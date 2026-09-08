@@ -11,8 +11,8 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 | Stage | Status | Completion evidence |
 |---|---|---|
 | S0 GitHub write check | PASS | README commit 82ee3f6f60eca15185c562a232dad50afa847b08; remote content equality verified |
-| S1 source-project understanding | IN PROGRESS | Immutable source SHA, inspected files, claims vs implementation, task constraints |
-| S2 independent design freeze | PENDING | Design, decision alternatives, acceptance rubric, runnable interactive concept committed before prior artifacts are read |
+| S1 source-project understanding | PASS | docs/01_source_review.md; immutable source SHA, inspected contracts/results and archive freshness boundary |
+| S2 independent design freeze | IN PROGRESS | Design, decision alternatives, acceptance rubric, runnable interactive concept committed before prior artifacts are read |
 | S3 prior-artifact comparison | PENDING | Existing behavior checked; both versions compared against identical tasks with evidence and weaknesses |
 | S4 final synthesis | PENDING | Runnable GUI, component guide, input/output contracts and migration decisions |
 | S5 final verification | PENDING | Offline, state, context, controls, visual/keyboard tests; actual limitations; final remote commit |
@@ -28,4 +28,3 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 ## Resume
 
 Read this plan and the last WORKLOG entry. Complete the first unfinished stage; do not replay successful write checks or reopen older UI before S2.
-

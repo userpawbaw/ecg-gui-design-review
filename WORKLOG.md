@@ -17,3 +17,11 @@
 - Source GUI design files and demo HTML were identified by path and deliberately deferred until the independent design freeze.
 - No claims about code execution or hardware operation are made from source inspection alone.
 
+## S1 — source analysis complete
+
+- Wrote docs/01_source_review.md with source-grounded requirements and conflicts between metrics, documentation and implementation.
+- Verified actual demo-bank bytes against pinned Git blob 4a94d1b79db95b8cb8afa5e8f944955d756c5db6. Retrieved large public data via its immutable raw URL after the connector could not return its bytes; no access restriction was bypassed.
+- Builder provenance matches; dataset source hash differs. Archive output will be labeled as stored results requiring regeneration verification.
+- Corrected assumptions: existing registry/streaming bridge, 250 Hz processing, D1 band-limited reference, D3 uncollected, insufficient D1 QRS duration discrimination, bridge source/clock/denominator contract gaps.
+- Verdict PASS for source inspection; model rerun, hardware, current-code reproduction NOT VERIFIED.
+- Overall: S0/S1 complete, S2 active, S3–S5 pending. Previous GUI files remain unopened.

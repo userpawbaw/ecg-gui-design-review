@@ -12,9 +12,9 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 |---|---|---|
 | S0 GitHub write check | PASS | README commit 82ee3f6f60eca15185c562a232dad50afa847b08; remote content equality verified |
 | S1 source-project understanding | PASS | docs/01_source_review.md; immutable source SHA, inspected contracts/results and archive freshness boundary |
-| S2 independent design freeze | READY TO COMMIT | Design, acceptance rubric, offline interactive concept and actual output data complete; 336 metric checks pass. Browser file/localhost preview blocked; visual interaction verification pending |
-| S3 prior-artifact comparison | PENDING | Existing behavior checked; both versions compared against identical tasks with evidence and weaknesses |
-| S4 final synthesis | PENDING | Runnable GUI, component guide, input/output contracts and migration decisions |
+| S2 independent design freeze | PASS with QA limitation | Freeze bcd2f8d1516b4020895e6e17ed66107773504faa remotely verified; 336 metrics pass. Browser visual checks remain unverified |
+| S3 prior-artifact comparison | COMPLETE / render NV | docs/04_comparison.md: prior mockup, team/manual docs and source GUI code compared; rendered behavior not claimed |
+| S4 final synthesis | IN PROGRESS | Runnable GUI, component guide, input/output contracts and migration decisions |
 | S5 final verification | PENDING | Offline, state, context, controls, visual/keyboard tests; actual limitations; final remote commit |
 
 ## Source boundary
@@ -27,4 +27,4 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 
 ## Resume
 
-Read this plan and the last WORKLOG entry. Commit S2, verify the remote tree, then start S3. Do not replay successful write checks or reopen older UI before the S2 freeze commit exists.
+Read this plan and the last WORKLOG entry. S2 freeze is verified and prior files have now been inspected. Finish S4 in prototype/ without changing independent/. Complete S5 and keep actual browser/hardware limitations explicit.

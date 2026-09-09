@@ -36,3 +36,18 @@
 - Browser setup succeeded. Direct local-file navigation was blocked by the browser URL policy. A server restricted to app assets was tried as a narrower exposure; localhost navigation returned ERR_BLOCKED_BY_CLIENT. No further browser access workaround is attempted. Actual rendered interaction, focus and screenshots are NOT VERIFIED at this checkpoint.
 - Verdict: source-grounded independent concept complete, verification CONDITIONAL. Freeze preserves this limitation instead of inventing a visual PASS.
 - Next: commit and verify S2 before opening previous artifacts; S3 comparison, S4 synthesis and S5 verification remain.
+
+## S2 — remote freeze confirmed
+
+- Commit bcd2f8d1516b4020895e6e17ed66107773504faa, tree 54e89c323968309ff5c4e7729b2839150e275143.
+- All 14 committed files matched local Git blob hashes after remote tree retrieval. Receipt in verification/S2-freeze-receipt.json.
+- Only after this check were previous GUI files opened.
+
+## S3 — comparison complete
+
+- Compared previous local complete HTML, handoff, checklist, reusable manual and two labeled wireframes; also source demo/index.html, demo/live.html, demo/mockup_expo.html and docs/31.
+- Found P0 method-name mapping differences and contradictory success labels within sample UI. Prior handoff already documented sample/CDN limitations; did not represent those as newly discovered facts.
+- Credited previous design for multi-method comparison, audience flow, component-level debugging and operational states. Credited source GUI for real bank, all SNR/method controls and SSE/ring-buffer implementation.
+- Criticized independent version for limited methods/conditions, weak presentation flow, missing cohort context near scene, small-screen source loss and incomplete failure recovery.
+- Recorded synthesis decisions and common rubric in docs/04_comparison.md. No rendered beauty or full behavior superiority is claimed without browser evidence.
+- Verdict COMPLETE for source/document comparison; browser rendering NOT VERIFIED. S0–S3 complete; S4 active, S5 remains.

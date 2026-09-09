@@ -1,0 +1,64 @@
+{
+  "sha": "bcd2f8d1516b4020895e6e17ed66107773504faa",
+  "parent": "b7b23517c2334256d073d61c4e3234c064265031",
+  "tree": "54e89c323968309ff5c4e7729b2839150e275143",
+  "files": [
+    {
+      "path": "docs/02_independent_design.md",
+      "sha": "647c6a6f167dbee191c0f4f2cb29ed39ad2a125a"
+    },
+    {
+      "path": "docs/03_acceptance_rubric.md",
+      "sha": "e904de0e0dd5a86601f0af1cc76ee334236cdcf8"
+    },
+    {
+      "path": "independent/index.html",
+      "sha": "4f85b355fa3de7f6b6c635d11a5f07120ffa5373"
+    },
+    {
+      "path": "independent/style.css",
+      "sha": "76f6dd5e44f06c74e13b6b7525603a20cdcd55fe"
+    },
+    {
+      "path": "independent/core.js",
+      "sha": "49a678e7efdf974cd61058ed3813880b0709739e"
+    },
+    {
+      "path": "independent/app.js",
+      "sha": "1628c8d86ac924ce189783d9a8b4949f3d0df3a5"
+    },
+    {
+      "path": "independent/README.md",
+      "sha": "ed08f4054a464f08e7ecf6eadc2ca9bf043207b5"
+    },
+    {
+      "path": "scripts/prepare-data.cjs",
+      "sha": "560bee6391afb0a7ced4901c255d741e77b8ad58"
+    },
+    {
+      "path": "scripts/preview.cjs",
+      "sha": "fe4cb7fb9119c5dea9820debaea332d021f72b2c"
+    },
+    {
+      "path": "tests/core.test.cjs",
+      "sha": "f34e524cc27ffaf36dbe01ac2a6001f594df8169"
+    },
+    {
+      "path": "data/bank.js",
+      "sha": "c54502e408285e9a23c03b007592c29aed6d2b16"
+    },
+    {
+      "path": "data/provenance.json",
+      "sha": "964b894c2ea3b46b724a4a09ec77b553d37fd81a"
+    },
+    {
+      "path": "PLAN.md",
+      "sha": "7101806c188a01927af77164a44ead87ce9d5f6c"
+    },
+    {
+      "path": "WORKLOG.md",
+      "sha": "f68939f6680884947a67db7c4d20692ca8d74300"
+    }
+  ],
+  "remoteVerified": true
+}

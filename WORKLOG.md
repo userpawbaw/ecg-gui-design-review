@@ -87,3 +87,21 @@
 - Routine verification corrections: the document audit initially checked for its own not-yet-created report; corrected its generation order exception, then all actual file links passed. An earlier test expectation of 18 aggregate rows was corrected to the source's actual 16. Neither was relabeled a product defect.
 - Overall verdict: CONDITIONAL PASS for the final GUI prototype. Implementation/specification and automated checks S0–S5 are complete. Browser pixels, native keyboard/dialog/download, OS settings, current-code inference regeneration, pathology annotation and actual AFE/exhibit validation remain unverified or pending as documented.
 - Next action: target-PC browser checklist with screenshots and review JSON, then archive regeneration and source/session-aware bridge integration. No further optional tests are needed before that evidence exists.
+
+## Post-stop resume — implementation intact; target-PC handoff prepared
+
+- User reported the stuck progress indicator had stopped and requested continuation.
+- Refreshed GitHub main: `4a99f30f0b6b108f0e5b61a11c3f6e62b82a67f8`. All 44 baseline files match the final receipt; no missing or changed source file. Portable HTML matches SHA-256 `f14296bc03d2c725bc5940df7fcca5e0e856fd376d8124f79a1558ed262ee5a2`. Evidence: verification/post-stop-resume.json.
+- No interrupted source implementation was found. Data and full DOM suites were not repeated; their reports remain tied to unchanged source. A later portable-file integrity failure required a targeted portable retest, recorded below.
+- Continued the next feasible step with docs/09_target_pc_check.md: ten exact PC tasks, expected states, screenshot priorities and a result form. Linked it from README and PLAN.
+- No GUI behavior, frozen design, source data or model output was modified. No previously blocked browser route was retried.
+- Verdict: recovery PASS; target-PC handoff preparation COMPLETE; actual browser/native behavior still NOT VERIFIED. Overall GUI verdict remains CONDITIONAL PASS.
+- Next evidence: PC lab/focus/Replay screenshots, exported review JSON and observed keyboard/download results. Then resolve UI issues before archive regeneration and AFE integration.
+
+## Post-stop portable artifact recovery
+
+- During the new document audit, portable HTML no longer matched its verified build hash. Direct inspection found a 27,329-byte tail truncation. The damaged 8,781,824-byte file was an exact prefix of the correct 8,809,153-byte HTML. Cause not established; no background project writer was identified in the limited process inspection.
+- Existing ZIP member remained intact and matched `f14296bc03d2c725bc5940df7fcca5e0e856fd376d8124f79a1558ed262ee5a2`. Preserved the damaged file under dist/recovery/ and restored the HTML atomically from the verified ZIP. Receipt: verification/portable-recovery.json.
+- Re-ran only the six portable groups needed to verify the recovered artifact: PASS. All 38 component mappings still match. Document/freeze/build audit also passed; the initial link count was 28 before the recovery report links were added.
+- Clarification: the initial resume check was successful, but a subsequent artifact failure was found and repaired. Source files/data were intact; this is not proof of what caused the progress indicator to remain active.
+- Updated PC handoff and final report to use a freshly downloaded review ZIP. Browser/native/AFE gates still require actual target-PC evidence.

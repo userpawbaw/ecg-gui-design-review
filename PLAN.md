@@ -31,6 +31,8 @@ Read this plan and the last WORKLOG entry, then compare the remote head and loca
 
 ## Remaining gates, not hidden implementation claims
 
+Target-PC execution handoff: `docs/09_target_pc_check.md` gives Q01–Q10 actions, expected results and a report template. Preparation is COMPLETE; actual browser execution remains NOT VERIFIED. Continue visual/interaction review from the user's captures and review JSON. Do not repeat completed automated tests without a relevant code change.
+
 - Target desktop browser rendering, native keyboard/dialog/download, zoom/scaling, screen reader and offline opening: NOT VERIFIED because local browser navigation is blocked in this environment.
 - Current-source/checkpoint archive regeneration, exact metadata and pathology annotation: PENDING.
 - Actual AFE adapter/source-session contract, hardware and exhibit testing: PENDING.

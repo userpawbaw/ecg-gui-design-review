@@ -12,6 +12,8 @@
 
 증거: [recovery-check.json](../verification/recovery-check.json), [S3-remote-tree.json](../verification/S3-remote-tree.json). 복구 체크포인트 `5b6b5ad24b25b480dbf0e49844075b697147d566`를 원격 커밋하고 19개 변경 파일의 blob을 다시 비교했다.
 
+추가 재개 검사: 진행 표시 중단 후에도 원본 44파일과 HTML hash가 처음에는 일치했다. 이후 문서 감사에서 HTML 끝부분이 27,329 bytes 잘린 상태를 발견했다. 손상본은 백업하고 기존 ZIP의 온전한 파일로 복원했다. 원래 SHA-256 일치와 portable 6개 그룹을 다시 확인했다. 발생 원인은 확정하지 못했으며 원본 코드 수정이나 모델 재실행은 없었다. [portable-recovery.json](../verification/portable-recovery.json)에 복구 증거가 있다. 현재 PC 실행 절차는 [09_target_pc_check.md](09_target_pc_check.md)를 따른다.
+
 ## 2. 독립 비교 절차
 
 | 단계 | 증거 | 판정 |

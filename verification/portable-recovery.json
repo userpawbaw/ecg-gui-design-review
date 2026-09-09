@@ -1,0 +1,12 @@
+{
+  "status": "RESTORED_AND_HASH_VERIFIED",
+  "source": "Existing ZIP member ecg-signal-studio.html",
+  "expectedBytes": 8809153,
+  "expectedSha256": "f14296bc03d2c725bc5940df7fcca5e0e856fd376d8124f79a1558ed262ee5a2",
+  "damagedBytes": 8781824,
+  "damagedSha256": "3d08a9eaf9cb83759d270bd4f6a1316f55240ce00d4edb801322153831f157ce",
+  "backup": "dist/recovery/ecg-signal-studio-3d08a9eaf9cb.html",
+  "damagedIsPrefix": true,
+  "restoredFile": "dist/ecg-signal-studio.html",
+  "cause": "Not established; truncated HTML detected after initial successful resume check. Source files still match pinned build inputs."
+}

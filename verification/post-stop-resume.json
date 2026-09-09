@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "baselineCommit": "4a99f30f0b6b108f0e5b61a11c3f6e62b82a67f8",
+  "remoteHeadConfirmed": true,
+  "repositoryFilesMatched": 44,
+  "missing": [],
+  "changed": [],
+  "portableSha256": "f14296bc03d2c725bc5940df7fcca5e0e856fd376d8124f79a1558ed262ee5a2",
+  "portableMatches": true,
+  "priorTestsRerun": false,
+  "subsequentPortableRecovery": "verification/portable-recovery.json",
+  "conclusion": "Initial check passed for all source files and portable bytes. A later audit detected truncated portable HTML; it was backed up and restored from the verified ZIP, then six portable checks passed. Target-PC browser validation remains NOT VERIFIED."
+}

@@ -30,6 +30,7 @@ npm run build
 | 최종 화면 구성과 기능 범위 | [05_final_spec.md](docs/05_final_spec.md) |
 | 팀 설명·38개 요소·디버깅·연동 | [06_team_guide.md](docs/06_team_guide.md) |
 | 검사 결과·제약·배포 전 체크리스트 | [07_verification.md](docs/07_verification.md) |
+| 지금 PC에서 할 조작·캡처·결과 기록 | [09_target_pc_check.md](docs/09_target_pc_check.md) |
 | 기존안/독립안의 장단점과 채택 이유 | [04_comparison.md](docs/04_comparison.md) |
 | 다른 프로젝트에 가져갈 규칙 | [08_manual_addendum.md](docs/08_manual_addendum.md) |
 | 원본 목적·실제 계약 | [01_source_review.md](docs/01_source_review.md) |

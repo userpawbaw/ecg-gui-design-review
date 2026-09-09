@@ -104,15 +104,15 @@
       $('focus-metrics').innerHTML='';$('focus-method').textContent=state.method+' · 출력 없음';$('focus-explanation').textContent='입력과 정상 출력은 위에서 계속 비교할 수 있습니다.';return;
     }
     if(state.view==='dual'){
-      let svg='<svg viewBox="0 0 930 242" role="img" aria-label="선택한 동일 구간: 왼쪽 입력과 출력, 오른쪽 참조와 출력">';
+      let svg='<div class="dual-panels" role="group" aria-label="선택한 동일 구간: 입력과 출력, 참조와 출력">';
       [['입력과 출력','input','#bd702e'],['참조와 출력','clean','#796395']].forEach(([title,key,color],i)=>{
-        const x=42+i*465,w=412,h=172,y=30,opt={first:s.first,last:s.last,x,y,width:w,height:h};
-        svg+=`<defs><clipPath id="dual-clip-${i}"><rect x="${x}" y="${y}" width="${w}" height="${h}"/></clipPath></defs><text x="${x}" y="18" font-size="12" fill="#344f45" font-weight="600">${title}</text>`;
+        const x=42,w=412,h=172,y=30,opt={first:s.first,last:s.last,x,y,width:w,height:h};
+        svg+=`<svg viewBox="0 0 465 242" role="img" aria-label="${title} · ${number(s.start)}–${number(s.end)}초"><defs><clipPath id="dual-clip-${i}"><rect x="${x}" y="${y}" width="${w}" height="${h}"/></clipPath></defs><text x="${x}" y="18" font-size="16" fill="#344f45" font-weight="600">${title}</text>`;
         for(let t=0;t<=4;t++){svg+=`<line x1="${x+t*w/4}" x2="${x+t*w/4}" y1="${y}" y2="${y+h}" stroke="#dce6e0"/><line x1="${x}" x2="${x+w}" y1="${y+t*h/4}" y2="${y+t*h/4}" stroke="#dce6e0"/>`;}
         svg+=`<g clip-path="url(#dual-clip-${i})">`+tracePath(traces[key],opt,color,key==='clean')+tracePath(traces[state.method],opt,'#087763')+'</g>';
-        svg+=`<text x="${x}" y="224" font-size="11" fill="#5a7068">${number(s.start)} s</text><text x="${x+w}" y="224" text-anchor="end" font-size="11" fill="#5a7068">${number(s.end)} s</text><text x="${x-6}" y="${y+10}" text-anchor="end" font-size="10" fill="#5a7068">+${state.amplitude}</text><text x="${x-6}" y="${y+h}" text-anchor="end" font-size="10" fill="#5a7068">−${state.amplitude}</text>`;
+        svg+=`<text x="${x}" y="224" font-size="14" fill="#5a7068">${number(s.start)} s</text><text x="${x+w}" y="224" text-anchor="end" font-size="14" fill="#5a7068">${number(s.end)} s</text><text x="${x-6}" y="${y+10}" text-anchor="end" font-size="13" fill="#5a7068">+${state.amplitude}</text><text x="${x-6}" y="${y+h}" text-anchor="end" font-size="13" fill="#5a7068">−${state.amplitude}</text></svg>`;
       });
-      $('detail-waveform').innerHTML=svg+'</svg>';
+      $('detail-waveform').innerHTML=svg+'</div>';
     }else{
     const opt={first:s.first,last:s.last,x:50,y:7,width:850,height:184};
     let svg=`<svg viewBox="0 0 930 220" role="img" aria-label="선택한 ${number(s.start)}초부터 ${number(s.end)}초의 ${state.view==='overlay'?'출력과 참조':'제거 성분'}"><defs><clipPath id="focus-clip"><rect x="50" y="7" width="850" height="184"/></clipPath></defs>`;
@@ -127,7 +127,7 @@
     }
     const m=core.metrics(traces.clean.slice(s.first,s.last),traces[state.method].slice(s.first,s.last));
     $('focus-method').textContent=state.method+' · '+methods[state.method].name;
-    $('focus-explanation').textContent=state.view==='dual'?'왼쪽: 입력 대비 변화를, 오른쪽: 참조 대비 형태 차이를 확인합니다. 청록 실선은 같은 출력입니다.':state.view==='overlay'?'청록 실선: 출력 / 보라 점선: 참조. 작은 굴곡과 진폭의 차이를 같은 축에서 확인하세요.':'제거 성분 = 입력 − 출력. 남은 ECG 성분과 기준선도 포함될 수 있어, 전부 잡음이라고 단정할 수 없습니다.';
+    $('focus-explanation').textContent=state.view==='dual'?'입력 비교에서는 처리 전후의 변화를, 참조 비교에서는 형태 차이를 확인합니다. 청록 실선은 같은 출력이며 두 그래프는 시간·진폭축이 같습니다.':state.view==='overlay'?'청록 실선: 출력 / 보라 점선: 참조. 작은 굴곡과 진폭의 차이를 같은 축에서 확인하세요.':'제거 성분 = 입력 − 출력. 남은 ECG 성분과 기준선도 포함될 수 있어, 전부 잡음이라고 단정할 수 없습니다.';
     if(state.view==='residual'){
       const clipped=traces.input.slice(s.first,s.last).filter((v,i)=>Math.abs(v-traces[state.method][s.first+i])>state.amplitude).length;
       if(clipped)$('focus-explanation').textContent+=` 현재 진폭 범위 밖 ${clipped} samples. 범위 맞춤으로 모두 볼 수 있습니다.`;
@@ -163,6 +163,7 @@
   function moveSelection(start){if(!dataReady)return;const prior=start,s=core.selection(start,state.length,bank.fs,bank.n);state.start=s.start;renderGraph();renderFocus();announce(`${number(s.start)}–${number(s.end)}초 선택${Math.abs(prior-s.start)>.01?' · 유효 범위로 조정':''}`);}
   function showWorkspace(workspace){
     state.workspace=workspace;setPlaying(false);
+    $('source-mode').textContent=workspace==='acquisition'?'장치 미연결 · NO SESSION':'저장 결과 · ARCHIVE';
     ['lab','evidence','acquisition'].forEach(id=>$(id).hidden=id!==workspace);
     document.querySelectorAll('[data-workspace]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.workspace===workspace)));
     if(workspace==='evidence')renderEvidence();
@@ -195,7 +196,11 @@
     if(gap)svg+='<rect x="431.6" y="13" width="84.4" height="186" fill="#f8b670" opacity=".12"/><text x="473.8" y="227" text-anchor="middle" font-size="12" fill="#ffbc79">4–5 s · invalid 시연</text>';
     else for(let t=0;t<=10;t+=2)svg+=`<text x="${94+t*84.4}" y="227" text-anchor="middle" font-size="12" fill="#b0c6d1">${t} s</text>`;
     svg+='<line data-play-cursor x1="94" x2="94" y1="13" y2="199" stroke="#f4f8fb" opacity="0"/></svg>';
-    $('replay-wave').innerHTML=svg;$('replay-note').textContent=gap?'4–5초 구간은 상태 표현을 점검하기 위해 의도적으로 가린 UI fixture입니다. 원본 기록에서 실제 유실이 있었다는 뜻이 아닙니다.':waiting?'워밍업·FE 초기화 시 저장 입력만 남기고 이전 출력은 숨기는 동작을 보여줍니다.':`실제 저장 파형의 표시 예시 · 모든 행 ±${state.amplitude} mV. 이 파형이나 커서로 실제 장치 연결을 증명하지 않습니다.`;
+    $('replay-wave').innerHTML=svg;
+    const keys=waiting?['input']:['input',state.method];
+    const clipped=keys.reduce((sum,key)=>sum+(traces[key]?.filter((v,i)=>(!gap||i<1000||i>=1250)&&Math.abs(v)>state.amplitude).length||0),0);
+    const note=gap?'4–5초 구간은 상태 표현을 점검하기 위해 의도적으로 가린 UI fixture입니다. 원본 기록에서 실제 유실이 있었다는 뜻이 아닙니다.':waiting?'워밍업·FE 초기화 시 저장 입력만 남기고 이전 출력은 숨기는 동작을 보여줍니다.':'실제 저장 파형의 표시 예시입니다. 이 파형이나 커서로 실제 장치 연결을 증명하지 않습니다.';
+    $('replay-note').textContent=note+` 모든 행 ±${state.amplitude} mV.`+(clipped?` 범위 밖 ${clipped}개 표시 표본. 실험실의 범위 맞춤으로 조정할 수 있습니다.`:'');
   }
   function openProvenance(){
     if(!dataReady)return;
@@ -215,7 +220,7 @@
     const s=selection(),m=core.metrics(traces.clean,traces[state.method],traces.input);
     return {schema:'ecg-gui-review/1',createdAt:new Date().toISOString(),kind:'GUI_REVIEW_SNAPSHOT',
       source:{...bank.provenance,mode:state.axis==='d1'?'RECORDED_ARCHIVE':'SYNTHETIC_ARCHIVE',sceneId:scene.id,recordId:scene.record,segment:scene.seg,runId:null,checkpointHash:null,lead:null,noiseSeed:null,annotations:null},
-      context:{...state,playing:false,selection:{first:s.first,lastExclusive:s.last,startSeconds:s.start,lengthSeconds:s.length,timeOrigin:'stored-array start',fs:bank.fs}},
+      context:{...state,playing:false,selection:{first:s.first,lastExclusive:s.last,startSeconds:s.start,lengthSeconds:s.length,timeOrigin:'stored-array start',fs:bank.fs},acquisitionPreview:{scenario:$('acquisition-scenario').value,replayOpen:!$('replay-area').hidden,deviceSession:null}},
       scope:{currentWorkspace:state.workspace,currentViewSource:state.workspace==='evidence'?'results/d1/report/table_main.csv':state.workspace==='acquisition'?'NO_DEVICE_SESSION':'demo/demo_bank.js',waveform:'EXP-G stored central 10 s; retained laboratory context',localMetrics:'DC-removed quantized arrays; whole laboratory 10 s, not current acquisition',aggregatePanel:'EXP-A D1 L1 record-level summary; separate experiment'},
       localMetrics:m,notes:$('review-note').value,uiEvents:reviewEvents.slice(-15),notVerified:['archive regeneration','actual AFE connection','clinical morphology preservation','browser pixel QA']};
   }

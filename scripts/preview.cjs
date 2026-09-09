@@ -9,4 +9,4 @@ http.createServer((req,res)=>{
     if(err){res.writeHead(404);res.end('Not found');return;}
     res.writeHead(200,{'Content-Type':types[path.extname(pathname)]+'; charset=utf-8','Cache-Control':'no-store'});res.end(bytes);
   });
-}).listen(8765,'0.0.0.0',()=>console.log('Scoped GUI preview on port 8765; only app assets are served.'));
+}).listen(8765,'127.0.0.1',()=>console.log('Open http://127.0.0.1:8765/prototype/index.html ; only app assets are served.'));

@@ -35,7 +35,7 @@
 | M05 | Savitzky–Golay | Sameni EKF/EKS |
 | M06 | Sameni Kalman | Residual 1D U-Net |
 | M09 | 1D U-Net | CNN + Transformer |
-| M10 | SWT-CNN hybrid | 다른 DL 비교군; Wavelet-subband U-Net은 M08 |
+| M10 | SWT-CNN hybrid | Dilated ResNet(다운샘플링 없는 dilated residual CNN); Wavelet-subband U-Net은 M08 |
 | M02 | UI component ID로도 사용 | 실제 방법에서는 Savitzky–Golay |
 
 방법 ID와 component ID가 같은 짧은 기호를 쓰는 점도 디버깅 혼동을 만든다. 최종은 `LAB-xx`, `EVD-xx`, `ACQ-xx`와 실제 `Mxx`를 구별한다. 실제 registry는 이미 있으므로 “registry 전체를 새로 구현”하는 것이 아니라 GUI adapter와 DL checkpoint metadata를 연결해야 한다.

@@ -61,3 +61,13 @@
 - Re-ran JavaScript syntax and 22 DOM behavior groups successfully. Native dialog methods use an explicitly documented test host shim; browser pixels, native focus, screen reader and hardware remain NOT VERIFIED.
 - One asynchronous shell polling call could not resume its tool session; the relevant tests were rerun synchronously and passed. No missing authored file was found. The existing portable HTML is stale and will be rebuilt for S5.
 - Verdict: S4 implementation checkpoint CONDITIONAL, not a completed product. Next: finish Replay regression coverage, component-level final specification/team guide, portable-build verification and final report. S0–S3 complete; S4/S5 remain.
+
+## S4 — synthesis and handoff complete
+
+- Recovery checkpoint `5b6b5ad24b25b480dbf0e49844075b697147d566` was committed and all 19 changed files verified against the remote tree.
+- Final specification maps all previous 16 frame IDs and 10 hotspot flows to implemented, integrated or deferred behavior. It does not claim 16 functional frame passes.
+- Team guide documents 38 component IDs with purpose, behavior, failure symptoms and code entry points. Includes metric scope, archived data identity, review JSON, source bridge contracts and integration requirements.
+- Reusable manual addendum separates structure/behavior/evidence/environment verification and includes screen split/addition and recovery checkpoint rules.
+- Added four Replay DOM groups (now 26) covering explicit entry, invalid mask, warmup/reset output clearing and stop-on-close. Added clipping disclosure and scope-aware header; final review snapshot includes acquisition scenario. Split dual plots into responsive panels with larger SVG labels.
+- Re-ran the parent workspace's legacy audit against the previous mockup as required: FAIL on three external CDN scripts (Floating UI core/dom, Lucide). This confirms the old offline defect, not a failure of prototype/. That validator is intentionally not repurposed to certify the new GUI.
+- Verdict: S4 implementation/specification COMPLETE; browser rendering NOT VERIFIED. Next S5: rebuild and execute portable HTML in DOM test host, verify downloaded JSON payload, audit component/document references, final report and remote commit.

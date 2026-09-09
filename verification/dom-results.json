@@ -64,6 +64,22 @@
       "status": "PASS"
     },
     {
+      "name": "Replay opens only on explicit action and is never labeled a device session",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid-span preview masks 4–5 seconds and discloses the simulated event",
+      "status": "PASS"
+    },
+    {
+      "name": "Warmup and FE reset hide previous output but preserve recorded input",
+      "status": "PASS"
+    },
+    {
+      "name": "Replay restores output, exposes scale and stops on close",
+      "status": "PASS"
+    },
+    {
       "name": "Provenance dialog follows the active workspace scope",
       "status": "PASS"
     },

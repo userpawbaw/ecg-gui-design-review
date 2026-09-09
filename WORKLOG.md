@@ -25,3 +25,14 @@
 - Corrected assumptions: existing registry/streaming bridge, 250 Hz processing, D1 band-limited reference, D3 uncollected, insufficient D1 QRS duration discrimination, bridge source/clock/denominator contract gaps.
 - Verdict PASS for source inspection; model rerun, hardware, current-code reproduction NOT VERIFIED.
 - Overall: S0/S1 complete, S2 active, S3–S5 pending. Previous GUI files remain unopened.
+
+## S2 — independent design and implementation ready for freeze
+
+- Date: 2026-09-09 (continued across the session boundary).
+- Authored docs/02_independent_design.md and docs/03_acceptance_rubric.md before reading previous GUI artifacts.
+- Built independent/index.html, style.css, core.js, app.js. Three workspaces; actual saved waveform comparison, method selection/preview, shared axes, interval focus, residual, strict/scaled/alpha/CC, aggregate evidence, acquisition-state preview and provenance dialog.
+- Extracted 48 source scenes (D0/D1 × 4 conditions × 6 SNR) with 432 trace arrays. Named method outputs are source data, not generated substitutes. Kept original archive provenance and dataset freshness mismatch.
+- Node syntax checks and tests/core.test.cjs PASS. Checked 336 output metrics against rounded stored values; largest scaled-SNR difference 0.0053266 dB. Known-input numerical tests include gain, DC, zero variance, invalid shape and signed int16 decoding.
+- Browser setup succeeded. Direct local-file navigation was blocked by the browser URL policy. A server restricted to app assets was tried as a narrower exposure; localhost navigation returned ERR_BLOCKED_BY_CLIENT. No further browser access workaround is attempted. Actual rendered interaction, focus and screenshots are NOT VERIFIED at this checkpoint.
+- Verdict: source-grounded independent concept complete, verification CONDITIONAL. Freeze preserves this limitation instead of inventing a visual PASS.
+- Next: commit and verify S2 before opening previous artifacts; S3 comparison, S4 synthesis and S5 verification remain.

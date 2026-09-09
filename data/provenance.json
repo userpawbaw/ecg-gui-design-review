@@ -1,0 +1,38 @@
+{
+  "repository": "userpawbaw/ECG_denoising_method_comparision",
+  "sourceCommit": "5eb27946087faca3c6e70b3925e2ba132b2ee680",
+  "sourcePath": "demo/demo_bank.js",
+  "sourceBlob": "4a94d1b79db95b8cb8afa5e8f944955d756c5db6",
+  "status": "archived",
+  "builderHashMatches": true,
+  "datasetHashMatches": false,
+  "metadataUnavailable": [
+    "exact noise seed",
+    "lead in export",
+    "beat/rhythm annotations",
+    "checkpoint hashes",
+    "absolute record start timestamp"
+  ],
+  "reference": "D1: band-limited FE(x_raw); D0: synthetic reference from source bank",
+  "traceEncoding": "signed int16 little-endian base64; mV = integer * scene.scale",
+  "time": "central 10 s of a processed 20 s segment; relative to stored-array start",
+  "sourceLicense": "See original repository and PhysioNet dataset terms; no new license over source data is asserted.",
+  "scenes": 48,
+  "methods": [
+    "M_FE",
+    "M01",
+    "M04",
+    "M05",
+    "M06",
+    "M08",
+    "M09"
+  ],
+  "conditions": [
+    "mixed",
+    "pli",
+    "ma_synth",
+    "em_synth"
+  ],
+  "fs": 250,
+  "n": 2500
+}

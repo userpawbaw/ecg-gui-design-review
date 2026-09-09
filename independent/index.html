@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ECG / Signal Studio · 독립 설계</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 이동</a>
+  <header class="app-header">
+    <a class="brand" href="#lab" aria-label="Signal Studio 실험실"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="9" fill="currentColor"/><path d="M4 16h5l3-7 5 14 3-9 2 2h4" stroke="white" fill="none" stroke-width="1.8"/></svg><span>signal<span class="brand-light">studio</span><small>ECG DENOISING RESEARCH</small></span></a>
+    <nav aria-label="작업 공간" id="workspace-nav">
+      <button data-workspace="lab" aria-pressed="true">실험실</button>
+      <button data-workspace="evidence" aria-pressed="false">전체 근거</button>
+      <button data-workspace="acquisition" aria-pressed="false">계측</button>
+    </nav>
+    <div class="header-actions"><span class="archive-tag">저장 결과 · ARCHIVE</span><button id="provenance-open" class="quiet">출처·규약 ↗</button></div>
+  </header>
+  <main id="main" tabindex="-1">
+    <section id="lab" aria-labelledby="lab-title">
+      <div class="page-heading"><div><div class="eyebrow">01 / SIGNAL WORKSPACE</div><h1 id="lab-title">잡음은 줄이고, 형태는 남기고.</h1><p>동일한 입력에서 처리 결과와 참조 파형의 차이를 살펴보세요.</p></div><button id="presentation" class="secondary" aria-pressed="false">발표 보기 ↗</button></div>
+      <div class="condition-bar" data-component="LAB-01">
+        <label>데이터 축<select id="axis"><option value="d1">D1 · MIT-BIH 기반</option><option value="d0">D0 · 합성 ECG</option></select></label>
+        <label>주입 잡음<select id="noise"><option value="mixed">혼합 잡음</option><option value="pli">전원 간섭 · PLI</option><option value="ma_synth">근육 잡음 · MA</option><option value="em_synth">전극 움직임 · EM</option></select></label>
+        <div class="snr-control"><span class="field-label">주입 SNR <span class="subtle">dB · nominal</span></span><div id="snr-options" role="group" aria-label="주입 SNR"></div></div>
+        <div class="record-summary"><span class="field-label">현재 기록</span><strong id="record">—</strong><span class="subtle">250 Hz · 저장 구간 10 s</span></div>
+      </div>
+      <div class="source-note"><span id="context-label"></span><span>보관 결과 · 현재 코드 재현 확인 필요</span></div>
+      <div id="data-error" class="notice danger" role="alert" hidden></div>
+      <div class="lab-grid">
+        <div class="signal-column">
+          <section class="signal-panel" aria-label="동일 조건 파형 비교" data-component="LAB-05">
+            <div class="panel-top"><div><span class="tiny-label">SHARED INPUT / SHARED AXES</span><h2>입력부터 출력까지</h2></div><div class="plot-controls"><label>진폭 ±<select id="amplitude" aria-label="공통 진폭 범위 mV"><option>1</option><option selected>2</option><option>5</option><option>10</option></select> mV</label><button id="fit" class="dark-button">범위 맞춤</button><button id="play" class="dark-button" aria-pressed="false">▶ 커서 재생</button></div></div>
+            <div class="trace-legend"><span class="legend input">입력</span><span class="legend fe">공통 FE</span><span class="legend output">선택 출력</span><span class="legend reference">참조 · 점선</span><span class="right-note">저장 파형 · 1×</span></div>
+            <div id="waveform" class="waveform"></div>
+            <div class="plot-footer"><span id="plot-hint">파형을 클릭하면 해당 구간을 확대합니다.</span><span id="clip-status"></span></div>
+          </section>
+          <section class="metrics-strip" aria-label="전체 저장 구간 지표" data-component="LAB-13">
+            <div class="metrics-caption"><strong>전체 10초</strong><span>저장 파형 재계산</span></div>
+            <div><span>출력 SNR · strict</span><strong id="strict">—</strong><small>진폭 보정 없음</small></div>
+            <div><span>출력 SNR · scaled</span><strong id="scaled">—</strong><small>최적 배율 보정 후</small></div>
+            <div><span>최적 배율 α</span><strong id="alpha">—</strong><small>출력에 곱하는 값</small></div>
+            <div><span>상관계수 CC</span><strong id="cc">—</strong><small>형태 유사성의 한 지표</small></div>
+          </section>
+        </div>
+        <aside class="method-panel" aria-labelledby="method-title" data-component="LAB-11">
+          <div class="section-heading"><div><span class="eyebrow">METHOD EXPLORER</span><h2 id="method-title">어떻게 달라질까요?</h2></div><span class="count-tag">8</span></div>
+          <div id="method-list" class="method-list" role="group" aria-label="처리 방법"></div>
+          <div id="method-detail" class="method-detail" data-component="LAB-12"></div>
+        </aside>
+      </div>
+      <section class="focus-panel" aria-labelledby="focus-title" data-component="LAB-14">
+        <div class="focus-heading"><div><span class="eyebrow">FOCUS / DETAIL</span><h2 id="focus-title">같은 구간, 더 가까이</h2></div><div class="segmented" role="group" aria-label="확대 보기 종류"><button data-view="overlay" aria-pressed="true">참조와 비교</button><button data-view="residual" aria-pressed="false">제거 성분</button></div></div>
+        <div class="focus-grid"><div><div class="selection-controls"><button id="previous" aria-label="선택 구간 0.5초 이전">←</button><label>시작 <input id="start" type="number" min="0" max="9.5" step="0.1" value="3"> s</label><label>길이 <select id="duration"><option value="0.6">0.6 s</option><option value="1.2" selected>1.2 s</option><option value="3">3 s</option></select></label><button id="next" aria-label="선택 구간 0.5초 다음">→</button><span id="selection-label"></span></div><div id="detail-waveform" class="detail-waveform"></div></div><div class="focus-reading"><span class="tiny-label">선택 구간의 관찰</span><h3 id="focus-method">—</h3><p id="focus-explanation">참조의 작은 굴곡이 출력에도 남아 있는지 확인하세요.</p><dl id="focus-metrics"></dl><p class="annotation-note">박동·리듬 annotation은 이 export에 없습니다. 선택 구간에 질환 판정을 붙이지 않습니다.</p></div></div>
+      </section>
+    </section>
+    <section id="evidence" aria-labelledby="evidence-title" hidden>
+      <div class="page-heading"><div><div class="eyebrow">02 / EVIDENCE</div><h1 id="evidence-title">한 장면에서, 전체 실험으로.</h1><p>D1 · EXP-A · TEST 22 records · 주 실험 L1 · 혼합 잡음 / −5…20 dB</p></div><span class="archive-tag">원본 집계표</span></div>
+      <div class="notice">실험실은 EXP-G의 저장 장면, 아래는 EXP-A의 전체 집계입니다. 실험·구간·집계 단위가 다릅니다.</div>
+      <div class="evidence-grid"><section class="paper-panel"><div class="section-heading"><div><span class="eyebrow">RECORD-LEVEL SUMMARY</span><h2>방법별 SNR 개선량</h2><p>scaled · mean, dB · 무처리와 FE 기준선 포함</p></div></div><div id="evidence-bars"></div></section><aside class="paper-panel reading-panel"><span class="eyebrow">READ THE RESULT</span><h2>세 가지를 함께 읽습니다.</h2><ol><li><strong>FE가 먼저 만든 차이</strong><p>전체 파이프라인 이득과 추가 denoiser 기여를 구분합니다.</p></li><li><strong>보정 후 수치의 의미</strong><p>scaled SNR은 최적 배율 보정 결과입니다. 원래 출력 진폭의 정확성을 단독으로 보증하지 않습니다.</p></li><li><strong>작은 형태 차이의 한계</strong><p>D1 QRS duration floor p95는 28.072 ms입니다. 이보다 작은 차이에 보존 합격 배지를 붙이지 않습니다.</p></li></ol><p class="subtle">여기서 우승 방법이나 실제 장치 적합성을 자동 판정하지 않습니다.</p></aside></div>
+      <section class="paper-panel"><h2>같은 결과를 수치로</h2><p>각 record 내부 조건 평균 → record 간 집계. 표준편차는 신뢰구간이 아닙니다.</p><div class="table-scroll"><table><caption class="sr-only">EXP-A scaled SNR improvement, record 단위</caption><thead><tr><th>방법</th><th>n</th><th>평균 dB</th><th>표준편차 dB</th><th>중앙값 dB</th></tr></thead><tbody id="evidence-table"></tbody></table></div></section>
+    </section>
+    <section id="acquisition" aria-labelledby="acquisition-title" hidden>
+      <div class="page-heading"><div><div class="eyebrow">03 / ACQUISITION</div><h1 id="acquisition-title">실제 신호는, 연결 상태부터.</h1><p>참조 파형이 없는 계측에서는 수신 품질과 시간 정렬을 먼저 확인합니다.</p></div><span class="archive-tag">장치 미연결</span></div>
+      <div class="acquisition-grid"><section class="signal-panel acquisition-empty"><span class="device-glyph" aria-hidden="true">⌁</span><span class="tiny-label">NO DEVICE SESSION</span><h2>수신 중인 신호가 없습니다.</h2><p>이 프로토타입에는 실제 장치를 연결하지 않았습니다.<br>아래에서 연결 예외 상태의 표시 방식을 확인할 수 있습니다.</p><div id="acquisition-state" role="status"></div></section><aside class="paper-panel"><span class="eyebrow">STATE PREVIEW</span><h2>상태 미리보기</h2><label>표시할 상태<select id="acquisition-scenario"><option value="disconnected">미연결</option><option value="warmup">워밍업</option><option value="lead-off">전극 접촉 해제</option><option value="gap">표본 유실</option><option value="reset">FE 변경 / 초기화</option></select></label><p class="subtle">실제 이벤트·수치가 아닌 UI 상태 시연입니다.</p><dl class="device-stats"><div><dt>유실 표본</dt><dd>—</dd></div><div><dt>알고리즘 지연</dt><dd>—</dd></div><div><dt>전체 전송 지연</dt><dd>측정 안 됨</dd></div><div><dt>참조 기반 SNR</dt><dd>참조 없음</dd></div></dl></aside></div>
+      <div class="notice">기존 Python bridge와 streaming 구현은 원본 프로젝트에 있습니다. 이 화면의 상태 시연은 장치 연동 검증을 대신하지 않습니다.</div>
+    </section>
+    <footer class="app-footer"><span>ECG denoising research / Independent concept</span><span>프로토타입 · 저장 결과 재생 · 임상 판정 없음</span></footer>
+  </main>
+  <div id="status" role="status" aria-live="polite" class="status-message"></div>
+  <dialog id="provenance" aria-labelledby="provenance-title"><div class="dialog-heading"><div><span class="eyebrow">PROVENANCE & SCOPE</span><h2 id="provenance-title">지금 보고 있는 결과의 출처</h2></div><button id="provenance-close" aria-label="출처 닫기">닫기 ×</button></div><div id="provenance-content"></div></dialog>
+  <script src="../data/bank.js"></script><script src="core.js"></script><script src="app.js"></script>
+</body></html>

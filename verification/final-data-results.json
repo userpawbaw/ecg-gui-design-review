@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "scenes": 98,
+  "traceArrays": 1274,
+  "metricsChecked": 1078,
+  "maxScaledSnrDifferenceDb": 0.009935499025885974,
+  "maxReferenceDriftMv": 0.00022790616005659292,
+  "minAdjacentNoiseDifferenceCorrelation": 0.99999052224706,
+  "interpretation": "Differences are consistent with shared noise realization across SNR within each condition, allowing int16 quantization. This does not verify current-code model reruns."
+}

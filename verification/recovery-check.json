@@ -1,0 +1,67 @@
+{
+  "checkedDate": "2026-09-09",
+  "remoteHead": "7eb0723a255d33ba9c85fbd12dde8c55d74af8cd",
+  "remoteFiles": 19,
+  "missing": [],
+  "changed": [
+    {
+      "path": "scripts/preview.cjs",
+      "sha": "fe4cb7fb9119c5dea9820debaea332d021f72b2c",
+      "local": "00cbdb35ab003e92097cf0a3e28ad1de6767f765"
+    }
+  ],
+  "independentFreezeUnchanged": true,
+  "wip": [
+    {
+      "path": "prototype/index.html",
+      "bytes": 16917,
+      "sha": "f6c39c6ae72881551e8c959dbf67c53ca1508bcf"
+    },
+    {
+      "path": "prototype/style.css",
+      "bytes": 23085,
+      "sha": "8dafe02d4995f4645d632b940b718d2fab73c17a"
+    },
+    {
+      "path": "prototype/core.js",
+      "bytes": 2163,
+      "sha": "49a678e7efdf974cd61058ed3813880b0709739e"
+    },
+    {
+      "path": "prototype/app.js",
+      "bytes": 38873,
+      "sha": "7e1537b4801a2034d24eb40361a6d87871daa1e0"
+    },
+    {
+      "path": "data/extension.js",
+      "bytes": 5738770,
+      "sha": "e71e57f3ad7d3c5f9b824d9baa8f1b9b4dc740c6"
+    },
+    {
+      "path": "scripts/extend-data.cjs",
+      "bytes": 1884,
+      "sha": "589cd0a69b78fd623334db07d7beb6da0a33e433"
+    },
+    {
+      "path": "scripts/build-single-file.cjs",
+      "bytes": 1204,
+      "sha": "d8c29bd4309234b691d332e89791aa918c4a23ab"
+    },
+    {
+      "path": "tests/dom.test.cjs",
+      "bytes": 11338,
+      "sha": "b51452a381f4b7730a0b640abd858603ce321e0c"
+    },
+    {
+      "path": "tests/final-data.test.cjs",
+      "bytes": 2678,
+      "sha": "f54682f4b247040477d7dbc44b61aa7074144a94"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 19229,
+      "sha": "09afbc8f3e378b051dd60d86f22c2df49ba35504"
+    }
+  ],
+  "conclusion": "No missing authored files found in the remote inventory or known S4 working files. S4 is not yet committed; portable build must be regenerated. Transient tool/REPL state is not a deliverable."
+}

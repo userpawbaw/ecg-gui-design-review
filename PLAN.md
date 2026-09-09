@@ -14,7 +14,7 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 | S1 source-project understanding | PASS | docs/01_source_review.md; immutable source SHA, inspected contracts/results and archive freshness boundary |
 | S2 independent design freeze | PASS with QA limitation | Freeze bcd2f8d1516b4020895e6e17ed66107773504faa remotely verified; 336 metrics pass. Browser visual checks remain unverified |
 | S3 prior-artifact comparison | COMPLETE / render NV | docs/04_comparison.md: prior mockup, team/manual docs and source GUI code compared; rendered behavior not claimed |
-| S4 final synthesis | IN PROGRESS | Runnable GUI, component guide, input/output contracts and migration decisions |
+| S4 final synthesis | IN PROGRESS / checkpoint ready | Final GUI and full archive bank implemented; 22 DOM checks and 1,078 output checks PASS. Detailed handoff and Replay-specific checks remain |
 | S5 final verification | PENDING | Offline, state, context, controls, visual/keyboard tests; actual limitations; final remote commit |
 
 ## Source boundary

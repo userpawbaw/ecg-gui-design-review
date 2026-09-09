@@ -1,0 +1,81 @@
+{
+  "commit": "7eb0723a255d33ba9c85fbd12dde8c55d74af8cd",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha": "aa0a9d839a874c04cd2ef6accb0a9986d1147b8c"
+    },
+    {
+      "path": "PLAN.md",
+      "sha": "49c8184b25ba367b7e6cd4f228e357d73afaf562"
+    },
+    {
+      "path": "README.md",
+      "sha": "5aa229291c1b1c62cbf2ab409bfe9a2aa5d31eb8"
+    },
+    {
+      "path": "WORKLOG.md",
+      "sha": "999ae8557e42840e430d2119f717f52a8f82afbf"
+    },
+    {
+      "path": "data/bank.js",
+      "sha": "c54502e408285e9a23c03b007592c29aed6d2b16"
+    },
+    {
+      "path": "data/provenance.json",
+      "sha": "964b894c2ea3b46b724a4a09ec77b553d37fd81a"
+    },
+    {
+      "path": "docs/01_source_review.md",
+      "sha": "a2f209de7b2db125a9c24ac11651f402adea1104"
+    },
+    {
+      "path": "docs/02_independent_design.md",
+      "sha": "647c6a6f167dbee191c0f4f2cb29ed39ad2a125a"
+    },
+    {
+      "path": "docs/03_acceptance_rubric.md",
+      "sha": "e904de0e0dd5a86601f0af1cc76ee334236cdcf8"
+    },
+    {
+      "path": "docs/04_comparison.md",
+      "sha": "d4acce135f18009bcc91c2c886cf508723f0b0cd"
+    },
+    {
+      "path": "independent/README.md",
+      "sha": "ed08f4054a464f08e7ecf6eadc2ca9bf043207b5"
+    },
+    {
+      "path": "independent/app.js",
+      "sha": "1628c8d86ac924ce189783d9a8b4949f3d0df3a5"
+    },
+    {
+      "path": "independent/core.js",
+      "sha": "49a678e7efdf974cd61058ed3813880b0709739e"
+    },
+    {
+      "path": "independent/index.html",
+      "sha": "4f85b355fa3de7f6b6c635d11a5f07120ffa5373"
+    },
+    {
+      "path": "independent/style.css",
+      "sha": "76f6dd5e44f06c74e13b6b7525603a20cdcd55fe"
+    },
+    {
+      "path": "scripts/prepare-data.cjs",
+      "sha": "560bee6391afb0a7ced4901c255d741e77b8ad58"
+    },
+    {
+      "path": "scripts/preview.cjs",
+      "sha": "fe4cb7fb9119c5dea9820debaea332d021f72b2c"
+    },
+    {
+      "path": "tests/core.test.cjs",
+      "sha": "f34e524cc27ffaf36dbe01ac2a6001f594df8169"
+    },
+    {
+      "path": "verification/S2-freeze-receipt.json",
+      "sha": "e77b5e44fe9cd50ad24b2cbdcc2bb12c30b3b22a"
+    }
+  ]
+}

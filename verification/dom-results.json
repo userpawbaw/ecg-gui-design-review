@@ -1,0 +1,104 @@
+{
+  "status": "PASS",
+  "engine": "jsdom 30.0.1 / Node DOM execution; not a rendered browser",
+  "dialogHostShim": true,
+  "checks": [
+    {
+      "name": "No runtime initialization error; no external assets or auto-connection",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual 98 scenes, 12 selectable methods including identity, no M07/M10 substitutes",
+      "status": "PASS"
+    },
+    {
+      "name": "SNR 10 → 0 → 10 preserves record and returns identical output",
+      "status": "PASS"
+    },
+    {
+      "name": "Method change keeps input and selected time",
+      "status": "PASS"
+    },
+    {
+      "name": "Hover preview does not overwrite pinned method or metrics",
+      "status": "PASS"
+    },
+    {
+      "name": "Numeric selection clamps to valid half-open sample interval",
+      "status": "PASS"
+    },
+    {
+      "name": "Next/previous and 3-second interval use the same selection",
+      "status": "PASS"
+    },
+    {
+      "name": "Crosshair coordinate conversion uses sample time, not animation frame count",
+      "status": "PASS"
+    },
+    {
+      "name": "Residual and dual comparison are distinct real-data views",
+      "status": "PASS"
+    },
+    {
+      "name": "25 dB slider and L1/L6 guide are available",
+      "status": "PASS"
+    },
+    {
+      "name": "Noise recipe changes record openly",
+      "status": "PASS"
+    },
+    {
+      "name": "All 98 selectors resolve actual data with finite selected metrics",
+      "status": "PASS"
+    },
+    {
+      "name": "All stored methods select without replacing the input",
+      "status": "PASS"
+    },
+    {
+      "name": "Workspace navigation preserves laboratory state and stops playback",
+      "status": "PASS"
+    },
+    {
+      "name": "Acquisition states carry no fabricated measured values",
+      "status": "PASS"
+    },
+    {
+      "name": "Provenance dialog follows the active workspace scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Review snapshot retains source hash, current scope and explicit missing metadata",
+      "status": "PASS"
+    },
+    {
+      "name": "Diagnostics reports unmeasured stages without a fake self-test pass",
+      "status": "PASS"
+    },
+    {
+      "name": "All DOM ids unique and dialogs labeled",
+      "status": "PASS"
+    },
+    {
+      "name": "Whole-input corruption fails closed and preserves a retry action",
+      "status": "PASS"
+    },
+    {
+      "name": "Single-method corruption leaves input and other method rows available",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing data bank shows failure rather than success",
+      "status": "PASS"
+    }
+  ],
+  "notVerified": [
+    "pixel layout",
+    "real pointer hit targets",
+    "native keyboard Tab order",
+    "native dialog behavior and focus trap",
+    "screen reader",
+    "OS reduced motion behavior",
+    "hardware"
+  ]
+}

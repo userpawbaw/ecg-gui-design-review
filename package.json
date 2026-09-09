@@ -1,0 +1,13 @@
+{
+  "name": "ecg-gui-design-review",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline ECG GUI prototype and reproducible review checks",
+  "scripts": {
+    "test": "node tests/core.test.cjs && node tests/final-data.test.cjs && node tests/dom.test.cjs",
+    "preview": "node scripts/preview.cjs",
+    "build": "node scripts/build-single-file.cjs"
+  },
+  "engines": {"node": ">=24"},
+  "devDependencies": {"jsdom": "30.0.1"}
+}

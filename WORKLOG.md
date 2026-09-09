@@ -51,3 +51,13 @@
 - Criticized independent version for limited methods/conditions, weak presentation flow, missing cohort context near scene, small-screen source loss and incomplete failure recovery.
 - Recorded synthesis decisions and common rubric in docs/04_comparison.md. No rendered beauty or full behavior superiority is claimed without browser evidence.
 - Verdict COMPLETE for source/document comparison; browser rendering NOT VERIFIED. S0–S3 complete; S4 active, S5 remains.
+
+## Recovery and S4 implementation checkpoint
+
+- Date: 2026-09-09. User requested a loss audit after interruption.
+- Remote main is still S3 commit `7eb0723a255d33ba9c85fbd12dde8c55d74af8cd`. All 19 files in that remote tree exist locally; the preview server is the only pre-existing file changed before this log update. All seven frozen independent/data files match the S2 receipt. Known S4 files are present. Evidence: `verification/recovery-check.json` and `verification/S3-remote-tree.json`.
+- Added prototype/ with actual stored 98 scenes, 12 selectable methods including identity, two-method comparison beside FE, dual focus, EXP-G condition means, presentation guide, scope-aware provenance, review JSON and acquisition diagnostics/explicit Replay preview.
+- Added extension.js while preserving the frozen bank. 1,078 output metrics / 1,274 trace arrays PASS; maximum difference from rounded archive scaled SNR 0.009936 dB. Same-condition reference/noise consistency checked with quantization tolerance.
+- Re-ran JavaScript syntax and 22 DOM behavior groups successfully. Native dialog methods use an explicitly documented test host shim; browser pixels, native focus, screen reader and hardware remain NOT VERIFIED.
+- One asynchronous shell polling call could not resume its tool session; the relevant tests were rerun synchronously and passed. No missing authored file was found. The existing portable HTML is stale and will be rebuilt for S5.
+- Verdict: S4 implementation checkpoint CONDITIONAL, not a completed product. Next: finish Replay regression coverage, component-level final specification/team guide, portable-build verification and final report. S0–S3 complete; S4/S5 remain.

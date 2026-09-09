@@ -1,0 +1,153 @@
+{
+  "status": "PASS",
+  "frozenFilesMatched": 9,
+  "documentLocalLinksChecked": 25,
+  "portableInputsMatch": true,
+  "palettePairs": [
+    {
+      "name": "Body",
+      "foreground": "#172c37",
+      "background": "#f4f5f4",
+      "ratio": 13.233892626984291,
+      "threshold": 4.5,
+      "status": "PASS"
+    },
+    {
+      "name": "Paper body",
+      "foreground": "#172c37",
+      "background": "#fff",
+      "ratio": 14.46408874580088,
+      "threshold": 4.5,
+      "status": "PASS"
+    },
+    {
+      "name": "Muted text",
+      "foreground": "#5f7077",
+      "background": "#fff",
+      "ratio": 5.158907505508288,
+      "threshold": 4.5,
+      "status": "PASS"
+    },
+    {
+      "name": "Muted on page",
+      "foreground": "#5f7077",
+      "background": "#f4f5f4",
+      "ratio": 4.720133373093445,
+      "threshold": 4.5,
+      "status": "PASS"
+    },
+    {
+      "name": "Accent text",
+      "foreground": "#067d72",
+      "background": "#fff",
+      "ratio": 5.018915528310728,
+      "threshold": 4.5,
+      "status": "PASS"
+    },
+    {
+      "name": "Selected text",
+      "foreground": "#fff",
+      "background": "#067d72",
+      "ratio": 5.018915528310728,
+      "threshold": 4.5,
+      "status": "PASS"
+    },
+    {
+      "name": "Selected method",
+      "foreground": "#172c37",
+      "background": "#e5f3ef",
+      "ratio": 12.672083569419469,
+      "threshold": 4.5,
+      "status": "PASS"
+    },
+    {
+      "name": "Plot label",
+      "foreground": "#b0c6d1",
+      "background": "#112b39",
+      "ratio": 8.29165051366317,
+      "threshold": 4.5,
+      "status": "PASS"
+    },
+    {
+      "name": "Input trace",
+      "foreground": "#ffbc79",
+      "background": "#112b39",
+      "ratio": 8.905622654594433,
+      "threshold": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "FE trace",
+      "foreground": "#b1c8d4",
+      "background": "#112b39",
+      "ratio": 8.457899875382605,
+      "threshold": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "Selected trace",
+      "foreground": "#67e7c3",
+      "background": "#112b39",
+      "ratio": 9.65728292870001,
+      "threshold": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "Reference trace",
+      "foreground": "#d4caff",
+      "background": "#112b39",
+      "ratio": 9.584839518273203,
+      "threshold": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "Comparison trace",
+      "foreground": "#97c2ff",
+      "background": "#112b39",
+      "ratio": 8.034193955586492,
+      "threshold": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "Detail output",
+      "foreground": "#087763",
+      "background": "#f7faf8",
+      "ratio": 5.2189498596821275,
+      "threshold": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "Detail input",
+      "foreground": "#bd702e",
+      "background": "#f7faf8",
+      "ratio": 3.619808036017732,
+      "threshold": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "Detail reference",
+      "foreground": "#796395",
+      "background": "#f7faf8",
+      "ratio": 4.956837689599178,
+      "threshold": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "Focus on white",
+      "foreground": "#d67829",
+      "background": "#fff",
+      "ratio": 3.1925394451707705,
+      "threshold": 3,
+      "status": "PASS"
+    },
+    {
+      "name": "Focus on dark",
+      "foreground": "#d67829",
+      "background": "#112b39",
+      "ratio": 4.6048234085955535,
+      "threshold": 3,
+      "status": "PASS"
+    }
+  ],
+  "paletteScope": "18 selected opaque foreground/background pairs from source. No actual layout, all-state contrast, control-boundary or screen-reader certification."
+}

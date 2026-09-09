@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "artifact": "dist/ecg-signal-studio.html",
+  "artifactSha256": "f14296bc03d2c725bc5940df7fcca5e0e856fd376d8124f79a1558ed262ee5a2",
+  "engine": "jsdom 30.0.1; actual portable script execution, no rendered browser",
+  "dialogAndDownloadHostShims": true,
+  "checks": [
+    {
+      "name": "Delivered bytes match build receipt; no runtime asset references",
+      "status": "PASS"
+    },
+    {
+      "name": "Portable app initializes actual 98 scenes and methods without requests",
+      "status": "PASS"
+    },
+    {
+      "name": "Portable controls recalculate real traces and retain the same input on method selection",
+      "status": "PASS"
+    },
+    {
+      "name": "Portable export serializes notes, scope and nonfabricated metadata into the requested JSON",
+      "status": "PASS"
+    },
+    {
+      "name": "Team guide describes every actual component exactly once",
+      "status": "PASS"
+    },
+    {
+      "name": "Offline operations made no network requests or DOM runtime errors",
+      "status": "PASS"
+    }
+  ],
+  "componentsMatched": 38,
+  "notVerified": [
+    "native file download",
+    "native dialog/focus/Escape",
+    "pixel layout",
+    "browser performance",
+    "hardware"
+  ]
+}

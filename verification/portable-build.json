@@ -1,0 +1,33 @@
+{
+  "file": "dist/ecg-signal-studio.html",
+  "bytes": 8809153,
+  "sha256": "f14296bc03d2c725bc5940df7fcca5e0e856fd376d8124f79a1558ed262ee5a2",
+  "builtFrom": "prototype/ + data/bank.js + data/extension.js",
+  "externalAssets": 0,
+  "inputs": [
+    {
+      "path": "prototype/index.html",
+      "sha256": "1d9156bc93869cfd3d70b4482444b9000491fed8feeee28ac364f51e48d1e73c"
+    },
+    {
+      "path": "prototype/style.css",
+      "sha256": "491a76369037a66c4b9b8e13b1d5cca257059ea3a7b6976b51dfc1c2e2b359af"
+    },
+    {
+      "path": "data/bank.js",
+      "sha256": "5306f03910b1a077ec844164bf7ce204557be595fcaff4797d1f78c4430288b0"
+    },
+    {
+      "path": "data/extension.js",
+      "sha256": "b9d183c1c0eac397b66133c6343a26c080346ec50d3a4b4fb87f6622105f7424"
+    },
+    {
+      "path": "prototype/core.js",
+      "sha256": "d55a861cc5d38403cc833a73f69d24f3940f68c054bd3ba624e083950337e88e"
+    },
+    {
+      "path": "prototype/app.js",
+      "sha256": "d16787009b247e71090c33bb24d253b9d573fbd457959ab2c42ce064706682cd"
+    }
+  ]
+}

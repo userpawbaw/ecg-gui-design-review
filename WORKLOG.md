@@ -71,3 +71,19 @@
 - Added four Replay DOM groups (now 26) covering explicit entry, invalid mask, warmup/reset output clearing and stop-on-close. Added clipping disclosure and scope-aware header; final review snapshot includes acquisition scenario. Split dual plots into responsive panels with larger SVG labels.
 - Re-ran the parent workspace's legacy audit against the previous mockup as required: FAIL on three external CDN scripts (Floating UI core/dom, Lucide). This confirms the old offline defect, not a failure of prototype/. That validator is intentionally not repurposed to certify the new GUI.
 - Verdict: S4 implementation/specification COMPLETE; browser rendering NOT VERIFIED. Next S5: rebuild and execute portable HTML in DOM test host, verify downloaded JSON payload, audit component/document references, final report and remote commit.
+
+## S4 — remote synthesis checkpoint confirmed
+
+- Commit `b0299499b49736a4222e321df497bce0e6d1ec56`, tree `4e60766414839412edec53b34ef98006302a07de`. All 12 changed files matched the remote blobs.
+
+## S5 — final verification and handoff
+
+- Date: 2026-09-09. Final source syntax checks passed for 13 JS/CJS files.
+- Re-ran core known-input/subset tests, final data tests and 26 DOM task groups. All passed. Final data covers 98 scenes, 1,274 trace arrays, 1,078 stored method outputs. Maximum scaled-SNR difference 0.009935499 dB; quantization-aware same-condition consistency passed.
+- Rebuilt the portable HTML: 8,809,153 bytes, SHA-256 `f14296bc03d2c725bc5940df7fcca5e0e856fd376d8124f79a1558ed262ee5a2`. Source input hashes are recorded in verification/portable-build.json.
+- Executed actual inlined scripts in a jsdom host: six portable groups passed. Verified JSON payload/filename/notes/source hash/explicit null metadata and acquisition preview context. Native file download was not simulated as a filesystem success. Actual browser dialog/focus and download remain NV.
+- All 38 component IDs match the team guide exactly. Nine frozen source/design files match the S2 receipt. All 25 local document links resolve. Eighteen selected opaque palette pairs pass their stated contrast thresholds; this is not an all-state accessibility certificate.
+- Authored docs/07_verification.md with the original rubric, 16-frame/10-flow reconciliation link, browser checklist and research/hardware integration gates. README now points to final entrypoints and makes archived vs freshly executed data explicit.
+- Routine verification corrections: the document audit initially checked for its own not-yet-created report; corrected its generation order exception, then all actual file links passed. An earlier test expectation of 18 aggregate rows was corrected to the source's actual 16. Neither was relabeled a product defect.
+- Overall verdict: CONDITIONAL PASS for the final GUI prototype. Implementation/specification and automated checks S0–S5 are complete. Browser pixels, native keyboard/dialog/download, OS settings, current-code inference regeneration, pathology annotation and actual AFE/exhibit validation remain unverified or pending as documented.
+- Next action: target-PC browser checklist with screenshots and review JSON, then archive regeneration and source/session-aware bridge integration. No further optional tests are needed before that evidence exists.

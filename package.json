@@ -6,7 +6,9 @@
   "scripts": {
     "test": "node tests/core.test.cjs && node tests/final-data.test.cjs && node tests/dom.test.cjs",
     "preview": "node scripts/preview.cjs",
-    "build": "node scripts/build-single-file.cjs"
+    "build": "node scripts/build-single-file.cjs",
+    "test:portable": "node scripts/build-single-file.cjs && node tests/portable.test.cjs",
+    "audit": "node scripts/audit-deliverables.cjs"
   },
   "engines": {"node": ">=24"},
   "devDependencies": {"jsdom": "30.0.1"}

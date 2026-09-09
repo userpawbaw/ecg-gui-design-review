@@ -15,7 +15,7 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 | S2 independent design freeze | PASS with QA limitation | Freeze bcd2f8d1516b4020895e6e17ed66107773504faa remotely verified; 336 metrics pass. Browser visual checks remain unverified |
 | S3 prior-artifact comparison | COMPLETE / render NV | docs/04_comparison.md: prior mockup, team/manual docs and source GUI code compared; rendered behavior not claimed |
 | S4 final synthesis | COMPLETE / browser NV | prototype/ + docs/05_final_spec.md, docs/06_team_guide.md, docs/08_manual_addendum.md; all prior frames/hotspots reconciled |
-| S5 final verification | IN PROGRESS | Data/DOM checks, portable rebuild/execution, document/component audit; explicit browser/hardware limitations; final remote commit |
+| S5 final verification | COMPLETE / CONDITIONAL PASS | 1,078 output metrics, 26 DOM groups, 6 portable groups, 38 components, 9 frozen files and 18 selected palette pairs verified. Actual browser/hardware gates remain NOT VERIFIED |
 
 ## Source boundary
 
@@ -27,4 +27,11 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 
 ## Resume
 
-Read this plan and the last WORKLOG entry. S2 stays immutable. S4 recovery checkpoint was remotely verified at 5b6b5ad24b25b480dbf0e49844075b697147d566. S4 implementation and handoff are complete; finish S5 portable execution, component/document audit and final report. Actual browser/hardware gates remain explicitly unverified.
+Read this plan and the last WORKLOG entry, then compare the remote head and local build hashes. S0–S5 are complete for the source-grounded GUI review, implementation, documentation and automated checks. Overall result is CONDITIONAL PASS. Do not repeat the independent design or overwrite independent/. Next: run docs/07_verification.md browser checks on the target PC; then regenerate archive metadata and connect the existing bridge adapter. These are separate unverified integration/deployment gates.
+
+## Remaining gates, not hidden implementation claims
+
+- Target desktop browser rendering, native keyboard/dialog/download, zoom/scaling, screen reader and offline opening: NOT VERIFIED because local browser navigation is blocked in this environment.
+- Current-source/checkpoint archive regeneration, exact metadata and pathology annotation: PENDING.
+- Actual AFE adapter/source-session contract, hardware and exhibit testing: PENDING.
+- Optional automatic attract/idle reset and expanded distribution/annotation screens require their data and operational requirements. Prior 16 frames and 10 hotspot flows are reconciled in docs/05_final_spec.md.

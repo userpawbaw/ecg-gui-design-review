@@ -1,6 +1,6 @@
 # Review plan
 
-Updated: 2026-09-10
+Updated: 2026-09-11
 
 ## Goal
 
@@ -16,20 +16,72 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 | S3 prior-artifact comparison | COMPLETE / render NV | docs/04_comparison.md: prior mockup, team/manual docs and source GUI code compared; rendered behavior not claimed |
 | S4 final synthesis | COMPLETE / browser NV | prototype/ + docs/05_final_spec.md, docs/06_team_guide.md, docs/08_manual_addendum.md; all prior frames/hotspots reconciled |
 | S5 final verification | COMPLETE / CONDITIONAL PASS | 1,078 output metrics, 26 DOM groups, 6 portable groups, 38 components, 9 frozen files and 18 selected palette pairs verified. Actual browser/hardware gates remain NOT VERIFIED |
+| R0-v2.1 functional planning | COMPLETE | docs/12_expo_gui_plan_v2_1_final.md; playback, Inspector, Difference Lens, 600 s data, chunk architecture, stack baseline |
+| R0-v2.2 Expo/UI refinement | COMPLETE | docs/13_expo_gui_plan_v2_2_final.md; message hierarchy, Attention→Choose→Compare→Inspect→Prove, presentation behavior, scenario rules, failure states, wireframe handoff |
 
 ## Source boundary
 
 - Source: userpawbaw/ECG_denoising_method_comparision
 - Branch at discovery: claude/ecg-denoising-dsp-dl-comparison-b5wjvj
 - Pinned SHA: 5eb27946087faca3c6e70b3925e2ba132b2ee680
-- Source demo HTML and docs/30–34 GUI plans are deferred until S3, as are previous local GUI deliverables.
+- Source demo HTML and docs/30–34 GUI plans were deferred until S3, as were previous local GUI deliverables.
 - Earlier conversation contents cannot be erased. Independence means deferred reinspection, explicit design reasons and a prior freeze commit.
+
+## Current design baseline
+
+Use both planning documents together:
+
+- `docs/12_expo_gui_plan_v2_1_final.md` — **function/data/technical architecture baseline**.
+- `docs/13_expo_gui_plan_v2_2_final.md` — **Expo story/information hierarchy/presentation behavior baseline**.
+
+Key frozen principles include:
+
+- Sweep + Scroll + Pause with short erase-edge fade.
+- Same-time comparison across method changes.
+- Large two-row Signal Inspector with gray Reference overlay.
+- Hover = temporary preview, Click = selected method, Pin = persistent A/B comparison.
+- Difference Lens as an expert reveal rather than default clutter.
+- 98 conditions × 600 s target, no retraining, no 10 s looping as fake long data.
+- Local / Session / Experiment metric scope separation.
+- Chunked data loading rather than scaling the current monolithic bank.js approach.
+- React/TypeScript/Vite recommended with a framework-independent Canvas playback engine; preserve the existing visual identity and CSS token logic.
+- Expo story: **Attention → Choose → Compare → Inspect → Prove**.
+- One primary visitor choice per demonstration.
+- Three scenario roles are defined before output-driven timestamp selection; final segments must follow predeclared input/reference selection rules to reduce cherry-picking risk.
+- Presentation Mode is Signal-Inspector-centered.
+- REPLAY and verified LIVE must remain visibly distinct.
+- Loading/error transitions retain the last valid scene and atomically swap waveform + labels + legend + metrics.
+- Avoid winner badges, automatic best/worst regions, waveform morphing, long persistence trails, and visual effects that could distort scientific interpretation.
 
 ## Resume
 
-Latest user steering: review the proposal as an Expo planner and GUI designer, and develop a v2 before implementation. `docs/11_expo_gui_plan_v2.md` is the latest proposal; `docs/10_playback_expansion_proposal.md` is preserved as v1. R0-v2 planning COMPLETE; R1a stack/behavior parity and minimal browser harness, R1b playback/viewer, R2 full-grid 600s inference, R3 packaging/Expo options, R4 actual browser review, R5 handoff remain. React/TypeScript/Vite/Tailwind plus selected shadcn/ui is RECOMMENDED, not installed or user-approved. Do not start GUI edits, dependencies, inference or QA-runner implementation before the requested implementation confirmation. Retraining is excluded. Use a local Playwright evidence bundle to minimize manual QA; actual rendered checks remain NV.
+**Next phase: wireframe review.** Do not start GUI implementation, dependency migration, 600 s inference, or Playwright QA-runner changes until the wireframe decisions are reviewed.
 
-Read this plan and the last WORKLOG entry, then compare the remote head and local build hashes. S0–S5 are complete for the source-grounded GUI review, implementation, documentation and automated checks. Overall result is CONDITIONAL PASS. Do not repeat the independent design or overwrite independent/. Next: run docs/07_verification.md browser checks on the target PC; then regenerate archive metadata and connect the existing bridge adapter. These are separate unverified integration/deployment gates.
+Wireframe work should resolve at least the following states:
+
+- W1 — 1920×1080 Presentation / Replay, two-row Signal Inspector.
+- W2 — Inspect / Reference state.
+- W3 — Inspect + Difference Lens.
+- W4 — Pin comparison / three-row state.
+- W5 — Attract state and handoff.
+- W6 — Scenario launcher/bookmarks.
+- W7 — Loading / missing output / error and retry.
+- W8 — 1366×768 compact layout.
+- W9 — Touch visitor path with no required hover.
+- W10 — Evidence/Q&A path from Local → Session → Experiment and provenance.
+
+Primary wireframe questions: waveform area ratio; condition-vs-method control priority; timeline location; Method Explorer sidebar vs lower rail; Difference Lens expansion behavior; three-row minimum height; scenario button visibility; metric placement; touch preview replacement; Attract information density; 1 m readability; and error-state coexistence with the last valid waveform.
+
+After wireframe approval, continue with:
+
+- R1a stack/behavior parity and minimal browser harness.
+- R1b playback / Signal Inspector / comparison interactions.
+- R2 full-grid 600 s data generation and verification.
+- R3 offline packaging, scenario bookmarks, Expo options and target-PC evidence bundle.
+- R4 actual browser review and visual/performance/accessibility tuning.
+- R5 handoff, operation guide, validation matrix and final status log.
+
+Retraining remains excluded. Use existing checkpoints and processing methods when long-form outputs need regeneration.
 
 ## Remaining gates, not hidden implementation claims
 
@@ -38,4 +90,4 @@ Target-PC execution handoff: `docs/09_target_pc_check.md` gives Q01–Q10 action
 - Target desktop browser rendering, native keyboard/dialog/download, zoom/scaling, screen reader and offline opening: NOT VERIFIED because local browser navigation is blocked in this environment.
 - Current-source/checkpoint archive regeneration, exact metadata and pathology annotation: PENDING.
 - Actual AFE adapter/source-session contract, hardware and exhibit testing: PENDING.
-- Optional automatic attract/idle reset and expanded distribution/annotation screens require their data and operational requirements. Prior 16 frames and 10 hotspot flows are reconciled in docs/05_final_spec.md.
+- Optional attract/idle reset and expanded distribution/annotation screens still require their operational/data requirements and later implementation checks.

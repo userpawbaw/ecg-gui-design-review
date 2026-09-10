@@ -4,6 +4,8 @@ ECG denoising 프로젝트를 원본 소스에서 다시 이해하고, 독립 �
 
 **현재 결과: 최종 GUI·상세 명세·팀 설명·자동 검증 완료, 실제 브라우저와 AFE 검수는 조건부입니다.** 이름이 붙은 파형은 원본 프로젝트의 실제 저장 출력입니다. 이 화면에서 새 추론이나 실제 장치 측정을 실행하지 않습니다.
 
+**다음 버전 기획:** [Expo·GUI 기획서 v2](docs/11_expo_gui_plan_v2.md)에 연속 Sweep/Scroll·대형 비교·전 조건 10분 출력·기술 스택 개선 제안을 정리했습니다. 구현 전 검토본이며 아래 실행 파일에 아직 반영되지 않았습니다.
+
 ## 실행
 
 저장소 전체를 다운로드한 뒤 [prototype/index.html](prototype/index.html)을 데스크톱 브라우저로 여세요. CSS/JS와 data 폴더가 함께 있어야 합니다. GitHub의 파일 페이지는 앱 실행 화면이 아닙니다.
@@ -27,6 +29,8 @@ npm run build
 
 | 읽을 목적 | 문서 |
 |---|---|
+| 다음 버전의 전시 동선·모션·기술 선택·검수 기준 | [11_expo_gui_plan_v2.md](docs/11_expo_gui_plan_v2.md) |
+| v2 이전의 기능·데이터 확장 제안 | [10_playback_expansion_proposal.md](docs/10_playback_expansion_proposal.md) |
 | 최종 화면 구성과 기능 범위 | [05_final_spec.md](docs/05_final_spec.md) |
 | 팀 설명·38개 요소·디버깅·연동 | [06_team_guide.md](docs/06_team_guide.md) |
 | 검사 결과·제약·배포 전 체크리스트 | [07_verification.md](docs/07_verification.md) |

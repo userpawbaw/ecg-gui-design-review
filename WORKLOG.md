@@ -105,3 +105,13 @@
 - Re-ran only the six portable groups needed to verify the recovered artifact: PASS. All 38 component mappings still match. Document/freeze/build audit also passed; the initial link count was 28 before the recovery report links were added.
 - Clarification: the initial resume check was successful, but a subsequent artifact failure was found and repaired. Source files/data were intact; this is not proof of what caused the progress indicator to remain active.
 - Updated PC handoff and final report to use a freshly downloaded review ZIP. Browser/native/AFE gates still require actual target-PC evidence.
+
+## R0 — continuous playback and enlarged comparison proposal
+
+- Date: 2026-09-10. User requests a reviewable plan and confirmation before implementation: true Sweep/Scroll, >=600s data, large noisy/output comparison with gray reference, hover or pinned comparison, and browser automation that reduces manual QA.
+- Re-read final app, original mockup drawAll, bank builder, DLDenoiser and split contracts. Current app only animates a cursor; original Sweep moves an erase band on a fixed synthetic trace. A true new-sample playback engine is needed.
+- Queried the pinned original Git tree; raw MITDB/NSTDB and D0/D1 checkpoints exist. Fetched 111.hea: 650000 samples at 360Hz (~30.09min). Asset presence is not proof of checkpoint loading or completed 600s inference.
+- User clarified during planning: generate 10-minute outputs through existing methods for every noise combination, not retraining. Proposal targets all existing 98 axis/noise/SNR conditions and supporting method outputs; single-condition generation is only a pipeline gate. Retraining excluded.
+- Browser skill connection exposes cloud Chrome only; no user-PC browser connection was observed. Prior file/localhost access block was not bypassed or repeatedly retried. Opened official Playwright headed-run/trace docs and OpenAI browser docs. Proposed local PC automatic evidence bundle; no runner was built or executed yet.
+- Authored docs/10_playback_expansion_proposal.md: shared transport, honest Sweep time mapping, large two-row dialog with optional third row, full-grid generation, chunked offline packaging, automated QA gates and R1–R5 sequencing. PLAN updated.
+- Checks: read-only source/capability feasibility and proposal consistency; GUI code/data unchanged, no inference/training/browser rendering performed. R0 proposal COMPLETE / implementation and execution NOT VERIFIED. Await user confirmation as explicitly requested; next R1 shared playback and enlarged viewer.

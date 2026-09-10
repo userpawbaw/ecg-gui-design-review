@@ -1,6 +1,6 @@
 # Review plan
 
-Updated: 2026-09-09
+Updated: 2026-09-10
 
 ## Goal
 
@@ -26,6 +26,8 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 - Earlier conversation contents cannot be erased. Independence means deferred reinspection, explicit design reasons and a prior freeze commit.
 
 ## Resume
+
+Latest user steering: approve a concrete plan before implementing true Sweep/Scroll, >=600s continuous data and a large comparison dialog. See `docs/10_playback_expansion_proposal.md`. R0 source/capability analysis and proposal COMPLETE; R1–R5 await user confirmation. Do not start GUI edits, inference, training or QA-runner implementation until confirmed. This supersedes the previous request for the user to manually perform all target-PC checks: propose a local Playwright evidence bundle to minimize manual work.
 
 Read this plan and the last WORKLOG entry, then compare the remote head and local build hashes. S0–S5 are complete for the source-grounded GUI review, implementation, documentation and automated checks. Overall result is CONDITIONAL PASS. Do not repeat the independent design or overwrite independent/. Next: run docs/07_verification.md browser checks on the target PC; then regenerate archive metadata and connect the existing bridge adapter. These are separate unverified integration/deployment gates.
 

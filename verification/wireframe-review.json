@@ -1,0 +1,146 @@
+{
+  "date": "2026-09-11",
+  "boards": 12,
+  "statesCovered": [
+    "W1",
+    "W2",
+    "W3",
+    "W4",
+    "W5",
+    "W6",
+    "W7",
+    "W8",
+    "W9",
+    "W10"
+  ],
+  "localLinksChecked": 52,
+  "missingLinks": [],
+  "svgXML": "PASS",
+  "regionBounds": "PASS",
+  "panelLabelWidthAssertions": "PASS",
+  "twoRow1080pInternalHeight": 280,
+  "compactTwoRowInternalHeight": 204,
+  "pngVisualInspection": "W3/W8 individually; complete overview of all 12 boards",
+  "scope": "static design diagrams, not rendered GUI behavior",
+  "browser": "NOT VERIFIED",
+  "userReview": "PENDING",
+  "verdict": "STATIC WIREFRAME PASS / IMPLEMENTATION GATE PENDING",
+  "files": [
+    {
+      "path": "docs/wireframes/index.html",
+      "sha256": "2b1050ef80adb0ea49b14943703e2679747bc51fc3ce7840804a0c533fd00349"
+    },
+    {
+      "path": "docs/wireframes/W9.svg",
+      "sha256": "b19cadd2687dda0e6eb33d62bbb956b7c0650240a06a029b93a02bb653b26053"
+    },
+    {
+      "path": "docs/wireframes/W7-P.svg",
+      "sha256": "3eb1061db292c0b9fd8d89949cb4f1d38524ae8223ff6f0a8841b43ea4a76db7"
+    },
+    {
+      "path": "docs/wireframes/W7-M.svg",
+      "sha256": "954602d2d08e2ca90a75e3d035daf34cc990f2885de249d6d17d615f9fb783d0"
+    },
+    {
+      "path": "docs/wireframes/W3.png",
+      "sha256": "730df056c3143bcb4c7fa4c0faf8afaf7569144b37200d0694f139a38a945d44"
+    },
+    {
+      "path": "docs/wireframes/W8.svg",
+      "sha256": "f3f687b36151068cff0e02e04dadc66ca75664b01f0eae129ec20c48e2cf53d0"
+    },
+    {
+      "path": "docs/wireframes/overview.png",
+      "sha256": "5271bdda89d4b3493fa09070e03bff3d429f47cb60c7254428fcc9d41d7540b7"
+    },
+    {
+      "path": "docs/wireframes/W1.svg",
+      "sha256": "a0da7e3e18ee662f5b25a25995b2287d0b49f5e3c5e49e85538d7724e5259851"
+    },
+    {
+      "path": "docs/wireframes/W5.png",
+      "sha256": "38559d01be7c41221a59fc16b20dd448b6c1644acecfc6363109b66771db1f44"
+    },
+    {
+      "path": "docs/wireframes/W10.svg",
+      "sha256": "d8eedb47c5c025604717ab2b6077d9445a1358cf9c647ba15ff43ad5fa7ba8de"
+    },
+    {
+      "path": "docs/wireframes/W4.svg",
+      "sha256": "2d0ba422c0d16eee2da01ab3cbc903e2cfa1d6d876c14094b9988be691d4a974"
+    },
+    {
+      "path": "docs/wireframes/W5.svg",
+      "sha256": "e69f460642b7ade3e91f2f9a0ec382a3e49cd4168333a5472304706a1c1d10e4"
+    },
+    {
+      "path": "docs/wireframes/W7-E.png",
+      "sha256": "6380b9a5af9afcf3f51177feb4c28d8e1c4d88e3c4911ffdde90923d0b279e5c"
+    },
+    {
+      "path": "docs/wireframes/W7-M.png",
+      "sha256": "e540a49b5776d14b95abb7382b470be7f472c9fd094f1f3f58930ad72b52cd12"
+    },
+    {
+      "path": "docs/wireframes/W2.svg",
+      "sha256": "024bd9f820503dcac66cdf22315b930357d665cd0256d22d44ff95ff791e4f27"
+    },
+    {
+      "path": "docs/wireframes/W7-E.svg",
+      "sha256": "9c21f3a3194982fe6186e6fca1ed151e097dd449b307176e89fe929d84975e15"
+    },
+    {
+      "path": "docs/wireframes/W6.svg",
+      "sha256": "317f276bbe15c71222da231ee7cf5dbe95929769c49ef1011694e195443ba96b"
+    },
+    {
+      "path": "docs/wireframes/W6.png",
+      "sha256": "07e5918608f786fc6fbf4ef4923904f8d74297ca5e84aae9e166e78b7e89cb54"
+    },
+    {
+      "path": "docs/wireframes/W10.png",
+      "sha256": "f2d5494356b049cd3e8f956a3bda45e3c622083f2d8e05f5f4abad601e8d278f"
+    },
+    {
+      "path": "docs/wireframes/geometry.json",
+      "sha256": "df0170a79cb9888dabf43636d6d6f3b1c1ee39ddca0e1171a253da36b8056ff8"
+    },
+    {
+      "path": "docs/wireframes/W7-P.png",
+      "sha256": "6471e03fce550388ab02619f4ad7b7b72209af2830366b27a4bb97cb2cc99a4a"
+    },
+    {
+      "path": "docs/wireframes/W4.png",
+      "sha256": "5f93dd897a5688c3e890894606f5c8642bfe362537a6a39518d271f79788f0ac"
+    },
+    {
+      "path": "docs/wireframes/W2.png",
+      "sha256": "9f19d1118bc70888e358c27825809d7db5bcd3f7bb360138b7d7cd7fc2bb28ad"
+    },
+    {
+      "path": "docs/wireframes/W8.png",
+      "sha256": "3058d45babb8660914fc45bbeabc4261138f7cb5e4675ba33a9952a35cef1332"
+    },
+    {
+      "path": "docs/wireframes/W9.png",
+      "sha256": "3782d1de1b5b47327283615824c7b743570d661bf1b4a4810e593b9d6ed1e7e8"
+    },
+    {
+      "path": "docs/wireframes/W3.svg",
+      "sha256": "5ed38d4cd41dd4b1e9b582f2df06ca2be6d8578eb631a7af899fdcbd01abcb8a"
+    },
+    {
+      "path": "docs/wireframes/W1.png",
+      "sha256": "a97c94a52955b0fe51ca42f4b975a0649b5959e4394c70e5606876a86f435ad5"
+    },
+    {
+      "path": "docs/15_wireframe_review.md",
+      "sha256": "25210e4f9e80fe8f735cb39e664e3b4f4e550ef685a04eabca92b123bf02a015"
+    },
+    {
+      "path": "scripts/build-wireframes.py",
+      "sha256": "32fda41d9943742de75e23f4e99271742c2150c6bb9db1e352b1da3b4eb4c3f0"
+    }
+  ]
+}

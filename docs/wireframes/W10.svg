@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img"><title>W10 — Evidence / Q&amp;A</title><desc>Static spatial wireframe. Rectangles reserve waveform space; no signal or performance data is shown.</desc><rect width="1920" height="1080" fill="#10171d"/>
+<text x="32" y="54" font-family="DejaVu Sans,Arial,sans-serif" font-size="30" fill="#e7edf0">ECG Signal Studio</text>
+<text x="450" y="52" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#7bd8c5">INSPECT / interval fixed</text>
+<text x="1560" y="49" font-family="DejaVu Sans,Arial,sans-serif" font-size="19" fill="#aab9c3">Design board / no real data</text>
+<rect x="32" y="88" width="1856" height="48" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="120" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">D1 / MITDB 111 / muscle noise / 0 dB</text>
+<rect x="32" y="160" width="1216" height="328" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="192" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Noisy input + Reference</text>
+<text x="1028" y="190" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Plot 1152 x 280</text>
+<path d="M208.0 196v280" stroke="#293640"/>
+<path d="M336.0 196v280" stroke="#293640"/>
+<path d="M464.0 196v280" stroke="#293640"/>
+<path d="M592.0 196v280" stroke="#293640"/>
+<path d="M720.0 196v280" stroke="#293640"/>
+<path d="M848.0 196v280" stroke="#293640"/>
+<path d="M976.0 196v280" stroke="#293640"/>
+<path d="M1104.0 196v280" stroke="#293640"/>
+<path d="M80 336.0h1152" stroke="#465660"/>
+<text x="96" y="374.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#aab9c3">Waveform space reserved</text>
+<text x="96" y="402.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Same sample range / shared mV scale</text>
+<rect x="32" y="504" width="1216" height="328" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="536" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Selected output / M08 + Reference</text>
+<text x="1028" y="534" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Plot 1152 x 280</text>
+<path d="M208.0 540v280" stroke="#293640"/>
+<path d="M336.0 540v280" stroke="#293640"/>
+<path d="M464.0 540v280" stroke="#293640"/>
+<path d="M592.0 540v280" stroke="#293640"/>
+<path d="M720.0 540v280" stroke="#293640"/>
+<path d="M848.0 540v280" stroke="#293640"/>
+<path d="M976.0 540v280" stroke="#293640"/>
+<path d="M1104.0 540v280" stroke="#293640"/>
+<path d="M80 680.0h1152" stroke="#465660"/>
+<text x="96" y="718.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#aab9c3">Waveform space reserved</text>
+<text x="96" y="746.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Same sample range / shared mV scale</text>
+<rect x="1272" y="160" width="616" height="672" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="1288" y="192" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Local | Session | Experiment</text>
+<text x="1290" y="250" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Local: fixed range 02:14-02:19</text>
+<text x="1290" y="308" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Session: this record / full 600 s</text>
+<text x="1290" y="366" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Experiment: separate aggregate population</text>
+<text x="1290" y="424" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Values: pending verified evidence</text>
+<text x="1290" y="482" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Metric definition: strict / scaled</text>
+<text x="1290" y="540" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Provenance: source / processing / model</text>
+<text x="1290" y="598" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Reference definition and limitations</text>
+<text x="1290" y="656" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Return restores exact scene + interval</text>
+<rect x="32" y="848" width="1856" height="60" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="880" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">00:00      Timeline: total 10:00 / current viewport [5 s] / playhead      10:00</text>
+<text x="48" y="900" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#aab9c3">Scenario A / B / C markers: positions pending input/reference selection</text>
+<rect x="32" y="924" width="1856" height="56" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="956" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Scope and data coverage remain visible. No invented score. Unavailable evidence shows a reason.</text>
+<rect x="32" y="996" width="1856" height="60" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="1028" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Pause    Sweep / Scroll    1x    View 2.5 / 5 / 10 s    Fix current interval    Evidence    Exit presentation</text>
+</svg>

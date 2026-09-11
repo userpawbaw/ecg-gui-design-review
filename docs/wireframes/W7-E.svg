@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img"><title>W7-E — Loading / error / missing</title><desc>Static spatial wireframe. Rectangles reserve waveform space; no signal or performance data is shown.</desc><rect width="1920" height="1080" fill="#10171d"/>
+<text x="32" y="54" font-family="DejaVu Sans,Arial,sans-serif" font-size="30" fill="#e7edf0">ECG Signal Studio</text>
+<text x="450" y="52" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#7bd8c5">REPLAY / PAUSED / last valid scene</text>
+<text x="1560" y="49" font-family="DejaVu Sans,Arial,sans-serif" font-size="19" fill="#aab9c3">Design board / no real data</text>
+<rect x="32" y="88" width="1856" height="48" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="120" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">CURRENT: D1 / MITDB 111 / muscle noise / 0 dB / selected M08</text>
+<rect x="32" y="160" width="1856" height="328" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="192" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">CURRENT noisy input + Reference</text>
+<text x="1668" y="190" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Plot 1792 x 280</text>
+<path d="M279.1111111111111 196v280" stroke="#293640"/>
+<path d="M478.22222222222223 196v280" stroke="#293640"/>
+<path d="M677.3333333333334 196v280" stroke="#293640"/>
+<path d="M876.4444444444445 196v280" stroke="#293640"/>
+<path d="M1075.5555555555557 196v280" stroke="#293640"/>
+<path d="M1274.6666666666667 196v280" stroke="#293640"/>
+<path d="M1473.7777777777778 196v280" stroke="#293640"/>
+<path d="M1672.888888888889 196v280" stroke="#293640"/>
+<path d="M80 336.0h1792" stroke="#465660"/>
+<text x="96" y="374.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#aab9c3">Waveform space reserved</text>
+<text x="96" y="402.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Same sample range / shared mV scale</text>
+<rect x="32" y="504" width="1856" height="328" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="536" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">CURRENT M08 output + Reference</text>
+<text x="1668" y="534" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Plot 1792 x 280</text>
+<path d="M279.1111111111111 540v280" stroke="#293640"/>
+<path d="M478.22222222222223 540v280" stroke="#293640"/>
+<path d="M677.3333333333334 540v280" stroke="#293640"/>
+<path d="M876.4444444444445 540v280" stroke="#293640"/>
+<path d="M1075.5555555555557 540v280" stroke="#293640"/>
+<path d="M1274.6666666666667 540v280" stroke="#293640"/>
+<path d="M1473.7777777777778 540v280" stroke="#293640"/>
+<path d="M1672.888888888889 540v280" stroke="#293640"/>
+<path d="M80 680.0h1792" stroke="#465660"/>
+<text x="96" y="718.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#aab9c3">Waveform space reserved</text>
+<text x="96" y="746.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Same sample range / shared mV scale</text>
+<rect x="32" y="848" width="1856" height="112" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="880" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">New condition failed</text>
+<text x="48" y="910" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Current scene retained. Retry the request or cancel and keep the current scene.</text>
+<text x="48" y="942" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Retry / Cancel request / Choose another method     |     Waveform + label + legend + metric commit together</text>
+<rect x="32" y="996" width="1856" height="60" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="1028" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Current scene controls retained / automatic resume only after valid atomic commit and prior playing state</text>
+</svg>

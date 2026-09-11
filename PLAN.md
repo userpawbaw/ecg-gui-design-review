@@ -18,6 +18,8 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 | S5 final verification | COMPLETE / CONDITIONAL PASS | 1,078 output metrics, 26 DOM groups, 6 portable groups, 38 components, 9 frozen files and 18 selected palette pairs verified. Actual browser/hardware gates remain NOT VERIFIED |
 | R0-v2.1 functional planning | COMPLETE | docs/12_expo_gui_plan_v2_1_final.md; playback, Inspector, Difference Lens, 600 s data, chunk architecture, stack baseline |
 | R0-v2.2 Expo/UI refinement | COMPLETE | docs/13_expo_gui_plan_v2_2_final.md; message hierarchy, Attention→Choose→Compare→Inspect→Prove, presentation behavior, scenario rules, failure states, wireframe handoff |
+| Recovery checkpoint | PASS / implementation PARTIAL | recovery/v2-interrupted-20260911 at f8b6300: 52/98 scenes, 9 engine tests, build and one-condition reproduction verified; docs/14_resume_audit.md |
+| W1–W10 wireframe preparation | COMPLETE / REVIEW PENDING | docs/15_wireframe_review.md + docs/wireframes/index.html; 12 static boards including three W7 failure variants. Static geometry is not browser QA |
 
 ## Source boundary
 
@@ -55,7 +57,9 @@ Key frozen principles include:
 
 ## Resume
 
-**Next phase: wireframe review.** Do not start GUI implementation, dependency migration, 600 s inference, or Playwright QA-runner changes until the wireframe decisions are reviewed.
+**Current phase: wireframe review, concrete boards ready.** Read docs/15_wireframe_review.md and docs/wireframes/index.html. Review the bottom method rail, contextual sidebar, preserved two-row height with Difference Lens, compact three-row scrolling and metric reveal timing. Do not start further GUI implementation, dependency migration, 600 s inference, or Playwright QA-runner changes until these wireframe decisions are reviewed.
+
+The earlier v2 work was already started after user authorization and interrupted before the newer planning documents were discovered. It is preserved on recovery/v2-interrupted-20260911, not merged into this baseline. This distinction corrects the apparent conflict between old local work and the newer wireframe-first plan. Browser execution remains NOT VERIFIED.
 
 Wireframe work should resolve at least the following states:
 

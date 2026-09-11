@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img"><title>W6 — Scenario launcher</title><desc>Static spatial wireframe. Rectangles reserve waveform space; no signal or performance data is shown.</desc><rect width="1920" height="1080" fill="#10171d"/>
+<text x="32" y="54" font-family="DejaVu Sans,Arial,sans-serif" font-size="30" fill="#e7edf0">ECG Signal Studio</text>
+<text x="450" y="52" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#7bd8c5">REPLAY / paused for selection</text>
+<text x="1560" y="49" font-family="DejaVu Sans,Arial,sans-serif" font-size="19" fill="#aab9c3">Design board / no real data</text>
+<rect x="32" y="88" width="1856" height="48" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="48" y="120" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Presentation scenes / record context retained until selection completes</text>
+<rect x="80" y="244" width="568" height="420" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="96" y="276" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">A / Strong noise</text>
+<text x="96" y="344" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Purpose: see input/output change</text>
+<text x="96" y="390" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Input/reference selection only</text>
+<text x="96" y="490" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Timestamp: not selected</text>
+<rect x="96" y="568" width="536" height="60" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="112" y="600" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Start scene (pending verification)</text>
+<rect x="676" y="244" width="568" height="420" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="692" y="276" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">B / DSP comparison</text>
+<text x="692" y="344" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Purpose: compare method families</text>
+<text x="692" y="390" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">No guaranteed DSP winner</text>
+<text x="692" y="490" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Timestamp: not selected</text>
+<rect x="692" y="568" width="536" height="60" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="708" y="600" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Start scene (pending verification)</text>
+<rect x="1272" y="244" width="568" height="420" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="1288" y="276" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">C / Low noise</text>
+<text x="1288" y="344" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">Purpose: inspect preservation</text>
+<text x="1288" y="390" font-family="DejaVu Sans,Arial,sans-serif" font-size="20" fill="#aab9c3">No guaranteed overprocessing</text>
+<text x="1288" y="490" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Timestamp: not selected</text>
+<rect x="1288" y="568" width="536" height="60" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="1304" y="600" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Start scene (pending verification)</text>
+<rect x="80" y="724" width="1760" height="64" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="96" y="756" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Return to previous scene and exact time    /    Personal bookmarks are separate from curated scenarios</text>
+<text x="80" y="878" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#aab9c3">Open from one Scenario button. No permanent three-card panel over the waveforms.</text>
+</svg>

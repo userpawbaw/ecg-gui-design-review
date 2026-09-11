@@ -4,7 +4,9 @@ ECG denoising 프로젝트를 원본 소스에서 다시 이해하고, 독립 �
 
 **현재 결과: 최종 GUI·상세 명세·팀 설명·자동 검증 완료, 실제 브라우저와 AFE 검수는 조건부입니다.** 이름이 붙은 파형은 원본 프로젝트의 실제 저장 출력입니다. 이 화면에서 새 추론이나 실제 장치 측정을 실행하지 않습니다.
 
-**다음 버전 기획:** [Expo·GUI 기획서 v2](docs/11_expo_gui_plan_v2.md)에 연속 Sweep/Scroll·대형 비교·전 조건 10분 출력·기술 스택 개선 제안을 정리했습니다. 구현 전 검토본이며 아래 실행 파일에 아직 반영되지 않았습니다.
+**현재 후속 단계:** [v2.1 기능 기준](docs/12_expo_gui_plan_v2_1_final.md) + [v2.2 전시 기준](docs/13_expo_gui_plan_v2_2_final.md)에 따른 [와이어프레임 검토안](docs/15_wireframe_review.md)과 [12개 화면 배치 보드](docs/wireframes/index.html)를 작성했습니다. 보드는 실제 ECG·성능 결과를 그린 앱 화면이 아닙니다. 아래 S5 실행 파일에는 후속 v2 기능이 아직 반영되지 않았습니다.
+
+**중단 작업 복구:** 이전 v2 구현 WIP는 [복구 브랜치](https://github.com/userpawbaw/ecg-gui-design-review/tree/recovery/v2-interrupted-20260911)에 보존했습니다. 10분 자료는 52/98조건 확인; 상세 복구 범위와 남은 작업은 [복구 보고서](docs/14_resume_audit.md)에 기록했습니다. 최신 계획에 따라 와이어프레임 검토 후 추가 구현을 재개합니다.
 
 ## 실행
 

@@ -1,5 +1,21 @@
 # Work log
 
+## 2026-09-11 — W1–W10 wireframe preparation
+
+- Reconciled remote main 90792b9 with the interrupted local v2 implementation. Preserved 27 source/log files in recovery commit f8b63004f54d29700b101d1e25599d62bc4e6e35; verified remote tree hashes and branch ref. No inference output JSON or installed dependency tree was added to Git.
+- Read v2.1/v2.2 latest baselines and completed 12 static spatial boards covering W1–W10, with W7 pending/error/missing variants. Authored docs/15_wireframe_review.md: exact plot dimensions, 12 design questions, state behavior, touch flow, scenario policy, atomic transitions and review decisions.
+- Retained two plot interiors at 280px for 1080p, 204px compact, 200px three-row 1080p. Difference Lens is separate Output−Reference with a 64px trace area. Proposed compact three-row scroll and first-screen metric reveal remain review decisions, not accepted changes.
+- Checked generated region bounds and panel label widths; directly inspected W3/W8 PNGs and the complete board overview. These are static design diagrams generated with Pillow/SVG, not browser screenshots. No restricted browser route was retried; no new GUI implementation or full-grid inference continued.
+- Static document/asset link and geometry audit saved in verification/wireframe-review.json. Verdict: wireframe preparation COMPLETE / static checks PASS / user review PENDING / actual browser and exhibit readability NV.
+- Next: user reviews five layout decisions in docs/15_wireframe_review.md, then resume R1a/R1b from the recovery divergence table, followed by R2–R5. Work is not reported as final GUI completion.
+
+## 2026-09-11 — interrupted v2 checkpoint
+
+- Recovered v2 source and 52/98 complete 600-second conditions (D0 25, D1 27); 676 trace arrays decode to expected lengths. 112 pinned source asset hashes and 12 preserved baseline files matched. Evidence: verification/v2-resume-check.json.
+- Re-ran nine engine tests and TypeScript/Vite build: PASS. Re-generated d1-mixed--5: all traces, scale and stored metrics exactly match; only methodSeconds differs. No full-grid restart after discovering the new remote plan.
+- GitHub main advanced to 90792b9 with v2.1/v2.2 and a wireframe-first gate. Preserve v2 WIP on recovery/v2-interrupted-20260911; follow main's W1–W10 next. Detailed divergence and limitations: docs/14_resume_audit.md.
+- Verdict: recovery PASS; v2 implementation PARTIAL; actual browser/hardware verification NV. Next: wireframe review, then resume implementation with the approved decisions.
+
 ## S0 — GitHub connection reset and write verification
 
 - Date: 2026-09-08.

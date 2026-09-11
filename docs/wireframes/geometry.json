@@ -1,0 +1,683 @@
+[
+  {
+    "id": "W1",
+    "title": "Presentation / Replay",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 504,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "timeline",
+        "x": 32,
+        "y": 848,
+        "w": 1856,
+        "h": 60
+      },
+      {
+        "id": "methods",
+        "x": 32,
+        "y": 924,
+        "w": 1856,
+        "h": 56
+      },
+      {
+        "id": "transport",
+        "x": 32,
+        "y": 996,
+        "w": 1856,
+        "h": 60
+      }
+    ],
+    "plotAreaFraction": 0.484
+  },
+  {
+    "id": "W2",
+    "title": "Inspect / Reference",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1456,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1392
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 504,
+        "w": 1456,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1392
+      },
+      {
+        "id": "detail",
+        "x": 1512,
+        "y": 160,
+        "w": 376,
+        "h": 672
+      },
+      {
+        "id": "timeline",
+        "x": 32,
+        "y": 848,
+        "w": 1856,
+        "h": 60
+      },
+      {
+        "id": "inspect-tools",
+        "x": 32,
+        "y": 924,
+        "w": 1856,
+        "h": 56
+      },
+      {
+        "id": "transport",
+        "x": 32,
+        "y": 996,
+        "w": 1856,
+        "h": 60
+      }
+    ],
+    "plotAreaFraction": 0.3759
+  },
+  {
+    "id": "W3",
+    "title": "Inspect / Difference Lens",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1456,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1392
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 504,
+        "w": 1456,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1392
+      },
+      {
+        "id": "detail",
+        "x": 1512,
+        "y": 160,
+        "w": 376,
+        "h": 672
+      },
+      {
+        "id": "difference",
+        "x": 32,
+        "y": 844,
+        "w": 1456,
+        "h": 80,
+        "plotHeight": 64,
+        "plotWidth": 1392
+      },
+      {
+        "id": "difference-tools",
+        "x": 1512,
+        "y": 844,
+        "w": 376,
+        "h": 80
+      },
+      {
+        "id": "timeline",
+        "x": 32,
+        "y": 940,
+        "w": 1856,
+        "h": 52
+      },
+      {
+        "id": "transport",
+        "x": 32,
+        "y": 1008,
+        "w": 1856,
+        "h": 48
+      }
+    ],
+    "plotAreaFraction": 0.4189
+  },
+  {
+    "id": "W4",
+    "title": "Pin / three rows",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1856,
+        "h": 248,
+        "plotHeight": 200,
+        "plotWidth": 1792
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 420,
+        "w": 1856,
+        "h": 248,
+        "plotHeight": 200,
+        "plotWidth": 1792
+      },
+      {
+        "id": "pinned",
+        "x": 32,
+        "y": 680,
+        "w": 1856,
+        "h": 248,
+        "plotHeight": 200,
+        "plotWidth": 1792
+      },
+      {
+        "id": "timeline",
+        "x": 32,
+        "y": 944,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "transport",
+        "x": 32,
+        "y": 1008,
+        "w": 1856,
+        "h": 48
+      }
+    ],
+    "plotAreaFraction": 0.5185
+  },
+  {
+    "id": "W5",
+    "title": "Attract / same-scene handoff",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1856,
+        "h": 352,
+        "plotHeight": 304,
+        "plotWidth": 1792
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 528,
+        "w": 1856,
+        "h": 352,
+        "plotHeight": 304,
+        "plotWidth": 1792
+      },
+      {
+        "id": "handoff",
+        "x": 480,
+        "y": 932,
+        "w": 960,
+        "h": 72
+      }
+    ],
+    "plotAreaFraction": 0.5254
+  },
+  {
+    "id": "W6",
+    "title": "Scenario launcher",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "scenario-0",
+        "x": 80,
+        "y": 244,
+        "w": 568,
+        "h": 420
+      },
+      {
+        "id": "start-0",
+        "x": 96,
+        "y": 568,
+        "w": 536,
+        "h": 60
+      },
+      {
+        "id": "scenario-1",
+        "x": 676,
+        "y": 244,
+        "w": 568,
+        "h": 420
+      },
+      {
+        "id": "start-1",
+        "x": 692,
+        "y": 568,
+        "w": 536,
+        "h": 60
+      },
+      {
+        "id": "scenario-2",
+        "x": 1272,
+        "y": 244,
+        "w": 568,
+        "h": 420
+      },
+      {
+        "id": "start-2",
+        "x": 1288,
+        "y": 568,
+        "w": 536,
+        "h": 60
+      },
+      {
+        "id": "return",
+        "x": 80,
+        "y": 724,
+        "w": 1760,
+        "h": 64
+      }
+    ],
+    "plotAreaFraction": 0.0
+  },
+  {
+    "id": "W7-P",
+    "title": "Loading / error / missing",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 504,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "pending",
+        "x": 32,
+        "y": 848,
+        "w": 1856,
+        "h": 112
+      },
+      {
+        "id": "transport",
+        "x": 32,
+        "y": 996,
+        "w": 1856,
+        "h": 60
+      }
+    ],
+    "plotAreaFraction": 0.484
+  },
+  {
+    "id": "W7-E",
+    "title": "Loading / error / missing",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 504,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "pending",
+        "x": 32,
+        "y": 848,
+        "w": 1856,
+        "h": 112
+      },
+      {
+        "id": "transport",
+        "x": 32,
+        "y": 996,
+        "w": 1856,
+        "h": 60
+      }
+    ],
+    "plotAreaFraction": 0.484
+  },
+  {
+    "id": "W7-M",
+    "title": "Loading / error / missing",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 504,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "pending",
+        "x": 32,
+        "y": 848,
+        "w": 1856,
+        "h": 112
+      },
+      {
+        "id": "transport",
+        "x": 32,
+        "y": 996,
+        "w": 1856,
+        "h": 60
+      }
+    ],
+    "plotAreaFraction": 0.484
+  },
+  {
+    "id": "W8",
+    "title": "Compact 1366 x 768",
+    "width": 1366,
+    "height": 768,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 24,
+        "y": 72,
+        "w": 1318,
+        "h": 44
+      },
+      {
+        "id": "input",
+        "x": 24,
+        "y": 128,
+        "w": 1318,
+        "h": 252,
+        "plotHeight": 204,
+        "plotWidth": 1254
+      },
+      {
+        "id": "output",
+        "x": 24,
+        "y": 392,
+        "w": 1318,
+        "h": 252,
+        "plotHeight": 204,
+        "plotWidth": 1254
+      },
+      {
+        "id": "timeline",
+        "x": 24,
+        "y": 656,
+        "w": 1318,
+        "h": 40
+      },
+      {
+        "id": "transport",
+        "x": 24,
+        "y": 708,
+        "w": 1318,
+        "h": 44
+      }
+    ],
+    "plotAreaFraction": 0.4877
+  },
+  {
+    "id": "W9",
+    "title": "Touch visitor / no hover",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 504,
+        "w": 1856,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1792
+      },
+      {
+        "id": "timeline",
+        "x": 32,
+        "y": 848,
+        "w": 1856,
+        "h": 60
+      },
+      {
+        "id": "noise-0",
+        "x": 32,
+        "y": 924,
+        "w": 452,
+        "h": 56
+      },
+      {
+        "id": "noise-1",
+        "x": 500,
+        "y": 924,
+        "w": 452,
+        "h": 56
+      },
+      {
+        "id": "noise-2",
+        "x": 968,
+        "y": 924,
+        "w": 452,
+        "h": 56
+      },
+      {
+        "id": "noise-3",
+        "x": 1436,
+        "y": 924,
+        "w": 452,
+        "h": 56
+      },
+      {
+        "id": "transport",
+        "x": 32,
+        "y": 996,
+        "w": 1856,
+        "h": 60
+      }
+    ],
+    "plotAreaFraction": 0.484
+  },
+  {
+    "id": "W10",
+    "title": "Evidence / Q&A",
+    "width": 1920,
+    "height": 1080,
+    "regions": [
+      {
+        "id": "condition",
+        "x": 32,
+        "y": 88,
+        "w": 1856,
+        "h": 48
+      },
+      {
+        "id": "input",
+        "x": 32,
+        "y": 160,
+        "w": 1216,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1152
+      },
+      {
+        "id": "output",
+        "x": 32,
+        "y": 504,
+        "w": 1216,
+        "h": 328,
+        "plotHeight": 280,
+        "plotWidth": 1152
+      },
+      {
+        "id": "evidence",
+        "x": 1272,
+        "y": 160,
+        "w": 616,
+        "h": 672
+      },
+      {
+        "id": "timeline",
+        "x": 32,
+        "y": 848,
+        "w": 1856,
+        "h": 60
+      },
+      {
+        "id": "scope",
+        "x": 32,
+        "y": 924,
+        "w": 1856,
+        "h": 56
+      },
+      {
+        "id": "transport",
+        "x": 32,
+        "y": 996,
+        "w": 1856,
+        "h": 60
+      }
+    ],
+    "plotAreaFraction": 0.3111
+  }
+]

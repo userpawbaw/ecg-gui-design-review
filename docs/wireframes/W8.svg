@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 768" role="img"><title>W8 — Compact 1366 x 768</title><desc>Static spatial wireframe. Rectangles reserve waveform space; no signal or performance data is shown.</desc><rect width="1366" height="768" fill="#10171d"/>
+<text x="24" y="44" font-family="DejaVu Sans,Arial,sans-serif" font-size="26" fill="#e7edf0">ECG Signal Studio</text>
+<text x="350" y="44" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#7bd8c5">REPLAY / SWEEP / 1x</text>
+<text x="1010" y="41" font-family="DejaVu Sans,Arial,sans-serif" font-size="19" fill="#aab9c3">Design board / no real data</text>
+<rect x="24" y="72" width="1318" height="44" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="40" y="104" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">MITDB 111 / muscle noise / 0 dB    Conditions...    Methods: M08...    Pin    Evidence</text>
+<rect x="24" y="128" width="1318" height="252" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="40" y="160" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Noisy input + Reference</text>
+<text x="1122" y="158" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Plot 1254 x 204</text>
+<path d="M211.33333333333334 164v204" stroke="#293640"/>
+<path d="M350.6666666666667 164v204" stroke="#293640"/>
+<path d="M490.0 164v204" stroke="#293640"/>
+<path d="M629.3333333333334 164v204" stroke="#293640"/>
+<path d="M768.6666666666666 164v204" stroke="#293640"/>
+<path d="M908.0 164v204" stroke="#293640"/>
+<path d="M1047.3333333333335 164v204" stroke="#293640"/>
+<path d="M1186.6666666666667 164v204" stroke="#293640"/>
+<path d="M72 266.0h1254" stroke="#465660"/>
+<text x="88" y="304.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#aab9c3">Waveform space reserved</text>
+<text x="88" y="332.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Same sample range / shared mV scale</text>
+<rect x="24" y="392" width="1318" height="252" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="40" y="424" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Selected output / M08 + Reference</text>
+<text x="1122" y="422" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Plot 1254 x 204</text>
+<path d="M211.33333333333334 428v204" stroke="#293640"/>
+<path d="M350.6666666666667 428v204" stroke="#293640"/>
+<path d="M490.0 428v204" stroke="#293640"/>
+<path d="M629.3333333333334 428v204" stroke="#293640"/>
+<path d="M768.6666666666666 428v204" stroke="#293640"/>
+<path d="M908.0 428v204" stroke="#293640"/>
+<path d="M1047.3333333333335 428v204" stroke="#293640"/>
+<path d="M1186.6666666666667 428v204" stroke="#293640"/>
+<path d="M72 530.0h1254" stroke="#465660"/>
+<text x="88" y="568.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#aab9c3">Waveform space reserved</text>
+<text x="88" y="596.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="18" fill="#aab9c3">Same sample range / shared mV scale</text>
+<rect x="24" y="656" width="1318" height="40" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="40" y="688" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">00:00       [viewport 5 s / playhead / scenario markers]       10:00</text>
+<rect x="24" y="708" width="1318" height="44" rx="4" fill="#1b252e" stroke="#465660"/>
+<text x="40" y="740" font-family="DejaVu Sans,Arial,sans-serif" font-size="22" fill="#e7edf0">Pause    Sweep / Scroll    1x    Fix interval    Reference...    More...    Exit</text>
+</svg>

@@ -1,0 +1,2 @@
+import {defineConfig,devices} from '@playwright/test';
+export default defineConfig({testDir:'./browser-tests',timeout:45000,fullyParallel:false,workers:1,reporter:[['html',{open:'never'}],['json',{outputFile:'test-results/results.json'}]],use:{baseURL:'http://127.0.0.1:4173',trace:'on',video:'on',screenshot:'on',viewport:{width:1920,height:1080}},projects:[{name:'chromium',use:{...devices['Desktop Chrome'],viewport:{width:1920,height:1080}}}],webServer:{command:'node ../../scripts/serve-v2.cjs',port:4173,reuseExistingServer:!process.env.CI}});

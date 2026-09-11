@@ -1,5 +1,12 @@
 # Work log
 
+## 2026-09-11 — interrupted v2 checkpoint
+
+- Recovered v2 source and 52/98 complete 600-second conditions (D0 25, D1 27); 676 trace arrays decode to expected lengths. 112 pinned source asset hashes and 12 preserved baseline files matched. Evidence: verification/v2-resume-check.json.
+- Re-ran nine engine tests and TypeScript/Vite build: PASS. Re-generated d1-mixed--5: all traces, scale and stored metrics exactly match; only methodSeconds differs. No full-grid restart after discovering the new remote plan.
+- GitHub main advanced to 90792b9 with v2.1/v2.2 and a wireframe-first gate. Preserve v2 WIP on recovery/v2-interrupted-20260911; follow main's W1–W10 next. Detailed divergence and limitations: docs/14_resume_audit.md.
+- Verdict: recovery PASS; v2 implementation PARTIAL; actual browser/hardware verification NV. Next: wireframe review, then resume implementation with the approved decisions.
+
 ## S0 — GitHub connection reset and write verification
 
 - Date: 2026-09-08.

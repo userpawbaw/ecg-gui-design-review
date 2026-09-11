@@ -1,5 +1,7 @@
 # Review plan
 
+> Recovery branch checkpoint — 2026-09-11: v2 implementation began after user approval and was interrupted. 52/98 long scenes survived; 9 engine tests, build and one-condition regeneration pass. See docs/14_resume_audit.md. Main now uses v2.1/v2.2 and requires W1–W10 review before further implementation. This branch preserves WIP only; do not merge this older planning baseline over main.
+
 Updated: 2026-09-10
 
 ## Goal

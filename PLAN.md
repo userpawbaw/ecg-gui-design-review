@@ -4,6 +4,16 @@ Updated: 2026-09-12
 
 User approved the concrete wireframe review in chat on 2026-09-12 ("응"). The five proposed layout decisions are accepted. R1a/R1b implementation is now authorized and in progress, followed by R2–R5; the earlier wireframe approval gate below is satisfied. Actual browser/hardware gates remain independent.
 
+## Current execution checkpoint — 2026-09-12
+
+- R1 implementation: COMPLETE / CONDITIONAL PASS. Main checkpoint ad6a920 and subsequent chunk/Expo refinements; actual rendering NV.
+- R2 data: COMPLETE. 98×600s, 1,274 trace arrays, 1,078 verified method metrics, 1,960 byte-identical 30s chunks. No retraining. One damaged local condition was regenerated.
+- R3 offline application/data package and PC QA runner: PREPARED. See verification/v2-package.json and docs/17_v2_team_handoff.md.
+- R4 actual browser/monitor/keyboard/touch/10-minute soak: NOT VERIFIED. Local browser access is blocked in this environment; run the provided target-PC evidence bundle. No browser workaround was used.
+- R5 team handoff: PREPARED, final closeout pending R4 evidence. Source/data/state tests are not a visual or exhibit-device pass.
+
+The following wireframe-review section is historical context; approval is satisfied and must not be requested again. Next work is target-PC evidence and resulting layout/interaction fixes, not a repeated wireframe approval or repeated inference run.
+
 ## Goal
 
 Produce a source-grounded independent GUI design, compare it fairly with the earlier GUI, and deliver a verified synthesis prototype plus team handoff. Model identity is not evidence of quality.

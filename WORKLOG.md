@@ -1,5 +1,14 @@
 # Work log
 
+## 2026-09-12 — R2 complete; R3/R5 handoff prepared
+
+- Generated 47 conditions (46 missing + one corrupted), preserving the other 51 verified files. All 98 conditions now have 600s/150,000 samples. Re-verified 112 pinned inference assets.
+- Verified 1,274 arrays and 1,078 method metric sets against source float metrics within declared quantization tolerances. Packaged 1,960 30s chunks; reassembly byte-identical. First packaging attempt stopped before the final D0 condition existed; reran after both generators completed 49/49. Final report: verification/v2-long-data.json.
+- Integrated bounded adjacent-window loading, SHA-256/length checks, a nine-chunk cache, full-session metrics, request-epoch guards, frozen interval seek and intent-aware resume. Added fixed-input scenario bookmarks, explicit ten-second Attract/handoff, opt-in idle, timeline range/markers and clipping notices.
+- Final engine/chunk/Attract tests: 11 PASS. DOM state tests: 6 PASS. TypeScript/Vite build PASS. Hashed-window test includes 30/60/300/600s boundaries and corrupted-chunk rejection; it is not a real ten-minute wall-clock soak.
+- Prepared standalone distribution with all 98 conditions, local Node launcher, optional PC Playwright runner, source/license notices and docs/17_v2_team_handoff.md. Package integrity in verification/v2-package.json.
+- Verdict: implementation/data CONDITIONAL PASS; R4 actual browser/exhibit/AFE NV. R5 handoff prepared, final closeout awaits target-PC results. Do not ask for the already-granted wireframe approval again.
+
 ## 2026-09-12 — wireframes approved; R1 implemented
 
 - User approved the five wireframe decisions. Restored local baseline from verified GitHub blobs (38 restored / 22 intact), preserving latest main planning and recovering v2 source.

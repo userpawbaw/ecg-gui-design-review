@@ -1,0 +1,6 @@
+{
+  "noiseSeedWeightCheckpointGroups": 14,
+  "sharedAcrossSevenSNRValues": true,
+  "scenes": 98,
+  "source": "manifest exact metadata check; not new model inference"
+}

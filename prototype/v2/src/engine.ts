@@ -1,10 +1,11 @@
 export type Mode='sweep'|'scroll';
 export class Transport {
+ loopRange:{start:number,end:number}|null=null;
  time=5; playing=false; speed=1; duration=10; loop=false; private last:number|null=null;
  play(){if(this.time>=this.duration)this.time=0;this.playing=true;this.last=null;}
  pause(){this.playing=false;this.last=null;}
  seek(t:number){this.pause();this.time=Math.max(0,Math.min(this.duration,t));}
- tick(now:number){if(!this.playing){this.last=null;return;}if(this.last!==null){this.time+=(now-this.last)/1000*this.speed;if(this.time>=this.duration){if(this.loop)this.time%=this.duration;else{this.time=this.duration;this.pause();}}}if(this.playing)this.last=now;}
+ tick(now:number){if(!this.playing){this.last=null;return;}if(this.last!==null){this.time+=(now-this.last)/1000*this.speed;if(this.loopRange&&this.time>=this.loopRange.end){this.time=this.loopRange.start+(this.time-this.loopRange.start)%(this.loopRange.end-this.loopRange.start);}else if(this.time>=this.duration){if(this.loop)this.time%=this.duration;else{this.time=this.duration;this.pause();}}}if(this.playing)this.last=now;}
 }
 export type Point={index:number,x:number,alpha:number,breakBefore:boolean};
 export function visiblePoints(time:number,span:number,fs:number,n:number,mode:Mode,inspect=false,soft=true):Point[]{

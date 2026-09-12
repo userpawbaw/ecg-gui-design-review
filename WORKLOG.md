@@ -1,5 +1,14 @@
 # Work log
 
+## 2026-09-12 — v2.2.1 SWT audit and requested UI revision
+
+- Restored latest GitHub e0c9878 source and verified released ZIP hash. Local archive JSON was truncated; restored it byte-for-byte from the verified release before rerunning DOM checks. Long replay chunks came from that release, not incomplete local raw generation files.
+- Checked all 98 long scenes and 98 archive scenes: no fully identical M04/M_FE pair. Reproduced 14 long conditions with input hash equality and 28 outputs within quantization tolerance. Hard threshold and k=0 controls pass. D1 conservative hard threshold is active; weak/no extra benefit on some noises is a performance finding, not a missing execution claim.
+- Enabled moving Output−Reference for both modes, preserved Difference across play/pause/mode transitions, added five left y ticks with gain-correct physical values, repaired Difference bottom-label space and range-fit inclusion. Active SWT metadata is visible in Method Explorer.
+- Final verification: 13 unit/engine/chunk tests PASS; DOM/Canvas-command checks PASS; TypeScript/Vite build PASS; ZIP CRC PASS and all 1968 prior replay/archive/legacy assets byte-identical.
+- Added axis unit tests, DOM/Canvas-command playback checks and target-PC tests for standard/large Difference. Font and major tab/loss changes deferred as requested. No native browser run claimed.
+
+
 ## 2026-09-12 — R2 complete; R3/R5 handoff prepared
 
 - Generated 47 conditions (46 missing + one corrupted), preserving the other 51 verified files. All 98 conditions now have 600s/150,000 samples. Re-verified 112 pinned inference assets.

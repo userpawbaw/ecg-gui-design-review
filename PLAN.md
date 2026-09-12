@@ -4,6 +4,14 @@ Updated: 2026-09-12
 
 User approved the concrete wireframe review in chat on 2026-09-12 ("응"). The five proposed layout decisions are accepted. R1a/R1b implementation is now authorized and in progress, followed by R2–R5; the earlier wireframe approval gate below is satisfied. Actual browser/hardware gates remain independent.
 
+## v2.2.1 user-feedback revision — 2026-09-12
+
+1. M04/M_FE source and release audit: COMPLETE. 98 long + 98 archive scenes checked; 14 long scenes reproduced. No output replacement or retraining. See docs/18_swt_audit_and_ui_revision.md.
+2. Moving Difference + physical left y ticks: COMPLETE. 13 tests + DOM/Canvas command regressions + TypeScript/Vite build pass; packaged release CRC pass. Actual browser pixels remain NV.
+3. Font change: DISCUSSION ONLY; current font retained. Recommended local Pretendard and role-based weights.
+4. Loss evolution view / lab and analysis integration: DEFERRED by user until this revision is complete.
+5. R4 actual browser/monitor testing remains NOT VERIFIED. PC runner prepared; no local-browser bypass.
+
 ## Current execution checkpoint — 2026-09-12
 
 - R1 implementation: COMPLETE / CONDITIONAL PASS. Main checkpoint ad6a920 and subsequent chunk/Expo refinements; actual rendering NV.

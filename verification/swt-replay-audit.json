@@ -1,0 +1,2554 @@
+{
+  "sourceCommit": "5eb27946087faca3c6e70b3925e2ba132b2ee680",
+  "scenes": [
+    {
+      "id": "d0-mixed--5",
+      "axis": "d0",
+      "noise": "mixed",
+      "snr": -5,
+      "differenceRmsMv": 0.11019902632940864,
+      "differenceMaxMv": 0.7914690860287055,
+      "identicalSamplesFraction": 0.0005666666666666667,
+      "snrGainOverFeDb": 7.034444562275958
+    },
+    {
+      "id": "d0-mixed-0",
+      "axis": "d0",
+      "noise": "mixed",
+      "snr": 0,
+      "differenceRmsMv": 0.06321960324667049,
+      "differenceMaxMv": 0.4702012485336263,
+      "identicalSamplesFraction": 0.00068,
+      "snrGainOverFeDb": 7.0099269074356325
+    },
+    {
+      "id": "d0-mixed-5",
+      "axis": "d0",
+      "noise": "mixed",
+      "snr": 5,
+      "differenceRmsMv": 0.036444158239533196,
+      "differenceMaxMv": 0.2781249676878952,
+      "identicalSamplesFraction": 0.00066,
+      "snrGainOverFeDb": 6.916449322637062
+    },
+    {
+      "id": "d0-mixed-10",
+      "axis": "d0",
+      "noise": "mixed",
+      "snr": 10,
+      "differenceRmsMv": 0.021166893181906222,
+      "differenceMaxMv": 0.1713790752045242,
+      "identicalSamplesFraction": 0.0012933333333333334,
+      "snrGainOverFeDb": 6.641791977071964
+    },
+    {
+      "id": "d0-mixed-15",
+      "axis": "d0",
+      "noise": "mixed",
+      "snr": 15,
+      "differenceRmsMv": 0.012660204500472031,
+      "differenceMaxMv": 0.10367457910544783,
+      "identicalSamplesFraction": 0.0018933333333333332,
+      "snrGainOverFeDb": 5.9116859002072175
+    },
+    {
+      "id": "d0-mixed-20",
+      "axis": "d0",
+      "noise": "mixed",
+      "snr": 20,
+      "differenceRmsMv": 0.007864644375378448,
+      "differenceMaxMv": 0.06986268453769762,
+      "identicalSamplesFraction": 0.0025466666666666667,
+      "snrGainOverFeDb": 4.717447487576077
+    },
+    {
+      "id": "d0-mixed-25",
+      "axis": "d0",
+      "noise": "mixed",
+      "snr": 25,
+      "differenceRmsMv": 0.0052157429369422015,
+      "differenceMaxMv": 0.05320717143332345,
+      "identicalSamplesFraction": 0.00336,
+      "snrGainOverFeDb": 2.9664681935982173
+    },
+    {
+      "id": "d0-impulse--5",
+      "axis": "d0",
+      "noise": "impulse",
+      "snr": -5,
+      "differenceRmsMv": 0.00042592022911566284,
+      "differenceMaxMv": 0.003433831948860655,
+      "identicalSamplesFraction": 0.7100266666666667,
+      "snrGainOverFeDb": 4.445115509987829e-05
+    },
+    {
+      "id": "d0-impulse-0",
+      "axis": "d0",
+      "noise": "impulse",
+      "snr": 0,
+      "differenceRmsMv": 0.00038885997620202517,
+      "differenceMaxMv": 0.0035570526853167944,
+      "identicalSamplesFraction": 0.6104333333333334,
+      "snrGainOverFeDb": 0.00013518981412896647
+    },
+    {
+      "id": "d0-impulse-5",
+      "axis": "d0",
+      "noise": "impulse",
+      "snr": 5,
+      "differenceRmsMv": 0.00036134242919433584,
+      "differenceMaxMv": 0.0031878240930511142,
+      "identicalSamplesFraction": 0.48956,
+      "snrGainOverFeDb": 0.0003537938220903314
+    },
+    {
+      "id": "d0-impulse-10",
+      "axis": "d0",
+      "noise": "impulse",
+      "snr": 10,
+      "differenceRmsMv": 0.00034143198339336045,
+      "differenceMaxMv": 0.003286850898420124,
+      "identicalSamplesFraction": 0.36465333333333333,
+      "snrGainOverFeDb": 0.0010030260147466663
+    },
+    {
+      "id": "d0-impulse-15",
+      "axis": "d0",
+      "noise": "impulse",
+      "snr": 15,
+      "differenceRmsMv": 0.00032623891063435575,
+      "differenceMaxMv": 0.0035260282914900826,
+      "identicalSamplesFraction": 0.2558066666666667,
+      "snrGainOverFeDb": 0.0028365656818145624
+    },
+    {
+      "id": "d0-impulse-20",
+      "axis": "d0",
+      "noise": "impulse",
+      "snr": 20,
+      "differenceRmsMv": 0.0003112195512726685,
+      "differenceMaxMv": 0.002781549955706397,
+      "identicalSamplesFraction": 0.16999333333333333,
+      "snrGainOverFeDb": 0.0074614524469893695
+    },
+    {
+      "id": "d0-impulse-25",
+      "axis": "d0",
+      "noise": "impulse",
+      "snr": 25,
+      "differenceRmsMv": 0.00030243292295177625,
+      "differenceMaxMv": 0.0028098326820178987,
+      "identicalSamplesFraction": 0.12168666666666667,
+      "snrGainOverFeDb": 0.01769066994179269
+    },
+    {
+      "id": "d0-pli--5",
+      "axis": "d0",
+      "noise": "pli",
+      "snr": -5,
+      "differenceRmsMv": 0.02680226547219427,
+      "differenceMaxMv": 0.10694300963725578,
+      "identicalSamplesFraction": 0.00034,
+      "snrGainOverFeDb": 4.028331827091323
+    },
+    {
+      "id": "d0-pli-0",
+      "axis": "d0",
+      "noise": "pli",
+      "snr": 0,
+      "differenceRmsMv": 0.01574719816661885,
+      "differenceMaxMv": 0.06967337583330373,
+      "identicalSamplesFraction": 0.0005,
+      "snrGainOverFeDb": 2.7229585871416475
+    },
+    {
+      "id": "d0-pli-5",
+      "axis": "d0",
+      "noise": "pli",
+      "snr": 5,
+      "differenceRmsMv": 0.009361370183647503,
+      "differenceMaxMv": 0.056510818572867744,
+      "identicalSamplesFraction": 0.00082,
+      "snrGainOverFeDb": 1.515643393206389
+    },
+    {
+      "id": "d0-pli-10",
+      "axis": "d0",
+      "noise": "pli",
+      "snr": 10,
+      "differenceRmsMv": 0.006066178991028405,
+      "differenceMaxMv": 0.045182246731267764,
+      "identicalSamplesFraction": 0.0013133333333333332,
+      "snrGainOverFeDb": 0.008645565428508917
+    },
+    {
+      "id": "d0-pli-15",
+      "axis": "d0",
+      "noise": "pli",
+      "snr": 15,
+      "differenceRmsMv": 0.0041855994248186455,
+      "differenceMaxMv": 0.03514535016730118,
+      "identicalSamplesFraction": 0.002353333333333333,
+      "snrGainOverFeDb": -0.4764656772280347
+    },
+    {
+      "id": "d0-pli-20",
+      "axis": "d0",
+      "noise": "pli",
+      "snr": 20,
+      "differenceRmsMv": 0.0032586374730499777,
+      "differenceMaxMv": 0.030935981086353405,
+      "identicalSamplesFraction": 0.004006666666666667,
+      "snrGainOverFeDb": -0.5629195193893821
+    },
+    {
+      "id": "d0-pli-25",
+      "axis": "d0",
+      "noise": "pli",
+      "snr": 25,
+      "differenceRmsMv": 0.002851170646536161,
+      "differenceMaxMv": 0.027520389234194857,
+      "identicalSamplesFraction": 0.005213333333333334,
+      "snrGainOverFeDb": -0.44814363077506414
+    },
+    {
+      "id": "d0-bw_synth--5",
+      "axis": "d0",
+      "noise": "bw_synth",
+      "snr": -5,
+      "differenceRmsMv": 0.0002459396842081977,
+      "differenceMaxMv": 0.002678843122366742,
+      "identicalSamplesFraction": 0.24352,
+      "snrGainOverFeDb": -0.0005176310880266044
+    },
+    {
+      "id": "d0-bw_synth-0",
+      "axis": "d0",
+      "noise": "bw_synth",
+      "snr": 0,
+      "differenceRmsMv": 0.0002457475737924499,
+      "differenceMaxMv": 0.0026860895048573252,
+      "identicalSamplesFraction": 0.19410666666666668,
+      "snrGainOverFeDb": -0.0015577959768009464
+    },
+    {
+      "id": "d0-bw_synth-5",
+      "axis": "d0",
+      "noise": "bw_synth",
+      "snr": 5,
+      "differenceRmsMv": 0.0002455544299767041,
+      "differenceMaxMv": 0.002652251569404865,
+      "identicalSamplesFraction": 0.16732666666666668,
+      "snrGainOverFeDb": -0.004904355083585443
+    },
+    {
+      "id": "d0-bw_synth-10",
+      "axis": "d0",
+      "noise": "bw_synth",
+      "snr": 10,
+      "differenceRmsMv": 0.00024555274114112016,
+      "differenceMaxMv": 0.002667922741253201,
+      "identicalSamplesFraction": 0.15246,
+      "snrGainOverFeDb": -0.01542792338991461
+    },
+    {
+      "id": "d0-bw_synth-15",
+      "axis": "d0",
+      "noise": "bw_synth",
+      "snr": 15,
+      "differenceRmsMv": 0.00024551023935086595,
+      "differenceMaxMv": 0.002657715148219164,
+      "identicalSamplesFraction": 0.14379333333333333,
+      "snrGainOverFeDb": -0.04842374696908536
+    },
+    {
+      "id": "d0-bw_synth-20",
+      "axis": "d0",
+      "noise": "bw_synth",
+      "snr": 20,
+      "differenceRmsMv": 0.0002454855442206916,
+      "differenceMaxMv": 0.002650911110284329,
+      "identicalSamplesFraction": 0.14023333333333332,
+      "snrGainOverFeDb": -0.150920240282872
+    },
+    {
+      "id": "d0-bw_synth-25",
+      "axis": "d0",
+      "noise": "bw_synth",
+      "snr": 25,
+      "differenceRmsMv": 0.0002454498937181419,
+      "differenceMaxMv": 0.0026516860751277377,
+      "identicalSamplesFraction": 0.13704666666666668,
+      "snrGainOverFeDb": -0.4611715509707537
+    },
+    {
+      "id": "d0-ma_synth--5",
+      "axis": "d0",
+      "noise": "ma_synth",
+      "snr": -5,
+      "differenceRmsMv": 0.18076841888570214,
+      "differenceMaxMv": 1.278372477518915,
+      "identicalSamplesFraction": 0.0005866666666666667,
+      "snrGainOverFeDb": 7.8169791088106955
+    },
+    {
+      "id": "d0-ma_synth-0",
+      "axis": "d0",
+      "noise": "ma_synth",
+      "snr": 0,
+      "differenceRmsMv": 0.10307565723235207,
+      "differenceMaxMv": 0.755553165364003,
+      "identicalSamplesFraction": 0.0006,
+      "snrGainOverFeDb": 7.781461153978582
+    },
+    {
+      "id": "d0-ma_synth-5",
+      "axis": "d0",
+      "noise": "ma_synth",
+      "snr": 5,
+      "differenceRmsMv": 0.059004173178182996,
+      "differenceMaxMv": 0.44684283424881704,
+      "identicalSamplesFraction": 0.00068,
+      "snrGainOverFeDb": 7.683042478563183
+    },
+    {
+      "id": "d0-ma_synth-10",
+      "axis": "d0",
+      "noise": "ma_synth",
+      "snr": 10,
+      "differenceRmsMv": 0.03387986399996505,
+      "differenceMaxMv": 0.25739126239702514,
+      "identicalSamplesFraction": 0.00072,
+      "snrGainOverFeDb": 7.4464831769834365
+    },
+    {
+      "id": "d0-ma_synth-15",
+      "axis": "d0",
+      "noise": "ma_synth",
+      "snr": 15,
+      "differenceRmsMv": 0.019564129509440854,
+      "differenceMaxMv": 0.14865959674661244,
+      "identicalSamplesFraction": 0.0011466666666666667,
+      "snrGainOverFeDb": 7.0115212876474295
+    },
+    {
+      "id": "d0-ma_synth-20",
+      "axis": "d0",
+      "noise": "ma_synth",
+      "snr": 20,
+      "differenceRmsMv": 0.011477271933367705,
+      "differenceMaxMv": 0.09283609199107912,
+      "identicalSamplesFraction": 0.002213333333333333,
+      "snrGainOverFeDb": 6.089586981537668
+    },
+    {
+      "id": "d0-ma_synth-25",
+      "axis": "d0",
+      "noise": "ma_synth",
+      "snr": 25,
+      "differenceRmsMv": 0.006741287366794835,
+      "differenceMaxMv": 0.0556175727369633,
+      "identicalSamplesFraction": 0.003533333333333333,
+      "snrGainOverFeDb": 5.103121077661694
+    },
+    {
+      "id": "d0-em_synth--5",
+      "axis": "d0",
+      "noise": "em_synth",
+      "snr": -5,
+      "differenceRmsMv": 0.0002629906198609649,
+      "differenceMaxMv": 0.0027889582942100533,
+      "identicalSamplesFraction": 0.3475533333333333,
+      "snrGainOverFeDb": 3.645017657927241e-06
+    },
+    {
+      "id": "d0-em_synth-0",
+      "axis": "d0",
+      "noise": "em_synth",
+      "snr": 0,
+      "differenceRmsMv": 0.00025956473690993574,
+      "differenceMaxMv": 0.002749563268976435,
+      "identicalSamplesFraction": 0.2681266666666667,
+      "snrGainOverFeDb": -3.856171273053377e-05
+    },
+    {
+      "id": "d0-em_synth-5",
+      "axis": "d0",
+      "noise": "em_synth",
+      "snr": 5,
+      "differenceRmsMv": 0.0002560633001475597,
+      "differenceMaxMv": 0.002756071194582377,
+      "identicalSamplesFraction": 0.21433333333333332,
+      "snrGainOverFeDb": -0.000131948928176584
+    },
+    {
+      "id": "d0-em_synth-10",
+      "axis": "d0",
+      "noise": "em_synth",
+      "snr": 10,
+      "differenceRmsMv": 0.00025364261731333337,
+      "differenceMaxMv": 0.0027430738939611538,
+      "identicalSamplesFraction": 0.17842,
+      "snrGainOverFeDb": -0.0005466362986972229
+    },
+    {
+      "id": "d0-em_synth-15",
+      "axis": "d0",
+      "noise": "em_synth",
+      "snr": 15,
+      "differenceRmsMv": 0.0002512977279626172,
+      "differenceMaxMv": 0.0027174468834081367,
+      "identicalSamplesFraction": 0.15597333333333332,
+      "snrGainOverFeDb": -0.00211196863581975
+    },
+    {
+      "id": "d0-em_synth-20",
+      "axis": "d0",
+      "noise": "em_synth",
+      "snr": 20,
+      "differenceRmsMv": 0.0002494594636361655,
+      "differenceMaxMv": 0.0026921039832058513,
+      "identicalSamplesFraction": 0.1442,
+      "snrGainOverFeDb": -0.007076916061553362
+    },
+    {
+      "id": "d0-em_synth-25",
+      "axis": "d0",
+      "noise": "em_synth",
+      "snr": 25,
+      "differenceRmsMv": 0.00024760859179364476,
+      "differenceMaxMv": 0.002673916916403382,
+      "identicalSamplesFraction": 0.13689333333333334,
+      "snrGainOverFeDb": -0.022677196300563196
+    },
+    {
+      "id": "d0-awgn--5",
+      "axis": "d0",
+      "noise": "awgn",
+      "snr": -5,
+      "differenceRmsMv": 0.20369643153342207,
+      "differenceMaxMv": 0.9263371806283474,
+      "identicalSamplesFraction": 8e-05,
+      "snrGainOverFeDb": 9.517314056530777
+    },
+    {
+      "id": "d0-awgn-0",
+      "axis": "d0",
+      "noise": "awgn",
+      "snr": 0,
+      "differenceRmsMv": 0.11621627298616476,
+      "differenceMaxMv": 0.48177869282836455,
+      "identicalSamplesFraction": 0.00012666666666666666,
+      "snrGainOverFeDb": 8.330559488224212
+    },
+    {
+      "id": "d0-awgn-5",
+      "axis": "d0",
+      "noise": "awgn",
+      "snr": 5,
+      "differenceRmsMv": 0.0660401829368045,
+      "differenceMaxMv": 0.2972522011597098,
+      "identicalSamplesFraction": 0.00014666666666666666,
+      "snrGainOverFeDb": 6.891026016316902
+    },
+    {
+      "id": "d0-awgn-10",
+      "axis": "d0",
+      "noise": "awgn",
+      "snr": 10,
+      "differenceRmsMv": 0.03774017388229341,
+      "differenceMaxMv": 0.16586420630173784,
+      "identicalSamplesFraction": 0.0002933333333333333,
+      "snrGainOverFeDb": 5.488517124710027
+    },
+    {
+      "id": "d0-awgn-15",
+      "axis": "d0",
+      "noise": "awgn",
+      "snr": 15,
+      "differenceRmsMv": 0.021724869396327826,
+      "differenceMaxMv": 0.1122613901176353,
+      "identicalSamplesFraction": 0.00042,
+      "snrGainOverFeDb": 4.130521107374378
+    },
+    {
+      "id": "d0-awgn-20",
+      "axis": "d0",
+      "noise": "awgn",
+      "snr": 20,
+      "differenceRmsMv": 0.012704703411451615,
+      "differenceMaxMv": 0.07670052447946363,
+      "identicalSamplesFraction": 0.0007266666666666667,
+      "snrGainOverFeDb": 2.77128474392849
+    },
+    {
+      "id": "d0-awgn-25",
+      "axis": "d0",
+      "noise": "awgn",
+      "snr": 25,
+      "differenceRmsMv": 0.007780043614876483,
+      "differenceMaxMv": 0.057647449766457026,
+      "identicalSamplesFraction": 0.0015,
+      "snrGainOverFeDb": 1.1151417017655412
+    },
+    {
+      "id": "d1-mixed--5",
+      "axis": "d1",
+      "noise": "mixed",
+      "snr": -5,
+      "differenceRmsMv": 0.15435950298635623,
+      "differenceMaxMv": 0.5449566622871255,
+      "identicalSamplesFraction": 0.0010133333333333333,
+      "snrGainOverFeDb": 1.5674428689932296
+    },
+    {
+      "id": "d1-mixed-0",
+      "axis": "d1",
+      "noise": "mixed",
+      "snr": 0,
+      "differenceRmsMv": 0.08658537789560988,
+      "differenceMaxMv": 0.3086789909709755,
+      "identicalSamplesFraction": 0.0010666666666666667,
+      "snrGainOverFeDb": 1.5378041851597404
+    },
+    {
+      "id": "d1-mixed-5",
+      "axis": "d1",
+      "noise": "mixed",
+      "snr": 5,
+      "differenceRmsMv": 0.04860801861972624,
+      "differenceMaxMv": 0.18509054707334982,
+      "identicalSamplesFraction": 0.0009733333333333333,
+      "snrGainOverFeDb": 1.501535817697027
+    },
+    {
+      "id": "d1-mixed-10",
+      "axis": "d1",
+      "noise": "mixed",
+      "snr": 10,
+      "differenceRmsMv": 0.02737814179176706,
+      "differenceMaxMv": 0.10274510379232353,
+      "identicalSamplesFraction": 0.001,
+      "snrGainOverFeDb": 1.4626951007620814
+    },
+    {
+      "id": "d1-mixed-15",
+      "axis": "d1",
+      "noise": "mixed",
+      "snr": 15,
+      "differenceRmsMv": 0.01553652785966114,
+      "differenceMaxMv": 0.056054423671226074,
+      "identicalSamplesFraction": 0.00166,
+      "snrGainOverFeDb": 1.400184582164286
+    },
+    {
+      "id": "d1-mixed-20",
+      "axis": "d1",
+      "noise": "mixed",
+      "snr": 20,
+      "differenceRmsMv": 0.009028217274005162,
+      "differenceMaxMv": 0.03336345222707359,
+      "identicalSamplesFraction": 0.00188,
+      "snrGainOverFeDb": 1.2817460154819642
+    },
+    {
+      "id": "d1-mixed-25",
+      "axis": "d1",
+      "noise": "mixed",
+      "snr": 25,
+      "differenceRmsMv": 0.005575869270251413,
+      "differenceMaxMv": 0.02096344887752044,
+      "identicalSamplesFraction": 0.003193333333333333,
+      "snrGainOverFeDb": 0.9846527092204376
+    },
+    {
+      "id": "d1-impulse--5",
+      "axis": "d1",
+      "noise": "impulse",
+      "snr": -5,
+      "differenceRmsMv": 0.005880413825336495,
+      "differenceMaxMv": 0.028062551396311433,
+      "identicalSamplesFraction": 0.0508,
+      "snrGainOverFeDb": 0.0013413473041108404
+    },
+    {
+      "id": "d1-impulse-0",
+      "axis": "d1",
+      "noise": "impulse",
+      "snr": 0,
+      "differenceRmsMv": 0.005813803526446614,
+      "differenceMaxMv": 0.026638599341208567,
+      "identicalSamplesFraction": 0.02888,
+      "snrGainOverFeDb": 0.00414044685028836
+    },
+    {
+      "id": "d1-impulse-5",
+      "axis": "d1",
+      "noise": "impulse",
+      "snr": 5,
+      "differenceRmsMv": 0.0057692098643006605,
+      "differenceMaxMv": 0.026724775564755804,
+      "identicalSamplesFraction": 0.015053333333333333,
+      "snrGainOverFeDb": 0.012953001774811401
+    },
+    {
+      "id": "d1-impulse-10",
+      "axis": "d1",
+      "noise": "impulse",
+      "snr": 10,
+      "differenceRmsMv": 0.003071246230332825,
+      "differenceMaxMv": 0.013225153752944085,
+      "identicalSamplesFraction": 0.026233333333333334,
+      "snrGainOverFeDb": -0.0009413668845121848
+    },
+    {
+      "id": "d1-impulse-15",
+      "axis": "d1",
+      "noise": "impulse",
+      "snr": 15,
+      "differenceRmsMv": 0.002945359169798542,
+      "differenceMaxMv": 0.011335355212830356,
+      "identicalSamplesFraction": 0.014186666666666667,
+      "snrGainOverFeDb": -0.008678735467455567
+    },
+    {
+      "id": "d1-impulse-20",
+      "axis": "d1",
+      "noise": "impulse",
+      "snr": 20,
+      "differenceRmsMv": 0.0028588133318043726,
+      "differenceMaxMv": 0.011081841032573495,
+      "identicalSamplesFraction": 0.00828,
+      "snrGainOverFeDb": -0.03917679784589012
+    },
+    {
+      "id": "d1-impulse-25",
+      "axis": "d1",
+      "noise": "impulse",
+      "snr": 25,
+      "differenceRmsMv": 0.002810481462094451,
+      "differenceMaxMv": 0.011122618801955843,
+      "identicalSamplesFraction": 0.00696,
+      "snrGainOverFeDb": -0.14375717971583413
+    },
+    {
+      "id": "d1-pli--5",
+      "axis": "d1",
+      "noise": "pli",
+      "snr": -5,
+      "differenceRmsMv": 0.04084899347703125,
+      "differenceMaxMv": 0.09181581591392413,
+      "identicalSamplesFraction": 0.00036666666666666667,
+      "snrGainOverFeDb": 12.122215275523912
+    },
+    {
+      "id": "d1-pli-0",
+      "axis": "d1",
+      "noise": "pli",
+      "snr": 0,
+      "differenceRmsMv": 0.02196545747003094,
+      "differenceMaxMv": 0.05716819157950159,
+      "identicalSamplesFraction": 0.0005666666666666667,
+      "snrGainOverFeDb": 11.018809058938931
+    },
+    {
+      "id": "d1-pli-5",
+      "axis": "d1",
+      "noise": "pli",
+      "snr": 5,
+      "differenceRmsMv": 0.01185588847844565,
+      "differenceMaxMv": 0.035655519098114374,
+      "identicalSamplesFraction": 0.0010666666666666667,
+      "snrGainOverFeDb": 9.017367188794907
+    },
+    {
+      "id": "d1-pli-10",
+      "axis": "d1",
+      "noise": "pli",
+      "snr": 10,
+      "differenceRmsMv": 0.006731345813884434,
+      "differenceMaxMv": 0.024619279121682103,
+      "identicalSamplesFraction": 0.0022,
+      "snrGainOverFeDb": 5.84060373626636
+    },
+    {
+      "id": "d1-pli-15",
+      "axis": "d1",
+      "noise": "pli",
+      "snr": 15,
+      "differenceRmsMv": 0.004328245442860517,
+      "differenceMaxMv": 0.015411636171018152,
+      "identicalSamplesFraction": 0.0037066666666666667,
+      "snrGainOverFeDb": 2.0207092953737344
+    },
+    {
+      "id": "d1-pli-20",
+      "axis": "d1",
+      "noise": "pli",
+      "snr": 20,
+      "differenceRmsMv": 0.003314230872183484,
+      "differenceMaxMv": 0.01205872745794618,
+      "identicalSamplesFraction": 0.00534,
+      "snrGainOverFeDb": -1.9794772208770084
+    },
+    {
+      "id": "d1-pli-25",
+      "axis": "d1",
+      "noise": "pli",
+      "snr": 25,
+      "differenceRmsMv": 0.0029389761912341607,
+      "differenceMaxMv": 0.01076516748211436,
+      "identicalSamplesFraction": 0.006326666666666667,
+      "snrGainOverFeDb": -6.440273963799356
+    },
+    {
+      "id": "d1-bw_synth--5",
+      "axis": "d1",
+      "noise": "bw_synth",
+      "snr": -5,
+      "differenceRmsMv": 0.0027561227453545877,
+      "differenceMaxMv": 0.011075046544980982,
+      "identicalSamplesFraction": 0.00974,
+      "snrGainOverFeDb": -0.01587211575901648
+    },
+    {
+      "id": "d1-bw_synth-0",
+      "axis": "d1",
+      "noise": "bw_synth",
+      "snr": 0,
+      "differenceRmsMv": 0.0027562491977212306,
+      "differenceMaxMv": 0.011137161544207885,
+      "identicalSamplesFraction": 0.0079,
+      "snrGainOverFeDb": -0.05004507467978314
+    },
+    {
+      "id": "d1-bw_synth-5",
+      "axis": "d1",
+      "noise": "bw_synth",
+      "snr": 5,
+      "differenceRmsMv": 0.002756233650505772,
+      "differenceMaxMv": 0.01111550356302715,
+      "identicalSamplesFraction": 0.007266666666666667,
+      "snrGainOverFeDb": -0.1563649028734524
+    },
+    {
+      "id": "d1-bw_synth-10",
+      "axis": "d1",
+      "noise": "bw_synth",
+      "snr": 10,
+      "differenceRmsMv": 0.002756217893342772,
+      "differenceMaxMv": 0.011105509174136281,
+      "identicalSamplesFraction": 0.007046666666666666,
+      "snrGainOverFeDb": -0.476280801478552
+    },
+    {
+      "id": "d1-bw_synth-15",
+      "axis": "d1",
+      "noise": "bw_synth",
+      "snr": 15,
+      "differenceRmsMv": 0.002756301315109714,
+      "differenceMaxMv": 0.011085047087430883,
+      "identicalSamplesFraction": 0.007026666666666666,
+      "snrGainOverFeDb": -1.3561328176084544
+    },
+    {
+      "id": "d1-bw_synth-20",
+      "axis": "d1",
+      "noise": "bw_synth",
+      "snr": 20,
+      "differenceRmsMv": 0.002756181073765973,
+      "differenceMaxMv": 0.01106682785402676,
+      "identicalSamplesFraction": 0.007373333333333333,
+      "snrGainOverFeDb": -3.342287277715009
+    },
+    {
+      "id": "d1-bw_synth-25",
+      "axis": "d1",
+      "noise": "bw_synth",
+      "snr": 25,
+      "differenceRmsMv": 0.002756307465232467,
+      "differenceMaxMv": 0.011123531609074977,
+      "identicalSamplesFraction": 0.007053333333333333,
+      "snrGainOverFeDb": -6.688114602616153
+    },
+    {
+      "id": "d1-ma_synth--5",
+      "axis": "d1",
+      "noise": "ma_synth",
+      "snr": -5,
+      "differenceRmsMv": 0.07214654069305426,
+      "differenceMaxMv": 0.31021765502568743,
+      "identicalSamplesFraction": 0.0011866666666666666,
+      "snrGainOverFeDb": 0.24444612393845944
+    },
+    {
+      "id": "d1-ma_synth-0",
+      "axis": "d1",
+      "noise": "ma_synth",
+      "snr": 0,
+      "differenceRmsMv": 0.04097973625527781,
+      "differenceMaxMv": 0.17372869516022751,
+      "identicalSamplesFraction": 0.0015333333333333334,
+      "snrGainOverFeDb": 0.24623713871449526
+    },
+    {
+      "id": "d1-ma_synth-5",
+      "axis": "d1",
+      "noise": "ma_synth",
+      "snr": 5,
+      "differenceRmsMv": 0.023649076733610736,
+      "differenceMaxMv": 0.10492191798779771,
+      "identicalSamplesFraction": 0.0015666666666666667,
+      "snrGainOverFeDb": 0.26098204788506374
+    },
+    {
+      "id": "d1-ma_synth-10",
+      "axis": "d1",
+      "noise": "ma_synth",
+      "snr": 10,
+      "differenceRmsMv": 0.014448277298047738,
+      "differenceMaxMv": 0.06531992452274682,
+      "identicalSamplesFraction": 0.0018333333333333333,
+      "snrGainOverFeDb": 0.3112005120132313
+    },
+    {
+      "id": "d1-ma_synth-15",
+      "axis": "d1",
+      "noise": "ma_synth",
+      "snr": 15,
+      "differenceRmsMv": 0.007879797657816594,
+      "differenceMaxMv": 0.03482695118938066,
+      "identicalSamplesFraction": 0.003086666666666667,
+      "snrGainOverFeDb": 0.2576263147443285
+    },
+    {
+      "id": "d1-ma_synth-20",
+      "axis": "d1",
+      "noise": "ma_synth",
+      "snr": 20,
+      "differenceRmsMv": 0.0052753090529765925,
+      "differenceMaxMv": 0.023683125691957685,
+      "identicalSamplesFraction": 0.004333333333333333,
+      "snrGainOverFeDb": 0.2742699707917211
+    },
+    {
+      "id": "d1-ma_synth-25",
+      "axis": "d1",
+      "noise": "ma_synth",
+      "snr": 25,
+      "differenceRmsMv": 0.004066069236635379,
+      "differenceMaxMv": 0.01728266464082968,
+      "identicalSamplesFraction": 0.005533333333333334,
+      "snrGainOverFeDb": 0.30009299255873856
+    },
+    {
+      "id": "d1-em_synth--5",
+      "axis": "d1",
+      "noise": "em_synth",
+      "snr": -5,
+      "differenceRmsMv": 0.0027555598268277632,
+      "differenceMaxMv": 0.01105290394752986,
+      "identicalSamplesFraction": 0.01752,
+      "snrGainOverFeDb": -0.0009560327110125777
+    },
+    {
+      "id": "d1-em_synth-0",
+      "axis": "d1",
+      "noise": "em_synth",
+      "snr": 0,
+      "differenceRmsMv": 0.002756138743596855,
+      "differenceMaxMv": 0.011080449006514018,
+      "identicalSamplesFraction": 0.010206666666666666,
+      "snrGainOverFeDb": -0.0030287119241760863
+    },
+    {
+      "id": "d1-em_synth-5",
+      "axis": "d1",
+      "noise": "em_synth",
+      "snr": 5,
+      "differenceRmsMv": 0.002756476128235296,
+      "differenceMaxMv": 0.01110979014949301,
+      "identicalSamplesFraction": 0.006973333333333333,
+      "snrGainOverFeDb": -0.009553999879017283
+    },
+    {
+      "id": "d1-em_synth-10",
+      "axis": "d1",
+      "noise": "em_synth",
+      "snr": 10,
+      "differenceRmsMv": 0.0027562227463040815,
+      "differenceMaxMv": 0.011099973554405928,
+      "identicalSamplesFraction": 0.006893333333333333,
+      "snrGainOverFeDb": -0.03019277373848439
+    },
+    {
+      "id": "d1-em_synth-15",
+      "axis": "d1",
+      "noise": "em_synth",
+      "snr": 15,
+      "differenceRmsMv": 0.0027562533621026675,
+      "differenceMaxMv": 0.011083789923478594,
+      "identicalSamplesFraction": 0.0070866666666666665,
+      "snrGainOverFeDb": -0.09469585395911295
+    },
+    {
+      "id": "d1-em_synth-20",
+      "axis": "d1",
+      "noise": "em_synth",
+      "snr": 20,
+      "differenceRmsMv": 0.0027562939570114587,
+      "differenceMaxMv": 0.011100697423342205,
+      "identicalSamplesFraction": 0.00696,
+      "snrGainOverFeDb": -0.2928361622108504
+    },
+    {
+      "id": "d1-em_synth-25",
+      "axis": "d1",
+      "noise": "em_synth",
+      "snr": 25,
+      "differenceRmsMv": 0.0027563021569872,
+      "differenceMaxMv": 0.011110205209221163,
+      "identicalSamplesFraction": 0.0072,
+      "snrGainOverFeDb": -0.8654692446266736
+    },
+    {
+      "id": "d1-awgn--5",
+      "axis": "d1",
+      "noise": "awgn",
+      "snr": -5,
+      "differenceRmsMv": 0.21472817641593855,
+      "differenceMaxMv": 0.7915747424416821,
+      "identicalSamplesFraction": 0.00011333333333333333,
+      "snrGainOverFeDb": 2.965004834632241
+    },
+    {
+      "id": "d1-awgn-0",
+      "axis": "d1",
+      "noise": "awgn",
+      "snr": 0,
+      "differenceRmsMv": 0.12050853012149909,
+      "differenceMaxMv": 0.4178171152241454,
+      "identicalSamplesFraction": 0.0002,
+      "snrGainOverFeDb": 2.9071326357846785
+    },
+    {
+      "id": "d1-awgn-5",
+      "axis": "d1",
+      "noise": "awgn",
+      "snr": 5,
+      "differenceRmsMv": 0.06775088053794552,
+      "differenceMaxMv": 0.241943206714186,
+      "identicalSamplesFraction": 0.0003266666666666667,
+      "snrGainOverFeDb": 2.8462724470974
+    },
+    {
+      "id": "d1-awgn-10",
+      "axis": "d1",
+      "noise": "awgn",
+      "snr": 10,
+      "differenceRmsMv": 0.038239220499615124,
+      "differenceMaxMv": 0.13654050109754962,
+      "identicalSamplesFraction": 0.00046,
+      "snrGainOverFeDb": 2.7899168124255276
+    },
+    {
+      "id": "d1-awgn-15",
+      "axis": "d1",
+      "noise": "awgn",
+      "snr": 15,
+      "differenceRmsMv": 0.02098335894905317,
+      "differenceMaxMv": 0.07425390858125291,
+      "identicalSamplesFraction": 0.0009933333333333333,
+      "snrGainOverFeDb": 2.5575881406810623
+    },
+    {
+      "id": "d1-awgn-20",
+      "axis": "d1",
+      "noise": "awgn",
+      "snr": 20,
+      "differenceRmsMv": 0.012003830264804394,
+      "differenceMaxMv": 0.04235425394186121,
+      "identicalSamplesFraction": 0.00152,
+      "snrGainOverFeDb": 2.3925656830783524
+    },
+    {
+      "id": "d1-awgn-25",
+      "axis": "d1",
+      "noise": "awgn",
+      "snr": 25,
+      "differenceRmsMv": 0.007130451313889137,
+      "differenceMaxMv": 0.027725955586675635,
+      "identicalSamplesFraction": 0.00272,
+      "snrGainOverFeDb": 2.026013691075356
+    }
+  ],
+  "reproductions": [
+    {
+      "id": "d0-mixed--5",
+      "maxErrorMv": {
+        "M04": 4.087280377995661e-05,
+        "M_FE": 4.087319209748058e-05
+      },
+      "halfQuantizationStep": 4.087322278603106e-05
+    },
+    {
+      "id": "d0-impulse--5",
+      "maxErrorMv": {
+        "M04": 0.00024527007764098274,
+        "M_FE": 0.0002452719106254275
+      },
+      "halfQuantizationStep": 0.00024527371063290225
+    },
+    {
+      "id": "d0-pli--5",
+      "maxErrorMv": {
+        "M04": 1.6508607822891125e-05,
+        "M_FE": 1.6508607790899354e-05
+      },
+      "halfQuantizationStep": 1.650864613109845e-05
+    },
+    {
+      "id": "d0-bw_synth--5",
+      "maxErrorMv": {
+        "M04": 2.0606430448849578e-05,
+        "M_FE": 2.0606479033645486e-05
+      },
+      "halfQuantizationStep": 2.0606485556667213e-05
+    },
+    {
+      "id": "d0-ma_synth--5",
+      "maxErrorMv": {
+        "M04": 5.4823264609038524e-05,
+        "M_FE": 5.482329683423326e-05
+      },
+      "halfQuantizationStep": 5.482341871167831e-05
+    },
+    {
+      "id": "d0-em_synth--5",
+      "maxErrorMv": {
+        "M04": 3.6696158405957746e-05,
+        "M_FE": 3.6696782765209546e-05
+      },
+      "halfQuantizationStep": 3.669681966065857e-05
+    },
+    {
+      "id": "d0-awgn--5",
+      "maxErrorMv": {
+        "M04": 2.213860681368751e-05,
+        "M_FE": 2.21388525147026e-05
+      },
+      "halfQuantizationStep": 2.213893171044279e-05
+    },
+    {
+      "id": "d1-mixed--5",
+      "maxErrorMv": {
+        "M04": 0.00019673460914907542,
+        "M_FE": 0.000196735026667616
+      },
+      "halfQuantizationStep": 0.0001967352571433666
+    },
+    {
+      "id": "d1-impulse--5",
+      "maxErrorMv": {
+        "M04": 0.0004008908639165226,
+        "M_FE": 0.00040089173875482165
+      },
+      "halfQuantizationStep": 0.00040089359137587756
+    },
+    {
+      "id": "d1-pli--5",
+      "maxErrorMv": {
+        "M04": 3.3607352626058296e-05,
+        "M_FE": 3.3607288941764346e-05
+      },
+      "halfQuantizationStep": 3.360754608855202e-05
+    },
+    {
+      "id": "d1-bw_synth--5",
+      "maxErrorMv": {
+        "M04": 3.164271794209306e-05,
+        "M_FE": 3.1642879845000804e-05
+      },
+      "halfQuantizationStep": 3.164299012851709e-05
+    },
+    {
+      "id": "d1-ma_synth--5",
+      "maxErrorMv": {
+        "M04": 9.551018815184831e-05,
+        "M_FE": 9.551009748509642e-05
+      },
+      "halfQuantizationStep": 9.551036176899245e-05
+    },
+    {
+      "id": "d1-em_synth--5",
+      "maxErrorMv": {
+        "M04": 5.9424092034160436e-05,
+        "M_FE": 5.94233337411626e-05
+      },
+      "halfQuantizationStep": 5.9424214771665905e-05
+    },
+    {
+      "id": "d1-awgn--5",
+      "maxErrorMv": {
+        "M04": 3.740537383160186e-05,
+        "M_FE": 3.740516243055936e-05
+      },
+      "halfQuantizationStep": 3.740547880359523e-05
+    }
+  ],
+  "diagnostics": [
+    {
+      "axis": "d0",
+      "noise": "mixed",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d2",
+        "k": [
+          2.5,
+          2.0,
+          0.6,
+          0.4,
+          0.3
+        ],
+        "mode": "garrote",
+        "protect_qrs": true,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.06488077509946281,
+          "lambdaUnprotected": 0.09509626667445738,
+          "coefficientRms": 0.3359712375605477,
+          "belowThresholdFraction": 0.41131189676877883,
+          "removedEnergyFraction": 0.01728698607975376
+        },
+        {
+          "band": "D4",
+          "sigma": 0.06488077509946281,
+          "lambdaUnprotected": 0.12679502223260983,
+          "coefficientRms": 0.25536074905069245,
+          "belowThresholdFraction": 0.769087022660512,
+          "removedEnergyFraction": 0.04406336458686289
+        },
+        {
+          "band": "D3",
+          "sigma": 0.06488077509946281,
+          "lambdaUnprotected": 0.19019253334891476,
+          "coefficientRms": 0.1903027992033155,
+          "belowThresholdFraction": 0.8466809169114562,
+          "removedEnergyFraction": 0.15621673366596697
+        },
+        {
+          "band": "D2",
+          "sigma": 0.06488077509946281,
+          "lambdaUnprotected": 0.6339751111630492,
+          "coefficientRms": 0.1884441424825236,
+          "belowThresholdFraction": 0.9818243810323122,
+          "removedEnergyFraction": 0.6572489705571662
+        },
+        {
+          "band": "D1",
+          "sigma": 0.06488077509946281,
+          "lambdaUnprotected": 0.7924688889538115,
+          "coefficientRms": 0.13468057030839792,
+          "belowThresholdFraction": 0.9962560323122115,
+          "removedEnergyFraction": 0.861666151344694
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection."
+    },
+    {
+      "axis": "d0",
+      "noise": "impulse",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d2",
+        "k": [
+          2.5,
+          2.0,
+          0.6,
+          0.4,
+          0.3
+        ],
+        "mode": "garrote",
+        "protect_qrs": true,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.00030348924135734356,
+          "lambdaUnprotected": 0.00044482658822591123,
+          "coefficientRms": 0.42363166483484416,
+          "belowThresholdFraction": 0.0025899601342845155,
+          "removedEnergyFraction": 3.7652778362861e-09
+        },
+        {
+          "band": "D4",
+          "sigma": 0.00030348924135734356,
+          "lambdaUnprotected": 0.0005931021176345483,
+          "coefficientRms": 0.4008398127835683,
+          "belowThresholdFraction": 0.043550671422576584,
+          "removedEnergyFraction": 8.428111409118445e-08
+        },
+        {
+          "band": "D3",
+          "sigma": 0.00030348924135734356,
+          "lambdaUnprotected": 0.0008896531764518225,
+          "coefficientRms": 0.4215611849312406,
+          "belowThresholdFraction": 0.3080347775912715,
+          "removedEnergyFraction": 4.611289510710366e-07
+        },
+        {
+          "band": "D2",
+          "sigma": 0.00030348924135734356,
+          "lambdaUnprotected": 0.0029655105881727416,
+          "coefficientRms": 0.3113730101920346,
+          "belowThresholdFraction": 0.6905358266890474,
+          "removedEnergyFraction": 5.520784812611151e-06
+        },
+        {
+          "band": "D1",
+          "sigma": 0.00030348924135734356,
+          "lambdaUnprotected": 0.003706888235215927,
+          "coefficientRms": 0.09744707554990528,
+          "belowThresholdFraction": 0.8536705308434747,
+          "removedEnergyFraction": 8.763374502625882e-05
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection."
+    },
+    {
+      "axis": "d0",
+      "noise": "pli",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d2",
+        "k": [
+          2.5,
+          2.0,
+          0.6,
+          0.4,
+          0.3
+        ],
+        "mode": "garrote",
+        "protect_qrs": true,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.03915860089159692,
+          "lambdaUnprotected": 0.0573950719188738,
+          "coefficientRms": 0.3363069613149314,
+          "belowThresholdFraction": 0.2738866449853126,
+          "removedEnergyFraction": 0.005964227594461791
+        },
+        {
+          "band": "D4",
+          "sigma": 0.03915860089159692,
+          "lambdaUnprotected": 0.07652676255849843,
+          "coefficientRms": 0.25383611718050014,
+          "belowThresholdFraction": 0.6789236256819136,
+          "removedEnergyFraction": 0.018253009669778154
+        },
+        {
+          "band": "D3",
+          "sigma": 0.03915860089159692,
+          "lambdaUnprotected": 0.1147901438377476,
+          "coefficientRms": 0.13111765526677144,
+          "belowThresholdFraction": 0.8844812211498112,
+          "removedEnergyFraction": 0.07695783811869657
+        },
+        {
+          "band": "D2",
+          "sigma": 0.03915860089159692,
+          "lambdaUnprotected": 0.38263381279249203,
+          "coefficientRms": 0.06713238533449037,
+          "belowThresholdFraction": 0.9925055077633236,
+          "removedEnergyFraction": 0.8003349266121046
+        },
+        {
+          "band": "D1",
+          "sigma": 0.03915860089159692,
+          "lambdaUnprotected": 0.4782922659906151,
+          "coefficientRms": 0.02983512411673384,
+          "belowThresholdFraction": 0.9999803294167017,
+          "removedEnergyFraction": 0.9914985956772274
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection."
+    },
+    {
+      "axis": "d0",
+      "noise": "bw_synth",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d2",
+        "k": [
+          2.5,
+          2.0,
+          0.6,
+          0.4,
+          0.3
+        ],
+        "mode": "garrote",
+        "protect_qrs": true,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.0002681539631864612,
+          "lambdaUnprotected": 0.0003930353907440213,
+          "coefficientRms": 0.3355593493857346,
+          "belowThresholdFraction": 0.0025243915232899708,
+          "removedEnergyFraction": 4.765738493731311e-09
+        },
+        {
+          "band": "D4",
+          "sigma": 0.0002681539631864612,
+          "lambdaUnprotected": 0.0005240471876586951,
+          "coefficientRms": 0.25370969689496164,
+          "belowThresholdFraction": 0.04578656105749056,
+          "removedEnergyFraction": 1.8123769306037595e-07
+        },
+        {
+          "band": "D3",
+          "sigma": 0.0002681539631864612,
+          "lambdaUnprotected": 0.0007860707814880426,
+          "coefficientRms": 0.13105584903347062,
+          "belowThresholdFraction": 0.3291478703315149,
+          "removedEnergyFraction": 4.2258110594187035e-06
+        },
+        {
+          "band": "D2",
+          "sigma": 0.0002681539631864612,
+          "lambdaUnprotected": 0.0026202359382934757,
+          "coefficientRms": 0.062392391971521244,
+          "belowThresholdFraction": 0.721202266051196,
+          "removedEnergyFraction": 0.00010110251077090288
+        },
+        {
+          "band": "D1",
+          "sigma": 0.0002681539631864612,
+          "lambdaUnprotected": 0.003275294922866845,
+          "coefficientRms": 0.0124176939039757,
+          "belowThresholdFraction": 0.8963294691565253,
+          "removedEnergyFraction": 0.0033589377642250086
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection."
+    },
+    {
+      "axis": "d0",
+      "noise": "ma_synth",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d2",
+        "k": [
+          2.5,
+          2.0,
+          0.6,
+          0.4,
+          0.3
+        ],
+        "mode": "garrote",
+        "protect_qrs": true,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.10287735040519405,
+          "lambdaUnprotected": 0.1507881484753552,
+          "coefficientRms": 0.3360691845436879,
+          "belowThresholdFraction": 0.48350293747377254,
+          "removedEnergyFraction": 0.046868201417903134
+        },
+        {
+          "band": "D4",
+          "sigma": 0.10287735040519405,
+          "lambdaUnprotected": 0.20105086463380697,
+          "coefficientRms": 0.25768671515195624,
+          "belowThresholdFraction": 0.8282954783885859,
+          "removedEnergyFraction": 0.09208211085621144
+        },
+        {
+          "band": "D3",
+          "sigma": 0.10287735040519405,
+          "lambdaUnprotected": 0.3015762969507104,
+          "coefficientRms": 0.2550250475374098,
+          "belowThresholdFraction": 0.8661875786823332,
+          "removedEnergyFraction": 0.20699556358798687
+        },
+        {
+          "band": "D2",
+          "sigma": 0.10287735040519405,
+          "lambdaUnprotected": 1.0052543231690347,
+          "coefficientRms": 0.29818461699600624,
+          "belowThresholdFraction": 0.9801982794796475,
+          "removedEnergyFraction": 0.6558877406597159
+        },
+        {
+          "band": "D1",
+          "sigma": 0.10287735040519405,
+          "lambdaUnprotected": 1.2565679039612936,
+          "coefficientRms": 0.21651243528859312,
+          "belowThresholdFraction": 0.9963740558120017,
+          "removedEnergyFraction": 0.8863019506728971
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection."
+    },
+    {
+      "axis": "d0",
+      "noise": "em_synth",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d2",
+        "k": [
+          2.5,
+          2.0,
+          0.6,
+          0.4,
+          0.3
+        ],
+        "mode": "garrote",
+        "protect_qrs": true,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.00028629767025354686,
+          "lambdaUnprotected": 0.00041962876610166406,
+          "coefficientRms": 0.36311062085211093,
+          "belowThresholdFraction": 0.0026358581619806967,
+          "removedEnergyFraction": 4.588609979229521e-09
+        },
+        {
+          "band": "D4",
+          "sigma": 0.00028629767025354686,
+          "lambdaUnprotected": 0.0005595050214688856,
+          "coefficientRms": 0.2581273848630549,
+          "belowThresholdFraction": 0.044980067142257656,
+          "removedEnergyFraction": 1.9187894186197833e-07
+        },
+        {
+          "band": "D3",
+          "sigma": 0.00028629767025354686,
+          "lambdaUnprotected": 0.0008392575322033281,
+          "coefficientRms": 0.1314901094137571,
+          "belowThresholdFraction": 0.3225516680654637,
+          "removedEnergyFraction": 4.612780162771365e-06
+        },
+        {
+          "band": "D2",
+          "sigma": 0.00028629767025354686,
+          "lambdaUnprotected": 0.0027975251073444275,
+          "coefficientRms": 0.062401934543350704,
+          "belowThresholdFraction": 0.7145995069240453,
+          "removedEnergyFraction": 0.00013014743234390989
+        },
+        {
+          "band": "D1",
+          "sigma": 0.00028629767025354686,
+          "lambdaUnprotected": 0.0034969063841805343,
+          "coefficientRms": 0.012418227292229122,
+          "belowThresholdFraction": 0.8996406840117499,
+          "removedEnergyFraction": 0.003852273753628799
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection."
+    },
+    {
+      "axis": "d0",
+      "noise": "awgn",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d2",
+        "k": [
+          2.5,
+          2.0,
+          0.6,
+          0.4,
+          0.3
+        ],
+        "mode": "garrote",
+        "protect_qrs": true,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.24714956171015257,
+          "lambdaUnprotected": 0.3622490729007724,
+          "coefficientRms": 0.4112187522912083,
+          "belowThresholdFraction": 0.6654230486781368,
+          "removedEnergyFraction": 0.2710489802010997
+        },
+        {
+          "band": "D4",
+          "sigma": 0.24714956171015257,
+          "lambdaUnprotected": 0.48299876386769663,
+          "coefficientRms": 0.35220455075547424,
+          "belowThresholdFraction": 0.8684824800671422,
+          "removedEnergyFraction": 0.48504790656106755
+        },
+        {
+          "band": "D3",
+          "sigma": 0.24714956171015257,
+          "lambdaUnprotected": 0.7244981458015448,
+          "coefficientRms": 0.27446882621075674,
+          "belowThresholdFraction": 0.9848208665547629,
+          "removedEnergyFraction": 0.9065856696115331
+        },
+        {
+          "band": "D2",
+          "sigma": 0.24714956171015257,
+          "lambdaUnprotected": 2.414993819338483,
+          "coefficientRms": 0.2498474886500586,
+          "belowThresholdFraction": 1.0,
+          "removedEnergyFraction": 1.0
+        },
+        {
+          "band": "D1",
+          "sigma": 0.24714956171015257,
+          "lambdaUnprotected": 3.0187422741731034,
+          "coefficientRms": 0.18000879834043607,
+          "belowThresholdFraction": 1.0,
+          "removedEnergyFraction": 1.0
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection."
+    },
+    {
+      "axis": "d1",
+      "noise": "mixed",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d1",
+        "k": [
+          0.6,
+          0.2,
+          0.1,
+          0.3,
+          0.3
+        ],
+        "mode": "hard",
+        "protect_qrs": false,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.24138225430831925,
+          "lambdaUnprotected": 0.3537958846976794,
+          "coefficientRms": 0.748126197274177,
+          "belowThresholdFraction": 0.4455583822912295,
+          "removedEnergyFraction": 0.031041170182879222
+        },
+        {
+          "band": "D4",
+          "sigma": 0.24138225430831925,
+          "lambdaUnprotected": 0.3537958846976794,
+          "coefficientRms": 0.5441293622677437,
+          "belowThresholdFraction": 0.6138205518254302,
+          "removedEnergyFraction": 0.07568723066227286
+        },
+        {
+          "band": "D3",
+          "sigma": 0.24138225430831925,
+          "lambdaUnprotected": 0.11793196156589313,
+          "coefficientRms": 0.5315706846926936,
+          "belowThresholdFraction": 0.2567797943768359,
+          "removedEnergyFraction": 0.004168466657458205
+        },
+        {
+          "band": "D2",
+          "sigma": 0.24138225430831925,
+          "lambdaUnprotected": 0.23586392313178625,
+          "coefficientRms": 0.4327079028600669,
+          "belowThresholdFraction": 0.5272896558959295,
+          "removedEnergyFraction": 0.04869205220337776
+        },
+        {
+          "band": "D1",
+          "sigma": 0.24138225430831925,
+          "lambdaUnprotected": 0.7075917693953588,
+          "coefficientRms": 0.2549757701226909,
+          "belowThresholdFraction": 0.9939873583718003,
+          "removedEnergyFraction": 0.8619087243258176
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection.",
+      "d2OnlyDiagnostic": {
+        "currentStrict": -3.8818606979743313,
+        "d2Strict": -3.548020924678876,
+        "differenceDb": 0.33383977329545544,
+        "adopted": false
+      }
+    },
+    {
+      "axis": "d1",
+      "noise": "impulse",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d1",
+        "k": [
+          0.6,
+          0.2,
+          0.1,
+          0.3,
+          0.3
+        ],
+        "mode": "hard",
+        "protect_qrs": false,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.013104343142811581,
+          "lambdaUnprotected": 0.019207139683396365,
+          "coefficientRms": 0.8042123143658929,
+          "belowThresholdFraction": 0.0407115505665128,
+          "removedEnergyFraction": 7.824244925339599e-06
+        },
+        {
+          "band": "D4",
+          "sigma": 0.013104343142811581,
+          "lambdaUnprotected": 0.019207139683396365,
+          "coefficientRms": 0.6638027502763445,
+          "belowThresholdFraction": 0.187211498111624,
+          "removedEnergyFraction": 4.968744318885257e-05
+        },
+        {
+          "band": "D3",
+          "sigma": 0.013104343142811581,
+          "lambdaUnprotected": 0.006402379894465455,
+          "coefficientRms": 0.7673046835494627,
+          "belowThresholdFraction": 0.24594785984053713,
+          "removedEnergyFraction": 5.450579605624929e-06
+        },
+        {
+          "band": "D2",
+          "sigma": 0.013104343142811581,
+          "lambdaUnprotected": 0.01280475978893091,
+          "coefficientRms": 0.5758525457301761,
+          "belowThresholdFraction": 0.3886513848090642,
+          "removedEnergyFraction": 6.532982916753461e-05
+        },
+        {
+          "band": "D1",
+          "sigma": 0.013104343142811581,
+          "lambdaUnprotected": 0.03841427936679273,
+          "coefficientRms": 0.1814300986090483,
+          "belowThresholdFraction": 0.9661141418380194,
+          "removedEnergyFraction": 0.003759019780146174
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection.",
+      "d2OnlyDiagnostic": {
+        "currentStrict": -7.251898558123172,
+        "d2Strict": -7.251413383601237,
+        "differenceDb": 0.00048517452193497235,
+        "adopted": false
+      }
+    },
+    {
+      "axis": "d1",
+      "noise": "pli",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d1",
+        "k": [
+          0.6,
+          0.2,
+          0.1,
+          0.3,
+          0.3
+        ],
+        "mode": "hard",
+        "protect_qrs": false,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.07466944672714133,
+          "lambdaUnprotected": 0.10944360031939895,
+          "coefficientRms": 0.6362533864468062,
+          "belowThresholdFraction": 0.28795766890474195,
+          "removedEnergyFraction": 0.0030418188501650616
+        },
+        {
+          "band": "D4",
+          "sigma": 0.07466944672714133,
+          "lambdaUnprotected": 0.10944360031939895,
+          "coefficientRms": 0.3178047437463024,
+          "belowThresholdFraction": 0.6758877989928661,
+          "removedEnergyFraction": 0.016267720122777475
+        },
+        {
+          "band": "D3",
+          "sigma": 0.07466944672714133,
+          "lambdaUnprotected": 0.03648120010646632,
+          "coefficientRms": 0.16028885593660838,
+          "belowThresholdFraction": 0.7314375262274444,
+          "removedEnergyFraction": 0.006063201506461534
+        },
+        {
+          "band": "D2",
+          "sigma": 0.07466944672714133,
+          "lambdaUnprotected": 0.07296240021293264,
+          "coefficientRms": 0.06314267363497089,
+          "belowThresholdFraction": 0.8668891628199749,
+          "removedEnergyFraction": 0.43892448915169435
+        },
+        {
+          "band": "D1",
+          "sigma": 0.07466944672714133,
+          "lambdaUnprotected": 0.2188872006387979,
+          "coefficientRms": 0.05136238154357336,
+          "belowThresholdFraction": 0.9998885333613092,
+          "removedEnergyFraction": 0.9965073080473074
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection.",
+      "d2OnlyDiagnostic": {
+        "currentStrict": 25.205339763238797,
+        "d2Strict": 25.137700184177763,
+        "differenceDb": -0.06763957906103357,
+        "adopted": false
+      }
+    },
+    {
+      "axis": "d1",
+      "noise": "bw_synth",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d1",
+        "k": [
+          0.6,
+          0.2,
+          0.1,
+          0.3,
+          0.3
+        ],
+        "mode": "hard",
+        "protect_qrs": false,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.005047684291063184,
+          "lambdaUnprotected": 0.007398430901843344,
+          "coefficientRms": 0.6363975678517898,
+          "belowThresholdFraction": 0.01675278010910617,
+          "removedEnergyFraction": 7.607444833048464e-07
+        },
+        {
+          "band": "D4",
+          "sigma": 0.005047684291063184,
+          "lambdaUnprotected": 0.007398430901843344,
+          "coefficientRms": 0.3177801001582233,
+          "belowThresholdFraction": 0.08505560218212338,
+          "removedEnergyFraction": 1.5281825445575446e-05
+        },
+        {
+          "band": "D3",
+          "sigma": 0.005047684291063184,
+          "lambdaUnprotected": 0.0024661436339477815,
+          "coefficientRms": 0.16032440580526786,
+          "belowThresholdFraction": 0.1087848825010491,
+          "removedEnergyFraction": 8.471124033310626e-06
+        },
+        {
+          "band": "D2",
+          "sigma": 0.005047684291063184,
+          "lambdaUnprotected": 0.004932287267895563,
+          "coefficientRms": 0.04145500513273641,
+          "belowThresholdFraction": 0.35828656105749057,
+          "removedEnergyFraction": 0.0016101822352220822
+        },
+        {
+          "band": "D1",
+          "sigma": 0.005047684291063184,
+          "lambdaUnprotected": 0.014796861803686688,
+          "coefficientRms": 0.0069185212590410486,
+          "belowThresholdFraction": 0.9606391628199749,
+          "removedEnergyFraction": 0.5073022470880588
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection.",
+      "d2OnlyDiagnostic": {
+        "currentStrict": 12.561439566351558,
+        "d2Strict": 12.55170547859868,
+        "differenceDb": -0.009734087752876874,
+        "adopted": false
+      }
+    },
+    {
+      "axis": "d1",
+      "noise": "ma_synth",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d1",
+        "k": [
+          0.6,
+          0.2,
+          0.1,
+          0.3,
+          0.3
+        ],
+        "mode": "hard",
+        "protect_qrs": false,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.13437164103547114,
+          "lambdaUnprotected": 0.19694958005363628,
+          "coefficientRms": 0.6373304294111899,
+          "belowThresholdFraction": 0.4156459819555183,
+          "removedEnergyFraction": 0.010283360984411977
+        },
+        {
+          "band": "D4",
+          "sigma": 0.13437164103547114,
+          "lambdaUnprotected": 0.19694958005363628,
+          "coefficientRms": 0.3294831077025116,
+          "belowThresholdFraction": 0.7356076898866974,
+          "removedEnergyFraction": 0.04305645383617596
+        },
+        {
+          "band": "D3",
+          "sigma": 0.13437164103547114,
+          "lambdaUnprotected": 0.06564986001787876,
+          "coefficientRms": 0.4519276137427404,
+          "belowThresholdFraction": 0.32201400545530845,
+          "removedEnergyFraction": 0.002165378328044937
+        },
+        {
+          "band": "D2",
+          "sigma": 0.13437164103547114,
+          "lambdaUnprotected": 0.13129972003575752,
+          "coefficientRms": 0.5438249977872076,
+          "belowThresholdFraction": 0.5205819869911876,
+          "removedEnergyFraction": 0.00905201260597975
+        },
+        {
+          "band": "D1",
+          "sigma": 0.13437164103547114,
+          "lambdaUnprotected": 0.39389916010727255,
+          "coefficientRms": 0.40293342739589594,
+          "belowThresholdFraction": 0.872619859420898,
+          "removedEnergyFraction": 0.08304994025904076
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection.",
+      "d2OnlyDiagnostic": {
+        "currentStrict": -6.523535899495617,
+        "d2Strict": -6.379330798240525,
+        "differenceDb": 0.14420510125509267,
+        "adopted": false
+      }
+    },
+    {
+      "axis": "d1",
+      "noise": "em_synth",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d1",
+        "k": [
+          0.6,
+          0.2,
+          0.1,
+          0.3,
+          0.3
+        ],
+        "mode": "hard",
+        "protect_qrs": false,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.005049913742692201,
+          "lambdaUnprotected": 0.007401698626779209,
+          "coefficientRms": 0.6865984915113478,
+          "belowThresholdFraction": 0.01624134494334872,
+          "removedEnergyFraction": 6.396266609778028e-07
+        },
+        {
+          "band": "D4",
+          "sigma": 0.005049913742692201,
+          "lambdaUnprotected": 0.007401698626779209,
+          "coefficientRms": 0.3280531056036651,
+          "belowThresholdFraction": 0.08188208140998741,
+          "removedEnergyFraction": 1.3766446139253047e-05
+        },
+        {
+          "band": "D3",
+          "sigma": 0.005049913742692201,
+          "lambdaUnprotected": 0.00246723287559307,
+          "coefficientRms": 0.16126992605408882,
+          "belowThresholdFraction": 0.10608345572807386,
+          "removedEnergyFraction": 8.179879526404416e-06
+        },
+        {
+          "band": "D2",
+          "sigma": 0.005049913742692201,
+          "lambdaUnprotected": 0.00493446575118614,
+          "coefficientRms": 0.041481505323809925,
+          "belowThresholdFraction": 0.3556310323122115,
+          "removedEnergyFraction": 0.0015953517234948739
+        },
+        {
+          "band": "D1",
+          "sigma": 0.005049913742692201,
+          "lambdaUnprotected": 0.014803397253558418,
+          "coefficientRms": 0.00691094890850731,
+          "belowThresholdFraction": 0.9606785039865715,
+          "removedEnergyFraction": 0.5087327457136916
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection.",
+      "d2OnlyDiagnostic": {
+        "currentStrict": 0.370772008687616,
+        "d2Strict": 0.37018739902472975,
+        "differenceDb": -0.0005846096628862596,
+        "adopted": false
+      }
+    },
+    {
+      "axis": "d1",
+      "noise": "awgn",
+      "snr": -5,
+      "config": {
+        "wavelet": "sym4",
+        "level": 5,
+        "sigma_source": "d1",
+        "k": [
+          0.6,
+          0.2,
+          0.1,
+          0.3,
+          0.3
+        ],
+        "mode": "hard",
+        "protect_qrs": false,
+        "protect_ms": 60.0,
+        "protect_rho": 0.3,
+        "threshold_approx": false
+      },
+      "bands": [
+        {
+          "band": "D5",
+          "sigma": 0.3355507580064654,
+          "lambdaUnprotected": 0.49181940747904757,
+          "coefficientRms": 0.7865518760824161,
+          "belowThresholdFraction": 0.5226670688208142,
+          "removedEnergyFraction": 0.06269500074412263
+        },
+        {
+          "band": "D4",
+          "sigma": 0.3355507580064654,
+          "lambdaUnprotected": 0.49181940747904757,
+          "coefficientRms": 0.5551663379225128,
+          "belowThresholdFraction": 0.6583744229962233,
+          "removedEnergyFraction": 0.14990712988310584
+        },
+        {
+          "band": "D3",
+          "sigma": 0.3355507580064654,
+          "lambdaUnprotected": 0.16393980249301585,
+          "coefficientRms": 0.48338777436711133,
+          "belowThresholdFraction": 0.2700312106588334,
+          "removedEnergyFraction": 0.010237232226673713
+        },
+        {
+          "band": "D2",
+          "sigma": 0.3355507580064654,
+          "lambdaUnprotected": 0.3278796049860317,
+          "coefficientRms": 0.45602814471868997,
+          "belowThresholdFraction": 0.5268765736466638,
+          "removedEnergyFraction": 0.0843554083858822
+        },
+        {
+          "band": "D1",
+          "sigma": 0.3355507580064654,
+          "lambdaUnprotected": 0.9836388149580951,
+          "coefficientRms": 0.3359454502749978,
+          "belowThresholdFraction": 0.9967346831724717,
+          "removedEnergyFraction": 0.9656358629550086
+        }
+      ],
+      "notes": "For protected D0, band thresholds shown before QRS protection; actual output above uses protection.",
+      "d2OnlyDiagnostic": {
+        "currentStrict": -3.299053948785783,
+        "d2Strict": -2.5564582091659585,
+        "differenceDb": 0.7425957396198246,
+        "adopted": false
+      }
+    }
+  ],
+  "chunksVerified": 2240,
+  "allScenesIdentical": 0,
+  "hardThresholdControl": "PASS",
+  "zeroThresholdMaxError": 3.33466587676412e-12,
+  "productionConfigurationChanged": false,
+  "archive10s": {
+    "scenes": [
+      {
+        "id": "d0-mixed--5",
+        "differenceRmsMv": 0.022958431798051897,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d0-mixed-0",
+        "differenceRmsMv": 0.013298600693134826,
+        "identicalSamplesFraction": 0.0016
+      },
+      {
+        "id": "d0-mixed-5",
+        "differenceRmsMv": 0.008271260147378978,
+        "identicalSamplesFraction": 0.0016
+      },
+      {
+        "id": "d0-mixed-10",
+        "differenceRmsMv": 0.005360873215618609,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d0-mixed-15",
+        "differenceRmsMv": 0.0038206480229051173,
+        "identicalSamplesFraction": 0.0024
+      },
+      {
+        "id": "d0-mixed-20",
+        "differenceRmsMv": 0.0030146390110933267,
+        "identicalSamplesFraction": 0.0048
+      },
+      {
+        "id": "d0-pli--5",
+        "differenceRmsMv": 0.030393937571759,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d0-pli-0",
+        "differenceRmsMv": 0.017286871992067163,
+        "identicalSamplesFraction": 0.0004
+      },
+      {
+        "id": "d0-pli-5",
+        "differenceRmsMv": 0.010279568441894565,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d0-pli-10",
+        "differenceRmsMv": 0.006200624684140793,
+        "identicalSamplesFraction": 0.0004
+      },
+      {
+        "id": "d0-pli-15",
+        "differenceRmsMv": 0.003737774307068512,
+        "identicalSamplesFraction": 0.002
+      },
+      {
+        "id": "d0-pli-20",
+        "differenceRmsMv": 0.0024777073672303377,
+        "identicalSamplesFraction": 0.0056
+      },
+      {
+        "id": "d0-ma_synth--5",
+        "differenceRmsMv": 0.2739343296834787,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d0-ma_synth-0",
+        "differenceRmsMv": 0.15611974180748944,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d0-ma_synth-5",
+        "differenceRmsMv": 0.08903486971274152,
+        "identicalSamplesFraction": 0.0004
+      },
+      {
+        "id": "d0-ma_synth-10",
+        "differenceRmsMv": 0.05067906153424369,
+        "identicalSamplesFraction": 0.0004
+      },
+      {
+        "id": "d0-ma_synth-15",
+        "differenceRmsMv": 0.028819808695940693,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d0-ma_synth-20",
+        "differenceRmsMv": 0.016365167366920366,
+        "identicalSamplesFraction": 0.0016
+      },
+      {
+        "id": "d0-em_synth--5",
+        "differenceRmsMv": 0.0006372469316879397,
+        "identicalSamplesFraction": 0.0824
+      },
+      {
+        "id": "d0-em_synth-0",
+        "differenceRmsMv": 0.0006133541379673863,
+        "identicalSamplesFraction": 0.074
+      },
+      {
+        "id": "d0-em_synth-5",
+        "differenceRmsMv": 0.0006003028740527453,
+        "identicalSamplesFraction": 0.0672
+      },
+      {
+        "id": "d0-em_synth-10",
+        "differenceRmsMv": 0.0005889943195503239,
+        "identicalSamplesFraction": 0.0624
+      },
+      {
+        "id": "d0-em_synth-15",
+        "differenceRmsMv": 0.0005779149833423326,
+        "identicalSamplesFraction": 0.0568
+      },
+      {
+        "id": "d0-em_synth-20",
+        "differenceRmsMv": 0.0005776816454913538,
+        "identicalSamplesFraction": 0.0576
+      },
+      {
+        "id": "d1-mixed--5",
+        "differenceRmsMv": 0.1474839354893891,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d1-mixed-0",
+        "differenceRmsMv": 0.08289475119099042,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d1-mixed-5",
+        "differenceRmsMv": 0.04694441202205905,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d1-mixed-10",
+        "differenceRmsMv": 0.02567617556620835,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d1-mixed-15",
+        "differenceRmsMv": 0.014614507760059625,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d1-mixed-20",
+        "differenceRmsMv": 0.008418642244863122,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d1-pli--5",
+        "differenceRmsMv": 0.0655767445844839,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d1-pli-0",
+        "differenceRmsMv": 0.036225205304428174,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d1-pli-5",
+        "differenceRmsMv": 0.019621551603716387,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d1-pli-10",
+        "differenceRmsMv": 0.010505679754672027,
+        "identicalSamplesFraction": 0.0036
+      },
+      {
+        "id": "d1-pli-15",
+        "differenceRmsMv": 0.0059604609729302675,
+        "identicalSamplesFraction": 0.0072
+      },
+      {
+        "id": "d1-pli-20",
+        "differenceRmsMv": 0.0037352735142462917,
+        "identicalSamplesFraction": 0.01
+      },
+      {
+        "id": "d1-ma_synth--5",
+        "differenceRmsMv": 0.10879399891420394,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d1-ma_synth-0",
+        "differenceRmsMv": 0.06164876493307203,
+        "identicalSamplesFraction": 0.0004
+      },
+      {
+        "id": "d1-ma_synth-5",
+        "differenceRmsMv": 0.03495492800902706,
+        "identicalSamplesFraction": 0.0016
+      },
+      {
+        "id": "d1-ma_synth-10",
+        "differenceRmsMv": 0.02060486442678263,
+        "identicalSamplesFraction": 0.0016
+      },
+      {
+        "id": "d1-ma_synth-15",
+        "differenceRmsMv": 0.012524098341485677,
+        "identicalSamplesFraction": 0.0016
+      },
+      {
+        "id": "d1-ma_synth-20",
+        "differenceRmsMv": 0.007453977228459878,
+        "identicalSamplesFraction": 0.0048
+      },
+      {
+        "id": "d1-em_synth--5",
+        "differenceRmsMv": 0.0027868501378514477,
+        "identicalSamplesFraction": 0.0196
+      },
+      {
+        "id": "d1-em_synth-0",
+        "differenceRmsMv": 0.002787265419458334,
+        "identicalSamplesFraction": 0.0172
+      },
+      {
+        "id": "d1-em_synth-5",
+        "differenceRmsMv": 0.0027892938927157464,
+        "identicalSamplesFraction": 0.0148
+      },
+      {
+        "id": "d1-em_synth-10",
+        "differenceRmsMv": 0.0027868091018092584,
+        "identicalSamplesFraction": 0.0144
+      },
+      {
+        "id": "d1-em_synth-15",
+        "differenceRmsMv": 0.0027869740124486257,
+        "identicalSamplesFraction": 0.0132
+      },
+      {
+        "id": "d1-em_synth-20",
+        "differenceRmsMv": 0.002785844812849313,
+        "identicalSamplesFraction": 0.0132
+      },
+      {
+        "id": "d0-mixed-25",
+        "differenceRmsMv": 0.0026148233648975745,
+        "identicalSamplesFraction": 0.0036
+      },
+      {
+        "id": "d0-impulse--5",
+        "differenceRmsMv": 0.00045376612486459775,
+        "identicalSamplesFraction": 0.562
+      },
+      {
+        "id": "d0-impulse-0",
+        "differenceRmsMv": 0.00041816613154476486,
+        "identicalSamplesFraction": 0.418
+      },
+      {
+        "id": "d0-impulse-5",
+        "differenceRmsMv": 0.0003838470988544057,
+        "identicalSamplesFraction": 0.2904
+      },
+      {
+        "id": "d0-impulse-10",
+        "differenceRmsMv": 0.00037045171277942375,
+        "identicalSamplesFraction": 0.19
+      },
+      {
+        "id": "d0-impulse-15",
+        "differenceRmsMv": 0.0003187507720735743,
+        "identicalSamplesFraction": 0.1528
+      },
+      {
+        "id": "d0-impulse-20",
+        "differenceRmsMv": 0.000304881864217355,
+        "identicalSamplesFraction": 0.166
+      },
+      {
+        "id": "d0-impulse-25",
+        "differenceRmsMv": 0.000294746299493148,
+        "identicalSamplesFraction": 0.1656
+      },
+      {
+        "id": "d0-pli-25",
+        "differenceRmsMv": 0.0019107112117376151,
+        "identicalSamplesFraction": 0.0052
+      },
+      {
+        "id": "d0-bw_synth--5",
+        "differenceRmsMv": 0.000572140804007867,
+        "identicalSamplesFraction": 0.0852
+      },
+      {
+        "id": "d0-bw_synth-0",
+        "differenceRmsMv": 0.0005721754374527603,
+        "identicalSamplesFraction": 0.0752
+      },
+      {
+        "id": "d0-bw_synth-5",
+        "differenceRmsMv": 0.0005720996085060475,
+        "identicalSamplesFraction": 0.0728
+      },
+      {
+        "id": "d0-bw_synth-10",
+        "differenceRmsMv": 0.0005727487915479428,
+        "identicalSamplesFraction": 0.0684
+      },
+      {
+        "id": "d0-bw_synth-15",
+        "differenceRmsMv": 0.0005723028834421746,
+        "identicalSamplesFraction": 0.0624
+      },
+      {
+        "id": "d0-bw_synth-20",
+        "differenceRmsMv": 0.0005727813852075367,
+        "identicalSamplesFraction": 0.0596
+      },
+      {
+        "id": "d0-bw_synth-25",
+        "differenceRmsMv": 0.0005719719360929927,
+        "identicalSamplesFraction": 0.0632
+      },
+      {
+        "id": "d0-ma_synth-25",
+        "differenceRmsMv": 0.009322252245936058,
+        "identicalSamplesFraction": 0.0028
+      },
+      {
+        "id": "d0-em_synth-25",
+        "differenceRmsMv": 0.0005738581826964154,
+        "identicalSamplesFraction": 0.06
+      },
+      {
+        "id": "d0-awgn--5",
+        "differenceRmsMv": 0.24535518419133592,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d0-awgn-0",
+        "differenceRmsMv": 0.13789583077179826,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d0-awgn-5",
+        "differenceRmsMv": 0.07750534008732927,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d0-awgn-10",
+        "differenceRmsMv": 0.043321020635635116,
+        "identicalSamplesFraction": 0.0004
+      },
+      {
+        "id": "d0-awgn-15",
+        "differenceRmsMv": 0.024399735963373338,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d0-awgn-20",
+        "differenceRmsMv": 0.014138321050274766,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d0-awgn-25",
+        "differenceRmsMv": 0.008373823569448003,
+        "identicalSamplesFraction": 0.0004
+      },
+      {
+        "id": "d1-mixed-25",
+        "differenceRmsMv": 0.0051969664756279154,
+        "identicalSamplesFraction": 0.002
+      },
+      {
+        "id": "d1-impulse--5",
+        "differenceRmsMv": 0.0027930745356346373,
+        "identicalSamplesFraction": 0.0732
+      },
+      {
+        "id": "d1-impulse-0",
+        "differenceRmsMv": 0.0027360602881095755,
+        "identicalSamplesFraction": 0.0488
+      },
+      {
+        "id": "d1-impulse-5",
+        "differenceRmsMv": 0.002733277309627371,
+        "identicalSamplesFraction": 0.0328
+      },
+      {
+        "id": "d1-impulse-10",
+        "differenceRmsMv": 0.002725046628649885,
+        "identicalSamplesFraction": 0.0232
+      },
+      {
+        "id": "d1-impulse-15",
+        "differenceRmsMv": 0.0027219193861348955,
+        "identicalSamplesFraction": 0.018
+      },
+      {
+        "id": "d1-impulse-20",
+        "differenceRmsMv": 0.0026978938969535356,
+        "identicalSamplesFraction": 0.0172
+      },
+      {
+        "id": "d1-impulse-25",
+        "differenceRmsMv": 0.002699384385159305,
+        "identicalSamplesFraction": 0.0196
+      },
+      {
+        "id": "d1-pli-25",
+        "differenceRmsMv": 0.0028239461854469984,
+        "identicalSamplesFraction": 0.014
+      },
+      {
+        "id": "d1-bw_synth--5",
+        "differenceRmsMv": 0.0025793494518891505,
+        "identicalSamplesFraction": 0.0108
+      },
+      {
+        "id": "d1-bw_synth-0",
+        "differenceRmsMv": 0.002578670322488959,
+        "identicalSamplesFraction": 0.0104
+      },
+      {
+        "id": "d1-bw_synth-5",
+        "differenceRmsMv": 0.0025790107547749457,
+        "identicalSamplesFraction": 0.0088
+      },
+      {
+        "id": "d1-bw_synth-10",
+        "differenceRmsMv": 0.0025791911108198856,
+        "identicalSamplesFraction": 0.012
+      },
+      {
+        "id": "d1-bw_synth-15",
+        "differenceRmsMv": 0.002579380002839021,
+        "identicalSamplesFraction": 0.01
+      },
+      {
+        "id": "d1-bw_synth-20",
+        "differenceRmsMv": 0.002578877425774118,
+        "identicalSamplesFraction": 0.0092
+      },
+      {
+        "id": "d1-bw_synth-25",
+        "differenceRmsMv": 0.002578684764353714,
+        "identicalSamplesFraction": 0.0116
+      },
+      {
+        "id": "d1-ma_synth-25",
+        "differenceRmsMv": 0.005302542032508063,
+        "identicalSamplesFraction": 0.0064
+      },
+      {
+        "id": "d1-em_synth-25",
+        "differenceRmsMv": 0.002786416864503543,
+        "identicalSamplesFraction": 0.0152
+      },
+      {
+        "id": "d1-awgn--5",
+        "differenceRmsMv": 0.15920560720898963,
+        "identicalSamplesFraction": 0.0004
+      },
+      {
+        "id": "d1-awgn-0",
+        "differenceRmsMv": 0.08917170686562013,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d1-awgn-5",
+        "differenceRmsMv": 0.05032628461183899,
+        "identicalSamplesFraction": 0.0
+      },
+      {
+        "id": "d1-awgn-10",
+        "differenceRmsMv": 0.02757453978325521,
+        "identicalSamplesFraction": 0.0008
+      },
+      {
+        "id": "d1-awgn-15",
+        "differenceRmsMv": 0.015639232052427895,
+        "identicalSamplesFraction": 0.0004
+      },
+      {
+        "id": "d1-awgn-20",
+        "differenceRmsMv": 0.00903792474901176,
+        "identicalSamplesFraction": 0.0024
+      },
+      {
+        "id": "d1-awgn-25",
+        "differenceRmsMv": 0.005523147098701485,
+        "identicalSamplesFraction": 0.0016
+      }
+    ],
+    "allScenesIdentical": 0,
+    "sourceReproduced": false
+  }
+}

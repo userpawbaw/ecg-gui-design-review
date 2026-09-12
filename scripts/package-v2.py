@@ -1,9 +1,9 @@
 """Package built browser app and generated data; no runtime CDN dependencies."""
 from pathlib import Path
 import zipfile,json,hashlib,shutil
-root=Path(__file__).resolve().parents[1];built=root/'dist/v2';out=root/'dist/ecg-signal-studio-v2.2.zip'
-assert (built/'replay/manifest.json').exists();manifest=json.loads((built/'replay/manifest.json').read_text());assert len(manifest['scenes'])==98
-readme='''ECG Signal Studio v2.2 — 실행 패키지
+root=Path(__file__).resolve().parents[1];built=root/'dist/v2';out=root/'dist/ecg-signal-studio-v2.2.1.zip'
+assert (built/'replay/manifest.json').exists();manifest=json.loads((built/'replay/manifest.json').read_text(encoding='utf-8'));assert len(manifest['scenes'])==98
+readme='''ECG Signal Studio v2.2.1 — 실행 패키지
 
 1. ZIP 전체를 압축 해제합니다.
 2. Node.js 24 이상이 설치된 PC에서 START_WINDOWS.cmd를 실행합니다.
@@ -23,9 +23,10 @@ Attract는 별도로 표시한 10초 구간 반복이고 600초 자료의 대체
 자동 PC 검수(선택): qa 폴더에서 npm install, npx playwright install chromium, npm test.
 10분 실시간 검수: PowerShell에서 $env:ECG_SOAK="1"; npm test
 결과: qa/test-results 및 qa/playwright-report. 이 패키지의 브라우저 검수는 아직 미실행입니다.
+수정 사항과 SWT 조사 결과는 REVISION.md와 SWT-AUDIT.json에 있습니다.
 자세한 한계 및 상태는 IMPLEMENTATION.md와 VERIFICATION.json을 읽어주세요.
 '''
-qa={'name':'ecg-v2-pc-check','private':True,'type':'module','scripts':{'test':'playwright test','test:headed':'playwright test --headed'},'devDependencies':{'@playwright/test':json.loads((root/'prototype/v2/package-lock.json').read_text())['packages']['node_modules/@playwright/test']['version']}}
+qa={'name':'ecg-v2-pc-check','private':True,'type':'module','scripts':{'test':'playwright test','test:headed':'playwright test --headed'},'devDependencies':{'@playwright/test':json.loads((root/'prototype/v2/package-lock.json').read_text(encoding='utf-8'))['packages']['node_modules/@playwright/test']['version']}}
 config="import {defineConfig} from '@playwright/test';import path from 'node:path';export default defineConfig({testDir:'./tests',timeout:45000,workers:1,reporter:[['html',{open:'never'}],['json',{outputFile:'test-results/results.json'}]],use:{baseURL:'http://127.0.0.1:4173',viewport:{width:1920,height:1080},trace:'on',video:'on',screenshot:'on'},webServer:{command:'node ../serve-v2.cjs',env:{ECG_V2_ROOT:path.resolve('../app')},port:4173,reuseExistingServer:true}});"
 with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=4)as z:
  for f in built.rglob('*'):
@@ -33,7 +34,7 @@ with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=4)as z:
  z.write(root/'scripts/serve-v2.cjs','serve-v2.cjs');z.writestr('START_WINDOWS.cmd','@echo off\r\ncd /d "%~dp0"\r\nset "ECG_V2_ROOT=%~dp0app"\r\nnode serve-v2.cjs\r\npause\r\n');z.writestr('README.txt',readme)
  z.writestr('qa/package.json',json.dumps(qa,indent=2));z.writestr('qa/playwright.config.ts',config)
  z.write(root/'prototype/v2/browser-tests/expo.spec.ts','qa/tests/expo.spec.ts')
- z.write(root/'docs/17_v2_team_handoff.md','IMPLEMENTATION.md');z.write(root/'verification/v2-long-data.json','VERIFICATION.json')
+ z.write(root/'docs/18_swt_audit_and_ui_revision.md','REVISION.md');z.write(root/'verification/swt-replay-audit.json','SWT-AUDIT.json');z.write(root/'docs/17_v2_team_handoff.md','IMPLEMENTATION.md');z.write(root/'verification/v2-long-data.json','VERIFICATION.json')
  license=root/'prototype/v2/SHADCN-LICENSE.txt'
  if license.exists():z.write(license,'licenses/shadcn-ui.txt')
  for license in (root/'prototype/v2/node_modules').rglob('*'):

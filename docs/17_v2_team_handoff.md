@@ -1,6 +1,8 @@
-# ECG Signal Studio v2.2 — 팀 실행·디버깅 안내
+# ECG Signal Studio v2.2.1 — 팀 실행·디버깅 안내
 
 2026-09-12. 구현과 자동 데이터/상태 검증을 완료한 검수용 빌드다. 실제 브라우저 렌더링·전시장 사용성·AFE 검증 완료를 뜻하지 않는다.
+
+v2.2.1 변경 및 SWT 데이터 판정: `docs/18_swt_audit_and_ui_revision.md` (실행 ZIP에서는 `REVISION.md`). 글꼴은 논의안이며 이번에는 변경하지 않았다.
 
 ## 실행
 
@@ -29,7 +31,8 @@ Git에는 대용량 생성 자료를 넣지 않았다. 실행 ZIP의 `app/replay
 | Pause / 구간 고정 | 정지된 Sweep과 연속 고정 구간은 다름 | 고정 후 방법 변경에도 구간 유지 |
 | 방법 rail | 대표군부터 선택, 전체 방법 펼침 | hover/focus는 점선 후보이고 클릭 선택·지표 변경과 별개 |
 | Pin | 현재 방법을 세 번째 비교 대상으로 유지 | 클릭으로 selected를 바꿔도 pinned 불변 |
-| Reference와 차이 | Output−Reference, ×1/3/5는 표시 확대 | Input−Output residual과 혼동 금지 |
+| Reference와 차이 | Output−Reference가 Sweep/Scroll과 동기 재생; ×1/3/5는 표시 확대 | 축은 확대 전 실제 mV; Input−Output residual과 혼동 금지 |
+| 왼쪽 축 | 행마다 5개 수치와 `[mV]` | 차이 표시 확대 시 축 범위도 대응 |
 | 근거 | Local / Session / Experiment의 서로 다른 범위 | 600초 Session을 캐시된 일부 구간으로 계산하지 않음 |
 | 출처 | record·fs·시작·seed·checkpoint·원본 SHA | GUI 애니메이션을 실제 LIVE로 표시하지 않음 |
 | 시연 장면 | 고정 조건의 10–20초 구간 A/B/C | 출력 우세를 보고 위치 선정하지 않았음; 우세 보장 안 함 |

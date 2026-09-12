@@ -1,0 +1,25 @@
+{
+  "version": "2.2.1",
+  "unitTests": 13,
+  "unitTestsPass": true,
+  "domAndCanvasCommands": "PASS",
+  "build": "TypeScript/Vite PASS",
+  "unchangedReplayArchiveLegacyFiles": 1968,
+  "sourceDataChanged": false,
+  "nativeBrowser": "NOT VERIFIED",
+  "actualTenMinuteSoak": "NOT VERIFIED",
+  "fontsChanged": false,
+  "deferred": [
+    "font choice/application",
+    "loss-evolution view",
+    "lab/analysis integration"
+  ],
+  "release": {
+    "file": "ecg-signal-studio-v2.2.1.zip",
+    "bytes": 340775483,
+    "sha256": "9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed",
+    "zipCRC": "PASS",
+    "chunks": 1960,
+    "browser": "NOT VERIFIED"
+  }
+}

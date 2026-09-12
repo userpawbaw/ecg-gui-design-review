@@ -1,14 +1,18 @@
 {
-  "date": "2026-09-12T08:21:25.127Z",
+  "date": "2026-09-12T10:26:15.780Z",
   "checks": [
     "initial archive",
     "Pin persists",
     "same-time method selection",
-    "separate Difference state",
+    "Difference stays enabled through play/pause/freeze/mode changes",
+    "Sweep and Scroll advance Canvas commands with Difference",
+    "five left y ticks on every row",
+    "Difference gain labels physical mV",
     "missing request retains canvas and labels",
     "cancel restores valid condition"
   ],
   "pass": true,
+  "canvasCommands": "PASS (recording stub)",
   "canvasPixels": "NOT VERIFIED",
   "nativeBrowser": "NOT VERIFIED"
 }

@@ -15,3 +15,28 @@ test('ten-minute actual replay soak',async({page},info)=>{
  await page.goto('/');await expect(page.getByLabel('자료 길이')).toBeVisible();await page.getByLabel('자료 길이').selectOption('long');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();await page.getByRole('button',{name:'처음으로',exact:true}).click();await page.getByRole('button',{name:'재생',exact:true}).click();
  await page.waitForTimeout(605000);await expect(page.getByRole('button',{name:'재생',exact:true})).toBeVisible();await expect(page.locator('canvas')).toHaveAttribute('data-time','600.000');await page.screenshot({path:info.outputPath('10-minute-end.png')});
 });
+
+test('Difference follows playback in both viewer sizes and retains physical axis ticks',async({page},info)=>{
+ await page.goto('/');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
+ for(const large of [false,true]){
+  if(large)await page.getByRole('button',{name:'크게 비교'}).click();
+  const viewer=large?page.getByRole('dialog'):page.locator('.viewer');
+  await viewer.getByText('표시 설정',{exact:true}).click();
+  await viewer.getByLabel('Reference와 차이',{exact:true}).uncheck();
+  await viewer.getByRole('button',{name:'재생',exact:true}).click();
+  await viewer.getByLabel('Reference와 차이',{exact:true}).check();
+  const canvas=viewer.locator('canvas');
+  for(const mode of ['Sweep','Scroll']){
+   await viewer.getByRole('button',{name:mode,exact:true}).click();
+   await expect(viewer.getByRole('button',{name:'일시정지',exact:true})).toBeVisible();
+   await expect(canvas).toHaveAttribute('data-mode',mode.toLowerCase());
+   await expect(canvas).toHaveAttribute('data-difference','true');
+   const before=await canvas.getAttribute('data-time');await expect.poll(()=>canvas.getAttribute('data-time')).not.toBe(before);
+   await page.screenshot({path:info.outputPath(`${large?'large':'standard'}-difference-${mode}.png`),fullPage:true});
+  }
+  await viewer.getByRole('button',{name:'구간 고정',exact:true}).click();
+  await expect(canvas).toHaveAttribute('data-difference','true');
+  await viewer.getByLabel('차이 표시 확대',{exact:true}).selectOption('5');
+  await page.screenshot({path:info.outputPath(`${large?'large':'standard'}-axis-gain5.png`),fullPage:true});
+ }
+});

@@ -1,6 +1,8 @@
 # Review plan
 
-Updated: 2026-09-11
+Updated: 2026-09-12
+
+User approved the concrete wireframe review in chat on 2026-09-12 ("응"). The five proposed layout decisions are accepted. R1a/R1b implementation is now authorized and in progress, followed by R2–R5; the earlier wireframe approval gate below is satisfied. Actual browser/hardware gates remain independent.
 
 ## Goal
 

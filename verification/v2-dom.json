@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-12T08:05:48.943Z",
+  "checks": [
+    "initial archive",
+    "Pin persists",
+    "same-time method selection",
+    "separate Difference state",
+    "missing request retains canvas and labels",
+    "cancel restores valid condition"
+  ],
+  "pass": true,
+  "canvasPixels": "NOT VERIFIED",
+  "nativeBrowser": "NOT VERIFIED"
+}

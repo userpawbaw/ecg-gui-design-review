@@ -1,5 +1,13 @@
 # Work log
 
+## 2026-09-12 — wireframes approved; R1 implemented
+
+- User approved the five wireframe decisions. Restored local baseline from verified GitHub blobs (38 restored / 22 intact), preserving latest main planning and recovering v2 source.
+- Implemented bottom method rail, optional sidebar, persistent Pin, separate Output−Reference Difference Lens, explicit metric scope and last-valid-scene loading/error behavior.
+- Checks: engine 9 PASS; DOM state 6 PASS; TypeScript/Vite build PASS. Browser pixels/native behavior remain NV. Details: docs/16_implementation_progress.md and verification/v2-dom.json.
+- Long-data resume audit found 51 prior files identical and d1-mixed-15.json malformed/hash mismatch. Quarantined it; regenerate this condition plus 46 missing conditions, no retraining.
+- R1 code checkpoint CONDITIONAL PASS; next R2 full data grid/chunks, then R3–R5. No actual browser execution is claimed.
+
 ## 2026-09-11 — W1–W10 wireframe preparation
 
 - Reconciled remote main 90792b9 with the interrupted local v2 implementation. Preserved 27 source/log files in recovery commit f8b63004f54d29700b101d1e25599d62bc4e6e35; verified remote tree hashes and branch ref. No inference output JSON or installed dependency tree was added to Git.

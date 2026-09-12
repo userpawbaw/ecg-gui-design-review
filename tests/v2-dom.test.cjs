@@ -1,0 +1,32 @@
+// DOM/state verification only. Canvas pixels and native dialog behavior are not tested.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {JSDOM}=require('jsdom');
+const {build}=require('../prototype/v2/node_modules/esbuild');
+const root=path.resolve(__dirname,'..');
+const wait=()=>new Promise(r=>setTimeout(r,40));
+(async()=>{
+ const bank=JSON.parse(fs.readFileSync(path.join(root,'prototype/v2/public/archive.json'),'utf8'));
+ const output=await build({entryPoints:[path.join(root,'prototype/v2/src/main.tsx')],bundle:true,write:false,format:'iife',loader:{'.css':'empty'},define:{'process.env.NODE_ENV':'"test"'}});
+ const dom=new JSDOM('<div id="root"></div>',{url:'http://localhost/',runScripts:'outside-only',pretendToBeVisual:true});const w=dom.window;
+ w.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});w.ResizeObserver=class{observe(){}disconnect(){}};w.HTMLCanvasElement.prototype.getContext=()=>null;
+ w.fetch=async url=>String(url).includes('archive.json')?{ok:true,json:async()=>bank}:{ok:false};
+ w.eval(output.outputFiles[0].text);for(let i=0;i<20&&!w.document.querySelector('canvas');i++)await wait();
+ assert.ok(w.document.querySelector('canvas'),'archive loads');
+ const buttons=()=>[...w.document.querySelectorAll('button')];
+ const click=async text=>{const b=buttons().find(x=>x.textContent===text);assert.ok(b,text);b.click();await wait();};
+ const initialTime=w.document.querySelector('.time').textContent;
+ await click('현재 방법 Pin');assert.ok(w.document.querySelector('canvas').className.includes('three'));
+ w.document.querySelector('[data-method="M04"]').click();await wait();assert.equal(w.document.querySelector('[data-method="M04"]').getAttribute('aria-pressed'),'true');assert.equal(w.document.querySelector('.time').textContent,initialTime);
+ assert.ok(w.document.querySelector('canvas').className.includes('three'),'pin survives selection');
+ const difference=[...w.document.querySelectorAll('label')].find(x=>x.textContent==='Reference와 차이').querySelector('input');difference.click();await wait();assert.ok(w.document.querySelector('canvas').className.includes('difference'));
+ const old=bank.scenes;bank.scenes=bank.scenes.filter(s=>s.cond!=='pli');
+ const select=w.document.querySelector('[aria-label="잡음 종류"]');select.value='pli';select.dispatchEvent(new w.Event('change',{bubbles:true}));await wait();
+ assert.ok(w.document.querySelector('.request-status').textContent.includes('요청 실패'));
+ assert.ok(w.document.querySelector('canvas'),'last valid trace retained on missing condition');
+ assert.ok(w.document.querySelector('.viewer-heading p').textContent.includes('혼합 잡음'),'display label still matches old scene');
+ assert.ok(!w.document.querySelector('.viewer-heading p').textContent.includes('전원 간섭'));
+ bank.scenes=old;await click('요청 취소');await wait();
+ assert.ok(!w.document.querySelector('.request-status'),'cancel returns to valid condition');
+ const result={date:new Date().toISOString(),checks:['initial archive','Pin persists','same-time method selection','separate Difference state','missing request retains canvas and labels','cancel restores valid condition'],pass:true,canvasPixels:'NOT VERIFIED',nativeBrowser:'NOT VERIFIED'};
+ fs.writeFileSync(path.join(root,'verification/v2-dom.json'),JSON.stringify(result,null,2));console.log(result);dom.window.close();
+})().catch(e=>{console.error(e);process.exitCode=1;});

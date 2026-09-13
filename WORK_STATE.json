@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "work": "ECG GUI design review",
+  "updated_at": "2026-09-13T14:40:39.780867+00:00",
+  "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
+  "request_status": "in_progress",
+  "current_request": "지속 복구 지침·6시간 예약 설정 완료 및 docs/20 검토 후 정식 UI 수정 워크플로우 완성",
+  "overall_project_status": "conditional_pass_external_verification_pending",
+  "plan": "PLAN.md",
+  "policy": "WORK_RESUME_POLICY.md",
+  "completed_verified": [
+    "S0–S5 source review, independent freeze, comparison, synthesis and scoped automated checks",
+    "R1 GUI implementation and v2.2.1 requested revision; actual browser NV",
+    "R2 98 conditions × 600 s data and chunk verification",
+    "SWT final tuning provenance audit; algorithm repair not performed",
+    "6-hour automation creation confirmed enabled"
+  ],
+  "in_progress": [
+    "P1 persistent workflow checkpoint",
+    "P2 docs/20 review and final workflow"
+  ],
+  "not_started": [
+    "P3 document consistency check and final remote commit verification"
+  ],
+  "blocked": [
+    {
+      "id": "R4",
+      "reason": "Target-PC browser/render/native/10-minute soak evidence not yet available; prior local browser access blocked",
+      "resume_when": "Authorized execution environment or target-PC result bundle is available"
+    },
+    {
+      "id": "R5-closeout",
+      "reason": "Final team closeout depends on R4"
+    }
+  ],
+  "deferred_not_authorized": [
+    "SWT patient-disjoint retuning and output regeneration",
+    "Global font replacement",
+    "Loss evolution view and tab integration"
+  ],
+  "major_artifacts": [
+    "docs/17_v2_team_handoff.md",
+    "docs/18_swt_audit_and_ui_revision.md",
+    "docs/19_swt_tuning_version_review.md",
+    "docs/20_ui_refinement_workflow.md",
+    "WORK_RESUME_POLICY.md",
+    "AGENTS.md"
+  ],
+  "verification": [
+    {
+      "scope": "v2.2.1 implementation (prior verified checkpoint)",
+      "result": "13 tests, DOM/Canvas command regressions, TS/Vite build PASS; actual browser NOT VERIFIED",
+      "evidence": "docs/18_swt_audit_and_ui_revision.md"
+    },
+    {
+      "scope": "final SWT provenance audit (prior verified checkpoint)",
+      "result": "Audit complete, independent-patient holdout claim FAIL; no retuning performed",
+      "evidence": "docs/19_swt_tuning_version_review.md"
+    }
+  ],
+  "last_good_checkpoint": {
+    "commit": "4505c0e750901447445ab30b280d026446826594",
+    "description": "Verified SWT audit and unchanged v2.2.1 release"
+  },
+  "base_remote_commit": "3bf2fef54af8b341ff224c5281db79e6a9497e45",
+  "release": {
+    "filename": "ecg-signal-studio-v2.2.1.zip",
+    "sha256": "9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed",
+    "verification": "Previously verified archive; not re-executed by this documentation task"
+  },
+  "execution": {
+    "status": "in_progress",
+    "owner": "current Work turn",
+    "task_id": "workflow-policy-and-ui-refinement-20260913",
+    "started_at": "2026-09-13T14:40:39.780867+00:00",
+    "last_progress_at": "2026-09-13T14:40:39.780867+00:00",
+    "last_progress": "GitHub baseline restored and automation create success",
+    "note": "This record is not a global mutex; corroborate actual execution activity before resuming"
+  },
+  "automation": {
+    "id": "6aa6b5a5ae688191ba361ee495000ffc",
+    "conversation_id": "6a984afd-0864-83ee-8f6c-ff3a32e4c56e",
+    "enabled": true,
+    "timezone": "Asia/Seoul",
+    "schedule": "BEGIN:VEVENT\nDTSTART:20260913T143933Z\nRRULE:FREQ=HOURLY;INTERVAL=6\nEND:VEVENT",
+    "verified": "create returned success=true and is_enabled=true; next_run_time unspecified"
+  },
+  "next_action": "Complete docs/20 comparison against current source, write docs/21 and reusable request template, verify and commit"
+}

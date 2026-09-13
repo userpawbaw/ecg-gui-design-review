@@ -2,7 +2,11 @@
 
 Updated: 2026-09-13
 
-User approved the concrete wireframe review in chat on 2026-09-12 ("응"). The five proposed layout decisions are accepted. R1a/R1b implementation is now authorized and in progress, followed by R2–R5; the earlier wireframe approval gate below is satisfied. Actual browser/hardware gates remain independent.
+## Current Work control
+
+Read `WORK_STATE.json` and `WORK_RESUME_POLICY.md` first. Latest task: persist interruption-safe instructions and a 6-hour status/resume automation; then review docs/20 and complete the UI refinement workflow. P1 settings checkpoint in progress; P2 final workflow and P3 validation/commit remain. Historical approval gates below are satisfied. The SWT audit is complete; retuning is a separate proposed task, not automatically authorized. R4/R5 external verification gates remain open.
+
+User approved the concrete wireframe review in chat on 2026-09-12 ("응"). The five proposed layout decisions are accepted. R1a/R1b and R2 implementation have since completed; R3/R5 handoff is prepared and R4 remains unverified; the earlier wireframe approval gate below is satisfied. Actual browser/hardware gates remain independent.
 
 ## SWT final-tuning audit — 2026-09-13
 
@@ -47,7 +51,7 @@ Produce a source-grounded independent GUI design, compare it fairly with the ear
 | R0-v2.1 functional planning | COMPLETE | docs/12_expo_gui_plan_v2_1_final.md; playback, Inspector, Difference Lens, 600 s data, chunk architecture, stack baseline |
 | R0-v2.2 Expo/UI refinement | COMPLETE | docs/13_expo_gui_plan_v2_2_final.md; message hierarchy, Attention→Choose→Compare→Inspect→Prove, presentation behavior, scenario rules, failure states, wireframe handoff |
 | Recovery checkpoint | PASS / implementation PARTIAL | recovery/v2-interrupted-20260911 at f8b6300: 52/98 scenes, 9 engine tests, build and one-condition reproduction verified; docs/14_resume_audit.md |
-| W1–W10 wireframe preparation | COMPLETE / REVIEW PENDING | docs/15_wireframe_review.md + docs/wireframes/index.html; 12 static boards including three W7 failure variants. Static geometry is not browser QA |
+| W1–W10 wireframe preparation | COMPLETE / APPROVED 2026-09-12 | docs/15_wireframe_review.md + docs/wireframes/index.html; 12 static boards including three W7 failure variants. Static geometry is not browser QA |
 
 ## Source boundary
 
@@ -83,9 +87,9 @@ Key frozen principles include:
 - Loading/error transitions retain the last valid scene and atomically swap waveform + labels + legend + metrics.
 - Avoid winner badges, automatic best/worst regions, waveform morphing, long persistence trails, and visual effects that could distort scientific interpretation.
 
-## Resume
+## Historical resume note — superseded, not an active approval gate
 
-**Current phase: wireframe review, concrete boards ready.** Read docs/15_wireframe_review.md and docs/wireframes/index.html. Review the bottom method rail, contextual sidebar, preserved two-row height with Difference Lens, compact three-row scrolling and metric reveal timing. Do not start further GUI implementation, dependency migration, 600 s inference, or Playwright QA-runner changes until these wireframe decisions are reviewed.
+**Historical phase: wireframe review, concrete boards ready.** Read docs/15_wireframe_review.md and docs/wireframes/index.html. Review the bottom method rail, contextual sidebar, preserved two-row height with Difference Lens, compact three-row scrolling and metric reveal timing. Do not start further GUI implementation, dependency migration, 600 s inference, or Playwright QA-runner changes until these wireframe decisions are reviewed.
 
 The earlier v2 work was already started after user authorization and interrupted before the newer planning documents were discovered. It is preserved on recovery/v2-interrupted-20260911, not merged into this baseline. This distinction corrects the apparent conflict between old local work and the newer wireframe-first plan. Browser execution remains NOT VERIFIED.
 

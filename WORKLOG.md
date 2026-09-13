@@ -1,5 +1,12 @@
 # Work log
 
+## 2026-09-13 — P1 Work recovery policy and scheduling
+
+- Restored latest control documents from GitHub 3bf2fef after detecting stale local PLAN. Prior verified source/output work was not rerun. docs/20 exists at this remote baseline.
+- Created one six-hour ECG automation, enabled, Asia/Seoul. No prior ECG automation existed; unrelated tasks retained. Tool creation succeeded; actual future scheduled run is not yet observed.
+- Added persistent project AGENTS rules, WORK_RESUME_POLICY and structured WORK_STATE. Actual concurrent execution must be checked; unknown concurrency means no mutation. No platform-wide mutex is claimed.
+- Corrected obsolete PLAN resume/approval labels. P1 ready for remote verification; P2 docs/20 synthesis and P3 validation remain. Existing algorithm/UI pending proposals do not become authorized by scheduling.
+
 ## 2026-09-13 — final SWT tuning/provenance audit
 
 - User challenged whether later SWT tuning had been omitted. Checked all four visible original branches; read/hash-verified 56 main-branch files, plus source selection and historical/alternate tune code. Current main source 97b2a00; best artifacts in three branches are identical, fourth waveform-only branch has no tracked best artifacts.

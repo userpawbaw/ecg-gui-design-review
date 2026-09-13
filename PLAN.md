@@ -4,7 +4,7 @@ Updated: 2026-09-13
 
 ## Current Work control
 
-Read `WORK_STATE.json` and `WORK_RESUME_POLICY.md` first. Latest task: persist interruption-safe instructions and a 6-hour status/resume automation; then review docs/20 and complete the UI refinement workflow. P1 settings checkpoint in progress; P2 final workflow and P3 validation/commit remain. Historical approval gates below are satisfied. The SWT audit is complete; retuning is a separate proposed task, not automatically authorized. R4/R5 external verification gates remain open.
+Read `WORK_STATE.json` and `WORK_RESUME_POLICY.md` first. Latest task: persist interruption-safe instructions and a 6-hour status/resume automation; then review docs/20 and complete the UI refinement workflow. P1 settings checkpoint COMPLETE (0154b384, remote verified); P2 final workflow COMPLETE with document/source checks PASS; P3 remote publication and closeout in progress. Historical approval gates below are satisfied. The SWT audit is complete; retuning is a separate proposed task, not automatically authorized. R4/R5 external verification gates remain open.
 
 User approved the concrete wireframe review in chat on 2026-09-12 ("응"). The five proposed layout decisions are accepted. R1a/R1b and R2 implementation have since completed; R3/R5 handoff is prepared and R4 remains unverified; the earlier wireframe approval gate below is satisfied. Actual browser/hardware gates remain independent.
 

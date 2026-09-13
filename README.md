@@ -80,3 +80,11 @@ npm run audit
 목표 PC의 브라우저·배율·키보드·스크린리더 검수, 최신 코드 bank 재생성, 병리 annotation·분포 export, 기존 bridge 어댑터·source/session 확장, 실제 AFE·전시장 시험이 남아 있습니다. 이전 16개 프레임과 10개 동선의 유지·통합·대기 사유는 최종 명세에서 추적합니다.
 
 각 단계는 목표·산출물·검사·판정·다음 행동을 Markdown과 원격 검증 커밋으로 남깁니다. 이는 저장소의 작업 규칙이며 사용량 제한 중에도 계속 실행되는 서비스는 아닙니다.
+
+## Work 운영과 UI 수정
+
+- [UI 수정 워크플로우 v1.0](docs/21_ui_refinement_workflow_final.md): 20번 초안 분석·변경 분류·검증·전후 비교·모델 운용 기준.
+- [짧은 요청과 완료 기록 템플릿](docs/templates/ui_change_request.md)
+- [중단 복구·6시간 예약 실행 규칙](WORK_RESUME_POLICY.md), [현재 작업 상태](WORK_STATE.json)
+
+예약은 상태 확인 후 필요한 경우에만 승인된 미완료 작업을 재개한다. 완료된 실험을 반복하거나 실제 진행 중인 실행과 동시에 수정하지 않는다.

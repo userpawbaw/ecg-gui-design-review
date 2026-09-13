@@ -1,5 +1,13 @@
 # Work log
 
+## 2026-09-13 — P2 UI refinement workflow finalized
+
+- P1 remote commit 0154b384 verified. Re-read automation via peek: exactly one matching ECG task, enabled, HOURLY/INTERVAL=6, Asia/Seoul. No actual scheduled run is claimed.
+- Preserved docs/20 original body and added a pointer to docs/21. Final workflow maps each draft idea to adopt/develop/conditional/reject, defines U1–U4 impact classes and F0–F6 execution, lean user input, evidence matrix, model-effort hypotheses, global review triggers and visual-editor round-trip rules. Added a reusable template.
+- Read pinned v2 source: CSS/Canvas font split, export pauses playback, existing browser assertion coverage. These details drive the workflow; no app or model output changed.
+- Validation PASS: 10 fetched blobs match the pinned tree; 16 local links resolve; original draft preserved; fences and required control paths checked. First link audit found a missing local docs/12, restored unchanged pinned remote file and reran. Evidence: verification/workflow-policy-review.json. Decision-path review is not a scheduler concurrency test.
+- Actual browser/AFE/soak and effort-cost benchmarking not performed. P2 COMPLETE; P3 final remote commit and state closeout remain.
+
 ## 2026-09-13 — P1 Work recovery policy and scheduling
 
 - Restored latest control documents from GitHub 3bf2fef after detecting stale local PLAN. Prior verified source/output work was not rerun. docs/20 exists at this remote baseline.

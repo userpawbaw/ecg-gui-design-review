@@ -1,0 +1,148 @@
+{
+  "checked_at": "2026-09-13T14:47:25.314237+00:00",
+  "scope": "Document consistency and retrieved source blob identity; no GUI/runtime execution",
+  "result": "PASS",
+  "source_base": "3bf2fef54af8b341ff224c5281db79e6a9497e45",
+  "source_files_verified": [
+    {
+      "path": "prototype/v2/src/main.tsx",
+      "git_blob": "0cccc803968191f2eaf6d48fe46ee0ffb561fdf4"
+    },
+    {
+      "path": "prototype/v2/src/Plot.tsx",
+      "git_blob": "530ed5a4567495f5ae29286e5d5035df16152252"
+    },
+    {
+      "path": "prototype/v2/src/plot-scale.ts",
+      "git_blob": "d3c9d7ad412e7d0db69a1302b7433e508de5f95a"
+    },
+    {
+      "path": "prototype/v2/src/engine.ts",
+      "git_blob": "350e725339d74b8b67bd4b3139f4cae0578ceba8"
+    },
+    {
+      "path": "prototype/v2/src/style.css",
+      "git_blob": "91709c7d230a955356bcb13e24a3f761b39bc789"
+    },
+    {
+      "path": "prototype/v2/package.json",
+      "git_blob": "97e66742ba034b31e50850b3c4f027be68565402"
+    },
+    {
+      "path": "prototype/v2/browser-tests/expo.spec.ts",
+      "git_blob": "a44834aba77f6ee721104420317fb145e4fe62ef"
+    },
+    {
+      "path": "prototype/v2/playwright.config.ts",
+      "git_blob": "a8643e514a31e0101177bdf613aaa2394c22e20e"
+    },
+    {
+      "path": "docs/12_expo_gui_plan_v2_1_final.md",
+      "git_blob": "5ca3112473b4db68dd938648236204f4c73ccc06"
+    },
+    {
+      "path": "docs/20_ui_refinement_workflow.md",
+      "git_blob": "e17e13684bb5bd491234f2ce7ac5a80a2734841b"
+    }
+  ],
+  "original_draft_body_preserved": true,
+  "local_links_checked": 16,
+  "links": [
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "20_ui_refinement_workflow.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "08_manual_addendum.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "12_expo_gui_plan_v2_1_final.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "13_expo_gui_plan_v2_2_final.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "15_wireframe_review.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "17_v2_team_handoff.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "18_swt_audit_and_ui_revision.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "19_swt_tuning_version_review.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "../WORK_RESUME_POLICY.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "../WORK_STATE.json"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "../PLAN.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "templates/ui_change_request.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "17_v2_team_handoff.md"
+    },
+    {
+      "from": "docs/21_ui_refinement_workflow_final.md",
+      "target": "../WORK_RESUME_POLICY.md"
+    },
+    {
+      "from": "docs/templates/ui_change_request.md",
+      "target": "../21_ui_refinement_workflow_final.md"
+    },
+    {
+      "from": "docs/20_ui_refinement_workflow.md",
+      "target": "21_ui_refinement_workflow_final.md"
+    }
+  ],
+  "automation": {
+    "enabled_confirmed_by": "create + subsequent peek",
+    "recurrence": "RRULE:FREQ=HOURLY;INTERVAL=6",
+    "timezone": "Asia/Seoul",
+    "future_execution": "NOT VERIFIED",
+    "global_mutex": "Not implemented or claimed; unknown concurrency is a no-write exit"
+  },
+  "scenario_review": {
+    "active_run": "no edits or duplicate commands",
+    "complete_plan": "brief status only",
+    "interrupted_stage": "verify/rerun affected stage and dependencies, then continue authorized remainder",
+    "stale_running_label": "check job/process/log progress",
+    "concurrency_unknown": "no-write exit",
+    "missing_required_input": "blocked or awaiting_user, not full completion",
+    "physical_axis_change": "U3 rather than cosmetic U1",
+    "font_change": "CSS and Canvas coverage"
+  },
+  "scenario_review_type": "document decision-path review, not live scheduler tests",
+  "initial_issue": "Link audit found local docs/12 absent; fetched unchanged pinned remote file and reran successfully",
+  "not_performed": [
+    "GUI changes",
+    "browser execution",
+    "model-effort A/B benchmark",
+    "threshold retuning/data regeneration",
+    "quota-reset detection"
+  ],
+  "document_hashes": {
+    "docs/21_ui_refinement_workflow_final.md": "bc3757313e96611d014fafe4e09ea5ddf26a83aa1d96217f057131ac6ca41cb0",
+    "docs/templates/ui_change_request.md": "7ac6027ee25fe4299d99809120762d49592c2b22b7d02a229df586d04040aa51",
+    "docs/20_ui_refinement_workflow.md": "ff2813f820e0dd7826c7ab5b0ce3d4fd6f447593d264fea3d931c956c4f806de",
+    "WORK_RESUME_POLICY.md": "649a521b6cf2dd22f0f289a249a930fa32794ec9223ade0b70f9e301abb1606a"
+  }
+}

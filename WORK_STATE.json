@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "work": "ECG GUI design review",
-  "updated_at": "2026-09-13T14:40:39.780867+00:00",
+  "updated_at": "2026-09-13T14:47:57.324238+00:00",
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "in_progress",
   "current_request": "지속 복구 지침·6시간 예약 설정 완료 및 docs/20 검토 후 정식 UI 수정 워크플로우 완성",
@@ -13,15 +13,14 @@
     "R1 GUI implementation and v2.2.1 requested revision; actual browser NV",
     "R2 98 conditions × 600 s data and chunk verification",
     "SWT final tuning provenance audit; algorithm repair not performed",
-    "6-hour automation creation confirmed enabled"
+    "6-hour automation creation confirmed enabled",
+    "P1 persistent policy remote commit 0154b384 verified",
+    "P2 final UI workflow, draft preservation, source and link checks PASS"
   ],
   "in_progress": [
-    "P1 persistent workflow checkpoint",
-    "P2 docs/20 review and final workflow"
+    "P3 final remote publication and checkpoint closeout"
   ],
-  "not_started": [
-    "P3 document consistency check and final remote commit verification"
-  ],
+  "not_started": [],
   "blocked": [
     {
       "id": "R4",
@@ -44,7 +43,10 @@
     "docs/19_swt_tuning_version_review.md",
     "docs/20_ui_refinement_workflow.md",
     "WORK_RESUME_POLICY.md",
-    "AGENTS.md"
+    "AGENTS.md",
+    "docs/21_ui_refinement_workflow_final.md",
+    "docs/templates/ui_change_request.md",
+    "verification/workflow-policy-review.json"
   ],
   "verification": [
     {
@@ -56,11 +58,16 @@
       "scope": "final SWT provenance audit (prior verified checkpoint)",
       "result": "Audit complete, independent-patient holdout claim FAIL; no retuning performed",
       "evidence": "docs/19_swt_tuning_version_review.md"
+    },
+    {
+      "scope": "workflow documentation",
+      "result": "PASS: 10 retrieved blobs, 16 local links, original docs/20 body preserved, decision paths reviewed",
+      "evidence": "verification/workflow-policy-review.json"
     }
   ],
   "last_good_checkpoint": {
-    "commit": "4505c0e750901447445ab30b280d026446826594",
-    "description": "Verified SWT audit and unchanged v2.2.1 release"
+    "commit": "0154b3845b3ae349c1c5ef20b9a0005192aa6aaf",
+    "description": "Work policy and six-hour automation configuration persisted; remote contents verified"
   },
   "base_remote_commit": "3bf2fef54af8b341ff224c5281db79e6a9497e45",
   "release": {
@@ -73,8 +80,8 @@
     "owner": "current Work turn",
     "task_id": "workflow-policy-and-ui-refinement-20260913",
     "started_at": "2026-09-13T14:40:39.780867+00:00",
-    "last_progress_at": "2026-09-13T14:40:39.780867+00:00",
-    "last_progress": "GitHub baseline restored and automation create success",
+    "last_progress_at": "2026-09-13T14:47:57.324238+00:00",
+    "last_progress": "P2 document validation PASS; publishing final workflow",
     "note": "This record is not a global mutex; corroborate actual execution activity before resuming"
   },
   "automation": {
@@ -83,7 +90,7 @@
     "enabled": true,
     "timezone": "Asia/Seoul",
     "schedule": "BEGIN:VEVENT\nDTSTART:20260913T143933Z\nRRULE:FREQ=HOURLY;INTERVAL=6\nEND:VEVENT",
-    "verified": "create returned success=true and is_enabled=true; next_run_time unspecified"
+    "verified": "Create success and subsequent peek confirmed exactly one matching enabled task; future run not yet observed"
   },
-  "next_action": "Complete docs/20 comparison against current source, write docs/21 and reusable request template, verify and commit"
+  "next_action": "Verify final workflow remote commit/content, then close current settings/document request. R4/R5 remain external gates."
 }

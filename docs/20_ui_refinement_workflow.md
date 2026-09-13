@@ -1,3 +1,5 @@
+> 후속 정식 지침: [21번 UI 수정 워크플로우 v1.0](21_ui_refinement_workflow_final.md). 아래는 2026-09-13 논의 초안 원문이며, 실제 운영에는 21번을 적용한다.
+
 # ECG GUI UI refinement workflow — 시각 피드백·모델 운용 기록
 
 작성: 2026-09-13  

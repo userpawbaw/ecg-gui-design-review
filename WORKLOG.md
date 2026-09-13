@@ -1,5 +1,12 @@
 # Work log
 
+## 2026-09-13 — P3 closeout verified
+
+- Final workflow commit 44fd7fd1bdef9f396a29206ce4d50528b5d9d0cb and all eight changed blobs verified on remote main. Source/data/frozen artifact tree comparison against the pre-task baseline found no changes.
+- Current user request COMPLETE: project instructions and structured checkpoint persisted, six-hour automation enabled and re-read, docs/20 reviewed and final docs/21/template published with validation evidence.
+- No interrupted code or inference step rerun. Missing/stale local control documents were recovered from pinned remote sources; a link check was rerun after restoring docs/12.
+- Existing R4 actual browser/target-device gate and dependent R5 final handoff remain open. Deferred font/SWT retuning/Loss-tab ideas are not runnable work without subsequent user instruction. Next scheduled check should report this status unless new actionable evidence or steering exists.
+
 ## 2026-09-13 — P2 UI refinement workflow finalized
 
 - P1 remote commit 0154b384 verified. Re-read automation via peek: exactly one matching ECG task, enabled, HOURLY/INTERVAL=6, Asia/Seoul. No actual scheduled run is claimed.

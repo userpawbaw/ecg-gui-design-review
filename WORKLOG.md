@@ -1,5 +1,15 @@
 # Work log
 
+## 2026-09-13 — final SWT tuning/provenance audit
+
+- User challenged whether later SWT tuning had been omitted. Checked all four visible original branches; read/hash-verified 56 main-branch files, plus source selection and historical/alternate tune code. Current main source 97b2a00; best artifacts in three branches are identical, fourth waveform-only branch has no tracked best artifacts.
+- Traced F-5 → F-12 reference correction → D-9 axis-specific parameter loading → O-10/O-13 artifact preservation. GUI already uses these settings, confirmed against all 98 scene metadata. No newer differing best.json found in checked heads; local uncommitted results not observable.
+- Instantiated M03/M04 factories: DWT uses soft/D2/default k; D1 SWT uses tuned hard/D1/smaller k. Final source report explicitly admits confounding; source EXP-B already shows DWT higher on muscle noise.
+- Reproduced selector defect with a deterministic record IO stub and real selection/noise functions: both tune/holdout select 101/106/108/109; 84 cases each, same base segments, different noise. Current/historical selector ASTs match. This validates the selection defect, not real ECG performance. Independent-patient holdout prose is unsupported; no TEST leakage path found.
+- Diagnostic first config assertion exposed tuple/list serialization mismatch; normalized the report representation and reran successfully. No tuning data was changed to pass the check.
+- Added docs/19 and two provenance receipts; source/GUI/output data unchanged. No retraining, threshold reoptimization, source-repo mutation or browser verification performed. Audit COMPLETE; algorithm validation repair is the next separate work item, alongside previously deferred GUI topics.
+
+
 ## 2026-09-12 — v2.2.1 SWT audit and requested UI revision
 
 - Restored latest GitHub e0c9878 source and verified released ZIP hash. Local archive JSON was truncated; restored it byte-for-byte from the verified release before rerunning DOM checks. Long replay chunks came from that release, not incomplete local raw generation files.

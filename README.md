@@ -1,5 +1,7 @@
 # ECG Signal Studio · GUI Design Review
 
+**2026-09-13 SWT 재검토:** [최종 튜닝 이력 감사](docs/19_swt_tuning_version_review.md). GUI의 튜닝값 누락은 없었지만 원본의 독립 환자 holdout 설명과 실제 선택 경로가 일치하지 않습니다. 실행 결과 재현과 튜닝 검증의 타당성을 구분했습니다.
+
 **v2.2.1 수정:** 재생 중 Reference 차이 표시, 왼쪽 mV 축, 실제 SWT 설정 설명을 추가했습니다. [SWT 조사·변경 내역·글꼴 논의안](docs/18_swt_audit_and_ui_revision.md). 기존 저장 출력은 유지했습니다. 실행 파일은 `ecg-signal-studio-v2.2.1.zip`입니다.
 
 **2026-09-12 v2.2 구현 업데이트:** Sweep/Scroll·큰 비교 창·Reference 차이·Pin·30초 청크 재생·Attract를 구현했습니다. 98조건 전체의 600초 출력과 1,078건 지표 검증을 완료했습니다. [팀 실행 안내](docs/17_v2_team_handoff.md), [구현·복구 기록](docs/16_implementation_progress.md), [데이터 검사](verification/v2-long-data.json)를 먼저 읽어주세요. 실제 브라우저와 AFE 검수는 아직 미완료입니다.

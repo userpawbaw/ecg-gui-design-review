@@ -1,0 +1,667 @@
+{
+  "checkedAt": "2026-09-13",
+  "guiSourceCommit": "5eb27946087faca3c6e70b3925e2ba132b2ee680",
+  "branches": [
+    {
+      "name": "claude/adoring-einstein-opbvaj",
+      "sha": "615f934f1d4d0bd213e1e440da48259f31ae2fa8",
+      "truncated": false,
+      "artifacts": [
+        {
+          "mode": "100644",
+          "path": "ecgdn/config.py",
+          "sha": "d0f102bb054da9a05aa834d5144410720da37f8b",
+          "size": 6358,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/d0f102bb054da9a05aa834d5144410720da37f8b"
+        },
+        {
+          "mode": "100644",
+          "path": "ecgdn/methods/wavelet.py",
+          "sha": "14ac45188fea99c2d92c5d486732960335c8a8fe",
+          "size": 9543,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/14ac45188fea99c2d92c5d486732960335c8a8fe"
+        },
+        {
+          "mode": "100644",
+          "path": "results/d0/tune_swt/best.json",
+          "sha": "08c895e721d2089297588ed4ffec35d2afc13de9",
+          "size": 236,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/08c895e721d2089297588ed4ffec35d2afc13de9"
+        },
+        {
+          "mode": "100644",
+          "path": "results/d1/tune_swt/best.json",
+          "sha": "fe7069c3c416cb32a0cf5a13b33f42c55ac5fb58",
+          "size": 234,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/fe7069c3c416cb32a0cf5a13b33f42c55ac5fb58"
+        },
+        {
+          "mode": "100644",
+          "path": "scripts/run_exp.py",
+          "sha": "df469df1802564f757af7286dc081a0bf789634f",
+          "size": 13736,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/df469df1802564f757af7286dc081a0bf789634f"
+        },
+        {
+          "mode": "100644",
+          "path": "scripts/tune_swt.py",
+          "sha": "240206fa3b5fca8b804d939c02259556070d6cb9",
+          "size": 8472,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/240206fa3b5fca8b804d939c02259556070d6cb9"
+        }
+      ]
+    },
+    {
+      "name": "claude/bold-sagan-7j27yq",
+      "sha": "7a9dc5e3e86bd3e5ea991882e4486616e676721b",
+      "truncated": false,
+      "artifacts": [
+        {
+          "mode": "100644",
+          "path": "ecgdn/config.py",
+          "sha": "d0f102bb054da9a05aa834d5144410720da37f8b",
+          "size": 6358,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/d0f102bb054da9a05aa834d5144410720da37f8b"
+        },
+        {
+          "mode": "100644",
+          "path": "ecgdn/methods/wavelet.py",
+          "sha": "14ac45188fea99c2d92c5d486732960335c8a8fe",
+          "size": 9543,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/14ac45188fea99c2d92c5d486732960335c8a8fe"
+        },
+        {
+          "mode": "100644",
+          "path": "results/d0/tune_swt/best.json",
+          "sha": "08c895e721d2089297588ed4ffec35d2afc13de9",
+          "size": 236,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/08c895e721d2089297588ed4ffec35d2afc13de9"
+        },
+        {
+          "mode": "100644",
+          "path": "results/d1/tune_swt/best.json",
+          "sha": "fe7069c3c416cb32a0cf5a13b33f42c55ac5fb58",
+          "size": 234,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/fe7069c3c416cb32a0cf5a13b33f42c55ac5fb58"
+        },
+        {
+          "mode": "100644",
+          "path": "scripts/run_exp.py",
+          "sha": "efdea50a42d331bf1f3010be7c54bf5014dbc0cc",
+          "size": 13641,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/efdea50a42d331bf1f3010be7c54bf5014dbc0cc"
+        },
+        {
+          "mode": "100644",
+          "path": "scripts/tune_swt.py",
+          "sha": "9bf0f63b8e8f5960f87fb91f4e5dbac44698e4bb",
+          "size": 8264,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/9bf0f63b8e8f5960f87fb91f4e5dbac44698e4bb"
+        }
+      ]
+    },
+    {
+      "name": "claude/ecg-denoising-dsp-dl-comparison-b5wjvj",
+      "sha": "97b2a00bb2e1f0f20ec181f7e1e96a73ce947ce5",
+      "truncated": false,
+      "artifacts": [
+        {
+          "mode": "100644",
+          "path": "ecgdn/config.py",
+          "sha": "d0f102bb054da9a05aa834d5144410720da37f8b",
+          "size": 6358,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/d0f102bb054da9a05aa834d5144410720da37f8b"
+        },
+        {
+          "mode": "100644",
+          "path": "ecgdn/methods/wavelet.py",
+          "sha": "14ac45188fea99c2d92c5d486732960335c8a8fe",
+          "size": 9543,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/14ac45188fea99c2d92c5d486732960335c8a8fe"
+        },
+        {
+          "mode": "100644",
+          "path": "results/d0/tune_swt/best.json",
+          "sha": "08c895e721d2089297588ed4ffec35d2afc13de9",
+          "size": 236,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/08c895e721d2089297588ed4ffec35d2afc13de9"
+        },
+        {
+          "mode": "100644",
+          "path": "results/d1/tune_swt/best.json",
+          "sha": "fe7069c3c416cb32a0cf5a13b33f42c55ac5fb58",
+          "size": 234,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/fe7069c3c416cb32a0cf5a13b33f42c55ac5fb58"
+        },
+        {
+          "mode": "100644",
+          "path": "scripts/run_exp.py",
+          "sha": "efdea50a42d331bf1f3010be7c54bf5014dbc0cc",
+          "size": 13641,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/efdea50a42d331bf1f3010be7c54bf5014dbc0cc"
+        },
+        {
+          "mode": "100644",
+          "path": "scripts/tune_swt.py",
+          "sha": "9bf0f63b8e8f5960f87fb91f4e5dbac44698e4bb",
+          "size": 8264,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/9bf0f63b8e8f5960f87fb91f4e5dbac44698e4bb"
+        }
+      ]
+    },
+    {
+      "name": "waveform-generate-only",
+      "sha": "fe24b366c33b2967e0f5c1f72ac6d53bd2437d34",
+      "truncated": false,
+      "artifacts": [
+        {
+          "mode": "100644",
+          "path": "ecgdn/config.py",
+          "sha": "157741166c6bbf6b1ebdcf6856cf5c9963e6d5dc",
+          "size": 5496,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/157741166c6bbf6b1ebdcf6856cf5c9963e6d5dc"
+        },
+        {
+          "mode": "100644",
+          "path": "ecgdn/methods/wavelet.py",
+          "sha": "14ac45188fea99c2d92c5d486732960335c8a8fe",
+          "size": 9543,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/14ac45188fea99c2d92c5d486732960335c8a8fe"
+        },
+        {
+          "mode": "100644",
+          "path": "scripts/run_exp.py",
+          "sha": "36ac8a560d1ca91df60091729f704559ce11b165",
+          "size": 9848,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/36ac8a560d1ca91df60091729f704559ce11b165"
+        },
+        {
+          "mode": "100644",
+          "path": "scripts/tune_swt.py",
+          "sha": "9bf0f63b8e8f5960f87fb91f4e5dbac44698e4bb",
+          "size": 8264,
+          "type": "blob",
+          "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/9bf0f63b8e8f5960f87fb91f4e5dbac44698e4bb"
+        }
+      ]
+    }
+  ],
+  "bestD1History": [
+    {
+      "sha": "f7092b8e4208d6ce343c84168f97d27cc4403ba1",
+      "date": "2026-08-26T14:45:04Z",
+      "title": "fix: 배포 산출물이 저장소에 하나도 없던 문제 (O-13)"
+    }
+  ],
+  "filesReadFromMainBranch": [
+    {
+      "mode": "100644",
+      "path": "README.md",
+      "sha": "ad51e88b05f5c5992a1d7a1c03eb947dca92b85a",
+      "size": 7090,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/ad51e88b05f5c5992a1d7a1c03eb947dca92b85a"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/00_review.md",
+      "sha": "001f9f496a62d8d18073d9560a4fc93f31ec54ee",
+      "size": 27712,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/001f9f496a62d8d18073d9560a4fc93f31ec54ee"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/01_design.md",
+      "sha": "c772cab173c52d2ea14cba8b685a82d7d261a4a7",
+      "size": 17685,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/c772cab173c52d2ea14cba8b685a82d7d261a4a7"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/02_procedure.md",
+      "sha": "121fa8fbdedf526fa67082a7e8093286ff8e7f81",
+      "size": 35585,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/121fa8fbdedf526fa67082a7e8093286ff8e7f81"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/03_metric_floor.md",
+      "sha": "912b1c8fe89974ce3d916c817b7fbcb01789461d",
+      "size": 2945,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/912b1c8fe89974ce3d916c817b7fbcb01789461d"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/03_metric_floor_d1.md",
+      "sha": "ff83b639d1237a52ed9c8425345fbc1897dea1ce",
+      "size": 3030,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/ff83b639d1237a52ed9c8425345fbc1897dea1ce"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/04_snr_estimator_calibration.md",
+      "sha": "902cfa895903d64e3ffe6089098c350345f2efb5",
+      "size": 7263,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/902cfa895903d64e3ffe6089098c350345f2efb5"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/04_snr_estimator_calibration_d1.md",
+      "sha": "bc748f8909d826b5ba1e9096b285c0a7cc7bb77f",
+      "size": 7352,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/bc748f8909d826b5ba1e9096b285c0a7cc7bb77f"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/05_swt_tuning.md",
+      "sha": "baa398dc03197b7ba1ef71b3fa53e8b8ba25371c",
+      "size": 1403,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/baa398dc03197b7ba1ef71b3fa53e8b8ba25371c"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/05_swt_tuning_d1.md",
+      "sha": "432c74af0bd10f78f6cf9c9066262a51c22eaf2a",
+      "size": 1411,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/432c74af0bd10f78f6cf9c9066262a51c22eaf2a"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/06_sameni_diagnosis.md",
+      "sha": "3a33b275fe37d983482965c4fc945bd5f1762437",
+      "size": 2900,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/3a33b275fe37d983482965c4fc945bd5f1762437"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/06_sameni_diagnosis_d1.md",
+      "sha": "fd56ec3e5b159e69cb502c5c1af205430d8d6ef0",
+      "size": 3203,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/fd56ec3e5b159e69cb502c5c1af205430d8d6ef0"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/07_safety_probe_d0.md",
+      "sha": "d9560b391f9645e6490fcabdbbcbdf783738d0ad",
+      "size": 3019,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/d9560b391f9645e6490fcabdbbcbdf783738d0ad"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/07_safety_probe_d1.md",
+      "sha": "5892625693cb25abdcfc5285ece9b4fd0db48cf2",
+      "size": 3019,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/5892625693cb25abdcfc5285ece9b4fd0db48cf2"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/08_acquisition.md",
+      "sha": "19bb9da84e6feff032ab7da015431351e138d1fe",
+      "size": 6504,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/19bb9da84e6feff032ab7da015431351e138d1fe"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/09_data_upload.md",
+      "sha": "99352e97297018bceb29d1fdf9f08e36810ade7e",
+      "size": 2524,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/99352e97297018bceb29d1fdf9f08e36810ade7e"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/10_loss_ablation_d0.md",
+      "sha": "11184333adba9230dc94678c94750a3d00a10a89",
+      "size": 3132,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/11184333adba9230dc94678c94750a3d00a10a89"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/10_loss_ablation_d1.md",
+      "sha": "36edc364c752ef7bd124a16cca9571bcf7d52571",
+      "size": 3272,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/36edc364c752ef7bd124a16cca9571bcf7d52571"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/11_loss_by_noise.md",
+      "sha": "4a974a7fc072e8bbe6207c40e86d75fdb8c98697",
+      "size": 9072,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/4a974a7fc072e8bbe6207c40e86d75fdb8c98697"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/12_causal_fe.md",
+      "sha": "ec0b87478a4292db277347be42e34f0a888669e7",
+      "size": 3174,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/ec0b87478a4292db277347be42e34f0a888669e7"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/13_lookahead_fe.md",
+      "sha": "f491c72f83ebf51434d4f92e0f275be05ef131ff",
+      "size": 12810,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/f491c72f83ebf51434d4f92e0f275be05ef131ff"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/14_median_vs_zerophase.md",
+      "sha": "b6039e0ca3aef6a584b44f4a5d33a2ca0b42197e",
+      "size": 7439,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/b6039e0ca3aef6a584b44f4a5d33a2ca0b42197e"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/15_reference_and_training.md",
+      "sha": "2ec192d11c473ad29ed936336e7215bf51cf0b98",
+      "size": 28109,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/2ec192d11c473ad29ed936336e7215bf51cf0b98"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/16_fe_metric_audit.md",
+      "sha": "2117581a7d507c6b8170cef6be67d09a5fbc9821",
+      "size": 23266,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/2117581a7d507c6b8170cef6be67d09a5fbc9821"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/17_checklists.md",
+      "sha": "b2ca3f41fef8cd78e4632471202b2a80c2ff20e3",
+      "size": 10180,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/b2ca3f41fef8cd78e4632471202b2a80c2ff20e3"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/18_glossary.md",
+      "sha": "91253f40f61412ac1c9b98f2532712ed3baae225",
+      "size": 13513,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/91253f40f61412ac1c9b98f2532712ed3baae225"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/19_record_keeping.md",
+      "sha": "2be7538bb19b9c4989b24c83fb4e697a04974cb0",
+      "size": 15954,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/2be7538bb19b9c4989b24c83fb4e697a04974cb0"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/20_findings.md",
+      "sha": "51a449547a5efae97c10256b9170fa24c4aa7e8f",
+      "size": 203412,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/51a449547a5efae97c10256b9170fa24c4aa7e8f"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/21_decisions.md",
+      "sha": "cacaa9cb50d0a7a5c7211c3a564aecd50529428f",
+      "size": 122300,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/cacaa9cb50d0a7a5c7211c3a564aecd50529428f"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/22_incidents.md",
+      "sha": "3d4e76c7f0e5c886e6245671ca16729d7055394c",
+      "size": 72172,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/3d4e76c7f0e5c886e6245671ca16729d7055394c"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/23_ai_review.md",
+      "sha": "535ff5d15c949689cc0f0ab11e41d5dfb54925dd",
+      "size": 10729,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/535ff5d15c949689cc0f0ab11e41d5dfb54925dd"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/30_realtime_demo.md",
+      "sha": "86c88fb22d945e676862489fdbfa548381053112",
+      "size": 55906,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/86c88fb22d945e676862489fdbfa548381053112"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/31_demo_design_review.md",
+      "sha": "0c749b69c6fd5ae762baf986401a348c35bd93e1",
+      "size": 19730,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/0c749b69c6fd5ae762baf986401a348c35bd93e1"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/32_metric_cards.md",
+      "sha": "9cc23ab1b8a85629f6be05375efe96cc62e2c6a0",
+      "size": 3184,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/9cc23ab1b8a85629f6be05375efe96cc62e2c6a0"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/33_card_design_samples.md",
+      "sha": "72b82c380a0e93ac86fce7974a3fe602f9b0cb9e",
+      "size": 8686,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/72b82c380a0e93ac86fce7974a3fe602f9b0cb9e"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/34_visual_plan.md",
+      "sha": "29cdd55e1ae44462dac7379dbf0c05a746021bf3",
+      "size": 17050,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/29cdd55e1ae44462dac7379dbf0c05a746021bf3"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/35_external_compute.md",
+      "sha": "3cb5b59b1b5e65a5cd2c2862d906e309822bd1af",
+      "size": 17766,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/3cb5b59b1b5e65a5cd2c2862d906e309822bd1af"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/36_related_work.md",
+      "sha": "8fa9898f3532248824e8b879d48a10ee944e692f",
+      "size": 5415,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/8fa9898f3532248824e8b879d48a10ee944e692f"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/90_results_d0.md",
+      "sha": "8ccf1e6773a6fa200b7c130afb37856a0de7082a",
+      "size": 17145,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/8ccf1e6773a6fa200b7c130afb37856a0de7082a"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/90_results_d1.md",
+      "sha": "d99f393bf6fa977b6fe964c62d748b9e0988dc68",
+      "size": 16856,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/d99f393bf6fa977b6fe964c62d748b9e0988dc68"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/91_report.md",
+      "sha": "9c846606e08376d2e6d4574ae9acf27aeeda4508",
+      "size": 228468,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/9c846606e08376d2e6d4574ae9acf27aeeda4508"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/92_axis_gap.md",
+      "sha": "a907d5c304b008eeeb3477a42e0b88191e01606a",
+      "size": 6928,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/a907d5c304b008eeeb3477a42e0b88191e01606a"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/93_slides.md",
+      "sha": "f3c8ada72be83ea65c8cd742443d219b212e7316",
+      "size": 6142,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/f3c8ada72be83ea65c8cd742443d219b212e7316"
+    },
+    {
+      "mode": "100644",
+      "path": "docs/99_status.md",
+      "sha": "9ec273f9d0ddc8856c174eb9df455f5055afe5d1",
+      "size": 45860,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/9ec273f9d0ddc8856c174eb9df455f5055afe5d1"
+    },
+    {
+      "mode": "100644",
+      "path": "ecgdn/config.py",
+      "sha": "d0f102bb054da9a05aa834d5144410720da37f8b",
+      "size": 6358,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/d0f102bb054da9a05aa834d5144410720da37f8b"
+    },
+    {
+      "mode": "100644",
+      "path": "ecgdn/methods/wavelet.py",
+      "sha": "14ac45188fea99c2d92c5d486732960335c8a8fe",
+      "size": 9543,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/14ac45188fea99c2d92c5d486732960335c8a8fe"
+    },
+    {
+      "mode": "100644",
+      "path": "results/d0/tune_swt/best.json",
+      "sha": "08c895e721d2089297588ed4ffec35d2afc13de9",
+      "size": 236,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/08c895e721d2089297588ed4ffec35d2afc13de9"
+    },
+    {
+      "mode": "100644",
+      "path": "results/d0/tune_swt/manifest.json",
+      "sha": "7e5a0fde698dfbfd19666ccf003f4d14cf048298",
+      "size": 444,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/7e5a0fde698dfbfd19666ccf003f4d14cf048298"
+    },
+    {
+      "mode": "100644",
+      "path": "results/d0/tune_swt/search.csv",
+      "sha": "a06463f06a169c45b4272204ba59d134f23ab721",
+      "size": 9299,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/a06463f06a169c45b4272204ba59d134f23ab721"
+    },
+    {
+      "mode": "100644",
+      "path": "results/d1/report/table_main.csv",
+      "sha": "a7abd58be2434bce928f38dfc31120411299dbcc",
+      "size": 37247,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/a7abd58be2434bce928f38dfc31120411299dbcc"
+    },
+    {
+      "mode": "100644",
+      "path": "results/d1/tune_swt/best.json",
+      "sha": "fe7069c3c416cb32a0cf5a13b33f42c55ac5fb58",
+      "size": 234,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/fe7069c3c416cb32a0cf5a13b33f42c55ac5fb58"
+    },
+    {
+      "mode": "100644",
+      "path": "results/d1/tune_swt/manifest.json",
+      "sha": "ca31cfc6061b8afc3aa326cce9d3e2e90d31f094",
+      "size": 503,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/ca31cfc6061b8afc3aa326cce9d3e2e90d31f094"
+    },
+    {
+      "mode": "100644",
+      "path": "results/d1/tune_swt/search.csv",
+      "sha": "9ea151fb2c92d4af3c1fc85eba317563f30d6495",
+      "size": 12590,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/9ea151fb2c92d4af3c1fc85eba317563f30d6495"
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/build_demo_bank.py",
+      "sha": "4c091c5e7b100ce6232dab425b48ce2fd16561e7",
+      "size": 26794,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/4c091c5e7b100ce6232dab425b48ce2fd16561e7"
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/run_exp.py",
+      "sha": "efdea50a42d331bf1f3010be7c54bf5014dbc0cc",
+      "size": 13641,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/efdea50a42d331bf1f3010be7c54bf5014dbc0cc"
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/tune_swt.py",
+      "sha": "9bf0f63b8e8f5960f87fb91f4e5dbac44698e4bb",
+      "size": 8264,
+      "type": "blob",
+      "url": "https://api.github.com/repos/userpawbaw/ECG_denoising_method_comparision/git/blobs/9bf0f63b8e8f5960f87fb91f4e5dbac44698e4bb"
+    }
+  ]
+}

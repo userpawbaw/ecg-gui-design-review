@@ -1,8 +1,16 @@
 # Review plan
 
-Updated: 2026-09-12
+Updated: 2026-09-13
 
 User approved the concrete wireframe review in chat on 2026-09-12 ("응"). The five proposed layout decisions are accepted. R1a/R1b implementation is now authorized and in progress, followed by R2–R5; the earlier wireframe approval gate below is satisfied. Actual browser/hardware gates remain independent.
+
+## SWT final-tuning audit — 2026-09-13
+
+- COMPLETE: four source branches and final docs checked; current best.json matches all 98 GUI scenes. See docs/19_swt_tuning_version_review.md.
+- CONFIRMED: M03/M04 differ in shrinkage and parameter settings; they do not isolate decimation.
+- DEFECT FOUND: D1 tune and holdout select the same first four TRAIN records; only noise seeds change. Independent-patient holdout claim FAIL. No TEST contamination path found in this check.
+- Follow-up research work: correct explicit record/patient split and generated prose, run controlled comparisons and retuning, then version affected replay outputs. Not executed by this audit; preserve current release.
+- GUI/AFE/browser/font/loss-tab work remains as below. Do not claim this audit fixes the original research protocol.
 
 ## v2.2.1 user-feedback revision — 2026-09-12
 

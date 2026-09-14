@@ -10,6 +10,10 @@
 - Updated DOM and Playwright checks for the new control contract. Twelve relevant engine/axis tests PASS; updated DOM/Canvas-command regression PASS; TypeScript/Vite build PASS.
 - An initial full `npm test` attempt reported 12 PASS and one ENOENT for gitignored `public/replay/manifest.json`; the initial DOM attempt likewise lacked generated `public/archive.json`. The archive was reconstructed from tracked bank data for UI tests. The 10-minute chunk data was not regenerated, so the unrelated chunk test remains unavailable rather than relabeled PASS.
 - Next: publish/read back this on-lock checkpoint, then attempt scoped Chromium rendering and interaction tests. Actual 10-minute/target-PC R4 remains separate.
+- Implementation checkpoint `632fcbcfa058f333d30758f5d22a5b6bc88d8075` was published and its nine intended paths plus generation-2 ownership were read back from remote main.
+- Added switch on/off/on state coverage; the final DOM regression has 14 checks and PASS. Playwright Chromium installation ended exit 1 after repeated 30-second CDN download timeouts; no system Chromium/Chrome executable was found. No browser test started, so pixels and native interaction remain NOT VERIFIED.
+- The old `ecg-signal-studio-v2.2.1.zip` was not regenerated because complete ignored 600-second replay inputs are not in this checkout. It does not contain the new UI source. No substitute archive or partial package was published.
+- All commands and the browser installer reached terminal exit states. Release generation 2 as a conditional completion: source implementation and available automated checks complete; browser/package/target-PC R4 remains blocked. Evidence: `verification/ui-polish-20260915.json`.
 
 ## 2026-09-15 — D3 verified checkpoint and lock release
 

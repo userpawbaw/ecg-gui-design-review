@@ -1,0 +1,26 @@
+{
+  "date_utc": "2026-09-14T20:53:06.317Z",
+  "scope": ["UI-01", "UI-03", "UI-04"],
+  "owner_id": "automation-ecg-ui-20260914T203857Z-982efb68",
+  "generation": 2,
+  "base_commit": "c9083aa2096f16b33221f32bb5cd95d0f2c14250",
+  "claim_commit": "077e0b1ed74047e04eced9684e1d82651332422f",
+  "implementation_commit": "632fcbcfa058f333d30758f5d22a5b6bc88d8075",
+  "checks": [
+    {"command": "npm ci (root)", "exit_code": 0, "result": "PASS"},
+    {"command": "npm ci (prototype/v2)", "exit_code": 0, "result": "PASS"},
+    {"command": "node --import tsx --test tests/attract.test.ts tests/engine.test.ts tests/plot-scale.test.ts", "exit_code": 0, "result": "12/12 PASS"},
+    {"command": "node tests/v2-dom.test.cjs", "exit_code": 0, "result": "14 checks PASS; Canvas commands only, pixels not inspected"},
+    {"command": "npm run build (prototype/v2)", "exit_code": 0, "result": "TypeScript and Vite PASS"},
+    {"command": "npx playwright install chromium", "exit_code": 1, "result": "Repeated 30-second CDN download timeouts; browser not installed"},
+    {"command": "system browser lookup", "exit_code": 0, "result": "No Chromium/Chrome executable found"}
+  ],
+  "unavailable_checks": [
+    "The full v2 chunk test needs gitignored prototype/v2/public/replay artifacts, which were absent.",
+    "Playwright pixel/interaction checks could not start without a browser.",
+    "The target-PC native and 10-minute soak gates remain R4."
+  ],
+  "data_actions": "scripts/prepare-v2.cjs reconstructed the ignored 10-second archive from tracked bank data for DOM/build checks. It did not run inference or regenerate 600-second replay data. Its stale methods.json output was not retained.",
+  "release_package": "The previously verified ecg-signal-studio-v2.2.1.zip was not regenerated and does not contain this UI source update.",
+  "verdict": "CONDITIONAL PASS"
+}

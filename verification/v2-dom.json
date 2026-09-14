@@ -1,10 +1,10 @@
 {
-  "date": "2026-09-14T20:46:51.951Z",
+  "date": "2026-09-14T20:52:40.748Z",
   "checks": [
     "initial archive",
     "always-visible basic display tools",
     "advanced settings default collapsed",
-    "semantic switches",
+    "semantic switch state transitions",
     "explicit large-view contrast rule",
     "Pin persists",
     "same-time method selection",

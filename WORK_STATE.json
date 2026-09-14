@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "work": "ECG GUI design review",
-  "updated_at": "2026-09-14T20:47:05.026Z",
+  "updated_at": "2026-09-14T20:53:06.317Z",
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "in_progress",
+  "request_status": "completed_conditional",
   "current_request": "승인된 UI-01/03/04 구현 및 범위에 맞는 자동 검증",
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -20,19 +20,15 @@
     "D1 shared-lock start commit d7ae76f verified on remote; no cross-host process claim",
     "D2 UI discussion and lock-policy documents remotely verified at 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c",
     "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained",
-    "UI-01/03/04 source implementation prepared; 12 targeted tests, updated DOM regression and TypeScript/Vite build PASS"
+    "UI-01/03/04 source implementation remotely verified at 632fcbc; 12 targeted tests, 14 DOM checks and TypeScript/Vite build PASS"
   ],
-  "in_progress": [
-    "UI-01: approved contrast fix",
-    "UI-03: approved always-visible basic display controls",
-    "UI-04: approved switch/toggle presentation"
-  ],
+  "in_progress": [],
   "not_started": [],
   "blocked": [
     {
       "id": "R4",
-      "reason": "Target-PC browser/render/native/10-minute soak evidence not yet available; prior local browser access blocked",
-      "resume_when": "Authorized execution environment or target-PC result bundle is available"
+      "reason": "Target-PC browser/render/native/10-minute soak evidence is not available. This run's Playwright Chromium download ended with repeated CDN timeouts and no system browser was present.",
+      "resume_when": "A browser-capable runner or target-PC result bundle and the complete 600-second package input are available"
     },
     {
       "id": "R5-closeout",
@@ -56,7 +52,8 @@
     "docs/templates/ui_change_request.md",
     "verification/workflow-policy-review.json",
     "docs/22_ui_polish_review_and_decisions.md",
-    "verification/ui-discussion-lock-review.json"
+    "verification/ui-discussion-lock-review.json",
+    "verification/ui-polish-20260915.json"
   ],
   "verification": [
     {
@@ -81,31 +78,32 @@
     },
     {
       "scope": "UI-01/03/04 implementation checkpoint",
-      "result": "PASS: 12 relevant engine/scale tests, updated DOM/Canvas-command regression and TypeScript/Vite build. Browser pixels pending. Full chunk test unavailable because ignored public/replay artifacts are absent.",
-      "evidence": "verification/v2-dom.json and WORKLOG.md"
+      "result": "CONDITIONAL PASS: 12 relevant engine/scale tests, 14 updated DOM/Canvas-command checks and TypeScript/Vite build PASS. Chromium install exit 1 after repeated CDN timeouts; browser pixels NOT VERIFIED. Full chunk test unavailable because ignored public/replay artifacts are absent.",
+      "evidence": "verification/v2-dom.json, verification/ui-polish-20260915.json and WORKLOG.md"
     }
   ],
   "last_good_checkpoint": {
-    "commit": "8ed1f42720168232c967ca04c1bb53f0d3ddcd0c",
-    "description": "UI discussions and shared-lock policy: all 7 changed files read back; other 128 tracked blobs unchanged; automation prompt verified"
+    "commit": "632fcbcfa058f333d30758f5d22a5b6bc88d8075",
+    "description": "UI-01/03/04 implementation, tests, build evidence and documentation remotely verified while generation-2 lock remained active"
   },
-  "base_remote_commit": "6974aa71994972fc1e30d78a3bc2e6982479ee85",
+  "base_remote_commit": "c9083aa2096f16b33221f32bb5cd95d0f2c14250",
   "release": {
     "filename": "ecg-signal-studio-v2.2.1.zip",
     "sha256": "9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed",
-    "verification": "Previously verified archive; not re-executed by this documentation task"
+    "verification": "Previously verified archive; not regenerated and does not include the current UI-01/03/04 source changes",
+    "status": "stale_for_ui_polish"
   },
   "execution": {
-    "status": "running",
+    "status": "finished",
     "owner": "automation-ecg-ui-20260914T203857Z-982efb68",
     "task_id": "approved-ui-01-03-04",
     "started_at": "2026-09-14T20:38:57.222Z",
-    "last_progress_at": "2026-09-14T20:47:05.026Z",
-    "last_progress": "UI-01/03/04 implemented; targeted tests, DOM regression and TypeScript/Vite build pass; preparing locked remote checkpoint before browser QA",
-    "environment": "Codex managed workspace with git and local command execution; browser availability not yet verified",
+    "last_progress_at": "2026-09-14T20:53:06.317Z",
+    "last_progress": "UI-01/03/04 source checkpoint remotely verified; final DOM switch-state regression passed; browser install failed cleanly and no child jobs remain; releasing lock",
+    "environment": "Codex managed workspace with git and local command execution; no installed browser and Playwright download timed out",
     "platform_run_id": null,
-    "note": "No source edits, build, tests, or browser run started before remote ownership readback.",
-    "finished_at": null
+    "note": "All started commands reached terminal exit states. Browser pixels, native behavior, 600-second chunk test and target-PC soak were not verified.",
+    "finished_at": "2026-09-14T20:53:06.317Z"
   },
   "automation": {
     "id": "6aa6b5a5ae688191ba361ee495000ffc",
@@ -116,35 +114,35 @@
     "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed.",
     "prompt_policy_version": "1.1"
   },
-  "next_action": "Publish and verify the locked implementation checkpoint, then run scoped Chromium QA if the browser runtime can be installed. UI-02/additional recommendations remain discussion only.",
+  "next_action": "On a browser-capable runner, rebuild from the remotely verified UI source, run the two non-soak Playwright tests at 1920×1080 and 1366×768, then package with the existing complete 600-second replay artifacts. R4 10-minute target-PC soak remains required. UI-02/additional recommendations remain discussion only.",
   "approved_pending": [
     {
       "id": "UI-01",
       "task": "Fix top-right large-comparison button foreground/background contrast",
-      "status": "implemented_automated_pass_browser_pending"
+      "status": "completed_conditional_browser_not_verified"
     },
     {
       "id": "UI-03",
       "task": "Always expose compact basic display controls; collapse advanced settings",
-      "status": "implemented_automated_pass_browser_pending"
+      "status": "completed_conditional_browser_not_verified"
     },
     {
       "id": "UI-04",
       "task": "Replace checkbox presentation with semantic switches/toggle and grouped difference gain",
-      "status": "implemented_automated_pass_browser_pending"
+      "status": "completed_conditional_browser_not_verified"
     }
   ],
   "execution_lock": {
     "protocol_version": 1,
-    "active": true,
-    "owner_id": "automation-ecg-ui-20260914T203857Z-982efb68",
+    "active": false,
+    "owner_id": null,
     "task_id": "approved-ui-01-03-04",
     "generation": 2,
     "acquired_at": "2026-09-14T20:38:57.222Z",
-    "last_progress_at": "2026-09-14T20:47:05.026Z",
-    "released_at": null,
-    "last_owner_id": "work-ui-record-20260914174354733-e1snkicq",
-    "phase": "checkpoint_ui_implementation",
+    "last_progress_at": "2026-09-14T20:53:06.317Z",
+    "released_at": "2026-09-14T20:53:06.317Z",
+    "last_owner_id": "automation-ecg-ui-20260914T203857Z-982efb68",
+    "phase": "released",
     "progress_evidence": [
       "User requests GitHub shared status protocol and reports no PC command running",
       "Previous remote execution is finished at 6974aa71994972fc1e30d78a3bc2e6982479ee85",
@@ -155,8 +153,11 @@
       "No local source edits, builds, tests, or browser jobs started before claim",
       "UI-01/03/04 source and test changes prepared",
       "12 relevant engine/scale tests PASS; updated DOM/Canvas-command regression PASS; TypeScript/Vite build PASS",
-      "Full v2 chunk test could not run because gitignored public/replay data is absent; no regeneration or inference attempted"
+      "Full v2 chunk test could not run because gitignored public/replay data is absent; no regeneration or inference attempted",
+      "Implementation checkpoint 632fcbc remotely verified with nine intended paths",
+      "Final DOM regression PASS with semantic switch state transitions",
+      "Playwright Chromium install exit 1 after repeated 30-second CDN timeouts; no system browser found; no browser test started"
     ],
-    "release_reason": null
+    "release_reason": "Approved source implementation and available automated checks complete; all child commands ended; browser/package/target-PC verification remains explicitly blocked"
   }
 }

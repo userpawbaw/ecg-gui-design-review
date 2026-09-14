@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "work": "ECG GUI design review",
-  "updated_at": "2026-09-14T17:43:54.733Z",
+  "updated_at": "2026-09-14T17:48:14.463Z",
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "in_progress",
   "current_request": "미기록 UI·UX 논의 문서화 및 GitHub 공유 작업 시작/on·종료/off 규약 적용",
@@ -16,10 +16,11 @@
     "6-hour automation creation confirmed enabled",
     "P1 persistent policy remote commit 0154b384 verified",
     "P2 final UI workflow, draft preservation, source and link checks PASS",
-    "P3 final workflow remote commit 44fd7fd1 verified; current requested policy/schedule/document work complete"
+    "P3 final workflow remote commit 44fd7fd1 verified; current requested policy/schedule/document work complete",
+    "D1 shared-lock start commit d7ae76f verified on remote; no cross-host process claim"
   ],
   "in_progress": [
-    "D1 shared-lock policy bootstrap and UI discussion documentation"
+    "D3 remote document verification and owner release"
   ],
   "not_started": [],
   "blocked": [
@@ -48,7 +49,9 @@
     "AGENTS.md",
     "docs/21_ui_refinement_workflow_final.md",
     "docs/templates/ui_change_request.md",
-    "verification/workflow-policy-review.json"
+    "verification/workflow-policy-review.json",
+    "docs/22_ui_polish_review_and_decisions.md",
+    "verification/ui-discussion-lock-review.json"
   ],
   "verification": [
     {
@@ -82,21 +85,22 @@
     "owner": "work-ui-record-20260914174354733-e1snkicq",
     "task_id": "ui-discussion-and-shared-lock",
     "started_at": "2026-09-14T17:43:54.733Z",
-    "last_progress_at": "2026-09-14T17:43:54.733Z",
-    "last_progress": "Register cooperative GitHub lock before publishing discussion and updating the existing automation prompt",
+    "last_progress_at": "2026-09-14T17:48:14.463Z",
+    "last_progress": "UI discussions recorded; shared-lock start verified; automation prompt updated/read back; final publication verification pending",
     "environment": "GitHub connector and in-memory orchestration; no local shell/browser/process tools",
     "platform_run_id": null,
     "note": "owner is a generated logical attempt ID, not a platform-observed execution ID"
   },
   "automation": {
     "id": "6aa6b5a5ae688191ba361ee495000ffc",
-    "conversation_id": "6a984afd-0864-83ee-8f6c-ff3a32e4c56e",
+    "conversation_id": "6aa709df-a970-83e9-a0b0-b4fd4631110f",
     "enabled": true,
     "timezone": "Asia/Seoul",
     "schedule": "BEGIN:VEVENT\nDTSTART:20260913T143933Z\nRRULE:FREQ=HOURLY;INTERVAL=6\nEND:VEVENT",
-    "verified": "Create success and subsequent peek confirmed exactly one matching enabled task; future run not yet observed"
+    "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed.",
+    "prompt_policy_version": "1.1"
   },
-  "next_action": "Publish docs/22 and checkpoint, align existing automation prompt, verify remote contents, release lock. UI-01/03/04 remain approved but unimplemented; runtime/build/render capability remains separate.",
+  "next_action": "Read back docs/control changes and unchanged source/data tree, then release own lock. Next coding session: approved UI-01/03/04, build and render evidence.",
   "approved_pending": [
     {
       "id": "UI-01",
@@ -121,13 +125,15 @@
     "task_id": "ui-discussion-and-shared-lock",
     "generation": 1,
     "acquired_at": "2026-09-14T17:43:54.733Z",
-    "last_progress_at": "2026-09-14T17:43:54.733Z",
+    "last_progress_at": "2026-09-14T17:48:14.463Z",
     "released_at": null,
     "last_owner_id": null,
-    "phase": "record_discussion_and_lock_policy",
+    "phase": "verify_documentation",
     "progress_evidence": [
       "User requests GitHub shared status protocol and reports no PC command running",
-      "Previous remote execution is finished at 6974aa71994972fc1e30d78a3bc2e6982479ee85"
+      "Previous remote execution is finished at 6974aa71994972fc1e30d78a3bc2e6982479ee85",
+      "Start claim d7ae76f remotely verified",
+      "Existing automation prompt updated and independently re-read; cadence and enabled flag retained"
     ],
     "release_reason": null
   }

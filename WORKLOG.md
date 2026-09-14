@@ -1,5 +1,13 @@
 # Work log
 
+## 2026-09-15 — D2 UI discussion and automation alignment
+
+- docs/22 records all four screenshot items, the initial three visual directions, refined glow specification, ten additional candidates and filtering, Skill applicability, approval boundaries and validation limitations.
+- UI-01/03/04 approved, still unimplemented. UI-02 and candidate recommendations are discussion-only. No app source/data/release outputs changed.
+- Existing ECG automation prompt updated to shared-lock policy and separately re-read; ID/enabled/schedule retained. This validates configuration, not future scheduled execution or crash recovery.
+- Remote start claim d7ae76f ownership verified. Local shell/browser/process capabilities are absent; GitHub source/document editing remains available. No local commands or child jobs were started.
+- In-memory content checks and repository-link checks below precede publication; next remote readback, then off release.
+
 ## 2026-09-15 — D1 shared-lock bootstrap
 
 - Latest user authorizes GitHub shared on/off status and reports the desktop is open but no commands are running. This explicitly changes the old cross-session verification procedure; it is not proof of all host processes.

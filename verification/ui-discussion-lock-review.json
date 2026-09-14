@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-14T17:48:14.463Z",
+  "base_commit": "6974aa71994972fc1e30d78a3bc2e6982479ee85",
+  "start_claim_commit": "d7ae76f52a8c95170126cb08edeae417913f5726",
+  "scope": "Documentation and cooperative-lock configuration",
+  "checks": {
+    "json_parse": "PASS",
+    "relative_links": [
+      {
+        "path": "docs/22_ui_polish_review_and_decisions.md",
+        "target": "21_ui_refinement_workflow_final.md",
+        "resolved": "docs/21_ui_refinement_workflow_final.md",
+        "exists": true
+      },
+      {
+        "path": "docs/22_ui_polish_review_and_decisions.md",
+        "target": "21_ui_refinement_workflow_final.md",
+        "resolved": "docs/21_ui_refinement_workflow_final.md",
+        "exists": true
+      },
+      {
+        "path": "docs/22_ui_polish_review_and_decisions.md",
+        "target": "../WORK_RESUME_POLICY.md",
+        "resolved": "WORK_RESUME_POLICY.md",
+        "exists": true
+      }
+    ],
+    "approval_boundary": "UI-01/03/04 pending; UI-02 and ten recommendations discussion only",
+    "automation_prompt_readback": "PASS; same ID/enabled/schedule",
+    "start_lock_readback": "PASS; owner and generation match"
+  },
+  "not_verified": [
+    "distributed concurrent claim race",
+    "forced-interruption recovery",
+    "future automation start/release",
+    "local code/build/browser rendering",
+    "all external processes"
+  ],
+  "local_commands_started": 0,
+  "source_data_changes": 0,
+  "note": "Read-only remote content/tree equality is checked after publishing; this receipt describes prepublication content checks."
+}

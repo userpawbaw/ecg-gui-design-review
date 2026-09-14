@@ -39,5 +39,26 @@
   ],
   "local_commands_started": 0,
   "source_data_changes": 0,
-  "note": "Read-only remote content/tree equality is checked after publishing; this receipt describes prepublication content checks."
+  "note": "Read-only remote content/tree equality is checked after publishing; this receipt describes prepublication content checks.",
+  "remote_document_verification": {
+    "changed_paths": [
+      "AGENTS.md",
+      "PLAN.md",
+      "WORKLOG.md",
+      "WORK_RESUME_POLICY.md",
+      "WORK_STATE.json",
+      "docs/22_ui_polish_review_and_decisions.md",
+      "verification/ui-discussion-lock-review.json"
+    ],
+    "commit": "8ed1f42720168232c967ca04c1bb53f0d3ddcd0c",
+    "readback_files": 7,
+    "unchanged_other_blobs": 128
+  },
+  "release": {
+    "owner_id": "work-ui-record-20260914174354733-e1snkicq",
+    "generation": 1,
+    "child_jobs_started": 0,
+    "prepared_at": "2026-09-14T17:49:30.706Z",
+    "note": "Final off commit readback is performed after publication; no concurrent race test."
+  }
 }

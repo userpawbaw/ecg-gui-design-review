@@ -1,5 +1,15 @@
 # Work log
 
+## 2026-09-15 — D3 verified checkpoint and lock release
+
+- Remote document commit 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c: all 7 changed files read back exactly. Tree comparison against 6974aa7 shows only intended documentation/control paths; other 128 tracked blobs unchanged.
+- Existing automation prompt independently re-read; same ID, enabled state and six-hour schedule. Stored conversation ID corrected to the observed current automation metadata.
+- Release generation 1 owner work-ui-record-20260914174354733-e1snkicq after the documentation checkpoint. No local command or child job was started; own active flag becomes false. Final release ref/content readback is performed after this commit.
+- Current documentation/shared-status request COMPLETE. UI-01/03/04 are approved and still not implemented; UI-02/additional recommendations are discussion only. R4/R5 remain open.
+- Clarification: Work in general is not declared unable to execute tools. This turn exposes GitHub but no shell/browser/filesystem/process execution tools. GitHub source changes remain possible; runtime/build/render validation requires a capable environment.
+- No distributed concurrency race, forced-stop recovery or actual future scheduler transition test was run. The protocol is cooperative, not an OS-level global lock.
+
+
 ## 2026-09-15 — D2 UI discussion and automation alignment
 
 - docs/22 records all four screenshot items, the initial three visual directions, refined glow specification, ten additional candidates and filtering, Skill applicability, approval boundaries and validation limitations.

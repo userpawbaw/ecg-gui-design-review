@@ -1,10 +1,10 @@
 {
   "schema_version": 2,
   "work": "ECG GUI design review",
-  "updated_at": "2026-09-14T17:49:30.706Z",
+  "updated_at": "2026-09-14T20:38:57.222Z",
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "completed",
-  "current_request": "미기록 UI·UX 논의 문서화 및 GitHub 공유 작업 시작/on·종료/off 규약 적용",
+  "request_status": "in_progress",
+  "current_request": "승인된 UI-01/03/04 구현 및 범위에 맞는 자동 검증",
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
   "policy": "WORK_RESUME_POLICY.md",
@@ -21,12 +21,12 @@
     "D2 UI discussion and lock-policy documents remotely verified at 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c",
     "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained"
   ],
-  "in_progress": [],
-  "not_started": [
+  "in_progress": [
     "UI-01: approved contrast fix",
     "UI-03: approved always-visible basic display controls",
     "UI-04: approved switch/toggle presentation"
   ],
+  "not_started": [],
   "blocked": [
     {
       "id": "R4",
@@ -90,16 +90,16 @@
     "verification": "Previously verified archive; not re-executed by this documentation task"
   },
   "execution": {
-    "status": "finished",
-    "owner": "work-ui-record-20260914174354733-e1snkicq",
-    "task_id": "ui-discussion-and-shared-lock",
-    "started_at": "2026-09-14T17:43:54.733Z",
-    "last_progress_at": "2026-09-14T17:49:30.706Z",
-    "last_progress": "Documentation/automation update verified; releasing own generation-1 lock with completion checkpoint",
-    "environment": "GitHub connector and in-memory orchestration; no local shell/browser/process tools",
+    "status": "running",
+    "owner": "automation-ecg-ui-20260914T203857Z-982efb68",
+    "task_id": "approved-ui-01-03-04",
+    "started_at": "2026-09-14T20:38:57.222Z",
+    "last_progress_at": "2026-09-14T20:38:57.222Z",
+    "last_progress": "Claiming generation-2 shared lock from remote main c9083aa before source edits or tests",
+    "environment": "Codex managed workspace with git and local command execution; browser availability not yet verified",
     "platform_run_id": null,
-    "note": "No local processes or child jobs were started. This release is a cooperative protocol transition, not a platform-wide process scan.",
-    "finished_at": "2026-09-14T17:49:30.706Z"
+    "note": "No source edits, build, tests, or browser run started before remote ownership readback.",
+    "finished_at": null
   },
   "automation": {
     "id": "6aa6b5a5ae688191ba361ee495000ffc",
@@ -110,42 +110,44 @@
     "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed.",
     "prompt_policy_version": "1.1"
   },
-  "next_action": "Claim shared lock for next approved work. UI-01/03/04 remain unimplemented; source editing via GitHub is possible, but build/execution/render require an available runtime. Do not re-request implementation approval. UI-02/additional recommendations remain discussion only. R4/R5 remain open.",
+  "next_action": "After remote ownership readback, inspect the v2 controls and implement only UI-01/03/04; run relevant tests/build and browser checks if available. UI-02/additional recommendations remain discussion only.",
   "approved_pending": [
     {
       "id": "UI-01",
       "task": "Fix top-right large-comparison button foreground/background contrast",
-      "status": "not_started"
+      "status": "in_progress"
     },
     {
       "id": "UI-03",
       "task": "Always expose compact basic display controls; collapse advanced settings",
-      "status": "not_started"
+      "status": "in_progress"
     },
     {
       "id": "UI-04",
       "task": "Replace checkbox presentation with semantic switches/toggle and grouped difference gain",
-      "status": "not_started"
+      "status": "in_progress"
     }
   ],
   "execution_lock": {
     "protocol_version": 1,
-    "active": false,
-    "owner_id": null,
-    "task_id": "ui-discussion-and-shared-lock",
-    "generation": 1,
-    "acquired_at": "2026-09-14T17:43:54.733Z",
-    "last_progress_at": "2026-09-14T17:49:30.706Z",
-    "released_at": "2026-09-14T17:49:30.706Z",
+    "active": true,
+    "owner_id": "automation-ecg-ui-20260914T203857Z-982efb68",
+    "task_id": "approved-ui-01-03-04",
+    "generation": 2,
+    "acquired_at": "2026-09-14T20:38:57.222Z",
+    "last_progress_at": "2026-09-14T20:38:57.222Z",
+    "released_at": null,
     "last_owner_id": "work-ui-record-20260914174354733-e1snkicq",
-    "phase": "released",
+    "phase": "claiming",
     "progress_evidence": [
       "User requests GitHub shared status protocol and reports no PC command running",
       "Previous remote execution is finished at 6974aa71994972fc1e30d78a3bc2e6982479ee85",
       "Start claim d7ae76f remotely verified",
       "Existing automation prompt updated and independently re-read; cadence and enabled flag retained",
-      "Documentation commit 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c read back; other source/data blobs unchanged"
+      "Documentation commit 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c read back; other source/data blobs unchanged",
+      "Remote main c9083aa and valid generation-1 off record read before generation-2 claim",
+      "No local source edits, builds, tests, or browser jobs started before claim"
     ],
-    "release_reason": "Documentation and automation configuration complete; no local or child jobs started; UI implementation remains pending"
+    "release_reason": null
   }
 }

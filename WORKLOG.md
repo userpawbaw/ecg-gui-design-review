@@ -1,5 +1,11 @@
 # Work log
 
+## 2026-09-15 — generation-2 claim for approved UI-01/03/04
+
+- Read remote main `c9083aa2096f16b33221f32bb5cd95d0f2c14250`, the current policy/state/plan/log and docs/21–22. The execution lock is a valid generation-1 `off`; UI-01/03/04 are approved and unimplemented.
+- Candidate owner `automation-ecg-ui-20260914T203857Z-982efb68` is registered before any source edit, build, test or browser job. This commit must be pushed fast-forward-only and ownership re-read from remote main before implementation starts.
+- Scope is limited to UI-01 contrast, UI-03 always-visible compact basic controls and UI-04 semantic switch/toggle/group presentation. UI-02 glow, additional recommendations, SWT work, data regeneration, global font replacement and Loss/tab work remain excluded.
+
 ## 2026-09-15 — D3 verified checkpoint and lock release
 
 - Remote document commit 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c: all 7 changed files read back exactly. Tree comparison against 6974aa7 shows only intended documentation/control paths; other 128 tracked blobs unchanged.

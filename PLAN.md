@@ -4,6 +4,8 @@ Updated: 2026-09-15 (KST)
 
 ## Current Work control
 
+Automation resume 2026-09-15 05:38 KST: generation-2 owner `automation-ecg-ui-20260914T203857Z-982efb68` is claiming the shared lock from remote main `c9083aa`. After remote ownership readback, the active scope is the already approved UI-01/03/04 implementation and proportionate tests/build/browser checks. UI-02 and the additional recommendation shortlist remain out of implementation scope.
+
 Latest request: record uncommitted UI/UX discussions and use GitHub-shared on/off execution ownership. D1 policy/start claim COMPLETE (d7ae76f, remote ownership read back); D2 docs/22 and existing automation alignment COMPLETE; D3 documentation remote verification COMPLETE (8ed1f42), own lock released by this closeout commit. Documentation/control request complete; UI-01/03/04 remain approved pending implementation. WORK_RESUME_POLICY.md v1.1 §3 supersedes mandatory cross-host manual inspection for a valid released lock.
 
 Approved pending: UI-01 large-comparison button contrast; UI-03 compact basic display controls always visible; UI-04 semantic toggles/switches and grouped gain controls. These have NOT been implemented or browser-verified. UI-02 glow and the additional ten candidates are recorded recommendations only. Lack of runtime/build/render tools is separate from execution ownership. R4/R5 gates remain open.

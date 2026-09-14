@@ -1,10 +1,10 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "work": "ECG GUI design review",
-  "updated_at": "2026-09-13T14:48:38.674809+00:00",
+  "updated_at": "2026-09-14T17:43:54.733Z",
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "completed",
-  "current_request": "지속 복구 지침·6시간 예약 설정 완료 및 docs/20 검토 후 정식 UI 수정 워크플로우 완성",
+  "request_status": "in_progress",
+  "current_request": "미기록 UI·UX 논의 문서화 및 GitHub 공유 작업 시작/on·종료/off 규약 적용",
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
   "policy": "WORK_RESUME_POLICY.md",
@@ -18,7 +18,9 @@
     "P2 final UI workflow, draft preservation, source and link checks PASS",
     "P3 final workflow remote commit 44fd7fd1 verified; current requested policy/schedule/document work complete"
   ],
-  "in_progress": [],
+  "in_progress": [
+    "D1 shared-lock policy bootstrap and UI discussion documentation"
+  ],
   "not_started": [],
   "blocked": [
     {
@@ -34,7 +36,8 @@
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
-    "Loss evolution view and tab integration"
+    "Loss evolution view and tab integration",
+    "Sweep leading-edge glow and the additional ten-candidate UI/UX shortlist: discussion concluded, no implementation approval inferred"
   ],
   "major_artifacts": [
     "docs/17_v2_team_handoff.md",
@@ -75,13 +78,15 @@
     "verification": "Previously verified archive; not re-executed by this documentation task"
   },
   "execution": {
-    "status": "finished",
-    "owner": "current Work turn",
-    "task_id": "workflow-policy-and-ui-refinement-20260913",
-    "started_at": "2026-09-13T14:40:39.780867+00:00",
-    "last_progress_at": "2026-09-13T14:48:38.674809+00:00",
-    "last_progress": "Requested settings and workflow complete; no authorized runnable task remains without new external evidence or user steering",
-    "note": "This record is not a global mutex; corroborate actual execution activity before resuming"
+    "status": "running",
+    "owner": "work-ui-record-20260914174354733-e1snkicq",
+    "task_id": "ui-discussion-and-shared-lock",
+    "started_at": "2026-09-14T17:43:54.733Z",
+    "last_progress_at": "2026-09-14T17:43:54.733Z",
+    "last_progress": "Register cooperative GitHub lock before publishing discussion and updating the existing automation prompt",
+    "environment": "GitHub connector and in-memory orchestration; no local shell/browser/process tools",
+    "platform_run_id": null,
+    "note": "owner is a generated logical attempt ID, not a platform-observed execution ID"
   },
   "automation": {
     "id": "6aa6b5a5ae688191ba361ee495000ffc",
@@ -91,5 +96,39 @@
     "schedule": "BEGIN:VEVENT\nDTSTART:20260913T143933Z\nRRULE:FREQ=HOURLY;INTERVAL=6\nEND:VEVENT",
     "verified": "Create success and subsequent peek confirmed exactly one matching enabled task; future run not yet observed"
   },
-  "next_action": "Scheduled check: verify actual state first. Current request is complete; R4/R5 remain blocked on real target-PC evidence. Do not automatically start deferred algorithm/font/Loss/tab proposals."
+  "next_action": "Publish docs/22 and checkpoint, align existing automation prompt, verify remote contents, release lock. UI-01/03/04 remain approved but unimplemented; runtime/build/render capability remains separate.",
+  "approved_pending": [
+    {
+      "id": "UI-01",
+      "task": "Fix top-right large-comparison button foreground/background contrast",
+      "status": "not_started"
+    },
+    {
+      "id": "UI-03",
+      "task": "Always expose compact basic display controls; collapse advanced settings",
+      "status": "not_started"
+    },
+    {
+      "id": "UI-04",
+      "task": "Replace checkbox presentation with semantic switches/toggle and grouped difference gain",
+      "status": "not_started"
+    }
+  ],
+  "execution_lock": {
+    "protocol_version": 1,
+    "active": true,
+    "owner_id": "work-ui-record-20260914174354733-e1snkicq",
+    "task_id": "ui-discussion-and-shared-lock",
+    "generation": 1,
+    "acquired_at": "2026-09-14T17:43:54.733Z",
+    "last_progress_at": "2026-09-14T17:43:54.733Z",
+    "released_at": null,
+    "last_owner_id": null,
+    "phase": "record_discussion_and_lock_policy",
+    "progress_evidence": [
+      "User requests GitHub shared status protocol and reports no PC command running",
+      "Previous remote execution is finished at 6974aa71994972fc1e30d78a3bc2e6982479ee85"
+    ],
+    "release_reason": null
+  }
 }

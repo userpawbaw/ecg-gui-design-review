@@ -1,10 +1,14 @@
 # Review plan
 
-Updated: 2026-09-13
+Updated: 2026-09-15 (KST)
 
 ## Current Work control
 
-Read `WORK_STATE.json` and `WORK_RESUME_POLICY.md` first. Latest task: persist interruption-safe instructions and a 6-hour status/resume automation; then review docs/20 and complete the UI refinement workflow. P1 settings COMPLETE; P2 final workflow COMPLETE; P3 validation/publication COMPLETE (44fd7fd1, remote contents verified). Current settings/document request is complete. Scheduled checks must still distinguish this from the open R4/R5 project gates. Historical approval gates below are satisfied. The SWT audit is complete; retuning is a separate proposed task, not automatically authorized. R4/R5 external verification gates remain open.
+Latest request: record uncommitted UI/UX discussions and use GitHub-shared on/off execution ownership. D1 policy/start claim IN PROGRESS; D2 docs/22 and existing automation alignment PENDING; D3 remote verification/off release PENDING. WORK_RESUME_POLICY.md v1.1 §3 supersedes mandatory cross-host manual inspection for a valid released lock.
+
+Approved pending: UI-01 large-comparison button contrast; UI-03 compact basic display controls always visible; UI-04 semantic toggles/switches and grouped gain controls. These have NOT been implemented or browser-verified. UI-02 glow and the additional ten candidates are recorded recommendations only. Lack of runtime/build/render tools is separate from execution ownership. R4/R5 gates remain open.
+
+Prior P1/P2/P3 policy/schedule/workflow documentation completed at 44fd7fd1 and closeout 6974aa7; this does not complete the new UI requests.
 
 User approved the concrete wireframe review in chat on 2026-09-12 ("응"). The five proposed layout decisions are accepted. R1a/R1b and R2 implementation have since completed; R3/R5 handoff is prepared and R4 remains unverified; the earlier wireframe approval gate below is satisfied. Actual browser/hardware gates remain independent.
 

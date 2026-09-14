@@ -1,5 +1,14 @@
 # Work log
 
+## 2026-09-15 — D1 shared-lock bootstrap
+
+- Latest user authorizes GitHub shared on/off status and reports the desktop is open but no commands are running. This explicitly changes the old cross-session verification procedure; it is not proof of all host processes.
+- Read main 6974aa71994972fc1e30d78a3bc2e6982479ee85, AGENTS/policy/state/plan/log and repository tree. No docs/22 discussion record exists. Prior execution=finished.
+- Register generated logical owner work-ui-record-20260914174354733-e1snkicq, generation 1, with a single-parent/fast-forward-only commit before further writes. No platform run ID or local process observation is claimed.
+- Policy distinguishes cooperative ownership, actual process liveness, task completion and missing execution environment. Crash residue is not auto-cleared by age.
+- Approved UI-01/03/04 remain pending; UI-02/additional candidates are not implementation authorization. Source/data/build/GUI rendering unchanged/unrun.
+- D1 publication/ownership verification pending; next docs/22, existing automation alignment, final checkpoint and release.
+
 ## 2026-09-13 — P3 closeout verified
 
 - Final workflow commit 44fd7fd1bdef9f396a29206ce4d50528b5d9d0cb and all eight changed blobs verified on remote main. Source/data/frozen artifact tree comparison against the pre-task baseline found no changes.

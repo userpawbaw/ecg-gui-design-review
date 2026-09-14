@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "work": "ECG GUI design review",
-  "updated_at": "2026-09-14T20:38:57.222Z",
+  "updated_at": "2026-09-14T20:47:05.026Z",
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "in_progress",
   "current_request": "승인된 UI-01/03/04 구현 및 범위에 맞는 자동 검증",
@@ -19,7 +19,8 @@
     "P3 final workflow remote commit 44fd7fd1 verified; current requested policy/schedule/document work complete",
     "D1 shared-lock start commit d7ae76f verified on remote; no cross-host process claim",
     "D2 UI discussion and lock-policy documents remotely verified at 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c",
-    "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained"
+    "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained",
+    "UI-01/03/04 source implementation prepared; 12 targeted tests, updated DOM regression and TypeScript/Vite build PASS"
   ],
   "in_progress": [
     "UI-01: approved contrast fix",
@@ -77,6 +78,11 @@
       "scope": "UI discussion and cooperative shared-lock configuration",
       "result": "PASS: seven files read back and scoped tree compared; start owner registered/read back; automation prompt readback. Distributed race/crash recovery and GUI execution NOT VERIFIED.",
       "evidence": "verification/ui-discussion-lock-review.json"
+    },
+    {
+      "scope": "UI-01/03/04 implementation checkpoint",
+      "result": "PASS: 12 relevant engine/scale tests, updated DOM/Canvas-command regression and TypeScript/Vite build. Browser pixels pending. Full chunk test unavailable because ignored public/replay artifacts are absent.",
+      "evidence": "verification/v2-dom.json and WORKLOG.md"
     }
   ],
   "last_good_checkpoint": {
@@ -94,8 +100,8 @@
     "owner": "automation-ecg-ui-20260914T203857Z-982efb68",
     "task_id": "approved-ui-01-03-04",
     "started_at": "2026-09-14T20:38:57.222Z",
-    "last_progress_at": "2026-09-14T20:38:57.222Z",
-    "last_progress": "Claiming generation-2 shared lock from remote main c9083aa before source edits or tests",
+    "last_progress_at": "2026-09-14T20:47:05.026Z",
+    "last_progress": "UI-01/03/04 implemented; targeted tests, DOM regression and TypeScript/Vite build pass; preparing locked remote checkpoint before browser QA",
     "environment": "Codex managed workspace with git and local command execution; browser availability not yet verified",
     "platform_run_id": null,
     "note": "No source edits, build, tests, or browser run started before remote ownership readback.",
@@ -110,22 +116,22 @@
     "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed.",
     "prompt_policy_version": "1.1"
   },
-  "next_action": "After remote ownership readback, inspect the v2 controls and implement only UI-01/03/04; run relevant tests/build and browser checks if available. UI-02/additional recommendations remain discussion only.",
+  "next_action": "Publish and verify the locked implementation checkpoint, then run scoped Chromium QA if the browser runtime can be installed. UI-02/additional recommendations remain discussion only.",
   "approved_pending": [
     {
       "id": "UI-01",
       "task": "Fix top-right large-comparison button foreground/background contrast",
-      "status": "in_progress"
+      "status": "implemented_automated_pass_browser_pending"
     },
     {
       "id": "UI-03",
       "task": "Always expose compact basic display controls; collapse advanced settings",
-      "status": "in_progress"
+      "status": "implemented_automated_pass_browser_pending"
     },
     {
       "id": "UI-04",
       "task": "Replace checkbox presentation with semantic switches/toggle and grouped difference gain",
-      "status": "in_progress"
+      "status": "implemented_automated_pass_browser_pending"
     }
   ],
   "execution_lock": {
@@ -135,10 +141,10 @@
     "task_id": "approved-ui-01-03-04",
     "generation": 2,
     "acquired_at": "2026-09-14T20:38:57.222Z",
-    "last_progress_at": "2026-09-14T20:38:57.222Z",
+    "last_progress_at": "2026-09-14T20:47:05.026Z",
     "released_at": null,
     "last_owner_id": "work-ui-record-20260914174354733-e1snkicq",
-    "phase": "claiming",
+    "phase": "checkpoint_ui_implementation",
     "progress_evidence": [
       "User requests GitHub shared status protocol and reports no PC command running",
       "Previous remote execution is finished at 6974aa71994972fc1e30d78a3bc2e6982479ee85",
@@ -146,7 +152,10 @@
       "Existing automation prompt updated and independently re-read; cadence and enabled flag retained",
       "Documentation commit 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c read back; other source/data blobs unchanged",
       "Remote main c9083aa and valid generation-1 off record read before generation-2 claim",
-      "No local source edits, builds, tests, or browser jobs started before claim"
+      "No local source edits, builds, tests, or browser jobs started before claim",
+      "UI-01/03/04 source and test changes prepared",
+      "12 relevant engine/scale tests PASS; updated DOM/Canvas-command regression PASS; TypeScript/Vite build PASS",
+      "Full v2 chunk test could not run because gitignored public/replay data is absent; no regeneration or inference attempted"
     ],
     "release_reason": null
   }

@@ -1,6 +1,7 @@
 import {test,expect} from '@playwright/test';
 test('large viewer, real sweep/scroll, hover, freeze, keyboard and download',async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
+ const largeAction=page.getByRole('button',{name:'크게 비교'});await expect(largeAction).toHaveCSS('background-color','rgb(6, 125, 114)');await expect(largeAction).toHaveCSS('color','rgb(255, 255, 255)');
  await page.screenshot({path:info.outputPath('01-lab.png'),fullPage:true});await page.getByRole('button',{name:'크게 비교'}).click();const dialog=page.getByRole('dialog');await expect(dialog).toBeVisible();
  await dialog.getByRole('button',{name:'재생',exact:true}).click();await expect.poll(()=>dialog.locator('canvas').getAttribute('data-time')).not.toBe('5.000');
  await page.waitForTimeout(1600);await dialog.getByRole('button',{name:'일시정지',exact:true}).click();await page.screenshot({path:info.outputPath('02-sweep.png')});
@@ -21,10 +22,12 @@ test('Difference follows playback in both viewer sizes and retains physical axis
  for(const large of [false,true]){
   if(large)await page.getByRole('button',{name:'크게 비교'}).click();
   const viewer=large?page.getByRole('dialog'):page.locator('.viewer');
-  await viewer.getByText('표시 설정',{exact:true}).click();
-  await viewer.getByLabel('Reference와 차이',{exact:true}).uncheck();
+  await expect(viewer.getByRole('group',{name:'기본 표시 도구'})).toBeVisible();
+  await expect(viewer.locator('details.advanced-settings')).not.toHaveAttribute('open');
+  await expect(viewer.getByRole('switch')).toHaveCount(2);
+  const difference=viewer.getByRole('button',{name:/^차이 보기/});if(await difference.getAttribute('aria-pressed')==='true')await difference.click();
   await viewer.getByRole('button',{name:'재생',exact:true}).click();
-  await viewer.getByLabel('Reference와 차이',{exact:true}).check();
+  await difference.click();await expect(difference).toHaveAttribute('aria-pressed','true');
   const canvas=viewer.locator('canvas');
   for(const mode of ['Sweep','Scroll']){
    await viewer.getByRole('button',{name:mode,exact:true}).click();
@@ -36,7 +39,8 @@ test('Difference follows playback in both viewer sizes and retains physical axis
   }
   await viewer.getByRole('button',{name:'구간 고정',exact:true}).click();
   await expect(canvas).toHaveAttribute('data-difference','true');
-  await viewer.getByLabel('차이 표시 확대',{exact:true}).selectOption('5');
+  await viewer.getByRole('group',{name:'차이 표시 확대'}).getByRole('button',{name:'×5'}).click();
+  await expect(viewer.getByRole('group',{name:'차이 표시 확대'}).getByRole('button',{name:'×5'})).toHaveAttribute('aria-pressed','true');
   await page.screenshot({path:info.outputPath(`${large?'large':'standard'}-axis-gain5.png`),fullPage:true});
  }
 });

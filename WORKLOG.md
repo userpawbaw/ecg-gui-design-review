@@ -5,6 +5,11 @@
 - Read remote main `c9083aa2096f16b33221f32bb5cd95d0f2c14250`, the current policy/state/plan/log and docs/21–22. The execution lock is a valid generation-1 `off`; UI-01/03/04 are approved and unimplemented.
 - Candidate owner `automation-ecg-ui-20260914T203857Z-982efb68` is registered before any source edit, build, test or browser job. This commit must be pushed fast-forward-only and ownership re-read from remote main before implementation starts.
 - Scope is limited to UI-01 contrast, UI-03 always-visible compact basic controls and UI-04 semantic switch/toggle/group presentation. UI-02 glow, additional recommendations, SWT work, data regeneration, global font replacement and Loss/tab work remain excluded.
+- Remote claim `077e0b1ed74047e04eced9684e1d82651332422f` and generation-2 ownership were read back before implementation.
+- Implemented the scoped controls in `prototype/v2/src/main.tsx` and `style.css`: explicit teal/white large-view action; always-visible display length, ±mV, fit and Difference controls; segmented ×1/×3/×5 gain; collapsed advanced speed/Reference controls; native checkbox semantics presented as two labeled switches.
+- Updated DOM and Playwright checks for the new control contract. Twelve relevant engine/axis tests PASS; updated DOM/Canvas-command regression PASS; TypeScript/Vite build PASS.
+- An initial full `npm test` attempt reported 12 PASS and one ENOENT for gitignored `public/replay/manifest.json`; the initial DOM attempt likewise lacked generated `public/archive.json`. The archive was reconstructed from tracked bank data for UI tests. The 10-minute chunk data was not regenerated, so the unrelated chunk test remains unavailable rather than relabeled PASS.
+- Next: publish/read back this on-lock checkpoint, then attempt scoped Chromium rendering and interaction tests. Actual 10-minute/target-PC R4 remains separate.
 
 ## 2026-09-15 — D3 verified checkpoint and lock release
 

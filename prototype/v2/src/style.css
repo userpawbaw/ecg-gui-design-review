@@ -13,3 +13,36 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .attract .viewer-actions,.attract .condition-drawer,.attract .transport,.attract .method-rail,.attract .metric-panel{display:none}.attract-cta{display:block;margin:22px auto;font-size:22px;min-height:64px}.attract .viewer-heading h2{font-size:30px}.scenario-launcher{padding:8px;background:white;border:1px solid #d9e2df;border-radius:8px}.scenario-launcher summary{cursor:pointer;min-height:28px}.scenario-launcher p{font-size:13px}.bookmarks label{display:flex;gap:6px;align-items:center}.bookmarks input{min-width:22px;min-height:22px}
 
 .timeline-map{position:relative;height:44px;margin-top:8px;background:linear-gradient(transparent 20px,#304955 20px,#304955 28px,transparent 28px)}.viewport-range{position:absolute;top:20px;height:8px;min-width:2px;background:#67e7c3}.timeline-map button{position:absolute;top:0;min-height:44px;font-size:11px;padding:4px;transform:translateX(-25%);background:#193e4d}.attract .timeline-map{display:none}
+
+/* UI-01: keep the primary large-view action legible outside Tailwind layers. */
+.viewer-actions button[data-open-large]{background:#067d72;color:#fff;border-color:#067d72}
+.viewer-actions button[data-open-large]:hover:not(:disabled){background:#05665e;color:#fff;border-color:#05665e}
+
+/* UI-03/04: essential display controls stay visible; secondary controls remain compact. */
+.display-tools{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-top:12px;padding:12px;border:1px solid #304f5d;border-radius:10px;background:#0d2532}
+.display-tools label{position:relative;color:#c5d8de}
+.display-tools label small{position:absolute;right:9px;bottom:11px;color:#607c87;pointer-events:none}
+.display-tools input[type=number]{width:94px;padding-right:36px}
+.display-tools button{background:#183b4a;color:#e4f0ef;border-color:#426271}
+.display-tools button:hover{background:#285160}
+.display-tools button[aria-pressed=true]{background:#187b6b;color:#fff;border-color:#2aa08d}
+.difference-toggle{display:flex;align-items:center;gap:10px;min-width:126px;justify-content:space-between}
+.difference-toggle small{padding:2px 6px;border-radius:999px;background:#294b59;color:#bdd0d7;font-size:10px}
+.difference-toggle[aria-pressed=true] small{background:#d9f5e9;color:#075f49}
+.gain-group{display:flex;align-items:center;border:1px solid #426271;border-radius:8px;overflow:hidden}
+.gain-group>span{align-self:stretch;display:flex;align-items:center;padding:0 10px;color:#b9cdd4;font-size:11px;background:#112f3d}
+.gain-group button{min-width:44px;border-width:0 0 0 1px;border-radius:0;border-color:#426271;padding:8px 10px}
+.advanced-settings{margin-top:10px!important;border-top:1px solid #294754;padding-top:4px}
+.advanced-settings summary{width:max-content;color:#bed1d7}
+.advanced-settings-grid{align-items:center}
+.switch-control{position:relative!important;display:flex!important;align-items:center!important;gap:10px!important;min-height:52px;padding:7px 10px!important;border:1px solid #365564;border-radius:9px;background:#122f3d;cursor:pointer}
+.switch-control input{position:absolute;opacity:0;width:1px;height:1px}
+.switch-track{position:relative;flex:0 0 40px;height:22px;border-radius:999px;background:#56707a;transition:background .14s}
+.switch-track span{position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #07161c80;transition:transform .14s}
+.switch-control input:checked+.switch-track{background:#15927f}
+.switch-control input:checked+.switch-track span{transform:translateX(18px)}
+.switch-control input:focus-visible+.switch-track{outline:3px solid #f0a95d;outline-offset:3px}
+.switch-copy{display:grid;gap:2px}
+.switch-copy strong{font-size:12px;color:#e5f0f2}
+.switch-copy small{font-size:10px;color:#9fb8c1}
+@media(max-width:780px){.display-tools{align-items:stretch}.display-tools>label,.display-tools>button,.gain-group{flex:1 1 130px}.gain-group>span{flex:1}.advanced-settings-grid{align-items:stretch}.switch-control{flex:1 1 220px}}

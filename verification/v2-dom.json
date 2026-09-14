@@ -1,10 +1,15 @@
 {
-  "date": "2026-09-12T10:26:15.780Z",
+  "date": "2026-09-14T20:46:51.951Z",
   "checks": [
     "initial archive",
+    "always-visible basic display tools",
+    "advanced settings default collapsed",
+    "semantic switches",
+    "explicit large-view contrast rule",
     "Pin persists",
     "same-time method selection",
     "Difference stays enabled through play/pause/freeze/mode changes",
+    "segmented Difference gain",
     "Sweep and Scroll advance Canvas commands with Difference",
     "five left y ticks on every row",
     "Difference gain labels physical mV",

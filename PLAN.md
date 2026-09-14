@@ -4,7 +4,7 @@ Updated: 2026-09-15 (KST)
 
 ## Current Work control
 
-Automation resume 2026-09-15 05:38 KST: generation-2 owner `automation-ecg-ui-20260914T203857Z-982efb68` is claiming the shared lock from remote main `c9083aa`. After remote ownership readback, the active scope is the already approved UI-01/03/04 implementation and proportionate tests/build/browser checks. UI-02 and the additional recommendation shortlist remain out of implementation scope.
+Automation resume 2026-09-15 05:38 KST: generation-2 owner `automation-ecg-ui-20260914T203857Z-982efb68` acquired the shared lock at `077e0b1`. UI-01/03/04 source implementation is complete; 12 relevant engine/scale tests, the updated DOM/Canvas-command regression and TypeScript/Vite build PASS. Browser pixels are the next gate. The full chunk test was not run because gitignored 10-minute `public/replay` artifacts are absent; no inference or data regeneration is authorized. UI-02 and the additional recommendation shortlist remain out of implementation scope.
 
 Latest request: record uncommitted UI/UX discussions and use GitHub-shared on/off execution ownership. D1 policy/start claim COMPLETE (d7ae76f, remote ownership read back); D2 docs/22 and existing automation alignment COMPLETE; D3 documentation remote verification COMPLETE (8ed1f42), own lock released by this closeout commit. Documentation/control request complete; UI-01/03/04 remain approved pending implementation. WORK_RESUME_POLICY.md v1.1 §3 supersedes mandatory cross-host manual inspection for a valid released lock.
 

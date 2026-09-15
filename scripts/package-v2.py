@@ -2,6 +2,10 @@
 from pathlib import Path
 import zipfile,json,hashlib,shutil
 root=Path(__file__).resolve().parents[1];built=root/'dist/v2';out=root/'dist/ecg-signal-studio-v2.2.1.zip'
+required=['archive.json','legacy/index.html','legacy/style.css','legacy/app.js','legacy/core.js','legacy/data/bank.js','legacy/data/extension.js']
+missing=[name for name in required if not (built/name).is_file()]
+assert not missing, f'Incomplete application assets: {missing}; restore archive/legacy before packaging'
+assert len(json.loads((built/'archive.json').read_text(encoding='utf-8'))['scenes'])==98
 assert (built/'replay/manifest.json').exists();manifest=json.loads((built/'replay/manifest.json').read_text(encoding='utf-8'));assert len(manifest['scenes'])==98
 readme='''ECG Signal Studio v2.2.1 — 실행 패키지
 

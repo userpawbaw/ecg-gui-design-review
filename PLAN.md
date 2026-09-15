@@ -148,3 +148,8 @@ Target-PC execution handoff: `docs/09_target_pc_check.md` gives Q01–Q10 action
 ## 2026-09-15 — generation 7 package recovery
 
 Latest user requested resumption and supplied the correct v2.2.1 archive. GitHub reports 340775483 bytes, SHA256 9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed. Read-only inspection found generation-6 ZIP missing app/archive.json and app/legacy even though current source uses them. Recover original static assets without data generation, add a packaging completeness gate, verify affected routes and regenerate the package. Preserve prior verified UI/replay. Generation 7 starts from main 3c40e031 with a single parent and force=false.
+
+
+## Generation 8 — recover unpersisted package repair
+
+Generation 7 command results in the owning conversation show original v2.2.1 SHA256/CRC PASS, seven archive/legacy files restored, build PASS and extracted-package Chromium QA 3 PASS. Its ZIP was 340780943 bytes, SHA256 5ec5d47e288c4b54c8ff2edfad2c27249d08d0129ff67e73344cc596d94506bf. Both Library replacement attempts ended transfer_failed. All owned child commands had terminal exit results. Before the final commit, workspace maintenance removed the checkout and ZIP; main remains b500207 (start only). Those historical results are not proof of a currently available deliverable. Reconstruct the small packaging/test fix from the preserved conversation, then recover assets from the original Release and rebuild. No model training or data regeneration. Generation-6 ZIP 31d17dfa… lacks archive/legacy and must not be distributed as complete.

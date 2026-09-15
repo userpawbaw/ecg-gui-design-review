@@ -62,22 +62,23 @@
   ],
   "execution": {
     "status": "running",
-    "owner": "manual-package-recovery-2026-09-15T09:08:20.154Z-f11e0261",
-    "started_at": "2026-09-15T09:08:20.154Z",
-    "last_progress_at": "2026-09-15T09:08:20.154Z",
-    "last_progress": "Recover missing archive and legacy assets; verify package"
+    "owner": "manual-recover8-2026-09-15T13:49:28.939Z",
+    "started_at": "2026-09-15T13:49:28.939Z",
+    "last_progress_at": "2026-09-15T13:49:28.939Z",
+    "last_progress": "Restore lost package repair and preserve checkpoint before re-execution"
   },
   "execution_lock": {
-    "acquired_at": "2026-09-15T09:08:20.154Z",
+    "acquired_at": "2026-09-15T13:49:28.939Z",
     "active": true,
-    "generation": 7,
+    "generation": 8,
     "last_owner_id": "automation-release-recovery-20260915T084227Z-9c41",
-    "last_progress_at": "2026-09-15T09:01:49.662Z",
-    "owner_id": "manual-package-recovery-2026-09-15T09:08:20.154Z-f11e0261",
-    "phase": "package-recovery",
+    "last_progress_at": "2026-09-15T13:49:28.939Z",
+    "owner_id": "manual-recover8-2026-09-15T13:49:28.939Z",
+    "phase": "restore-pruned-package",
     "progress_evidence": [
-      "Original v2.2.1 Release asset size/digest matches recorded original",
-      "Read-only ZIP inspection found archive.json and legacy assets absent from generation-6 rebuilt package"
+      "Generation-7 owned download/build/test/package/transfer command sessions all returned terminal exit in this conversation",
+      "Both Library replacements returned transfer_failed; workspace maintenance removed the old files",
+      "User explicitly requests continuation; recover from original Release and remote source"
     ],
     "protocol_version": 1,
     "release_reason": null,
@@ -114,7 +115,7 @@
     "filename": "ecg-signal-studio-v2.2.1.zip",
     "bytes": 328553119,
     "sha256": "31d17dfaf1d833abf45fb7c2bd9498b325f376908dfb8b844b35e058e2bd9aff",
-    "status": "regenerated_verified_available_for_download",
+    "status": "incomplete_superseded_requires_repair",
     "verification": "Current UI-01/03/04 source, 98×600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",

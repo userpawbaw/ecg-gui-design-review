@@ -1,10 +1,10 @@
 {
   "schema_version": 2,
   "work": "ECG GUI design review",
-  "updated_at": "2026-09-14T20:53:06.317Z",
+  "updated_at": "2026-09-15T02:41:28.571Z",
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "completed_conditional",
-  "current_request": "승인된 UI-01/03/04 구현 및 범위에 맞는 자동 검증",
+  "request_status": "in_progress",
+  "current_request": "UI-01/03/04의 미완료 비-soak Chromium 렌더·상호작용 검증 재시도",
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
   "policy": "WORK_RESUME_POLICY.md",
@@ -22,7 +22,9 @@
     "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained",
     "UI-01/03/04 source implementation remotely verified at 632fcbc; 12 targeted tests, 14 DOM checks and TypeScript/Vite build PASS"
   ],
-  "in_progress": [],
+  "in_progress": [
+    "R4-partial: install Chromium and run the two non-soak Playwright UI checks"
+  ],
   "not_started": [],
   "blocked": [
     {
@@ -94,16 +96,16 @@
     "status": "stale_for_ui_polish"
   },
   "execution": {
-    "status": "finished",
-    "owner": "automation-ecg-ui-20260914T203857Z-982efb68",
-    "task_id": "approved-ui-01-03-04",
-    "started_at": "2026-09-14T20:38:57.222Z",
-    "last_progress_at": "2026-09-14T20:53:06.317Z",
-    "last_progress": "UI-01/03/04 source checkpoint remotely verified; final DOM switch-state regression passed; browser install failed cleanly and no child jobs remain; releasing lock",
-    "environment": "Codex managed workspace with git and local command execution; no installed browser and Playwright download timed out",
+    "status": "running",
+    "owner": "automation-ecg-browser-20260915T024128Z-e697169f",
+    "task_id": "ui-01-03-04-browser-retry",
+    "started_at": "2026-09-15T02:41:28.571Z",
+    "last_progress_at": "2026-09-15T02:41:28.571Z",
+    "last_progress": "Claiming generation-3 lock from remote main 5e445b3 before retrying Chromium installation",
+    "environment": "Codex managed workspace with git and local command execution; browser availability to be retried",
     "platform_run_id": null,
-    "note": "All started commands reached terminal exit states. Browser pixels, native behavior, 600-second chunk test and target-PC soak were not verified.",
-    "finished_at": "2026-09-14T20:53:06.317Z"
+    "note": "No browser download, server, test or source mutation started before remote generation-3 ownership readback.",
+    "finished_at": null
   },
   "automation": {
     "id": "6aa6b5a5ae688191ba361ee495000ffc",
@@ -114,35 +116,35 @@
     "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed.",
     "prompt_policy_version": "1.1"
   },
-  "next_action": "On a browser-capable runner, rebuild from the remotely verified UI source, run the two non-soak Playwright tests at 1920×1080 and 1366×768, then package with the existing complete 600-second replay artifacts. R4 10-minute target-PC soak remains required. UI-02/additional recommendations remain discussion only.",
+  "next_action": "After remote generation-3 ownership readback, retry Chromium installation once and run only the two non-soak Playwright UI tests if installation succeeds. Do not regenerate 600-second data.",
   "approved_pending": [
     {
       "id": "UI-01",
       "task": "Fix top-right large-comparison button foreground/background contrast",
-      "status": "completed_conditional_browser_not_verified"
+      "status": "browser_verification_in_progress"
     },
     {
       "id": "UI-03",
       "task": "Always expose compact basic display controls; collapse advanced settings",
-      "status": "completed_conditional_browser_not_verified"
+      "status": "browser_verification_in_progress"
     },
     {
       "id": "UI-04",
       "task": "Replace checkbox presentation with semantic switches/toggle and grouped difference gain",
-      "status": "completed_conditional_browser_not_verified"
+      "status": "browser_verification_in_progress"
     }
   ],
   "execution_lock": {
     "protocol_version": 1,
-    "active": false,
-    "owner_id": null,
-    "task_id": "approved-ui-01-03-04",
-    "generation": 2,
-    "acquired_at": "2026-09-14T20:38:57.222Z",
-    "last_progress_at": "2026-09-14T20:53:06.317Z",
-    "released_at": "2026-09-14T20:53:06.317Z",
+    "active": true,
+    "owner_id": "automation-ecg-browser-20260915T024128Z-e697169f",
+    "task_id": "ui-01-03-04-browser-retry",
+    "generation": 3,
+    "acquired_at": "2026-09-15T02:41:28.571Z",
+    "last_progress_at": "2026-09-15T02:41:28.571Z",
+    "released_at": null,
     "last_owner_id": "automation-ecg-ui-20260914T203857Z-982efb68",
-    "phase": "released",
+    "phase": "claiming_browser_retry",
     "progress_evidence": [
       "User requests GitHub shared status protocol and reports no PC command running",
       "Previous remote execution is finished at 6974aa71994972fc1e30d78a3bc2e6982479ee85",
@@ -156,8 +158,10 @@
       "Full v2 chunk test could not run because gitignored public/replay data is absent; no regeneration or inference attempted",
       "Implementation checkpoint 632fcbc remotely verified with nine intended paths",
       "Final DOM regression PASS with semantic switch state transitions",
-      "Playwright Chromium install exit 1 after repeated 30-second CDN timeouts; no system browser found; no browser test started"
+      "Playwright Chromium install exit 1 after repeated 30-second CDN timeouts; no system browser found; no browser test started",
+      "Remote main 5e445b3 and valid generation-2 off record read before generation-3 claim",
+      "No browser download, server, test or source mutation started before claim"
     ],
-    "release_reason": "Approved source implementation and available automated checks complete; all child commands ended; browser/package/target-PC verification remains explicitly blocked"
+    "release_reason": null
   }
 }

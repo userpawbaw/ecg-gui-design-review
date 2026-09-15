@@ -1,5 +1,11 @@
 # Work log
 
+## 2026-09-15 — generation-3 non-soak browser verification retry
+
+- Read remote main `5e445b3fcea9cdf62010cf205ff9206398562d61`, the required control files and docs/21–22. Generation 2 is a valid `off`; UI-01/03/04 source and automated checks are complete, while browser pixels remain NV after a transient-looking CDN timeout.
+- Candidate owner `automation-ecg-browser-20260915T024128Z-e697169f` is registered before any browser download/server/test. After remote ownership readback, retry Chromium installation once and, only if successful, run the two non-soak Playwright tests.
+- Preserve the verified UI source and generated-data boundary. Do not regenerate the absent 600-second replay, rebuild the release package from partial data, or implement UI-02/additional recommendations.
+
 ## 2026-09-15 — generation-2 claim for approved UI-01/03/04
 
 - Read remote main `c9083aa2096f16b33221f32bb5cd95d0f2c14250`, the current policy/state/plan/log and docs/21–22. The execution lock is a valid generation-1 `off`; UI-01/03/04 are approved and unimplemented.

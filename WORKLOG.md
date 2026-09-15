@@ -1,5 +1,11 @@
 # Work log
 
+## 2026-09-15 — user-provided Release recovery
+
+- Remote f77b646 and generation-4 off verified. Claim generation 5 before download/install/QA.
+- Chromium Release lists three Linux x64 archives. ECG Release contains ecg-signal-studio-v2.2.zip (340989208 bytes, SHA256 bd8148aea2210317fd3d60ad3ce05442f7fc9695f183c80ed083d608b9b63f8c), not the recorded v2.2.1 ZIP. Validate contents before reuse; no source rollback or inference.
+
+
 ## 2026-09-15 — user-requested Chromium installation check
 
 - Latest main e0cf8e0 and valid generation-3 off read; registering generation 4 before installation.

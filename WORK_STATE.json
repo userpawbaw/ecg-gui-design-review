@@ -51,7 +51,7 @@
     "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained",
     "UI-01/03/04 source implementation remotely verified at 632fcbc; 12 targeted tests, 14 DOM checks and TypeScript/Vite build PASS"
   ],
-  "current_request": "User-requested Chromium installation retry",
+  "current_request": "Recover user-provided release assets and resume approved UI browser QA",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
@@ -59,32 +59,30 @@
     "Sweep leading-edge glow and the additional ten-candidate UI/UX shortlist: discussion concluded, no implementation approval inferred"
   ],
   "execution": {
-    "last_progress": "Official Chromium download timed out after 30000 ms; further installer retry cancelled (exit 130); no matching installer child remains.",
-    "last_progress_at": "2026-09-15T04:59:46.978Z",
-    "owner": "manual-chromium-20260915T045704Z-c7429a",
-    "platform_run_id": null,
-    "started_at": "2026-09-15T04:57:04Z",
-    "status": "finished",
-    "task_id": "chromium-install-check",
-    "finished_at": "2026-09-15T04:59:46.978Z"
+    "status": "in_progress",
+    "owner": "manual-release-recovery-20260915051727906-a6f2",
+    "task_id": "release-recovery-browser-qa",
+    "started_at": "2026-09-15T05:17:27.906Z",
+    "last_progress_at": "2026-09-15T05:17:27.906Z",
+    "last_progress": "Claim before asset recovery; archive is v2.2 with different digest, data reuse requires validation",
+    "platform_run_id": null
   },
   "execution_lock": {
-    "acquired_at": "2026-09-15T04:57:04Z",
-    "active": false,
-    "generation": 4,
+    "acquired_at": "2026-09-15T05:17:27.906Z",
+    "active": true,
+    "generation": 5,
     "last_owner_id": "manual-chromium-20260915T045704Z-c7429a",
-    "last_progress_at": "2026-09-15T04:59:46.978Z",
-    "owner_id": null,
-    "phase": "released",
+    "last_progress_at": "2026-09-15T05:17:27.906Z",
+    "owner_id": "manual-release-recovery-20260915051727906-a6f2",
+    "phase": "asset-recovery",
     "progress_evidence": [
-      "Latest remote main e0cf8e0 and generation-3 off checked; user explicitly requested Chromium reinstall check",
-      "Claim 4f6bdf1 remotely verified",
-      "Official Chromium v1243 download timeout 30000 ms; cancelled subsequent retry; tool session 17093 terminal exit 130; matching installer child process scan empty"
+      "Remote main f77b646 and valid generation-4 off checked",
+      "User supplied two Releases; ECG asset is v2.2 rather than v2.2.1 and must be independently checked"
     ],
     "protocol_version": 1,
-    "release_reason": "Requested installation check could not download Chromium; remaining retry cancelled, installer exit 130 and children absent.",
-    "released_at": "2026-09-15T04:59:46.978Z",
-    "task_id": "chromium-install-check"
+    "release_reason": null,
+    "released_at": null,
+    "task_id": "release-recovery-browser-qa"
   },
   "in_progress": [],
   "last_good_checkpoint": {
@@ -117,9 +115,9 @@
     "verification": "Previously verified archive; not regenerated and does not include the current UI-01/03/04 source changes"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "blocked",
+  "request_status": "in_progress",
   "schema_version": 2,
-  "updated_at": "2026-09-15T04:59:46.978Z",
+  "updated_at": "2026-09-15T05:17:27.906Z",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",

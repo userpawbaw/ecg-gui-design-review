@@ -1,6 +1,6 @@
 # ECG Signal Studio v2.2.1 — 팀 실행·디버깅 안내
 
-2026-09-12. 구현과 자동 데이터/상태 검증을 완료한 검수용 빌드다. 실제 브라우저 렌더링·전시장 사용성·AFE 검증 완료를 뜻하지 않는다.
+2026-09-15. 구현과 자동 데이터/상태 검증을 완료한 검수용 빌드다. Linux headless Chromium의 비-soak 렌더·상호작용 검사는 통과했지만, 대상 Windows PC의 headed 표시·한글 글꼴·10분 soak·전시장 사용성·AFE 검증 완료를 뜻하지 않는다.
 
 v2.2.1 변경 및 SWT 데이터 판정: `docs/18_swt_audit_and_ui_revision.md` (실행 ZIP에서는 `REVISION.md`). 글꼴은 논의안이며 이번에는 변경하지 않았다.
 
@@ -61,21 +61,21 @@ npx playwright install chromium
 npm test
 ```
 
-Playwright는 개발용 선택 의존성이며 평상시 앱 실행에는 필요 없다. 이 명령은 **사용자 PC 브라우저**를 실행한다. 이 작업 환경에서 이미 실행된 것으로 보고하지 않는다. 눈으로 과정을 보고 싶으면 `npm run test:headed`를 쓴다. 실제 10분 재생 테스트는 PowerShell에서 `$env:ECG_SOAK="1"` 설정 후 `npm test`다. 빠른 자동 검수와 10분 실시간 검수는 별개다.
+Playwright는 개발용 선택 의존성이며 평상시 앱 실행에는 필요 없다. 2026-09-15 Linux x86_64 headless Chrome 153.0.8010.12에서 빠른 자동 검수는 2 PASS, 10분 soak 1건은 의도대로 SKIP됐다. 큰 창, Sweep/Scroll, hover/선택, Escape 후 포커스 복귀, JSON 다운로드, 1920×1080·1366×768, 일반/큰 창의 Difference와 ×5 물리축을 검사했다. 이 결과는 사용자 PC의 headed 창, OS 배율, 실제 터치나 10분 연속 실행을 대신하지 않는다. 눈으로 과정을 보고 싶으면 `npm run test:headed`를 쓴다. 실제 10분 재생 테스트는 PowerShell에서 `$env:ECG_SOAK="1"` 설정 후 `npm test`다.
 
 결과 폴더 `test-results`와 `playwright-report`에는 screenshot/video/trace/결과 JSON이 남는다. 공유할 우선 자료는 큰 창 Sweep·Scroll·Pin·Difference 화면, 1366×768 화면, `review.json`, 실패 trace다. 화면에 안 보이는 요소를 억지로 클릭하는 테스트 통과를 사용성 PASS로 취급하지 않는다.
 
 ## 현재 한계와 다음 판정
 
-- native dialog 포커스·Escape·다운로드·키보드 및 실제 터치: NOT VERIFIED.
-- 화면 공간 도면을 CSS로 옮겼지만 1080p/768p의 실제 overflow·OS 배율·1m 가독성·60fps: NOT VERIFIED. 큰 창은 내용이 넘치면 스크롤을 허용한다. “발표 중 스크롤 없음” 목표는 PC 검수 후 조정한다.
+- Headless Chromium에서 native dialog 표시, Escape 후 포커스 복귀, JSON 다운로드, 키보드 시나리오는 PASS다. 대상 PC headed 창과 실제 터치는 NOT VERIFIED다.
+- 1920×1080·1366×768 headless 캡처와 overflow 자동검사는 PASS다. Linux runner에는 한글 fallback 글꼴이 없어 캡처에서 한글이 네모로 표시되므로 한글 가독성, OS 125%·150% 배율, 1m 가독성·60fps는 대상 PC에서 확인해야 한다. 이번 작업에서 전면 글꼴 교체는 하지 않았다.
 - Attract/idle의 긴 실제 운영 및 브라우저 background throttling: NOT VERIFIED. 청크/시계 단위 테스트를 실제 10분 soak 완료로 대체하지 않는다.
 - 새 자료 요청은 우선 Pause하고, 성공 시 직전 재생 의도가 유지된 경우에만 자동 재개한다. 대기 중 구간 고정/탐색/정지 의도가 있으면 자동 재개를 취소한다. 실제 요청 경합·브라우저 동작은 PC에서 추가 확인한다.
 - timeline에는 현재 viewport, 현재 조건에 해당하는 시연 구간 marker, 같은 조건의 개인 북마크가 표시된다. marker가 밀집한 경우 실제 PC에서 겹침을 확인해야 한다. 자유 드래그 범위 브러시는 제공하지 않는다.
 - strict/scaled 지표 정의는 유지하며 대형 Inspector의 상세 정보량과 작은 화면 3행 조작성은 후속 사용자 피드백으로 다듬는다.
 - 실제 AFE 연결과 병리 보존 검증은 별도 통합 단계다.
 
-전체 판정은 **구현·데이터 통합 CONDITIONAL PASS / 실제 브라우저·전시 검수 대기**다. 최종 완료를 위해 남은 순서는 위 UI 디테일 보완 → PC 결과 확인·수정 → 팀 문서 최종 갱신이다.
+전체 판정은 **구현·데이터 통합 및 headless 비-soak QA PASS / 대상 PC headed·10분 soak·전시 검수 대기**다. 최종 완료를 위해 남은 순서는 PC 결과 확인·필요한 보정 → 팀 문서 최종 갱신이다.
 
 ## 데이터 출처 표기
 

@@ -89,6 +89,6 @@ Attract 진입은 기존 간결한 전시 설정대로 차이 행을 끈다. Loc
 
 - 데이터 hash/소스 재현: PASS, 위 명시한 범위.
 - 엔진·청크·축 단위 검사: 13 PASS. DOM/Canvas 명령 회귀 검사: PASS. TypeScript/Vite 빌드: PASS.
-- 실제 브라우저 픽셀·native dialog·실제 10분 재생·전시장 가독성: NOT VERIFIED. 이 환경의 기존 localhost 브라우저 차단을 우회하지 않았다. 테스트의 Canvas는 명령 기록용 대역이며 스크린샷 검수가 아니다.
-- PC 자동 검수에 일반/큰 창의 재생 중 Difference, Sweep/Scroll 전환, ×5 축 스크린샷 수집을 추가했다. 숫자의 실제 가독성 판정은 그 결과가 필요하다.
+- Linux headless Chrome 153에서 비-soak 브라우저 검수 2건 PASS: 큰 창, Sweep/Scroll, hover/선택, Escape 후 포커스 복귀, JSON 다운로드, 1920×1080·1366×768, 일반/큰 창의 Difference와 ×5 물리축을 확인했다. 결과는 `verification/release-recovery-20260915.json`에 있다.
+- 실제 Windows headed 창·실제 10분 재생·터치·전시장 가독성은 NOT VERIFIED다. Linux runner에는 한글 fallback 글꼴이 없어 캡처의 한글이 네모로 표시되며, 이는 전면 글꼴 교체 승인이나 대상 PC 한글 표시 PASS를 뜻하지 않는다.
 - 다음 논의: 글꼴 범위·굵기 선택. 이후 요청하신 Loss 발전 비교 및 상세 분석·계측/실험실 통합을 별도 설계한다. 이번 수정에서 큰 탭 구조는 변경하지 않았다.

@@ -22,7 +22,7 @@ Attract는 별도로 표시한 10초 구간 반복이고 600초 자료의 대체
 
 자동 PC 검수(선택): qa 폴더에서 npm install, npx playwright install chromium, npm test.
 10분 실시간 검수: PowerShell에서 $env:ECG_SOAK="1"; npm test
-결과: qa/test-results 및 qa/playwright-report. 이 패키지의 브라우저 검수는 아직 미실행입니다.
+결과: qa/test-results 및 qa/playwright-report. Linux headless Chrome 153에서 비-soak 자동 검수는 2 PASS였고 10분 soak는 미실행입니다. Windows headed 검수는 별도입니다.
 수정 사항과 SWT 조사 결과는 REVISION.md와 SWT-AUDIT.json에 있습니다.
 자세한 한계 및 상태는 IMPLEMENTATION.md와 VERIFICATION.json을 읽어주세요.
 '''
@@ -35,10 +35,11 @@ with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=4)as z:
  z.writestr('qa/package.json',json.dumps(qa,indent=2));z.writestr('qa/playwright.config.ts',config)
  z.write(root/'prototype/v2/browser-tests/expo.spec.ts','qa/tests/expo.spec.ts')
  z.write(root/'docs/18_swt_audit_and_ui_revision.md','REVISION.md');z.write(root/'verification/swt-replay-audit.json','SWT-AUDIT.json');z.write(root/'docs/17_v2_team_handoff.md','IMPLEMENTATION.md');z.write(root/'verification/v2-long-data.json','VERIFICATION.json')
+ z.write(root/'verification/release-recovery-20260915.json','BROWSER-QA.json')
  license=root/'prototype/v2/SHADCN-LICENSE.txt'
  if license.exists():z.write(license,'licenses/shadcn-ui.txt')
  for license in (root/'prototype/v2/node_modules').rglob('*'):
   if license.is_file() and license.name.lower().startswith(('license','licence')):z.write(license,'licenses/dependencies/'+str(license.relative_to(root/'prototype/v2/node_modules')))
 with zipfile.ZipFile(out)as z:assert z.testzip() is None;assert len([p for p in z.namelist()if p.endswith('.bin')])==1960
-receipt={'file':out.name,'bytes':out.stat().st_size,'sha256':hashlib.sha256(out.read_bytes()).hexdigest(),'zipCRC':'PASS','chunks':1960,'browser':'NOT VERIFIED'}
+receipt={'file':out.name,'bytes':out.stat().st_size,'sha256':hashlib.sha256(out.read_bytes()).hexdigest(),'zipCRC':'PASS','chunks':1960,'browser':'HEADLESS NON-SOAK PASS; TARGET-PC HEADED AND 10-MINUTE SOAK NOT VERIFIED'}
 (root/'verification/v2-package.json').write_text(json.dumps(receipt,indent=2));print(json.dumps(receipt,indent=2))

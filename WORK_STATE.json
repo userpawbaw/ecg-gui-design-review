@@ -29,8 +29,8 @@
   "blocked": [
     {
       "id": "R4",
-      "reason": "Target-PC browser/render/native/10-minute soak evidence is not available. Two Playwright Chromium installation runs failed: first by repeated timeouts, then with extended timeout by truncated 0 MiB responses and HTTP 502. No system browser is present. User-requested third check again timed out after 30000 ms; subsequent retry cancelled (exit 130), with installer children confirmed absent.",
-      "resume_when": "A browser-capable runner or target-PC result bundle and the complete 600-second package input are available"
+      "reason": "Linux headless Chrome 153 non-soak QA passes, but target-PC headed rendering, Hangul fallback, OS scaling/touch and the actual 10-minute soak remain unverified.",
+      "resume_when": "Run the packaged PC evidence bundle on the target Windows PC, including ECG_SOAK=1, and return its screenshots/review JSON/result bundle"
     },
     {
       "id": "R5-closeout",
@@ -50,6 +50,8 @@
     "D2 UI discussion and lock-policy documents remotely verified at 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c",
     "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained",
     "UI-01/03/04 source implementation remotely verified at 632fcbc; 12 targeted tests, 14 DOM checks and TypeScript/Vite build PASS"
+    ,"User-provided v2.2 archive replay recovered without inference: embedded verification byte-identical, 98 scenes and 1960/1960 chunk hashes PASS"
+    ,"Chrome 153 Linux headless non-soak browser QA: corrected full run 2 PASS, 1 ten-minute soak SKIP"
   ],
   "current_request": "Recover user-provided release assets and resume approved UI browser QA",
   "deferred_not_authorized": [
@@ -63,8 +65,8 @@
     "owner": "automation-release-recovery-20260915T084227Z-9c41",
     "task_id": "release-recovery-browser-qa",
     "started_at": "2026-09-15T08:42:27.906Z",
-    "last_progress_at": "2026-09-15T08:42:27.906Z",
-    "last_progress": "Recovered generation 5 after its owning conversation explicitly ended and no managed child process remained; claiming before validating user-provided Release assets",
+    "last_progress_at": "2026-09-15T08:56:15.677Z",
+    "last_progress": "Release assets and 1960 replay chunks verified; current UI built; Chrome 153 headless non-soak QA passes 2 tests with 1 soak skipped; packaging remains",
     "platform_run_id": null
   },
   "execution_lock": {
@@ -72,14 +74,16 @@
     "active": true,
     "generation": 6,
     "last_owner_id": "manual-release-recovery-20260915051727906-a6f2",
-    "last_progress_at": "2026-09-15T08:42:27.906Z",
+    "last_progress_at": "2026-09-15T08:56:15.677Z",
     "owner_id": "automation-release-recovery-20260915T084227Z-9c41",
     "phase": "recovery-claim",
     "progress_evidence": [
       "Remote main 6d60b1a and generation-5 owner read before recovery",
       "The generation-5 owning conversation explicitly sent a final response stating that it had ended without source/build/test mutation",
       "No download, browser, preview server, test, packaging or archive child process remains in the managed workspace",
-      "User supplied two Releases; ECG asset is v2.2 rather than v2.2.1 and must be independently checked"
+      "User supplied two Releases; ECG asset is v2.2 rather than v2.2.1 and must be independently checked",
+      "All four Release assets ZIP CRC PASS; embedded replay verification is byte-identical and 1960/1960 chunk hashes PASS",
+      "Chrome 153 headless non-soak browser QA corrected full run: 2 PASS, 1 ten-minute soak SKIP"
     ],
     "protocol_version": 1,
     "release_reason": null,
@@ -104,8 +108,10 @@
     "docs/22_ui_polish_review_and_decisions.md",
     "verification/ui-discussion-lock-review.json",
     "verification/ui-polish-20260915.json"
+    ,"verification/release-recovery-20260915.json"
+    ,"verification/browser-qa-20260915/"
   ],
-  "next_action": "Obtain existing v2.2.1 ZIP through a reachable GitHub Release asset; validate SHA256 and recover app/replay without regeneration. Browser QA still requires a working Chromium download/runner.",
+  "next_action": "Regenerate and verify ecg-signal-studio-v2.2.1.zip from the current UI source plus the verified recovered replay, then release generation 6. Target-PC headed/Hangul/10-minute soak remain R4.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -113,13 +119,13 @@
   "release": {
     "filename": "ecg-signal-studio-v2.2.1.zip",
     "sha256": "9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed",
-    "status": "stale_for_ui_polish",
+    "status": "regeneration_pending_after_headless_qa",
     "verification": "Previously verified archive; not regenerated and does not include the current UI-01/03/04 source changes"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "in_progress",
   "schema_version": 2,
-  "updated_at": "2026-09-15T08:42:27.906Z",
+  "updated_at": "2026-09-15T08:56:15.677Z",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -145,6 +151,11 @@
       "evidence": "verification/v2-dom.json, verification/ui-polish-20260915.json and WORKLOG.md",
       "result": "CONDITIONAL PASS: 12 relevant engine/scale tests, 14 updated DOM/Canvas-command checks and TypeScript/Vite build PASS. Chromium install exit 1 after repeated CDN timeouts; browser pixels NOT VERIFIED. Full chunk test unavailable because ignored public/replay artifacts are absent.",
       "scope": "UI-01/03/04 implementation checkpoint"
+    },
+    {
+      "evidence": "verification/release-recovery-20260915.json and verification/browser-qa-20260915/",
+      "result": "PASS: Release ZIP CRC; embedded verification byte-identical; 1960/1960 replay chunks; TypeScript/Vite build; Chrome 153 headless non-soak 2 PASS with 1 soak SKIP. Target-PC headed/Hangul/10-minute soak NOT VERIFIED.",
+      "scope": "release asset recovery and browser QA"
     }
   ],
   "work": "ECG GUI design review"

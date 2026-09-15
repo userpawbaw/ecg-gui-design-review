@@ -23,8 +23,12 @@ test('Difference follows playback in both viewer sizes and retains physical axis
   if(large)await page.getByRole('button',{name:'크게 비교'}).click();
   const viewer=large?page.getByRole('dialog'):page.locator('.viewer');
   await expect(viewer.getByRole('group',{name:'기본 표시 도구'})).toBeVisible();
-  await expect(viewer.locator('details.advanced-settings')).not.toHaveAttribute('open');
+  const advanced=viewer.locator('details.advanced-settings');
+  await expect(advanced).not.toHaveAttribute('open');
+  await advanced.locator('summary').click();
   await expect(viewer.getByRole('switch')).toHaveCount(2);
+  await advanced.locator('summary').click();
+  await expect(advanced).not.toHaveAttribute('open');
   const difference=viewer.getByRole('button',{name:/^차이 보기/});if(await difference.getAttribute('aria-pressed')==='true')await difference.click();
   await viewer.getByRole('button',{name:'재생',exact:true}).click();
   await difference.click();await expect(difference).toHaveAttribute('aria-pressed','true');

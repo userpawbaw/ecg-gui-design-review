@@ -4,6 +4,8 @@ Updated: 2026-09-15 (KST)
 
 ## Current Work control
 
+Generation 6 progress 2026-09-15 17:56 KST: all four user-provided assets passed ZIP CRC. The v2.2 archive's `VERIFICATION.json` is byte-identical to the tracked 98×600-second report, and all 1,960 replay chunk hashes pass; replay data was recovered without inference. Chrome 153 headless non-soak QA now passes 2 tests with 1 soak test intentionally skipped. One QA assertion was corrected to open the approved collapsed advanced settings before counting its two switches. Target-PC headed/Hangul/10-minute soak remain open; package regeneration is next.
+
 Automation recovery 2026-09-15 17:42 KST: generation 5's owning conversation explicitly ended and no managed download/browser/server/test child remained. Generation 6 claims the user-provided Releases from remote main 6d60b1a. Verify downloads and archive provenance before reuse, then run approved browser QA only if the supplied Linux x64 Chromium starts. Preserve current UI source and do not regenerate ECG data.
 
 Manual check 2026-09-15: retry Chromium installation at the user's explicit request. Preserve verified UI source; no data regeneration or repeated build. Generation 4 claim 4f6bdf1 was remotely verified. Official Chromium download timed out after 30000 ms; subsequent retry cancelled (exit 130), no installer child remains. Browser not installed; no tests/build/data regeneration. Generation 4 released as blocked.

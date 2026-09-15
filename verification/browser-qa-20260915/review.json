@@ -1,0 +1,169 @@
+{
+  "schema": 2,
+  "at": "2026-09-15T08:54:56.084Z",
+  "source": {
+    "sourceCommit": "5eb27946087faca3c6e70b3925e2ba132b2ee680",
+    "mode": "GENERATED REPLAY",
+    "reference": "FE(x_raw)",
+    "noise": "synthetic presets, not NSTDB recordings",
+    "retrained": false,
+    "continuousSeconds": 600,
+    "quantization": "shared int16 scale; metrics verified against float source"
+  },
+  "metadata": {
+    "sourceCommit": "5eb27946087faca3c6e70b3925e2ba132b2ee680",
+    "record": "111",
+    "split": "test",
+    "lead": "MLII",
+    "sourceStartSeconds": 5,
+    "sourceStartSample": 1800,
+    "sourceFs": 360,
+    "processedStartSample": 1250,
+    "durationSeconds": 600,
+    "guardSecondsEachSide": 5,
+    "noiseKind": "synthetic",
+    "noiseSeedParts": [
+      "expo-long-v2",
+      "d1",
+      "111",
+      "mixed"
+    ],
+    "noiseSeed": 2021221576,
+    "noiseWeights": {
+      "awgn": 0.5289471944862844,
+      "impulse": 0.26066485254236377,
+      "pli": 0.21038795297135202
+    },
+    "snrNormalization": "whole 610s raw input before FE, guards excluded for displayed metrics",
+    "reference": "FE(x_raw)",
+    "checkpoints": {
+      "M06": {
+        "path": "results/d1/m06_l1/best.pt",
+        "sha256": "8659d37c3d62f2380a6c480a073bb3636cf87a4fca67f74a09815507ef5f5e8b",
+        "data_win": 1024,
+        "data_hop": 512,
+        "frontend": true
+      },
+      "M06L6": {
+        "path": "results/d1/m06_l6/best.pt",
+        "sha256": "b7c6c10bb0e6bc54d71581e5297aa20dc5aedfcba478b07781f1a9d84680093a",
+        "data_win": 1024,
+        "data_hop": 512,
+        "frontend": true
+      },
+      "M08": {
+        "path": "results/d1/m08_l1/best.pt",
+        "sha256": "3af81f04faf6eb067ffa91f36bd688f7a2e747f6e195e864b485eb5bc7efd1db",
+        "data_win": 1024,
+        "data_hop": 512,
+        "frontend": true
+      },
+      "M09": {
+        "path": "results/d1/m09_l1/best.pt",
+        "sha256": "cd6d58cd0e2adcd4fab828ca8bfd47ccb18948d5dc66ddcae7454368158e9b2e",
+        "data_win": 1024,
+        "data_hop": 512,
+        "frontend": true
+      }
+    },
+    "methodConfig": {
+      "methods": [
+        "M_FE",
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "B01"
+      ],
+      "frontend": true,
+      "dl_methods": {
+        "M06": {
+          "ckpt": "results/d1/m06_l1/best.pt",
+          "batch": 64
+        },
+        "M06L6": {
+          "ckpt": "results/d1/m06_l6/best.pt",
+          "batch": 64
+        },
+        "M08": {
+          "ckpt": "results/d1/m08_l1/best.pt",
+          "batch": 64
+        },
+        "M09": {
+          "ckpt": "results/d1/m09_l1/best.pt",
+          "batch": 64
+        }
+      }
+    },
+    "swtTuning": {
+      "wavelet": "sym4",
+      "level": 5,
+      "sigma_source": "d1",
+      "k": [
+        0.6,
+        0.2,
+        0.1,
+        0.3,
+        0.3
+      ],
+      "mode": "hard",
+      "protect_qrs": false,
+      "protect_ms": 60,
+      "protect_rho": 0.3,
+      "threshold_approx": false
+    },
+    "methodSeconds": {
+      "M_FE": 0.07136034965515137,
+      "M01": 0.03177762031555176,
+      "M02": 0.0481877326965332,
+      "M03": 0.08395171165466309,
+      "M04": 0.12352323532104492,
+      "M05": 9.708794116973877,
+      "B01": 0.0797128677368164,
+      "M06": 0.65594482421875,
+      "M06L6": 0.6522133350372314,
+      "M08": 0.8837754726409912,
+      "M09": 1.3119914531707764
+    },
+    "torch": "2.14.0+cpu",
+    "numpy": "2.3.5",
+    "python": "3.12.14",
+    "rawSha256": "7f3f4f2caeb82eb1443d7bdec905dbcc3f6caa9697b57cdcfca7784eed11b954",
+    "inputSha256": "51eaddb8488b628a5e389207c6723a67732b1cc97a5c2f738bd7fe9b1f173be0",
+    "annotationsShown": false
+  },
+  "scene": "d1-mixed-10",
+  "axis": "d1",
+  "noise": "mixed",
+  "snr": 10,
+  "method": "M04",
+  "comparison": "",
+  "mode": "scroll",
+  "span": 5,
+  "atSeconds": 7.933268,
+  "firstSample": 733,
+  "lastSampleExclusive": 1983,
+  "inspect": true,
+  "amplitude": 2,
+  "reference": 0.55,
+  "difference": false,
+  "displayGain": 1,
+  "playing": false,
+  "note": "자동 PC 검수",
+  "events": [
+    {
+      "at": "2026-09-15T08:54:51.879Z",
+      "message": "연속 600초 · 111 · 혼합 잡음 · 10 dB"
+    },
+    {
+      "at": "2026-09-15T08:54:55.479Z",
+      "message": "현재 시각까지의 연속 구간을 고정했습니다."
+    },
+    {
+      "at": "2026-09-15T08:54:55.831Z",
+      "message": "M04 선택 · 입력과 시각 유지"
+    }
+  ],
+  "deviceSession": null
+}

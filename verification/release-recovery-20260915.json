@@ -1,0 +1,88 @@
+{
+  "date_utc": "2026-09-15T08:56:15.677Z",
+  "owner_id": "automation-release-recovery-20260915T084227Z-9c41",
+  "generation": 6,
+  "claim_commit": "10b9ce0e9eabd3d5c4e624c5874b4b89d0602ad3",
+  "release_assets": [
+    {
+      "file": "ecg-signal-studio-v2.2.zip",
+      "bytes": 340989208,
+      "sha256": "bd8148aea2210317fd3d60ad3ce05442f7fc9695f183c80ed083d608b9b63f8c",
+      "zip_crc": "PASS"
+    },
+    {
+      "file": "chrome-linux64.zip",
+      "bytes": 195836009,
+      "sha256": "8aac35011c18f6e2d10696154af89a5728ac2ddd6dc6fad24ffdf243c3fcfd5a",
+      "zip_crc": "PASS"
+    },
+    {
+      "file": "chrome-headless-shell-linux64.zip",
+      "bytes": 119809080,
+      "sha256": "a9da028861a0cf789ff25c2fed45f5f1aaf969ed9247835b6a7821a4f7af9d1d",
+      "zip_crc": "PASS"
+    },
+    {
+      "file": "ffmpeg-linux.zip",
+      "bytes": 2376500,
+      "sha256": "ebc74fc5b94830176a3c2914ae96bd8bc7f6a91f4f33890230f84a172ee61ccc",
+      "zip_crc": "PASS"
+    }
+  ],
+  "replay_recovery": {
+    "manifest_sha256": "5feff5b0b7f56b20b0765baceb50122ace6e6a314b7c611d33e44eeeeee2a8c7",
+    "verification_json_match": "BYTE_IDENTICAL",
+    "scene_count": 98,
+    "duration_seconds": 600,
+    "channels_per_scene": 13,
+    "chunks_verified": 1960,
+    "chunk_hash_failures": 0,
+    "source_commit": "5eb27946087faca3c6e70b3925e2ba132b2ee680",
+    "retrained": false
+  },
+  "browser": {
+    "product": "Chrome for Testing headless shell",
+    "version": "153.0.8010.12",
+    "playwright": "1.63.0",
+    "environment": "Ubuntu 24.04 x86_64 headless",
+    "build_exit_code": 0,
+    "initial_test_exit_code": 1,
+    "initial_test_result": "One QA assertion counted advanced switches while their details element was closed; UI remained consistent with the approved collapsed-advanced design.",
+    "test_correction": "Open advanced settings, assert two semantic switches, close advanced settings and assert it is collapsed again.",
+    "corrected_targeted_exit_code": 0,
+    "corrected_targeted_result": "1/1 PASS",
+    "corrected_full_exit_code": 0,
+    "corrected_full_result": "2 PASS, 1 ten-minute soak SKIPPED",
+    "target_pc_headed": "NOT VERIFIED",
+    "ten_minute_soak": "NOT VERIFIED",
+    "visual_limitation": "The Linux runner has no Hangul-capable system fallback font, so Korean glyphs appear as boxes in captured evidence. No global font change was authorized or made."
+  },
+  "evidence": [
+    {
+      "file": "verification/browser-qa-20260915/01-lab-1920.png",
+      "sha256": "1fe16b815e960e86e6305031f29a8458465a2395dbc0f8c6736a513a55ec8523"
+    },
+    {
+      "file": "verification/browser-qa-20260915/04-small-1366.png",
+      "sha256": "79633496fa51bab97e398efdb787fc385bbf97fa24c385e83a0cb9217ab1b596"
+    },
+    {
+      "file": "verification/browser-qa-20260915/standard-axis-gain5.png",
+      "sha256": "aed16f76107b98183c917b8c252e483fa6d11254b0bd6b47b7f75eaf26f9d91f"
+    },
+    {
+      "file": "verification/browser-qa-20260915/large-axis-gain5.png",
+      "sha256": "d86b2c7779a6fc331e1d9cfedb5e08f7565d721b154f1fc02b74880bed77f9ac"
+    },
+    {
+      "file": "verification/browser-qa-20260915/review.json",
+      "sha256": "d135e2b89030ffe36169614c1c6c16ab78d89574939bc91c900fec6babde02ee"
+    }
+  ],
+  "source_changes": [
+    "prototype/v2/browser-tests/expo.spec.ts: align switch assertion with collapsed advanced settings"
+  ],
+  "ui_source_changes": 0,
+  "data_regeneration": false,
+  "verdict": "HEADLESS NON-SOAK PASS; TARGET-PC HEADED, HANGUL FONT AND TEN-MINUTE SOAK REMAIN"
+}

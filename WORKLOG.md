@@ -1,5 +1,11 @@
 # Work log
 
+## 2026-09-15 — user-requested Chromium installation check
+
+- Latest main e0cf8e0 and valid generation-3 off read; registering generation 4 before installation.
+- Retry standard Playwright Chromium installer once. Only launch browser if installation succeeds. Preserve source/data and prior verified stages.
+
+
 ## 2026-09-15 — generation-3 non-soak browser verification retry
 
 - Read remote main `5e445b3fcea9cdf62010cf205ff9206398562d61`, the required control files and docs/21–22. Generation 2 is a valid `off`; UI-01/03/04 source and automated checks are complete, while browser pixels remain NV after a transient-looking CDN timeout.

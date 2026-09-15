@@ -1,10 +1,10 @@
 {
   "schema_version": 2,
   "work": "ECG GUI design review",
-  "updated_at": "2026-09-15T02:48:21.806Z",
+  "updated_at": "2026-09-15T04:57:04Z",
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "completed_conditional",
-  "current_request": "UI-01/03/04의 미완료 비-soak Chromium 렌더·상호작용 검증 재시도",
+  "request_status": "in_progress",
+  "current_request": "User-requested Chromium installation retry",
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
   "policy": "WORK_RESUME_POLICY.md",
@@ -94,16 +94,13 @@
     "status": "stale_for_ui_polish"
   },
   "execution": {
-    "status": "finished",
-    "owner": "automation-ecg-browser-20260915T024128Z-e697169f",
-    "task_id": "ui-01-03-04-browser-retry",
-    "started_at": "2026-09-15T02:41:28.571Z",
-    "last_progress_at": "2026-09-15T02:48:21.806Z",
-    "last_progress": "Extended-timeout Chromium retry ended exit 1 with truncated downloads and HTTP 502; no browser/server/test job started; releasing generation-3 lock",
-    "environment": "Codex managed workspace with git and local command execution; no installed browser, download path returned corrupt/502 responses",
-    "platform_run_id": null,
-    "note": "The installer process reached a terminal exit. No source, build output, release package or generated ECG data was modified.",
-    "finished_at": "2026-09-15T02:48:21.806Z"
+    "status": "in_progress",
+    "owner": "manual-chromium-20260915T045704Z-c7429a",
+    "task_id": "chromium-install-check",
+    "started_at": "2026-09-15T04:57:04Z",
+    "last_progress_at": "2026-09-15T04:57:04Z",
+    "last_progress": "Preparing one explicitly requested installation retry; no build or data regeneration",
+    "platform_run_id": null
   },
   "automation": {
     "id": "6aa6b5a5ae688191ba361ee495000ffc",
@@ -134,34 +131,18 @@
   ],
   "execution_lock": {
     "protocol_version": 1,
-    "active": false,
-    "owner_id": null,
-    "task_id": "ui-01-03-04-browser-retry",
-    "generation": 3,
-    "acquired_at": "2026-09-15T02:41:28.571Z",
-    "last_progress_at": "2026-09-15T02:48:21.806Z",
-    "released_at": "2026-09-15T02:48:21.806Z",
+    "active": true,
+    "owner_id": "manual-chromium-20260915T045704Z-c7429a",
+    "task_id": "chromium-install-check",
+    "generation": 4,
+    "acquired_at": "2026-09-15T04:57:04Z",
+    "last_progress_at": "2026-09-15T04:57:04Z",
+    "released_at": null,
     "last_owner_id": "automation-ecg-browser-20260915T024128Z-e697169f",
-    "phase": "released",
+    "phase": "browser-install",
     "progress_evidence": [
-      "User requests GitHub shared status protocol and reports no PC command running",
-      "Previous remote execution is finished at 6974aa71994972fc1e30d78a3bc2e6982479ee85",
-      "Start claim d7ae76f remotely verified",
-      "Existing automation prompt updated and independently re-read; cadence and enabled flag retained",
-      "Documentation commit 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c read back; other source/data blobs unchanged",
-      "Remote main c9083aa and valid generation-1 off record read before generation-2 claim",
-      "No local source edits, builds, tests, or browser jobs started before claim",
-      "UI-01/03/04 source and test changes prepared",
-      "12 relevant engine/scale tests PASS; updated DOM/Canvas-command regression PASS; TypeScript/Vite build PASS",
-      "Full v2 chunk test could not run because gitignored public/replay data is absent; no regeneration or inference attempted",
-      "Implementation checkpoint 632fcbc remotely verified with nine intended paths",
-      "Final DOM regression PASS with semantic switch state transitions",
-      "Playwright Chromium install exit 1 after repeated 30-second CDN timeouts; no system browser found; no browser test started",
-      "Remote main 5e445b3 and valid generation-2 off record read before generation-3 claim",
-      "No browser download, server, test or source mutation started before claim",
-      "Extended-timeout Chromium installer exit 1: repeated 0 MiB/truncated archives and HTTP 502 responses",
-      "No browser executable installed; no preview server or Playwright test started; source and generated data unchanged"
+      "Latest remote main e0cf8e0 and generation-3 off checked; user explicitly requested Chromium reinstall check"
     ],
-    "release_reason": "Browser installation retry ended cleanly but the external download path remained unavailable; no child process remains and browser QA is blocked"
+    "release_reason": null
   }
 }

@@ -38,9 +38,9 @@
     }
   ],
   "completed_verified": [
-    "S0–S5 source review, independent freeze, comparison, synthesis and scoped automated checks",
+    "S0\u2013S5 source review, independent freeze, comparison, synthesis and scoped automated checks",
     "R1 GUI implementation and v2.2.1 requested revision; actual browser NV",
-    "R2 98 conditions × 600 s data and chunk verification",
+    "R2 98 conditions \u00d7 600 s data and chunk verification",
     "SWT final tuning provenance audit; algorithm repair not performed",
     "6-hour automation creation confirmed enabled",
     "P1 persistent policy remote commit 0154b384 verified",
@@ -65,7 +65,7 @@
     "owner": "manual-recover8-2026-09-15T13:49:28.939Z",
     "started_at": "2026-09-15T13:49:28.939Z",
     "last_progress_at": "2026-09-15T13:49:28.939Z",
-    "last_progress": "Restore lost package repair and preserve checkpoint before re-execution"
+    "last_progress": "Original ZIP SHA256/CRC verified; 1968 assets restored; npm ci and TypeScript/Vite build exit 0. Packaging in progress."
   },
   "execution_lock": {
     "acquired_at": "2026-09-15T13:49:28.939Z",
@@ -78,7 +78,9 @@
     "progress_evidence": [
       "Generation-7 owned download/build/test/package/transfer command sessions all returned terminal exit in this conversation",
       "Both Library replacements returned transfer_failed; workspace maintenance removed the old files",
-      "User explicitly requests continuation; recover from original Release and remote source"
+      "User explicitly requests continuation; recover from original Release and remote source",
+      "Restored original ZIP bytes without inference",
+      "npm ci exit 0; TypeScript/Vite build exit 0"
     ],
     "protocol_version": 1,
     "release_reason": null,
@@ -116,7 +118,7 @@
     "bytes": 328553119,
     "sha256": "31d17dfaf1d833abf45fb7c2bd9498b325f376908dfb8b844b35e058e2bd9aff",
     "status": "incomplete_superseded_requires_repair",
-    "verification": "Current UI-01/03/04 source, 98×600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
+    "verification": "Current UI-01/03/04 source, 98\u00d7600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "in_progress",

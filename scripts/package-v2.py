@@ -40,6 +40,7 @@ with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=4)as z:
  z.write(root/'prototype/v2/browser-tests/expo.spec.ts','qa/tests/expo.spec.ts')
  z.write(root/'docs/18_swt_audit_and_ui_revision.md','REVISION.md');z.write(root/'verification/swt-replay-audit.json','SWT-AUDIT.json');z.write(root/'docs/17_v2_team_handoff.md','IMPLEMENTATION.md');z.write(root/'verification/v2-long-data.json','VERIFICATION.json')
  z.write(root/'verification/release-recovery-20260915.json','BROWSER-QA.json')
+ z.write(root/'verification/package-repair-20260915.json','PACKAGE-REPAIR.json')
  license=root/'prototype/v2/SHADCN-LICENSE.txt'
  if license.exists():z.write(license,'licenses/shadcn-ui.txt')
  for license in (root/'prototype/v2/node_modules').rglob('*'):

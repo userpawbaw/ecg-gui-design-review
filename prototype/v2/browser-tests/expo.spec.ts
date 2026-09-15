@@ -48,3 +48,22 @@ test('Difference follows playback in both viewer sizes and retains physical axis
   await page.screenshot({path:info.outputPath(`${large?'large':'standard'}-axis-gain5.png`),fullPage:true});
  }
 });
+
+test('archive, experiment evidence and legacy analysis assets are usable',async({page,request})=>{
+ const response=await request.get('/archive.json');expect(response.ok()).toBeTruthy();
+ const archive=await response.json();expect(archive.scenes).toHaveLength(98);
+ for(const name of ['index.html','style.css','app.js','core.js','data/bank.js','data/extension.js']){
+  const asset=await request.get('/legacy/'+name);expect(asset.ok(),name).toBeTruthy();
+  if(name.endsWith('.js'))expect(asset.headers()['content-type']).toMatch(/javascript/);
+ }
+ await page.goto('/');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
+ await page.getByRole('button',{name:'전체 근거',exact:true}).click();
+ expect(archive.evidence.rows.length).toBeGreaterThan(0);
+ await expect(page.locator('.evidence tbody tr')).toHaveCount(archive.evidence.rows.length);
+ await page.getByRole('button',{name:'실험실',exact:true}).click();
+ await page.getByLabel('자료 길이').selectOption('archive');
+ await expect(page.locator('.badge')).toHaveText('ARCHIVED REPLAY');
+ await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
+ await page.getByRole('button',{name:'상세 분석·계측',exact:true}).click();
+ await expect(page.frameLocator('iframe').locator('canvas,svg').first()).toBeVisible();
+});

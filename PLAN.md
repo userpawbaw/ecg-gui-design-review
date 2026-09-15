@@ -153,3 +153,8 @@ Latest user requested resumption and supplied the correct v2.2.1 archive. GitHub
 ## Generation 8 — recover unpersisted package repair
 
 Generation 7 command results in the owning conversation show original v2.2.1 SHA256/CRC PASS, seven archive/legacy files restored, build PASS and extracted-package Chromium QA 3 PASS. Its ZIP was 340780943 bytes, SHA256 5ec5d47e288c4b54c8ff2edfad2c27249d08d0129ff67e73344cc596d94506bf. Both Library replacement attempts ended transfer_failed. All owned child commands had terminal exit results. Before the final commit, workspace maintenance removed the checkout and ZIP; main remains b500207 (start only). Those historical results are not proof of a currently available deliverable. Reconstruct the small packaging/test fix from the preserved conversation, then recover assets from the original Release and rebuild. No model training or data regeneration. Generation-6 ZIP 31d17dfa… lacks archive/legacy and must not be distributed as complete.
+
+
+## Generation 8 recovery checkpoint
+
+Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed), ZIP CRC PASS. Restored 1968 files covering replay plus archive/legacy. npm ci and TypeScript/Vite build exit 0. Reconstructed archive/evidence/legacy browser regression and packaging completeness guard. New package verification and persistence are next; prior generation-7 output is not available after workspace pruning. No data regeneration.

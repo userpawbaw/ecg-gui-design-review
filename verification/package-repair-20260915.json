@@ -1,0 +1,12 @@
+{
+  "original": {
+    "bytes": 340775483,
+    "sha256": "9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed",
+    "zipCRC": "PASS"
+  },
+  "restored_files": 1968,
+  "restored_scope": "app/archive.json, app/legacy and app/replay; original bytes",
+  "data_regenerated": false,
+  "browser": "new extracted-package QA pending",
+  "supersedes": "generation 6 archive SHA256 31d17dfa lacked archive/legacy; generation 7 repair failed persistence and was pruned"
+}

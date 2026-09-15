@@ -4,7 +4,7 @@ Updated: 2026-09-15 (KST)
 
 ## Current Work control
 
-Manual check 2026-09-15: retry Chromium installation at the user's explicit request. Preserve verified UI source; no data regeneration or repeated build. Generation 4 claim precedes execution.
+Manual check 2026-09-15: retry Chromium installation at the user's explicit request. Preserve verified UI source; no data regeneration or repeated build. Generation 4 claim 4f6bdf1 was remotely verified. Official Chromium download timed out after 30000 ms; subsequent retry cancelled (exit 130), no installer child remains. Browser not installed; no tests/build/data regeneration. Generation 4 released as blocked.
 
 Automation retry 2026-09-15 11:41 KST: generation-3 owner `automation-ecg-browser-20260915T024128Z-e697169f` was remotely verified at `84d1795`. The Chromium installation was retried once with a 120-second connection timeout, but every download was either a truncated 0 MiB response or HTTP 502; installer exit 1. No preview server or Playwright test started. Source/data/package remained unchanged and generation 3 is released. Resume R4 only with a browser-capable runner or target-PC evidence.
 

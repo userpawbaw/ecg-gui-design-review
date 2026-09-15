@@ -1,13 +1,42 @@
 {
-  "schema_version": 2,
-  "work": "ECG GUI design review",
-  "updated_at": "2026-09-15T04:57:04Z",
-  "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "in_progress",
-  "current_request": "User-requested Chromium installation retry",
-  "overall_project_status": "conditional_pass_external_verification_pending",
-  "plan": "PLAN.md",
-  "policy": "WORK_RESUME_POLICY.md",
+  "approved_pending": [
+    {
+      "id": "UI-01",
+      "status": "completed_conditional_browser_not_verified",
+      "task": "Fix top-right large-comparison button foreground/background contrast"
+    },
+    {
+      "id": "UI-03",
+      "status": "completed_conditional_browser_not_verified",
+      "task": "Always expose compact basic display controls; collapse advanced settings"
+    },
+    {
+      "id": "UI-04",
+      "status": "completed_conditional_browser_not_verified",
+      "task": "Replace checkbox presentation with semantic switches/toggle and grouped difference gain"
+    }
+  ],
+  "automation": {
+    "conversation_id": "6aa709df-a970-83e9-a0b0-b4fd4631110f",
+    "enabled": true,
+    "id": "6aa6b5a5ae688191ba361ee495000ffc",
+    "prompt_policy_version": "1.1",
+    "schedule": "BEGIN:VEVENT\nDTSTART:20260913T143933Z\nRRULE:FREQ=HOURLY;INTERVAL=6\nEND:VEVENT",
+    "timezone": "Asia/Seoul",
+    "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed."
+  },
+  "base_remote_commit": "c9083aa2096f16b33221f32bb5cd95d0f2c14250",
+  "blocked": [
+    {
+      "id": "R4",
+      "reason": "Target-PC browser/render/native/10-minute soak evidence is not available. Two Playwright Chromium installation runs failed: first by repeated timeouts, then with extended timeout by truncated 0 MiB responses and HTTP 502. No system browser is present. User-requested third check again timed out after 30000 ms; subsequent retry cancelled (exit 130), with installer children confirmed absent.",
+      "resume_when": "A browser-capable runner or target-PC result bundle and the complete 600-second package input are available"
+    },
+    {
+      "id": "R5-closeout",
+      "reason": "Final team closeout depends on R4"
+    }
+  ],
   "completed_verified": [
     "S0–S5 source review, independent freeze, comparison, synthesis and scoped automated checks",
     "R1 GUI implementation and v2.2.1 requested revision; actual browser NV",
@@ -22,25 +51,46 @@
     "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained",
     "UI-01/03/04 source implementation remotely verified at 632fcbc; 12 targeted tests, 14 DOM checks and TypeScript/Vite build PASS"
   ],
-  "in_progress": [],
-  "not_started": [],
-  "blocked": [
-    {
-      "id": "R4",
-      "reason": "Target-PC browser/render/native/10-minute soak evidence is not available. Two Playwright Chromium installation runs failed: first by repeated timeouts, then with extended timeout by truncated 0 MiB responses and HTTP 502. No system browser is present.",
-      "resume_when": "A browser-capable runner or target-PC result bundle and the complete 600-second package input are available"
-    },
-    {
-      "id": "R5-closeout",
-      "reason": "Final team closeout depends on R4"
-    }
-  ],
+  "current_request": "User-requested Chromium installation retry",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
     "Loss evolution view and tab integration",
     "Sweep leading-edge glow and the additional ten-candidate UI/UX shortlist: discussion concluded, no implementation approval inferred"
   ],
+  "execution": {
+    "last_progress": "Official Chromium download timed out after 30000 ms; further installer retry cancelled (exit 130); no matching installer child remains.",
+    "last_progress_at": "2026-09-15T04:59:46.978Z",
+    "owner": "manual-chromium-20260915T045704Z-c7429a",
+    "platform_run_id": null,
+    "started_at": "2026-09-15T04:57:04Z",
+    "status": "finished",
+    "task_id": "chromium-install-check",
+    "finished_at": "2026-09-15T04:59:46.978Z"
+  },
+  "execution_lock": {
+    "acquired_at": "2026-09-15T04:57:04Z",
+    "active": false,
+    "generation": 4,
+    "last_owner_id": "manual-chromium-20260915T045704Z-c7429a",
+    "last_progress_at": "2026-09-15T04:59:46.978Z",
+    "owner_id": null,
+    "phase": "released",
+    "progress_evidence": [
+      "Latest remote main e0cf8e0 and generation-3 off checked; user explicitly requested Chromium reinstall check",
+      "Claim 4f6bdf1 remotely verified",
+      "Official Chromium v1243 download timeout 30000 ms; cancelled subsequent retry; tool session 17093 terminal exit 130; matching installer child process scan empty"
+    ],
+    "protocol_version": 1,
+    "release_reason": "Requested installation check could not download Chromium; remaining retry cancelled, installer exit 130 and children absent.",
+    "released_at": "2026-09-15T04:59:46.978Z",
+    "task_id": "chromium-install-check"
+  },
+  "in_progress": [],
+  "last_good_checkpoint": {
+    "commit": "632fcbcfa058f333d30758f5d22a5b6bc88d8075",
+    "description": "UI-01/03/04 implementation, tests, build evidence and documentation remotely verified while generation-2 lock remained active"
+  },
   "major_artifacts": [
     "docs/17_v2_team_handoff.md",
     "docs/18_swt_audit_and_ui_revision.md",
@@ -55,94 +105,47 @@
     "verification/ui-discussion-lock-review.json",
     "verification/ui-polish-20260915.json"
   ],
-  "verification": [
-    {
-      "scope": "v2.2.1 implementation (prior verified checkpoint)",
-      "result": "13 tests, DOM/Canvas command regressions, TS/Vite build PASS; actual browser NOT VERIFIED",
-      "evidence": "docs/18_swt_audit_and_ui_revision.md"
-    },
-    {
-      "scope": "final SWT provenance audit (prior verified checkpoint)",
-      "result": "Audit complete, independent-patient holdout claim FAIL; no retuning performed",
-      "evidence": "docs/19_swt_tuning_version_review.md"
-    },
-    {
-      "scope": "workflow documentation",
-      "result": "PASS: 10 retrieved blobs, 16 local links, original docs/20 body preserved, decision paths reviewed",
-      "evidence": "verification/workflow-policy-review.json"
-    },
-    {
-      "scope": "UI discussion and cooperative shared-lock configuration",
-      "result": "PASS: seven files read back and scoped tree compared; start owner registered/read back; automation prompt readback. Distributed race/crash recovery and GUI execution NOT VERIFIED.",
-      "evidence": "verification/ui-discussion-lock-review.json"
-    },
-    {
-      "scope": "UI-01/03/04 implementation checkpoint",
-      "result": "CONDITIONAL PASS: 12 relevant engine/scale tests, 14 updated DOM/Canvas-command checks and TypeScript/Vite build PASS. Chromium install exit 1 after repeated CDN timeouts; browser pixels NOT VERIFIED. Full chunk test unavailable because ignored public/replay artifacts are absent.",
-      "evidence": "verification/v2-dom.json, verification/ui-polish-20260915.json and WORKLOG.md"
-    }
-  ],
-  "last_good_checkpoint": {
-    "commit": "632fcbcfa058f333d30758f5d22a5b6bc88d8075",
-    "description": "UI-01/03/04 implementation, tests, build evidence and documentation remotely verified while generation-2 lock remained active"
-  },
-  "base_remote_commit": "c9083aa2096f16b33221f32bb5cd95d0f2c14250",
+  "next_action": "Obtain existing v2.2.1 ZIP through a reachable GitHub Release asset; validate SHA256 and recover app/replay without regeneration. Browser QA still requires a working Chromium download/runner.",
+  "not_started": [],
+  "overall_project_status": "conditional_pass_external_verification_pending",
+  "plan": "PLAN.md",
+  "policy": "WORK_RESUME_POLICY.md",
   "release": {
     "filename": "ecg-signal-studio-v2.2.1.zip",
     "sha256": "9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed",
-    "verification": "Previously verified archive; not regenerated and does not include the current UI-01/03/04 source changes",
-    "status": "stale_for_ui_polish"
+    "status": "stale_for_ui_polish",
+    "verification": "Previously verified archive; not regenerated and does not include the current UI-01/03/04 source changes"
   },
-  "execution": {
-    "status": "in_progress",
-    "owner": "manual-chromium-20260915T045704Z-c7429a",
-    "task_id": "chromium-install-check",
-    "started_at": "2026-09-15T04:57:04Z",
-    "last_progress_at": "2026-09-15T04:57:04Z",
-    "last_progress": "Preparing one explicitly requested installation retry; no build or data regeneration",
-    "platform_run_id": null
-  },
-  "automation": {
-    "id": "6aa6b5a5ae688191ba361ee495000ffc",
-    "conversation_id": "6aa709df-a970-83e9-a0b0-b4fd4631110f",
-    "enabled": true,
-    "timezone": "Asia/Seoul",
-    "schedule": "BEGIN:VEVENT\nDTSTART:20260913T143933Z\nRRULE:FREQ=HOURLY;INTERVAL=6\nEND:VEVENT",
-    "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed.",
-    "prompt_policy_version": "1.1"
-  },
-  "next_action": "Resume browser QA only when a browser-capable runner or target-PC result bundle is available. Then run the two non-soak Playwright UI tests and package with the existing complete 600-second artifacts; do not regenerate data without approval.",
-  "approved_pending": [
+  "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
+  "request_status": "blocked",
+  "schema_version": 2,
+  "updated_at": "2026-09-15T04:59:46.978Z",
+  "verification": [
     {
-      "id": "UI-01",
-      "task": "Fix top-right large-comparison button foreground/background contrast",
-      "status": "completed_conditional_browser_not_verified"
+      "evidence": "docs/18_swt_audit_and_ui_revision.md",
+      "result": "13 tests, DOM/Canvas command regressions, TS/Vite build PASS; actual browser NOT VERIFIED",
+      "scope": "v2.2.1 implementation (prior verified checkpoint)"
     },
     {
-      "id": "UI-03",
-      "task": "Always expose compact basic display controls; collapse advanced settings",
-      "status": "completed_conditional_browser_not_verified"
+      "evidence": "docs/19_swt_tuning_version_review.md",
+      "result": "Audit complete, independent-patient holdout claim FAIL; no retuning performed",
+      "scope": "final SWT provenance audit (prior verified checkpoint)"
     },
     {
-      "id": "UI-04",
-      "task": "Replace checkbox presentation with semantic switches/toggle and grouped difference gain",
-      "status": "completed_conditional_browser_not_verified"
+      "evidence": "verification/workflow-policy-review.json",
+      "result": "PASS: 10 retrieved blobs, 16 local links, original docs/20 body preserved, decision paths reviewed",
+      "scope": "workflow documentation"
+    },
+    {
+      "evidence": "verification/ui-discussion-lock-review.json",
+      "result": "PASS: seven files read back and scoped tree compared; start owner registered/read back; automation prompt readback. Distributed race/crash recovery and GUI execution NOT VERIFIED.",
+      "scope": "UI discussion and cooperative shared-lock configuration"
+    },
+    {
+      "evidence": "verification/v2-dom.json, verification/ui-polish-20260915.json and WORKLOG.md",
+      "result": "CONDITIONAL PASS: 12 relevant engine/scale tests, 14 updated DOM/Canvas-command checks and TypeScript/Vite build PASS. Chromium install exit 1 after repeated CDN timeouts; browser pixels NOT VERIFIED. Full chunk test unavailable because ignored public/replay artifacts are absent.",
+      "scope": "UI-01/03/04 implementation checkpoint"
     }
   ],
-  "execution_lock": {
-    "protocol_version": 1,
-    "active": true,
-    "owner_id": "manual-chromium-20260915T045704Z-c7429a",
-    "task_id": "chromium-install-check",
-    "generation": 4,
-    "acquired_at": "2026-09-15T04:57:04Z",
-    "last_progress_at": "2026-09-15T04:57:04Z",
-    "released_at": null,
-    "last_owner_id": "automation-ecg-browser-20260915T024128Z-e697169f",
-    "phase": "browser-install",
-    "progress_evidence": [
-      "Latest remote main e0cf8e0 and generation-3 off checked; user explicitly requested Chromium reinstall check"
-    ],
-    "release_reason": null
-  }
+  "work": "ECG GUI design review"
 }

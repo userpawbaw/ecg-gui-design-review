@@ -3,7 +3,10 @@
 ## 2026-09-15 — user-requested Chromium installation check
 
 - Latest main e0cf8e0 and valid generation-3 off read; registering generation 4 before installation.
-- Retry standard Playwright Chromium installer once. Only launch browser if installation succeeds. Preserve source/data and prior verified stages.
+- Ran PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=30000 ./node_modules/.bin/playwright install chromium after claim 4f6bdf1 ownership readback.
+- Chrome for Testing 153.0.8010.12 / Playwright chromium v1243 download from cdn.playwright.dev timed out after 30000 ms. Cancelled the installer's subsequent retry, tool session 17093 exited 130. No matching installer/downloader child remained. No browser launch, source change, build/test or data regeneration.
+- Original ZIP was located in Library in the preceding read-only check but transfer returned HTTP 502 twice. Recommend GitHub Releases recovery asset; archive SHA256 and app/replay contents must be verified before reuse.
+- Ownership rechecked before this evidence/off commit.
 
 
 ## 2026-09-15 — generation-3 non-soak browser verification retry

@@ -4,6 +4,8 @@ Updated: 2026-09-15 (KST)
 
 ## Current Work control
 
+Generation 6 closeout 2026-09-15 18:01 KST: regenerated `ecg-signal-studio-v2.2.1.zip` from current UI plus verified replay. Independent ZIP CRC/content checks pass; 1,960 chunks are present and the embedded verification matches. QA run from the extracted package's own server/config passes 2 non-soak tests with the 10-minute test skipped. The updated package is preserved for user download. Target-PC headed/Hangul/OS-scale/touch and 10-minute soak remain R4; generation 6 is released.
+
 Generation 6 progress 2026-09-15 17:56 KST: all four user-provided assets passed ZIP CRC. The v2.2 archive's `VERIFICATION.json` is byte-identical to the tracked 98×600-second report, and all 1,960 replay chunk hashes pass; replay data was recovered without inference. Chrome 153 headless non-soak QA now passes 2 tests with 1 soak test intentionally skipped. One QA assertion was corrected to open the approved collapsed advanced settings before counting its two switches. Target-PC headed/Hangul/10-minute soak remain open; package regeneration is next.
 
 Automation recovery 2026-09-15 17:42 KST: generation 5's owning conversation explicitly ended and no managed download/browser/server/test child remained. Generation 6 claims the user-provided Releases from remote main 6d60b1a. Verify downloads and archive provenance before reuse, then run approved browser QA only if the supplied Linux x64 Chromium starts. Preserve current UI source and do not regenerate ECG data.

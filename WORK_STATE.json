@@ -61,33 +61,36 @@
     "Sweep leading-edge glow and the additional ten-candidate UI/UX shortlist: discussion concluded, no implementation approval inferred"
   ],
   "execution": {
-    "status": "in_progress",
+    "status": "finished",
     "owner": "automation-release-recovery-20260915T084227Z-9c41",
     "task_id": "release-recovery-browser-qa",
     "started_at": "2026-09-15T08:42:27.906Z",
-    "last_progress_at": "2026-09-15T08:56:15.677Z",
-    "last_progress": "Release assets and 1960 replay chunks verified; current UI built; Chrome 153 headless non-soak QA passes 2 tests with 1 soak skipped; packaging remains",
-    "platform_run_id": null
+    "last_progress_at": "2026-09-15T09:01:49.662Z",
+    "last_progress": "Regenerated and independently verified v2.2.1 package; extracted-package non-soak QA passes 2 tests with 1 soak skipped; all child commands ended",
+    "platform_run_id": null,
+    "finished_at": "2026-09-15T09:01:49.662Z"
   },
   "execution_lock": {
     "acquired_at": "2026-09-15T08:42:27.906Z",
-    "active": true,
+    "active": false,
     "generation": 6,
-    "last_owner_id": "manual-release-recovery-20260915051727906-a6f2",
-    "last_progress_at": "2026-09-15T08:56:15.677Z",
-    "owner_id": "automation-release-recovery-20260915T084227Z-9c41",
-    "phase": "recovery-claim",
+    "last_owner_id": "automation-release-recovery-20260915T084227Z-9c41",
+    "last_progress_at": "2026-09-15T09:01:49.662Z",
+    "owner_id": null,
+    "phase": "released",
     "progress_evidence": [
       "Remote main 6d60b1a and generation-5 owner read before recovery",
       "The generation-5 owning conversation explicitly sent a final response stating that it had ended without source/build/test mutation",
       "No download, browser, preview server, test, packaging or archive child process remains in the managed workspace",
       "User supplied two Releases; ECG asset is v2.2 rather than v2.2.1 and must be independently checked",
       "All four Release assets ZIP CRC PASS; embedded replay verification is byte-identical and 1960/1960 chunk hashes PASS",
-      "Chrome 153 headless non-soak browser QA corrected full run: 2 PASS, 1 ten-minute soak SKIP"
+      "Chrome 153 headless non-soak browser QA corrected full run: 2 PASS, 1 ten-minute soak SKIP",
+      "Regenerated v2.2.1 package CRC PASS, 328553119 bytes, SHA256 31d17dfaf1d833abf45fb7c2bd9498b325f376908dfb8b844b35e058e2bd9aff",
+      "Extracted-package server QA exit 0: 2 PASS, 1 ten-minute soak SKIP; all child commands ended"
     ],
     "protocol_version": 1,
-    "release_reason": null,
-    "released_at": null,
+    "release_reason": "Approved release recovery, headless non-soak QA and package regeneration completed; target-PC headed/Hangul/ten-minute soak remain external R4 gates",
+    "released_at": "2026-09-15T09:01:49.662Z",
     "task_id": "release-recovery-browser-qa"
   },
   "in_progress": [],
@@ -111,21 +114,22 @@
     ,"verification/release-recovery-20260915.json"
     ,"verification/browser-qa-20260915/"
   ],
-  "next_action": "Regenerate and verify ecg-signal-studio-v2.2.1.zip from the current UI source plus the verified recovered replay, then release generation 6. Target-PC headed/Hangul/10-minute soak remain R4.",
+  "next_action": "Run the regenerated v2.2.1 package on the target Windows PC with headed QA and ECG_SOAK=1, then return screenshots/review JSON/results for R4 closeout. Upload this regenerated asset to GitHub Releases after target-PC acceptance.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
   "policy": "WORK_RESUME_POLICY.md",
   "release": {
     "filename": "ecg-signal-studio-v2.2.1.zip",
-    "sha256": "9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed",
-    "status": "regeneration_pending_after_headless_qa",
-    "verification": "Previously verified archive; not regenerated and does not include the current UI-01/03/04 source changes"
+    "bytes": 328553119,
+    "sha256": "31d17dfaf1d833abf45fb7c2bd9498b325f376908dfb8b844b35e058e2bd9aff",
+    "status": "regenerated_verified_available_for_download",
+    "verification": "Current UI-01/03/04 source, 98×600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "in_progress",
+  "request_status": "completed_conditional",
   "schema_version": 2,
-  "updated_at": "2026-09-15T08:56:15.677Z",
+  "updated_at": "2026-09-15T09:01:49.662Z",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",

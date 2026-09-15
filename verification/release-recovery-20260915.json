@@ -57,6 +57,19 @@
     "ten_minute_soak": "NOT VERIFIED",
     "visual_limitation": "The Linux runner has no Hangul-capable system fallback font, so Korean glyphs appear as boxes in captured evidence. No global font change was authorized or made."
   },
+  "packaged_artifact": {
+    "file": "ecg-signal-studio-v2.2.1.zip",
+    "bytes": 328553119,
+    "sha256": "31d17dfaf1d833abf45fb7c2bd9498b325f376908dfb8b844b35e058e2bd9aff",
+    "zip_crc": "PASS",
+    "replay_files": 1961,
+    "replay_manifest_sha256": "5feff5b0b7f56b20b0765baceb50122ace6e6a314b7c611d33e44eeeeee2a8c7",
+    "embedded_verification_match": "BYTE_IDENTICAL",
+    "embedded_browser_qa_json": "PASS",
+    "packaged_server_qa": "2 PASS, 1 ten-minute soak SKIP",
+    "package_qa_exit_code": 0,
+    "note": "An earlier command was invoked from the repository root and collected unrelated repository tests. It was a runner-directory error, not a package failure; the package QA was rerun from qa/ and passed."
+  },
   "evidence": [
     {
       "file": "verification/browser-qa-20260915/01-lab-1920.png",
@@ -84,5 +97,5 @@
   ],
   "ui_source_changes": 0,
   "data_regeneration": false,
-  "verdict": "HEADLESS NON-SOAK PASS; TARGET-PC HEADED, HANGUL FONT AND TEN-MINUTE SOAK REMAIN"
+  "verdict": "PACKAGE AND HEADLESS NON-SOAK PASS; TARGET-PC HEADED, HANGUL FONT AND TEN-MINUTE SOAK REMAIN"
 }

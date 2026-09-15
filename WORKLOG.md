@@ -282,3 +282,12 @@
 - Current UI TypeScript/Vite build PASS. First real Playwright run: the large-viewer scenario passed; the Difference scenario failed because the test counted advanced switches while their approved details container was closed. Corrected only the QA sequence to open advanced settings, assert two semantic switches, close it, and assert collapsed state.
 - Corrected targeted rerun 1/1 PASS; corrected full non-soak run 2 PASS and 1 ten-minute soak SKIP. Captures cover 1920×1080 and 1366×768, normal/large Difference and ×5 axes. Linux has no Hangul-capable system fallback, so Korean glyphs appear as boxes; target-PC headed/Hangul/OS-scale/touch and 10-minute soak remain NOT VERIFIED.
 - No UI source, SWT tuning, model output or scene data changed. Next: remotely checkpoint the test/evidence/document updates, regenerate the v2.2.1 package from current UI plus verified replay, verify its CRC/hash/content, then release generation 6.
+
+## 2026-09-15 — v2.2.1 package regeneration and generation 6 closeout
+
+- Checkpoint `90719e7b394e838565c5f059aea2bf09d471c76b` remotely verified before packaging; generation 6 ownership remained intact.
+- Generated `dist/ecg-signal-studio-v2.2.1.zip` from the current UI build and recovered replay. Size 328,553,119 bytes; SHA-256 `31d17dfaf1d833abf45fb7c2bd9498b325f376908dfb8b844b35e058e2bd9aff`; ZIP CRC PASS; 1,960 `.bin` chunks.
+- Extracted the new ZIP independently. Its replay manifest hash is `5feff5b0b7f56b20b0765baceb50122ace6e6a314b7c611d33e44eeeeee2a8c7`; embedded `VERIFICATION.json` is byte-identical to the tracked report; embedded browser-QA JSON parses.
+- One package-QA invocation used the repository root as its working directory and collected unrelated repository tests. Re-ran from the extracted package's `qa/` directory: exit 0, two non-soak tests PASS, ten-minute soak SKIP. No product failure is inferred from the misdirected invocation.
+- Persisted the completed ZIP for user download. All download, unzip, build, browser, server, package and upload commands reached terminal exit; no managed child job remains.
+- Current request is completed conditionally. R4 target-PC headed/Hangul/OS-scale/touch/10-minute soak and R5 final closeout remain blocked on external evidence. UI-02, the additional candidates, SWT retuning, global font change and Loss/tab work remain untouched.

@@ -1,8 +1,8 @@
 {
   "file": "ecg-signal-studio-v2.2.1.zip",
-  "bytes": 340775483,
-  "sha256": "9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed",
+  "bytes": 328553119,
+  "sha256": "31d17dfaf1d833abf45fb7c2bd9498b325f376908dfb8b844b35e058e2bd9aff",
   "zipCRC": "PASS",
   "chunks": 1960,
-  "browser": "NOT VERIFIED"
+  "browser": "HEADLESS NON-SOAK PASS; TARGET-PC HEADED AND 10-MINUTE SOAK NOT VERIFIED"
 }

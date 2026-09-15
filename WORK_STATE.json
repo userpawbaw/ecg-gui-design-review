@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "work": "ECG GUI design review",
-  "updated_at": "2026-09-15T02:41:28.571Z",
+  "updated_at": "2026-09-15T02:48:21.806Z",
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "in_progress",
+  "request_status": "completed_conditional",
   "current_request": "UI-01/03/04의 미완료 비-soak Chromium 렌더·상호작용 검증 재시도",
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -22,14 +22,12 @@
     "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained",
     "UI-01/03/04 source implementation remotely verified at 632fcbc; 12 targeted tests, 14 DOM checks and TypeScript/Vite build PASS"
   ],
-  "in_progress": [
-    "R4-partial: install Chromium and run the two non-soak Playwright UI checks"
-  ],
+  "in_progress": [],
   "not_started": [],
   "blocked": [
     {
       "id": "R4",
-      "reason": "Target-PC browser/render/native/10-minute soak evidence is not available. This run's Playwright Chromium download ended with repeated CDN timeouts and no system browser was present.",
+      "reason": "Target-PC browser/render/native/10-minute soak evidence is not available. Two Playwright Chromium installation runs failed: first by repeated timeouts, then with extended timeout by truncated 0 MiB responses and HTTP 502. No system browser is present.",
       "resume_when": "A browser-capable runner or target-PC result bundle and the complete 600-second package input are available"
     },
     {
@@ -96,16 +94,16 @@
     "status": "stale_for_ui_polish"
   },
   "execution": {
-    "status": "running",
+    "status": "finished",
     "owner": "automation-ecg-browser-20260915T024128Z-e697169f",
     "task_id": "ui-01-03-04-browser-retry",
     "started_at": "2026-09-15T02:41:28.571Z",
-    "last_progress_at": "2026-09-15T02:41:28.571Z",
-    "last_progress": "Claiming generation-3 lock from remote main 5e445b3 before retrying Chromium installation",
-    "environment": "Codex managed workspace with git and local command execution; browser availability to be retried",
+    "last_progress_at": "2026-09-15T02:48:21.806Z",
+    "last_progress": "Extended-timeout Chromium retry ended exit 1 with truncated downloads and HTTP 502; no browser/server/test job started; releasing generation-3 lock",
+    "environment": "Codex managed workspace with git and local command execution; no installed browser, download path returned corrupt/502 responses",
     "platform_run_id": null,
-    "note": "No browser download, server, test or source mutation started before remote generation-3 ownership readback.",
-    "finished_at": null
+    "note": "The installer process reached a terminal exit. No source, build output, release package or generated ECG data was modified.",
+    "finished_at": "2026-09-15T02:48:21.806Z"
   },
   "automation": {
     "id": "6aa6b5a5ae688191ba361ee495000ffc",
@@ -116,35 +114,35 @@
     "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed.",
     "prompt_policy_version": "1.1"
   },
-  "next_action": "After remote generation-3 ownership readback, retry Chromium installation once and run only the two non-soak Playwright UI tests if installation succeeds. Do not regenerate 600-second data.",
+  "next_action": "Resume browser QA only when a browser-capable runner or target-PC result bundle is available. Then run the two non-soak Playwright UI tests and package with the existing complete 600-second artifacts; do not regenerate data without approval.",
   "approved_pending": [
     {
       "id": "UI-01",
       "task": "Fix top-right large-comparison button foreground/background contrast",
-      "status": "browser_verification_in_progress"
+      "status": "completed_conditional_browser_not_verified"
     },
     {
       "id": "UI-03",
       "task": "Always expose compact basic display controls; collapse advanced settings",
-      "status": "browser_verification_in_progress"
+      "status": "completed_conditional_browser_not_verified"
     },
     {
       "id": "UI-04",
       "task": "Replace checkbox presentation with semantic switches/toggle and grouped difference gain",
-      "status": "browser_verification_in_progress"
+      "status": "completed_conditional_browser_not_verified"
     }
   ],
   "execution_lock": {
     "protocol_version": 1,
-    "active": true,
-    "owner_id": "automation-ecg-browser-20260915T024128Z-e697169f",
+    "active": false,
+    "owner_id": null,
     "task_id": "ui-01-03-04-browser-retry",
     "generation": 3,
     "acquired_at": "2026-09-15T02:41:28.571Z",
-    "last_progress_at": "2026-09-15T02:41:28.571Z",
-    "released_at": null,
-    "last_owner_id": "automation-ecg-ui-20260914T203857Z-982efb68",
-    "phase": "claiming_browser_retry",
+    "last_progress_at": "2026-09-15T02:48:21.806Z",
+    "released_at": "2026-09-15T02:48:21.806Z",
+    "last_owner_id": "automation-ecg-browser-20260915T024128Z-e697169f",
+    "phase": "released",
     "progress_evidence": [
       "User requests GitHub shared status protocol and reports no PC command running",
       "Previous remote execution is finished at 6974aa71994972fc1e30d78a3bc2e6982479ee85",
@@ -160,8 +158,10 @@
       "Final DOM regression PASS with semantic switch state transitions",
       "Playwright Chromium install exit 1 after repeated 30-second CDN timeouts; no system browser found; no browser test started",
       "Remote main 5e445b3 and valid generation-2 off record read before generation-3 claim",
-      "No browser download, server, test or source mutation started before claim"
+      "No browser download, server, test or source mutation started before claim",
+      "Extended-timeout Chromium installer exit 1: repeated 0 MiB/truncated archives and HTTP 502 responses",
+      "No browser executable installed; no preview server or Playwright test started; source and generated data unchanged"
     ],
-    "release_reason": null
+    "release_reason": "Browser installation retry ended cleanly but the external download path remained unavailable; no child process remains and browser QA is blocked"
   }
 }

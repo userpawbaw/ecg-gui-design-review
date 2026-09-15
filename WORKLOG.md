@@ -5,6 +5,9 @@
 - Read remote main `5e445b3fcea9cdf62010cf205ff9206398562d61`, the required control files and docs/21–22. Generation 2 is a valid `off`; UI-01/03/04 source and automated checks are complete, while browser pixels remain NV after a transient-looking CDN timeout.
 - Candidate owner `automation-ecg-browser-20260915T024128Z-e697169f` is registered before any browser download/server/test. After remote ownership readback, retry Chromium installation once and, only if successful, run the two non-soak Playwright tests.
 - Preserve the verified UI source and generated-data boundary. Do not regenerate the absent 600-second replay, rebuild the release package from partial data, or implement UI-02/additional recommendations.
+- Claim commit `84d17956617a7a7b5254c30535235109bffeae30` and generation-3 ownership were read back from remote main before the retry.
+- Ran `PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=120000 npx playwright install chromium`. The installer exhausted its attempts and exited 1: downloads reported 100% of 0 MiB followed by invalid/truncated ZIP errors, and other attempts returned HTTP 502 connection refused.
+- No browser executable was installed, so no preview server or Playwright UI test was started. Tracked source, build output, release package and ECG data are unchanged. All started processes reached terminal exit; release generation 3 as blocked on a browser-capable environment.
 
 ## 2026-09-15 — generation-2 claim for approved UI-01/03/04
 

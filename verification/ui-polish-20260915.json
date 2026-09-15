@@ -22,5 +22,12 @@
   ],
   "data_actions": "scripts/prepare-v2.cjs reconstructed the ignored 10-second archive from tracked bank data for DOM/build checks. It did not run inference or regenerate 600-second replay data. Its stale methods.json output was not retained.",
   "release_package": "The previously verified ecg-signal-studio-v2.2.1.zip was not regenerated and does not contain this UI source update.",
+  "browser_retry_generation_3": {
+    "claim_commit": "84d17956617a7a7b5254c30535235109bffeae30",
+    "command": "PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=120000 npx playwright install chromium",
+    "exit_code": 1,
+    "result": "All installer attempts failed with truncated 0 MiB archives or HTTP 502 responses. No browser, preview server or Playwright test started.",
+    "source_or_data_changes": 0
+  },
   "verdict": "CONDITIONAL PASS"
 }

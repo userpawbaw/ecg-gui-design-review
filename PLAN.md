@@ -4,7 +4,7 @@ Updated: 2026-09-15 (KST)
 
 ## Current Work control
 
-Automation retry 2026-09-15 11:41 KST: candidate generation-3 owner `automation-ecg-browser-20260915T024128Z-e697169f` will retry the previously timed-out Chromium installation and the two non-soak Playwright UI tests only after remote ownership readback. No source redesign, 600-second data regeneration, package substitution or target-PC soak is included.
+Automation retry 2026-09-15 11:41 KST: generation-3 owner `automation-ecg-browser-20260915T024128Z-e697169f` was remotely verified at `84d1795`. The Chromium installation was retried once with a 120-second connection timeout, but every download was either a truncated 0 MiB response or HTTP 502; installer exit 1. No preview server or Playwright test started. Source/data/package remained unchanged and generation 3 is released. Resume R4 only with a browser-capable runner or target-PC evidence.
 
 Automation resume 2026-09-15 05:38 KST: generation-2 owner `automation-ecg-ui-20260914T203857Z-982efb68` acquired the shared lock at `077e0b1`. UI-01/03/04 source implementation is remotely verified at `632fcbc`; 12 relevant engine/scale tests, 14 updated DOM/Canvas-command checks and TypeScript/Vite build PASS. Playwright Chromium installation ended with repeated CDN timeouts and no system browser exists, so pixels/native behavior remain NOT VERIFIED. The full chunk test and package regeneration were not run because gitignored 10-minute `public/replay` artifacts are absent; no inference or data regeneration was attempted. The prior release ZIP is therefore stale for this UI change. UI-02 and the additional recommendation shortlist remain out of implementation scope. Generation 2 is released by the final evidence commit with all child commands ended.
 

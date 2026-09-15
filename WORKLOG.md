@@ -291,3 +291,8 @@
 - One package-QA invocation used the repository root as its working directory and collected unrelated repository tests. Re-ran from the extracted package's `qa/` directory: exit 0, two non-soak tests PASS, ten-minute soak SKIP. No product failure is inferred from the misdirected invocation.
 - Persisted the completed ZIP for user download. All download, unzip, build, browser, server, package and upload commands reached terminal exit; no managed child job remains.
 - Current request is completed conditionally. R4 target-PC headed/Hangul/OS-scale/touch/10-minute soak and R5 final closeout remain blocked on external evidence. UI-02, the additional candidates, SWT retuning, global font change and Loss/tab work remain untouched.
+
+
+## 2026-09-15 — generation 7 package recovery
+
+Latest user requested resumption and supplied the correct v2.2.1 archive. GitHub reports 340775483 bytes, SHA256 9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed. Read-only inspection found generation-6 ZIP missing app/archive.json and app/legacy even though current source uses them. Recover original static assets without data generation, add a packaging completeness gate, verify affected routes and regenerate the package. Preserve prior verified UI/replay. Generation 7 starts from main 3c40e031 with a single parent and force=false.

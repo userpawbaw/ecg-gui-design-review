@@ -143,3 +143,8 @@ Target-PC execution handoff: `docs/09_target_pc_check.md` gives Q01–Q10 action
 - Current-source/checkpoint archive regeneration, exact metadata and pathology annotation: PENDING.
 - Actual AFE adapter/source-session contract, hardware and exhibit testing: PENDING.
 - Optional attract/idle reset and expanded distribution/annotation screens still require their operational/data requirements and later implementation checks.
+
+
+## 2026-09-15 — generation 7 package recovery
+
+Latest user requested resumption and supplied the correct v2.2.1 archive. GitHub reports 340775483 bytes, SHA256 9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed. Read-only inspection found generation-6 ZIP missing app/archive.json and app/legacy even though current source uses them. Recover original static assets without data generation, add a packaging completeness gate, verify affected routes and regenerate the package. Preserve prior verified UI/replay. Generation 7 starts from main 3c40e031 with a single parent and force=false.

@@ -25,7 +25,7 @@
     "timezone": "Asia/Seoul",
     "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed."
   },
-  "base_remote_commit": "c9083aa2096f16b33221f32bb5cd95d0f2c14250",
+  "base_remote_commit": "6d60b1a280867354f01788cd4791d12e7ec6f903",
   "blocked": [
     {
       "id": "R4",
@@ -60,23 +60,25 @@
   ],
   "execution": {
     "status": "in_progress",
-    "owner": "manual-release-recovery-20260915051727906-a6f2",
+    "owner": "automation-release-recovery-20260915T084227Z-9c41",
     "task_id": "release-recovery-browser-qa",
-    "started_at": "2026-09-15T05:17:27.906Z",
-    "last_progress_at": "2026-09-15T05:17:27.906Z",
-    "last_progress": "Claim before asset recovery; archive is v2.2 with different digest, data reuse requires validation",
+    "started_at": "2026-09-15T08:42:27.906Z",
+    "last_progress_at": "2026-09-15T08:42:27.906Z",
+    "last_progress": "Recovered generation 5 after its owning conversation explicitly ended and no managed child process remained; claiming before validating user-provided Release assets",
     "platform_run_id": null
   },
   "execution_lock": {
-    "acquired_at": "2026-09-15T05:17:27.906Z",
+    "acquired_at": "2026-09-15T08:42:27.906Z",
     "active": true,
-    "generation": 5,
-    "last_owner_id": "manual-chromium-20260915T045704Z-c7429a",
-    "last_progress_at": "2026-09-15T05:17:27.906Z",
-    "owner_id": "manual-release-recovery-20260915051727906-a6f2",
-    "phase": "asset-recovery",
+    "generation": 6,
+    "last_owner_id": "manual-release-recovery-20260915051727906-a6f2",
+    "last_progress_at": "2026-09-15T08:42:27.906Z",
+    "owner_id": "automation-release-recovery-20260915T084227Z-9c41",
+    "phase": "recovery-claim",
     "progress_evidence": [
-      "Remote main f77b646 and valid generation-4 off checked",
+      "Remote main 6d60b1a and generation-5 owner read before recovery",
+      "The generation-5 owning conversation explicitly sent a final response stating that it had ended without source/build/test mutation",
+      "No download, browser, preview server, test, packaging or archive child process remains in the managed workspace",
       "User supplied two Releases; ECG asset is v2.2 rather than v2.2.1 and must be independently checked"
     ],
     "protocol_version": 1,
@@ -117,7 +119,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "in_progress",
   "schema_version": 2,
-  "updated_at": "2026-09-15T05:17:27.906Z",
+  "updated_at": "2026-09-15T08:42:27.906Z",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",

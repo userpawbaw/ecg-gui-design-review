@@ -266,3 +266,10 @@
 - Maintained all 98 conditions ×600s output generation, no retraining, no method-output substitutes and explicit research/Replay provenance. Added 14 v2 acceptance items; motion constants and typography are preliminary values pending actual rendering.
 - Updated PLAN/README and linked v1 to v2. No GUI/runtime/data/QA code changed. No browser rendering, model inference or installation performed. Planning COMPLETE; implementation/rendered quality NOT VERIFIED. Next after confirmation: R1a behavior parity and browser evidence path, then R1b–R5.
 - Planning verification PASS: 19 local links in the five touched Markdown files resolve; V2-01–14 are present; all 23 baseline non-document/non-verification files match the S5 Git blob receipt. Existing automated GUI suites were not repeated because their inputs/code were unchanged. This document audit is not a rendered-UI pass.
+
+## 2026-09-15 — generation 6 release-recovery claim
+
+- Read remote main `6d60b1a`, the lock policy, state, plan, current worklog and docs/21–22 before execution.
+- Generation 5 remained on, but its owning conversation had explicitly sent a final response stating that it ended without source/build/test mutation. The managed workspace contains no remaining download, browser, preview-server, test, package or archive child process.
+- Preserved the divergent local checkout in place and created a clean worktree from remote main. Claimed generation 6 only to validate the two user-provided GitHub Releases, recover the preserved 600-second replay data if provenance matches, and run approved browser QA if the supplied Linux x64 browser starts.
+- No UI source, ECG inference output or package has been changed at this checkpoint. Next: push the single-parent start commit with force disabled, re-read remote ownership, then download and validate assets.

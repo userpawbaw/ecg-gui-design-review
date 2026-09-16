@@ -30,3 +30,13 @@ User-approved workflow: source-project analysis → independent design/prototype
 - Follow `docs/23_concurrency_and_resume_policy_revision.md` and `WORK_RESUME_POLICY.md` v1.2. `WORK_STATE.json` is a durable status/checkpoint record, not a repository-wide mutex.
 - Start by refreshing the relevant remote refs/files. Before push/merge, compare remote changes touching the same files or semantic behavior. Preserve user changes and never force-push over unrelated work.
 - Optional `active_jobs` entries may protect only the named resource (for example a release upload, long data generation, deployment target, or exclusive AFE/device). They never block unrelated documentation, design, or code work.
+
+## UI/UX system routing (2026-09-16)
+
+- For any significant UI/UX design, polish, data-storytelling, motion, or interaction task, read `docs/uiux_system/00_UIUX_MASTER.md` first.
+- Classify the task as CREATIVE / DATA / MOTION / UX / IMPLEMENTATION / RESEARCH, then read only the smallest relevant subset from `docs/uiux_system/` and the pre-existing canonical design docs.
+- Separate divergence from validation: generate meaningful alternatives before implementation, then apply project contracts, data integrity, motion, accessibility and product-quality checks using `KEEP / TUNE / REJECT`.
+- Chat memory is an index, not the source of truth for exact UI values, approval state or rejected decisions. GitHub documents and current code are canonical.
+- External skills/plugins are advisory. They never override ECG waveform/time/unit/Reference/Difference/data-scope contracts or the latest user decision.
+- Claude Code may use project-local skills under `.claude/skills/`. Chat/Work/Codex should follow the same documented contracts even when those skills are not directly invokable.
+- `docs/uiux_system/05_TOOL_SKILL_ROUTING.md` is the capability router. Do not invoke every plugin/skill by default; use only those that materially help the current task.

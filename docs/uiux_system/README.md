@@ -20,6 +20,7 @@
 
 - `10_RECORD_KEEPING.md` — **F/D/O/R 기록 규약 + CASE 방법론 사례 규칙**
 - `11_CHECKLISTS.md` — 작업 직전 trigger별 최소 체크리스트와 자동검사 승급 대장
+- `12_RECORD_SYSTEM_LINEAGE.md` — 원본 ECG 연구 기록 시스템의 배경·새 40/41/42 문서 검토·UI/UX 이식 차이
 
 운영 기록:
 

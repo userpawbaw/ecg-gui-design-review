@@ -20,12 +20,19 @@
     "conversation_id": "6aa709df-a970-83e9-a0b0-b4fd4631110f",
     "enabled": true,
     "id": "6aa6b5a5ae688191ba361ee495000ffc",
-    "prompt_policy_version": "1.1",
+    "prompt_policy_version": "1.2",
     "schedule": "BEGIN:VEVENT\nDTSTART:20260913T143933Z\nRRULE:FREQ=HOURLY;INTERVAL=6\nEND:VEVENT",
     "timezone": "Asia/Seoul",
-    "verified": "Latest peek confirms existing ID, enabled and unchanged schedule; shared-lock prompt update read back. No scheduler acquisition/release test claimed."
+    "verified": "Automation update succeeded on 2026-09-16: repository-wide lock instructions removed; remote-SHA refresh, Git conflict checks and resource-scoped duplicate avoidance retained."
   },
-  "base_remote_commit": "6d60b1a280867354f01788cd4791d12e7ec6f903",
+  "active_jobs": [],
+  "concurrency": {
+    "mode": "git_and_resource_scoped",
+    "policy_version": "1.2",
+    "repository_wide_lock": false,
+    "note": "The 2026-09-15 execution_lock/owner_id/generation protocol is retired by user decision. WORK_STATE is advisory status/checkpoint data. Only actual conflicts on the same file, semantic contract, generated output, release/deployment target, expensive job or exclusive device/resource should be serialized."
+  },
+  "base_remote_commit": "aabfd19784b457832edec7113e496ac7dc32d6af",
   "blocked": [
     {
       "id": "R4",
@@ -38,59 +45,40 @@
     }
   ],
   "completed_verified": [
-    "S0\u2013S5 source review, independent freeze, comparison, synthesis and scoped automated checks",
+    "S0–S5 source review, independent freeze, comparison, synthesis and scoped automated checks",
     "R1 GUI implementation and v2.2.1 requested revision; actual browser NV",
-    "R2 98 conditions \u00d7 600 s data and chunk verification",
+    "R2 98 conditions × 600 s data and chunk verification",
     "SWT final tuning provenance audit; algorithm repair not performed",
     "6-hour automation creation confirmed enabled",
     "P1 persistent policy remote commit 0154b384 verified",
     "P2 final UI workflow, draft preservation, source and link checks PASS",
     "P3 final workflow remote commit 44fd7fd1 verified; current requested policy/schedule/document work complete",
-    "D1 shared-lock start commit d7ae76f verified on remote; no cross-host process claim",
-    "D2 UI discussion and lock-policy documents remotely verified at 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c",
-    "Existing ECG automation shared-lock prompt updated and independently re-read; cadence retained",
+    "Historical D1 shared-lock start commit d7ae76f verified on remote; protocol is superseded by policy v1.2",
+    "Historical D2 UI discussion and lock-policy documents remotely verified at 8ed1f42720168232c967ca04c1bb53f0d3ddcd0c; lock portion is superseded",
     "UI-01/03/04 source implementation remotely verified at 632fcbc; 12 targeted tests, 14 DOM checks and TypeScript/Vite build PASS",
     "User-provided v2.2 archive replay recovered without inference: embedded verification byte-identical, 98 scenes and 1960/1960 chunk hashes PASS",
-    "Chrome 153 Linux headless non-soak browser QA: corrected full run 2 PASS, 1 ten-minute soak SKIP"
+    "Chrome 153 Linux headless non-soak browser QA: corrected full run 2 PASS, 1 ten-minute soak SKIP",
+    "2026-09-16 concurrency policy revision: docs/23 added at 2f39ff9, WORK_RESUME_POLICY v1.2 at 0d38797, AGENTS updated at aabfd19",
+    "Existing ECG 6-hour automation prompt updated to policy v1.2; repository-wide lock removed and resource-scoped conflict checks retained"
   ],
-  "current_request": "Recover user-provided release assets and resume approved UI browser QA",
+  "current_request": "Retire the repository-wide Work execution lock while preserving checkpoint/resume tracking and resource-scoped duplicate-job protection.",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
     "Loss evolution view and tab integration",
     "Sweep leading-edge glow and the additional ten-candidate UI/UX shortlist: discussion concluded, no implementation approval inferred"
   ],
-  "execution": {
-    "status": "running",
-    "owner": "manual-recover8-2026-09-15T13:49:28.939Z",
+  "last_execution": {
+    "status": "interrupted_usage_limit_user_confirmed",
+    "previous_owner": "manual-recover8-2026-09-15T13:49:28.939Z",
     "started_at": "2026-09-15T13:49:28.939Z",
-    "last_progress_at": "2026-09-15T13:49:28.939Z",
-    "last_progress": "Original ZIP SHA256/CRC verified; 1968 assets restored; npm ci and TypeScript/Vite build exit 0. Packaging in progress."
-  },
-  "execution_lock": {
-    "acquired_at": "2026-09-15T13:49:28.939Z",
-    "active": true,
-    "generation": 8,
-    "last_owner_id": "automation-release-recovery-20260915T084227Z-9c41",
-    "last_progress_at": "2026-09-15T13:49:28.939Z",
-    "owner_id": "manual-recover8-2026-09-15T13:49:28.939Z",
-    "phase": "restore-pruned-package",
-    "progress_evidence": [
-      "Generation-7 owned download/build/test/package/transfer command sessions all returned terminal exit in this conversation",
-      "Both Library replacements returned transfer_failed; workspace maintenance removed the old files",
-      "User explicitly requests continuation; recover from original Release and remote source",
-      "Restored original ZIP bytes without inference",
-      "npm ci exit 0; TypeScript/Vite build exit 0"
-    ],
-    "protocol_version": 1,
-    "release_reason": null,
-    "released_at": null,
-    "task_id": "release-recovery-browser-qa"
+    "last_recorded_progress_at": "2026-09-15T13:49:28.939Z",
+    "last_recorded_progress": "Original ZIP SHA256/CRC verified; 1968 assets restored; npm ci and TypeScript/Vite build exit 0. Packaging was recorded in progress. This historical execution record no longer blocks unrelated work."
   },
   "in_progress": [],
   "last_good_checkpoint": {
     "commit": "632fcbcfa058f333d30758f5d22a5b6bc88d8075",
-    "description": "UI-01/03/04 implementation, tests, build evidence and documentation remotely verified while generation-2 lock remained active"
+    "description": "UI-01/03/04 implementation, tests, build evidence and documentation remotely verified. Historical lock ownership is no longer part of the checkpoint contract."
   },
   "major_artifacts": [
     "docs/17_v2_team_handoff.md",
@@ -103,12 +91,13 @@
     "docs/templates/ui_change_request.md",
     "verification/workflow-policy-review.json",
     "docs/22_ui_polish_review_and_decisions.md",
+    "docs/23_concurrency_and_resume_policy_revision.md",
     "verification/ui-discussion-lock-review.json",
     "verification/ui-polish-20260915.json",
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "Run the regenerated v2.2.1 package on the target Windows PC with headed QA and ECG_SOAK=1, then return screenshots/review JSON/results for R4 closeout. Upload this regenerated asset to GitHub Releases after target-PC acceptance.",
+  "next_action": "R4 target-PC verification remains an independent blocked task. Other documentation, UI/UX design and branch-based code work may proceed after refreshing remote refs and checking only actual file/resource conflicts.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -118,12 +107,12 @@
     "bytes": 328553119,
     "sha256": "31d17dfaf1d833abf45fb7c2bd9498b325f376908dfb8b844b35e058e2bd9aff",
     "status": "incomplete_superseded_requires_repair",
-    "verification": "Current UI-01/03/04 source, 98\u00d7600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
+    "verification": "Current UI-01/03/04 source, 98×600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "in_progress",
-  "schema_version": 2,
-  "updated_at": "2026-09-15T09:08:20.154Z",
+  "request_status": "completed",
+  "schema_version": 3,
+  "updated_at": "2026-09-16T23:20:00+09:00",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -142,8 +131,8 @@
     },
     {
       "evidence": "verification/ui-discussion-lock-review.json",
-      "result": "PASS: seven files read back and scoped tree compared; start owner registered/read back; automation prompt readback. Distributed race/crash recovery and GUI execution NOT VERIFIED.",
-      "scope": "UI discussion and cooperative shared-lock configuration"
+      "result": "HISTORICAL: prior shared-lock setup was verified as configured, but repository-wide locking is superseded by WORK_RESUME_POLICY v1.2 and docs/23.",
+      "scope": "historical shared-lock configuration"
     },
     {
       "evidence": "verification/v2-dom.json, verification/ui-polish-20260915.json and WORKLOG.md",
@@ -154,6 +143,11 @@
       "evidence": "verification/release-recovery-20260915.json and verification/browser-qa-20260915/",
       "result": "PASS: Release ZIP CRC; embedded verification byte-identical; 1960/1960 replay chunks; TypeScript/Vite build; Chrome 153 headless non-soak 2 PASS with 1 soak SKIP. Target-PC headed/Hangul/10-minute soak NOT VERIFIED.",
       "scope": "release asset recovery and browser QA"
+    },
+    {
+      "evidence": "docs/23_concurrency_and_resume_policy_revision.md, WORK_RESUME_POLICY.md v1.2, AGENTS.md and automation prompt",
+      "result": "PASS: global execution lock retired; state/checkpoint resume retained; concurrency now handled with Git refresh/conflict review and resource-scoped advisory jobs.",
+      "scope": "2026-09-16 concurrency-policy revision"
     }
   ],
   "work": "ECG GUI design review"

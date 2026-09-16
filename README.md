@@ -50,6 +50,7 @@ npm run build
 | 원본 목적·실제 계약 | [01_source_review.md](docs/01_source_review.md) |
 | 비교 전 동결 설계·공통 기준 | [02_independent_design.md](docs/02_independent_design.md), [03_acceptance_rubric.md](docs/03_acceptance_rubric.md) |
 | 중단 후 재개·단계별 증거 | [PLAN.md](PLAN.md), [WORKLOG.md](WORKLOG.md) |
+| 후속 UI/UX 설계·Plugin/Skill·기록 시스템 진입점 | [UI/UX System](docs/uiux_system/README.md), [MASTER](docs/uiux_system/00_UIUX_MASTER.md) |
 
 ## 검증 재현
 
@@ -61,6 +62,8 @@ npm test
 npm run test:portable
 npm run audit
 ```
+
+`npm test`에는 기존 core/data/DOM 검사와 함께 UI/UX 판단 기록 무결성 검사도 포함됩니다. 기록 검사만 실행하려면 `npm run records:check`를 사용합니다.
 
 1,078개 저장 출력 지표, 26개 DOM 과업 그룹, 배포 HTML의 6개 그룹을 검사했습니다. 팀 가이드의 38개 요소가 실제 DOM과 일치합니다. DOM host의 dialog/download shim은 렌더·focus·OS 다운로드를 증명하지 않습니다. 정확한 hash와 미검증 항목은 [portable-build.json](verification/portable-build.json)과 [검증 보고서](docs/07_verification.md)에 있습니다.
 
@@ -84,6 +87,8 @@ npm run audit
 ## Work 운영과 UI 수정
 
 - [UI 수정 워크플로우 v1.0](docs/21_ui_refinement_workflow_final.md): 20번 초안 분석·변경 분류·검증·전후 비교·모델 운용 기준.
+- [UI/UX 오케스트레이션·기록 시스템](docs/uiux_system/README.md): Creative/Data/Motion/Validation routing, F/D/O/R 판단 이력, 방법론 CASE, 자동 무결성 검사.
+- [판단 과정 기록 규약](docs/uiux_system/10_RECORD_KEEPING.md), [작업 직전 체크리스트](docs/uiux_system/11_CHECKLISTS.md)
 - [짧은 요청과 완료 기록 템플릿](docs/templates/ui_change_request.md)
 - [중단 복구·6시간 예약 실행 규칙](WORK_RESUME_POLICY.md), [현재 작업 상태](WORK_STATE.json)
 

@@ -1,10 +1,12 @@
-name: Build Preview Lite assets
+name: Build UIUX Experiment Preview
 
 on:
   push:
     branches:
-      - preview/lite-baseline
+      - experiments/uiux-a-f-baseline-20260917
     paths:
+      - prototype/v2/src/**
+      - prototype/v2/index.html
       - .github/workflows/preview-lite-assets.yml
   workflow_dispatch:
 
@@ -12,102 +14,45 @@ permissions:
   contents: write
 
 jobs:
-  extract-preview-assets:
+  build-experiment-preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout preview branch
+      - name: Checkout experiment branch
         uses: actions/checkout@v4
         with:
-          ref: preview/lite-baseline
+          ref: experiments/uiux-a-f-baseline-20260917
           fetch-depth: 0
 
-      - name: Download preserved v2.2.1 release asset
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Verify inherited Preview Lite fixture
         run: |
           set -euo pipefail
-          mkdir -p .preview-cache
-          gh release download archive-v2.2.1-recovery \
-            --repo "$GITHUB_REPOSITORY" \
-            --pattern 'ecg-signal-studio-v2.2.1.zip' \
-            --dir .preview-cache
-          echo '9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed  .preview-cache/ecg-signal-studio-v2.2.1.zip' | sha256sum -c -
-
-      - name: Extract the smallest real-data preview asset
-        run: |
-          set -euo pipefail
+          test -f prototype/v2/public/archive.json
+          test -f prototype/v2/public/preview-lite.json
+          test -f prototype/v2/public/evidence-lite.json
           python - <<'PY'
-          import json
-          import pathlib
-          import zipfile
-
-          archive = pathlib.Path('.preview-cache/ecg-signal-studio-v2.2.1.zip')
-          out_dir = pathlib.Path('prototype/v2/public')
-          out_dir.mkdir(parents=True, exist_ok=True)
-
-          with zipfile.ZipFile(archive) as zf:
-              names = zf.namelist()
-              candidates = [n for n in names if n == 'archive.json' or n.endswith('/archive.json')]
-              if not candidates:
-                  print('\n'.join(names[:300]))
-                  raise SystemExit('archive.json was not found in the preserved v2.2.1 ZIP')
-
-              def score(name: str):
-                  preferred = 0 if 'prototype/v2' in name else 1
-                  depth = name.count('/')
-                  return (preferred, depth, len(name))
-
-              source = sorted(candidates, key=score)[0]
-              raw = zf.read(source)
-              data = json.loads(raw)
-              required = {'fs', 'n', 'scenes'}
-              missing = required.difference(data)
-              if missing:
-                  raise SystemExit(f'archive.json is missing keys: {sorted(missing)}')
-              if not isinstance(data['scenes'], list) or not data['scenes']:
-                  raise SystemExit('archive.json has no scenes')
-
-              (out_dir / 'archive.json').write_bytes(raw)
-              meta = {
-                  'kind': 'ui-review-preview-lite',
-                  'source_release': 'archive-v2.2.1-recovery',
-                  'source_asset': 'ecg-signal-studio-v2.2.1.zip',
-                  'source_asset_sha256': '9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed',
-                  'zip_member': source,
-                  'archive_bytes': len(raw),
-                  'fs': data['fs'],
-                  'n': data['n'],
-                  'scene_count': len(data['scenes']),
-                  'limitations': [
-                      '10-second archive only; 600-second replay chunks are intentionally omitted',
-                      'Preview Lite is for UI/UX review, not target-PC or full-data validation'
-                  ]
-              }
-              (out_dir / 'preview-lite.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-              evidence = data.get('evidence', {})
-              (out_dir / 'evidence-lite.json').write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-              print(json.dumps(meta, ensure_ascii=False, indent=2))
-              print('evidence keys:', sorted(evidence.keys()) if isinstance(evidence, dict) else type(evidence).__name__)
+          import json, pathlib
+          m=json.loads(pathlib.Path('prototype/v2/public/preview-lite.json').read_text())
+          assert m['source_asset_sha256']=='9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed'
+          assert m['n']==2500 and m['fs']==250 and m['scene_count']==98
+          print('Preview Lite fixture verified:', m['archive_bytes'], 'bytes')
           PY
 
-      - name: Build browser-ready Preview Lite
+      - name: Build browser-ready experiment preview
         working-directory: prototype/v2
         run: |
           set -euo pipefail
           npm ci
           npm run build -- --base=./
 
-      - name: Commit generated Preview Lite fixture and static build
+      - name: Commit generated static build
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          # public/ and dist/ are ignored during normal development. This dedicated
-          # branch deliberately tracks only the verified UI-review fixture/build.
-          git add -f prototype/v2/public/archive.json prototype/v2/public/preview-lite.json prototype/v2/public/evidence-lite.json dist/v2
+          git add -f dist/v2
           if git diff --cached --quiet; then
-            echo 'Preview Lite assets/build are already current.'
+            echo 'Experiment preview build is already current.'
             exit 0
           fi
-          git commit -m 'chore(preview): refresh v2.2.1 lite fixture and evidence [preview-lite-generated]'
-          git push origin HEAD:preview/lite-baseline
+          git commit -m 'chore(experiment): refresh browser-ready A-F preview [generated]'
+          git push origin HEAD:experiments/uiux-a-f-baseline-20260917

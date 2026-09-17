@@ -35,10 +35,31 @@
 - `.claude/skills/motion-review/SKILL.md`
 - `.claude/skills/expo-ui-art-director/SKILL.md`
 - `.claude/skills/project-capability-audit/SKILL.md`
+- `.claude/skills/reference-mining/SKILL.md`
+
+### reference-mining
+
+- 작성 기준: 2026-09-18
+- Source: 프로젝트 내부 대화와 `docs/uiux_system/13_REFERENCE_GROUNDED_CREATIVE_MINING.md`
+- 목적: Awwwards/Godly 등 실제 reference의 특정 장면을 사용자가 직접 확인할 수 있게 하고, 표면적 스타일이 아니라 experience principle을 ECG 프로젝트로 번역한다.
+- 기본 출력: direct URL + viewing instruction + Reference Card + Imitation Distance + ECG translation + 5개 이상 발산 후보
+- 자동/제안 trigger: 새 Attract/Transition/Result Reveal 설계, Awwwards/독창성/놀라움 요구, text-only 아이디어의 visual intent가 불분명한 경우
+- 우선순위: 최신 사용자 지시와 `00_UIUX_MASTER.md`가 항상 우선한다.
 
 외부 Skill은 필요 시 별도로 설치하고 이 registry의 기준 SHA를 업데이트한다.
 
-## 4. Skill 도입 절차
+## 4. 참고 후보 — creative reference/tool layer
+
+아래는 자동 설치 대상이 아니라 **capability 후보**다. 실제 도입 전 `09_CAPABILITY_GAP_AUDIT.md`를 따른다.
+
+- Mobbin Plugin — production product UI flow/reference. Awwwards식 발산의 반대편 validator/reference 축으로 적합.
+- 21st.dev MCP 또는 유사 component catalog — 실제 구현 가능한 creative component/pattern 탐색 후보.
+- Anthropic `frontend-design` 계열 — generic AI frontend를 피하고 distinctive direction을 유지하는 implementation-side advisory 후보.
+- Awwwards-oriented community skill — 설치보다 먼저 workflow/reference 원리만 검토. 유지보수·권한·중복도를 평가한 뒤 필요 시 project-local로 시험.
+
+Awwwards/Godly/SiteInspire/Land-book/Lapa Ninja/CSS Design Awards 같은 공개 gallery는 Skill/Plugin이 없어도 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`의 reference source로 웹 조사할 수 있다.
+
+## 5. Skill 도입 절차
 
 1. 프로젝트 capability inventory
 2. gap 식별
@@ -49,7 +70,7 @@
 7. 처음에는 project-local
 8. 여러 프로젝트에서 반복 가치가 입증될 때만 global 승격
 
-## 5. 업데이트 정책
+## 6. 업데이트 정책
 
 외부 Skill 업데이트 시:
 - upstream SHA 기록

@@ -88,17 +88,24 @@ jobs:
               print(json.dumps(meta, ensure_ascii=False, indent=2))
           PY
 
-      - name: Commit generated Preview Lite asset
+      - name: Build browser-ready Preview Lite
+        working-directory: prototype/v2
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run build -- --base=./
+
+      - name: Commit generated Preview Lite fixture and static build
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          # prototype/v2/public is ignored during normal development. The dedicated
-          # preview branch intentionally tracks only this verified UI-review fixture.
-          git add -f prototype/v2/public/archive.json prototype/v2/public/preview-lite.json
+          # public/ and dist/ are ignored during normal development. This dedicated
+          # branch deliberately tracks only the verified UI-review fixture/build.
+          git add -f prototype/v2/public/archive.json prototype/v2/public/preview-lite.json prototype/v2/dist
           if git diff --cached --quiet; then
-            echo 'Preview Lite assets are already current.'
+            echo 'Preview Lite assets/build are already current.'
             exit 0
           fi
-          git commit -m 'chore(preview): extract v2.2.1 lite archive [preview-lite-generated]'
+          git commit -m 'chore(preview): build browser-ready v2.2.1 lite [preview-lite-generated]'
           git push origin HEAD:preview/lite-baseline

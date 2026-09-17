@@ -9,6 +9,9 @@
 - [ ] `00_UIUX_MASTER.md`와 `01_CREATIVE_DIRECTION.md`를 읽었나.
 - [ ] 이번 영역이 HIGH / MEDIUM / LOW Creative Freedom 중 어디인지 정했나.
 - [ ] 기존 화면을 새로 갈아엎는 게 아니라 **현재 문제를 어떤 방향으로 확장하려는지** 한 문장으로 적었나.
+- [ ] 중요한 새 visual direction이면 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`의 자동/제안 trigger에 해당하는지 확인했나.
+- [ ] reference mining을 썼다면 direct URL뿐 아니라 **어디를 봐야 하는지 viewing instruction**과 `Reference Feature → Experience Principle → ECG Translation`을 남겼나.
+- [ ] reference mining을 썼다면 Imitation Distance가 기본 3~4인지, 원본 appearance를 그대로 복제하고 있지 않은지 확인했나.
 - [ ] 최소 3개, 권장 5개 이상의 서로 다른 대안을 만들었나.
 - [ ] unusual하다는 이유만으로 초기 후보를 제거하지 않았나.
 - [ ] 이미 과거에 reject된 아이디어라면 `D_DECISIONS.md`를 먼저 확인했나.

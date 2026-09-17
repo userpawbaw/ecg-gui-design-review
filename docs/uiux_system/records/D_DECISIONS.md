@@ -162,3 +162,35 @@ Chat이 필요한 repo/plugin/runtime 정보를 안정적으로 가져오지 못
 
 ### 되돌려야 하는 조건
 CASE가 운영 기록을 반복 복사해 유지보수 부담만 만든다면 CASE를 요약/링크 중심으로 축소한다.
+
+---
+
+## D-007. 중요한 새 creative direction에는 Reference-Grounded Creative Mining을 넣는다
+
+| | |
+|---|---|
+| 시점 | 2026-09-18 `[대화]` |
+| 상태 | 유효 |
+| 연결 | F-004, R-006 |
+
+### 갈림길 — 무엇을 정해야 했나
+AI가 creative idea를 텍스트로만 설명할지, 모든 아이디어마다 시안을 만들지, 아니면 실제 reference의 특정 장면을 **visual-intent proxy**로 써서 prototype 이전에 느낌을 공유할지 정해야 했다.
+
+### 검토한 선택지
+1. text-only idea 설명을 더 자세히 작성
+2. 각 idea마다 Figma/React mockup 제작
+3. direct reference URL + viewing instruction + experience principle + ECG translation을 제공하고 상위 2~3개만 prototype
+
+### 고른 것과 근거
+3번. 사용자는 기존 제안의 개념은 이해했지만 실제 visual impression은 화면을 보지 않아 아리송할 수밖에 없다고 했다. 반대로 각 제안마다 시안을 만드는 것은 제한적이다. 실제 reference의 어느 부분을 보고 무엇을 차용하는지 지정하면 **시안을 만들기 전에 같은 시각적 기준점을 공유**할 수 있다. `[대화]` `[추론]`
+
+### 버린 것과 이유
+1번은 설명 길이를 늘려도 visual scene 자체를 공유하지 못한다. 2번은 발산 단계에서 prototype 비용이 과도하고 후보 수를 줄이는 압력으로 작용한다.
+
+### 적용 범위
+- 자동 실행: reference/Awwwards 요구, 새 Attract/Intro/Transition/Result Reveal, 독창성·놀라움 중심의 significant CREATIVE request
+- 먼저 제안: visual intent가 추상적이고 여러 mockup 전에 cheaper alignment가 유용한 significant CREATIVE request
+- 생략: 단순 polish, 이미 direction/reference가 freeze된 구현
+
+### 되돌려야 하는 조건
+Reference가 반복적으로 anchoring을 강화해 후보 다양성을 줄이거나, 사용자가 원본 appearance에 과도하게 끌려 프로젝트 고유성이 떨어지는 증거가 생기면 자동 실행 범위를 줄이고 text-first divergence를 앞에 둔다.

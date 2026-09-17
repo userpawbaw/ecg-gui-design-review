@@ -44,7 +44,7 @@ User-approved workflow: source-project analysis → independent design/prototype
 - Claude Code may use project-local skills under `.claude/skills/`. Chat/Work/Codex should follow the same documented contracts even when those skills are not directly invokable; `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` is the environment-neutral fallback contract.
 - `docs/uiux_system/05_TOOL_SKILL_ROUTING.md` is the capability router. Do not invoke every plugin/skill by default; use only those that materially help the current task.
 
-## UI/UX reasoning provenance (2026-09-17)
+## UI/UX reasoning provenance (2026-09-18)
 
 - Follow `docs/uiux_system/10_RECORD_KEEPING.md`. The project preserves **how a conclusion was reached**, not only the final decision.
 - Never silently erase rejected ideas, disproved hypotheses, or superseded judgements. Mark them rejected/withdrawn/superseded and link the later F/D/O/R item.
@@ -53,4 +53,5 @@ User-approved workflow: source-project analysis → independent design/prototype
 - Do not invent missing historical reasoning to satisfy a template. Use the evidence tags in `10_RECORD_KEEPING.md`; if contemporaneous evidence does not exist, write `기록 없음` or explicitly mark `[재구성]`.
 - Before the relevant task, read only the matching section of `docs/uiux_system/11_CHECKLISTS.md`.
 - When several F/D/O/R items and conversations together create a reusable workflow or notable AI-collaboration method, synthesize them in `docs/uiux_system/cases/CASE-*.md`. CASE files do not replace operational records and must distinguish user contribution, agent contribution, evidence and limitations.
+- CASE is also a **human reread artifact**. Preserve the actual `problem → AI response → user challenge → judgment change → system` flow; when pivotal dialogue is available, quote short excerpts or add a `CASE-*_TRANSCRIPT_EXCERPTS.md` appendix. If the original wording is unavailable, use `[재구성]` or `기록 없음` rather than inventing dialogue.
 - Run `npm run records:check` before committing significant UI/UX record-system changes; the full root `npm test` also includes this check.

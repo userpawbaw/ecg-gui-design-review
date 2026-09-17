@@ -1,0 +1,102 @@
+name: Build Preview Lite assets
+
+on:
+  push:
+    branches:
+      - preview/lite-baseline
+    paths:
+      - .github/workflows/preview-lite-assets.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract-preview-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout preview branch
+        uses: actions/checkout@v4
+        with:
+          ref: preview/lite-baseline
+          fetch-depth: 0
+
+      - name: Download preserved v2.2.1 release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p .preview-cache
+          gh release download archive-v2.2.1-recovery \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern 'ecg-signal-studio-v2.2.1.zip' \
+            --dir .preview-cache
+          echo '9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed  .preview-cache/ecg-signal-studio-v2.2.1.zip' | sha256sum -c -
+
+      - name: Extract the smallest real-data preview asset
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import pathlib
+          import zipfile
+
+          archive = pathlib.Path('.preview-cache/ecg-signal-studio-v2.2.1.zip')
+          out_dir = pathlib.Path('prototype/v2/public')
+          out_dir.mkdir(parents=True, exist_ok=True)
+
+          with zipfile.ZipFile(archive) as zf:
+              names = zf.namelist()
+              candidates = [n for n in names if n == 'archive.json' or n.endswith('/archive.json')]
+              if not candidates:
+                  print('\n'.join(names[:300]))
+                  raise SystemExit('archive.json was not found in the preserved v2.2.1 ZIP')
+
+              def score(name: str):
+                  preferred = 0 if 'prototype/v2' in name else 1
+                  depth = name.count('/')
+                  return (preferred, depth, len(name))
+
+              source = sorted(candidates, key=score)[0]
+              raw = zf.read(source)
+              data = json.loads(raw)
+              required = {'fs', 'n', 'scenes'}
+              missing = required.difference(data)
+              if missing:
+                  raise SystemExit(f'archive.json is missing keys: {sorted(missing)}')
+              if not isinstance(data['scenes'], list) or not data['scenes']:
+                  raise SystemExit('archive.json has no scenes')
+
+              target = out_dir / 'archive.json'
+              target.write_bytes(raw)
+              meta = {
+                  'kind': 'ui-review-preview-lite',
+                  'source_release': 'archive-v2.2.1-recovery',
+                  'source_asset': 'ecg-signal-studio-v2.2.1.zip',
+                  'source_asset_sha256': '9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed',
+                  'zip_member': source,
+                  'archive_bytes': len(raw),
+                  'fs': data['fs'],
+                  'n': data['n'],
+                  'scene_count': len(data['scenes']),
+                  'limitations': [
+                      '10-second archive only; 600-second replay chunks are intentionally omitted',
+                      'Preview Lite is for UI/UX review, not target-PC or full-data validation'
+                  ]
+              }
+              (out_dir / 'preview-lite.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+              print(json.dumps(meta, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit generated Preview Lite asset
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add prototype/v2/public/archive.json prototype/v2/public/preview-lite.json
+          if git diff --cached --quiet; then
+            echo 'Preview Lite assets are already current.'
+            exit 0
+          fi
+          git commit -m 'chore(preview): extract v2.2.1 lite archive [preview-lite-generated]'
+          git push origin HEAD:preview/lite-baseline

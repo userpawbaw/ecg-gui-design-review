@@ -84,7 +84,10 @@ jobs:
                   ]
               }
               (out_dir / 'preview-lite.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+              evidence = data.get('evidence', {})
+              (out_dir / 'evidence-lite.json').write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
               print(json.dumps(meta, ensure_ascii=False, indent=2))
+              print('evidence keys:', sorted(evidence.keys()) if isinstance(evidence, dict) else type(evidence).__name__)
           PY
 
       - name: Build browser-ready Preview Lite
@@ -101,10 +104,10 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           # public/ and dist/ are ignored during normal development. This dedicated
           # branch deliberately tracks only the verified UI-review fixture/build.
-          git add -f prototype/v2/public/archive.json prototype/v2/public/preview-lite.json dist/v2
+          git add -f prototype/v2/public/archive.json prototype/v2/public/preview-lite.json prototype/v2/public/evidence-lite.json dist/v2
           if git diff --cached --quiet; then
             echo 'Preview Lite assets/build are already current.'
             exit 0
           fi
-          git commit -m 'chore(preview): build browser-ready v2.2.1 lite [preview-lite-generated]'
+          git commit -m 'chore(preview): refresh v2.2.1 lite fixture and evidence [preview-lite-generated]'
           git push origin HEAD:preview/lite-baseline

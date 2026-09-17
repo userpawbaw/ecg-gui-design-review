@@ -1,6 +1,6 @@
-# ECG Signal Studio — UI/UX 운영 MASTER v1.1
+# ECG Signal Studio — UI/UX 운영 MASTER v1.2
 
-작성 기준: 2026-09-17  
+작성 기준: 2026-09-18  
 상태: **프로젝트 UI/UX 작업의 진입점 / 상위 라우팅 문서**  
 적용 대상: `prototype/v2` (ECG Signal Studio v2.2.1 이후) 및 후속 Expo UI/UX 개선
 
@@ -77,16 +77,35 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 
 1. **BASELINE** — 현재 화면/코드/버전/승인 상태 확인
 2. **ROUTE** — `05_TOOL_SKILL_ROUTING.md`로 필요한 문서·Skill·Plugin 선택
-3. **DIVERGE** — 디자인 판단 작업이면 3개 이상 대안을 발산. 창의 작업은 검증 전에 과도하게 보수화하지 않는다.
-4. **PRE-DECISION RECORD** — 결과의 성격을 바꾸는 갈림길이면 구현 전에 D를 작성하고, 기각 후보까지 남긴다.
-5. **CONVERGE** — 프로젝트 UX·데이터 무결성·motion·접근성 규칙으로 `KEEP / TUNE / REJECT` 판정
-6. **CHANGE CONTRACT** — 변경 대상, 변경 금지, 유지 조건, acceptance criteria 명시
-7. **IMPLEMENT** — 승인 범위만 구현
-8. **VERIFY** — 정적/동적/수치/접근성/대상 PC 중 필요한 수준만 검증
-9. **RECORD** — F/D/O/R을 갱신하고 결론이 바뀌면 이전 기록을 삭제하지 않고 연결한다.
-10. **CASE IF VALUABLE** — 여러 사건이 하나의 재사용 가능한 AI/workflow 패턴을 만들었다면 방법론 CASE로 묶는다.
+3. **REFERENCE GROUNDING WHEN USEFUL** — 중요한 새 CREATIVE 방향, Attract/Transition/Result Reveal, Awwwards/독창성/놀라움 요구, 또는 text-only 아이디어의 느낌을 공유하기 어려운 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 실행한다. 단순 polish에는 자동 삽입하지 않는다.
+4. **DIVERGE** — 디자인 판단 작업이면 3개 이상 대안을 발산. 창의 작업은 검증 전에 과도하게 보수화하지 않는다. reference mining을 썼다면 원본 외형이 아니라 추출한 experience principle을 기반으로 발산한다.
+5. **PRE-DECISION RECORD** — 결과의 성격을 바꾸는 갈림길이면 구현 전에 D를 작성하고, 기각 후보까지 남긴다.
+6. **CONVERGE** — 프로젝트 UX·데이터 무결성·motion·접근성 규칙으로 `KEEP / TUNE / REJECT` 판정
+7. **CHANGE CONTRACT** — 변경 대상, 변경 금지, 유지 조건, acceptance criteria 명시
+8. **IMPLEMENT** — 승인 범위만 구현
+9. **VERIFY** — 정적/동적/수치/접근성/대상 PC 중 필요한 수준만 검증
+10. **RECORD** — F/D/O/R을 갱신하고 결론이 바뀌면 이전 기록을 삭제하지 않고 연결한다.
+11. **CASE IF VALUABLE** — 여러 사건이 하나의 재사용 가능한 AI/workflow 패턴을 만들었다면 방법론 CASE로 묶는다.
 
 상세 기록 규약: `10_RECORD_KEEPING.md`. 작업 직전에는 `11_CHECKLISTS.md`에서 해당 트리거 절만 본다.
+
+### 4.1 새 설계를 시작할 때 reference mining을 언제 부르는가
+
+다음에는 자동 포함한다.
+
+- 사용자가 `레퍼런스 마이닝`, `Awwwards`, `실제 우수작 참고`, `이런 느낌의 사례`를 명시
+- Attract/Intro/Transition/Result Reveal의 새로운 visual direction을 처음 설계
+- `더 독창적으로`, `더 놀랍게`, `generic dashboard를 벗어나게`처럼 시각 언어 자체를 흔드는 요청
+
+다음에는 한 줄로 먼저 제안한다.
+
+- 중요한 CREATIVE 설계인데 visual intent가 추상어에 머물러 있고 여러 mockup을 만들기 전에 실제 reference로 느낌을 맞추는 편이 효율적인 경우
+
+다음에는 생략한다.
+
+- 단순 polish, 이미 visual direction/reference가 freeze된 구현, 사용자가 reference 조사 없이 바로 실행하라고 한 경우
+
+목표는 reference를 늘리는 것이 아니라 **사용자가 AI 제안이 어떤 실제 장면에서 어떤 느낌을 차용하려는지 직접 확인**하게 하는 것이다.
 
 ## 5. Creative Freedom Zones
 
@@ -100,9 +119,16 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 
 ## 6. 핵심 역할 분리
 
+### Reference Miner
+- 실제 reference를 찾고 direct URL과 `어디를 봐야 하는지` viewing instruction을 준다.
+- 표면적 스타일과 experience principle을 분리한다.
+- `Reference Feature → Experience Principle → Project Meaning → ECG Translation` 순서로 번역한다.
+- 기본 Imitation Distance는 3~4로 관리한다.
+
 ### Creative UI Art Director
 - 기존 dashboard 관습을 의심한다.
 - attract, transition, reveal, data emphasis의 대담한 후보를 만든다.
+- reference가 있을 때 외형을 복제하지 않고 여러 원리를 조합한다.
 - 최종 결정권은 없다.
 
 ### Data Storyteller

@@ -9,6 +9,9 @@
 - [ ] `00_UIUX_MASTER.md`와 `01_CREATIVE_DIRECTION.md`를 읽었나.
 - [ ] 이번 영역이 HIGH / MEDIUM / LOW Creative Freedom 중 어디인지 정했나.
 - [ ] 기존 화면을 새로 갈아엎는 게 아니라 **현재 문제를 어떤 방향으로 확장하려는지** 한 문장으로 적었나.
+- [ ] 중요한 새 visual direction이면 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`의 자동/제안 trigger에 해당하는지 확인했나.
+- [ ] reference mining을 썼다면 direct URL뿐 아니라 **어디를 봐야 하는지 viewing instruction**과 `Reference Feature → Experience Principle → ECG Translation`을 남겼나.
+- [ ] reference mining을 썼다면 Imitation Distance가 기본 3~4인지, 원본 appearance를 그대로 복제하고 있지 않은지 확인했나.
 - [ ] 최소 3개, 권장 5개 이상의 서로 다른 대안을 만들었나.
 - [ ] unusual하다는 이유만으로 초기 후보를 제거하지 않았나.
 - [ ] 이미 과거에 reject된 아이디어라면 `D_DECISIONS.md`를 먼저 확인했나.
@@ -63,10 +66,13 @@
 ## §8 방법론 CASE를 쓸 때
 
 - [ ] 단순한 최종 결과 요약이 아니라 **배경 → 문제 제기 → AI 응답 → 반론 → 판단 변화 → 시스템**의 흐름이 보이나.
+- [ ] 사용자가 몇 달 뒤 다시 읽었을 때도 "왜 이 시스템이 생겼는가"를 따라갈 수 있는가.
 - [ ] 핵심 비유·문제 정의·사용자 질문이 지나치게 요약되어 의미를 잃지 않았나.
+- [ ] 판단을 바꾼 핵심 발화의 원문이 현재 대화/export에 있으면 **짧은 직접 인용**을 남겼나.
+- [ ] 원문이 없으면 따옴표로 그럴듯하게 만들지 않고 `[재구성]` 또는 `기록 없음`을 썼나.
+- [ ] 대화가 길고 방법론 가치가 높다면 `CASE-*_TRANSCRIPT_EXCERPTS.md` 부록이 필요한지 검토했나.
 - [ ] 사용자와 AI의 기여를 분리했나.
 - [ ] 관련 F/D/O/R과 commit을 연결했나.
-- [ ] 당시 대화 원문이 없는데 그럴듯하게 복원하지 않았나.
 - [ ] 커리어용 문서라면 "AI가 해줬다"보다 **문제 정의·검증·반박·구조화 능력**이 드러나나.
 - [ ] 한계를 명시했나. 반사실이 없으면 없다고 썼나.
 
@@ -87,9 +93,13 @@
 | F/D/O/R 필수 절과 ID 중복 | `check-uiux-records.cjs` | 결론만 남고 판단 경로가 사라지는 것을 방지 |
 | R의 재사용 규칙 / D의 되돌림 조건 | `check-uiux-records.cjs` | AI 사용 교훈·설계 결정이 단순 메모가 되는 것을 방지 |
 | CASE → F/D/O/R 연결 | `check-uiux-records.cjs` | 커리어용 서사가 증거 없는 자화자찬이 되는 것을 방지 |
+| CASE의 대화 근거 또는 원문 부재 명시 | `check-uiux-records.cjs` | 형식은 맞지만 사람이 다시 읽을 핵심 전환점이 사라지는 것을 방지 |
+| CASE의 사용자/AI 기여 구분 | `check-uiux-records.cjs` | 협업 사례가 "AI가 다 했다" 또는 "사용자가 다 했다"로 평면화되는 것을 방지 |
 | project-local Skill provenance | `check-uiux-records.cjs` | 외부/로컬 Skill이 출처·역할 없이 누적되는 것을 방지 |
 | Master/Index가 기록 시스템을 가리키는가 | `check-uiux-records.cjs` | 규약이 만들어져도 다음 세션이 못 찾는 문제 방지 |
 
 ### 아직 사람 체크로 남은 것
+
+자동 검사는 인용의 **존재 여부와 출처 표시**까지만 확인할 수 있고, 그 발화가 정말 핵심 turning point인지까지 판정하지 않는다. §8에서 사람이 흐름과 맥락을 최종 확인한다.
 
 현재 코드 구조에서는 새 route/component/token 변경이 "중요한 D 의무"인지 자동으로 안정적으로 판별하기 어렵다. 별도 ledger를 새로 만들어 또 잊는 문제를 만들지 않는다. component/token/route/feature registry가 canonical source로 정리되면 그 구조에서 D 의무를 유도하는 검사로 승급한다.

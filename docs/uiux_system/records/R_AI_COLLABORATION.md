@@ -112,3 +112,47 @@ Flourish 공개 Plugin 설명을 다시 확인해 "강조할 insight/story를 �
 
 ### 재사용 규칙
 **운영 로그는 짧고 지속 가능하게, 방법론 사례는 여러 운영 기록과 대화를 묶어 서사화한다.** 커리어용 문서에서는 "AI가 무엇을 만들었다"보다 사용자가 문제를 어떻게 정의·반박·검증했고 AI가 어떻게 구조화했는지를 분리해서 보여준다.
+
+---
+
+## R-006. Reference를 AI와 사람 사이의 visual-intent proxy로 쓰면 mockup 비용을 줄일 수 있다
+
+| | |
+|---|---|
+| 대상 | Creative proposal을 사용자가 이해하고 검토하는 방식 |
+| 처리 | 새 workflow로 채택 |
+| 연결 | F-004, D-007 |
+
+### AI/도구가 내놓은 것
+AI는 `Signal Observatory`, `Beat Portal`, `Noise Fingerprint` 등 텍스트 기반 creative concept과, Awwwards/Godly 등에서 경험 원리를 가져오자는 방향을 제시했다. `[대화]`
+
+### 사람이 문제 삼은 것
+사용자는 제안의 개념 자체는 이해하지만 실제 화면을 본 것이 아니어서 **"어떤 느낌을 주려고 하는지"가 아리송할 수밖에 없고**, 후보마다 시안을 만드는 것도 제한적이라고 지적했다. 대신 실제 reference 사이트에서 AI가 어느 장면의 무엇을 보고 말하는지 알려주면 각 제안마다 시안을 받은 것과 비슷한 효과를 얻을 수 있다고 재정의했다. `[대화]`
+
+### 검증 방법과 결과
+이 문제를 `설명 부족`이 아니라 `visual anchor 부족`으로 다시 정의했다. direct URL만 주는 것도 충분하지 않아, `Viewing instruction`, `Unforgettable moment`, `Experience Principle`, `ECG Translation`, `Do NOT copy`, `Imitation Distance`를 하나의 Reference Card로 묶었다. 그 결과 reference가 inspiration source뿐 아니라 **prototype 이전의 shared visual language**가 되도록 workflow를 설계할 수 있었다. `[추론]` `[커밋]`
+
+### 재사용 규칙
+**추상적인 creative concept을 설명할 때 모든 후보를 직접 mockup하지 말고, 먼저 실제 reference의 특정 장면을 visual-intent proxy로 공유한다.** 반드시 `어디를 볼지`, `무엇을 차용할지`, `무엇은 차용하지 않을지`, `프로젝트에서 어떻게 번역할지`를 함께 적고, 상위 후보만 prototype한다.
+
+---
+
+## R-007. 기록 시스템은 AI 인수인계보다 인간의 재열람 품질을 우선 확인해야 한다
+
+| | |
+|---|---|
+| 대상 | CASE/기록 시스템의 품질 기준과 자동 검사 |
+| 처리 | checker와 transcript-excerpt 규칙 강화 |
+| 연결 | F-005, D-008 |
+
+### AI/도구가 내놓은 것
+기존 기록 시스템은 F/D/O/R 필수 구조, CASE 주요 절, F/D/O/R 연결, provenance 등을 자동 검사하도록 구성되어 있었다. `10_RECORD_KEEPING.md`에는 핵심 발화와 사용자/AI 기여를 남기라고 적혀 있었지만 checker는 그 부분까지 확인하지 않았다. `[코드]`
+
+### 사람이 문제 삼은 것
+사용자는 기록이 다음 AI에게 넘길 provenance인 것보다 **본인이 몇 달 뒤 다시 논의 흐름을 확인하기 위한 문서**라는 점을 강조했다. 따라서 필요하면 실제 대화를 인용하고, 어떤 문제 제기와 반론이 시스템을 바꿨는지 구체적으로 남겨야 한다고 요구했다. `[대화]`
+
+### 검증 방법과 결과
+문서 규약과 `scripts/check-uiux-records.cjs`를 대조하자 규약은 `핵심 발화`와 기여 구분을 요구하지만 checker는 이를 강제하지 않아 구조만 맞춘 축약 CASE도 PASS할 수 있음을 확인했다. `[코드]` 이를 보완하기 위해 CASE-002 transcript excerpt 부록, human-reread 규칙, checker 조건을 추가한다. `[커밋]`
+
+### 재사용 규칙
+**AI 협업 기록의 완료 조건을 기계적 provenance만으로 두지 않는다.** 사람이 다시 읽었을 때 `문제 제기 → AI 응답 → 반론 → 판단 변화 → 구축 결과`를 복원할 수 있어야 하며, 중요한 발화의 원문이 있으면 짧게 인용하고 없으면 `[재구성]`/`기록 없음`으로 정직하게 표시한다.

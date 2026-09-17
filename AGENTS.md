@@ -31,17 +31,20 @@ User-approved workflow: source-project analysis → independent design/prototype
 - Start by refreshing the relevant remote refs/files. Before push/merge, compare remote changes touching the same files or semantic behavior. Preserve user changes and never force-push over unrelated work.
 - Optional `active_jobs` entries may protect only the named resource (for example a release upload, long data generation, deployment target, or exclusive AFE/device). They never block unrelated documentation, design, or code work.
 
-## UI/UX system routing (2026-09-17)
+## UI/UX system routing (2026-09-18)
 
 - For any significant UI/UX design, polish, data-storytelling, motion, or interaction task, read `docs/uiux_system/00_UIUX_MASTER.md` first.
 - Classify the task as CREATIVE / DATA / MOTION / UX / IMPLEMENTATION / RESEARCH, then read only the smallest relevant subset from `docs/uiux_system/` and the pre-existing canonical design docs.
 - Separate divergence from validation: generate meaningful alternatives before implementation, then apply project contracts, data integrity, motion, accessibility and product-quality checks using `KEEP / TUNE / REJECT`.
+- For a new significant CREATIVE direction, especially Attract/Intro/Transition/Result Reveal or Awwwards/독창성/놀라움 요청, apply `docs/uiux_system/13_REFERENCE_GROUNDED_CREATIVE_MINING.md` before expensive multi-variant prototyping. If the visual direction is only an abstract text description, proactively suggest reference mining once.
+- `레퍼런스 마이닝 진행`, `Reference mining`, or a scoped form such as `Attract 레퍼런스 마이닝` means: find concrete references, give direct URLs plus exact viewing instructions, extract experience principles, translate them to ECG, then diverge and validate according to the project workflow.
+- Reference mining is skipped for trivial polish or when the reference/direction is already frozen. A reference never overrides waveform/time/unit/Reference/Difference/metric contracts.
 - Chat memory is an index, not the source of truth for exact UI values, approval state or rejected decisions. GitHub documents and current code are canonical.
 - External skills/plugins are advisory. They never override ECG waveform/time/unit/Reference/Difference/data-scope contracts or the latest user decision.
-- Claude Code may use project-local skills under `.claude/skills/`. Chat/Work/Codex should follow the same documented contracts even when those skills are not directly invokable.
+- Claude Code may use project-local skills under `.claude/skills/`. Chat/Work/Codex should follow the same documented contracts even when those skills are not directly invokable; `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` is the environment-neutral fallback contract.
 - `docs/uiux_system/05_TOOL_SKILL_ROUTING.md` is the capability router. Do not invoke every plugin/skill by default; use only those that materially help the current task.
 
-## UI/UX reasoning provenance (2026-09-17)
+## UI/UX reasoning provenance (2026-09-18)
 
 - Follow `docs/uiux_system/10_RECORD_KEEPING.md`. The project preserves **how a conclusion was reached**, not only the final decision.
 - Never silently erase rejected ideas, disproved hypotheses, or superseded judgements. Mark them rejected/withdrawn/superseded and link the later F/D/O/R item.
@@ -50,4 +53,5 @@ User-approved workflow: source-project analysis → independent design/prototype
 - Do not invent missing historical reasoning to satisfy a template. Use the evidence tags in `10_RECORD_KEEPING.md`; if contemporaneous evidence does not exist, write `기록 없음` or explicitly mark `[재구성]`.
 - Before the relevant task, read only the matching section of `docs/uiux_system/11_CHECKLISTS.md`.
 - When several F/D/O/R items and conversations together create a reusable workflow or notable AI-collaboration method, synthesize them in `docs/uiux_system/cases/CASE-*.md`. CASE files do not replace operational records and must distinguish user contribution, agent contribution, evidence and limitations.
+- CASE is also a **human reread artifact**. Preserve the actual `problem → AI response → user challenge → judgment change → system` flow; when pivotal dialogue is available, quote short excerpts or add a `CASE-*_TRANSCRIPT_EXCERPTS.md` appendix. If the original wording is unavailable, use `[재구성]` or `기록 없음` rather than inventing dialogue.
 - Run `npm run records:check` before committing significant UI/UX record-system changes; the full root `npm test` also includes this check.

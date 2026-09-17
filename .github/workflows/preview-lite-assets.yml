@@ -67,8 +67,7 @@ jobs:
               if not isinstance(data['scenes'], list) or not data['scenes']:
                   raise SystemExit('archive.json has no scenes')
 
-              target = out_dir / 'archive.json'
-              target.write_bytes(raw)
+              (out_dir / 'archive.json').write_bytes(raw)
               meta = {
                   'kind': 'ui-review-preview-lite',
                   'source_release': 'archive-v2.2.1-recovery',
@@ -102,7 +101,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           # public/ and dist/ are ignored during normal development. This dedicated
           # branch deliberately tracks only the verified UI-review fixture/build.
-          git add -f prototype/v2/public/archive.json prototype/v2/public/preview-lite.json prototype/v2/dist
+          git add -f prototype/v2/public/archive.json prototype/v2/public/preview-lite.json dist/v2
           if git diff --cached --quiet; then
             echo 'Preview Lite assets/build are already current.'
             exit 0

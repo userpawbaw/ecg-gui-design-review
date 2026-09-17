@@ -113,10 +113,24 @@ function checkRecords(errors) {
   return validIds;
 }
 
+function caseNumber(name) {
+  const m = name.match(/^CASE-(\d+)_/);
+  return m ? m[1] : null;
+}
+
+function hasDialogueEvidence(text) {
+  return text.includes('[대화]') || text.includes('[재구성]') || text.includes('기록 없음');
+}
+
+function quoteCount(text) {
+  return (text.match(/^>\s+.+$/gm) || []).length;
+}
+
 function checkCases(errors, validIds) {
   if (!fs.existsSync(CASE_DIR)) return;
   const files = fs.readdirSync(CASE_DIR).filter(n => /^CASE-\d+_.*\.md$/.test(n));
   const mainCases = files.filter(n => !/SUMMARY_EN/i.test(n) && !/TRANSCRIPT/i.test(n));
+  const transcriptFiles = files.filter(n => /TRANSCRIPT/i.test(n));
 
   for (const name of mainCases) {
     const text = fs.readFileSync(path.join(CASE_DIR, name), 'utf8');
@@ -134,10 +148,42 @@ function checkCases(errors, validIds) {
     const refs = [...text.matchAll(/\b([FDOR]-\d+)\b/g)].map(m => m[1]);
     if (!refs.length) {
       fail(errors, `${name}: F/D/O/R 연결이 하나도 없다`);
-      continue;
+    } else {
+      for (const id of new Set(refs)) {
+        if (!validIds.has(id)) fail(errors, `${name}: 존재하지 않는 기록 ${id}를 가리킨다`);
+      }
     }
-    for (const id of new Set(refs)) {
-      if (!validIds.has(id)) fail(errors, `${name}: 존재하지 않는 기록 ${id}를 가리킨다`);
+
+    if (!hasDialogueEvidence(text)) {
+      fail(errors, `${name}: [대화]/[재구성]/'기록 없음' 중 하나로 대화 provenance를 명시해야 한다`);
+    }
+
+    const n = caseNumber(name);
+    const hasTranscriptAppendix = n && transcriptFiles.some(f => f.startsWith(`CASE-${n}_`));
+    const hasDedicatedDialogueSection = /^## (핵심 대화 근거|핵심 발화)/m.test(text);
+    const hasQuotedTurningPoints = quoteCount(text) >= 2;
+    if (!hasTranscriptAppendix && !hasDedicatedDialogueSection && !hasQuotedTurningPoints) {
+      fail(errors, `${name}: 인간 재열람용 대화 근거가 부족하다 (핵심 대화 근거/핵심 발화 절, 2개 이상 직접 인용, 또는 TRANSCRIPT 부록 필요)`);
+    }
+
+    const hasUserContribution = /^(?:##|###) .*사용자.*기여|^(?:##|###) 사용자가 기여한 것/m.test(text);
+    const hasAIContribution = /^(?:##|###) .*AI.*기여|^(?:##|###) AI가 기여한 것/m.test(text);
+    if (!hasUserContribution || !hasAIContribution) {
+      fail(errors, `${name}: 사용자 기여와 AI 기여를 heading 수준에서 구분해야 한다`);
+    }
+  }
+
+  for (const name of transcriptFiles) {
+    const text = fs.readFileSync(path.join(CASE_DIR, name), 'utf8');
+    const n = caseNumber(name);
+    if (!n || !mainCases.some(f => f.startsWith(`CASE-${n}_`))) {
+      fail(errors, `${name}: 대응하는 main CASE가 없다`);
+    }
+    if (!hasDialogueEvidence(text)) {
+      fail(errors, `${name}: transcript/excerpt 부록은 대화 provenance를 명시해야 한다`);
+    }
+    if (text.includes('[대화]') && quoteCount(text) < 2) {
+      fail(errors, `${name}: [대화] 원문이 있다고 표시했지만 직접 인용이 2개 미만이다`);
     }
   }
 }
@@ -193,7 +239,7 @@ function main() {
     return;
   }
 
-  console.log(`[uiux-records] PASS — ${validIds.size} F/D/O/R records + CASE/provenance/entrypoint checks`);
+  console.log(`[uiux-records] PASS — ${validIds.size} F/D/O/R records + CASE/dialogue/provenance/entrypoint checks`);
 }
 
 main();

@@ -45,8 +45,11 @@
 - `cases/CASE-001_UIUX_AI_ORCHESTRATION.md` — Creative proposer + Validator + data-story + tool-routing 체계가 만들어진 실제 논의 과정
 - `cases/CASE-001_SUMMARY_EN.md` — 위 사례의 커리어용 영문 one-page
 - `cases/CASE-002_REFERENCE_GROUNDED_CREATIVE_MINING.md` — text-only creative proposal과 모든 mockup 사이의 비용/의도 공유 문제를 reference mining으로 해결한 논의와 시스템화
+- `cases/CASE-002_TRANSCRIPT_EXCERPTS.md` — CASE-002의 판단 전환을 다시 읽기 위한 핵심 사용자/AI 대화 발췌
 
 `CASE`는 다섯 번째 운영 기록 종류가 아니다. 여러 F/D/O/R과 대화를 묶어 **배경 → 문제 제기 → AI 응답 → 반론 → 판단 변화 → 구축 결과 → 재사용 패턴 → 한계**를 설명하는 해설 계층이다.
+
+CASE는 다음 AI의 provenance만을 위한 문서가 아니다. **사용자가 나중에 다시 읽고 당시의 문제 정의와 판단 전환을 복원할 수 있어야 한다.** 그래서 핵심 대화 원문이 있으면 짧게 인용하고, 없으면 `[재구성]` 또는 `기록 없음`을 명시한다.
 
 ## 자동 무결성 검사
 
@@ -54,7 +57,7 @@
 - `npm run records:check`
 - root `npm test`에도 포함
 
-검사는 현재 F/D/O/R 필수 구조와 근거, CASE 연결, project-local Skill provenance, Master/Index/AGENTS 진입점을 확인한다. 코드 구조에서 "중요한 D가 아예 빠졌다"를 안정적으로 유도할 canonical route/token/component registry는 아직 없으므로, 없는 기록 탐지는 `11_CHECKLISTS.md`의 사람 trigger를 병행한다. 별도 수동 ledger를 하나 더 만들어 그 ledger 자체를 잊는 구조는 만들지 않는다.
+검사는 현재 F/D/O/R 필수 구조와 근거, CASE 연결, CASE의 대화 provenance/인용 또는 transcript 부록, 사용자·AI 기여 구분, project-local Skill provenance, Master/Index/AGENTS 진입점을 확인한다. 코드 구조에서 "중요한 D가 아예 빠졌다"를 안정적으로 유도할 canonical route/token/component registry는 아직 없으므로, 없는 기록 탐지는 `11_CHECKLISTS.md`의 사람 trigger를 병행한다. 별도 수동 ledger를 하나 더 만들어 그 ledger 자체를 잊는 구조는 만들지 않는다.
 
 ## 환경별 사용
 

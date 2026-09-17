@@ -3,13 +3,13 @@
 작성 기준: 2026-09-18  
 관련 운영 기록: `F-004`, `D-007`, `R-006`
 
-## 1. 배경
+## 배경
 
 ECG Signal Studio의 UI/UX 개선 시스템은 이미 Creative Art Director와 Validator를 분리하고, Attract/Transition 같은 HIGH creative freedom 영역에서는 Awwwards식 대담한 표현을 허용하도록 설계되어 있었다. 그러나 creative proposal이 실제 사용자 검토 단계로 넘어오면 다른 문제가 생겼다.
 
 AI가 `Signal Observatory`, `Beat Portal`, `Noise Weather` 같은 개념을 설명해도 사용자는 **논리와 목적은 이해할 수 있지만 실제 화면이 주는 느낌까지 정확히 공유하기 어렵다**고 지적했다. `[대화]`
 
-## 2. 문제 제기
+## 논의 흐름
 
 초기에는 두 가지 방법이 자연스러워 보였다.
 
@@ -22,8 +22,6 @@ AI가 `Signal Observatory`, `Beat Portal`, `Noise Weather` 같은 개념을 설�
 - 발산 단계의 모든 후보를 시안으로 만드는 것은 시간·사용량·구현 비용이 커서 오히려 아이디어 수를 줄이게 된다.
 
 대신 사용자는 **실제 레퍼런스 사이트에서 AI가 어느 부분을 보고 어떤 특성을 차용하려는지 알려주면, 각 제안마다 시안을 받은 것과 비슷하게 느낌을 이해할 수 있다**고 제안했다. `[대화]`
-
-## 3. 판단 변화
 
 이 지적은 reference의 역할을 바꿨다.
 
@@ -59,7 +57,7 @@ Reference = inspiration source
 
 `F-004`가 이 발견을 기록하고, `D-007`이 text-only / all-mockup / reference-grounded 세 방법 중 세 번째를 선택한 이유와 되돌림 조건을 기록한다.
 
-## 4. 구축 결과
+## 구축된 시스템
 
 다음 구조를 프로젝트에 추가했다. `[커밋]`
 
@@ -81,7 +79,7 @@ Attract 레퍼런스 마이닝.
 
 이 명령은 특정 tool 이름보다 **GitHub에 저장된 workflow contract**를 가리킨다. Claude Code가 local skill을 직접 로드할 수 있으면 skill을 사용하고, 같은 skill loader가 없는 Chat/Work/Codex 환경에서는 문서 계약을 읽어 같은 절차를 수행한다.
 
-## 5. 자동 호출 범위
+자동 호출 범위도 나눴다.
 
 ### 자동 실행
 - Awwwards/reference/inspiration을 사용자가 명시
@@ -98,8 +96,6 @@ Attract 레퍼런스 마이닝.
 
 이 규칙은 reference mining을 의식 없이 모든 UI 작업에 붙이는 것을 막는다.
 
-## 6. 사용자 기여 / AI 기여
-
 ### 사용자 기여
 - text-only idea가 논리적으로 이해돼도 visual impression은 공유되지 않는다는 문제를 명확히 했다.
 - 모든 후보 mockup은 비용이 높다는 현실적 제약을 제시했다.
@@ -113,7 +109,7 @@ Attract 레퍼런스 마이닝.
 - 기존 Art Director / Validator / Tool Router에 reference mining을 삽입하고 자동/제안/생략 trigger를 정의했다.
 - 재사용 방법을 F/D/R 및 project-local skill로 고정했다.
 
-## 7. 재사용 패턴
+## 재사용 가능한 AI 사용 패턴
 
 `R-006`의 재사용 규칙을 요약하면 다음과 같다.
 
@@ -121,17 +117,7 @@ Attract 레퍼런스 마이닝.
 
 이 패턴은 UI/UX 외에도 motion design, data storytelling, slide visual direction처럼 **말로 설명할 수는 있지만 결과물의 느낌을 공유하기 어려운 작업**에 이식할 수 있다.
 
-## 8. 한계와 반례
-
-- Reference는 anchoring을 유발할 수 있다. 실제 사례를 너무 일찍 보여주면 아이디어가 원본 주변으로 수렴할 수 있다.
-- 링크가 사라지거나 사이트가 redesign될 수 있다. 그래서 핵심 장면 설명과 viewing instruction을 기록에 남겨야 한다.
-- Reference Card가 실제 prototype을 완전히 대체하는 것은 아니다. motion timing, layout density, target-PC performance는 L2/L3/L4 검증이 필요하다.
-- 사용자가 reference를 보고도 느낌이 불분명한 후보는 mockup 단계로 올려야 한다.
-- 프로젝트의 waveform/data contract보다 reference가 우선하지 않는다.
-
-## 9. 성공 판단 기준
-
-이 workflow가 잘 작동하면 사용자는 구현 전에도 다음을 답할 수 있어야 한다.
+성공했다면 사용자는 구현 전에도 다음을 답할 수 있어야 한다.
 
 1. AI가 어느 사이트의 어느 장면을 보고 말하는가?
 2. 거기서 어떤 경험 원리를 차용하려는가?
@@ -139,4 +125,10 @@ Attract 레퍼런스 마이닝.
 4. ECG 화면에서는 어떤 느낌으로 번역될 것인가?
 5. 이 아이디어가 mockup 비용을 쓸 만큼 유망한가?
 
-이 질문이 답되지 않으면 reference mining은 완료된 것이 아니다.
+## 한계
+
+- Reference는 anchoring을 유발할 수 있다. 실제 사례를 너무 일찍 보여주면 아이디어가 원본 주변으로 수렴할 수 있다.
+- 링크가 사라지거나 사이트가 redesign될 수 있다. 그래서 핵심 장면 설명과 viewing instruction을 기록에 남겨야 한다.
+- Reference Card가 실제 prototype을 완전히 대체하는 것은 아니다. motion timing, layout density, target-PC performance는 L2/L3/L4 검증이 필요하다.
+- 사용자가 reference를 보고도 느낌이 불분명한 후보는 mockup 단계로 올려야 한다.
+- 프로젝트의 waveform/data contract보다 reference가 우선하지 않는다.

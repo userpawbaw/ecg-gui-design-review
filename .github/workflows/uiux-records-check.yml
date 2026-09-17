@@ -1,0 +1,48 @@
+name: UIUX Records Check
+
+on:
+  pull_request:
+    paths:
+      - 'docs/uiux_system/**'
+      - '.claude/skills/**'
+      - 'AGENTS.md'
+      - 'scripts/check-uiux-records.cjs'
+      - 'tests/uiux-records.test.cjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/uiux-records-check.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/uiux_system/**'
+      - '.claude/skills/**'
+      - 'AGENTS.md'
+      - 'scripts/check-uiux-records.cjs'
+      - 'tests/uiux-records.test.cjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/uiux-records-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  records-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate UI/UX reasoning records
+        run: npm run records:check

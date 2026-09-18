@@ -155,14 +155,18 @@
     "date": "2026-09-18",
     "base_remote_commit": "08ffec3",
     "branch": "docs/dual-director-records-20260918",
-    "status": "local_verified_pr_ci_pending",
+    "status": "completed_awaiting_user_for_runtime",
     "artifacts": [
       "docs/uiux_system/cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md",
       "docs/uiux_system/cases/CASE-004_TRANSCRIPT_EXCERPTS.md",
       "docs/uiux_system/cases/CASE-001_TRANSCRIPT_EXCERPTS.md"
     ],
     "verification": "records:check 29 records PASS; 16 isolated checker fixtures PASS; full root npm test PASS",
-    "next_action": "Create PR and verify latest head CI; report records completion and ask user before Dual runtime implementation",
-    "runtime_status": "not_started_awaiting_user_approval"
+    "next_action": "Report records-stage completion; await explicit user approval before Dual Director runtime implementation. PR is not merged.",
+    "runtime_status": "not_started_awaiting_user_approval",
+    "pr": "https://github.com/userpawbaw/ecg-gui-design-review/pull/9",
+    "verified_commit": "105fc0f6d0e43c49c2fb42ba6a4c6cc579f5d007",
+    "ci": "https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35338498909",
+    "ci_result": "success: records validation and 16 rejection/acceptance regression fixtures"
   }
 }

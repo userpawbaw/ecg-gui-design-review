@@ -317,3 +317,11 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Initial local checker found the new CASE used qualified evidence tags rather than the existing exact [대화] tag; normalized document tags, retaining source descriptions, without weakening the checker.
 - PASS: npm run records:check (29 records); node tests/uiux-records.test.cjs (16 isolated fixtures); npm test (48-scene/336 metric core, 98-scene/1078 metric data, 26 DOM groups and record suite). npm ci --ignore-scripts succeeded. This is not rendered-browser or Dual Director runtime evidence.
 - Next: push branch, create PR, verify CI on latest head. Dual runtime implementation remains awaiting explicit user approval. No UI/skills/data/release modifications.
+
+
+### Records closeout — PR #9
+
+- Published via authenticated GitHub connector after unauthenticated shell push failed. Remote commit `105fc0f6d0e43c49c2fb42ba6a4c6cc579f5d007` tree `580149ea3b6790b20d2b99774b1744019138cd13` exactly matches the locally tested tree.
+- PR: https://github.com/userpawbaw/ecg-gui-design-review/pull/9 (open, not merged).
+- CI evidence: https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35338498909 ; records-check job `105578807822` completed success, including record validation and regression fixture steps.
+- Records stage PASS. This closeout changes checkpoint documentation only; latest-head CI must also be confirmed in PR checks after publication. Dual runtime/skill/activation implementation remains not started and requires the next user approval, as explicitly requested. Existing unrelated project gates remain open.

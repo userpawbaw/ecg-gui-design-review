@@ -166,6 +166,6 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - CASE-003은 이미 generator 도입 사례여서 보존하고 Dual evolution은 CASE-004로 추가.
 - COMPLETE locally: CASE-004/발췌, CASE-001 발췌, F-007/D-010/R-009, D-011/R-010, D/R CASE 연결 규칙과 checker/CI 회귀 검사.
 - PASS: records:check (29 records), 16 isolated checker fixtures, full root npm test (core/final data/DOM/records). UI 렌더링 또는 Dual 실행 검증이 아님.
-- IN PROGRESS: branch → PR → 최신 head CI 확인. 결과는 PR checks 및 후속 WORKLOG에 연결.
+- COMPLETE: branch → PR #9 → commit `105fc0f` CI run `35338498909` success (기록 검사와 회귀 검사). closeout 후 최신 head 결과는 PR checks에서 확인. PR 미병합.
 - AWAITING USER after records closeout: 16번 canonical contract, dual-director skill, Superdesign dual-mode 및 activation routing. 이번 단계에서 구현/생성하지 않는다.
 - 기존 target-PC/AFE/release 회복 등 별도 미완료 항목은 그대로 유지한다.

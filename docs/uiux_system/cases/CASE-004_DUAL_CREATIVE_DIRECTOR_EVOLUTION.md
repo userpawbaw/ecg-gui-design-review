@@ -93,3 +93,8 @@ Dual Director의 `16_DUAL_CREATIVE_DIRECTOR.md`, skill, 실행 routing 및 시�
 전체 machine-export transcript는 없다. handoff가 Chat에서 옮긴 발췌와 기존 CASE의 요약을 사용했으며, 부록에 인용 출처와 원문 부재를 표시했다. 초기 AI 답변의 완전한 원문을 새로 만들지 않았다.
 
 두 Director가 실제로 다양성·판단 속도·UI 품질을 높인다는 비교 실험이나 반사실은 없다. 독립성과 예산은 설계 가설이며 아직 실행·검증되지 않았다. 사용량·인기 신호가 더 넓은 reference 접근을 보장한다는 주장도 이 CASE의 근거로 삼지 않는다.
+
+
+## 기록 단계 검증 증거
+
+[테스트] [커밋] [PR #9](https://github.com/userpawbaw/ecg-gui-design-review/pull/9)의 구현 commit `105fc0f`에서 로컬 전체 npm test와 [GitHub Actions run 35338498909](https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35338498909)가 통과했다. CI는 기록 검사와 16개 정상/오류 fixture를 모두 실행했다. 이후 checkpoint 문서만 추가했으며 최신 head 상태는 PR checks에서 확인한다. 이 증거는 기록 계층의 구조 검사이며 독립 Director의 실행 성능 검증이 아니다. 다음 단계는 사용자 승인 대기다.

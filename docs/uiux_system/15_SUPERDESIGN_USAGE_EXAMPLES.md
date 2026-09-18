@@ -1,5 +1,64 @@
 # Superdesign 사용 예시 — ECG Signal Studio
 
+## 0. 첫 사용 전 설치·preflight
+
+Superdesign은 프로젝트 내부 문서만 읽는 advisory가 아니라 **외부 skill + CLI/service를 실제 실행하는 generator**다. 그래서 trigger를 쳤다고 무조건 실행부터 하지 않고 환경을 먼저 확인한다.
+
+### Standard Chat
+
+- shell이 없으므로 Superdesign CLI를 직접 실행하지 않는다.
+- `14_SUPERDESIGN_GENERATION_LAYER.md` 형식의 brief/handoff를 만들고 Work/Codex/Claude Code 또는 Superdesign web app으로 넘긴다.
+- ChatGPT Plugin Directory에서 Superdesign이 현재 계정에 직접 노출되지 않는 경우에도 이 fallback이 정상 경로다.
+
+### Codex 또는 shell 가능한 coding agent
+
+vendor skill을 해당 agent에 설치한 뒤 CLI preflight를 수행한다. Codex 설치 예시는 upstream 문서 기준:
+
+```bash
+npx skills add superdesigndev/superdesign-skill -g -a codex -y
+npx --yes @superdesign/cli@latest
+```
+
+preflight가 `not authenticated`를 반환할 때만:
+
+```bash
+npx --yes @superdesign/cli@latest login
+```
+
+실제 agent/환경이 다른 경우 설치 slug나 plugin 방식은 upstream `INSTALL.md`를 따른다. 프로젝트 문서가 vendor CLI syntax를 재정의하지 않는다.
+
+### Claude Code
+
+upstream이 권장하는 namespaced plugin 경로를 사용한다.
+
+```text
+/plugin marketplace add superdesigndev/superdesign-skill
+/plugin install superdesign@superdesign
+```
+
+그 뒤 실제 호출은:
+
+```text
+/superdesign:superdesign
+```
+
+Claude Code에서 plugin을 설치했다면 같은 skill을 `npx skills add`로 중복 설치하지 않는다.
+
+### 모든 실제 실행에서 기록할 것
+
+- upstream review pin
+- 실제 CLI version
+- 사용 model(확인 가능할 때)
+- baseline commit
+- canvas/project URL
+- draft/preview IDs
+- branch/replace 여부
+- 전달한 최소 context
+- 미검증 항목
+
+이 정보는 Superdesign 업데이트로 결과 품질이 달라졌는지 나중에 구분하기 위한 provenance다.
+
+---
 상위 기준: `14_SUPERDESIGN_GENERATION_LAYER.md`  
 목적: 긴 프롬프트 없이 **언제 generator를 부르고 어떤 결과를 기대할지** 예시로 고정한다.
 

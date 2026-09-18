@@ -33,6 +33,7 @@
 - 검토 기준 commit: `f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b` (2026-08-21)
 - 검토된 plugin manifest version: `0.4.3`
 - 상태: **ADOPT — 조건부 핵심 generator layer**
+- ChatGPT Plugin Directory 확인: 2026-09-18 `Superdesign UI design` 검색에서 Superdesign 자체는 노출되지 않음. 현재 프로젝트 사용 경로는 agent skill/CLI/web app이며, standard Chat native plugin으로 간주하지 않는다.
 - 공식 역할: 기존 codebase 분석, design-system context, 실제 reference, branchable design draft, multi-model/canvas exploration
 - 공식 제약: shell/CLI가 필요하며 standard ChatGPT chat에서는 직접 실행하지 않고 Work tab 또는 shell 가능한 coding-agent 환경을 사용하도록 안내
 - legacy 주의: `superdesigndev/superdesign` IDE extension은 archived/history 용도이며 현재 제품은 `superdesign.dev` + `superdesign-skill`

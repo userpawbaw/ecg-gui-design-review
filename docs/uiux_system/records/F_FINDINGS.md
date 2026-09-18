@@ -175,3 +175,45 @@ CASE 작성 비용이 조금 증가한다. 대신 operational F/D/O/R은 계속 
 
 ### 일반화
 방법론 CASE는 데이터베이스용 provenance가 아니라 **사람이 다시 사고 과정을 복원할 수 있는 narrative evidence**여야 한다. 자동 검사는 최소한 그 목적을 훼손하는 과도한 요약을 걸러낼 수 있어야 한다.
+
+---
+
+## F-006. 검증 체계가 강해진 뒤에도 **concrete multi-variant visual generation**은 별도 빈칸으로 남아 있었다
+
+| | |
+|---|---|
+| 상태 | 확정 |
+| 발견 | 2026-09-18 Superdesign 도입 검토 `[대화]` `[문헌]` |
+| 영향 | Reference/Art Direction과 Validator 사이에 Visual Draft Generator 레이어 추가 |
+
+### 발단 — 무엇이 이상해 보였나
+프로젝트에는 Reference Mining, Creative Art Director, Product Design, design-taste, motion-review, Flourish, Figma 등 **제안·검증·정리 도구가 많이 쌓였지만**, 사용자는 여전히 "검증기용 플러그인이나 스킬은 많은데 생성기용은 부족한 느낌"이라고 문제를 제기했다. `[대화]`
+
+### 먼저 의심한 것과 배제 방법
+처음에는 Creative Production이나 Figma가 이 빈칸을 이미 충분히 채우는지 볼 수 있었다. 그러나 Creative Production은 mood/branding upstream에 가깝고, Figma는 selected direction의 편집/freeze에 강하다. 둘 다 **현재 codebase를 baseline으로 읽고 같은 화면을 2~4개의 concrete visual direction으로 branch해서 비교**하는 역할과는 다르다. `[추론]`
+
+### 결정적 근거
+유지 중인 `superdesigndev/superdesign-skill`을 독립 검토하자 기존 codebase 분석, design-system context, real style reference, branchable draft iteration, resume/canvas workflow를 공식 시나리오로 제공하고 있었다. 또한 standard Chat에서는 shell이 없어 직접 실행하지 말고 Work 또는 shell 가능한 agent/web app을 사용하라는 제약도 명시되어 있어 환경 경계를 정확히 정의할 수 있었다. `[문헌]`
+
+### 조치와 검토한 대안
+- Superdesign을 **Visual Draft Generator**로 채택
+- Reference Mining / Art Director 뒤, Validator 앞에 배치
+- 8~10개 아이디어 전체가 아니라 상위 2~4개만 concrete draft로 생성
+- generator output을 source of truth나 자동 승인안으로 취급하지 않음
+- standard Chat은 실행이 아니라 handoff/brief까지만 담당
+
+검토한 대안:
+- 기존 Creative Production/Figma만으로 유지
+- Superdesign을 전체 UI 설계/검증까지 맡기는 통합 도구로 사용
+- Superdesign을 generator 역할로만 좁혀 기존 pipeline에 삽입
+
+세 번째를 채택했다.
+
+### 비용 / 영향 범위
+외부 CLI/service auth와 draft generation 비용이 추가되고, code/context 일부가 외부 서비스로 전달된다. 그래서 최소 context, raw data/credential 제외, selected draft만 production implementation으로 옮기는 정책이 필요하다.
+
+### 놓쳤다면
+Reference와 아이디어는 풍부하지만 사용자가 **실제 시안 차이를 보기 위해 매번 Figma/React prototype을 직접 만들어야 하는 상태**가 남아, 발산 후보를 충분히 비교하기 전에 구현 비용 때문에 일찍 수렴했을 수 있다.
+
+### 일반화
+AI 디자인 시스템에서 **idea generation / concrete visual generation / validation은 서로 다른 capability**다. 검증기가 많다고 실제 시안 생성 능력이 자동으로 채워지는 것은 아니다.

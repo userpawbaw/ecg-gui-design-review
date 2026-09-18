@@ -1,4 +1,4 @@
-# Chat / Work / Codex Handoff
+# Chat / Work / Codex / Claude Handoff
 
 목적: UI/UX 판단의 중심을 유지하면서 실행 환경만 필요에 따라 바꾼다.
 
@@ -27,6 +27,7 @@ Work/Codex로 넘기는 이유는 기억을 보존하기 위해서가 아니라,
 - Playwright headed/soak
 - Storybook 도입/컴포넌트 자동 QA
 - Motion AI Kit/로컬 MCP 사용
+- Superdesign concrete draft generation
 - 대용량 release/package 작업
 
 ## 4. Handoff Packet
@@ -64,3 +65,24 @@ Work/Codex로 넘기는 이유는 기억을 보존하기 위해서가 아니라,
 - 같은 파일·semantic contract·generated artifact·Release/deployment·장시간 job·exclusive device를 실제로 공유할 때만 충돌을 조정한다.
 - 중단된 실행은 재개 시 최신 remote commit을 먼저 확인하고 자신의 미커밋 변경을 보존한 채 새 기준과 비교한다.
 - 다른 branch의 새 UI/UX 설계 문서는 현재 작업에 관련될 때 먼저 읽고, 필요하면 handoff packet의 기준 문서를 갱신한다.
+
+
+## 7. Superdesign 전용 Handoff Packet
+
+Standard Chat에서 Superdesign이 필요한 경우 일반 implementation handoff보다 **design-generation packet**을 먼저 만든다.
+
+필수:
+
+1. target screen / current route
+2. baseline commit SHA
+3. `00_UIUX_MASTER.md`, `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`, `14_SUPERDESIGN_GENERATION_LAYER.md`
+4. Creative Intent 한 문장
+5. shortlist 2~4 directions
+6. 각 direction의 Reference IDs / borrowed principles
+7. 유지해야 할 data/UI contracts
+8. generator에 넘겨도 되는 최소 source/context files
+9. 제외할 asset/data/secrets
+10. "production 구현하지 말고 canvas/preview review에서 멈출 것"
+11. 결과로 받을 canvas URL / draft ID / preview URL / branch direction summary
+
+Superdesign이 반환한 draft는 다시 Chat의 user alignment + validator 단계로 돌아온다. draft HTML 자체를 production source로 간주하지 않는다.

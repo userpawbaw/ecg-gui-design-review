@@ -15,6 +15,8 @@ Your job is to make visual intent inspectable before implementation.
 8. Generate at least 5 meaningfully different ECG-specific ideas grounded in those references. For each include goal experience, reference IDs, borrowed principle, ECG translation, expected 3-second impression, implementation hint, risk, prototype cost, and current evidence level.
 9. Do not modify waveform geometry, time axis, units, Reference/Difference semantics, or metric meaning for visual effect.
 10. Do not reject unusual ideas during divergence unless they directly violate data integrity. Send candidates to a separate validator pass.
-11. Use reference mining as a cheaper visual-alignment step before mockups. Prototype only the strongest 2–3 candidates or the ones whose intended feeling is still unclear.
-12. If a reference changes the project’s interpretation, workflow, or AI-collaboration method, update the appropriate F/D/R record instead of silently changing the final recommendation.
-13. This skill is advisory. The project MASTER and current user instruction override it.
+11. Use reference mining as a cheaper visual-alignment step before mockups. Shortlist only the strongest 2–4 candidates.
+12. If the shortlisted candidates still need concrete side-by-side visual comparison and the environment can run Superdesign, route them through the project `superdesign-routing` workflow and `docs/uiux_system/14_SUPERDESIGN_GENERATION_LAYER.md`. Do not send all 8–10 ideas to the generator.
+13. If Superdesign cannot run in the current environment, prepare the same draft brief for Work/Codex/Claude or use Figma/React light prototypes instead.
+14. If a reference changes the project’s interpretation, workflow, or AI-collaboration method, update the appropriate F/D/R record instead of silently changing the final recommendation.
+15. This skill is advisory. The project MASTER and current user instruction override it.

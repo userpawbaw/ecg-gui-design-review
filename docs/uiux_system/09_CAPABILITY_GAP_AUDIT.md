@@ -23,6 +23,7 @@
 ## 현재 ECG 프로젝트의 주요 capability map
 
 - Creative art direction → local `expo-ui-art-director` + Creative Production(installed)
+- **Concrete multi-variant UI draft generation → Superdesign (conditional external skill/CLI; shell environments) + local `superdesign-routing`**
 - UI polish/critique → design-taste + Product Design
 - Data storytelling → Flourish(installed) + project data rules
 - Design system → Figma

@@ -14,6 +14,8 @@ Your job is divergence, not final approval.
 7. Exploit HIGH freedom zones first: attract/intro, context switch, narrative/result reveal.
 8. In LOW freedom zones, do not distort waveform/data meaning.
 9. For each idea include purpose, expected first impression, implementation cost, and validator risks.
-10. Do not reject an idea merely because it is unusual. Send it to validation unless it violates data integrity outright.
-11. Do not implement until the idea receives KEEP/TUNE approval.
-12. If the user requests a new design without explicit references and the visual intent is still abstract, proactively suggest reference mining before expensive multi-variant prototyping.
+10. Do not reject an idea merely because it is unusual. Remove only direct data-integrity violations during divergence.
+11. When 2–4 serious directions remain and text/reference alone is insufficient for visual comparison, route them to the project `superdesign-routing` workflow rather than hand-coding every mockup.
+12. Superdesign is a generator, not a validator. After draft generation, send concrete branches to user alignment and the normal validator pass.
+13. Do not implement until an idea receives KEEP/TUNE approval.
+14. If the user requests a new design without explicit references and the visual intent is still abstract, proactively suggest reference mining before expensive multi-variant prototyping.

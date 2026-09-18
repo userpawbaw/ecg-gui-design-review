@@ -156,3 +156,33 @@ AI는 `Signal Observatory`, `Beat Portal`, `Noise Fingerprint` 등 텍스트 기
 
 ### 재사용 규칙
 **AI 협업 기록의 완료 조건을 기계적 provenance만으로 두지 않는다.** 사람이 다시 읽었을 때 `문제 제기 → AI 응답 → 반론 → 판단 변화 → 구축 결과`를 복원할 수 있어야 하며, 중요한 발화의 원문이 있으면 짧게 인용하고 없으면 `[재구성]`/`기록 없음`으로 정직하게 표시한다.
+
+---
+
+## R-008. 디자인 AI는 **제안기·시안 생성기·검증기**를 한 도구에 몰지 않을 때 역할이 더 명확했다
+
+| | |
+|---|---|
+| 대상 | Superdesign 도입 검토와 기존 UI/UX orchestration |
+| 처리 | 역할 분리 후 조건부 채택 |
+| 연결 | F-006, D-009 |
+
+### AI/도구가 내놓은 것
+기존 시스템은 Reference Mining, Creative Art Director, Creative Production, Flourish, Product Design, design-taste, Figma 등을 역할별로 분리해 사용하고 있었다. 다른 AI의 Superdesign 조사안은 Superdesign이 codebase 분석→reference→baseline replica→branch variant 생성까지 할 수 있어 현재 pipeline의 생성기 빈칸을 채울 수 있다고 제안했다. `[대화]`
+
+### 사람이 문제 삼은 것
+사용자는 현재 시스템을 가장 많이 함께 설계한 이 세션에서 **"검증기용 플러그인/스킬은 많은데 생성기용은 부족한 느낌"**이라는 관점으로 최종 검증을 요구했다. 즉 새로운 도구를 유명세나 기능 수로 채택하는 것이 아니라, 기존 역할 지도에서 실제 빈칸을 채우는지 확인해야 했다. `[대화]`
+
+### 검증 방법과 결과
+maintained Superdesign skill의 실제 문서를 읽고 다음을 확인했다. `[문헌]`
+
+- 기존 codebase가 있으면 init/context를 먼저 분석
+- real reference와 design-system을 이용
+- 같은 draft에서 branch variation 가능
+- standard Chat에서는 shell이 없어 직접 지원하지 않음
+- 현재 제품은 archived legacy IDE repo가 아니라 superdesign.dev + superdesign-skill
+
+이를 기존 capability map과 대조하자 Superdesign은 Creative Production/Figma/Product Design을 대체하기보다 **concrete draft generation**이라는 별도 위치가 가장 적합했다.
+
+### 재사용 규칙
+**새 AI 디자인 도구를 평가할 때 기능 목록을 기존 파이프라인에 얹지 말고, 먼저 "idea proposer / visual generator / validator / implementation / runtime QA" 중 어느 capability를 채우는지 한 자리만 부여한다.** 역할이 둘 이상 겹치면 source of truth와 최종 승인권을 명시해서 한 도구가 자기 결과를 스스로 승인하지 못하게 한다.

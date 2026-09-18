@@ -58,13 +58,15 @@ ECG TRANSLATION
   ↓
 DIVERGENCE 5~10 ideas
   ↓
-USER VISUAL ALIGNMENT
+USER REFERENCE ALIGNMENT
+  ↓
+SHORTLIST 2~4
+  ↓
+SUPERDESIGN VISUAL DRAFTS when useful
   ↓
 VALIDATOR PASS
   ↓
 KEEP / TUNE / REJECT
-  ↓
-LIGHT PROTOTYPE for top 2~3
   ↓
 IMPLEMENT / BROWSER VERIFY
   ↓
@@ -214,18 +216,24 @@ Reference mining 자체가 mockup 전 단계의 visual alignment다.
   ↓
 reference를 직접 보고 의도 이해
   ↓
-사용자 + validator
+사용자 1차 alignment
   ↓
-2~3 ideas
+2~4 ideas
   ↓
-light prototype
+Superdesign concrete draft branches (필요 시)
+  ↓
+validator
   ↓
 1~2 ideas
   ↓
 real implementation
 ```
 
-모든 아이디어를 Figma/React 시안으로 만들지 않는다. 사용자가 reference만으로 느낌을 판단하기 어렵다고 한 후보에만 prototype 비용을 쓴다.
+모든 아이디어를 Figma/React/Superdesign 시안으로 만들지 않는다. reference만으로 충분히 reject 가능한 후보는 여기서 줄인다.
+
+**Superdesign을 쓰는 조건:** 같은 baseline에서 2개 이상 방향의 실제 visual difference를 보고 나서야 판단이 쉬워지는 significant CREATIVE 작업. 자세한 계약은 `14_SUPERDESIGN_GENERATION_LAYER.md`.
+
+Superdesign이 없거나 standard Chat이라 직접 실행할 수 없으면 기존처럼 Figma/React light prototype 또는 Work/Codex/Claude handoff로 대체한다.
 
 ## 13. Validator pass
 
@@ -251,6 +259,7 @@ Reference가 실제 데이터처럼 보이게 하는 장식, waveform을 왜곡�
 - reference discovery: 웹 조사 + 필요 시 Mobbin
 - concept/mood expansion: Creative Production
 - concrete visual/component inspiration: 21st.dev류 source가 연결되어 있으면 사용
+- **concrete multi-variant screen drafts: Superdesign (shell 환경, 14번 문서 기준)**
 - production UX reality check: Product Design / Mobbin
 - data story: Flourish
 - editable design: Figma

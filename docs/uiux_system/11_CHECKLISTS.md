@@ -16,6 +16,18 @@
 - [ ] unusual하다는 이유만으로 초기 후보를 제거하지 않았나.
 - [ ] 이미 과거에 reject된 아이디어라면 `D_DECISIONS.md`를 먼저 확인했나.
 
+## §1A Superdesign concrete draft를 만들기 전에
+
+- [ ] 이 작업이 단순 polish가 아니라 **실제 visual branch 비교가 필요한 significant CREATIVE 작업**인가.
+- [ ] Reference Mining / Art Director 단계가 끝났거나 사용자가 이미 충분히 구체적인 방향·reference를 줬나.
+- [ ] 8~10개 아이디어를 그대로 생성하지 않고 **2~4개로 shortlist**했나.
+- [ ] existing `prototype/v2` codebase를 baseline으로 쓰고 brand-new from-scratch를 피했나.
+- [ ] Flourish/Data Storyteller가 먼저 정해야 할 visualization grammar를 Superdesign에게 떠넘기고 있지 않나.
+- [ ] release/archive/raw experiment data/credential을 context로 넘기지 않았나.
+- [ ] generator output을 승인안으로 취급하지 않고 canvas/preview에서 멈출 계획이 있나.
+- [ ] 결과를 Product Design / design-taste / motion-review / project contract로 별도 검증할 계획이 있나.
+- [ ] standard Chat처럼 shell이 없는 환경이면 실행을 가장하지 않고 handoff packet만 만들고 있나.
+
 ## §2 중요한 설계 후보를 고르기 전에
 
 - [ ] 이것이 단순 값 조정인가, 아니면 결과의 성격을 바꾸는 **갈림길**인가.

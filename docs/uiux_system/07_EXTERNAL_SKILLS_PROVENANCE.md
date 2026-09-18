@@ -27,7 +27,34 @@
 - 색/폰트 전면 교체보다 UI pattern, anti-pattern, accessibility, chart 후보 탐색에 사용
 - 파형·시간축·Reference·Difference 계약은 프로젝트 문서가 우선
 
-## 3. 프로젝트 로컬 Skill
+## 3. Superdesign
+
+- Source: `superdesigndev/superdesign-skill`
+- 검토 기준 commit: `f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b` (2026-08-21)
+- 검토된 plugin manifest version: `0.4.3`
+- 상태: **ADOPT — 조건부 핵심 generator layer**
+- ChatGPT Plugin Directory 확인: 2026-09-18 `Superdesign UI design` 검색에서 Superdesign 자체는 노출되지 않음. 현재 프로젝트 사용 경로는 agent skill/CLI/web app이며, standard Chat native plugin으로 간주하지 않는다.
+- 공식 역할: 기존 codebase 분석, design-system context, 실제 reference, branchable design draft, multi-model/canvas exploration
+- 공식 제약: shell/CLI가 필요하며 standard ChatGPT chat에서는 직접 실행하지 않고 Work tab 또는 shell 가능한 coding-agent 환경을 사용하도록 안내
+- legacy 주의: `superdesigndev/superdesign` IDE extension은 archived/history 용도이며 현재 제품은 `superdesign.dev` + `superdesign-skill`
+
+프로젝트 적용:
+- `Reference Mining → Art Director`가 만든 상위 2~4개 방향을 **동일 baseline의 concrete visual drafts**로 비교하는 생성기
+- Product Design/design-taste/motion-review/project docs보다 우선하지 않음
+- Evidence/Data 화면에서는 Flourish가 visualization grammar를 먼저 정하고 Superdesign은 screen composition을 맡음
+- Figma는 필요 시 selected direction의 freeze/editable handoff에 사용하며 필수 관문이 아님
+- current codebase 기반 redesign을 기본으로 하고 brand-new from-scratch 경로는 사용하지 않음
+- `.superdesign/*` init/resume/design-system은 derived tool state이며 프로젝트 canonical source가 아님
+- 최소 context만 외부 서비스에 전달하고 release/archive/raw data/credential은 기본 제외
+
+환경:
+- Claude Code: 공식 namespaced plugin `/superdesign:superdesign` 사용 가능(설치 필요)
+- Codex/Work: shell + Superdesign skill/CLI가 실제 설치된 환경에서 사용
+- Standard Chat: 직접 실행하지 않고 `14_SUPERDESIGN_GENERATION_LAYER.md`에 따라 handoff를 준비
+
+상세 프로젝트 계약: `14_SUPERDESIGN_GENERATION_LAYER.md`.
+
+## 4. 프로젝트 로컬 Skill
 
 이 저장소에는 외부 Skill의 원문 전체를 vendoring하지 않고, 프로젝트 계약을 담은 작은 local Skill을 둔다.
 
@@ -36,6 +63,7 @@
 - `.claude/skills/expo-ui-art-director/SKILL.md`
 - `.claude/skills/project-capability-audit/SKILL.md`
 - `.claude/skills/reference-mining/SKILL.md`
+- `.claude/skills/superdesign-routing/SKILL.md`
 
 ### reference-mining
 
@@ -48,7 +76,7 @@
 
 외부 Skill은 필요 시 별도로 설치하고 이 registry의 기준 SHA를 업데이트한다.
 
-## 4. 참고 후보 — creative reference/tool layer
+## 5. 참고 후보 — creative reference/tool layer
 
 아래는 자동 설치 대상이 아니라 **capability 후보**다. 실제 도입 전 `09_CAPABILITY_GAP_AUDIT.md`를 따른다.
 
@@ -59,7 +87,7 @@
 
 Awwwards/Godly/SiteInspire/Land-book/Lapa Ninja/CSS Design Awards 같은 공개 gallery는 Skill/Plugin이 없어도 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`의 reference source로 웹 조사할 수 있다.
 
-## 5. Skill 도입 절차
+## 6. Skill 도입 절차
 
 1. 프로젝트 capability inventory
 2. gap 식별
@@ -70,7 +98,7 @@ Awwwards/Godly/SiteInspire/Land-book/Lapa Ninja/CSS Design Awards 같은 공개 
 7. 처음에는 project-local
 8. 여러 프로젝트에서 반복 가치가 입증될 때만 global 승격
 
-## 6. 업데이트 정책
+## 7. 업데이트 정책
 
 외부 Skill 업데이트 시:
 - upstream SHA 기록

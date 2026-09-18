@@ -221,3 +221,58 @@ CASE 문서의 품질을 사람 체크리스트에만 맡길지, checker가 서�
 
 ### 되돌려야 하는 조건
 자동 검사가 정상적인 CASE를 자주 오탐하거나, 작성자가 형식만 맞추고 내용 품질은 개선되지 않는다면 검사 조건을 단순화하고 transcript appendix의 선택 기준을 재조정한다.
+
+---
+
+## D-009. Superdesign을 **조건부 핵심 Visual Draft Generator**로 채택한다
+
+| | |
+|---|---|
+| 시점 | 2026-09-18 `[대화]` `[문헌]` |
+| 상태 | 유효 — 첫 실사용 후 trigger 범위 재검토 |
+| 연결 | F-006, R-008 |
+
+### 갈림길 — 무엇을 정해야 했나
+Superdesign을 도입하지 않을지, 기존 pipeline 전체를 대체하는 design agent로 둘지, 아니면 현재 시스템의 부족한 **concrete multi-variant generation**만 맡기는 bounded generator로 둘지 정해야 했다.
+
+### 검토한 선택지
+1. 미도입 — Creative Production/Figma/React prototype으로 계속 탐색
+2. Superdesign 중심 재편 — reference, generation, validation, implementation을 넓게 위임
+3. 기존 `Reference Mining → Art Director → Validator` 사이에 **Superdesign generator layer만 추가**
+
+### 고른 것과 근거
+3번. 공식 maintained skill은 기존 codebase 분석과 branchable draft generation에 강점이 있어 F-006의 gap과 직접 맞는다. 반면 Product Design/design-taste/motion-review/project docs가 이미 검증 역할을 잘 수행하고 있고, Flourish는 데이터 관계 선택이라는 별도 전문성이 있다. 따라서 Superdesign을 넓게 쓰기보다 **"현재 UI를 이해한 concrete visual branches"**에 집중시키는 것이 중복과 authority conflict를 가장 적게 만든다. `[문헌]` `[추론]`
+
+### 버린 것과 이유
+1번은 여러 candidate의 실제 visual difference를 보기 위해 매번 수작업 prototype 비용이 든다는 gap을 남긴다. 2번은 generator가 자기 결과를 평가하고 project/data contract까지 재해석하게 만들어 현재 분리형 시스템의 장점을 잃는다.
+
+### 운영 위치
+기본 흐름:
+
+```text
+Reference Mining
+→ Art Director divergence
+→ hard data-integrity prefilter
+→ shortlist 2~4
+→ Superdesign branch drafts
+→ user visual alignment
+→ Product Design / design-taste / motion-review / project validator
+→ KEEP / TUNE / REJECT
+→ Figma(필요 시) / implementation
+```
+
+Evidence/Data에서는 Flourish가 visualization grammar를 먼저 정한다.
+
+### 환경 경계
+- Standard Chat: 직접 실행하지 않음. brief/handoff까지만.
+- Work/Codex/Claude Code: shell + Superdesign skill/CLI 설치가 실제 확인될 때 실행.
+- Superdesign web app: coding-agent가 없을 때 수동 대안.
+
+### 되돌려야 하는 조건
+첫 1~2회 실사용에서 다음이 반복되면 핵심 generator 지위를 낮춘다.
+
+- baseline fidelity가 낮고 generic SaaS drift가 큼
+- branch diversity가 실제로 낮음
+- reference-only alignment보다 사용자 판단 속도가 개선되지 않음
+- selected draft를 React로 옮기는 비용이 Figma/직접 prototype보다 큼
+- 외부 context 전송/운영 비용이 이득보다 큼

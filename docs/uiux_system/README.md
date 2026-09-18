@@ -51,6 +51,7 @@
 - `cases/CASE-001_SUMMARY_EN.md` — 위 사례의 커리어용 영문 one-page
 - `cases/CASE-002_REFERENCE_GROUNDED_CREATIVE_MINING.md` — text-only creative proposal과 모든 mockup 사이의 비용/의도 공유 문제를 reference mining으로 해결한 논의와 시스템화
 - `cases/CASE-002_TRANSCRIPT_EXCERPTS.md` — CASE-002의 판단 전환을 다시 읽기 위한 핵심 사용자/AI 대화 발췌
+- `cases/CASE-003_SUPERDESIGN_GENERATOR_LAYER.md` — validator-heavy 시스템에서 visual generator gap을 발견하고 Superdesign을 bounded generator로 채택한 검증·통합 과정
 
 `CASE`는 다섯 번째 운영 기록 종류가 아니다. 여러 F/D/O/R과 대화를 묶어 **배경 → 문제 제기 → AI 응답 → 반론 → 판단 변화 → 구축 결과 → 재사용 패턴 → 한계**를 설명하는 해설 계층이다.
 

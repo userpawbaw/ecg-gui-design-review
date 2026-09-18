@@ -1,4 +1,4 @@
-# ECG Signal Studio — UI/UX 운영 MASTER v1.2
+# ECG Signal Studio — UI/UX 운영 MASTER v1.3
 
 작성 기준: 2026-09-18  
 상태: **프로젝트 UI/UX 작업의 진입점 / 상위 라우팅 문서**  
@@ -79,13 +79,14 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 2. **ROUTE** — `05_TOOL_SKILL_ROUTING.md`로 필요한 문서·Skill·Plugin 선택
 3. **REFERENCE GROUNDING WHEN USEFUL** — 중요한 새 CREATIVE 방향, Attract/Transition/Result Reveal, Awwwards/독창성/놀라움 요구, 또는 text-only 아이디어의 느낌을 공유하기 어려운 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 실행한다. 단순 polish에는 자동 삽입하지 않는다.
 4. **DIVERGE** — 디자인 판단 작업이면 3개 이상 대안을 발산. 창의 작업은 검증 전에 과도하게 보수화하지 않는다. reference mining을 썼다면 원본 외형이 아니라 추출한 experience principle을 기반으로 발산한다.
-5. **PRE-DECISION RECORD** — 결과의 성격을 바꾸는 갈림길이면 구현 전에 D를 작성하고, 기각 후보까지 남긴다.
-6. **CONVERGE** — 프로젝트 UX·데이터 무결성·motion·접근성 규칙으로 `KEEP / TUNE / REJECT` 판정
-7. **CHANGE CONTRACT** — 변경 대상, 변경 금지, 유지 조건, acceptance criteria 명시
-8. **IMPLEMENT** — 승인 범위만 구현
-9. **VERIFY** — 정적/동적/수치/접근성/대상 PC 중 필요한 수준만 검증
-10. **RECORD** — F/D/O/R을 갱신하고 결론이 바뀌면 이전 기록을 삭제하지 않고 연결한다.
-11. **CASE IF VALUABLE** — 여러 사건이 하나의 재사용 가능한 AI/workflow 패턴을 만들었다면 방법론 CASE로 묶는다.
+5. **VISUAL DRAFT GENERATION WHEN USEFUL** — significant CREATIVE 작업에서 text/reference만으로 실제 차이를 판단하기 어렵고 2개 이상 방향을 같은 baseline에서 비교할 가치가 있으면 `14_SUPERDESIGN_GENERATION_LAYER.md`에 따라 상위 2~4개만 Superdesign draft로 구체화한다. standard Chat에서는 실행하지 않고 handoff만 준비한다.
+6. **PRE-DECISION RECORD** — 결과의 성격을 바꾸는 갈림길이면 구현 전에 D를 작성하고, 기각 후보까지 남긴다.
+7. **CONVERGE** — 프로젝트 UX·데이터 무결성·motion·접근성 규칙으로 `KEEP / TUNE / REJECT` 판정
+8. **CHANGE CONTRACT** — 변경 대상, 변경 금지, 유지 조건, acceptance criteria 명시
+9. **IMPLEMENT** — 승인 범위만 구현
+10. **VERIFY** — 정적/동적/수치/접근성/대상 PC 중 필요한 수준만 검증
+11. **RECORD** — F/D/O/R을 갱신하고 결론이 바뀌면 이전 기록을 삭제하지 않고 연결한다.
+12. **CASE IF VALUABLE** — 여러 사건이 하나의 재사용 가능한 AI/workflow 패턴을 만들었다면 방법론 CASE로 묶는다.
 
 상세 기록 규약: `10_RECORD_KEEPING.md`. 작업 직전에는 `11_CHECKLISTS.md`에서 해당 트리거 절만 본다.
 
@@ -130,6 +131,11 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 - attract, transition, reveal, data emphasis의 대담한 후보를 만든다.
 - reference가 있을 때 외형을 복제하지 않고 여러 원리를 조합한다.
 - 최종 결정권은 없다.
+
+### Visual Draft Generator
+- Reference Mining / Art Director가 만든 상위 방향을 **같은 현재 UI baseline에서 실제 시안으로 비교 가능하게** 만든다.
+- 기본 생성기는 Superdesign이며 `14_SUPERDESIGN_GENERATION_LAYER.md`를 따른다.
+- generator output은 exploratory artifact이며 자기 결과를 승인하지 않는다.
 
 ### Data Storyteller
 - 어떤 데이터를 어떤 순서와 관계로 보여야 메시지가 빨리 전달되는지 설계한다.

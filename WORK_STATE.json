@@ -150,5 +150,19 @@
       "scope": "2026-09-16 concurrency-policy revision"
     }
   ],
-  "work": "ECG GUI design review"
+  "work": "ECG GUI design review",
+  "uiux_records_stage": {
+    "date": "2026-09-18",
+    "base_remote_commit": "08ffec3",
+    "branch": "docs/dual-director-records-20260918",
+    "status": "local_verified_pr_ci_pending",
+    "artifacts": [
+      "docs/uiux_system/cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md",
+      "docs/uiux_system/cases/CASE-004_TRANSCRIPT_EXCERPTS.md",
+      "docs/uiux_system/cases/CASE-001_TRANSCRIPT_EXCERPTS.md"
+    ],
+    "verification": "records:check 29 records PASS; 16 isolated checker fixtures PASS; full root npm test PASS",
+    "next_action": "Create PR and verify latest head CI; report records completion and ask user before Dual runtime implementation",
+    "runtime_status": "not_started_awaiting_user_approval"
+  }
 }

@@ -86,7 +86,7 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 9. **IMPLEMENT** — 승인 범위만 구현
 10. **VERIFY** — 정적/동적/수치/접근성/대상 PC 중 필요한 수준만 검증
 11. **RECORD** — F/D/O/R을 갱신하고 결론이 바뀌면 이전 기록을 삭제하지 않고 연결한다.
-12. **CASE IF VALUABLE** — 여러 사건이 하나의 재사용 가능한 AI/workflow 패턴을 만들었다면 방법론 CASE로 묶는다.
+12. **CASE FOR METHODOLOGY CHANGE** — AI 역할·orchestration·source of truth·검증·handoff·creative 방법론·기록 방식 변경은 같은 작업 단위에서 CASE로 묶는다. 모든 D/R에 CASE 연결 또는 구체적인 비연결 사유를 남긴다 (`10_RECORD_KEEPING.md`).
 
 상세 기록 규약: `10_RECORD_KEEPING.md`. 작업 직전에는 `11_CHECKLISTS.md`에서 해당 트리거 절만 본다.
 

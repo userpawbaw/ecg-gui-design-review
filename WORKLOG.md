@@ -306,3 +306,14 @@ Generation 7 command results in the owning conversation show original v2.2.1 SHA
 ## Generation 8 recovery checkpoint
 
 Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed), ZIP CRC PASS. Restored 1968 files covering replay plus archive/legacy. npm ci and TypeScript/Vite build exit 0. Reconstructed archive/evidence/legacy browser regression and packaging completeness guard. New package verification and persistence are next; prior generation-7 output is not available after workspace pruning. No data regeneration.
+
+
+## 2026-09-18 — Dual Creative Director records-first implementation
+
+- Baseline main `08ffec3`; read AGENTS, resume policy/state/plan, Master, record rules/checklists, current F/D/R/cases and primary handoff.
+- Preserved existing CASE-003; authored CASE-004 evolution and transcript excerpts plus CASE-001 excerpts. Quotes distinguish handoff-transferred dialogue, supplied Chat excerpts and reconstructed summaries. No missing dialogue invented.
+- Added F-007/D-010/R-009 and D-011/R-010; backlinked D-009/R-008 without erasing initial reasoning. Migrated historical D/R CASE metadata to existing cases.
+- Checker now rejects missing/duplicate CASE fields, nonexistent main CASE targets, empty/placeholder reasons, deferrals without review conditions and duplicate main CASE IDs. Isolated fixtures test failure and acceptance paths. CI runs these regression tests.
+- Initial local checker found the new CASE used qualified evidence tags rather than the existing exact [대화] tag; normalized document tags, retaining source descriptions, without weakening the checker.
+- PASS: npm run records:check (29 records); node tests/uiux-records.test.cjs (16 isolated fixtures); npm test (48-scene/336 metric core, 98-scene/1078 metric data, 26 DOM groups and record suite). npm ci --ignore-scripts succeeded. This is not rendered-browser or Dual Director runtime evidence.
+- Next: push branch, create PR, verify CI on latest head. Dual runtime implementation remains awaiting explicit user approval. No UI/skills/data/release modifications.

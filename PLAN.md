@@ -158,3 +158,14 @@ Generation 7 command results in the owning conversation show original v2.2.1 SHA
 ## Generation 8 recovery checkpoint
 
 Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed), ZIP CRC PASS. Restored 1968 files covering replay plus archive/legacy. npm ci and TypeScript/Vite build exit 0. Reconstructed archive/evidence/legacy browser regression and packaging completeness guard. New package verification and persistence are next; prior generation-7 output is not available after workspace pruning. No data regeneration.
+
+
+## 2026-09-18 — Dual Director 기록 우선 단계
+
+- 기준 main `08ffec3`; primary context: docs/uiux_system/handoffs/DUAL_CREATIVE_DIRECTOR_IMPLEMENTATION_2026-09-18.md.
+- CASE-003은 이미 generator 도입 사례여서 보존하고 Dual evolution은 CASE-004로 추가.
+- COMPLETE locally: CASE-004/발췌, CASE-001 발췌, F-007/D-010/R-009, D-011/R-010, D/R CASE 연결 규칙과 checker/CI 회귀 검사.
+- PASS: records:check (29 records), 16 isolated checker fixtures, full root npm test (core/final data/DOM/records). UI 렌더링 또는 Dual 실행 검증이 아님.
+- IN PROGRESS: branch → PR → 최신 head CI 확인. 결과는 PR checks 및 후속 WORKLOG에 연결.
+- AWAITING USER after records closeout: 16번 canonical contract, dual-director skill, Superdesign dual-mode 및 activation routing. 이번 단계에서 구현/생성하지 않는다.
+- 기존 target-PC/AFE/release 회복 등 별도 미완료 항목은 그대로 유지한다.

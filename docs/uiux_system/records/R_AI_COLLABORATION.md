@@ -12,6 +12,7 @@
 | 대상 | UI/UX Plugin 추천 과정 |
 | 처리 | 부분 채택 후 문제 정의 수정 |
 | 연결 | F-001, D-001 |
+| CASE | CASE-001 |
 
 ### AI/도구가 내놓은 것
 Context7, TinyFish, Vercel 등 Motion AI Kit 대체와 Chat 기반 실행/브라우저 반복을 돕는 도구를 주요 후보로 추천했다. `[대화]`
@@ -34,6 +35,7 @@ Context7, TinyFish, Vercel 등 Motion AI Kit 대체와 Chat 기반 실행/브라
 | 대상 | MotionDesign/Awwwards 계열 Plugin 평가 |
 | 처리 | 초기 평가 수정 |
 | 연결 | F-002, D-002 |
+| CASE | CASE-001 |
 
 ### AI/도구가 내놓은 것
 화려한 Awwwards/high-motion 스타일이 ECG waveform readability에 위험하다는 이유로 우선순위를 낮췄다. `[대화]`
@@ -56,6 +58,7 @@ Context7, TinyFish, Vercel 등 Motion AI Kit 대체와 Chat 기반 실행/브라
 | 대상 | Flourish Plugin 평가 |
 | 처리 | 역할 재정의 후 채택 |
 | 연결 | F-003, D-003 |
+| CASE | CASE-001 |
 
 ### AI/도구가 내놓은 것
 ECG visualization 아이디어나 결과 차트 제작에 참고할 수 있지만 현재 GUI polish의 주력은 아니라는 평가를 했다. `[대화]`
@@ -78,6 +81,7 @@ Flourish 공개 Plugin 설명을 다시 확인해 "강조할 insight/story를 �
 | 대상 | Work 상태 공유 / repository-wide execution lock 설계 |
 | 처리 | 폐기 후 resource-scoped 정책으로 교체 |
 | 연결 | O-001, D-004 |
+| CASE | CASE-001 |
 
 ### AI/도구가 내놓은 것
 사용자가 "기기나 세션별 동시 실행 문제일 수 있다"고 생각한 상황에서 GitHub `WORK_STATE`의 global on/off lock을 정식 운영 규칙으로 발전시켰다. `[대화]`
@@ -100,6 +104,7 @@ Flourish 공개 Plugin 설명을 다시 확인해 "강조할 insight/story를 �
 | 대상 | 원본 ECG 연구 프로젝트 기록 시스템의 UI/UX 이식 |
 | 처리 | 채택 및 확장 |
 | 연결 | D-006 |
+| CASE | CASE-001 |
 
 ### AI/도구가 내놓은 것
 초기 UI/UX 시스템에는 `08_DECISION_EXPERIMENT_PROTOCOL.md`로 rejected idea와 근거를 남기는 규칙은 있었지만, 여러 대화에 걸친 **시스템 생성 배경과 사용자-AI 상호작용을 포트폴리오형 서사로 보존하는 계층**은 없었다. `[코드]`
@@ -122,6 +127,7 @@ Flourish 공개 Plugin 설명을 다시 확인해 "강조할 insight/story를 �
 | 대상 | Creative proposal을 사용자가 이해하고 검토하는 방식 |
 | 처리 | 새 workflow로 채택 |
 | 연결 | F-004, D-007 |
+| CASE | CASE-002 |
 
 ### AI/도구가 내놓은 것
 AI는 `Signal Observatory`, `Beat Portal`, `Noise Fingerprint` 등 텍스트 기반 creative concept과, Awwwards/Godly 등에서 경험 원리를 가져오자는 방향을 제시했다. `[대화]`
@@ -144,6 +150,7 @@ AI는 `Signal Observatory`, `Beat Portal`, `Noise Fingerprint` 등 텍스트 기
 | 대상 | CASE/기록 시스템의 품질 기준과 자동 검사 |
 | 처리 | checker와 transcript-excerpt 규칙 강화 |
 | 연결 | F-005, D-008 |
+| CASE | CASE-002 |
 
 ### AI/도구가 내놓은 것
 기존 기록 시스템은 F/D/O/R 필수 구조, CASE 주요 절, F/D/O/R 연결, provenance 등을 자동 검사하도록 구성되어 있었다. `10_RECORD_KEEPING.md`에는 핵심 발화와 사용자/AI 기여를 남기라고 적혀 있었지만 checker는 그 부분까지 확인하지 않았다. `[코드]`
@@ -166,6 +173,9 @@ AI는 `Signal Observatory`, `Beat Portal`, `Noise Fingerprint` 등 텍스트 기
 | 대상 | Superdesign 도입 검토와 기존 UI/UX orchestration |
 | 처리 | 역할 분리 후 조건부 채택 |
 | 연결 | F-006, D-009 |
+| CASE | CASE-003 |
+
+2026-09-18 후속: R-009 / CASE-004는 아래 한 자리 제한을 수정한다. 자기 승인 금지는 유지하며 당시 문장은 이력으로 보존한다.
 
 ### AI/도구가 내놓은 것
 기존 시스템은 Reference Mining, Creative Art Director, Creative Production, Flourish, Product Design, design-taste, Figma 등을 역할별로 분리해 사용하고 있었다. 다른 AI의 Superdesign 조사안은 Superdesign이 codebase 분석→reference→baseline replica→branch variant 생성까지 할 수 있어 현재 pipeline의 생성기 빈칸을 채울 수 있다고 제안했다. `[대화]`
@@ -186,3 +196,47 @@ maintained Superdesign skill의 실제 문서를 읽고 다음을 확인했다. 
 
 ### 재사용 규칙
 **새 AI 디자인 도구를 평가할 때 기능 목록을 기존 파이프라인에 얹지 말고, 먼저 "idea proposer / visual generator / validator / implementation / runtime QA" 중 어느 capability를 채우는지 한 자리만 부여한다.** 역할이 둘 이상 겹치면 source of truth와 최종 승인권을 명시해서 한 도구가 자기 결과를 스스로 승인하지 못하게 한다.
+
+## R-009. 역할 분리는 도구 하나를 한 위치에 제한하는 것과 다르다
+
+| | |
+|---|---|
+| 대상 | Superdesign Renderer → Independent Director 논의 |
+| 처리 | R-008의 한 자리 제한 수정; 생성기 자기 승인 금지 유지 |
+| 연결 | F-007, D-010, R-008 |
+| CASE | CASE-004 |
+
+### AI/도구가 내놓은 것
+기존 AI는 generator 부족을 해소하기 위해 Superdesign을 A의 shortlist 뒤에만 두었다. [대화: handoff §3]
+
+### 사람이 문제 삼은 것
+사용자는 자체 발상 → 시안이라는 독립 경로와 A/B 병렬 비교를 기대했다고 반론하고, B의 비싼 생성은 1~2개로 제한하자고 제안했다. [대화: handoff §2]
+
+### 검증 방법과 결과
+D-009/R-008과 handoff를 대조해 NATIVE_DIRECTOR와 CONCRETIZER를 구분했다. 독립 입력과 cross-review 시점을 설계했지만 실제 결과의 다양성 향상은 아직 검증하지 않았다. [코드] [추론]
+
+### 재사용 규칙
+도구의 기능을 한 자리로 좁히기 전에 서로 다른 모드로 쓸 가치가 있는지 검토한다. 각 모드의 입력·출력·승인권을 분리하며, 독립 탐색 결과는 first pass가 끝나기 전 공유하지 않는다. 비싼 생성 전에 싼 후보 평가를 둔다.
+
+---
+
+## R-010. 기록이 있다는 것과 중요한 논의가 빠짐없이 기록된다는 것은 다르다
+
+| | |
+|---|---|
+| 대상 | 방법론 D/R과 CASE의 누락 검사 |
+| 처리 | CASE linkage와 회귀 검사로 보강 |
+| 연결 | D-011, R-007 |
+| CASE | CASE-004 |
+
+### AI/도구가 내놓은 것
+기존 checker는 있는 CASE의 절·대화 표시·기여 구분을 확인했다. [코드]
+
+### 사람이 문제 삼은 것
+사용자는 본인의 질문과 AI 답변 사이의 논의가 매번 충분히 보존되는지 확인하고 실행 시스템보다 기록 보강을 먼저 요구했다. [대화: 이번 실행 요청]
+
+### 검증 방법과 결과
+기존 코드에는 D/R → CASE 역방향 검사가 없었다. CASE 필드와 유효한 main CASE 대상을 검사하고, 잘못된 입력을 실제 임시 저장소에 넣어 실패하는 회귀 검사를 추가한다. 검사 PASS는 인용의 진실성이나 문장의 충분함을 보증하지 않는다. [코드]
+
+### 재사용 규칙
+기록의 존재를 확인하는 검사와 기록 의무의 누락을 확인하는 검사를 구분한다. 원문·전달 발췌·재구성을 구별하고, 사용자가 다시 읽어 반론과 판단 변화의 순서를 복원할 수 있는지 별도로 검토한다.

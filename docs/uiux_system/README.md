@@ -76,3 +76,7 @@ CASE는 다음 AI의 provenance만을 위한 문서가 아니다. **사용자가
 즉 short trigger의 의미는 **skill loader 자체가 아니라 GitHub에 고정된 workflow contract**에 있다. 어떤 환경이든 repo 문서를 읽을 수 있으면 `레퍼런스 마이닝 진행`이라는 짧은 요청으로 같은 흐름을 재현한다.
 
 Chat memory는 이 구조의 **인덱스**로만 사용한다. exact 승인 상태, rejected idea, 수치, timing, 결정 이유의 source of truth는 GitHub 문서·코드·commit이다.
+
+## Dual Director 기록 단계
+
+[CASE-004](cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md)와 [발췌 부록](cases/CASE-004_TRANSCRIPT_EXCERPTS.md)은 CASE-001 → CASE-002 → CASE-003의 후속 판단을 기록한다. D-010의 설계 채택은 실행 구현 완료가 아니다. 기록 검사 후 별도 사용자 승인을 받아 다음 단계를 시작한다.

@@ -88,7 +88,7 @@ Playwright / TinyFish / target-PC verification
 
 ### Standard Chat
 
-Superdesign 공식 skill은 shell/CLI를 전제로 하므로 **일반 Chat에서는 직접 실행하지 않는다.**
+2026-09-18 Plugin Directory 검색에서는 Superdesign이 일반 Chat용 설치 앱으로 노출되지 않았다. 공식 Superdesign skill도 shell/CLI를 전제로 하며 **standard Chat에서는 직접 실행하지 말고 Work tab 또는 shell 가능한 agent를 사용**하도록 명시한다. 따라서 일반 Chat에서는 직접 실행하지 않는다.
 
 Chat의 역할:
 - Reference Mining
@@ -225,6 +225,7 @@ Superdesign 실행 결과는 최소 다음을 반환한다.
 
 - 대상 화면/기준 commit
 - Superdesign project/canvas URL
+- Superdesign skill review pin / 실제 CLI version / 사용 model(확인 가능할 때)
 - draft id와 preview URL
 - 각 branch의 한 줄 direction
 - 사용된 Reference IDs / Creative Intent
@@ -270,3 +271,5 @@ Superdesign은 자기 결과를 승인하지 않는다.
 - 생성 draft → implementation transfer 비용
 
 첫 1~2회 실사용 결과 후 이 문서의 trigger 범위를 다시 검토한다.
+
+Superdesign 공식 skill이 `@superdesign/cli@latest` 사용을 기본으로 안내하므로, **각 실험은 실제 CLI version과 생성 model을 기록**해 나중에 결과 품질 변화가 도구 업데이트 때문인지 구분할 수 있게 한다.

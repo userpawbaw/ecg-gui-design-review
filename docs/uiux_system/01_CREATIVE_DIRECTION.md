@@ -72,7 +72,21 @@ Creative 요청에서는 기본적으로 5개 이상 아이디어를 만든다. 
 ### Metric reveal
 3D 블록 높이로 서로 다른 단위의 수치를 비교하지 않는다. 대신 card 자체의 depth/rise/reveal을 사용해 **중요성**을 강조하고, 수치 의미는 텍스트/축/단위로 정확하게 유지한다.
 
-## 6. 검증으로 넘기는 시점
+## 6. 생성기로 구체화하는 시점
+
+Creative divergence의 모든 후보를 바로 mockup하지 않는다.
+
+다음 조건이면 상위 2~4개를 `14_SUPERDESIGN_GENERATION_LAYER.md`의 Visual Draft Generator로 넘긴다.
+
+- reference/text 설명만으로 실제 visual difference를 판단하기 어렵다.
+- 같은 baseline에서 둘 이상의 방향을 side-by-side 비교할 가치가 있다.
+- significant CREATIVE 작업이며 단순 polish가 아니다.
+
+Reference Mining이 있었다면 Reference ID와 experience principle을 전달하고, 원본 사이트의 appearance를 복제하라고 지시하지 않는다. Evidence/Data 화면은 visualization grammar가 미정이면 먼저 Flourish/Data Storyteller에서 관계를 확정한다.
+
+Superdesign draft는 **후보를 더 잘 보기 위한 시안**이지 승인된 설계나 production code가 아니다.
+
+## 7. 검증으로 넘기는 시점
 
 Creative 단계에서 후보를 제거하는 이유는 "낯설다"가 아니라 다음이어야 한다.
 

@@ -3,7 +3,7 @@
 작성 기준: 2026-09-18  
 상태: **ADOPT — 조건부 핵심 생성기(generator) 레이어**  
 검토 기준 upstream: `superdesigndev/superdesign-skill@f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b`  
-검토된 plugin manifest version: `0.4.3`
+검토된 plugin manifest version: `0.6.0`
 
 ## 1. 왜 추가하는가
 
@@ -258,7 +258,26 @@ Superdesign은 자기 결과를 승인하지 않는다.
 - Superdesign 결과가 모두 generic → 21st.dev/Creative Production/reference set을 보강한 뒤 second round
 - standard Chat → generator 실행을 시도하지 않고 Work/Codex/Claude/web app용 handoff packet을 만든다.
 
-## 17. 채택 상태
+## 17. 최종 타당성 판정
+
+**ADOPT — 조건부 핵심 generator layer로 채택.**
+
+최종 검증에서 채택 이유는 다음 세 가지로 압축한다.
+
+1. 기존 시스템의 가장 명확한 빈칸인 `idea → concrete multi-variant visual draft`를 직접 채운다.
+2. current codebase 분석과 branch/replace workflow가 있어 기존 ECG UI를 버리고 generic SaaS dashboard로 재생성할 위험을 줄일 수 있다.
+3. generator를 Validator와 분리하면 Superdesign이 자기 결과를 스스로 승인하는 구조를 피하면서 기존 Product Design/design-taste/motion-review/ECG contract를 그대로 살릴 수 있다.
+
+반대로 **전체 UI/UX 시스템의 새 중심 도구로 승격하지 않는다.** Reference Mining, Data Storytelling, Validator, implementation/QA는 각자 기존 전문 레이어를 유지한다.
+
+### upstream 상태 메모
+
+- 검토 기준 upstream: `superdesigndev/superdesign-skill@f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b`
+- `.codex-plugin/plugin.json`: v0.6.0
+- legacy `superdesigndev/superdesign` IDE extension은 historical/archived이고 현재 maintained 경로는 `superdesign.dev` + `superdesign-skill`
+- standard Chat 직접 실행 가능 여부는 Plugin Directory 노출과 별개이므로, 이 프로젝트는 **shell/CLI preflight가 통과한 환경만 direct execution 가능**으로 판단한다.
+
+## 18. 채택 상태
 
 **ADOPT — generator layer로 채택.**
 

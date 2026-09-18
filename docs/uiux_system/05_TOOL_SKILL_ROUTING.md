@@ -14,8 +14,10 @@
 - TinyFish — live browser workflow
 - Vercel — preview deployment
 
+### 조건부 핵심 외부 generator
+- **Superdesign — 기존 codebase 기반 concrete UI draft/branch generator. Work/Codex/Claude Code 등 shell 환경에서 조건부 핵심 생성기로 채택; standard Chat에서는 실행하지 않음.** Reference/Art Direction의 상위 2~4개 후보를 같은 baseline에서 실제 시안으로 비교할 때 사용한다.
+
 ### 공개 후보 / 필요 시 연결
-- **Superdesign — 기존 codebase 기반 concrete UI draft/branch generator. Work/Codex/Claude Code 등 shell 환경에서 조건부 핵심 생성기로 채택; standard Chat에서는 실행하지 않음**
 - Mobbin — 상용 UI/UX 레퍼런스 연구; product UX reality check에 특히 유용
 - 21st.dev MCP 계열 — creative component/pattern reference 후보. 도입 전 capability gap audit
 - MotionDesign/Awwwards 계열 — attract/transition 발상용 후보. 플러그인 자체 capability는 채택 전 재검증
@@ -71,7 +73,7 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 3. 관련 문서 1~3개
 4. 필요한 Skill/Plugin만 선택
 5. significant CREATIVE 작업이면 §3 trigger를 확인하고 필요한 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 추가
-6. 상위 2~4개 방향을 **실제 화면으로 비교해야 판단이 쉬워지는 경우** `14_SUPERDESIGN_GENERATION_LAYER.md`와 `superdesign-routing`을 추가
+6. 상위 2~4개 방향을 **실제 화면으로 비교해야 판단이 쉬워지는 경우** `14_SUPERDESIGN_GENERATION_LAYER.md`와 `superdesign-routing`을 추가한다. 이 단계는 생성기이며 validation/implementation을 자동 승인하지 않는다
 
 모든 skill/reference/plugin을 한 번에 로드하지 않는다.
 

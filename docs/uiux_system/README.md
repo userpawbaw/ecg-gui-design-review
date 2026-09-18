@@ -16,6 +16,8 @@
 - `08_DECISION_EXPERIMENT_PROTOCOL.md` — 후보 비교·승인·구현·검증 실험 단위
 - `09_CAPABILITY_GAP_AUDIT.md` — 새 Skill/MCP/Plugin 도입 전 gap audit
 - `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` — 실제 reference의 특정 장면을 visual-intent proxy로 사용해 `reference → principle → ECG translation → divergence`를 수행하는 workflow
+- `14_SUPERDESIGN_GENERATION_LAYER.md` — Reference/Art Director 결과를 같은 baseline의 concrete UI draft 2~4안으로 구체화하는 generator layer
+- `15_SUPERDESIGN_USAGE_EXAMPLES.md` — Chat/Work/Codex/Claude 환경별 short trigger, Attract/Evidence/Method/Transition 사용 예시
 
 프로젝트 local skill:
 
@@ -24,8 +26,11 @@
 - `.claude/skills/expo-ui-art-director/SKILL.md`
 - `.claude/skills/project-capability-audit/SKILL.md`
 - `.claude/skills/reference-mining/SKILL.md`
+- `.claude/skills/superdesign-routing/SKILL.md`
 
 `레퍼런스 마이닝 진행해줘`, `Reference mining`, `Attract 레퍼런스 마이닝`은 `13_REFERENCE...`의 전체 절차를 실행하는 짧은 trigger로 사용한다. 중요한 새 CREATIVE 설계는 `05_TOOL_SKILL_ROUTING.md`의 자동/제안 규칙에 따라 이 단계를 포함한다.
+
+`Superdesign 시안 단계까지 진행해줘`, `이 3개 방향을 Superdesign으로 비교해줘`는 reference/art-direction 결과 중 상위 방향을 `14_SUPERDESIGN_GENERATION_LAYER.md`에 따라 concrete draft로 만드는 trigger다. standard Chat에서는 실제 CLI를 실행하지 않고 Work/Codex/Claude/web app용 handoff를 준비한다.
 
 ## 판단 과정 기록 계층
 

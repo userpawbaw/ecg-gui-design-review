@@ -31,9 +31,9 @@
 
 - Source: `superdesigndev/superdesign-skill`
 - 검토 기준 commit: `f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b` (2026-08-21)
-- 검토된 plugin manifest version: `0.4.3`
+- 검토된 plugin manifest version: `0.6.0`
 - 상태: **ADOPT — 조건부 핵심 generator layer**
-- ChatGPT Plugin Directory 확인: 2026-09-18 `Superdesign UI design` 검색에서 Superdesign 자체는 노출되지 않음. 현재 프로젝트 사용 경로는 agent skill/CLI/web app이며, standard Chat native plugin으로 간주하지 않는다.
+- ChatGPT Plugin Directory 확인: 2026-09-18 `Superdesign UI design` 검색에서 Superdesign 자체는 이 계정의 공개 Plugin Directory 결과에 노출되지 않음. 다만 upstream에는 `.codex-plugin/plugin.json`(v0.6.0)과 ChatGPT용 interface metadata가 존재한다. **배포 메타데이터가 있다는 사실과 이 계정에서 standard Chat native plugin으로 직접 실행 가능하다는 것은 구분**하며, 프로젝트 운영상 direct generation은 shell/CLI 가능한 Work/Codex/Claude Code 또는 web app 경로로 취급한다.
 - 공식 역할: 기존 codebase 분석, design-system context, 실제 reference, branchable design draft, multi-model/canvas exploration
 - 공식 제약: shell/CLI가 필요하며 standard ChatGPT chat에서는 직접 실행하지 않고 Work tab 또는 shell 가능한 coding-agent 환경을 사용하도록 안내
 - legacy 주의: `superdesigndev/superdesign` IDE extension은 archived/history 용도이며 현재 제품은 `superdesign.dev` + `superdesign-skill`

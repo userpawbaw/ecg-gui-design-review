@@ -325,3 +325,11 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - PR: https://github.com/userpawbaw/ecg-gui-design-review/pull/9 (open, not merged).
 - CI evidence: https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35338498909 ; records-check job `105578807822` completed success, including record validation and regression fixture steps.
 - Records stage PASS. This closeout changes checkpoint documentation only; latest-head CI must also be confirmed in PR checks after publication. Dual runtime/skill/activation implementation remains not started and requires the next user approval, as explicitly requested. Existing unrelated project gates remain open.
+
+### 2026-09-18 — Records-stage verification requested by user
+
+- Reviewed handoff acceptance criteria, CASE-004 narrative, both transcript appendices, prior CASE-003/D-009/R-008, rules, checker, fixtures and CI.
+- Reproduced formatted placeholder false acceptance (`불필요 — **TODO**`, exit 0), repaired normalization and placeholder checks. Added explicit F/D/O/R duplicate-ID and new-D/R-missing-CASE fixtures: 26 total (23 reject, 3 accept).
+- Preserved 9/9 handoff user quotes and 8/8 CASE-001 quotes; verified original CASE-003 prefix and D-009/R-008 decision bodies unchanged against main. Added visible user/AI recording discussion, qualified two earlier quotations unavailable in the truncated current context rather than silently claiming revalidation.
+- PASS: records:check 29 records, full root npm test, git diff --check and base-relative diff check. Existing head CI 35338610847 success; publish fixes then confirm latest-head CI before final response.
+- Human review and limitations: docs/uiux_system/handoffs/RECORDS_STAGE_VERIFICATION_2026-09-18.md. No merge, no runtime implementation.

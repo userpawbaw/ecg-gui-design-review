@@ -52,4 +52,22 @@ fixture('duplicate main case number', (_, tmp) => fs.copyFileSync(
 fixture('transcript is not a main case', (_, tmp) => fs.renameSync(
   path.join(tmp, 'docs/uiux_system/cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md'),
   path.join(tmp, 'docs/uiux_system/cases/CASE-004_SUMMARY_EN.md')), 1, '존재하지 않는 main CASE');
+for (const [prefix, file] of Object.entries({F: 'F_FINDINGS.md', D: 'D_DECISIONS.md', O: 'O_INCIDENTS.md', R: 'R_AI_COLLABORATION.md'})) {
+  fixture('duplicate record ID ' + prefix, edit => edit('docs/uiux_system/records/' + file, s => {
+    const block = s.match(new RegExp('^## ' + prefix + '-\\d+\\.[\\s\\S]*?(?=^## ' + prefix + '-|$(?![\\s\\S]))', 'm'));
+    assert.ok(block);
+    return s + '\n' + block[0];
+  }), 1, '중복 ID');
+}
+for (const [prefix, file] of [['D', d], ['R', rr]]) {
+  fixture('new record without CASE ' + prefix, edit => edit(file, s => {
+    const start = s.indexOf('## ' + prefix + '-001.');
+    const end = s.indexOf('\n## ' + prefix + '-', start + 1);
+    const block = s.slice(start, end).replace(prefix + '-001.', prefix + '-999.').replace(row, '');
+    return s + '\n' + block;
+  }), 1, prefix + '-999: CASE 필드');
+}
+for (const value of ['불필요 — **TODO**', '불필요 — [추후 작성]', '불필요 — 사유 입력', '보류 — 이유 작성 예정; 재검토: **TBD**']) {
+  fixture('formatted placeholder ' + value, edit => edit(d, s => s.replace(row, `| CASE | ${value} |`)), 1, 'CASE');
+}
 console.log(`[uiux-records tests] PASS — ${count} isolated regression fixtures`);

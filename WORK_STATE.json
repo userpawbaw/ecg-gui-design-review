@@ -167,6 +167,14 @@
     "pr": "https://github.com/userpawbaw/ecg-gui-design-review/pull/9",
     "verified_commit": "105fc0f6d0e43c49c2fb42ba6a4c6cc579f5d007",
     "ci": "https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35338498909",
-    "ci_result": "success: records validation and 16 rejection/acceptance regression fixtures"
+    "ci_result": "success: records validation and 16 rejection/acceptance regression fixtures",
+    "reverification": {
+      "date": "2026-09-18",
+      "report": "docs/uiux_system/handoffs/RECORDS_STAGE_VERIFICATION_2026-09-18.md",
+      "local_result": "PASS: narrative/provenance/history review, 29 records, 26 fixtures, full npm test, diff checks",
+      "remote_gate": "Confirm final PR head Actions success before final response",
+      "runtime_status": "not_started",
+      "merge": "not_authorized"
+    }
   }
 }

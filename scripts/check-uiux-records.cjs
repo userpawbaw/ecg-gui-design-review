@@ -95,7 +95,11 @@ function checkCaseLink(errors, item) {
     return;
   }
   const reason = value.match(/^(불필요|보류) — (.+)$/);
-  const meaningful = s => s.trim().length >= 5 && !/^(?:TODO|TBD|N\/A|미정|없음|기록 없음|추후|나중에|구체적(?:인)? (?:사유|이유)|조건)[.!…\s]*$/i.test(s.trim());
+  const meaningful = s => {
+    // Formatting must not turn an empty template into a substantive reason.
+    const plain = s.replace(/[*_`\[\]<>]/g, '').trim();
+    return plain.length >= 5 && !/^(?:TODO|TBD|N\/A|미정|없음|기록 없음|추후(?: 작성)?|나중에|구체적(?:인)? (?:사유|이유)|(?:사유|이유|조건)(?: 입력| 작성(?: 예정)?)?)[.!…\s]*$/i.test(plain);
+  };
   if (!reason) {
     fail(errors, `${item.id}: CASE 연결 또는 구체적인 불필요/보류 사유가 필요하다`);
   } else if (reason[1] === '보류') {

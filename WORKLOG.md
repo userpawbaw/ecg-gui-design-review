@@ -333,3 +333,13 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Preserved 9/9 handoff user quotes and 8/8 CASE-001 quotes; verified original CASE-003 prefix and D-009/R-008 decision bodies unchanged against main. Added visible user/AI recording discussion, qualified two earlier quotations unavailable in the truncated current context rather than silently claiming revalidation.
 - PASS: records:check 29 records, full root npm test, git diff --check and base-relative diff check. Existing head CI 35338610847 success; publish fixes then confirm latest-head CI before final response.
 - Human review and limitations: docs/uiux_system/handoffs/RECORDS_STAGE_VERIFICATION_2026-09-18.md. No merge, no runtime implementation.
+
+## 2026-09-19 — Dual Creative Director implementation
+
+- User authorized the runtime-contract stage after record verification. Refreshed remote main 08ffec3, still excludes PR #9. Created feat/dual-director-runtime-20260919 from verified 7035545 for a stacked PR.
+- Added D-012 before implementation; 16 contract, thin dual skill, Native/Concretizer wrapper and all routing/provenance/indices connected. Preserved historical CASE/D/R and appended approval/implementation context.
+- Resolved serial A generator calls, 13 reference budget mismatch and waveform time-compression example. Clean first-pass contexts include vendor resume isolation; blocked capability returns handoff instead of claiming independence.
+- PASS: four skill validators, 30 records, full npm test including 26 record fixtures and 26 DOM groups, diff checks. Tabletop review of 15 scenarios recorded; not live agent/vendor execution.
+- Publish stacked PR and check head CI; no merge, no actual generation or UI modification.
+
+2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.

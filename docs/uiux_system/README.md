@@ -16,7 +16,7 @@
 - `08_DECISION_EXPERIMENT_PROTOCOL.md` — 후보 비교·승인·구현·검증 실험 단위
 - `09_CAPABILITY_GAP_AUDIT.md` — 새 Skill/MCP/Plugin 도입 전 gap audit
 - `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` — 실제 reference의 특정 장면을 visual-intent proxy로 사용해 `reference → principle → ECG translation → divergence`를 수행하는 workflow
-- `14_SUPERDESIGN_GENERATION_LAYER.md` — Reference/Art Director 결과를 같은 baseline의 concrete UI draft 2~4안으로 구체화하는 generator layer
+- `14_SUPERDESIGN_GENERATION_LAYER.md` — NATIVE_DIRECTOR 독립 탐색과 CONCRETIZER 선택안 시안화 계약
 - `15_SUPERDESIGN_USAGE_EXAMPLES.md` — Chat/Work/Codex/Claude 환경별 short trigger, Attract/Evidence/Method/Transition 사용 예시
 
 프로젝트 local skill:
@@ -80,3 +80,10 @@ Chat memory는 이 구조의 **인덱스**로만 사용한다. exact 승인 상�
 ## Dual Director 기록 단계
 
 [CASE-004](cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md)와 [발췌 부록](cases/CASE-004_TRANSCRIPT_EXCERPTS.md)은 CASE-001 → CASE-002 → CASE-003의 후속 판단을 기록한다. D-010의 설계 채택은 실행 구현 완료가 아니다. 기록 검사 후 별도 사용자 승인을 받아 다음 단계를 시작한다.
+
+## Dual Creative Director 실행 진입점 (2026-09-19)
+
+- `docs/uiux_system/16_DUAL_CREATIVE_DIRECTOR.md`: HIGH/MEDIUM/LOW activation, 독립 A/B, 예산, cross-review, 환경별 fallback의 공통 계약(경로는 repository root 기준).
+- `docs/uiux_system/14_SUPERDESIGN_GENERATION_LAYER.md`: NATIVE_DIRECTOR / CONCRETIZER 실행.
+- `docs/uiux_system/15_SUPERDESIGN_USAGE_EXAMPLES.md`: 짧은 사용자 trigger 예시.
+- `.claude/skills/dual-creative-director/SKILL.md`: Claude wrapper; 다른 환경은 16번을 직접 따른다.

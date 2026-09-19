@@ -36,7 +36,7 @@
 
 | Task | 먼저 읽을 문서 | Skill/Plugin 후보 |
 |---|---|---|
-| 화면이 밋밋함 / 창의 개선 | 01 Creative, 04 Validation | expo-ui-art-director, Creative Production, Product Design |
+| 기존 방향 안의 가벼운 창의 개선 / non-significant polish | 01 Creative, 04 Validation | expo-ui-art-director, Creative Production, Product Design; **새 significant direction이면 아래 16 Dual 행으로 승격** |
 | **새 creative direction / 디자인적 놀라움 / Awwwards·reference 기반 발상** | 01 Creative, **16 Dual**, 13(A 전용), 04 Validation | **16 Dual routing → 독립 A(reference-mining/art-director) + B(Native) → cross-review → validator**, Creative Production, 필요 시 웹/Mobbin |
 | **같은 baseline에서 2~4개의 실제 UI 시안을 비교** | 01 Creative, **14 Superdesign**, 04 Validation | **superdesign-routing → external Superdesign → user alignment → validator** |
 | Attract/Intro | 01 Creative, 03 Motion, docs/13, 필요 시 14 | HIGH 신규는 16 Dual; A/B 독립, 이후 Product Design/Figma 필요 시 |

@@ -76,10 +76,10 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 기본 절차:
 
 1. **BASELINE** — 현재 화면/코드/버전/승인 상태 확인
-2. **ROUTE** — `05_TOOL_SKILL_ROUTING.md`로 필요한 문서·Skill·Plugin 선택
-3. **REFERENCE GROUNDING WHEN USEFUL** — 중요한 새 CREATIVE 방향, Attract/Transition/Result Reveal, Awwwards/독창성/놀라움 요구, 또는 text-only 아이디어의 느낌을 공유하기 어려운 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 실행한다. 단순 polish에는 자동 삽입하지 않는다.
+2. **ROUTE** — significant CREATIVE는 먼저 `16_DUAL_CREATIVE_DIRECTOR.md`로 zone/명시 모드를 정한다. HIGH 신규 Dual, MEDIUM A 우선, LOW/polish/frozen 구현은 자동 생략. 이후 `05_TOOL_SKILL_ROUTING.md`로 필요한 문서·Skill·Plugin 선택
+3. **REFERENCE GROUNDING WHEN USEFUL** — Dual이면 A의 독립 context에만 적용한다. 중요한 새 CREATIVE 방향, Attract/Transition/Result Reveal, Awwwards/독창성/놀라움 요구, 또는 text-only 아이디어의 느낌을 공유하기 어려운 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 실행한다. 단순 polish에는 자동 삽입하지 않는다.
 4. **DIVERGE** — 디자인 판단 작업이면 3개 이상 대안을 발산. 창의 작업은 검증 전에 과도하게 보수화하지 않는다. reference mining을 썼다면 원본 외형이 아니라 추출한 experience principle을 기반으로 발산한다.
-5. **VISUAL DRAFT GENERATION WHEN USEFUL** — significant CREATIVE 작업에서 text/reference만으로 실제 차이를 판단하기 어렵고 2개 이상 방향을 같은 baseline에서 비교할 가치가 있으면 `14_SUPERDESIGN_GENERATION_LAYER.md`에 따라 상위 2~4개만 Superdesign draft로 구체화한다. standard Chat에서는 실행하지 않고 handoff만 준비한다.
+5. **VISUAL DRAFT GENERATION WHEN USEFUL** — Dual/B-only는 16번의 독립 Native cards 4~6 → drafts 1~2 경로를 사용한다. 아래 상위 2~4 생성은 CONCRETIZER에 해당한다. significant CREATIVE 작업에서 text/reference만으로 실제 차이를 판단하기 어렵고 2개 이상 방향을 같은 baseline에서 비교할 가치가 있으면 `14_SUPERDESIGN_GENERATION_LAYER.md`에 따라 상위 2~4개만 Superdesign draft로 구체화한다. standard Chat에서는 실행하지 않고 handoff만 준비한다.
 6. **PRE-DECISION RECORD** — 결과의 성격을 바꾸는 갈림길이면 구현 전에 D를 작성하고, 기각 후보까지 남긴다.
 7. **CONVERGE** — 프로젝트 UX·데이터 무결성·motion·접근성 규칙으로 `KEEP / TUNE / REJECT` 판정
 8. **CHANGE CONTRACT** — 변경 대상, 변경 금지, 유지 조건, acceptance criteria 명시
@@ -90,9 +90,11 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 
 상세 기록 규약: `10_RECORD_KEEPING.md`. 작업 직전에는 `11_CHECKLISTS.md`에서 해당 트리거 절만 본다.
 
+Dual의 A/B 첫 pass는 공통 context만 받으며 16번의 격리·동결·cross-review를 적용한다. Chat은 A+B clean handoff, shell 환경은 실제 capability 확인 후 A/B를 수행한다.
+
 ### 4.1 새 설계를 시작할 때 reference mining을 언제 부르는가
 
-다음에는 자동 포함한다.
+다음에는 A 경로에 자동 포함한다. B_ONLY에는 적용하지 않는다.
 
 - 사용자가 `레퍼런스 마이닝`, `Awwwards`, `실제 우수작 참고`, `이런 느낌의 사례`를 명시
 - Attract/Intro/Transition/Result Reveal의 새로운 visual direction을 처음 설계
@@ -132,10 +134,10 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 - reference가 있을 때 외형을 복제하지 않고 여러 원리를 조합한다.
 - 최종 결정권은 없다.
 
-### Visual Draft Generator
-- Reference Mining / Art Director가 만든 상위 방향을 **같은 현재 UI baseline에서 실제 시안으로 비교 가능하게** 만든다.
-- 기본 생성기는 Superdesign이며 `14_SUPERDESIGN_GENERATION_LAYER.md`를 따른다.
-- generator output은 exploratory artifact이며 자기 결과를 승인하지 않는다.
+### Superdesign Native Director / Concretizer
+- **NATIVE_DIRECTOR** — A 결과 없이 current baseline + 공통 목표/제약 + Superdesign 자체 inspiration에서 독립 B 방향을 탐색한다. 16번의 격리·예산·동결 규칙을 따른다.
+- **CONCRETIZER** — Reference Mining / Art Director 또는 cross-review에서 이미 선택된 A/B/Hybrid 방향을 **같은 current baseline의 실제 시안**으로 구체화한다.
+- 두 모드의 vendor 실행 계약은 `14_SUPERDESIGN_GENERATION_LAYER.md`를 따르며, 어느 쪽도 자기 결과를 승인하지 않는다.
 
 ### Data Storyteller
 - 어떤 데이터를 어떤 순서와 관계로 보여야 메시지가 빨리 전달되는지 설계한다.

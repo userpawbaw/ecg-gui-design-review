@@ -1,0 +1,20 @@
+{
+  "status": "FROZEN",
+  "director": "A",
+  "round": "DUAL-ATTRACT-001",
+  "baseline": "ecb5e7c63279035ee5eac866237731987e3e6c7e",
+  "created_utc": "2026-09-19T11:26:15.918473+00:00",
+  "concept_count": 6,
+  "files": {
+    "A-report.md": "9067f4496e7bdabc1118f3014b8b40cc245833ea6ab209d65ba0170edf3acebe",
+    "input-verification.json": "a2731160b76fa71d1dd5421627d1d3311877c38cc519f34a0bad877c391fbe35",
+    "reference-cards.md": "91a06c5f75cbf27381166e19cd8d983df8f1dfdf0896d55a30d98459b7414064",
+    "source-read-log.md": "5147a883e6a28382611c032c50ea52e5fb632f06ae07df9a44a58132d2234350"
+  },
+  "limitations": [
+    "No ECG runtime/data verification",
+    "Reference 01 E3, 05 E2, remaining E1",
+    "All ECG concepts L0"
+  ],
+  "scope": "A only; no production edits, B access, or cross-review"
+}

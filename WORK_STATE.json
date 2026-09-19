@@ -190,5 +190,16 @@
     "pr": "https://github.com/userpawbaw/ecg-gui-design-review/pull/10",
     "verified_implementation_commit": "f1da0d32113d6e7b166dc48e9e550f8701045f0a",
     "ci": "https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35423470904"
+  },
+  "dual_attract_runtime": {
+    "round": "DUAL-ATTRACT-001",
+    "baseline": "ecb5e7c63279035ee5eac866237731987e3e6c7e",
+    "status": "partial_A_frozen_B_blocked",
+    "A_concepts": 6,
+    "B_generation_calls": 0,
+    "cross_review": "not_run",
+    "blocker": "Automatic approval review rejected unknown PostHog telemetry payload; official documented opt-out not found in read skill docs",
+    "report": "docs/uiux_system/experiments/DUAL-ATTRACT-001/REPORT.md",
+    "next_action": "Resolve telemetry scope; resume B clean context only, no A outputs; cross-review after B complete"
   }
 }

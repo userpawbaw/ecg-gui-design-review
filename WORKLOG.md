@@ -343,3 +343,7 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Publish stacked PR and check head CI; no merge, no actual generation or UI modification.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-09-19 Dual runtime checkpoint
+
+DUAL-ATTRACT-001: restarted after usage limit with fresh clean A/B contexts and verified 14-file identical baseline. A froze six concepts and five references (one browser interaction, one static render, three text only). B preflight polling rejected by automatic telemetry approval review; no search or generations, cost unknown. No bypass; process cancellation returned unknown session. B blocked artifacts frozen. No cross-review or production edits. O-002/R-011/CASE-004 linked.

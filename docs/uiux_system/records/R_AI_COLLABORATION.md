@@ -199,6 +199,8 @@ maintained Superdesign skill의 실제 문서를 읽고 다음을 확인했다. 
 
 ## R-009. 역할 분리는 도구 하나를 한 위치에 제한하는 것과 다르다
 
+2026-09-19 후속: D-012/16번은 이 원칙을 별도 clean context와 vendor state 격리로 구체화한다. 실제 생성 품질 향상은 여전히 미검증이다.
+
 | | |
 |---|---|
 | 대상 | Superdesign Renderer → Independent Director 논의 |

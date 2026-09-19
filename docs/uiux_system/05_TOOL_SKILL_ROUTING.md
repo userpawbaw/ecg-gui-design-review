@@ -14,8 +14,10 @@
 - TinyFish — live browser workflow
 - Vercel — preview deployment
 
-### 조건부 핵심 외부 generator
-- **Superdesign — 기존 codebase 기반 concrete UI draft/branch generator. Work/Codex/Claude Code 등 shell 환경에서 조건부 핵심 생성기로 채택; standard Chat에서는 실행하지 않음.** Reference/Art Direction의 상위 2~4개 후보를 같은 baseline에서 실제 시안으로 비교할 때 사용한다.
+### Superdesign 두 모드
+- NATIVE_DIRECTOR: 독립 B의 자체 inspiration 탐색. 4~6 cards → 1~2 drafts.
+- CONCRETIZER: 선택된 A/B/Hybrid 시안화. 통상 2~4 비교 또는 단일 후보 1개.
+- 16번 공통 계약이 zone/명시 모드/독립성/budget을 정한다. 14번은 vendor 실행, standard Chat은 clean handoff다.
 
 ### 공개 후보 / 필요 시 연결
 - Mobbin — 상용 UI/UX 레퍼런스 연구; product UX reality check에 특히 유용
@@ -34,11 +36,11 @@
 
 | Task | 먼저 읽을 문서 | Skill/Plugin 후보 |
 |---|---|---|
-| 화면이 밋밋함 / 창의 개선 | 01 Creative, 04 Validation | expo-ui-art-director, Creative Production, Product Design |
-| **새 creative direction / 디자인적 놀라움 / Awwwards·reference 기반 발상** | 01 Creative, **13 Reference Mining**, 04 Validation | **reference-mining → expo-ui-art-director → 필요 시 Superdesign → validator**, Creative Production, 필요 시 웹/Mobbin |
+| 기존 방향 안의 가벼운 창의 개선 / non-significant polish | 01 Creative, 04 Validation | expo-ui-art-director, Creative Production, Product Design; **새 significant direction이면 아래 16 Dual 행으로 승격** |
+| **새 creative direction / 디자인적 놀라움 / Awwwards·reference 기반 발상** | 01 Creative, **16 Dual**, 13(A 전용), 04 Validation | **16 Dual routing → 독립 A(reference-mining/art-director) + B(Native) → cross-review → validator**, Creative Production, 필요 시 웹/Mobbin |
 | **같은 baseline에서 2~4개의 실제 UI 시안을 비교** | 01 Creative, **14 Superdesign**, 04 Validation | **superdesign-routing → external Superdesign → user alignment → validator** |
-| Attract/Intro | 01 Creative, 03 Motion, docs/13, 필요 시 14 | reference-mining을 먼저 검토, art-director, Superdesign(시안 비교가 필요할 때), Product Design, Figma |
-| Replay↔Live transition | 03 Motion, 04 Validation | 중요한 새 visual direction이면 reference-mining, motion-review, Context7, Playwright |
+| Attract/Intro | 01 Creative, 03 Motion, docs/13, 필요 시 14 | HIGH 신규는 16 Dual; A/B 독립, 이후 Product Design/Figma 필요 시 |
+| Replay↔Live transition | 03 Motion, 04 Validation | HIGH 신규는 16 Dual, 이후 motion-review/Context7/Playwright |
 | 데이터 관계/스토리 | 02 Data, 04 Validation | Flourish, Product Design; story 표현이 새롭고 visual intent 공유가 필요하면 reference-mining |
 | 기존 UI polish | docs/21, docs/22, 04 Validation | design-taste, ui-ux-pro-max |
 | 컴포넌트/디자인 시스템 | docs/15, 01/04 | Figma, design-taste |
@@ -51,6 +53,8 @@
 ## 3. Reference Mining 자동 라우팅
 
 ### 자동 실행
+16번으로 명시 모드와 zone을 먼저 판정한다. B_ONLY에는 A 선행 규칙을 적용하지 않는다. Dual이면 아래는 A의 별도 context에서만 수행한다.
+
 다음 요청은 `docs/uiux_system/13_REFERENCE_GROUNDED_CREATIVE_MINING.md`와 `reference-mining` skill을 자동 포함한다.
 
 - `레퍼런스 마이닝`, `reference mining`
@@ -72,15 +76,15 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 2. 작업 분류
 3. 관련 문서 1~3개
 4. 필요한 Skill/Plugin만 선택
-5. significant CREATIVE 작업이면 §3 trigger를 확인하고 필요한 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 추가
-6. 상위 2~4개 방향을 **실제 화면으로 비교해야 판단이 쉬워지는 경우** `14_SUPERDESIGN_GENERATION_LAYER.md`와 `superdesign-routing`을 추가한다. 이 단계는 생성기이며 validation/implementation을 자동 승인하지 않는다
+5. significant CREATIVE 작업이면 `16_DUAL_CREATIVE_DIRECTOR.md`의 HIGH/MEDIUM/LOW 및 explicit routing을 먼저 확인하고 A 경로에만 §3 trigger를 적용하며 필요한 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 추가
+6. 상위 2~4개 방향을 **실제 화면으로 비교해야 판단이 쉬워지는 경우** `14_SUPERDESIGN_GENERATION_LAYER.md`와 `superdesign-routing`을 추가한다. 이는 CONCRETIZER 경로다. Native는 16번의 별도 예산을 따른다. 두 모드 모두 validation/implementation을 자동 승인하지 않는다
 
 모든 skill/reference/plugin을 한 번에 로드하지 않는다.
 
 ## 5. Tool Failover
 
 - Plugin/Skill을 사용할 수 없으면 역할 자체를 포기하지 않는다.
-- Superdesign 사용 불가/standard Chat → Reference Mining + art-director 결과로 Work/Codex/Claude/web app용 handoff packet을 만들거나 Figma/React light prototype으로 대체
+- Superdesign 사용 불가/standard Chat → A 수행 + A 출력 없는 B clean handoff. Concretizer만 선택 후보를 전달한다. Figma/직접 prototype 대안은 native 성공으로 기록하지 않는다.
 - Creative Production 사용 불가 → art-director skill + 웹 레퍼런스
 - `reference-mining` skill을 직접 invoke할 수 없는 환경 → `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 읽고 동일 절차 수행
 - Flourish 사용 불가 → 동일 data-story 질문을 먼저 설계하고 정적 mock/코드 후보 생성
@@ -100,3 +104,10 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 - project-local로 시험할 가치
 
 자세한 기준: `07_EXTERNAL_SKILLS_PROVENANCE.md`.
+
+## 7. 명시 trigger와 자동 activation
+
+`새 디자인 라운드 시작해줘` → zone/task 분류. HIGH 신규 significant CREATIVE → Dual, MEDIUM → A 우선/B 가치 제안, LOW 또는 polish/frozen 구현 → 자동 생략.
+`듀얼 디렉터 진행해줘` → Dual; `레퍼런스 디렉터만 진행해줘` → A_ONLY; `Superdesign 독립 탐색 진행해줘` → B_ONLY; `이 후보를 Superdesign 시안으로 만들어줘` → CONCRETIZER.
+
+실행 entrypoint: `.claude/skills/dual-creative-director/SKILL.md`; wrapper를 invoke할 수 없는 Chat/Work/Codex도 16번 계약을 직접 따른다. 이 자동 선택은 account-wide 설치/hook 보장이 아니다.

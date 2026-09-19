@@ -45,7 +45,9 @@ Reference는 단순 inspiration source가 아니라 **low-cost visual communicat
 - 이미 visual direction과 reference가 freeze되어 있고 구현/검증만 남은 작업
 - 사용자가 reference 조사 없이 바로 구현하라고 명시한 경우
 
-## 4. 전체 파이프라인
+## 4. 전체 파이프라인 — standalone/A-only serial 경로
+
+아래 흐름은 **active Dual first pass 밖에서** 적용한다. Dual의 Director A는 `ECG TRANSLATION → DIVERGENCE 5~8 → FREEZE/RETURN`에서 멈추며 shortlist→Superdesign을 직접 실행하지 않는다.
 
 ```text
 BASELINE

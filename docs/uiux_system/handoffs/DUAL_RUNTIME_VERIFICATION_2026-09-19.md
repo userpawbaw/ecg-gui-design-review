@@ -50,3 +50,21 @@
 실제 Superdesign login/search/draft/비용, 별도 agent들의 독립 실행 효과, preview/UI 품질, target PC는 NOT VERIFIED. 이 요청은 실행 계약/skill/routing 구현이며 유료 생성과 UI 변경은 수행하지 않았다. 배포된 모든 Chat 환경이 프로젝트 지침을 자동 로드한다는 보장은 없으므로 06번 explicit handoff를 사용한다.
 
 문서/skill 구현과 오프라인 검증 PASS; 첫 실사용 결과는 별도 라운드에서 실제 provenance와 함께 기록한다. main merge는 수행하지 않는다.
+
+## Chat secondary semantic review — 2026-09-19
+
+Work의 1차 검증 이후 standard Chat에서 PR #10 branch를 다시 읽어 **semantic routing double-check**를 수행했다. 이 단계는 shell/local test 재실행이 아니라 canonical docs·skill·CI wiring의 독립 재검토다.
+
+발견하고 수정한 ambiguity:
+
+1. `05_TOOL_SKILL_ROUTING.md`의 `화면이 밋밋함 / 창의 개선` 행이 significant CREATIVE와 구분되지 않아 16번 Dual routing을 건너뛸 여지가 있었다. 이를 `기존 방향 안의 가벼운 창의 개선 / non-significant polish`로 좁히고 significant direction은 16번 행으로 승격하도록 명시했다.
+2. `11_CHECKLISTS.md §1A`가 모든 Superdesign draft에 Reference Mining/Art Director 완료와 2~4 shortlist를 요구해 B_ONLY/NATIVE_DIRECTOR와 충돌할 수 있었다. §1A를 CONCRETIZER 전용으로 좁히고 §1B NATIVE_DIRECTOR preflight를 별도로 추가했다.
+3. `00_UIUX_MASTER.md`의 Superdesign 역할 설명이 Native와 Concretizer를 한 문장에 섞어 읽을 여지가 있어 두 모드를 별도 bullet로 분리했다.
+4. `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`의 기존 serial pipeline이 Dual A first pass에도 이어질 수 있어, 해당 pipeline은 standalone/A-only용이며 Dual A는 5~8 concepts 동결 후 반환한다고 §4에 다시 명시했다.
+
+재확인:
+- `16_DUAL_CREATIVE_DIRECTOR.md`, `AGENTS.md`, `05`, `06`, `14`, `15`, dual/reference/art-director/Superdesign routing skill의 핵심 budget·independence·environment boundary는 위 수정 뒤 같은 방향을 가리킨다.
+- GitHub Actions path filter는 `docs/uiux_system/**`, `.claude/skills/**`, `AGENTS.md`, checker/tests를 포함하므로 이번 semantic-doc/skill 변경도 CI trigger 범위다.
+- 이 Chat 검토에서는 Work가 이미 수행한 `npm test`, skill quick_validate, local diff/tree 검증을 재실행하지 않았다. 최신 branch head의 GitHub Actions는 변경 후 다시 확인해야 한다.
+
+이 secondary review는 실제 Superdesign vendor 실행·독립 agent diversity·UI 품질을 검증한 것이 아니다.

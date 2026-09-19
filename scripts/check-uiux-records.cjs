@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(process.env.UIUX_RECORDS_ROOT || path.join(__dirname, '..'));
 const UIUX = path.join(ROOT, 'docs', 'uiux_system');
 const RECORD_DIR = path.join(UIUX, 'records');
 const CASE_DIR = path.join(UIUX, 'cases');
@@ -75,6 +75,41 @@ function fail(errors, message) {
   errors.push(message);
 }
 
+function mainCaseFiles() {
+  if (!fs.existsSync(CASE_DIR)) return [];
+  return fs.readdirSync(CASE_DIR).filter(n => /^CASE-\d+_.*\.md$/.test(n) && !/SUMMARY_EN|TRANSCRIPT/i.test(n));
+}
+
+function checkCaseLink(errors, item) {
+  const rows = [...item.body.matchAll(/^\|\s*CASE\s*\|([^\n]*)\|\s*$/gm)];
+  if (rows.length !== 1) {
+    fail(errors, `${item.id}: CASE 필드는 정확히 하나 필요하다`);
+    return;
+  }
+  const value = rows[0][1].trim();
+  if (/^CASE-\d+(?:\s*,\s*CASE-\d+)*$/.test(value)) {
+    const known = new Set(mainCaseFiles().map(n => `CASE-${caseNumber(n)}`));
+    for (const id of value.split(',').map(s => s.trim())) {
+      if (!known.has(id)) fail(errors, `${item.id}: 존재하지 않는 main CASE ${id}`);
+    }
+    return;
+  }
+  const reason = value.match(/^(불필요|보류) — (.+)$/);
+  const meaningful = s => {
+    // Formatting must not turn an empty template into a substantive reason.
+    const plain = s.replace(/[*_`\[\]<>]/g, '').trim();
+    return plain.length >= 5 && !/^(?:TODO|TBD|N\/A|미정|없음|기록 없음|추후(?: 작성)?|나중에|구체적(?:인)? (?:사유|이유)|(?:사유|이유|조건)(?: 입력| 작성(?: 예정)?)?)[.!…\s]*$/i.test(plain);
+  };
+  if (!reason) {
+    fail(errors, `${item.id}: CASE 연결 또는 구체적인 불필요/보류 사유가 필요하다`);
+  } else if (reason[1] === '보류') {
+    const parts = reason[2].split('; 재검토:');
+    if (parts.length !== 2 || !parts.every(meaningful)) fail(errors, `${item.id}: CASE 보류 사유와 재검토 조건이 필요하다`);
+  } else if (!meaningful(reason[2])) {
+    fail(errors, `${item.id}: CASE 불필요 사유가 비어 있거나 placeholder다`);
+  }
+}
+
 function checkRecords(errors) {
   const allIds = new Map();
   const validIds = new Set();
@@ -95,6 +130,8 @@ function checkRecords(errors) {
           fail(errors, `${item.id}: 필수 절 누락 (${alternatives.join(' 또는 ')})`);
         }
       }
+
+      if (prefix === 'D' || prefix === 'R') checkCaseLink(errors, item);
 
       const hasEvidence = evidenceTags.some(tag => item.body.includes(tag));
       if (!hasEvidence && !item.body.includes('기록 없음')) {
@@ -131,6 +168,12 @@ function checkCases(errors, validIds) {
   const files = fs.readdirSync(CASE_DIR).filter(n => /^CASE-\d+_.*\.md$/.test(n));
   const mainCases = files.filter(n => !/SUMMARY_EN/i.test(n) && !/TRANSCRIPT/i.test(n));
   const transcriptFiles = files.filter(n => /TRANSCRIPT/i.test(n));
+  const seenCases = new Set();
+  for (const name of mainCases) {
+    const number = caseNumber(name);
+    if (seenCases.has(number)) fail(errors, `중복 main CASE 번호 CASE-${number}`);
+    seenCases.add(number);
+  }
 
   for (const name of mainCases) {
     const text = fs.readFileSync(path.join(CASE_DIR, name), 'utf8');

@@ -306,3 +306,30 @@ Generation 7 command results in the owning conversation show original v2.2.1 SHA
 ## Generation 8 recovery checkpoint
 
 Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed), ZIP CRC PASS. Restored 1968 files covering replay plus archive/legacy. npm ci and TypeScript/Vite build exit 0. Reconstructed archive/evidence/legacy browser regression and packaging completeness guard. New package verification and persistence are next; prior generation-7 output is not available after workspace pruning. No data regeneration.
+
+
+## 2026-09-18 — Dual Creative Director records-first implementation
+
+- Baseline main `08ffec3`; read AGENTS, resume policy/state/plan, Master, record rules/checklists, current F/D/R/cases and primary handoff.
+- Preserved existing CASE-003; authored CASE-004 evolution and transcript excerpts plus CASE-001 excerpts. Quotes distinguish handoff-transferred dialogue, supplied Chat excerpts and reconstructed summaries. No missing dialogue invented.
+- Added F-007/D-010/R-009 and D-011/R-010; backlinked D-009/R-008 without erasing initial reasoning. Migrated historical D/R CASE metadata to existing cases.
+- Checker now rejects missing/duplicate CASE fields, nonexistent main CASE targets, empty/placeholder reasons, deferrals without review conditions and duplicate main CASE IDs. Isolated fixtures test failure and acceptance paths. CI runs these regression tests.
+- Initial local checker found the new CASE used qualified evidence tags rather than the existing exact [대화] tag; normalized document tags, retaining source descriptions, without weakening the checker.
+- PASS: npm run records:check (29 records); node tests/uiux-records.test.cjs (16 isolated fixtures); npm test (48-scene/336 metric core, 98-scene/1078 metric data, 26 DOM groups and record suite). npm ci --ignore-scripts succeeded. This is not rendered-browser or Dual Director runtime evidence.
+- Next: push branch, create PR, verify CI on latest head. Dual runtime implementation remains awaiting explicit user approval. No UI/skills/data/release modifications.
+
+
+### Records closeout — PR #9
+
+- Published via authenticated GitHub connector after unauthenticated shell push failed. Remote commit `105fc0f6d0e43c49c2fb42ba6a4c6cc579f5d007` tree `580149ea3b6790b20d2b99774b1744019138cd13` exactly matches the locally tested tree.
+- PR: https://github.com/userpawbaw/ecg-gui-design-review/pull/9 (open, not merged).
+- CI evidence: https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35338498909 ; records-check job `105578807822` completed success, including record validation and regression fixture steps.
+- Records stage PASS. This closeout changes checkpoint documentation only; latest-head CI must also be confirmed in PR checks after publication. Dual runtime/skill/activation implementation remains not started and requires the next user approval, as explicitly requested. Existing unrelated project gates remain open.
+
+### 2026-09-18 — Records-stage verification requested by user
+
+- Reviewed handoff acceptance criteria, CASE-004 narrative, both transcript appendices, prior CASE-003/D-009/R-008, rules, checker, fixtures and CI.
+- Reproduced formatted placeholder false acceptance (`불필요 — **TODO**`, exit 0), repaired normalization and placeholder checks. Added explicit F/D/O/R duplicate-ID and new-D/R-missing-CASE fixtures: 26 total (23 reject, 3 accept).
+- Preserved 9/9 handoff user quotes and 8/8 CASE-001 quotes; verified original CASE-003 prefix and D-009/R-008 decision bodies unchanged against main. Added visible user/AI recording discussion, qualified two earlier quotations unavailable in the truncated current context rather than silently claiming revalidation.
+- PASS: records:check 29 records, full root npm test, git diff --check and base-relative diff check. Existing head CI 35338610847 success; publish fixes then confirm latest-head CI before final response.
+- Human review and limitations: docs/uiux_system/handoffs/RECORDS_STAGE_VERIFICATION_2026-09-18.md. No merge, no runtime implementation.

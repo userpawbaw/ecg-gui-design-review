@@ -46,3 +46,6 @@ jobs:
 
       - name: Validate UI/UX reasoning records
         run: npm run records:check
+
+      - name: Test record checker rejection and acceptance cases
+        run: node tests/uiux-records.test.cjs

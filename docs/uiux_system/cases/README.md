@@ -19,3 +19,12 @@ CASE 문서는 F/D/O/R 운영 기록을 복사하는 파일이 아니라, 사용
 6. CASE가 길어질 때는 `CASE-*_TRANSCRIPT_EXCERPTS.md`를 별도 부록으로 둔다.
 
 자동 검사는 `scripts/check-uiux-records.cjs`, 사람 기준은 `../10_RECORD_KEEPING.md`와 `../11_CHECKLISTS.md`를 따른다.
+
+## 2026-09-18 보강
+
+- [CASE-001 발췌](CASE-001_TRANSCRIPT_EXCERPTS.md) — 기존 CASE의 사용자 인용과 AI 응답 요약을 구분
+- [CASE-003](CASE-003_SUPERDESIGN_GENERATOR_LAYER.md) — 최초 bounded generator 도입, 이력 보존
+- [CASE-004](CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md) — Renderer에서 독립 Director + Concretizer로 판단을 확장한 흐름
+- [CASE-004 발췌](CASE-004_TRANSCRIPT_EXCERPTS.md) — primary handoff 발췌와 원문 부재 표시
+
+D/R은 CASE 연결 또는 `10_RECORD_KEEPING.md`에 따른 구체적 비연결 사유를 가진다. Dual Director 실행 시스템은 별도 승인 대기다.

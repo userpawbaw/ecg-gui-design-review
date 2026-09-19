@@ -4,7 +4,7 @@
 >
 > **왜 남기나.** 최종적으로 "Creative Art Director + Data Storyteller + Validator + GitHub/Chat/Work handoff"라는 구조만 남기면, 왜 그런 역할 분리가 필요했는지와 사용자가 AI의 초기 제안을 어떻게 수정·반박했는지가 사라진다. 이 과정은 차후 AI 사용 패턴 개선과 커리어 포트폴리오에서 더 중요한 증거가 될 수 있다.
 >
-> **근거 주의.** 현재 Chat 대화에서 직접 옮긴 부분은 `[대화]`로 표시했다. 이 저장소에는 현재 Chat의 machine-export transcript가 없으므로, 연구 repo의 `41_ai_collaboration_transcript.md`처럼 byte-level 대조된 부록은 아직 없다. 이후 원문 export가 생기면 별도 부록으로 추가한다. 당시 생각을 추정해 채운 부분은 `[재구성]`으로 표시해야 하며, 이 문서에는 가능한 한 사용하지 않았다.
+> **근거 주의.** 현재 Chat 대화에서 직접 옮긴 부분은 `[대화]`로 표시했다. 이 저장소에는 현재 Chat의 machine-export transcript가 없으므로, 연구 repo의 `41_ai_collaboration_transcript.md`처럼 byte-level 대조된 부록은 아직 없다. 이번에 [발췌 부록](CASE-001_TRANSCRIPT_EXCERPTS.md)을 추가했다. 기존 CASE 인용의 재수록이며 machine-export 대조는 아니다. 당시 생각을 추정해 채운 부분은 `[재구성]`으로 표시해야 하며, 이 문서에는 가능한 한 사용하지 않았다.
 
 ---
 
@@ -279,7 +279,7 @@ scripts/check-uiux-records.cjs
 - 이 CASE는 아직 실제 Creative redesign을 끝낸 사례가 아니다. **설계/오케스트레이션 시스템을 구축한 사례**다.
 - Creative Production, Flourish, Product Design 등이 실제 ECG 화면 품질을 얼마나 높이는지는 이후 prototype 비교가 필요하다.
 - MotionDesign Plugin 자체의 세부 capability는 충분히 검증되지 않았고, 현재 시스템은 "Awwwards식 art direction"이라는 capability를 먼저 정의한 상태다.
-- 현재 Chat 대화의 machine-readable transcript 부록이 없어 인용을 자동 대조하지 못했다. 원문 export가 생기면 보강해야 한다.
+- 발췌 부록은 추가했지만 원본 Chat의 machine-export가 없어 원문 전체와 인용을 자동 대조하지 못했다. export가 생기면 보강해야 한다.
 - 이 시스템을 쓴 UI iteration이 충분히 쌓이기 전에는 "기록 체계가 품질을 높였다"고 인과적으로 주장할 수 없다.
 
 따라서 이 사례가 현재 증명하는 것은 **UI 품질 향상 자체가 아니라, 사용자가 AI의 제안을 비판적으로 재정의하고 그 피드백을 재사용 가능한 협업 시스템으로 구조화한 과정**이다.

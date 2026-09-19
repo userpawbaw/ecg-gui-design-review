@@ -207,3 +207,7 @@ Superdesign이 `@latest` CLI 사용을 권장하기 때문에 같은 prompt라�
 - selected Superdesign draft를 실제 React UI로 옮기는 비용이 생각보다 크면 generator의 자동 trigger 범위를 줄여야 한다.
 
 따라서 채택 상태는 **ADOPT, but evidence pending**이다. 첫 실사용 뒤 D-009/R-008을 갱신하고 필요하면 routing을 축소하거나 확장한다.
+
+## 후속 판단 — 2026-09-18
+
+당시 generator 통합과 위 재사용 패턴은 도입 시점의 판단으로 보존한다. 이후 사용자는 독립적 방향 탐색을 기대했다고 반론했고, [CASE-004](CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md), F-007/D-010/R-009에서 NATIVE_DIRECTOR와 CONCRETIZER로 확장하는 설계를 기록했다. generator의 자기 승인 금지는 유지하고, 반드시 한 자리만 주어야 한다는 제한은 수정한다. 실행 routing 변경은 다음 승인 대기다.

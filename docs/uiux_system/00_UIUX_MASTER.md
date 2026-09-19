@@ -134,10 +134,10 @@ Dual의 A/B 첫 pass는 공통 context만 받으며 16번의 격리·동결·cro
 - reference가 있을 때 외형을 복제하지 않고 여러 원리를 조합한다.
 - 최종 결정권은 없다.
 
-### Superdesign Native Director / Visual Draft Generator
-- Reference Mining / Art Director가 만든 상위 방향을 **같은 현재 UI baseline에서 실제 시안으로 비교 가능하게** 만든다.
-- 독립 B 방향 탐색(NATIVE_DIRECTOR)은 A 결과 없이 16번을 따르고, 선택 후보 시안화(CONCRETIZER)의 기본 생성기는 Superdesign이며 `14_SUPERDESIGN_GENERATION_LAYER.md`를 따른다.
-- generator output은 exploratory artifact이며 자기 결과를 승인하지 않는다.
+### Superdesign Native Director / Concretizer
+- **NATIVE_DIRECTOR** — A 결과 없이 current baseline + 공통 목표/제약 + Superdesign 자체 inspiration에서 독립 B 방향을 탐색한다. 16번의 격리·예산·동결 규칙을 따른다.
+- **CONCRETIZER** — Reference Mining / Art Director 또는 cross-review에서 이미 선택된 A/B/Hybrid 방향을 **같은 current baseline의 실제 시안**으로 구체화한다.
+- 두 모드의 vendor 실행 계약은 `14_SUPERDESIGN_GENERATION_LAYER.md`를 따르며, 어느 쪽도 자기 결과를 승인하지 않는다.
 
 ### Data Storyteller
 - 어떤 데이터를 어떤 순서와 관계로 보여야 메시지가 빨리 전달되는지 설계한다.

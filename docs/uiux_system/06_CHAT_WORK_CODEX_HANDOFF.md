@@ -67,22 +67,32 @@ Work/Codex로 넘기는 이유는 기억을 보존하기 위해서가 아니라,
 - 다른 branch의 새 UI/UX 설계 문서는 현재 작업에 관련될 때 먼저 읽고, 필요하면 handoff packet의 기준 문서를 갱신한다.
 
 
-## 7. Superdesign 전용 Handoff Packet
+## 7. Dual / Superdesign 모드별 packet
 
-Standard Chat에서 Superdesign이 필요한 경우 일반 implementation handoff보다 **design-generation packet**을 먼저 만든다.
+Orchestrator가 읽을 문서: `AGENTS.md`, `00_UIUX_MASTER.md`, `16_DUAL_CREATIVE_DIRECTOR.md`, `14_SUPERDESIGN_GENERATION_LAYER.md`. 전체 handoff나 CASE에 들어 있는 A/B 아이디어를 worker에 그대로 전달하지 않는다.
 
-필수:
+### B clean packet (NATIVE_DIRECTOR)
 
-1. target screen / current route
-2. baseline commit SHA
-3. `00_UIUX_MASTER.md`, `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`, `14_SUPERDESIGN_GENERATION_LAYER.md`
-4. Creative Intent 한 문장
-5. shortlist 2~4 directions
-6. 각 direction의 Reference IDs / borrowed principles
-7. 유지해야 할 data/UI contracts
-8. generator에 넘겨도 되는 최소 source/context files
-9. 제외할 asset/data/secrets
-10. "production 구현하지 말고 canvas/preview review에서 멈출 것"
-11. 결과로 받을 canvas URL / draft ID / preview URL / branch direction summary
+- round ID, mode=NATIVE_DIRECTOR, target/zone와 선택 이유
+- baseline commit SHA, current main/branch SHA
+- 공통 문제/관람객 목표, data/UI hard constraints, 확정된 data grammar
+- 허용된 현재 UI source/design-system 파일 manifest; A 결과/참고 URL/선호/shortlist/전체 대화 제외
+- 14번 Native 계약과 16번의 독립성/예산/출력 절
+- 4~6 cards → cheap prefilter → 1~2 drafts, 추가 유료 setup 비용은 명시
+- 별도 B 출력 위치; 기존 vendor state에 A 자료가 있는지 점검
+- 반환할 query/source/card/prefilter/draft/CLI/model/URL, 실제 읽은 context, 비용, 독립성/blocked 상태
+- production 구현 금지, 반환 후 orchestrator에서 cross-review
 
-Superdesign이 반환한 draft는 다시 Chat의 user alignment + validator 단계로 돌아온다. draft HTML 자체를 production source로 간주하지 않는다.
+### A packet
+
+동일 baseline/goal/constraints + 13번 reference 계약. B 검색/cards/drafts를 제외하고 A 전용 출력 위치에 5~8 concepts를 동결한다.
+
+### CONCRETIZER packet
+
+mode=CONCRETIZER + 선택 A/B/Hybrid IDs/intent와 필요한 reference/원리, baseline/constraints, 허용 draft 수(단일 후보 가능), 최소 context, 반환 URL/IDs/검증 항목을 보낸다. 이 경로는 독립성 주장이 없다.
+
+### Orchestrator review packet
+
+A/B 둘 다 동결한 뒤에만 양쪽 결과, 입력 manifests, 독립성 판정, 비교 이유, 기각안, optional Hybrid 부모와 가설을 합친다. 한쪽이 handoff/blocked면 cross-review 완료로 처리하지 않는다.
+
+Chat은 A 수행 + clean B packet을 만들고 shell 가능한 새 context로 넘긴다. Work/Codex/Claude도 격리 context를 못 만들면 같은 방식을 쓴다. 별도 context에서는 위 최소 role packet만 읽고 전체 orchestrator 대화를 상속하지 않는다.

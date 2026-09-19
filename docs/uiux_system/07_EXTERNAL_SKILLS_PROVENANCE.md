@@ -32,14 +32,14 @@
 - Source: `superdesigndev/superdesign-skill`
 - 검토 기준 commit: `f9f05cd988c247dce6c072eaf9ac6b162f2ffc4b` (2026-08-21)
 - 검토된 plugin manifest version: `0.6.0`
-- 상태: **ADOPT — 조건부 핵심 generator layer**
+- 상태: **ADOPT — NATIVE_DIRECTOR + CONCRETIZER, 16번 routing**
 - ChatGPT Plugin Directory 확인: 2026-09-18 `Superdesign UI design` 검색에서 Superdesign 자체는 이 계정의 공개 Plugin Directory 결과에 노출되지 않음. 다만 upstream에는 `.codex-plugin/plugin.json`(v0.6.0)과 ChatGPT용 interface metadata가 존재한다. **배포 메타데이터가 있다는 사실과 이 계정에서 standard Chat native plugin으로 직접 실행 가능하다는 것은 구분**하며, 프로젝트 운영상 direct generation은 shell/CLI 가능한 Work/Codex/Claude Code 또는 web app 경로로 취급한다.
 - 공식 역할: 기존 codebase 분석, design-system context, 실제 reference, branchable design draft, multi-model/canvas exploration
 - 공식 제약: shell/CLI가 필요하며 standard ChatGPT chat에서는 직접 실행하지 않고 Work tab 또는 shell 가능한 coding-agent 환경을 사용하도록 안내
 - legacy 주의: `superdesigndev/superdesign` IDE extension은 archived/history 용도이며 현재 제품은 `superdesign.dev` + `superdesign-skill`
 
 프로젝트 적용:
-- `Reference Mining → Art Director`가 만든 상위 2~4개 방향을 **동일 baseline의 concrete visual drafts**로 비교하는 생성기
+- NATIVE_DIRECTOR는 A와 독립적으로 native inspiration에서 4~6 cards → 1~2 drafts; CONCRETIZER는 선택한 상위 2~4개 방향(단일 후보도 가능)을 동일 baseline으로 시안화한다.
 - Product Design/design-taste/motion-review/project docs보다 우선하지 않음
 - Evidence/Data 화면에서는 Flourish가 visualization grammar를 먼저 정하고 Superdesign은 screen composition을 맡음
 - Figma는 필요 시 selected direction의 freeze/editable handoff에 사용하며 필수 관문이 아님
@@ -64,6 +64,7 @@
 - `.claude/skills/project-capability-audit/SKILL.md`
 - `.claude/skills/reference-mining/SKILL.md`
 - `.claude/skills/superdesign-routing/SKILL.md`
+- `.claude/skills/dual-creative-director/SKILL.md`
 
 ### reference-mining
 
@@ -107,3 +108,11 @@ Awwwards/Godly/SiteInspire/Land-book/Lapa Ninja/CSS Design Awards 같은 공개 
 - 자동으로 최신판을 따라가지 않음
 
 외부 문서·Skill은 근거 자료이지 최상위 프로젝트 명세가 아니다.
+
+## Dual 역할 확장 (2026-09-19)
+
+- project-local `dual-creative-director`: `.claude/skills/dual-creative-director/SKILL.md`. 자체 작성, source는 16번/CASE-004/D-010/R-009/D-012. 공통 packet/별도 context/zone/예산/cross-review를 조정한다.
+- project-local `superdesign-routing`: 14번 두 모드 wrapper로 확장. 외부 vendor skill을 복제하거나 새 plugin을 설치하지 않는다.
+- 현재 설치된 Superdesign plugin 0.6.0 SKILL.md를 읽어 shell preflight/auth, init/resume, generation/refinement 구분을 확인했다. 과거 upstream pin은 위 이력이며 최신 upstream SHA를 새로 검증했다는 뜻이 아니다.
+- skill 작성은 설치된 skill-creator 지침을 사용했다. docs/skill 오프라인 검증이며 유료 generation/login/서비스 실측은 하지 않았다.
+- Chat/Codex/Work는 project-local Claude skill의 자동 발견을 가정하지 않고 AGENTS/MASTER/16을 직접 읽는다. 계정 전체 설치/hook은 이번 산출물이 아니다.

@@ -100,3 +100,13 @@ AI는 도구가 renderer만 가능한 것은 아니라는 판단으로 수정했
 ## 한계
 
 발췌의 순서는 논의의 인과 관계를 나타내며 전체 메시지의 시간·턴 번호를 복원한 transcript가 아니다. 정확한 timestamp와 빠진 AI 답변 원문은 기록 없음. 이후 export를 받으면 출처를 추가하고 대조하되 현재 발췌가 원래부터 전체 transcript였던 것처럼 변경하지 않는다.
+
+## 7. 기록 검증 후 다음 단계 승인 (2026-09-19)
+
+[대화] 출처: 현재 Work의 사용자 메시지. 다음 두 문장은 직접 인용이다.
+
+> 기록 단계 검증이 완료됐으니 Dual Creative Director 실행 시스템 구현 단계로 진행해줘.
+
+> 최신 main과 `docs/uiux_system/handoffs/DUAL_CREATIVE_DIRECTOR_IMPLEMENTATION_2026-09-18.md`, CASE-004, D-010/R-009를 기준으로 작업해.
+
+[재구성] 이어 사용자는 16번, 두 skill 모드, 기존 진입점, zone activation, 독립성, B 예산, cross-review/Hybrid, Chat/shell 분기를 구현 대상으로 열거했다. AI는 최신 main이 아직 PR #9를 포함하지 않아 검증된 기록 head 위 후속 branch/PR로 분리하고, 실제 시안 생성 대신 실행 계약과 검증을 구현하기로 했다.

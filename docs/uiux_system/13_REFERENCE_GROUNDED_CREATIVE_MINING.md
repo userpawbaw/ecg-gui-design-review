@@ -3,6 +3,10 @@
 작성 기준: 2026-09-18  
 상태: **Creative reference 탐색과 visual-intent 공유를 위한 운영 규칙**
 
+## Dual round에서의 적용 (2026-09-19)
+
+`16_DUAL_CREATIVE_DIRECTOR.md`로 먼저 route한다. Dual일 때 이 문서는 A 전용이며 A 예산은 5~8 concepts다. 아래 기존 단일 경로의 8~10 권장/shortlist→Superdesign 단계는 Dual first pass에 적용하지 않는다. A는 결과를 동결·반환하고 B 검색/cards/draft를 읽거나 B를 대신 실행하지 않는다. 두 pass 동결 뒤 orchestrator가 cross-review한다. B_ONLY는 이 reference mining 선행조건을 갖지 않는다.
+
 ## 1. 목적
 
 이 단계의 목적은 Awwwards나 다른 우수작을 그대로 모방하는 것이 아니다. 실제 reference의 특정 장면을 AI와 사용자가 함께 보면서 **"어떤 느낌을 만들려는가"를 mockup 이전에 공유**하고, 그 장면에서 경험 원리만 추출해 ECG 프로젝트에 재해석하는 것이다.

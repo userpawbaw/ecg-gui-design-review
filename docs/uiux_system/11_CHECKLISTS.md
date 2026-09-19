@@ -124,3 +124,15 @@
 - [ ] 초기 판단·반론·수정·시스템 변화와 설계 채택/구현 완료를 구분했나.
 
 자동 승급: D/R CASE 필드·대상·사유·보류 재검토 조건·main 번호 유일성은 checker와 임시 fixture 회귀 검사에서 확인한다. 방법론 판별·사유 타당성·서사 품질은 사람 검토로 남는다.
+
+## §11 Dual Director 실행 전후
+
+- [ ] 16번으로 target/task/zone/명시 모드를 정했나. HIGH여도 frozen 구현이면 자동 탐색을 생략했나.
+- [ ] baseline SHA와 공통 manifest를 고정하고 서로의 출력을 제외한 별도 A/B context를 만들었나.
+- [ ] B init/resume/project/draft에 A 아이디어가 섞이지 않았나. 불가능하면 handoff/미검증으로 표시했나.
+- [ ] A 5~8 concepts, B 4~6 cards와 prefilter 이유, 최대 1~2 drafts 예산을 지켰나.
+- [ ] prefilter 중복은 B 내부에만 적용했나. 낯설다는 이유만으로 제거하지 않았나.
+- [ ] 양쪽 동결 뒤 cross-review했나. Hybrid는 상보적 근거와 부모 IDs가 있고 한 번 이내인가.
+- [ ] Chat/shell 및 실제 auth/network capability를 구별하고 실패/미실행을 완료로 부르지 않았나.
+- [ ] actual sources/CLI/model/URLs/budget와 rejected reasons를 반환하고 user+validator를 거쳤나.
+- [ ] 문서/skill 검증과 실제 생성 품질·UI 검증 결과를 구별했나.

@@ -98,3 +98,11 @@ Dual Director의 `16_DUAL_CREATIVE_DIRECTOR.md`, skill, 실행 routing 및 시�
 ## 기록 단계 검증 증거
 
 [테스트] [커밋] [PR #9](https://github.com/userpawbaw/ecg-gui-design-review/pull/9)의 구현 commit `105fc0f`에서 로컬 전체 npm test와 [GitHub Actions run 35338498909](https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35338498909)가 통과했다. CI는 기록 검사와 16개 정상/오류 fixture를 모두 실행했다. 이후 checkpoint 문서만 추가했으며 최신 head 상태는 PR checks에서 확인한다. 이 증거는 기록 계층의 구조 검사이며 독립 Director의 실행 성능 검증이 아니다. 다음 단계는 사용자 승인 대기다.
+
+## 후속 — 2026-09-19 실행 시스템 구현 승인
+
+위 본문은 기록 단계 시점의 승인 대기/미구현 상태를 보존한다. 기록 재검증은 PR #9 head `703554557896da6dff84967a713d9e4429150b08`에서 완료됐고 사용자가 실행 시스템 구현을 요청했다. [대화]
+
+D-012에 따라 16번 공통 계약, dual wrapper, Superdesign 두 모드와 기존 진입점을 연결한다. 같은 대화에서 역할만 바꾸는 방식은 독립성이 없으므로 별도 clean context와 vendor state까지 경계를 구체화했다. context 격리 불가 시 B handoff로 반환한다. 이는 R-009의 원칙을 실행 조건으로 옮긴 것이다. [추론]
+
+Chat A+B handoff와 shell A/B 경로는 실제 capability로 분기한다. 문서/skill 구현과 실제 Superdesign 생성 효과는 별도 증거이며 이번에는 UI 변경이나 유료 시안을 만들지 않는다. 검증 보고는 handoffs/DUAL_RUNTIME_VERIFICATION_2026-09-19.md를 따른다.

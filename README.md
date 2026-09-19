@@ -93,3 +93,10 @@ npm run audit
 - [중단 복구·6시간 예약 실행 규칙](WORK_RESUME_POLICY.md), [현재 작업 상태](WORK_STATE.json)
 
 예약은 상태 확인 후 필요한 경우에만 승인된 미완료 작업을 재개한다. 완료된 실험을 반복하거나 실제 진행 중인 실행과 동시에 수정하지 않는다.
+
+## Dual Creative Director 실행 진입점 (2026-09-19)
+
+- `docs/uiux_system/16_DUAL_CREATIVE_DIRECTOR.md`: HIGH/MEDIUM/LOW activation, 독립 A/B, 예산, cross-review, 환경별 fallback의 공통 계약(경로는 repository root 기준).
+- `docs/uiux_system/14_SUPERDESIGN_GENERATION_LAYER.md`: NATIVE_DIRECTOR / CONCRETIZER 실행.
+- `docs/uiux_system/15_SUPERDESIGN_USAGE_EXAMPLES.md`: 짧은 사용자 trigger 예시.
+- `.claude/skills/dual-creative-director/SKILL.md`: Claude wrapper; 다른 환경은 16번을 직접 따른다.

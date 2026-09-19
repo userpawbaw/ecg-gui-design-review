@@ -16,17 +16,28 @@
 - [ ] unusual하다는 이유만으로 초기 후보를 제거하지 않았나.
 - [ ] 이미 과거에 reject된 아이디어라면 `D_DECISIONS.md`를 먼저 확인했나.
 
-## §1A Superdesign concrete draft를 만들기 전에
+## §1A Superdesign **CONCRETIZER** concrete draft를 만들기 전에
 
-- [ ] 이 작업이 단순 polish가 아니라 **실제 visual branch 비교가 필요한 significant CREATIVE 작업**인가.
+- [ ] 이 작업이 단순 polish가 아니라 **선택된 방향의 실제 visual branch 비교가 필요한 significant CREATIVE 작업**인가.
 - [ ] Reference Mining / Art Director 단계가 끝났거나 사용자가 이미 충분히 구체적인 방향·reference를 줬나.
-- [ ] 8~10개 아이디어를 그대로 생성하지 않고 **2~4개로 shortlist**했나.
+- [ ] 많은 아이디어를 그대로 생성하지 않고 **선택된 1개 또는 비교할 2~4개**로 좁혔나.
 - [ ] existing `prototype/v2` codebase를 baseline으로 쓰고 brand-new from-scratch를 피했나.
 - [ ] Flourish/Data Storyteller가 먼저 정해야 할 visualization grammar를 Superdesign에게 떠넘기고 있지 않나.
 - [ ] release/archive/raw experiment data/credential을 context로 넘기지 않았나.
 - [ ] generator output을 승인안으로 취급하지 않고 canvas/preview에서 멈출 계획이 있나.
 - [ ] 결과를 Product Design / design-taste / motion-review / project contract로 별도 검증할 계획이 있나.
 - [ ] standard Chat처럼 shell이 없는 환경이면 실행을 가장하지 않고 handoff packet만 만들고 있나.
+
+## §1B Superdesign **NATIVE_DIRECTOR**를 실행하기 전에
+
+- [ ] `16_DUAL_CREATIVE_DIRECTOR.md`에서 B_ONLY 또는 Dual의 B로 route되었나.
+- [ ] A의 reference / idea / shortlist / 선호 / draft를 제외한 **clean baseline packet**만 준비했나.
+- [ ] 기존 `.superdesign` resume/project/draft state에 A 결과가 섞이지 않았는지 확인했나. 섞였으면 Native용으로 재사용하지 않나.
+- [ ] 먼저 **4~6 SD Direction Cards**를 만들고, B 내부 cheap prefilter 뒤 **유효한 1~2개만 draft**로 생성하도록 예산을 고정했나.
+- [ ] first pass에서 A와의 중복 비교를 하지 않고 B 내부 중복만 제거하나.
+- [ ] shell 존재와 실제 vendor/auth/network 가능 여부를 구분했나.
+- [ ] context isolation이 안 되면 독립 실행 성공을 주장하지 않고 `B_HANDOFF_READY` / `INDEPENDENCE_UNVERIFIED`로 멈출 계획인가.
+- [ ] Native 결과도 자기 승인하지 않고 A/B 동결 뒤 cross-review + validator로 넘길 계획인가.
 
 ## §2 중요한 설계 후보를 고르기 전에
 
@@ -124,3 +135,15 @@
 - [ ] 초기 판단·반론·수정·시스템 변화와 설계 채택/구현 완료를 구분했나.
 
 자동 승급: D/R CASE 필드·대상·사유·보류 재검토 조건·main 번호 유일성은 checker와 임시 fixture 회귀 검사에서 확인한다. 방법론 판별·사유 타당성·서사 품질은 사람 검토로 남는다.
+
+## §11 Dual Director 실행 전후
+
+- [ ] 16번으로 target/task/zone/명시 모드를 정했나. HIGH여도 frozen 구현이면 자동 탐색을 생략했나.
+- [ ] baseline SHA와 공통 manifest를 고정하고 서로의 출력을 제외한 별도 A/B context를 만들었나.
+- [ ] B init/resume/project/draft에 A 아이디어가 섞이지 않았나. 불가능하면 handoff/미검증으로 표시했나.
+- [ ] A 5~8 concepts, B 4~6 cards와 prefilter 이유, 최대 1~2 drafts 예산을 지켰나.
+- [ ] prefilter 중복은 B 내부에만 적용했나. 낯설다는 이유만으로 제거하지 않았나.
+- [ ] 양쪽 동결 뒤 cross-review했나. Hybrid는 상보적 근거와 부모 IDs가 있고 한 번 이내인가.
+- [ ] Chat/shell 및 실제 auth/network capability를 구별하고 실패/미실행을 완료로 부르지 않았나.
+- [ ] actual sources/CLI/model/URLs/budget와 rejected reasons를 반환하고 user+validator를 거쳤나.
+- [ ] 문서/skill 검증과 실제 생성 품질·UI 검증 결과를 구별했나.

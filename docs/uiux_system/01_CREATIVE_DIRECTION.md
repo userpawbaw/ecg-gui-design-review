@@ -41,7 +41,7 @@ Awwwards식 접근을 금지하지 않는다. 다만 **스타일 복사보다 �
 
 ## 4. 후보 발산 규칙
 
-Creative 요청에서는 기본적으로 5개 이상 아이디어를 만든다. 서로 다른 축을 사용한다.
+먼저 `16_DUAL_CREATIVE_DIRECTOR.md`로 zone/명시 모드를 정한다. A는 5~8 concepts, 독립 B는 4~6 Direction Cards를 만든다. LOW/polish/frozen 구현에 발산 개수를 강요하지 않는다. 서로 다른 축을 사용한다.
 
 - 구조 변화형
 - motion/reveal형
@@ -62,7 +62,7 @@ Creative 요청에서는 기본적으로 5개 이상 아이디어를 만든다. 
 
 ### Replay → Live 전환
 단순 fade 대신:
-- stored waveform의 시간축이 짧게 압축
+- stored context를 나타내는 container가 전환(파형/시간축 자체의 압축·morph 없음)
 - grid/state label이 live context로 재구성
 - LIVE indicator가 짧게 활성화
 - sweep head가 실제 재생 시작 지점에서 진입
@@ -76,7 +76,9 @@ Creative 요청에서는 기본적으로 5개 이상 아이디어를 만든다. 
 
 Creative divergence의 모든 후보를 바로 mockup하지 않는다.
 
-다음 조건이면 상위 2~4개를 `14_SUPERDESIGN_GENERATION_LAYER.md`의 Visual Draft Generator로 넘긴다.
+Dual/B-only의 NATIVE_DIRECTOR는 A를 기다리지 않고 16번에 따라 독립 4~6 cards → 1~2 drafts를 만든다. A/B 동결 뒤에만 비교하며 필요할 때 Hybrid 한 개를 만든다.
+
+이미 선택한 아이디어를 시안화하는 CONCRETIZER에서는 다음 조건이면 상위 2~4개를 `14_SUPERDESIGN_GENERATION_LAYER.md`의 Visual Draft Generator로 넘긴다.
 
 - reference/text 설명만으로 실제 visual difference를 판단하기 어렵다.
 - 같은 baseline에서 둘 이상의 방향을 side-by-side 비교할 가치가 있다.

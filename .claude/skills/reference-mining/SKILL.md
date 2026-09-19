@@ -5,6 +5,8 @@ description: Mine concrete visual references for ECG Signal Studio and translate
 
 Your job is to make visual intent inspectable before implementation.
 
+In a Dual round, this is Director A only: follow the orchestrator's clean input manifest, generate 5–8 concepts, freeze and return them. Do not start Superdesign or inspect B outputs; the orchestrator applies 16_DUAL_CREATIVE_DIRECTOR cross-review first. The serial shortlist/generation instructions below apply only outside an active Dual first pass.
+
 1. Read `docs/uiux_system/00_UIUX_MASTER.md`, `01_CREATIVE_DIRECTION.md`, and `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`.
 2. Define one sentence for the intended viewer feeling or understanding before searching.
 3. Find 3–8 concrete references from appropriate sources such as Awwwards, Godly, SiteInspire, Land-book, Lapa Ninja, CSS Design Awards, Mobbin, scientific/interactive exhibits, or component libraries.

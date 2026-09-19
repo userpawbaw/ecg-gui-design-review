@@ -175,3 +175,11 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - handoff §11 및 사용자 6개 검증 항목을 직접 대조했다. 상세: docs/uiux_system/handoffs/RECORDS_STAGE_VERIFICATION_2026-09-18.md.
 - placeholder 우회 수정, 26개 fixture, 전체 npm test와 diff 검사 PASS. 원문/재구성 구분 및 현재 확보된 기록 요구 문답 보강.
 - 최종 head CI 확인 후 보고하고 종료. merge 및 Dual 실행 시스템 구현은 하지 않는다.
+
+## 2026-09-19 — Dual 실행 계약 구현
+
+- 사용자 승인으로 16번/skills/두 모드/activation/handoff를 구현했다. 기록 단계 PR #9 head를 기반으로 후속 branch에서 작업한다.
+- 문서/skill/tabletop/records 및 전체 npm test PASS. 자세한 검증: docs/uiux_system/handoffs/DUAL_RUNTIME_VERIFICATION_2026-09-19.md.
+- 원격 PR/CI 확인 후 보고. 실제 시안 생성·UI 수정·main merge는 수행하지 않는다.
+
+2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.

@@ -1,6 +1,6 @@
 # DUAL-ATTRACT-001 — 첫 실사용 결과와 재개 지점
 
-상태: **PARTIAL — A_FROZEN / B_BLOCKED_AFTER_AUTHORIZATION / CROSS_REVIEW_NOT_RUN**.
+상태: **READY_FOR_CROSS_REVIEW — A_FROZEN / B_FROZEN / CROSS_REVIEW_NOT_RUN**.
 기준 main/UI SHA: `ecb5e7c63279035ee5eac866237731987e3e6c7e`. Target: prototype/v2 Attract, HIGH 신규 방향. Production UI 및 Hybrid 생성 없음.
 
 ## 실제 수행
@@ -66,3 +66,30 @@ B_BLOCKED freeze 두 개는 각각 승인 전 차단과 승인 후 인증 실패
 telemetry 허용 문제는 해소됐지만 Superdesign 인증이 완료되지 않았다. 다음 재개는 vendor auth session 생성과 브라우저 승인이 가능한 환경에서 해야 한다. URL/code가 출력되면 사용자에게 즉시 전달하고 승인을 기다린다. 성공 후에만 동일 baseline/clean packet에서 4~6 native cards → prefilter → 1 baseline reproduction + 최대 1 branch draft를 실행한다. 양쪽 first pass를 동결한 뒤에만 A와 함께 cross-review한다. A freeze 결과는 재생성할 필요가 없다.
 
 O-002/R-011/CASE-004에 승인 후 인증 실패를 후속 기록으로 연결했다. 실험은 완료로 표시하지 않는다.
+
+
+## 2026-09-20 후속 — B first pass 완료
+
+이전 B_BLOCKED 기록은 당시 incident evidence로 유지한다. 이후 로컬/Codex 환경에서 Superdesign 인증이 성공했고 Director B first pass를 **A 결과를 읽지 않은 별도 clean context**에서 재개했다.
+
+최신 B 결과:
+- Superdesign CLI `v0.14.0`
+- `DO_NOT_TRACK=1`
+- prompt-library search 4회
+- Direction Cards 5개
+- cheap prefilter KEEP 2 / REJECT 3
+- setup reproduction 1회
+- branch generation 1회 → B01/B02 두 direction draft
+- total credits 46.0
+- production UI edits 0
+- cross-review 0
+
+선택 draft:
+- B01 Signal Orbit — https://p.superdesign.dev/draft/81ee679a-b18b-45e2-a008-8a1e60e322e7
+- B02 Exhibition Grid — https://p.superdesign.dev/draft/be68bb43-6954-4064-9362-0777b158f391
+
+`B-authorized/output/B_FROZEN.md`와 `direction-cards.md`, `prefilter.md`, `freeze-verification.json`이 최신 source of truth다.
+
+두 B draft는 faithful baseline과 동일 waveform SVG path hash, Input/Output/Reference semantics, mV/time labels, REPLAY/source wording을 구조적으로 보존했다. 단, 이 검증은 HTML/freeze structural verification이며 rendered-browser/target-PC visual QA는 아직 아니다.
+
+따라서 현재 round는 **A_FROZEN + B_FROZEN** 조건을 충족했고, 다음 허용 단계는 A/B cross-review와 validator다. 추가 A/B generation이나 Hybrid는 아직 수행하지 않는다.

@@ -59,10 +59,10 @@
     "generation_calls": 0,
     "cross_review_started": false
   },
-  "status": "READY_FOR_CROSS_REVIEW",
+  "status": "CROSS_REVIEW_COMPLETE_USER_ALIGNMENT_PENDING",
   "A_status": "FROZEN",
   "B_status": "FROZEN",
-  "cross_review": "NOT_RUN",
+  "cross_review": "COMPLETE",
   "independence": "Separate clean contexts and identical baseline verified; filesystem access restriction is instruction-based; no cross-output sharing reported",
   "finished_at": null,
   "B_completion": {
@@ -94,5 +94,37 @@
     "director_A_inspected": false,
     "cross_review_started": false,
     "production_changes": 0
+  },
+  "cross_review_completion": {
+    "at": "2026-09-20T10:00:00Z",
+    "status": "COMPLETE",
+    "browser_render_double_check": [
+      "B01",
+      "B02"
+    ],
+    "provisional_set": [
+      {
+        "id": "S1",
+        "source": "A04",
+        "name": "Question Poster"
+      },
+      {
+        "id": "S2",
+        "source": "B01",
+        "name": "Signal Orbit tuned"
+      },
+      {
+        "id": "H1",
+        "source": "B02+A05",
+        "name": "Exhibition Grid × Same-scene Handoff",
+        "generated": false
+      }
+    ],
+    "common_tunes": [
+      "A06 Reference semantics",
+      "A01 same-axis alignment discipline"
+    ],
+    "user_visual_alignment": "PENDING",
+    "implementation_authorized": false
   }
 }

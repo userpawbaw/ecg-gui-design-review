@@ -59,10 +59,40 @@
     "generation_calls": 0,
     "cross_review_started": false
   },
-  "status": "PARTIAL_A_FROZEN_B_BLOCKED_AFTER_AUTHORIZATION",
+  "status": "READY_FOR_CROSS_REVIEW",
   "A_status": "FROZEN",
-  "B_status": "B_BLOCKED_AUTH_TIMEOUT",
+  "B_status": "FROZEN",
   "cross_review": "NOT_RUN",
   "independence": "Separate clean contexts and identical baseline verified; filesystem access restriction is instruction-based; no cross-output sharing reported",
-  "finished_at": "2026-09-19T11:27:42.974100+00:00"
+  "finished_at": null,
+  "B_completion": {
+    "at": "2026-09-20T07:13:22Z",
+    "environment": "local/Codex resume",
+    "cli_version": "0.14.0",
+    "telemetry": "DO_NOT_TRACK=1",
+    "authentication": "authenticated; team Personal",
+    "prompt_searches": 4,
+    "direction_cards": 5,
+    "prefilter_keep": 2,
+    "prefilter_reject": 3,
+    "generation_calls": 2,
+    "setup_reproductions": 1,
+    "direction_drafts": 2,
+    "total_credits": 46,
+    "selected_drafts": [
+      {
+        "id": "SD-DIR-B01",
+        "name": "Signal Orbit",
+        "draft_id": "81ee679a-b18b-45e2-a008-8a1e60e322e7"
+      },
+      {
+        "id": "SD-DIR-B02",
+        "name": "Exhibition Grid",
+        "draft_id": "be68bb43-6954-4064-9362-0777b158f391"
+      }
+    ],
+    "director_A_inspected": false,
+    "cross_review_started": false,
+    "production_changes": 0
+  }
 }

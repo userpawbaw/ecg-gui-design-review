@@ -242,3 +242,26 @@ D-009/R-008과 handoff를 대조해 NATIVE_DIRECTOR와 CONCRETIZER를 구분했�
 
 ### 재사용 규칙
 기록의 존재를 확인하는 검사와 기록 의무의 누락을 확인하는 검사를 구분한다. 원문·전달 발췌·재구성을 구별하고, 사용자가 다시 읽어 반론과 판단 변화의 순서를 복원할 수 있는지 별도로 검토한다.
+
+---
+
+## R-012. 멀티 디렉터는 **반대 스타일**보다 서로 다른 provenance 경로로 차별화하는 편이 낫다
+
+| | |
+|---|---|
+| 대상 | Director A source ecosystem 확장과 Dual Director 역할 해석 |
+| 처리 | A의 creative 범위 유지 + source router 확장 |
+| 연결 | F-008, D-013, R-009 |
+| CASE | CASE-002 |
+
+### AI/도구가 내놓은 것
+B가 Superdesign-native direction과 draft를 생성한 뒤, A에 UX/product reference를 더 넣으면 두 Director의 다양성을 높일 수 있다는 해석이 가능했다. 기존 A source 문서에는 Awwwards/Godly, Land-book, Mobbin, scientific examples 등이 있었지만 source-selection budget과 provenance nature가 명시적으로 구조화되지는 않았다. `[코드]` `[추론]`
+
+### 사람이 문제 삼은 것
+사용자는 **"디렉터 B의 결과와 반대로 만들겠다고 일부러 UX에만 집중하게끔 하고 싶지는 않다"**고 지적하고, Land-book/Minimal Gallery와 component source를 추가한 이유는 **"혹시 awwwards에만 집중하고 있다면 그걸 방지"**하기 위한 것이라고 설명했다. `[대화]`
+
+### 검증 방법과 결과
+A/B 계약을 다시 보면 A의 차별점은 explicit URL/viewing instruction/principle/translation이고 B의 차별점은 Superdesign-native search/synthesis/draft다. 결과 미감을 반대로 강제할 필요가 없다. 그래서 `17_REFERENCE_SOURCE_REGISTRY.md`를 추가하고 A가 과업에 맞는 source family 2~4개만 선택하도록 했다. `[코드]` `[추론]`
+
+### 재사용 규칙
+**병렬 AI 역할을 설계할 때 서로 반대 결과를 내게 하는 것으로 diversity를 만들지 않는다.** 입력 source, provenance, search/generation mechanism을 다르게 두고 출력 공간은 겹치게 허용한다. 그래야 두 경로가 같은 결론에 도달하는 것도 의미 있는 독립 수렴 증거가 된다.

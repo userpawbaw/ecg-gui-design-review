@@ -247,3 +247,38 @@ B는 4~6 cards 뒤 1~2 drafts만 생성하도록 설계했다. 실제 비용과 
 
 ### 일반화
 도구 목록보다 pipeline의 위치·입력·출력·승인권을 점검한다.
+
+---
+
+## F-008. Director A의 차별점은 특정 미감이 아니라 **명시적 provenance**였다
+
+| | |
+|---|---|
+| 상태 | 확정 — 다음 creative round부터 적용 |
+| 발견 | 2026-09-20 Director A source 확장 논의 `[대화]` |
+| 영향 | Awwwards 중심 source list를 task-routed Reference Source Registry로 확장 |
+| 연결 | F-004, D-013, R-012, CASE-002 |
+
+### 발단 — 무엇이 이상해 보였나
+Dual Director 첫 실험에서 A의 reference-grounded 결과가 유용했지만, A와 B를 차별화한다는 이유로 A를 "UX 쪽", B를 "creative visual 쪽"처럼 스타일 역할로 나누는 해석이 생길 수 있었다. 사용자는 **A의 기존 creative 방향 자체가 마음에 들었고, B와 반대로 만들기 위해 UX-only로 제한하고 싶지 않다**고 명시했다. `[대화]`
+
+### 먼저 의심한 것과 배제 방법
+처음에는 A의 source pool을 product UX 쪽으로 넓히면 B와 다양성이 커질 수 있다고 생각할 수 있었다. 그러나 이는 A/B 차이를 결과 스타일로 정의한다. 실제 시스템의 차이는 A가 외부 reference의 URL·보는 장면·차용 원리를 명시한다는 점과, B가 Superdesign-native synthesis를 사용한다는 **provenance/process 차이**다. `[추론]`
+
+### 결정적 근거
+사용자는 Land-book/Minimal Gallery 같은 visual source와 Refero/Mobbin 같은 component/product source를 모두 A에 추가하려는 이유가 **Awwwards 하나에 과도하게 집중하는 것을 막고 reference vocabulary를 넓히기 위해서**라고 재정의했다. `[대화]`
+
+### 조치와 검토한 대안
+- A를 UX-only director로 변경 — 기각
+- 사이트 목록만 길게 추가 — 기각
+- source를 Creative / Curated Web / Concept / Product-Component / UX Evidence / Scientific / Data Story family로 분류하고 과업별 2~4 family만 선택 — 채택
+- full-site뿐 아니라 section/component/flow reference도 Reference Card로 허용
+
+### 비용 / 영향 범위
+reference router와 provenance tag를 읽는 비용이 조금 늘어난다. 대신 한 gallery에 anchoring되는 위험과 concept/shipped-product 근거 혼동을 줄인다.
+
+### 놓쳤다면
+Dual Director의 차이를 "화려함 vs UX" 같은 결과 스타일로 잘못 고정해 A의 강점인 폭넓은 creative exploration을 스스로 제한했을 수 있다.
+
+### 일반화
+멀티 디렉터의 다양성은 서로 반대 스타일을 강제해서 만드는 것이 아니라 **서로 다른 정보원·provenance·생성 절차를 유지하면서 각자 넓게 탐색하게 하는 것**이 더 안정적이다.

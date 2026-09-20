@@ -37,7 +37,7 @@
 | Task | 먼저 읽을 문서 | Skill/Plugin 후보 |
 |---|---|---|
 | 기존 방향 안의 가벼운 창의 개선 / non-significant polish | 01 Creative, 04 Validation | expo-ui-art-director, Creative Production, Product Design; **새 significant direction이면 아래 16 Dual 행으로 승격** |
-| **새 creative direction / 디자인적 놀라움 / Awwwards·reference 기반 발상** | 01 Creative, **16 Dual**, 13(A 전용), 04 Validation | **16 Dual routing → 독립 A(reference-mining/art-director) + B(Native) → cross-review → validator**, Creative Production, 필요 시 웹/Mobbin |
+| **새 creative direction / 디자인적 놀라움 / reference 기반 발상** | 01 Creative, **16 Dual**, 13(A 전용), **17 Source Registry**, 04 Validation | **16 Dual routing → 독립 A(reference-mining/art-director) + B(Native) → cross-review → validator**, A는 registry에서 과업별 source family를 선택 |
 | **같은 baseline에서 2~4개의 실제 UI 시안을 비교** | 01 Creative, **14 Superdesign**, 04 Validation | **superdesign-routing → external Superdesign → user alignment → validator** |
 | Attract/Intro | 01 Creative, 03 Motion, docs/13, 필요 시 14 | HIGH 신규는 16 Dual; A/B 독립, 이후 Product Design/Figma 필요 시 |
 | Replay↔Live transition | 03 Motion, 04 Validation | HIGH 신규는 16 Dual, 이후 motion-review/Context7/Playwright |
@@ -48,7 +48,7 @@
 | 구현/코드 변경 | docs/21 + change contract | GitHub, Codex/Claude/Work 필요 시 |
 | 실제 브라우저 검증 | 04 Validation | existing Playwright, TinyFish/Work |
 | 배포 preview | 06 Handoff | Vercel 필요 시 |
-| 상용 레퍼런스 | 01 Creative, 13 Reference Mining | Mobbin 또는 웹 연구; direct URL + viewing instruction 필수 |
+| 외부 레퍼런스 / UI 컴포넌트 inspiration | 01 Creative, 13 Reference Mining, **17 Source Registry** | task router로 Creative/Curated/Product/Scientific/Data Story source를 선택; direct URL + viewing instruction + provenance 필수 |
 
 ## 3. Reference Mining 자동 라우팅
 
@@ -76,7 +76,7 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 2. 작업 분류
 3. 관련 문서 1~3개
 4. 필요한 Skill/Plugin만 선택
-5. significant CREATIVE 작업이면 `16_DUAL_CREATIVE_DIRECTOR.md`의 HIGH/MEDIUM/LOW 및 explicit routing을 먼저 확인하고 A 경로에만 §3 trigger를 적용하며 필요한 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 추가
+5. significant CREATIVE 작업이면 `16_DUAL_CREATIVE_DIRECTOR.md`의 HIGH/MEDIUM/LOW 및 explicit routing을 먼저 확인하고 A 경로에만 §3 trigger를 적용하며 필요한 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md`를 추가
 6. 상위 2~4개 방향을 **실제 화면으로 비교해야 판단이 쉬워지는 경우** `14_SUPERDESIGN_GENERATION_LAYER.md`와 `superdesign-routing`을 추가한다. 이는 CONCRETIZER 경로다. Native는 16번의 별도 예산을 따른다. 두 모드 모두 validation/implementation을 자동 승인하지 않는다
 
 모든 skill/reference/plugin을 한 번에 로드하지 않는다.

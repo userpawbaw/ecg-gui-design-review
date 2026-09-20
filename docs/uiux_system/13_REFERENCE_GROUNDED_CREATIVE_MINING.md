@@ -95,19 +95,23 @@ Reference mining은 `DIVERGE`를 대신하지 않는다. **reference를 groundin
 
 ## 6. Step 2 — Reference Source 역할
 
-한 플랫폼에만 의존하지 않는다.
+**`17_REFERENCE_SOURCE_REGISTRY.md`를 Director A의 source-of-truth registry로 사용한다.**
 
-| Source | 주로 찾을 것 |
-|---|---|
-| Awwwards / Godly | wow moment, experimental interaction, cinematic motion, WebGL/3D presence |
-| SiteInspire / Land-book | typography, editorial composition, unusual layout, visual language |
-| Lapa Ninja / 실제 사이트 | full-flow, section transition, motion timing, interaction continuity |
-| CSS Design Awards | UI / UX / Innovation을 분리해서 보는 비판적 관점 |
-| Mobbin | production product flow, familiar interaction, usability reality check |
-| 21st.dev 또는 유사 component source | 실제 구현 가능한 creative component/pattern 후보 |
-| NASA Eyes·과학/박물관형 인터랙티브 사례 | scientific exploration, scale change, data-space metaphor |
+한 플랫폼이나 한 미감에만 의존하지 않는다. Awwwards/Godly는 중요한 creative source지만 Director A 자체를 Awwwards-style director로 정의하지 않는다.
 
-플랫폼 이름 자체가 품질 보증은 아니다. 필요한 경험 원리에 맞는 실제 사례를 선택한다.
+작업마다:
+1. Creative Intent를 기준으로 registry에서 2~4 source family를 고른다.
+2. 실제 reference는 보통 3~8개만 찾는다.
+3. 가능하면 한 domain이 reference set의 50%를 넘지 않게 한다.
+4. full-site뿐 아니라 section/component/flow reference도 허용한다.
+5. 각 reference에 `Reference Nature`, `Source Family`, `Granularity`, `Evidence Level`을 남긴다.
+
+예:
+- Attract → Creative/Experimental + Curated Web + Scientific/Exhibition
+- Method Explorer → Product/Component + Curated Web + Scientific
+- Evidence → Data Storytelling + Curated Web + Product/Component
+
+플랫폼 이름 자체가 품질 보증은 아니다. 필요한 경험 원리에 맞는 실제 사례를 선택하고, concept gallery를 shipped-product UX evidence로 취급하지 않는다.
 
 ## 7. Step 3 — Reference Card
 
@@ -117,7 +121,11 @@ Reference mining은 `DIVERGE`를 대신하지 않는다. **reference를 groundin
 REF-###
 Source:
 Site / direct URL:
-Target scene:
+Reference Nature:
+Source Family:
+Granularity: full-site / scene / section / component / flow
+Evidence Level:
+Target scene/component:
 Viewing instruction:
 Unforgettable moment:
 Mechanism:
@@ -262,7 +270,7 @@ Reference가 실제 데이터처럼 보이게 하는 장식, waveform을 왜곡�
 
 기본 순서:
 
-- reference discovery: 웹 조사 + 필요 시 Mobbin
+- reference discovery: 웹 조사 + `17_REFERENCE_SOURCE_REGISTRY.md`의 task-based source routing
 - concept/mood expansion: Creative Production
 - concrete visual/component inspiration: 21st.dev류 source가 연결되어 있으면 사용
 - **concrete multi-variant screen drafts: Superdesign (shell 환경, 14번 문서 기준)**

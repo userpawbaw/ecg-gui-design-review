@@ -1,7 +1,7 @@
 # CASE-002 — Reference-Grounded Creative Mining
 
 작성 기준: 2026-09-18  
-관련 운영 기록: `F-004`, `F-005`, `D-007`, `D-008`, `R-006`, `R-007`  
+관련 운영 기록: `F-004`, `F-005`, `F-008`, `D-007`, `D-008`, `D-013`, `R-006`, `R-007`, `R-012`  
 대화 발췌 부록: `CASE-002_TRANSCRIPT_EXCERPTS.md`
 
 > **왜 남기나.** 이 CASE는 Reference Mining이라는 기능 명세만 남기기 위한 문서가 아니다. 사용자가 text-only creative proposal의 한계를 어떻게 지적했고, 그 반론이 reference의 역할과 기록 시스템 자체를 어떻게 바꿨는지 나중에 다시 읽을 수 있게 보존한다.
@@ -214,3 +214,17 @@ KEEP / TUNE / REJECT
 - 프로젝트의 waveform/data contract보다 reference가 우선하지 않는다.
 - transcript-excerpt는 현재 Chat에서 확인한 핵심 발췌이지 전체 machine-export transcript가 아니다. 따라서 "전체 대화 보존"으로 과장하지 않는다.
 - checker는 구조와 evidence marker를 확인할 뿐, 실제 서사가 충분히 좋은지는 사람이 최종 확인해야 한다.
+
+## 2026-09-20 후속 — Awwwards 중심 source list에서 Reference Source Registry로
+
+첫 Dual Attract 실험에서 Director A는 실제 reference를 명시하는 방식으로 6개 방향을 만들었고, 사용자는 이 A의 creative direction 자체가 마음에 들었다고 평가했다. 이후 Land-book, Minimal Gallery, Refero, Mobbin, Behance/Dribbble, NN/g 등 추가 source를 제시하면서도 **B와 반대로 만들기 위해 A를 UX-only로 좁히려는 의도가 아님**을 분명히 했다. `[대화]`
+
+> "디렉터 B의 결과와 반대로 만들겠다고 일부러 UX에만 집중하게끔 하고 싶지는 않네."
+
+> "혹시 awwwards에만 집중하고 있다면 그걸 방지하기 위해 위의 사이트를 제시했던 거였어."
+
+이 발화로 Director A의 정체성을 다시 확인했다. A는 Awwwards 미감 전담도, UX 전담도 아니다. **외부 reference의 provenance를 사용자가 직접 확인할 수 있는 creative director**다. B와의 차이는 결과 스타일이 아니라 information diet와 provenance/generation process다. `[추론]`
+
+이에 `17_REFERENCE_SOURCE_REGISTRY.md`를 추가했다. Creative/Experimental, Curated Web/Art Direction, Visual Concept/Case Study, Product/Component/Flow, UX Evidence, Scientific/Exploratory, Data Storytelling으로 source를 나누고, task마다 2~4 family와 3~8 references만 선택한다. full-site뿐 아니라 section/component/flow도 Reference Card로 사용할 수 있으며 `Reference Nature`와 granularity/evidence를 기록한다. `[커밋]`
+
+이 확장은 기존 Reference Mining 원리를 교체하지 않는다. 오히려 `URL → Viewing instruction → Principle → ECG Translation` 계약을 더 다양한 source scale에 적용한다. 현재 `DUAL-ATTRACT-001`의 frozen A/B 결과에는 소급 적용하지 않고 다음 creative round부터 사용한다.

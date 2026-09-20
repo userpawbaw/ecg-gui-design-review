@@ -1,0 +1,65 @@
+{
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "result": "PASS",
+  "baseline": {
+    "waveform": "d1-mixed-10:250:2500:M08:9bd838ca",
+    "scene": "d1-mixed-10",
+    "method": "M08",
+    "fs": "250",
+    "samples": "2500",
+    "span": "10",
+    "amplitude": "2",
+    "reference": "0.55"
+  },
+  "variants": {
+    "baseline": {
+      "waveform": "d1-mixed-10:250:2500:M08:9bd838ca",
+      "scene": "d1-mixed-10",
+      "method": "M08",
+      "fs": "250",
+      "samples": "2500",
+      "span": "10",
+      "amplitude": "2",
+      "reference": "0.55"
+    },
+    "question": {
+      "waveform": "d1-mixed-10:250:2500:M08:9bd838ca",
+      "scene": "d1-mixed-10",
+      "method": "M08",
+      "fs": "250",
+      "samples": "2500",
+      "span": "10",
+      "amplitude": "2",
+      "reference": "0.55"
+    },
+    "orbit": {
+      "waveform": "d1-mixed-10:250:2500:M08:9bd838ca",
+      "scene": "d1-mixed-10",
+      "method": "M08",
+      "fs": "250",
+      "samples": "2500",
+      "span": "10",
+      "amplitude": "2",
+      "reference": "0.55"
+    },
+    "exhibition": {
+      "waveform": "d1-mixed-10:250:2500:M08:9bd838ca",
+      "scene": "d1-mixed-10",
+      "method": "M08",
+      "fs": "250",
+      "samples": "2500",
+      "span": "10",
+      "amplitude": "2",
+      "reference": "0.55"
+    }
+  },
+  "reducedMotion": {
+    "question": "PASS",
+    "orbit": "PASS",
+    "exhibition": "PASS"
+  },
+  "consoleErrors": []
+}

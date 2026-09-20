@@ -1,4 +1,93 @@
 import {test,expect} from '@playwright/test';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const variantEvidence=path.resolve(process.cwd(),'../../verification/attract-vnext-variants-20260920');
+const variantNames=['question','orbit','exhibition'] as const;
+
+test('Attract variants preserve one waveform/data contract and render 1920x1080 without console errors',async({page})=>{
+ fs.mkdirSync(variantEvidence,{recursive:true});
+ const errors:string[]=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
+ let baseline:Record<string,string|null>|null=null;
+ const contracts:Record<string,Record<string,string|null>>={};
+ for(const variant of ['baseline',...variantNames] as const){
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.goto(`/?attractVariant=${variant}`);
+  await expect(page.getByRole('button',{name:'Attract 시작'})).toBeEnabled();
+  const started=Date.now();
+  await page.getByRole('button',{name:'Attract 시작'}).click();
+  const dialog=page.getByRole('dialog');
+  const viewer=dialog.locator('.viewer');
+  const canvas=dialog.locator('canvas');
+  await expect(viewer).toHaveAttribute('data-attract-variant',variant);
+  await expect(viewer).toHaveAttribute('data-reduced-motion','false');
+  await expect(canvas).toBeVisible();
+  if(variant==='orbit')expect(Date.now()-started).toBeLessThan(1000);
+  const contract=await canvas.evaluate(element=>({
+   waveform:element.getAttribute('data-waveform-signature'),
+   scene:element.getAttribute('data-scene'),
+   method:element.getAttribute('data-waveform-method'),
+   fs:element.getAttribute('data-fs'),
+   samples:element.getAttribute('data-samples'),
+   span:element.getAttribute('data-span'),
+   amplitude:element.getAttribute('data-amplitude'),
+   reference:element.getAttribute('data-reference')
+  }));
+  contracts[variant]=contract;
+  if(variant==='baseline')baseline=contract;
+  else{
+   expect(contract).toEqual(baseline);
+   await expect.poll(async()=>Number(await canvas.getAttribute('data-time'))).toBeGreaterThan(1.2);
+   await page.screenshot({path:path.join(variantEvidence,`${variant}-1920x1080.png`)});
+   await page.emulateMedia({reducedMotion:'reduce'});
+   await expect(viewer).toHaveAttribute('data-reduced-motion','true');
+   await page.screenshot({path:path.join(variantEvidence,`${variant}-reduced-motion-1920x1080.png`)});
+  }
+  const cta=dialog.locator('[data-attract-cta]');
+  await expect(cta).toBeVisible();
+  await cta.click();
+  await expect(viewer).toHaveAttribute('data-attract','false');
+  await expect(dialog.locator('.transport')).toBeVisible();
+  await page.keyboard.press('Escape');
+ }
+ expect(errors).toEqual([]);
+ fs.writeFileSync(path.join(variantEvidence,'data-state-equality.json'),JSON.stringify({viewport:{width:1920,height:1080},result:'PASS',baseline,variants:contracts,reducedMotion:variantNames.reduce((result,variant)=>({...result,[variant]:'PASS'}),{}),consoleErrors:errors},null,2));
+});
+
+test('V3 CTA hands off the same scene, method, time and loop without replay restart',async({page})=>{
+ await page.goto('/?attractVariant=exhibition');
+ await expect(page.getByRole('button',{name:'Attract 시작'})).toBeEnabled();
+ await page.locator('[data-method="M04"]').click();
+ await page.getByRole('button',{name:'Attract 시작'}).click();
+ const dialog=page.getByRole('dialog');
+ const viewer=dialog.locator('.viewer');
+ const canvas=dialog.locator('canvas');
+ await expect(canvas).toHaveAttribute('data-waveform-method','M04');
+ await expect.poll(async()=>Number(await canvas.getAttribute('data-time'))).toBeGreaterThan(0.4);
+ const before=Number(await canvas.getAttribute('data-time'));
+ const stateBefore=await viewer.evaluate(element=>({
+  scene:element.getAttribute('data-scene'),
+  method:element.getAttribute('data-selected-method'),
+  loopStart:element.getAttribute('data-loop-start'),
+  loopEnd:element.getAttribute('data-loop-end')
+ }));
+ await dialog.getByRole('button',{name:'이 장면에서 직접 비교',exact:true}).click();
+ await expect(viewer).toHaveAttribute('data-attract','false');
+ const after=Number(await canvas.getAttribute('data-time'));
+ const stateAfter=await viewer.evaluate(element=>({
+  scene:element.getAttribute('data-scene'),
+  method:element.getAttribute('data-selected-method'),
+  loopStart:element.getAttribute('data-loop-start'),
+  loopEnd:element.getAttribute('data-loop-end')
+ }));
+ expect(stateAfter).toEqual(stateBefore);
+ expect(after).toBeGreaterThanOrEqual(before);
+ expect(after-before).toBeLessThan(0.6);
+ await expect.poll(async()=>Number(await canvas.getAttribute('data-time'))).toBeGreaterThan(after);
+ fs.writeFileSync(path.join(variantEvidence,'v3-handoff.json'),JSON.stringify({result:'PASS',before:{...stateBefore,time:before},after:{...stateAfter,time:after},timeDeltaSeconds:after-before,playingAdvancedAfterHandoff:true,seekOrReplayRestart:false},null,2));
+});
 test('large viewer, real sweep/scroll, hover, freeze, keyboard and download',async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
  const largeAction=page.getByRole('button',{name:'크게 비교'});await expect(largeAction).toHaveCSS('background-color','rgb(6, 125, 114)');await expect(largeAction).toHaveCSS('color','rgb(255, 255, 255)');

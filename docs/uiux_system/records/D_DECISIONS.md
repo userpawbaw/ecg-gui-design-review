@@ -389,3 +389,43 @@ Director A의 reference source를 Awwwards/Godly 중심으로 유지할지, B와
 
 ### 되돌려야 하는 조건
 다음 creative round에서 source router 때문에 검색 비용만 늘고 reference 다양성·설명력·아이디어 품질이 개선되지 않거나, source family 규칙이 오히려 발산을 제한하면 family 수와 budget을 줄인다.
+
+---
+
+## D-014. Attract vNext에서 S1/S2/H1을 모두 **별도 prototype variant**로 구현해 비교한다
+
+| | |
+|---|---|
+| 시점 | 2026-09-20 A/B cross-review 후 사용자 승인 `[대화]` |
+| 상태 | 구현 승인 — production winner 미선정 |
+| 연결 | D-010, D-013 |
+| CASE | 불필요 — 기존 Dual Director 방법론을 바꾸는 결정이 아니라 DUAL-ATTRACT-001의 구체적 UI prototype 범위 승인 |
+
+### 갈림길 — 무엇을 정해야 했나
+Cross-review에서 남은 S1(A04 Question Poster), S2(B01 Signal Orbit tuned), H1(B02 Exhibition Grid × A05 Same-scene Handoff) 중 하나를 먼저 고를지, 일부만 구현할지, 아니면 **세 방향을 같은 v2.2.1 baseline에서 모두 별도 variant로 구현해 실제 화면으로 비교할지** 정해야 했다.
+
+### 검토한 선택지
+1. 문서 판단만으로 하나를 winner로 선정
+2. S1/S2만 구현하고 H1은 보류
+3. S1/S2/H1 세 방향을 각각 non-destructive variant로 구현하고 같은 데이터·viewport·상태에서 비교
+
+### 고른 것과 근거
+3번. 사용자가 "다 적용해보자"라고 승인했다. 이 표현은 세 방향을 한 화면에 모두 섞는 뜻이 아니라, **서로 다른 가설을 유지한 세 prototype variant를 모두 만들어 비교**하는 것으로 해석한다. `[대화]` `[추론]`
+
+- S1은 low-cost editorial hierarchy 가설
+- S2는 dark cinematic stage 가설
+- H1은 exhibition shell + same-scene handoff 가설
+
+세 가설을 실제 integrated prototype으로 본 뒤 최종안을 고르는 것이 결과를 미리 정하는 것보다 실험 목적에 맞다.
+
+### 버린 것과 이유
+1번은 A 후보가 아직 L0이고 B draft도 integrated v2.2.1 runtime이 아니어서 근거가 부족하다. 2번은 A05와 B02의 상보성을 실제로 검증할 기회를 잃는다. 세 방향의 장점을 한 variant에 즉시 합치는 방식은 각 가설의 효과를 분리해 볼 수 없어 버렸다.
+
+### 공통 적용
+- A01의 same-axis/aligned-comparison discipline은 hard guardrail로 세 variant 모두 유지한다.
+- A06의 Reference semantic emphasis는 세 variant 모두에서 강도만 조절해 시험한다.
+- A02/A03/B03/B04/B05는 이번 Attract implementation scope에서 제외하되 기록은 유지한다.
+
+### 되돌려야 하는 조건
+구현 과정에서 세 variant를 동시에 유지하는 구조가 과도한 중복/회귀 위험을 만들면 shared component + variant configuration으로 축소한다. 어떤 candidate가 data integrity hard gate를 깨면 사용자 취향 검토 전이라도 해당 variant를 중단한다.
+

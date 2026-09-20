@@ -183,3 +183,11 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 원격 PR/CI 확인 후 보고. 실제 시안 생성·UI 수정·main merge는 수행하지 않는다.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-09-21 — Attract vNext three-variant implementation
+
+- Branch `feat/attract-vnext-variants-20260920`; source selection and change contract are frozen under `docs/uiux_system/experiments/DUAL-ATTRACT-001/`.
+- COMPLETE locally: V1 Question Poster, V2 Signal Orbit tuned, and V3 Exhibition Grid × Same-scene Handoff share one runtime and switch through `attractVariant=question|orbit|exhibition`; unknown/missing values use `baseline`.
+- PASS: TypeScript/Vite build, 15 targeted unit tests, Playwright 5 PASS / 1 intentional ten-minute soak SKIP, 1920×1080 and reduced-motion captures, data/state equality, V3 loop/time/method handoff, root tests, records check and in-app browser V3 review.
+- Remaining external gate: target Windows exhibition PC, 600-second replay/ten-minute soak, physical touch, OS scaling/Hangul fallback, viewing distance and long-run frame pacing.
+- Next: publish the committed branch to PR #14, verify remote head/CI, and stop without merge or winner selection.

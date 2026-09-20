@@ -1,10 +1,12 @@
-import {useEffect,useRef} from 'react';
+import {useEffect,useMemo,useRef} from 'react';
 import {Transport,visiblePoints,type Mode} from './engine';
 import {amplitudeTicks} from './plot-scale';
 import type {Loaded} from './data';
+import {waveformSignature} from './attract-variants';
 type Props={data:Loaded;transport:Transport;mode:Mode;span:number;inspect:boolean;amplitude:number;reference:number;method:string;preview:string|null;comparison:string|null;large?:boolean;soft:boolean;residual?:boolean;gain?:number};
 export function Plot(p:Props){
  const canvas=useRef<HTMLCanvasElement>(null),latest=useRef(p);latest.current=p;
+ const signature=useMemo(()=>waveformSignature(p.data,p.method),[p.data,p.method]);
  useEffect(()=>{const c=canvas.current!;const g=c.getContext('2d');if(!g)return;let raf=0,signature='';
  const draw=()=>{const q=latest.current,t=q.transport.time;const rect=c.getBoundingClientRect(),dpr=devicePixelRatio||1;
  const sig=[t,q.mode,q.span,q.inspect,q.amplitude,q.reference,q.method,q.preview,q.comparison,q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,rect.width,rect.height,dpr].join('|');
@@ -30,5 +32,5 @@ export function Plot(p:Props){
  });c.dataset.time=t.toFixed(3);c.dataset.mode=q.inspect?'inspect':q.mode;c.dataset.difference=String(!!q.residual);
  }if(q.transport.playing)raf=requestAnimationFrame(draw);};draw();const resize=new ResizeObserver(()=>{cancelAnimationFrame(raf);signature='';draw();});resize.observe(c);return()=>{cancelAnimationFrame(raf);resize.disconnect();};
  },[p.data,p.transport.playing,p.mode,p.span,p.inspect,p.amplitude,p.reference,p.method,p.preview,p.comparison,p.large,p.soft,p.residual,p.gain]);
- return <canvas ref={canvas} className={'ecg-canvas '+(p.large?'large':'')+(p.comparison?' three':'')+(p.residual?' difference':'')} role="img" aria-label={`동일 시간·진폭의 입력 및 ${p.method} 출력과 회색 Reference${p.preview?' · 점선 '+p.preview:''}${p.residual?' · Output − Reference 차이':''}`}/>;
+ return <canvas ref={canvas} className={'ecg-canvas '+(p.large?'large':'')+(p.comparison?' three':'')+(p.residual?' difference':'')} role="img" aria-label={`동일 시간·진폭의 입력 및 ${p.method} 출력과 회색 Reference${p.preview?' · 점선 '+p.preview:''}${p.residual?' · Output − Reference 차이':''}`} data-waveform-signature={signature} data-scene={p.data.scene.id} data-waveform-method={p.method} data-fs={p.data.fs} data-samples={p.data.n} data-span={p.span} data-amplitude={p.amplitude} data-reference={p.reference}/>;
 }

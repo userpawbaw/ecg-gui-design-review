@@ -1,0 +1,20 @@
+{
+  "result": "PASS",
+  "before": {
+    "scene": "d1-mixed-10",
+    "method": "M04",
+    "loopStart": "0",
+    "loopEnd": "10",
+    "time": 0.417
+  },
+  "after": {
+    "scene": "d1-mixed-10",
+    "method": "M04",
+    "loopStart": "0",
+    "loopEnd": "10",
+    "time": 0.567
+  },
+  "timeDeltaSeconds": 0.14999999999999997,
+  "playingAdvancedAfterHandoff": true,
+  "seekOrReplayRestart": false
+}

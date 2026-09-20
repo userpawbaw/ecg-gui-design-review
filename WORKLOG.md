@@ -343,3 +343,13 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Publish stacked PR and check head CI; no merge, no actual generation or UI modification.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-09-21 — DUAL-ATTRACT-001 implementation
+
+- Implemented three independent Attract shells over the unchanged v2.2.1 `Loaded` data, `Transport` and Canvas `Plot`: V1 Question Poster, V2 Signal Orbit tuned, V3 Exhibition Grid × Same-scene Handoff. Query selection is `?attractVariant=question|orbit|exhibition`; baseline remains the rollback default.
+- Wrote V3 transport tests before implementation. The explicit CTA bypasses the old ancestor capture exit; V3 retains scene, method and loop range without seek/restart while baseline/V1/V2 preserve the existing loop-clear behavior.
+- Added deterministic waveform fingerprints and browser contract attributes only for verification. Baseline and all variants matched fingerprint `d1-mixed-10:250:2500:M08:9bd838ca`, scene/method/fs/sample count/span/amplitude/Reference.
+- Initial visual QA found P2 Korean title fragmentation in V2/V3. Shorter two-line titles plus word-preserving wrapping fixed it; final side-by-side QA has no actionable P0/P1/P2 issue.
+- PASS: build; 15 targeted unit tests; Playwright 5 pass, 1 ten-minute soak skip; zero console errors; all 1920×1080 standard/reduced-motion captures; existing Lab/Evidence/legacy browser regressions; root npm test; records check; in-app browser V3 entry and handoff.
+- Fixed `prepare-v2.cjs` CRLF assignment parsing and prevented it from overwriting the reviewed `methods.json` during archive preparation. No data or release asset was regenerated.
+- Evidence and limitations: `docs/uiux_system/experiments/DUAL-ATTRACT-001/IMPLEMENTATION_RESULT.md`, `design-qa.md`, and `verification/attract-vnext-variants-20260920/`. Target PC and 600-second/ten-minute soak remain not verified. No winner, merge or production release.

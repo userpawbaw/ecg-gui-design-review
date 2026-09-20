@@ -190,5 +190,18 @@
     "pr": "https://github.com/userpawbaw/ecg-gui-design-review/pull/10",
     "verified_implementation_commit": "f1da0d32113d6e7b166dc48e9e550f8701045f0a",
     "ci": "https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35423470904"
+  },
+  "uiux_attract_vnext_variants_stage": {
+    "date": "2026-09-21",
+    "status": "implemented_local_verification_pass_publication_pending",
+    "branch": "feat/attract-vnext-variants-20260920",
+    "base": "dafe411332361fa6388788b2a64303152b417a1b",
+    "report": "docs/uiux_system/experiments/DUAL-ATTRACT-001/IMPLEMENTATION_RESULT.md",
+    "variants": ["question", "orbit", "exhibition"],
+    "verification": "build PASS; 15 targeted unit tests PASS; Playwright 5 PASS / 1 ten-minute soak SKIP; 1920x1080 standard and reduced-motion captures; waveform/data/state equality PASS; V3 same-scene/time/method/loop handoff PASS; root npm test and records check PASS; in-app browser V3 PASS",
+    "remaining": "Target Windows exhibition PC, 600-second replay and actual ten-minute soak, physical touch, OS scaling/Hangul fallback, viewing distance and long-run frame pacing are not verified.",
+    "winner": "not_selected",
+    "merge": "not_performed",
+    "pr": "https://github.com/userpawbaw/ecg-gui-design-review/pull/14"
   }
 }

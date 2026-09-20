@@ -42,9 +42,26 @@
     "fork_turns": "none",
     "cross_review_started": false
   },
-  "status": "PARTIAL_A_FROZEN_B_BLOCKED",
+  "authorization_resume": {
+    "at": "2026-09-20T00:39:34Z",
+    "authorization": "User explicitly allowed the previously unknown PostHog telemetry transmission",
+    "agent": "/root/director_b_authorized",
+    "fork_turns": "none",
+    "input": "Same isolated baseline and B-only packet; A outputs not delivered",
+    "baseline_hashes_verified": 14,
+    "superdesign_init_files": 6,
+    "cli_version": "0.14.0",
+    "preflight_auth": "not authenticated",
+    "login": "exit 3: timeout of 30000ms exceeded; no URL or device code",
+    "prompt_searches": 0,
+    "model_listings": 0,
+    "projects_created": 0,
+    "generation_calls": 0,
+    "cross_review_started": false
+  },
+  "status": "PARTIAL_A_FROZEN_B_BLOCKED_AFTER_AUTHORIZATION",
   "A_status": "FROZEN",
-  "B_status": "B_BLOCKED",
+  "B_status": "B_BLOCKED_AUTH_TIMEOUT",
   "cross_review": "NOT_RUN",
   "independence": "Separate clean contexts and identical baseline verified; filesystem access restriction is instruction-based; no cross-output sharing reported",
   "finished_at": "2026-09-19T11:27:42.974100+00:00"

@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "round": "DUAL-ATTRACT-001",
+  "director": "B",
+  "mode": "NATIVE_DIRECTOR",
+  "frozenAt": "2026-09-20T00:39:34Z",
+  "status": "B_BLOCKED",
+  "authorization": {
+    "source": "AUTHORIZATION.md",
+    "posthogTelemetryAuthorized": true,
+    "exactPayloadKnown": false,
+    "doNotTrackSet": false
+  },
+  "cli": {
+    "runner": "npx --yes @superdesign/cli@latest",
+    "version": "0.14.0",
+    "preflight": {
+      "command": "npx --yes @superdesign/cli@latest",
+      "exitCode": 0,
+      "authStatus": "not authenticated",
+      "sanitizedCombinedOutput": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nbin: ~/.npm/_npx/1fcb7780cda5ca66/node_modules/.bin/superdesign\nsuperdesign v0.14.0 — AI product designer for coding agents: find style inspiration and generate/iterate design drafts on an infinite canvas.\n\nauth: not authenticated — run `superdesign login` to connect; cached in /root/.superdesign/config.json\n\nnote: append --json to any command for the full machine-readable payload.\n\nhelp[6]:\n  Run `superdesign list-design-systems` to inspect existing design systems & projects\n  Run `superdesign search-prompts --query \"<style or component>\"` to find style / inspiration references\n  Run `superdesign create-project --title \"<title>\"` to start a new design project\n  Run `superdesign iterate-design-draft --draft-id <id> -p \"<direction>\" --mode <replace|branch>` to refine the selected draft (replace) or explore alternatives (branch)\n  Run `superdesign generate-image --project-id <id> --prompt \"<what>\"` to quote an image/video generation (free; confirm-generation spends credits after user approval)\n  Run `superdesign <command> --help` for full options on any command\nSuperDesign collects anonymous CLI usage; set DO_NOT_TRACK=1 to disable"
+    },
+    "login": {
+      "command": "npx --yes @superdesign/cli@latest login",
+      "exitCode": 3,
+      "tty": true,
+      "authorizationUrl": null,
+      "deviceCode": null,
+      "sanitizedCombinedOutput": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[Superdesign ASCII banner omitted as non-semantic]\nAI designer for coding agents\n\n- Creating auth session...\n✖ Login failed\n✗ timeout of 30000ms exceeded"
+    }
+  },
+  "counts": {
+    "preflightCalls": 1,
+    "loginCalls": 1,
+    "promptSearches": 0,
+    "promptBodiesFetched": 0,
+    "modelListings": 0,
+    "projectsCreated": 0,
+    "directionCards": 0,
+    "prefilterDecisions": 0,
+    "generationCalls": 0,
+    "baselineReproductions": 0,
+    "branchIterations": 0
+  },
+  "remoteArtifacts": {
+    "projectId": null,
+    "canvasUrl": null,
+    "chosenModel": null,
+    "chosenPromptSlug": null,
+    "baselineDraftId": null,
+    "baselinePreviewUrl": null,
+    "branchDraftIds": [],
+    "branchPreviewUrls": []
+  },
+  "pricing": {
+    "available": false,
+    "verifiedCost": null,
+    "reason": "Authentication failed before model listing, project creation, or generation."
+  },
+  "limitations": [
+    "The execution harness captured command output as a combined stream, so stdout and stderr cannot be separated reliably.",
+    "No prompt, model, project, draft, preview, canvas, price, or cost facts were invented.",
+    "No production UI was implemented or modified."
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "round": "DUAL-ATTRACT-001",
+  "director": "B",
+  "mode": "NATIVE_DIRECTOR",
+  "status": "B_BLOCKED",
+  "frozenAt": "2026-09-20T00:39:34Z",
+  "baseline": {
+    "declaredCommit": "ecb5e7c63279035ee5eac866237731987e3e6c7e",
+    "inputManifestVerified": true,
+    "verifiedFileCount": 14,
+    "mismatches": []
+  },
+  "scopeCompliance": {
+    "directorAInspected": false,
+    "gitHistoryInspected": false,
+    "mainRepositoryInspected": false,
+    "productionUiModified": false,
+    "superdesignTelemetryAuthorized": true
+  },
+  "superdesign": {
+    "cliVersion": "0.14.0",
+    "authStatus": "not authenticated",
+    "loginResult": "timeout of 30000ms exceeded",
+    "generationCalls": 0,
+    "generationLimit": 2
+  },
+  "artifacts": [
+    {
+      "path": "output/B_BLOCKED.md",
+      "sha256": "4e0fa8df8734c23cf9f4a91e3adfd45b07f2d0b700ffe045f0b4076c020c231e",
+      "kind": "blocker_report"
+    },
+    {
+      "path": "output/cli-evidence.json",
+      "sha256": "89983aa4ddc9984ddc96c95559fe264926e984a573f14ff31dbae2039731b759",
+      "kind": "cli_evidence"
+    },
+    {
+      "path": "output/sources-read.md",
+      "sha256": "eb021464e2669e4e248ceb211719ed5c35425cbb888250309f9396154c428f5c",
+      "kind": "provenance"
+    },
+    {
+      "path": "baseline/.superdesign/init/components.md",
+      "sha256": "85817884c92fa8f9558bbd00eb016604f9a7a0ff132dfbf440090ea5d0cd2cc4",
+      "kind": "superdesign_init"
+    },
+    {
+      "path": "baseline/.superdesign/init/layouts.md",
+      "sha256": "4a5050b5d85dcfdef71b6b4d0b91328135dc9abe9ce33a190a8361412d6e768b",
+      "kind": "superdesign_init"
+    },
+    {
+      "path": "baseline/.superdesign/init/routes.md",
+      "sha256": "3011a2cb7ccf8877e4fe29a8ee84e03ce258ffae461a37540344141998b736a7",
+      "kind": "superdesign_init"
+    },
+    {
+      "path": "baseline/.superdesign/init/theme.md",
+      "sha256": "5bc10d26aeafb0b37c3e9f6f534a0c4dedc905a4e1c3ff20c6e4854bbdbc9599",
+      "kind": "superdesign_init"
+    },
+    {
+      "path": "baseline/.superdesign/init/pages.md",
+      "sha256": "bd704410c829e95df02468072a7c4756a09467a16a291464e43dc05844d7ff81",
+      "kind": "superdesign_init"
+    },
+    {
+      "path": "baseline/.superdesign/init/extractable-components.md",
+      "sha256": "5cd89a9ce654e4481943496a928b05b4654df264354a6935fcf0cb0b1d458640",
+      "kind": "superdesign_init"
+    }
+  ],
+  "notCreated": [
+    "direction_cards",
+    "prefilter_results",
+    "chosen_prompt",
+    "chosen_model",
+    "project_id",
+    "canvas_url",
+    "baseline_draft",
+    "branch_draft",
+    "preview_urls",
+    "pricing_or_cost"
+  ],
+  "freezeNote": "SHA256SUMS hashes this manifest and every listed artifact. SHA256SUMS does not hash itself to avoid recursion."
+}

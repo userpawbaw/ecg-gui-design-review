@@ -193,3 +193,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 ## 2026-09-19 Dual runtime checkpoint
 
 A frozen (6 concepts); B blocked at CLI telemetry approval review; cross-review pending. Resume B only after scope resolved. See experiments/DUAL-ATTRACT-001/REPORT.md.
+
+## 2026-09-20 Dual runtime authorization resume
+
+- User explicitly authorized the previously unknown Superdesign/PostHog telemetry transmission.
+- Preserved the original B blocker and resumed in a new B-only clean context with the same 14-file baseline; A output was not delivered.
+- Bare CLI preflight verified Superdesign 0.14.0 and unauthenticated status. Required login failed while creating the auth session after 30 seconds and emitted no URL/device code.
+- Per the official skill, stopped without retry or workaround. Native searches/models/projects/generations remain 0; cross-review remains gated on B completion. Production UI is unchanged.

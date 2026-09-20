@@ -1,6 +1,6 @@
 # DUAL-ATTRACT-001 — 첫 실사용 결과와 재개 지점
 
-상태: **READY_FOR_CROSS_REVIEW — A_FROZEN / B_FROZEN / CROSS_REVIEW_NOT_RUN**.
+상태: **CROSS_REVIEW_COMPLETE — A_FROZEN / B_FROZEN / USER_VISUAL_ALIGNMENT_PENDING / IMPLEMENTATION_NOT_AUTHORIZED**.
 기준 main/UI SHA: `ecb5e7c63279035ee5eac866237731987e3e6c7e`. Target: prototype/v2 Attract, HIGH 신규 방향. Production UI 및 Hybrid 생성 없음.
 
 ## 실제 수행
@@ -93,3 +93,31 @@ O-002/R-011/CASE-004에 승인 후 인증 실패를 후속 기록으로 연결�
 두 B draft는 faithful baseline과 동일 waveform SVG path hash, Input/Output/Reference semantics, mV/time labels, REPLAY/source wording을 구조적으로 보존했다. 단, 이 검증은 HTML/freeze structural verification이며 rendered-browser/target-PC visual QA는 아직 아니다.
 
 따라서 현재 round는 **A_FROZEN + B_FROZEN** 조건을 충족했고, 다음 허용 단계는 A/B cross-review와 validator다. 추가 A/B generation이나 Hybrid는 아직 수행하지 않는다.
+
+
+## 2026-09-20 Cross-review / Validator
+
+A/B first pass 동결 뒤 처음으로 함께 비교했다. 상세 판단은 `CROSS_REVIEW.md`, `VALIDATION_MATRIX.md`, Hybrid proposal은 `HYBRID-H1.md`에 있다.
+
+Rendered browser double-check:
+- B01 Signal Orbit: dark two-column exhibition stage, dominant right plot, clear mV/time axes, prominent green CTA. 구조/data truth는 유지되나 radial/cinematic surface의 과잉과 reveal timing을 실제 runtime에서 검증해야 한다.
+- B02 Exhibition Grid: bright 3/12 metadata rail + 9/12 waveform stage, dominant plot, strong full-width CTA. 정보 밀도와 bright Attract→existing Lab continuity가 주요 tune 대상이다.
+
+Validator 결과:
+- KEEP: A04
+- KEEP as interaction principle: A05
+- KEEP as semantic rule: A06
+- KEEP/TUNE: B01, B02
+- TUNE/fallback: A01
+- DEFER: A02
+- REJECT for current Attract: A03
+- B03/B04/B05: 기존 reject 유지
+
+사용자 visual alignment 전 provisional prototype-worthiness set:
+1. S1 — A04 Question Poster
+2. S2 — B01 Signal Orbit (tuned)
+3. H1 — B02 Exhibition Grid × A05 Same-scene Handoff
+
+H1은 **제안 문서만 작성**했으며 Superdesign generation/React implementation은 하지 않았다. A06의 Reference 의미 강조와 A01의 same-axis discipline은 공통 tune/guardrail로 다룬다.
+
+다음 gate는 사용자 visual review다. 이 결과는 구현 승인이나 final winner가 아니다.

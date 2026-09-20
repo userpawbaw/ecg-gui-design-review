@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "attract": {
+      "targetKind": "existing-ui",
+      "projectId": "1b43a0d2-1c22-4f3a-9a15-c3084c108a1c",
+      "baselineDraftId": "64e804ed-f545-405c-a9af-5007b84614ee",
+      "activeDraftId": "64e804ed-f545-405c-a9af-5007b84614ee",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "src/main.tsx",
+        "src/Plot.tsx",
+        "src/style.css",
+        "src/plot-scale.ts",
+        "src/engine.ts",
+        "src/data.ts",
+        "src/methods.json",
+        "src/components/ui/dialog.tsx",
+        "src/components/ui/button.tsx",
+        "src/lib/utils.ts",
+        "vite.config.ts"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "ecad58bf6d75ad63898f35bcaed435c396fd20e0249f95d68e8f89d458355e01",
+        "src/main.tsx": "fc3877e2cb3776c1cd2d74f1f98a6811802dee57ec75db8cd94dd2aa79965aee",
+        "src/Plot.tsx": "31dfe5934c3fbf00aaa08318b78910de739c608e7838c5a30a311a3a38fcf289",
+        "src/style.css": "500501096bddee7c2c20f4346fe611100ea6629255aef32fe967791207166650",
+        "src/plot-scale.ts": "3c54bf5b990dd6f3dfc1991f633eefc15e9866ee1d8bd200b3dd202ba3042ffc",
+        "src/engine.ts": "175ffaa07da762cdae169a3911197def7023001cc9da61e0b004117058701003",
+        "src/data.ts": "f906c4fc0e0de77fc1a484ba33924e99bf5568c767eb916523253662e4ecf24a",
+        "src/methods.json": "06702e4b647bc364fde99ca497b5c52453de8049b6f2b406e442a4c9ba450e05",
+        "src/components/ui/dialog.tsx": "62a0324cacdfbc2ba7d1c6c823d4dbeb5dc065f057e5c72f58811bb3a1ab9349",
+        "src/components/ui/button.tsx": "23883834853e0871b5dd8f50955aafc8ab6cb5edd625fdf452273b1b8ab01b54",
+        "src/lib/utils.ts": "3c0ad01b6b40762d686625035bb98825cd50163501a432e10c5af9466eb8228a",
+        "vite.config.ts": "c591b28a66e28c64db372b7841e40ab0c32b4f78431bad0790e62296222ae089"
+      },
+      "components": [],
+      "drafts": {
+        "64e804ed-f545-405c-a9af-5007b84614ee": {
+          "title": "Signal Studio Attract",
+          "visualDirection": "faithful current-Attract setup reproduction",
+          "currentVersion": 1
+        },
+        "81ee679a-b18b-45e2-a008-8a1e60e322e7": {
+          "title": "Signal Studio — Signal Orbit Attract",
+          "visualDirection": "SD-DIR-B01 Signal Orbit",
+          "parentDraftId": "64e804ed-f545-405c-a9af-5007b84614ee",
+          "currentVersion": 1
+        },
+        "be68bb43-6954-4064-9362-0777b158f391": {
+          "title": "Signal Studio — Exhibition Grid Attract",
+          "visualDirection": "SD-DIR-B02 Exhibition Grid",
+          "parentDraftId": "64e804ed-f545-405c-a9af-5007b84614ee",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-09-20T07:13:22Z"
+    }
+  }
+}

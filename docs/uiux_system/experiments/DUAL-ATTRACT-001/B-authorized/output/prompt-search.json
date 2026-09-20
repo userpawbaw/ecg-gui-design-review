@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "round": "DUAL-ATTRACT-001",
+  "director": "B",
+  "cliVersion": "0.14.0",
+  "searches": [
+    {
+      "query": "immersive data visualization",
+      "total": 1,
+      "results": [
+        {
+          "slug": "orbit-or-interactive-solar-system-explorer",
+          "title": "ORBIT | Interactive Solar System Explorer",
+          "previewUrl": "https://p.superdesign.dev/draft/1c2b23d2-0ac2-437e-97bf-70cc3e41aea3"
+        }
+      ]
+    },
+    {
+      "query": "scientific storytelling",
+      "total": 1,
+      "results": [
+        {
+          "slug": "baoyu-slide-deck",
+          "title": "baoyu-slide-deck",
+          "previewUrl": null
+        }
+      ]
+    },
+    {
+      "query": "museum exhibition kiosk",
+      "total": 15,
+      "returned": 8,
+      "results": [
+        {"slug": "saas-landing-page-for-developer-tool", "title": "SaaS Landing Page for Developer Tool", "previewUrl": "https://p.superdesign.dev/draft/a8f544ea-ba22-4214-ade4-4cbd56118443"},
+        {"slug": "3d-journey-scroll-portfolio-centered", "title": "3D Journey Scroll Portfolio – Centered", "previewUrl": "https://p.superdesign.dev/draft/ffbd35dc-2bdb-4809-8094-5180f7754c02"},
+        {"slug": "brutalist-phylogenetic-map-redesign", "title": "Brutalist Phylogenetic Map Redesign", "previewUrl": "https://p.superdesign.dev/draft/97bdcd3a-2705-4821-9bee-fe4926d42c05"},
+        {"slug": "vintage-serif-masthead-editorial-newspaper-poster", "title": "Vintage Serif-Masthead Editorial Newspaper Poster", "previewUrl": "https://p.superdesign.dev/draft/82c64e41-3b06-49e6-9e37-38f46c16c2c7"},
+        {"slug": "archive-and-form-updated-hero-image", "title": "Archive & Form - Updated Hero Image", "previewUrl": "https://p.superdesign.dev/draft/757f007d-1094-4588-af95-3a4b8058e087"},
+        {"slug": "terroir-or-natural-wine-boutique", "title": "TERROIR | Natural Wine Boutique", "previewUrl": "https://p.superdesign.dev/draft/ee2df213-4905-4af3-b068-74ee0b4aa401"},
+        {"slug": "colobus-curio-or-integrated-navigation-1d77ec", "title": "Colobus Curio | Integrated Navigation", "previewUrl": "https://p.superdesign.dev/draft/13b0473f-32fe-4302-a8e2-3b308ce91db5"},
+        {"slug": "research-and-discovery-deep-archive", "title": "Research & Discovery Deep Archive", "previewUrl": "https://p.superdesign.dev/draft/9d129aa7-13ea-4cda-b8ff-9895500e2cfc"}
+      ]
+    },
+    {
+      "query": "cinematic dark interface",
+      "total": 2,
+      "results": [
+        {"slug": "cinematic-noir-style", "title": "Cinematic Noir Style", "previewUrl": "https://component-7121e835-54cd-4d01-98d8-95715596de25.preview.superdesign.dev/?projectId=a73b42e8-e7d4-4f03-9af3-c48202c9c063"},
+        {"slug": "deliberate-narrative-conflict-resolution", "title": "Deliberate Narrative Conflict Resolution", "previewUrl": "https://p.superdesign.dev/draft/60051274-4b78-46f3-b89c-121d574de3e5"}
+      ]
+    }
+  ],
+  "selectedPromptSlugs": [
+    "orbit-or-interactive-solar-system-explorer",
+    "saas-landing-page-for-developer-tool"
+  ],
+  "selectedPromptBodiesFetched": true,
+  "selectionNote": "The full prompt bodies were used only as composition inspiration. Their literal fonts, palettes, decorative objects, marketing sections, social proof, pricing, and unsupported metrics are prohibited by the B design system."
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="ko"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signal Studio — Attract</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#f4f5f4', ink: '#172c37', border: '#d9e2df', teal: '#067d72', forest: '#174235', amber: '#ce873a', stage: '#112b39', grid: '#304955', input: '#ffbc79', output: '#67e7c3', reference: '#c4c6c7', preview: '#f6d18d'
+          },
+          fontFamily: { signal: ['Malgun Gothic', 'Noto Sans KR', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    @media (prefers-reduced-motion: no-preference) {
+      .orbit-reveal { animation: orbit-arrive 420ms cubic-bezier(0.4, 0, 0.2, 1) both; }
+      .orbit-plot { animation: plot-focus 480ms cubic-bezier(0.4, 0, 0.2, 1) 80ms both; }
+    }
+    @keyframes orbit-arrive {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes plot-focus {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .signal-orbit-shell {
+      background-image: radial-gradient(circle at 76% 42%, rgba(6,125,114,.10) 0 1px, transparent 1px 132px, rgba(6,125,114,.08) 133px 134px, transparent 134px 246px, rgba(6,125,114,.06) 247px 248px, transparent 248px);
+    }
+    .signal-orbit-layout { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); column-gap:22px; row-gap:18px; }
+    .signal-orbit-rail { grid-column:span 3 / span 3; align-self:stretch; border-right:1px solid #d9e2df; padding:24px 26px 24px 10px; }
+    .signal-orbit-rail::before { content:'SIGNAL ORBIT'; display:block; margin-bottom:18px; color:#067d72; font-size:10px; font-weight:750; letter-spacing:2px; }
+    .signal-orbit-rail h1 { max-width:260px; }
+    .signal-orbit-rail p { max-width:245px; }
+    .signal-orbit-meta { margin-top:28px; padding-top:18px; border-top:1px solid #d9e2df; }
+    .signal-orbit-meta span { display:block; color:#59766a; font-size:11px; font-weight:750; letter-spacing:1.4px; }
+    .signal-orbit-meta strong { display:block; margin-top:7px; color:#174235; font-size:13px; font-weight:650; line-height:1.6; }
+    .signal-orbit-panel { grid-column:span 9 / span 9; position:relative; padding:12px; border:1px solid #304955; border-radius:16px; background:#112b39; box-shadow:0 0 0 1px rgba(103,231,195,.10), 0 20px 44px rgba(23,44,55,.14); }
+    .signal-orbit-panel::before { content:''; position:absolute; inset:-13px; z-index:0; border:1px solid rgba(6,125,114,.18); border-radius:22px; pointer-events:none; }
+    .signal-orbit-panel > section { position:relative; z-index:1; }
+    .signal-orbit-cta { grid-column:4 / span 9; justify-self:center; }
+    @media (max-width: 900px) {
+      .signal-orbit-layout { display:block; }
+      .signal-orbit-rail { border-right:0; border-bottom:1px solid #d9e2df; padding:12px 0 20px; margin-bottom:20px; }
+      .signal-orbit-rail h1,.signal-orbit-rail p { max-width:none; }
+      .signal-orbit-meta { margin-top:16px; }
+      .signal-orbit-panel { padding:6px; }
+      .signal-orbit-cta { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen bg-canvas font-signal text-ink" data-sd-id="1">
+    <main class="signal-orbit-shell fixed inset-0 flex items-center justify-center bg-stage p-[1vh_1vw]" aria-label="크게 비교" data-sd-id="2">
+      <section class="relative h-[98dvh] w-[98vw] overflow-auto rounded-[16px] border border-border bg-canvas p-[22px] shadow-lg" role="dialog" aria-modal="true" aria-labelledby="attract-title" data-sd-id="3">
+        <button type="button" aria-label="닫기" class="absolute right-3 top-2.5 flex min-h-[30px] w-8 items-center justify-center rounded-[8px] border border-border bg-white text-ink transition-colors hover:bg-[#e8f1ee] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-amber" data-sd-id="4">
+          <iconify-icon icon="lucide:x" class="text-[18px]"></iconify-icon>
+        </button>
+
+        <div class="signal-orbit-layout orbit-reveal pr-[30px]" data-sd-id="5">
+          <header class="signal-orbit-rail mb-0 flex items-start justify-between gap-4" data-sd-id="6">
+            <div data-sd-id="7">
+              <h1 id="attract-title" class="m-0 text-[30px] font-[650] leading-[1.35] tracking-tight text-ink" data-sd-id="8">같은 ECG, 다른 잡음 제거 결과</h1>
+              <p class="mb-0 mt-[5px] text-[14px] leading-[1.7] text-[#59766a]" data-sd-id="9">100 · 혼합 잡음 · 10 dB · 250 Hz · <b class="font-bold text-ink">REPLAY</b></p>
+              <div class="signal-orbit-meta">
+                <span>STORED SOURCE / SAME AXIS</span>
+                <strong>저장된 전시용 10초 반복<br>실제 장치 연결 없음</strong>
+              </div>
+            </div>
+          </header>
+
+          <div class="signal-orbit-panel orbit-plot grid grid-cols-1" data-sd-id="10">
+            <section class="overflow-hidden rounded-[14px] bg-stage text-[#c6d9df]" aria-label="같은 시간축 ECG 비교 파형" data-sd-id="11">
+              <svg class="block h-[540px] w-full" viewBox="0 0 1354 540" preserveAspectRatio="none" role="img" aria-label="동일 시간과 진폭의 입력 및 M08 출력과 회색 Reference 비교" data-sd-id="12">
+                <defs>
+                  <pattern id="gridTop" width="126.4" height="51" patternUnits="userSpaceOnUse">
+                    <path d="M 126.4 0 L 0 0 0 51" fill="none" stroke="#304955" stroke-width="0.6"></path>
+                  </pattern>
+                  <pattern id="gridBottom" width="126.4" height="51" patternUnits="userSpaceOnUse">
+                    <path d="M 126.4 0 L 0 0 0 51" fill="none" stroke="#304955" stroke-width="0.6"></path>
+                  </pattern>
+                  <clipPath id="topClip"><rect x="72" y="36" width="1264" height="204"></rect></clipPath>
+                  <clipPath id="bottomClip"><rect x="72" y="306" width="1264" height="204"></rect></clipPath>
+                </defs>
+
+                <text x="10" y="22" fill="#acc2cd" font-family="system-ui" font-size="11">[mV]</text>
+                <text x="72" y="22" fill="#ffbc79" font-family="system-ui" font-size="14" font-weight="600">입력 · Noisy</text>
+                <text x="10" y="292" fill="#acc2cd" font-family="system-ui" font-size="11">[mV]</text>
+                <text x="72" y="292" fill="#67e7c3" font-family="system-ui" font-size="14" font-weight="600">M08 · 선택 출력</text>
+
+                <g fill="#acc2cd" font-family="system-ui" font-size="11" text-anchor="end" dominant-baseline="middle">
+                  <text x="62" y="36">2.0</text><text x="62" y="87">1.0</text><text x="62" y="138">0</text><text x="62" y="189">−1.0</text><text x="62" y="240">−2.0</text>
+                  <text x="62" y="306">2.0</text><text x="62" y="357">1.0</text><text x="62" y="408">0</text><text x="62" y="459">−1.0</text><text x="62" y="510">−2.0</text>
+                </g>
+                <rect x="72" y="36" width="1264" height="204" fill="url(#gridTop)"></rect>
+                <rect x="72" y="306" width="1264" height="204" fill="url(#gridBottom)"></rect>
+
+                <g clip-path="url(#topClip)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M72 140 L91 139 L101 137 L110 140 L119 138 L130 140 L142 137 L151 140 L160 136 L170 139 L180 136 L189 139 L198 138 L207 139 L217 136 L226 139 L237 137 L245 139 L254 137 L263 140 L271 136 L280 138 L289 136 L298 140 L307 136 L315 139 L324 137 L334 139 L344 137 L352 139 L360 137 L369 140 L379 137 L389 139 L398 137 L407 139 L416 137 L425 140 L432 137 L439 139 L445 136 L450 140 L455 132 L460 145 L465 103 L470 201 L476 63 L482 167 L488 136 L495 141 L505 137 L515 140 L524 136 L534 139 L544 137 L554 140 L565 137 L575 139 L585 137 L596 140 L606 138 L616 140 L625 137 L635 140 L645 136 L655 139 L666 137 L676 140 L686 137 L695 139 L705 136 L714 140 L723 137 L732 139 L741 137 L750 140 L759 136 L768 139 L776 136 L784 139 L790 132 L796 143 L802 100 L808 200 L815 62 L823 170 L830 135 L840 141 L850 136 L860 140 L870 137 L881 139 L891 136 L901 140 L912 137 L922 139 L933 136 L944 140 L955 137 L966 139 L976 136 L987 140 L998 137 L1009 140 L1020 136 L1032 139 L1044 137 L1054 140 L1064 136 L1075 139 L1084 137 L1093 140 L1100 136 L1107 139 L1113 132 L1119 144 L1125 102 L1132 203 L1139 62 L1147 169 L1154 136 L1164 140 L1175 137 L1186 140 L1197 136 L1209 139 L1220 137 L1230 140 L1241 136 L1250 139 L1260 137 L1270 140 L1280 136 L1291 140 L1302 137 L1312 139 L1324 137 L1336 140" stroke="#c4c6c7" stroke-width="2.4" opacity="0.55"></path>
+                  <path d="M72 143 L84 132 L96 148 L108 130 L119 147 L130 135 L141 145 L153 126 L165 150 L177 129 L189 146 L200 133 L211 151 L222 124 L235 145 L245 137 L254 130 L263 151 L273 127 L283 146 L294 134 L306 149 L317 126 L329 145 L340 135 L352 151 L363 130 L376 146 L388 128 L400 150 L411 131 L423 144 L435 137 L445 129 L451 146 L457 123 L462 155 L468 95 L475 205 L482 55 L489 174 L497 128 L506 148 L519 126 L530 151 L543 130 L555 148 L566 126 L578 149 L591 132 L602 145 L614 128 L626 151 L638 129 L650 146 L662 135 L675 151 L687 126 L699 146 L712 132 L725 148 L737 126 L748 144 L760 133 L772 150 L783 125 L790 145 L797 131 L803 151 L809 122 L815 158 L821 94 L829 205 L836 57 L844 173 L852 128 L865 149 L877 125 L890 151 L902 130 L915 147 L928 126 L940 149 L951 132 L965 145 L978 126 L990 151 L1004 128 L1018 147 L1030 133 L1044 149 L1057 126 L1070 146 L1084 132 L1097 150 L1107 127 L1115 146 L1122 131 L1129 150 L1136 121 L1143 160 L1150 94 L1158 206 L1166 56 L1174 171 L1183 127 L1195 149 L1208 126 L1221 150 L1234 130 L1247 146 L1260 127 L1273 150 L1286 131 L1299 146 L1312 128 L1325 149 L1336 137" stroke="#ffbc79" stroke-width="1.6"></path>
+                </g>
+
+                <g clip-path="url(#bottomClip)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M72 410 L120 409 L175 410 L230 409 L285 410 L340 409 L395 410 L432 409 L445 410 L450 402 L455 416 L460 373 L465 471 L471 333 L478 437 L486 406 L540 410 L595 409 L650 410 L705 409 L760 410 L786 409 L790 401 L796 416 L802 371 L808 471 L815 332 L822 439 L830 406 L885 410 L940 409 L995 410 L1050 409 L1100 410 L1113 409 L1119 401 L1125 417 L1132 372 L1139 473 L1147 332 L1154 438 L1163 406 L1216 410 L1270 409 L1336 410" stroke="#c4c6c7" stroke-width="2.4" opacity="0.55"></path>
+                  <path d="M72 410 L96 410 L120 409 L145 410 L170 410 L194 409 L218 410 L241 410 L265 409 L289 410 L313 410 L337 409 L361 410 L385 410 L410 409 L432 410 L444 409 L450 401 L455 416 L461 373 L467 471 L474 333 L481 437 L489 406 L503 410 L528 410 L552 409 L576 410 L600 410 L624 409 L648 410 L672 410 L696 409 L720 410 L744 410 L768 409 L784 410 L791 401 L797 416 L803 372 L810 471 L817 332 L824 438 L832 406 L850 410 L875 410 L900 409 L925 410 L950 410 L975 409 L1000 410 L1025 410 L1050 409 L1075 410 L1100 410 L1112 409 L1119 401 L1126 417 L1133 372 L1140 473 L1148 332 L1156 438 L1164 406 L1180 410 L1205 410 L1230 409 L1255 410 L1280 410 L1305 409 L1336 410" stroke="#67e7c3" stroke-width="1.6"></path>
+                </g>
+
+                <g fill="#adc3ce" font-family="system-ui" font-size="12">
+                  <text x="72" y="260">0.0s</text><text x="388" y="260">2.5s</text><text x="704" y="260">5.0s</text><text x="1020" y="260">7.5s</text><text x="1281" y="260">10.0s</text>
+                  <text x="72" y="530">0.0s</text><text x="388" y="530">2.5s</text><text x="704" y="530">5.0s</text><text x="1020" y="530">7.5s</text><text x="1281" y="530">10.0s</text>
+                </g>
+              </svg>
+
+              <div class="flex flex-wrap gap-[15px] border-t border-grid px-5 pb-[15px] pt-0 text-[14px] text-input" data-sd-id="13">
+                <span class="text-reference" data-sd-id="14">━ Reference · 원기록에 공통 FE 적용</span>
+                <span data-sd-id="15">━ 입력</span>
+                <span class="text-output" data-sd-id="16">━ M08 출력</span>
+              </div>
+            </section>
+          </div>
+
+          <button type="button" class="signal-orbit-cta mx-auto my-[22px] block min-h-[64px] rounded-[8px] border border-teal bg-teal px-[13px] py-[9px] text-[22px] font-medium text-white transition-colors hover:bg-[#05665e] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-amber" data-sd-id="17">REPLAY · 전시용 10초 반복 — 직접 비교해보세요</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+</body></html>

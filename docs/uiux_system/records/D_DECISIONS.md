@@ -361,3 +361,31 @@ Superdesign을 기존 shortlist 뒤에만 둘지, 독립적인 방향 탐색도 
 문서만 추가하면 기존 serial 진입점이 우선될 수 있다. vendor 복제는 버전 변화와 모드 간 충돌을 만든다. 같은 대화에서 역할 이름만 바꾸는 방식은 이미 읽은 후보를 지울 수 없다.
 ### 되돌려야 하는 조건
 첫 실사용에서 wrapper와 vendor의 context/resume가 충돌하거나 budget을 지키지 못하면 실제 실패 근거로 계약을 수정한다. 이번 구현 승인은 시안 생성·UI 반영·병합까지 뜻하지 않는다.
+
+---
+
+## D-013. Director A에 task-routed Reference Source Registry를 도입한다
+
+| | |
+|---|---|
+| 시점 | 2026-09-20 source-pool 재논의 `[대화]` |
+| 상태 | 채택 — 다음 creative round부터 적용; DUAL-ATTRACT-001에는 소급 적용하지 않음 |
+| 연결 | F-008, R-012 |
+| CASE | CASE-002 |
+
+### 갈림길 — 무엇을 정해야 했나
+Director A의 reference source를 Awwwards/Godly 중심으로 유지할지, B와 대비되도록 UX/product source 중심으로 바꿀지, 아니면 **A의 creative 범위를 유지한 채 reference ecosystem만 넓힐지** 결정해야 했다.
+
+### 검토한 선택지
+1. Awwwards/Godly 중심 유지
+2. A를 UX/product-pattern 중심 director로 재정의
+3. Creative/Curated Web/Concept/Product-Component/UX Evidence/Scientific/Data Story family를 만들고 task별로 일부만 선택
+
+### 고른 것과 근거
+3번. A의 정체성은 특정 미감이 아니라 **실제 외부 reference의 provenance와 차용 원리를 사용자가 확인할 수 있다는 것**이다. 따라서 source family를 넓혀도 역할 충돌이 없고, Land-book/Minimal Gallery의 site·section 미감과 Refero/Mobbin류 component·flow를 같은 Reference Card 규칙으로 사용할 수 있다. `[대화]` `[추론]`
+
+### 버린 것과 이유
+1번은 한 gallery aesthetic에 anchoring될 위험이 있다. 2번은 Dual Director의 차이를 "creative vs UX"라는 인위적 스타일 대립으로 바꿔 A의 이미 유효한 creative direction을 약화시킨다. 모든 사이트를 매번 전부 검색하는 방식도 context/검색 비용 때문에 버렸다.
+
+### 되돌려야 하는 조건
+다음 creative round에서 source router 때문에 검색 비용만 늘고 reference 다양성·설명력·아이디어 품질이 개선되지 않거나, source family 규칙이 오히려 발산을 제한하면 family 수와 budget을 줄인다.

@@ -18,6 +18,8 @@
 - `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` — 실제 reference의 특정 장면을 visual-intent proxy로 사용해 `reference → principle → ECG translation → divergence`를 수행하는 workflow
 - `14_SUPERDESIGN_GENERATION_LAYER.md` — NATIVE_DIRECTOR 독립 탐색과 CONCRETIZER 선택안 시안화 계약
 - `15_SUPERDESIGN_USAGE_EXAMPLES.md` — Chat/Work/Codex/Claude 환경별 short trigger, Attract/Evidence/Method/Transition 사용 예시
+- `16_DUAL_CREATIVE_DIRECTOR.md` — 독립 A/B activation, first-pass isolation, budget, cross-review, Hybrid 규칙
+- `17_REFERENCE_SOURCE_REGISTRY.md` — Director A의 reference vocabulary를 Creative/Curated Web/Concept/Product/UX Evidence/Scientific/Data Story family로 확장하고 과업별 source router를 제공
 
 프로젝트 local skill:
 
@@ -28,7 +30,7 @@
 - `.claude/skills/reference-mining/SKILL.md`
 - `.claude/skills/superdesign-routing/SKILL.md`
 
-`레퍼런스 마이닝 진행해줘`, `Reference mining`, `Attract 레퍼런스 마이닝`은 `13_REFERENCE...`의 전체 절차를 실행하는 짧은 trigger로 사용한다. 중요한 새 CREATIVE 설계는 `05_TOOL_SKILL_ROUTING.md`의 자동/제안 규칙에 따라 이 단계를 포함한다.
+`레퍼런스 마이닝 진행해줘`, `Reference mining`, `Attract 레퍼런스 마이닝`은 `13_REFERENCE...`의 전체 절차를 실행하는 짧은 trigger로 사용한다. 이때 Director A는 `17_REFERENCE_SOURCE_REGISTRY.md`에서 과업에 맞는 2~4 source family를 선택하며 Awwwards/Godly만 기본값으로 고정하지 않는다.
 
 `Superdesign 시안 단계까지 진행해줘`, `이 3개 방향을 Superdesign으로 비교해줘`는 reference/art-direction 결과 중 상위 방향을 `14_SUPERDESIGN_GENERATION_LAYER.md`에 따라 concrete draft로 만드는 trigger다. standard Chat에서는 실제 CLI를 실행하지 않고 Work/Codex/Claude/web app용 handoff를 준비한다.
 

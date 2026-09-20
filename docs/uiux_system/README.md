@@ -34,6 +34,10 @@
 
 `Superdesign 시안 단계까지 진행해줘`, `이 3개 방향을 Superdesign으로 비교해줘`는 reference/art-direction 결과 중 상위 방향을 `14_SUPERDESIGN_GENERATION_LAYER.md`에 따라 concrete draft로 만드는 trigger다. standard Chat에서는 실제 CLI를 실행하지 않고 Work/Codex/Claude/web app용 handoff를 준비한다.
 
+## Current next-stage plan
+
+- `handoffs/DUAL_ATTRACT_CROSS_REVIEW_AND_VNEXT_PLAN_2026-09-20.md` — frozen A/B 결과를 cross-review/validator로 비교하고 v2.2.1을 보존한 채 Attract vNext variant를 구현·검증·선정하는 다음 단계 계획. 새 Source Registry의 실사용 테스트는 다음 creative round로 연기한다.
+
 ## Work handoff checkpoint
 
 - `handoffs/DUAL_CREATIVE_DIRECTOR_IMPLEMENTATION_2026-09-18.md` — Single Director → Reference Mining → Superdesign bounded generator → Dual Creative Director로 이어진 최신 판단 전환과, 웹 Work에서 먼저 수행할 기록 보강/후속 구현 순서를 고정한 primary handoff context.

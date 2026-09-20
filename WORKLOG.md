@@ -343,3 +343,16 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Publish stacked PR and check head CI; no merge, no actual generation or UI modification.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-09-19 Dual runtime checkpoint
+
+DUAL-ATTRACT-001: restarted after usage limit with fresh clean A/B contexts and verified 14-file identical baseline. A froze six concepts and five references (one browser interaction, one static render, three text only). B preflight polling rejected by automatic telemetry approval review; no search or generations, cost unknown. No bypass; process cancellation returned unknown session. B blocked artifacts frozen. No cross-review or production edits. O-002/R-011/CASE-004 linked.
+
+## 2026-09-20 Dual runtime authorization resume
+
+- Recorded the user's explicit permission for Superdesign CLI PostHog telemetry with the exact payload still unknown.
+- Created a new fork_turns=none B context and separate `B-authorized` evidence path; preserved the original B blocker and withheld A outputs.
+- Reverified all 14 baseline hashes. Built and reread all six required `.superdesign/init` files before CLI use.
+- Actual bare preflight PASS: CLI 0.14.0, auth `not authenticated`; the CLI disclosed `DO_NOT_TRACK=1` as its opt-out, but the authorized run did not set it.
+- Actual login FAIL: exit 3, auth-session creation `timeout of 30000ms exceeded`, no browser URL or device code. Official skill requires STOP when login itself fails; no retry, prompt search, model listing, project, draft, or generation.
+- B remains incomplete; cross-review and Hybrid were not run. Production UI remains untouched. Evidence and hashes are under `docs/uiux_system/experiments/DUAL-ATTRACT-001/B-authorized`.

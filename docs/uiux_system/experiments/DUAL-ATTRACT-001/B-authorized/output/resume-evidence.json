@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "round": "DUAL-ATTRACT-001",
+  "director": "B",
+  "mode": "NATIVE_DIRECTOR",
+  "checkpointAt": "2026-09-20T07:13:22Z",
+  "status": "B_FROZEN",
+  "cli": {
+    "version": "0.14.0",
+    "authStatus": "authenticated",
+    "team": "Personal",
+    "doNotTrackSet": true,
+    "catalogVersion": "ddd33b7ef0a92d0e",
+    "selectedDraftModel": "gpt-5.6-terra"
+  },
+  "counts": {
+    "preflightCalls": 1,
+    "loginCalls": 0,
+    "promptSearches": 4,
+    "promptIndexFetches": 1,
+    "promptBodyFetches": 1,
+    "modelListings": 1,
+    "projectsCreated": 1,
+    "directionCards": 5,
+    "prefilterKeep": 2,
+    "prefilterReject": 3,
+    "generationCalls": 2,
+    "baselineReproductions": 1,
+    "branchIterations": 1,
+    "directionDrafts": 2,
+    "contextUploads": 2
+  },
+  "project": {
+    "projectId": "1b43a0d2-1c22-4f3a-9a15-c3084c108a1c",
+    "canvasUrl": "https://superdesign.dev/teams/bb946bb3-0890-4522-98d9-225038853712/projects/1b43a0d2-1c22-4f3a-9a15-c3084c108a1c"
+  },
+  "selectedDirections": ["SD-DIR-B01", "SD-DIR-B02"],
+  "drafts": {
+    "baseline": {
+      "draftId": "64e804ed-f545-405c-a9af-5007b84614ee",
+      "previewUrl": "https://p.superdesign.dev/draft/64e804ed-f545-405c-a9af-5007b84614ee",
+      "credits": 20.5,
+      "version": 1
+    },
+    "SD-DIR-B01": {
+      "draftId": "81ee679a-b18b-45e2-a008-8a1e60e322e7",
+      "previewUrl": "https://p.superdesign.dev/draft/81ee679a-b18b-45e2-a008-8a1e60e322e7",
+      "version": 1
+    },
+    "SD-DIR-B02": {
+      "draftId": "be68bb43-6954-4064-9362-0777b158f391",
+      "previewUrl": "https://p.superdesign.dev/draft/be68bb43-6954-4064-9362-0777b158f391",
+      "version": 1
+    },
+    "branchCreditsCombined": 25.5,
+    "totalCredits": 46.0
+  },
+  "contextUpload": {
+    "approved": true,
+    "approvalSource": "User reply: 응.",
+    "attempted": true,
+    "securityReviewResult": "approved_and_completed",
+    "files": [
+      ".superdesign/design-system.md",
+      "src/main.tsx",
+      "src/Plot.tsx",
+      "src/style.css",
+      "src/plot-scale.ts",
+      "src/engine.ts",
+      "src/data.ts",
+      "src/methods.json",
+      "src/components/ui/dialog.tsx",
+      "src/components/ui/button.tsx",
+      "src/lib/utils.ts",
+      "vite.config.ts"
+    ]
+  },
+  "scopeCompliance": {
+    "directorAInspected": false,
+    "productionUiModified": false,
+    "rawEcgDataUploaded": false,
+    "credentialsUploaded": false,
+    "crossReviewRun": false
+  }
+}

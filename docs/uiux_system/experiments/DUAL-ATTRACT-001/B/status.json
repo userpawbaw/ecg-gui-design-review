@@ -1,0 +1,64 @@
+{
+  "status": "B_BLOCKED",
+  "checked_at_utc": "2026-09-19T11:21:27.092298+00:00",
+  "baseline_verified": {
+    "baseline/vite.config.ts": true,
+    "baseline/index.html": true,
+    "baseline/tsconfig.json": true,
+    "baseline/package.json": true,
+    "baseline/src/main.tsx": true,
+    "baseline/src/methods.json": true,
+    "baseline/src/plot-scale.ts": true,
+    "baseline/src/Plot.tsx": true,
+    "baseline/src/style.css": true,
+    "baseline/src/data.ts": true,
+    "baseline/src/engine.ts": true,
+    "baseline/src/lib/utils.ts": true,
+    "baseline/src/components/ui/button.tsx": true,
+    "baseline/src/components/ui/dialog.tsx": true
+  },
+  "prior_checkpoint": "Parent reports v0.14.0 NOT AUTHENTICATED and one login started; no persisted output or live node/npm process found at resume.",
+  "current_command": "npx --yes @superdesign/cli@latest",
+  "current_result": "Only npm http-proxy warning returned before rejection; current auth and CLI version unverified.",
+  "native_searches": 0,
+  "projects_created": 0,
+  "generation_calls": 0,
+  "generation_cap": 2,
+  "cost": "unknown; zero generation commands issued in this resumed session",
+  "sources_read": [
+    "COMMON.md",
+    "input-manifest.json",
+    "role-contract.md",
+    "official Superdesign SKILL.md",
+    "official SUPERDESIGN.md",
+    "baseline/src/main.tsx and style.css targeted Attract inspection"
+  ],
+  "blocked_at_utc": "2026-09-19T11:22:17.660957+00:00",
+  "blocker": "Automatic approval review rejected CLI telemetry egress to third-party PostHog endpoint. Payload not established and may contain workspace/environment metadata. No bypass or retry attempted.",
+  "cli_version": {
+    "prior_parent_checkpoint": "0.14.0",
+    "current_session": null
+  },
+  "authentication": {
+    "prior_parent_checkpoint": "NOT AUTHENTICATED; login started once",
+    "current_session": "unverified; no active prior login found and no login URL returned"
+  },
+  "search_queries": [],
+  "source_slugs": [],
+  "model": null,
+  "project_id": null,
+  "draft_ids": [],
+  "canvas_url": null,
+  "preview_urls": [],
+  "cards": [],
+  "prefilter": [],
+  "baseline_replica_generations": 0,
+  "independent_direction_generations": 0,
+  "cleanup": {
+    "session_id": 98069,
+    "action": "Sent Ctrl-C to existing session without restart",
+    "result": "write_stdin failed: Unknown process id 98069",
+    "process_scan": "No matching preflight process visible; exec process namespace may limit visibility",
+    "limitation": "Execution session no longer addressable; cannot independently prove OS process termination across namespaces."
+  }
+}

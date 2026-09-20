@@ -1,0 +1,19 @@
+{
+  "verified": true,
+  "files": {
+    "baseline/vite.config.ts": true,
+    "baseline/index.html": true,
+    "baseline/tsconfig.json": true,
+    "baseline/package.json": true,
+    "baseline/src/main.tsx": true,
+    "baseline/src/methods.json": true,
+    "baseline/src/plot-scale.ts": true,
+    "baseline/src/Plot.tsx": true,
+    "baseline/src/style.css": true,
+    "baseline/src/data.ts": true,
+    "baseline/src/engine.ts": true,
+    "baseline/src/lib/utils.ts": true,
+    "baseline/src/components/ui/button.tsx": true,
+    "baseline/src/components/ui/dialog.tsx": true
+  }
+}

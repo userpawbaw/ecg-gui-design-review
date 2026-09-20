@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "round": "DUAL-ATTRACT-001",
+  "director": "B",
+  "result": "PASS_STRUCTURAL_NOT_RENDERED_QA",
+  "checks": {
+    "jsonSyntax": {
+      "result": "PASS",
+      "files": [
+        "baseline/.superdesign/resume.json",
+        "output/resume-evidence.json",
+        "output/prompt-search.json"
+      ]
+    },
+    "draftSnapshots": {
+      "result": "PASS",
+      "files": [
+        "output/drafts/baseline-64e804ed.html",
+        "output/drafts/B01-signal-orbit-81ee679a.html",
+        "output/drafts/B02-exhibition-grid-be68bb43.html"
+      ],
+      "pathCountEach": 6,
+      "identicalPathHash": "dd26bd31ea67d083e98d88f1bec0469764e09742c8bd437c3f0778be16e840ac",
+      "requiredCountsEach": {
+        "mVLabels": 2,
+        "tenSecondLabels": 2,
+        "REPLAY": 2,
+        "Reference": 2,
+        "inputKorean": 3,
+        "M08": 3
+      },
+      "forbiddenMatchesEach": 0,
+      "forbiddenPattern": "Cabinet Grotesk|Satoshi|General Sans|Aileron|#1351AA|#ff4d00|pricing|social proof|patient|진단"
+    }
+  },
+  "limitations": [
+    "Waveform-path equality is an HTML structural check, not proof of runtime canvas behavior.",
+    "No independent rendered-browser or target-display visual QA was performed.",
+    "The generator does not approve its own visual quality."
+  ]
+}

@@ -190,5 +190,26 @@
     "pr": "https://github.com/userpawbaw/ecg-gui-design-review/pull/10",
     "verified_implementation_commit": "f1da0d32113d6e7b166dc48e9e550f8701045f0a",
     "ci": "https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35423470904"
+  },
+  "dual_attract_runtime": {
+    "round": "DUAL-ATTRACT-001",
+    "baseline": "ecb5e7c63279035ee5eac866237731987e3e6c7e",
+    "status": "partial_A_frozen_B_blocked_auth_timeout",
+    "A_concepts": 6,
+    "B_generation_calls": 0,
+    "cross_review": "not_run",
+    "blocker": "Telemetry was explicitly authorized; Superdesign 0.14.0 remained unauthenticated and login timed out creating the auth session after 30 seconds without a URL or device code",
+    "report": "docs/uiux_system/experiments/DUAL-ATTRACT-001/REPORT.md",
+    "authorization_resume": {
+      "date": "2026-09-20",
+      "telemetry_authorized": true,
+      "cli_version": "0.14.0",
+      "login_exit": 3,
+      "prompt_searches": 0,
+      "model_listings": 0,
+      "projects": 0,
+      "generation_calls": 0
+    },
+    "next_action": "Resume B only in an environment where vendor auth session creation and browser authorization can complete; no A outputs; cross-review only after B first-pass freeze"
   }
 }

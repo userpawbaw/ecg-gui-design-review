@@ -106,3 +106,17 @@ Dual Director의 `16_DUAL_CREATIVE_DIRECTOR.md`, skill, 실행 routing 및 시�
 D-012에 따라 16번 공통 계약, dual wrapper, Superdesign 두 모드와 기존 진입점을 연결한다. 같은 대화에서 역할만 바꾸는 방식은 독립성이 없으므로 별도 clean context와 vendor state까지 경계를 구체화했다. context 격리 불가 시 B handoff로 반환한다. 이는 R-009의 원칙을 실행 조건으로 옮긴 것이다. [추론]
 
 Chat A+B handoff와 shell A/B 경로는 실제 capability로 분기한다. 문서/skill 구현과 실제 Superdesign 생성 효과는 별도 증거이며 이번에는 UI 변경이나 유료 시안을 만들지 않는다. 검증 보고는 handoffs/DUAL_RUNTIME_VERIFICATION_2026-09-19.md를 따른다.
+
+## 첫 runtime 시도 — DUAL-ATTRACT-001 (2026-09-19)
+
+사용자는 main ecb5e7c의 Attract 신규 방향을 대상으로 A/B 별도 clean context, native tool 증거, 동결 후 cross-review를 요청했다. [대화] 문서/skill 구현 이후 실제 capability를 검증하는 단계다.
+
+사용량 제한으로 중단되어 A/B freeze 산출물이 없는 상태에서 재개했다. baseline hash를 확인하고 다시 분리한 context에서 수행했다. B의 CLI preflight는 PostHog telemetry payload/승인 범위가 불명확하다는 자동 검토로 차단됐다. O-002/R-011에 원인과 판단을 기록한다. 실제 native search/draft는 실행하지 못했고 cross-review를 완료하지 않았다. 원칙의 품질 향상 효과는 여전히 미검증이다.
+
+전체 실험 상태와 A 산출물/B 차단 증거는 `../experiments/DUAL-ATTRACT-001/REPORT.md`를 참조한다. 이후 B를 재개할 때는 A 결과를 입력하지 않고 동일 baseline의 독립 경로를 유지해야 한다.
+
+## 첫 runtime 재개 — telemetry 허용 후 auth timeout (2026-09-20)
+
+사용자는 앞선 차단 사유였던 미확인 PostHog telemetry 전송을 허용하고 계속 진행하라고 했다. [대화] 이전 B 결과를 덮어쓰지 않고 별도 clean context와 `B-authorized` 증거 경로를 만들었다. A 산출물은 전달하지 않았고 동일 14개 baseline hash를 확인했다.
+
+실제 Superdesign bare preflight는 CLI `v0.14.0`과 `not authenticated`를 반환했다. 이어 실행한 필수 login은 auth session 생성 단계에서 `timeout of 30000ms exceeded`로 실패했고 URL/device code가 없었다. 공식 skill 규칙에 따라 임의 우회·반복·대체 시안을 만들지 않았다. 따라서 native cards, model 선택, project/draft/preview/canvas와 cross-review는 여전히 미완료다. [런타임] 이 결과는 Dual 구조의 품질 실패가 아니라 외부 인증 준비 상태의 실패이며, 원칙의 효과는 계속 미검증이다. [추론]

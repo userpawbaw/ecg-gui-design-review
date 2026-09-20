@@ -1,0 +1,16 @@
+{
+  "baseline/vite.config.ts": "c591b28a66e28c64db372b7841e40ab0c32b4f78431bad0790e62296222ae089",
+  "baseline/index.html": "aed0cd7a8329951757973b99ca3f2d57c3b89ff962698574e3989092f55778cd",
+  "baseline/tsconfig.json": "684d2d1770edca9711c633de0fd0042498560267f50306828670ce7fd1f3b9bf",
+  "baseline/package.json": "5c933fc6a72ba4b8362b200f07ffb110fdcb379f92d1ee33b4bc348320dba1e2",
+  "baseline/src/main.tsx": "fc3877e2cb3776c1cd2d74f1f98a6811802dee57ec75db8cd94dd2aa79965aee",
+  "baseline/src/methods.json": "06702e4b647bc364fde99ca497b5c52453de8049b6f2b406e442a4c9ba450e05",
+  "baseline/src/plot-scale.ts": "3c54bf5b990dd6f3dfc1991f633eefc15e9866ee1d8bd200b3dd202ba3042ffc",
+  "baseline/src/Plot.tsx": "31dfe5934c3fbf00aaa08318b78910de739c608e7838c5a30a311a3a38fcf289",
+  "baseline/src/style.css": "500501096bddee7c2c20f4346fe611100ea6629255aef32fe967791207166650",
+  "baseline/src/data.ts": "f906c4fc0e0de77fc1a484ba33924e99bf5568c767eb916523253662e4ecf24a",
+  "baseline/src/engine.ts": "175ffaa07da762cdae169a3911197def7023001cc9da61e0b004117058701003",
+  "baseline/src/lib/utils.ts": "3c0ad01b6b40762d686625035bb98825cd50163501a432e10c5af9466eb8228a",
+  "baseline/src/components/ui/button.tsx": "23883834853e0871b5dd8f50955aafc8ab6cb5edd625fdf452273b1b8ab01b54",
+  "baseline/src/components/ui/dialog.tsx": "62a0324cacdfbc2ba7d1c6c823d4dbeb5dc065f057e5c72f58811bb3a1ab9349"
+}

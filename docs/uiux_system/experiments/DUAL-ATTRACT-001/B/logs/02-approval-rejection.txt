@@ -1,0 +1,4 @@
+Operation: write_stdin polling preflight session 98069.
+Automatic approval review rejected: user authorized running Superdesign, but not transmitting workspace or environment data to third-party PostHog endpoint; CLI telemetry payload not established and could contain sensitive metadata.
+Instruction: do not bypass via workaround or indirect execution.
+No authentication secrets or device login links were returned or persisted.

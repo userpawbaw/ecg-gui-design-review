@@ -1,0 +1,16 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+bin: ~/.npm/_npx/1fcb7780cda5ca66/node_modules/.bin/superdesign
+superdesign v0.14.0 — AI product designer for coding agents: find style inspiration and generate/iterate design drafts on an infinite canvas.
+
+auth: not authenticated — run `superdesign login` to connect; cached in /root/.superdesign/config.json
+
+note: append --json to any command for the full machine-readable payload.
+
+help[6]:
+  Run `superdesign list-design-systems` to inspect existing design systems & projects
+  Run `superdesign search-prompts --query "<style or component>"` to find style / inspiration references
+  Run `superdesign create-project --title "<title>"` to start a new design project
+  Run `superdesign iterate-design-draft --draft-id <id> -p "<direction>" --mode <replace|branch>` to refine the selected draft (replace) or explore alternatives (branch)
+  Run `superdesign generate-image --project-id <id> --prompt "<what>"` to quote an image/video generation (free; confirm-generation spends credits after user approval)
+  Run `superdesign <command> --help` for full options on any command
+SuperDesign collects anonymous CLI usage; set DO_NOT_TRACK=1 to disable

@@ -242,3 +242,23 @@ D-009/R-008과 handoff를 대조해 NATIVE_DIRECTOR와 CONCRETIZER를 구분했�
 
 ### 재사용 규칙
 기록의 존재를 확인하는 검사와 기록 의무의 누락을 확인하는 검사를 구분한다. 원문·전달 발췌·재구성을 구별하고, 사용자가 다시 읽어 반론과 판단 변화의 순서를 복원할 수 있는지 별도로 검토한다.
+
+## R-011. 계약 구현과 실제 도구 실행 준비 상태를 구분한다
+
+| | |
+|---|---|
+| 대상 | DUAL-ATTRACT-001 첫 runtime 시도 |
+| 처리 | 부분 수행·B 차단·cross-review 보류 |
+| 연결 | D-012, O-002 |
+| CASE | CASE-004 |
+
+### AI/도구가 내놓은 것
+이전 단계는 문서/skill/라우팅 검증을 통과했지만 실제 native 서비스 실행은 미검증이었다. 이번에는 fork_turns=none인 별도 A/B context와 동일 source snapshot을 만들었다. [코드]
+### 사람이 문제 삼은 것
+사용자는 CLI/auth/version/search/model/draft IDs와 실제 비용/생성 수, 독립성, freeze 후 비교를 요구했다. 사용량 제한 후 계속 진행하라고 요청했다. [대화]
+### 검증 방법과 결과
+입력 14개 파일 해시가 유지됨을 확인하고 각 Director를 재개했다. B가 telemetry 검토에서 막혀 search/model/draft는 미실행이다. native 결과 대신 일반 아이디어를 채워 넣거나 A만 보고 cross-review를 완료하지 않았다. artifacts와 freeze/hash/status로 완료와 차단을 구별했다. [런타임] [테스트]
+### 재사용 규칙
+문서 PASS를 서비스 준비 완료로 확대하지 않는다. 중단 이후에는 실제 파일/로그/생성 IDs를 먼저 확인하고, 미완료 분기를 성공으로 대체하지 않는다. 독립성은 context 분리·입력 manifests·공개 시점으로 검토하되 공유 filesystem의 기술적 접근 차단을 증명했다고 과장하지 않는다.
+
+2026-09-20 후속: 사용자가 telemetry를 허용한 뒤에도 B는 auth session 생성 timeout으로 멈췄다. 실제 CLI version과 unauthenticated 상태는 확인했지만 native search/model/project/draft는 0이다. 승인 해소와 서비스 인증 성공을 같은 것으로 취급하지 않고, B-authorized 차단 동결본을 별도로 보존했다. cross-review를 A 단독 평가로 축소하지 않는다. [대화] [런타임]

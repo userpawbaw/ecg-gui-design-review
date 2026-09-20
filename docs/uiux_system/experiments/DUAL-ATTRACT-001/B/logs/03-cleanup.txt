@@ -1,0 +1,5 @@
+Owned session: 98069
+Local process scan: no matching preflight process visible.
+Cancellation: write_stdin(session_id=98069, chars=Ctrl-C)
+Actual result: write_stdin failed: Unknown process id 98069
+No restart or network retry. Process namespace limits independent OS-level termination proof.

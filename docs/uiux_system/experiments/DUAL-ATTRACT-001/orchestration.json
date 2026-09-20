@@ -1,0 +1,98 @@
+{
+  "round": "DUAL-ATTRACT-001",
+  "baseline": "ecb5e7c63279035ee5eac866237731987e3e6c7e",
+  "zone": "HIGH",
+  "target": "prototype/v2 Attract",
+  "mode": "DUAL",
+  "started_at": "2026-09-19T09:20:30.356646+00:00",
+  "agents": {
+    "A": "/root/director_a",
+    "B": "/root/director_b"
+  },
+  "fork_turns": "none",
+  "shared_input": "COMMON.md + identical baseline snapshot",
+  "isolation": "Separate model contexts and role folders; policy-enforced manifests, not OS access isolation",
+  "freeze_gate": "Do not cross-review before both first passes complete and freeze",
+  "production_changes_authorized": false,
+  "hybrid_generations_authorized": false,
+  "shared_corrections": [
+    {
+      "fact": "Attract CSS hides method rail despite viewer DOM presence",
+      "evidence": "prototype/v2/src/style.css .attract .method-rail{display:none} grouped rule",
+      "delivered_to": [
+        "A",
+        "B"
+      ],
+      "creative_output_shared": false
+    }
+  ],
+  "B_generation_cap": {
+    "total_calls": 2,
+    "if_vendor_requires_replica": "1 baseline reproduction + 1 new direction, separately counted; no extra generation"
+  },
+  "resume": {
+    "at": "2026-09-19T11:20:42.260457+00:00",
+    "cause": "user-confirmed usage limit",
+    "prior_artifacts": "A/B output directories empty; baseline hashes verified",
+    "prior_B_report": "CLI v0.14.0 not authenticated; login started; no generation reported",
+    "new_agents": {
+      "A": "/root/director_a_resume",
+      "B": "/root/director_b_resume"
+    },
+    "fork_turns": "none",
+    "cross_review_started": false
+  },
+  "authorization_resume": {
+    "at": "2026-09-20T00:39:34Z",
+    "authorization": "User explicitly allowed the previously unknown PostHog telemetry transmission",
+    "agent": "/root/director_b_authorized",
+    "fork_turns": "none",
+    "input": "Same isolated baseline and B-only packet; A outputs not delivered",
+    "baseline_hashes_verified": 14,
+    "superdesign_init_files": 6,
+    "cli_version": "0.14.0",
+    "preflight_auth": "not authenticated",
+    "login": "exit 3: timeout of 30000ms exceeded; no URL or device code",
+    "prompt_searches": 0,
+    "model_listings": 0,
+    "projects_created": 0,
+    "generation_calls": 0,
+    "cross_review_started": false
+  },
+  "status": "READY_FOR_CROSS_REVIEW",
+  "A_status": "FROZEN",
+  "B_status": "FROZEN",
+  "cross_review": "NOT_RUN",
+  "independence": "Separate clean contexts and identical baseline verified; filesystem access restriction is instruction-based; no cross-output sharing reported",
+  "finished_at": null,
+  "B_completion": {
+    "at": "2026-09-20T07:13:22Z",
+    "environment": "local/Codex resume",
+    "cli_version": "0.14.0",
+    "telemetry": "DO_NOT_TRACK=1",
+    "authentication": "authenticated; team Personal",
+    "prompt_searches": 4,
+    "direction_cards": 5,
+    "prefilter_keep": 2,
+    "prefilter_reject": 3,
+    "generation_calls": 2,
+    "setup_reproductions": 1,
+    "direction_drafts": 2,
+    "total_credits": 46,
+    "selected_drafts": [
+      {
+        "id": "SD-DIR-B01",
+        "name": "Signal Orbit",
+        "draft_id": "81ee679a-b18b-45e2-a008-8a1e60e322e7"
+      },
+      {
+        "id": "SD-DIR-B02",
+        "name": "Exhibition Grid",
+        "draft_id": "be68bb43-6954-4064-9362-0777b158f391"
+      }
+    ],
+    "director_A_inspected": false,
+    "cross_review_started": false,
+    "production_changes": 0
+  }
+}

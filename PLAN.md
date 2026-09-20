@@ -183,3 +183,20 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 원격 PR/CI 확인 후 보고. 실제 시안 생성·UI 수정·main merge는 수행하지 않는다.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## DUAL-ATTRACT-001 — 첫 runtime experiment
+
+- 기준 main ecb5e7c; HIGH 신규 Attract, 별도 clean A/B context와 동일 source snapshot.
+- A 5~8 concepts, B native 4~6 cards → 1~2 drafts. 양쪽 freeze 후에만 cross-review.
+- 실측 command/source/provenance/cost/limitations를 experiments/DUAL-ATTRACT-001에 저장한다. Production UI 변경 없음.
+
+## 2026-09-19 Dual runtime checkpoint
+
+A frozen (6 concepts); B blocked at CLI telemetry approval review; cross-review pending. Resume B only after scope resolved. See experiments/DUAL-ATTRACT-001/REPORT.md.
+
+## 2026-09-20 Dual runtime authorization resume
+
+- User explicitly authorized the previously unknown Superdesign/PostHog telemetry transmission.
+- Preserved the original B blocker and resumed in a new B-only clean context with the same 14-file baseline; A output was not delivered.
+- Bare CLI preflight verified Superdesign 0.14.0 and unauthenticated status. Required login failed while creating the auth session after 30 seconds and emitted no URL/device code.
+- Per the official skill, stopped without retry or workaround. Native searches/models/projects/generations remain 0; cross-review remains gated on B completion. Production UI is unchanged.

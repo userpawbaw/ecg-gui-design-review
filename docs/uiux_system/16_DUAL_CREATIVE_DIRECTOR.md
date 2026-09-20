@@ -1,6 +1,6 @@
 # Dual Creative Director — 공통 실행 계약
 
-2026-09-19. 근거: CASE-004, D-010/R-009, D-012. 이전 handoff는 설계 이력이며 현재 실행 규칙은 이 문서다. 14번은 Superdesign 모드 실행 계약, 13번은 A의 reference 방법론이다.
+2026-09-19. 근거: CASE-004, D-010/R-009, D-012. 이전 handoff는 설계 이력이며 현재 실행 규칙은 이 문서다. 14번은 Superdesign 모드 실행 계약, 13번은 A의 reference 방법론이고, 17번은 A의 reference source registry다.
 
 ## 1. Activation과 우선순위
 

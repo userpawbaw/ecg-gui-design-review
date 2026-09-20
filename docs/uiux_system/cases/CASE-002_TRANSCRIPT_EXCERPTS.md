@@ -107,3 +107,28 @@ Attract 레퍼런스 마이닝.
 5. 실제로 어떤 문서/Skill/검사로 승급됐는가.
 
 정확한 원문이 없으면 `[재구성]`으로 표시하거나 `기록 없음`이라고 쓴다. 사용자가 다시 읽을 때 **결론만 있고 왜 그런 결론이 나왔는지 사라지는 것**을 가장 큰 실패로 본다.
+
+---
+
+## 7. 후속 전환 — Director A를 UX-only로 만들려는 것이 아니었다
+
+### 사용자 `[대화]`
+
+> "지금 디렉터 A로 탐색했던 방향이 마음에 들었어서 디렉터 B의 결과와 반대로 만들겠다고 일부러 UX에만 집중하게끔 하고 싶지는 않네."
+
+그리고 추가 사이트를 제시한 목적을 다음처럼 정리했다.
+
+> "혹시 awwwards에만 집중하고 있다면 그걸 방지하기 위해 위의 사이트를 제시했던 거였어."
+
+Land-book/Minimal Gallery처럼 전체 미감·section을 볼 수 있는 source와 Refero/Mobbin류 component/product source를 함께 쓰자는 요구였다. `[대화]`
+
+### 판단 변화 `[추론]`
+
+Director A와 B의 차이를 결과 스타일로 만들지 않는다.
+
+- A = explicit external reference + viewing instruction + borrowed principle + ECG translation
+- B = Superdesign-native search/synthesis + generated draft
+
+따라서 A는 Creative/Experimental뿐 아니라 Curated Web, Product/Component, Scientific, Data Storytelling source도 사용할 수 있다. UX research는 아이디어의 cheap sanity check로 쓰되 Validator를 대체하지 않는다.
+
+이 전환은 `F-008 / D-013 / R-012`와 `17_REFERENCE_SOURCE_REGISTRY.md`로 승급했다.

@@ -19,7 +19,10 @@
 - `14_SUPERDESIGN_GENERATION_LAYER.md` — NATIVE_DIRECTOR 독립 탐색과 CONCRETIZER 선택안 시안화 계약
 - `15_SUPERDESIGN_USAGE_EXAMPLES.md` — Chat/Work/Codex/Claude 환경별 short trigger, Attract/Evidence/Method/Transition 사용 예시
 - `16_DUAL_CREATIVE_DIRECTOR.md` — 독립 A/B activation, first-pass isolation, budget, cross-review, Hybrid 규칙
-- `17_REFERENCE_SOURCE_REGISTRY.md` — Director A의 reference vocabulary를 Creative/Curated Web/Concept/Product/UX Evidence/Scientific/Data Story family로 확장하고 과업별 source router를 제공
+- `17_REFERENCE_SOURCE_REGISTRY.md` — Creative/Curated Web/Concept/Product/UX Evidence/Scientific/Data Story family와 과업별 source router; Alpha/Beta 공통 reference layer
+- `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md` — reference의 visual world를 component/state/motion/implementation까지 처음부터 설계하는 Alpha 경로
+- `19_BETA_IMAGE_CONCEPT_TRACK.md` — reference-grounded image still을 만들고 component/interaction/motion으로 다시 번역하는 Beta 경로
+- `20_ALPHA_BETA_OPERATING_PROTOCOL.md` — Alpha/Beta 공통 packet, 평가 기준, trigger, template, Chat/Work/Codex 실행 계약
 
 프로젝트 local skill:
 
@@ -30,9 +33,11 @@
 - `.claude/skills/reference-mining/SKILL.md`
 - `.claude/skills/superdesign-routing/SKILL.md`
 
-`레퍼런스 마이닝 진행해줘`, `Reference mining`, `Attract 레퍼런스 마이닝`은 `13_REFERENCE...`의 전체 절차를 실행하는 짧은 trigger로 사용한다. 이때 Director A는 `17_REFERENCE_SOURCE_REGISTRY.md`에서 과업에 맞는 2~4 source family를 선택하며 Awwwards/Godly만 기본값으로 고정하지 않는다.
+`레퍼런스 마이닝 진행해줘`, `Reference mining`, `Attract 레퍼런스 마이닝`은 `13_REFERENCE...`의 전체 절차를 실행하는 짧은 trigger다. Alpha/Beta 모두 `17_REFERENCE_SOURCE_REGISTRY.md`에서 과업에 맞는 2~4 source family를 선택하며 Awwwards/Godly만 기본값으로 고정하지 않는다.
 
-`Superdesign 시안 단계까지 진행해줘`, `이 3개 방향을 Superdesign으로 비교해줘`는 reference/art-direction 결과 중 상위 방향을 `14_SUPERDESIGN_GENERATION_LAYER.md`에 따라 concrete draft로 만드는 trigger다. standard Chat에서는 실제 CLI를 실행하지 않고 Work/Codex/Claude/web app용 handoff를 준비한다.
+새 trigger: `Alpha안으로 [scene] 설계해줘`, `Beta안으로 [scene] 진행해줘`, `Alpha/Beta 라운드로 [scene] 진행해줘`, `Alpha/Beta 결과 비교해줘`. 정확한 의미는 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`가 source of truth다.
+
+Superdesign 관련 14/15/16번은 DUAL-ATTRACT-001의 이력과 향후 별도 capability 재검증을 위해 보존한다. 2026-09-23 이후 새 creative round의 기본 generator가 아니다.
 
 ## Current next-stage plan
 
@@ -87,7 +92,14 @@ Chat memory는 이 구조의 **인덱스**로만 사용한다. exact 승인 상�
 
 [CASE-004](cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md)와 [발췌 부록](cases/CASE-004_TRANSCRIPT_EXCERPTS.md)은 CASE-001 → CASE-002 → CASE-003의 후속 판단을 기록한다. D-010의 설계 채택은 실행 구현 완료가 아니다. 기록 검사 후 별도 사용자 승인을 받아 다음 단계를 시작한다.
 
-## Dual Creative Director 실행 진입점 (2026-09-19)
+## Alpha / Beta creative 실행 진입점 (2026-09-23)
+
+- `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`: Alpha 전체 계약.
+- `19_BETA_IMAGE_CONCEPT_TRACK.md`: Beta image-first 전체 계약.
+- `20_ALPHA_BETA_OPERATING_PROTOCOL.md`: 공통 packet, trigger, template, 비교, 환경별 실행.
+- Reference source는 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md`.
+
+## Dual Creative Director 실행 진입점 — 역사/재검증용 (2026-09-19)
 
 - `docs/uiux_system/16_DUAL_CREATIVE_DIRECTOR.md`: HIGH/MEDIUM/LOW activation, 독립 A/B, 예산, cross-review, 환경별 fallback의 공통 계약(경로는 repository root 기준).
 - `docs/uiux_system/14_SUPERDESIGN_GENERATION_LAYER.md`: NATIVE_DIRECTOR / CONCRETIZER 실행.

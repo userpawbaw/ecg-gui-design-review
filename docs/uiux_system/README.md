@@ -67,6 +67,8 @@ Superdesign 관련 14/15/16번은 DUAL-ATTRACT-001의 이력과 향후 별도 ca
 - `cases/CASE-002_REFERENCE_GROUNDED_CREATIVE_MINING.md` — text-only creative proposal과 모든 mockup 사이의 비용/의도 공유 문제를 reference mining으로 해결한 논의와 시스템화
 - `cases/CASE-002_TRANSCRIPT_EXCERPTS.md` — CASE-002의 판단 전환을 다시 읽기 위한 핵심 사용자/AI 대화 발췌
 - `cases/CASE-003_SUPERDESIGN_GENERATOR_LAYER.md` — validator-heavy 시스템에서 visual generator gap을 발견하고 Superdesign을 bounded generator로 채택한 검증·통합 과정
+- `cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md` — Superdesign을 독립 B로 확장한 판단과 첫 실행 계약의 진화
+- `cases/CASE-005_ALPHA_BETA_CREATIVE_TRACKS.md` — 첫 creative system 실사용의 fidelity 한계를 바탕으로 Alpha implementation-aware + Beta image-first 구조로 전환한 과정
 
 `CASE`는 다섯 번째 운영 기록 종류가 아니다. 여러 F/D/O/R과 대화를 묶어 **배경 → 문제 제기 → AI 응답 → 반론 → 판단 변화 → 구축 결과 → 재사용 패턴 → 한계**를 설명하는 해설 계층이다.
 
@@ -82,7 +84,7 @@ CASE는 다음 AI의 provenance만을 위한 문서가 아니다. **사용자가
 
 ## 환경별 사용
 
-프로젝트 로컬 Claude skill은 `.claude/skills/` 아래에 둔다. Claude Code에서는 project-local skill로 직접 활용할 수 있고, Chat/Work/Codex가 같은 skill loader를 제공하지 않는 환경에서도 `00_UIUX_MASTER.md` → `05_TOOL_SKILL_ROUTING.md` → `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`의 동일한 프로젝트 계약을 읽어 같은 절차를 수행한다.
+프로젝트 로컬 Claude skill은 `.claude/skills/` 아래에 둔다. Claude Code에서는 project-local skill로 직접 활용할 수 있고, Chat/Work/Codex가 같은 skill loader를 제공하지 않는 환경에서도 `00_UIUX_MASTER.md` → `05_TOOL_SKILL_ROUTING.md` → 필요 시 `13/17` → 새 significant CREATIVE는 `18/19/20`의 동일한 프로젝트 계약을 읽어 같은 절차를 수행한다.
 
 즉 short trigger의 의미는 **skill loader 자체가 아니라 GitHub에 고정된 workflow contract**에 있다. 어떤 환경이든 repo 문서를 읽을 수 있으면 `레퍼런스 마이닝 진행`이라는 짧은 요청으로 같은 흐름을 재현한다.
 

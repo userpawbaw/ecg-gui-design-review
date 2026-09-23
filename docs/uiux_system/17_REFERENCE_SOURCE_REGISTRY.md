@@ -1,25 +1,27 @@
 # Reference Source Registry v1
 
 작성 기준: 2026-09-20  
-상태: **Director A의 명시적 reference 탐색 source registry**  
-상위 계약: `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`, `16_DUAL_CREATIVE_DIRECTOR.md`
+상태: **명시적 reference 탐색의 공통 source registry — Alpha/Beta 공용**  
+상위 계약: `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`, `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`, `19_BETA_IMAGE_CONCEPT_TRACK.md`, `20_ALPHA_BETA_OPERATING_PROTOCOL.md`
 
 ## 1. 목적
 
-Director A는 특정 미감(Awwwards식, UX-only 등)을 담당하는 역할이 아니다.
+이 registry는 특정 미감(Awwwards식, UX-only 등)을 담당하지 않는다. 기존 Director A에서 시작했으며 2026-09-23 이후 Alpha/Beta의 공통 source layer로 확장한다.
 
-Director A의 정체성은:
+공통 정체성은:
 
-> **실제 외부 reference를 명시하고, 사용자가 직접 원본을 볼 수 있게 하며, 그 reference의 어떤 장면/컴포넌트/원리를 ECG UI에 어떻게 번역했는지 설명 가능한 Creative Director**
+> **실제 외부 reference를 명시하고, 사용자가 직접 원본을 볼 수 있게 하며, 그 reference의 어떤 장면/컴포넌트/원리를 ECG UI에 어떻게 번역했는지 설명 가능한 source layer**
 
 다.
 
+Alpha는 이 source를 실제 component/state/motion 구조로 번역하고, Beta는 같은 source를 image concept으로 먼저 시각화한 뒤 다시 UI 구조로 번역한다.
+
 따라서 이 registry의 목적은 Awwwards 의존도를 줄이되 A의 기존 강점인 과감한 creative exploration을 약화시키지 않고, **서로 다른 종류의 reference vocabulary를 넓히는 것**이다.
 
-Director B와의 차이는 "화려함 vs UX"가 아니다.
+과거 Director A/B 차이는 이 문서의 이력이다. 새 Alpha/Beta의 차이도 "화려함 vs UX"가 아니다.
 
-- A: explicit external provenance + viewing instruction + principle extraction
-- B: Superdesign-native direction synthesis + concrete drafts
+- Alpha: explicit provenance + implementation-aware structure
+- Beta: explicit provenance + image-first scene exploration + implementation translation
 
 둘 다 과감하거나 절제될 수 있다.
 

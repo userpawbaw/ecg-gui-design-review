@@ -45,7 +45,7 @@
 | **새 creative direction / 디자인적 놀라움 / reference 기반 발상** | 01 Creative, **18 Alpha**, **19 Beta**, **20 AB Protocol**, 13 Reference Mining, **17 Source Registry**, 04 Validation | HIGH: Alpha+Beta 권장 → cross-review → validator. MEDIUM: Alpha 우선, Beta 필요성 판단. LOW: creative track 생략 |
 | **같은 baseline에서 visual direction을 저비용 비교** | 18/19/20, 13/17, 04 Validation | Alpha 설계 + Beta image still 비교. 구현 후보는 이후 Work/Codex에서 actual UI prototype |
 | Attract/Intro | 01 Creative, 03 Motion, 13/17, **18/19/20** | HIGH 신규는 Alpha+Beta 기본; image still은 Chat, actual UI prototype은 Work/Codex |
-| Replay↔Live transition | 03 Motion, 04 Validation | HIGH 신규는 16 Dual, 이후 motion-review/Context7/Playwright |
+| Replay↔Live transition | 03 Motion, 13/17, 18/19/20, 04 Validation | HIGH 신규는 Alpha+Beta; 이후 motion-review/Context7/Playwright |
 | 데이터 관계/스토리 | 02 Data, 04 Validation | Flourish, Product Design; story 표현이 새롭고 visual intent 공유가 필요하면 reference-mining |
 | 기존 UI polish | docs/21, docs/22, 04 Validation | design-taste, ui-ux-pro-max |
 | 컴포넌트/디자인 시스템 | docs/15, 01/04 | Figma, design-taste |
@@ -58,7 +58,7 @@
 ## 3. Reference Mining 자동 라우팅
 
 ### 자동 실행
-16번으로 명시 모드와 zone을 먼저 판정한다. B_ONLY에는 A 선행 규칙을 적용하지 않는다. Dual이면 아래는 A의 별도 context에서만 수행한다.
+20번으로 target/zone과 Alpha/Beta 필요성을 먼저 판정한다. 아래 reference mining은 두 track의 공통 source layer다.
 
 다음 요청은 `docs/uiux_system/13_REFERENCE_GROUNDED_CREATIVE_MINING.md`와 `reference-mining` skill을 자동 포함한다.
 
@@ -117,4 +117,4 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 `새 디자인 라운드 시작해줘` → zone/task 분류. HIGH 신규 significant CREATIVE → Alpha+Beta 권장, MEDIUM → Alpha 우선/Beta 가치 판단, LOW 또는 polish/frozen 구현 → creative track 생략.
 `Alpha안으로 [scene] 설계해줘` → Alpha. `Beta안으로 [scene] 진행해줘` → Beta. `Alpha/Beta 라운드로 [scene] 진행해줘` → 두 track first pass 후 cross-review. `Alpha/Beta 결과 비교해줘` → 20번 공통 평가. 기존 Dual/Superdesign trigger는 역사/명시적 재검증 요청에서만 사용한다.
 
-실행 entrypoint: `.claude/skills/dual-creative-director/SKILL.md`; wrapper를 invoke할 수 없는 Chat/Work/Codex도 16번 계약을 직접 따른다. 이 자동 선택은 account-wide 설치/hook 보장이 아니다.
+실행 entrypoint는 특정 skill loader가 아니라 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`의 workflow contract다. Chat/Work/Codex/Claude Code는 같은 문서를 읽어 동일 trigger 의미를 따른다. 이 자동 선택은 account-wide hook 보장이 아니다.

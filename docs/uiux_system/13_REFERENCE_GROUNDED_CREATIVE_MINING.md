@@ -3,7 +3,18 @@
 작성 기준: 2026-09-18  
 상태: **Creative reference 탐색과 visual-intent 공유를 위한 운영 규칙**
 
-## Dual round에서의 적용 (2026-09-19)
+## Alpha/Beta에서의 적용 (2026-09-23)
+
+새 significant CREATIVE round에서는 이 문서가 **Alpha/Beta 공통 source layer**다.
+
+- Alpha: Reference Card를 실제 scene/layout/component/motion/implementation으로 번역한다.
+- Beta: 동일 Reference Card에서 image-specific palette/composition/signature features를 추출해 scene still을 만들고 다시 UI로 번역한다.
+- source selection은 `17_REFERENCE_SOURCE_REGISTRY.md`.
+- 공통 운영은 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`.
+
+기존 Dual Director 적용 규칙은 DUAL-ATTRACT-001 이력/명시적 재검증에서만 사용한다.
+
+## Dual round에서의 적용 — 역사/재검증용 (2026-09-19)
 
 `16_DUAL_CREATIVE_DIRECTOR.md`로 먼저 route한다. Dual일 때 이 문서는 A 전용이며 A 예산은 5~8 concepts다. 아래 기존 단일 경로의 8~10 권장/shortlist→Superdesign 단계는 Dual first pass에 적용하지 않는다. A는 결과를 동결·반환하고 B 검색/cards/draft를 읽거나 B를 대신 실행하지 않는다. 두 pass 동결 뒤 orchestrator가 cross-review한다. B_ONLY는 이 reference mining 선행조건을 갖지 않는다.
 
@@ -95,7 +106,7 @@ Reference mining은 `DIVERGE`를 대신하지 않는다. **reference를 groundin
 
 ## 6. Step 2 — Reference Source 역할
 
-**`17_REFERENCE_SOURCE_REGISTRY.md`를 Director A의 source-of-truth registry로 사용한다.**
+**`17_REFERENCE_SOURCE_REGISTRY.md`를 Alpha/Beta 공통 source-of-truth registry로 사용한다.**
 
 한 플랫폼이나 한 미감에만 의존하지 않는다. Awwwards/Godly는 중요한 creative source지만 Director A 자체를 Awwwards-style director로 정의하지 않는다.
 
@@ -226,28 +237,25 @@ Evidence level now (usually L0)
 Reference mining 자체가 mockup 전 단계의 visual alignment다.
 
 ```text
-8~10 ideas
+5~10 ideas
   ↓
 reference를 직접 보고 의도 이해
   ↓
-사용자 1차 alignment
+Alpha implementation-aware design
+  + Beta image-first scenes (필요 시)
   ↓
-2~4 ideas
+두 first pass freeze
   ↓
-Superdesign concrete draft branches (필요 시)
+user alignment / cross-review
   ↓
 validator
   ↓
-1~2 ideas
-  ↓
-real implementation
+selected real implementation
 ```
 
 모든 아이디어를 Figma/React/Superdesign 시안으로 만들지 않는다. reference만으로 충분히 reject 가능한 후보는 여기서 줄인다.
 
-**Superdesign을 쓰는 조건:** 같은 baseline에서 2개 이상 방향의 실제 visual difference를 보고 나서야 판단이 쉬워지는 significant CREATIVE 작업. 자세한 계약은 `14_SUPERDESIGN_GENERATION_LAYER.md`.
-
-Superdesign이 없거나 standard Chat이라 직접 실행할 수 없으면 기존처럼 Figma/React light prototype 또는 Work/Codex/Claude handoff로 대체한다.
+Superdesign은 현재 기본 시안 경로가 아니다. first DUAL-ATTRACT test 이후 별도 re-test 승인이 있을 때만 `14/16` 계약으로 사용한다. 기본 visual comparison은 `18/19/20`의 Alpha/Beta를 따른다.
 
 ## 13. Validator pass
 

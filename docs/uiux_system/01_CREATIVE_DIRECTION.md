@@ -88,6 +88,32 @@ Reference Mining이 있었다면 Reference ID와 experience principle을 전달�
 
 Superdesign draft는 **후보를 더 잘 보기 위한 시안**이지 승인된 설계나 production code가 아니다.
 
+## 6A. 2026-09-23 이후 creative fidelity 기준
+
+첫 DUAL-ATTRACT 실험을 통해 새 creative 작업의 목표를 더 명확히 한다.
+
+목표는 "정돈된 dashboard"가 아니라:
+
+> **2.2.1의 실제 기능과 파형 엔진을 자산으로 유지하면서, Awwwards/Godly/Minimal Gallery/Land-book류의 강한 visual world를 ECG 주제에 맞게 번안한 전시형 interactive scene을 만든다.**
+
+따라서 HIGH zone에서는 다음을 적극 허용한다.
+
+- attract/intro를 하나의 독립 scene처럼 설계
+- 연구 기록의 흥미로운 포인트를 story chapter로 재구성
+- palette/composition/typography/signature UI device를 reference에서 강하게 번안
+- 잔광, sweep presence, reveal, scene transition 같은 motion language 강화
+- 이후 component reference로 button/rail/tab/tooltip까지 같은 visual world로 완성
+
+다만 reference를 썼다는 이유만으로 외형 복제를 승인하지 않는다. ECG waveform, 연구 story, replay/live/data semantics가 원본의 hero object를 대신해야 한다.
+
+새 significant CREATIVE는 기본적으로:
+- Alpha: implementation-aware reference adaptation
+- Beta: reference-grounded image concept
+
+두 경로를 `18/19/20`에 따라 사용할 수 있다.
+
+Superdesign 생성물은 현재 기본 경로가 아니다. 과거 B draft는 이력/실험 증거로 보존한다.
+
 ## 7. 검증으로 넘기는 시점
 
 Creative 단계에서 후보를 제거하는 이유는 "낯설다"가 아니라 다음이어야 한다.

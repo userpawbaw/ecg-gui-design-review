@@ -1,5 +1,7 @@
 # Dual Creative Director — 공통 실행 계약
 
+> **2026-09-23 운영 상태.** 이 계약은 DUAL-ATTRACT-001 첫 실사용과 Superdesign 재검증을 위한 역사적/선택적 계약으로 유지한다. 새 significant CREATIVE round의 기본 경로는 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`이며, Alpha/Beta는 Director A/B와 동일한 이름/역할이 아니다. 기존 first-pass 기록은 삭제하지 않는다.
+
 2026-09-19. 근거: CASE-004, D-010/R-009, D-012. 이전 handoff는 설계 이력이며 현재 실행 규칙은 이 문서다. 14번은 Superdesign 모드 실행 계약, 13번은 A의 reference 방법론이고, 17번은 A의 reference source registry다.
 
 ## 1. Activation과 우선순위

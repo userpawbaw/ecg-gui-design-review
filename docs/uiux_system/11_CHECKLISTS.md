@@ -39,6 +39,37 @@
 - [ ] context isolation이 안 되면 독립 실행 성공을 주장하지 않고 `B_HANDOFF_READY` / `INDEPENDENCE_UNVERIFIED`로 멈출 계획인가.
 - [ ] Native 결과도 자기 승인하지 않고 A/B 동결 뒤 cross-review + validator로 넘길 계획인가.
 
+## §1C Alpha 실행 전
+
+- [ ] `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`를 읽었나.
+- [ ] Common Creative Packet의 target / 3초 목표 / next action / hard constraints가 고정됐나.
+- [ ] 17번 registry에서 2~4 source family와 3~8 reference를 고르고 viewing instruction이 있나.
+- [ ] macro art-direction reference와 component reference를 구분했나.
+- [ ] fidelity target이 STRUCTURAL / STRONG_ADAPTATION / NEAR_FINAL 중 무엇인지 정했나.
+- [ ] reference의 palette/composition/signature UI/motion 중 실제로 가져올 것을 명시했나.
+- [ ] implementation feasibility를 이유로 발산 전에 creative ambition을 낮추지 않았나.
+- [ ] Scene Blueprint + Component Inventory + Motion Spec + Data Contract + Implementation Blueprint를 모두 만들 계획인가.
+
+## §1D Beta image concept 실행 전
+
+- [ ] `19_BETA_IMAGE_CONCEPT_TRACK.md`를 읽었나.
+- [ ] 아무 "futuristic ECG" prompt가 아니라 Reference IDs와 exact borrowed features가 있나.
+- [ ] baseline screenshot을 쓸 수 있으면 확보했나. 없으면 conceptual still임을 명시했나.
+- [ ] image prompt에 project identity / hero waveform / reference translation / negative constraints / fidelity를 포함했나.
+- [ ] 생성 이미지의 text/axis/waveform pixel을 실제 데이터 증거로 쓰지 않을 계획인가.
+- [ ] image 뒤에 Component Translation + Interaction Translation + Motion Storyboard + Gap register를 반드시 작성할 계획인가.
+- [ ] Alpha와 비교하는 first pass라면 Alpha-specific 결과를 Beta prompt에 섞지 않았나.
+- [ ] generic medical dashboard / meaningless metric / random cyberpunk로 drift하지 않는지 검토할 계획인가.
+
+## §1E Alpha/Beta cross-review 전
+
+- [ ] 두 track이 같은 Common Creative Packet을 사용했나.
+- [ ] 둘 다 first pass를 freeze했나.
+- [ ] Creative Impact / Reference Translation / ECG Identity / Waveform Centrality / Story / Completeness / Interaction / Component / Data Integrity / Implementation Reality / Accessibility를 같이 비교하나.
+- [ ] 점수 합계로 자동 winner를 고르지 않나.
+- [ ] 사용자가 살릴 것 / 거슬리는 것 / 더 과감하게 할 것 / 프로젝트답지 않은 것을 표시할 기회를 받나.
+- [ ] Hybrid가 필요하면 결합 이유를 한 문장으로 설명할 수 있나.
+
 ## §2 중요한 설계 후보를 고르기 전에
 
 - [ ] 이것이 단순 값 조정인가, 아니면 결과의 성격을 바꾸는 **갈림길**인가.
@@ -136,7 +167,7 @@
 
 자동 승급: D/R CASE 필드·대상·사유·보류 재검토 조건·main 번호 유일성은 checker와 임시 fixture 회귀 검사에서 확인한다. 방법론 판별·사유 타당성·서사 품질은 사람 검토로 남는다.
 
-## §11 Dual Director 실행 전후
+## §11 Dual Director 실행 전후 — 역사/명시적 재검증
 
 - [ ] 16번으로 target/task/zone/명시 모드를 정했나. HIGH여도 frozen 구현이면 자동 탐색을 생략했나.
 - [ ] baseline SHA와 공통 manifest를 고정하고 서로의 출력을 제외한 별도 A/B context를 만들었나.

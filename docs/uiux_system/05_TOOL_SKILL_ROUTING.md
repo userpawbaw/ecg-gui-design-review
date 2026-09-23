@@ -14,10 +14,15 @@
 - TinyFish — live browser workflow
 - Vercel — preview deployment
 
-### Superdesign 두 모드
-- NATIVE_DIRECTOR: 독립 B의 자체 inspiration 탐색. 4~6 cards → 1~2 drafts.
-- CONCRETIZER: 선택된 A/B/Hybrid 시안화. 통상 2~4 비교 또는 단일 후보 1개.
-- 16번 공통 계약이 zone/명시 모드/독립성/budget을 정한다. 14번은 vendor 실행, standard Chat은 clean handoff다.
+### Alpha / Beta 기본 creative tracks (2026-09-23~)
+- **Alpha**: reference-grounded + implementation-aware. 실제 component/state/motion/implementation blueprint까지.
+- **Beta**: reference-grounded + image-first. Chat image generation으로 scene still을 만들고 component/interaction/motion translation을 반드시 붙인다.
+- 공통 계약: `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`, `19_BETA_IMAGE_CONCEPT_TRACK.md`, `20_ALPHA_BETA_OPERATING_PROTOCOL.md`.
+
+### Superdesign 두 모드 — 기본 자동 경로 중지
+- NATIVE_DIRECTOR / CONCRETIZER의 과거 계약은 14/16번에 보존한다.
+- 첫 DUAL-ATTRACT 실사용에서 generated draft의 reference fidelity / near-final completeness가 사용자 기대에 미달했다.
+- 별도 재검증과 사용자 승인 없이는 새 creative round에 자동 투입하지 않는다.
 
 ### 공개 후보 / 필요 시 연결
 - Mobbin — 상용 UI/UX 레퍼런스 연구; product UX reality check에 특히 유용
@@ -37,10 +42,10 @@
 | Task | 먼저 읽을 문서 | Skill/Plugin 후보 |
 |---|---|---|
 | 기존 방향 안의 가벼운 창의 개선 / non-significant polish | 01 Creative, 04 Validation | expo-ui-art-director, Creative Production, Product Design; **새 significant direction이면 아래 16 Dual 행으로 승격** |
-| **새 creative direction / 디자인적 놀라움 / reference 기반 발상** | 01 Creative, **16 Dual**, 13(A 전용), **17 Source Registry**, 04 Validation | **16 Dual routing → 독립 A(reference-mining/art-director) + B(Native) → cross-review → validator**, A는 registry에서 과업별 source family를 선택 |
-| **같은 baseline에서 2~4개의 실제 UI 시안을 비교** | 01 Creative, **14 Superdesign**, 04 Validation | **superdesign-routing → external Superdesign → user alignment → validator** |
-| Attract/Intro | 01 Creative, 03 Motion, docs/13, 필요 시 14 | HIGH 신규는 16 Dual; A/B 독립, 이후 Product Design/Figma 필요 시 |
-| Replay↔Live transition | 03 Motion, 04 Validation | HIGH 신규는 16 Dual, 이후 motion-review/Context7/Playwright |
+| **새 creative direction / 디자인적 놀라움 / reference 기반 발상** | 01 Creative, **18 Alpha**, **19 Beta**, **20 AB Protocol**, 13 Reference Mining, **17 Source Registry**, 04 Validation | HIGH: Alpha+Beta 권장 → cross-review → validator. MEDIUM: Alpha 우선, Beta 필요성 판단. LOW: creative track 생략 |
+| **같은 baseline에서 visual direction을 저비용 비교** | 18/19/20, 13/17, 04 Validation | Alpha 설계 + Beta image still 비교. 구현 후보는 이후 Work/Codex에서 actual UI prototype |
+| Attract/Intro | 01 Creative, 03 Motion, 13/17, **18/19/20** | HIGH 신규는 Alpha+Beta 기본; image still은 Chat, actual UI prototype은 Work/Codex |
+| Replay↔Live transition | 03 Motion, 13/17, 18/19/20, 04 Validation | HIGH 신규는 Alpha+Beta; 이후 motion-review/Context7/Playwright |
 | 데이터 관계/스토리 | 02 Data, 04 Validation | Flourish, Product Design; story 표현이 새롭고 visual intent 공유가 필요하면 reference-mining |
 | 기존 UI polish | docs/21, docs/22, 04 Validation | design-taste, ui-ux-pro-max |
 | 컴포넌트/디자인 시스템 | docs/15, 01/04 | Figma, design-taste |
@@ -53,7 +58,7 @@
 ## 3. Reference Mining 자동 라우팅
 
 ### 자동 실행
-16번으로 명시 모드와 zone을 먼저 판정한다. B_ONLY에는 A 선행 규칙을 적용하지 않는다. Dual이면 아래는 A의 별도 context에서만 수행한다.
+20번으로 target/zone과 Alpha/Beta 필요성을 먼저 판정한다. 아래 reference mining은 두 track의 공통 source layer다.
 
 다음 요청은 `docs/uiux_system/13_REFERENCE_GROUNDED_CREATIVE_MINING.md`와 `reference-mining` skill을 자동 포함한다.
 
@@ -76,15 +81,17 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 2. 작업 분류
 3. 관련 문서 1~3개
 4. 필요한 Skill/Plugin만 선택
-5. significant CREATIVE 작업이면 `16_DUAL_CREATIVE_DIRECTOR.md`의 HIGH/MEDIUM/LOW 및 explicit routing을 먼저 확인하고 A 경로에만 §3 trigger를 적용하며 필요한 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md`를 추가
-6. 상위 2~4개 방향을 **실제 화면으로 비교해야 판단이 쉬워지는 경우** `14_SUPERDESIGN_GENERATION_LAYER.md`와 `superdesign-routing`을 추가한다. 이는 CONCRETIZER 경로다. Native는 16번의 별도 예산을 따른다. 두 모드 모두 validation/implementation을 자동 승인하지 않는다
+5. significant CREATIVE 작업이면 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`로 HIGH/MEDIUM/LOW를 판정하고 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md`를 공통 source layer로 추가한다.
+6. Alpha는 `18`로 implementation-aware design을, Beta는 `19`로 reference-grounded image still + translation을 만든다. 두 결과는 freeze 뒤 비교한다. Superdesign은 별도 재검증 요청이 있을 때만 14/16번으로 호출한다.
 
 모든 skill/reference/plugin을 한 번에 로드하지 않는다.
 
 ## 5. Tool Failover
 
 - Plugin/Skill을 사용할 수 없으면 역할 자체를 포기하지 않는다.
-- Superdesign 사용 불가/standard Chat → A 수행 + A 출력 없는 B clean handoff. Concretizer만 선택 후보를 전달한다. Figma/직접 prototype 대안은 native 성공으로 기록하지 않는다.
+- image generation을 사용할 수 없는 환경 → Beta Image Concept Packet과 prompt/translation spec을 만들어 Chat으로 handoff한다.
+- Alpha 구현 환경이 없으면 설계/Change Contract까지만 수행하고 Work/Codex로 handoff한다.
+- Superdesign은 현재 기본 failover가 아니다. 별도 재검증 요청에서만 사용한다.
 - Creative Production 사용 불가 → art-director skill + 웹 레퍼런스
 - `reference-mining` skill을 직접 invoke할 수 없는 환경 → `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 읽고 동일 절차 수행
 - Flourish 사용 불가 → 동일 data-story 질문을 먼저 설계하고 정적 mock/코드 후보 생성
@@ -107,7 +114,7 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 
 ## 7. 명시 trigger와 자동 activation
 
-`새 디자인 라운드 시작해줘` → zone/task 분류. HIGH 신규 significant CREATIVE → Dual, MEDIUM → A 우선/B 가치 제안, LOW 또는 polish/frozen 구현 → 자동 생략.
-`듀얼 디렉터 진행해줘` → Dual; `레퍼런스 디렉터만 진행해줘` → A_ONLY; `Superdesign 독립 탐색 진행해줘` → B_ONLY; `이 후보를 Superdesign 시안으로 만들어줘` → CONCRETIZER.
+`새 디자인 라운드 시작해줘` → zone/task 분류. HIGH 신규 significant CREATIVE → Alpha+Beta 권장, MEDIUM → Alpha 우선/Beta 가치 판단, LOW 또는 polish/frozen 구현 → creative track 생략.
+`Alpha안으로 [scene] 설계해줘` → Alpha. `Beta안으로 [scene] 진행해줘` → Beta. `Alpha/Beta 라운드로 [scene] 진행해줘` → 두 track first pass 후 cross-review. `Alpha/Beta 결과 비교해줘` → 20번 공통 평가. 기존 Dual/Superdesign trigger는 역사/명시적 재검증 요청에서만 사용한다.
 
-실행 entrypoint: `.claude/skills/dual-creative-director/SKILL.md`; wrapper를 invoke할 수 없는 Chat/Work/Codex도 16번 계약을 직접 따른다. 이 자동 선택은 account-wide 설치/hook 보장이 아니다.
+실행 entrypoint는 특정 skill loader가 아니라 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`의 workflow contract다. Chat/Work/Codex/Claude Code는 같은 문서를 읽어 동일 trigger 의미를 따른다. 이 자동 선택은 account-wide hook 보장이 아니다.

@@ -1,5 +1,7 @@
 # Dual Director / Superdesign 사용 예시
 
+> **2026-09-23 상태:** 아래 예시는 기본 routing이 아니라 과거 Dual/Superdesign workflow의 보존 및 향후 명시적 재검증용이다. 새 creative round 기본 trigger는 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`를 따른다.
+
 공통 계약: [16_DUAL_CREATIVE_DIRECTOR.md](16_DUAL_CREATIVE_DIRECTOR.md). 모드 실행: [14_SUPERDESIGN_GENERATION_LAYER.md](14_SUPERDESIGN_GENERATION_LAYER.md). 설치/auth/CLI syntax는 현재 공식 vendor skill을 읽는다.
 
 | 사용자 요청 | 실제 경로/기대 결과 |

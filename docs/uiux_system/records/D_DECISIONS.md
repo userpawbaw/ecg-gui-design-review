@@ -389,3 +389,36 @@ Director A의 reference source를 Awwwards/Godly 중심으로 유지할지, B와
 
 ### 되돌려야 하는 조건
 다음 creative round에서 source router 때문에 검색 비용만 늘고 reference 다양성·설명력·아이디어 품질이 개선되지 않거나, source family 규칙이 오히려 발산을 제한하면 family 수와 budget을 줄인다.
+
+---
+
+## D-015. 새 significant CREATIVE 작업의 기본 경로를 **Alpha + Beta**로 바꾸고 Superdesign 자동 사용을 중지한다
+
+| | |
+|---|---|
+| 시점 | 2026-09-23 첫 DUAL-ATTRACT 결과 회고 후 `[대화]` |
+| 상태 | 채택 — 다음 creative round부터 적용 |
+| 연결 | F-009, R-013, D-010, D-013 |
+| CASE | CASE-005 |
+
+### 갈림길 — 무엇을 정해야 했나
+첫 Dual Director 실험 이후 기존 A/B+Superdesign 구조를 그대로 개선할지, Superdesign만 제외하고 단일 reference director로 돌아갈지, 또는 **같은 reference layer 위에 implementation-first와 image-first 두 표현 경로를 만들어 비교할지** 결정해야 했다.
+
+### 검토한 선택지
+1. Superdesign prompt/model을 더 세게 튜닝해 기존 Dual 구조 유지
+2. Reference Mining → 직접 구현의 단일 경로
+3. Alpha implementation-aware track + Beta reference-grounded image concept track을 같은 Common Creative Packet에서 실행 후 비교
+
+### 고른 것과 근거
+3번. 사용자는 Director A의 reference-grounded 발상 방식은 만족했지만, Superdesign 시안의 reference fidelity와 visual completeness에는 크게 실망했다고 평가했다. 동시에 이미지 생성은 실제 UI 구현보다 값싼 visual exploration으로 활용할 수 있지만, **각 image element의 component/interaction/motion translation이 별도로 명확해야 한다**고 요구했다. `[사용자평가]` `[대화]`
+
+Alpha는 reference의 visual world를 처음부터 component/state/motion/implementation으로 설계한다. Beta는 같은 reference/idea를 near-final still로 빠르게 시각화하고, 이미지가 끝이 아니라 실제 UI spec으로 다시 번역한다.
+
+### 버린 것과 이유
+1번은 첫 실사용에서 드러난 품질 문제를 추가 비용으로 즉시 재시험하게 된다. 재도입은 별도 capability re-test로 남긴다. 2번은 text/reference와 actual implementation 사이의 visual imagination gap을 다시 키운다. Alpha/Beta를 서로 반대 스타일로 강제하는 것도 버렸다.
+
+### 되돌려야 하는 조건
+- Beta image가 반복적으로 generic AI visual로 drift하고 user alignment를 개선하지 못함
+- Alpha/Beta 중복 비용이 실제 품질 이득보다 큼
+- Superdesign 또는 다른 generator가 별도 재시험에서 reference fidelity와 near-final completeness를 안정적으로 충족함
+- target task가 LOW/polish라 두 track이 불필요함

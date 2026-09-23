@@ -282,3 +282,42 @@ Dual Director의 차이를 "화려함 vs UX" 같은 결과 스타일로 잘못 �
 
 ### 일반화
 멀티 디렉터의 다양성은 서로 반대 스타일을 강제해서 만드는 것이 아니라 **서로 다른 정보원·provenance·생성 절차를 유지하면서 각자 넓게 탐색하게 하는 것**이 더 안정적이다.
+
+---
+
+## F-009. 첫 creative system test에서 핵심 병목은 **기능 부족보다 scene-level visual ambition과 reference fidelity 부족**으로 드러났다
+
+| | |
+|---|---|
+| 상태 | 확정 — 새 creative routing에 반영 |
+| 발견 | 2026-09-23 DUAL-ATTRACT-001 결과 회고 `[대화]` `[사용자평가]` |
+| 영향 | Alpha/Beta 두 creative track 도입, Superdesign 기본 자동 경로 중지 |
+| 연결 | D-015, R-013, CASE-005 |
+
+### 발단 — 무엇이 이상해 보였나
+사용자는 v2.2.1의 파형 표시와 기능 자체를 전면 부정하지 않았다. 오히려 비교/실시간성/기능은 자산으로 보고, 부족한 것은 처음 보는 사람을 끌어당기는 **전시형 장면·스토리·화려한 transition·reference의 강한 visual language**라고 설명했다. `[대화]`
+
+### 먼저 의심한 것과 배제 방법
+초기 시스템은 reference mining, Dual Director, Superdesign draft를 통해 발상 다양성과 concrete preview를 높이려 했다. 그러나 사용자가 첫 실사용 결과를 보고 평가한 핵심 불만은 "아이디어 수가 부족하다"가 아니라 **reference의 색·특징적 UI 요소·hover/motion·완성도가 실제 시안에 충분히 이식되지 않았다**는 것이었다. 특히 B01/B02는 구조적 data contract는 보존했지만, 사용자 기준에서 2.2.1보다 낮은 visual completeness와 약한 reference fidelity를 보였다. `[사용자평가]` `[추론]`
+
+### 결정적 근거
+사용자는 다음 목표를 명확히 했다. `[대화]`
+- 파형은 결과물의 중심이므로 더 현대적이고 존재감 있게 보여야 한다.
+- 연구 기록의 흥미로운 포인트를 scene/story로 전개할 수 있어야 한다.
+- Awwwards/Godly/Minimal Gallery류의 독창적 experience를 ECG에 강하게 번안해야 한다.
+- component/hover/motion까지 near-final 수준으로 구현되는 느낌이 필요하다.
+- Superdesign 시안 제작기는 당분간 쓰지 않는다.
+
+### 조치와 검토한 대안
+- Superdesign prompt를 더 길게 튜닝해 재시도 — 당장 채택하지 않음.
+- 기존 reference director + 직접 구현만 유지 — 이미지 기반 저비용 visual alignment 기회를 놓침.
+- **Alpha: 처음부터 implementation-aware / Beta: reference-grounded image-first 후 UI translation** — 채택.
+
+### 비용 / 영향 범위
+creative system 문서와 routing이 늘어나지만, 이미지가 implementation spec을 대신하지 않도록 공통 packet/template/gate를 둔다. Superdesign 관련 문서는 삭제하지 않고 이력/향후 re-test용으로 유지한다.
+
+### 놓쳤다면
+"더 창의적으로"라는 요구를 button polish나 generic high-motion으로 오해하고, 실제 원하는 **고충실도 reference adaptation + ECG-specific exhibition scene**과 계속 어긋날 수 있었다.
+
+### 일반화
+Creative AI workflow에서는 "아이디어 다양성"과 "사용자가 기대하는 reference fidelity / near-final completeness"를 별개 capability로 검증해야 한다. 생성물이 빠르더라도 후자가 낮으면 실제 디자인 의사결정에는 도움이 적다.

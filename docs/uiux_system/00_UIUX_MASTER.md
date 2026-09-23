@@ -76,10 +76,10 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 기본 절차:
 
 1. **BASELINE** — 현재 화면/코드/버전/승인 상태 확인
-2. **ROUTE** — significant CREATIVE는 먼저 `16_DUAL_CREATIVE_DIRECTOR.md`로 zone/명시 모드를 정한다. HIGH 신규 Dual, MEDIUM A 우선, LOW/polish/frozen 구현은 자동 생략. 이후 `05_TOOL_SKILL_ROUTING.md`로 필요한 문서·Skill·Plugin 선택
-3. **REFERENCE GROUNDING WHEN USEFUL** — Dual이면 A의 독립 context에만 적용한다. 중요한 새 CREATIVE 방향, Attract/Transition/Result Reveal, Awwwards/독창성/놀라움 요구, 또는 text-only 아이디어의 느낌을 공유하기 어려운 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`를 실행한다. 단순 polish에는 자동 삽입하지 않는다.
+2. **ROUTE** — 2026-09-23 이후의 significant CREATIVE는 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`로 먼저 분기한다. HIGH의 새 Attract/Intro/major transition은 Alpha+Beta를 기본 후보로, MEDIUM은 Alpha 우선/Beta 필요성 판단, LOW/polish/frozen 구현은 creative track을 자동 생략한다. 기존 `16_DUAL_CREATIVE_DIRECTOR.md`는 DUAL-ATTRACT-001 이력·재검증용 계약으로 보존한다. 이후 `05_TOOL_SKILL_ROUTING.md`로 필요한 문서·Skill·Plugin 선택
+3. **REFERENCE GROUNDING WHEN USEFUL** — 중요한 새 CREATIVE 방향, Attract/Transition/Result Reveal, Awwwards/독창성/놀라움 요구, 또는 text-only 아이디어의 느낌을 공유하기 어려운 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md`를 실행한다. Alpha/Beta가 같은 frozen Reference Pack을 공유한다. 단순 polish에는 자동 삽입하지 않는다.
 4. **DIVERGE** — 디자인 판단 작업이면 3개 이상 대안을 발산. 창의 작업은 검증 전에 과도하게 보수화하지 않는다. reference mining을 썼다면 원본 외형이 아니라 추출한 experience principle을 기반으로 발산한다.
-5. **VISUAL DRAFT GENERATION WHEN USEFUL** — Dual/B-only는 16번의 독립 Native cards 4~6 → drafts 1~2 경로를 사용한다. 아래 상위 2~4 생성은 CONCRETIZER에 해당한다. significant CREATIVE 작업에서 text/reference만으로 실제 차이를 판단하기 어렵고 2개 이상 방향을 같은 baseline에서 비교할 가치가 있으면 `14_SUPERDESIGN_GENERATION_LAYER.md`에 따라 상위 2~4개만 Superdesign draft로 구체화한다. standard Chat에서는 실행하지 않고 handoff만 준비한다.
+5. **VISUALIZATION WHEN USEFUL** — Alpha는 component/state/motion까지 포함한 near-implementation 설계를 만든다. Beta는 `19_BETA_IMAGE_CONCEPT_TRACK.md`에 따라 reference-grounded image still을 생성하고 반드시 component/interaction/motion translation을 붙인다. Superdesign Native/Concretizer는 DUAL-ATTRACT-001의 첫 실사용에서 near-final/reference fidelity가 사용자 기대에 미달해 기본 자동 경로에서 제외되었으며, 14/16번은 역사·별도 재검증용으로 유지한다.
 6. **PRE-DECISION RECORD** — 결과의 성격을 바꾸는 갈림길이면 구현 전에 D를 작성하고, 기각 후보까지 남긴다.
 7. **CONVERGE** — 프로젝트 UX·데이터 무결성·motion·접근성 규칙으로 `KEEP / TUNE / REJECT` 판정
 8. **CHANGE CONTRACT** — 변경 대상, 변경 금지, 유지 조건, acceptance criteria 명시
@@ -90,11 +90,11 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 
 상세 기록 규약: `10_RECORD_KEEPING.md`. 작업 직전에는 `11_CHECKLISTS.md`에서 해당 트리거 절만 본다.
 
-Dual의 A/B 첫 pass는 공통 context만 받으며 16번의 격리·동결·cross-review를 적용한다. Chat은 A+B clean handoff, shell 환경은 실제 capability 확인 후 A/B를 수행한다.
+Alpha/Beta round는 동일 Common Creative Packet과 Reference Pack을 사용하되 first pass 동안 서로의 구체 설계 결과를 보지 않는 것을 기본으로 한다. 실행 순서는 Alpha→Beta여도 Beta prompt에는 Alpha-specific layout/component 답을 넣지 않고, 둘 다 freeze된 뒤 cross-review한다. 자세한 계약은 18/19/20번 문서다.
 
 ### 4.1 새 설계를 시작할 때 reference mining을 언제 부르는가
 
-다음에는 A 경로에 자동 포함한다. B_ONLY에는 적용하지 않는다.
+다음에는 Alpha/Beta 공통 source layer로 자동 포함한다.
 
 - 사용자가 `레퍼런스 마이닝`, `Awwwards`, `실제 우수작 참고`, `이런 느낌의 사례`를 명시
 - Attract/Intro/Transition/Result Reveal의 새로운 visual direction을 처음 설계
@@ -122,6 +122,18 @@ Dual의 A/B 첫 pass는 공통 context만 받으며 16번의 격리·동결·cro
 
 ## 6. 핵심 역할 분리
 
+### Alpha Track — Implementation-Aware Reference Adaptation
+- reference의 미감·signature UI language를 ECG scene에 강하게 번안한다.
+- 처음부터 layout/component/state/motion/data contract/implementation blueprint를 함께 설계한다.
+- 구현 가능성을 이유로 초기 creative ambition을 낮추지 않는다.
+- 계약: `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`.
+
+### Beta Track — Reference-Grounded Image Concept
+- 같은 Creative Intent를 reference-grounded image still로 빠르게 시각화한다.
+- 이미지는 최종 결과가 아니라 visual-intent artifact이며, 모든 주요 요소를 component/state/motion으로 다시 번역한다.
+- generated text/data/waveform pixel은 source of truth가 아니다.
+- 계약: `19_BETA_IMAGE_CONCEPT_TRACK.md`, 공통 운영: `20_ALPHA_BETA_OPERATING_PROTOCOL.md`.
+
 ### Reference Miner
 - 실제 reference를 찾고 direct URL과 `어디를 봐야 하는지` viewing instruction을 준다.
 - 표면적 스타일과 experience principle을 분리한다.
@@ -134,10 +146,10 @@ Dual의 A/B 첫 pass는 공통 context만 받으며 16번의 격리·동결·cro
 - reference가 있을 때 외형을 복제하지 않고 여러 원리를 조합한다.
 - 최종 결정권은 없다.
 
-### Superdesign Native Director / Concretizer
-- **NATIVE_DIRECTOR** — A 결과 없이 current baseline + 공통 목표/제약 + Superdesign 자체 inspiration에서 독립 B 방향을 탐색한다. 16번의 격리·예산·동결 규칙을 따른다.
-- **CONCRETIZER** — Reference Mining / Art Director 또는 cross-review에서 이미 선택된 A/B/Hybrid 방향을 **같은 current baseline의 실제 시안**으로 구체화한다.
-- 두 모드의 vendor 실행 계약은 `14_SUPERDESIGN_GENERATION_LAYER.md`를 따르며, 어느 쪽도 자기 결과를 승인하지 않는다.
+### Superdesign Native Director / Concretizer — 역사/재검증용
+- DUAL-ATTRACT-001에서 실제 사용된 이전 generation path다.
+- first-test user evaluation에서 reference fidelity와 near-final completeness가 요구에 못 미쳐 새 creative round의 기본 경로에서는 제외한다.
+- 별도 capability re-test가 승인되면 `14/16` 계약으로 다시 평가할 수 있다.
 
 ### Data Storyteller
 - 어떤 데이터를 어떤 순서와 관계로 보여야 메시지가 빨리 전달되는지 설계한다.

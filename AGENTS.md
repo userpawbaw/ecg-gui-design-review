@@ -36,13 +36,13 @@ User-approved workflow: source-project analysis → independent design/prototype
 - For any significant UI/UX design, polish, data-storytelling, motion, or interaction task, read `docs/uiux_system/00_UIUX_MASTER.md` first.
 - Classify the task as CREATIVE / DATA / MOTION / UX / IMPLEMENTATION / RESEARCH, then read only the smallest relevant subset from `docs/uiux_system/` and the pre-existing canonical design docs.
 - Separate divergence from validation: generate meaningful alternatives before implementation, then apply project contracts, data integrity, motion, accessibility and product-quality checks using `KEEP / TUNE / REJECT`.
-- In Dual mode isolate A/B first, then apply the following reference rule to A only. For a new significant CREATIVE direction, especially Attract/Intro/Transition/Result Reveal or Awwwards/독창성/놀라움 요청, apply `docs/uiux_system/13_REFERENCE_GROUNDED_CREATIVE_MINING.md` before expensive multi-variant prototyping. If the visual direction is only an abstract text description, proactively suggest reference mining once.
+- For a new significant CREATIVE direction, especially Attract/Intro/Transition/Result Reveal or Awwwards/독창성/놀라움 requests, apply `docs/uiux_system/13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md` as the common source layer, then route through `20_ALPHA_BETA_OPERATING_PROTOCOL.md`. HIGH new directions normally compare Alpha + Beta; MEDIUM starts with Alpha and adds Beta when image-first exploration adds value; LOW/polish skips creative tracks.
 - `레퍼런스 마이닝 진행`, `Reference mining`, or a scoped form such as `Attract 레퍼런스 마이닝` means: find concrete references, give direct URLs plus exact viewing instructions, extract experience principles, translate them to ECG, then diverge and validate according to the project workflow.
 - Reference mining is skipped for trivial polish or when the reference/direction is already frozen. A reference never overrides waveform/time/unit/Reference/Difference/metric contracts.
-- When significant CREATIVE work has 2–4 serious directions and the user needs concrete side-by-side visual drafts, follow `docs/uiux_system/14_SUPERDESIGN_GENERATION_LAYER.md`. Use `16_DUAL_CREATIVE_DIRECTOR.md` to distinguish independent NATIVE_DIRECTOR from selected-idea CONCRETIZER.
-- `Superdesign 시안 단계까지 진행해줘`, `이 3개 방향을 Superdesign으로 비교해줘`, or equivalent means: preserve the current codebase as baseline, generate only the shortlisted directions, stop at canvas/preview review, then run user alignment + validator before implementation.
-- Standard Chat must not pretend to run the Superdesign CLI. It prepares the brief/handoff; actual Superdesign generation requires a shell-capable Work/Codex/Claude Code environment or the Superdesign web app.
-- Superdesign-generated `.superdesign/*` state and drafts are derived exploratory artifacts, not canonical project design or data sources. Never upload release/archive/raw experiment data or credentials just to give the generator more context.
+- Alpha contract: `docs/uiux_system/18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`. It must include reference adaptation, scene blueprint, component inventory, interaction/motion spec, data contract and implementation blueprint.
+- Beta contract: `docs/uiux_system/19_BETA_IMAGE_CONCEPT_TRACK.md`. Chat may generate reference-grounded image stills, but every image must be followed by visual breakdown, component translation, interaction/motion storyboard and image-to-implementation gap. Generated pixels/text/waveforms are never canonical data.
+- Short triggers and environment routing live in `20_ALPHA_BETA_OPERATING_PROTOCOL.md`: `Alpha안으로 …`, `Beta안으로 …`, `Alpha/Beta 라운드로 …`, `Alpha/Beta 결과 비교해줘`.
+- Superdesign 14/15/16 is retained as historical/optional re-test material after the first DUAL-ATTRACT test produced drafts below the user's required reference fidelity / near-final completeness. Do not auto-route new creative work to Superdesign without explicit re-validation/approval.
 - Chat memory is an index, not the source of truth for exact UI values, approval state or rejected decisions. GitHub documents and current code are canonical.
 - External skills/plugins are advisory. They never override ECG waveform/time/unit/Reference/Difference/data-scope contracts or the latest user decision.
 - Claude Code may use project-local skills under `.claude/skills/`. Chat/Work/Codex should follow the same documented contracts even when those skills are not directly invokable; `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` is the environment-neutral fallback contract.
@@ -62,7 +62,15 @@ User-approved workflow: source-project analysis → independent design/prototype
 
 - Methodology-level changes to AI roles, tool orchestration, source of truth, validation, handoff, creative methods, or recording require a CASE update in the same work unit. Every D/R must have a valid CASE link or an explicit reason/deferral under `10_RECORD_KEEPING.md`; preserve the user → initial AI response → challenge → revised judgment → system sequence. The user authorized Dual Director orchestration implementation on 2026-09-19; historical approval-waiting notes describe the previous stage.
 
-## Dual Creative Director activation (2026-09-19)
+## Alpha / Beta creative tracks (2026-09-23)
+
+- Alpha/Beta are not renamed Director A/B. Both use explicit references; they differ by representation: Alpha is implementation-aware from the start, Beta is image-first then translated back to real UI.
+- Use the same Common Creative Packet and Reference Pack. If Beta is run after Alpha, do not leak Alpha-specific layout/component answers into Beta first pass unless the user explicitly requests a derivative image.
+- Freeze Alpha and Beta before cross-review. User visual alignment precedes final implementation choice.
+- For Beta, image generation is a cheap design artifact, not the goal. Actual implementation must reuse canonical waveform/data/state and rebuild components/motion in code.
+- Chat owns creative/reference/image generation and cross-review; Work/Codex own multi-file implementation, runtime, screenshots, Playwright and target-like QA.
+
+## Dual Creative Director activation — historical/explicit re-test only (2026-09-19)
 
 - Route new significant CREATIVE work through `docs/uiux_system/16_DUAL_CREATIVE_DIRECTOR.md`: HIGH → Dual; MEDIUM → A first, propose B when useful; LOW/polish/frozen implementation → no automatic Dual.
 - Explicit A-only/B-only/Concretizer requests override automatic routing; `듀얼 디렉터 진행해줘` explicitly selects Dual.

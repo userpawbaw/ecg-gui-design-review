@@ -265,3 +265,30 @@ A/B 계약을 다시 보면 A의 차별점은 explicit URL/viewing instruction/p
 
 ### 재사용 규칙
 **병렬 AI 역할을 설계할 때 서로 반대 결과를 내게 하는 것으로 diversity를 만들지 않는다.** 입력 source, provenance, search/generation mechanism을 다르게 두고 출력 공간은 겹치게 허용한다. 그래야 두 경로가 같은 결론에 도달하는 것도 의미 있는 독립 수렴 증거가 된다.
+
+---
+
+## R-013. 이미지 생성은 **최종 UI 생성기**가 아니라 reference-grounded visual hypothesis + translation artifact로 쓸 때 가치가 크다
+
+| | |
+|---|---|
+| 대상 | 첫 Dual/Superdesign test 이후 creative generation 방식 재설계 |
+| 처리 | Superdesign 기본 사용 중지, Alpha/Beta 도입 |
+| 연결 | F-009, D-015, R-006, R-012 |
+| CASE | CASE-005 |
+
+### AI/도구가 내놓은 것
+기존 시스템은 실제 reference로 visual intent를 공유한 뒤 Superdesign이 concrete draft를 만들도록 설계했다. 첫 실사용에서 B는 Direction Cards와 두 draft를 만들었고 data structure는 보존했다. 이후 AI는 B 결과도 포함한 Attract shortlist를 제안했다. `[대화]` `[코드]`
+
+### 사람이 문제 삼은 것
+사용자는 B draft가 reference 예시의 색배합, 특징적 UI 요소, hover/animation, 전체 완성도를 충분히 따라가지 못했고 기존 v2.2.1보다도 낮은 완성도로 느껴졌다고 평가했다. 반면 Director A의 reference-based idea 설명은 만족스러웠다. 또한 이미지 생성은 더 싼 visual exploration으로 써볼 가치가 있지만 **아무 이미지가 아니라 reference+ECG idea 기반이어야 하고, 각 요소의 실제 component와 interactive animation 구현 방식을 따로 써야 한다**고 제안했다. `[사용자평가]` `[대화]`
+
+### 검증 방법과 결과
+요구를 "다른 이미지 생성기로 교체"가 아니라 두 representation으로 분해했다. `[추론]`
+- Alpha: 구조·component·motion·state·implementation을 처음부터 함께 설계
+- Beta: reference-grounded still로 visual world를 빠르게 확인한 뒤 Component Translation / Interaction Spec / Motion Storyboard / Gap register로 실제 UI에 재번역
+
+두 track은 같은 Reference Pack을 사용하고, Beta의 pixels/text/waveform을 canonical data로 취급하지 않는다.
+
+### 재사용 규칙
+**이미지 생성은 디자인 의사결정의 저비용 시각 가설로 사용하고, implementation truth와 분리한다.** 좋은 image workflow는 prompt에서 끝나지 않는다. reference provenance → still → element breakdown → component/state mapping → interaction/motion storyboard → implementation gap → real code validation까지 연결해야 한다.

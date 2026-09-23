@@ -20,6 +20,33 @@ Work/Codex로 넘기는 이유는 기억을 보존하기 위해서가 아니라,
 - 문서 routing 및 acceptance criteria
 - 사용자 피드백 반복
 
+## 2A. Alpha / Beta 환경 역할
+
+### Chat
+- Common Creative Packet 작성
+- Reference Mining / Source Registry 탐색
+- Alpha 설계
+- **Beta image generation 및 visual critique**
+- image → component/state/motion translation
+- Alpha/Beta cross-review와 user alignment
+- D/change contract
+
+### Work
+- Alpha/Beta 선택안의 repo integration
+- multi-file implementation
+- live browser / screenshot / video
+- Playwright와 state/data equality 검증
+- image 자체를 목표로 하지 않고 translation packet을 실제 UI로 구현
+
+### Codex / Codex Desktop
+- local implementation과 component integration
+- motion/animation 구현
+- component/library feasibility
+- build/test/Playwright
+- local browser QA와 screenshot evidence
+
+Beta image가 구현 환경으로 넘어갈 때는 이미지 하나만 전달하지 않는다. `19_BETA_IMAGE_CONCEPT_TRACK.md`의 Component Translation / Interaction Translation / Motion Storyboard / Gap / Data Contract를 같이 넘긴다.
+
 ## 3. Work/Codex/Claude로 넘길 신호
 
 - 여러 파일에 걸친 구현
@@ -27,7 +54,9 @@ Work/Codex로 넘기는 이유는 기억을 보존하기 위해서가 아니라,
 - Playwright headed/soak
 - Storybook 도입/컴포넌트 자동 QA
 - Motion AI Kit/로컬 MCP 사용
-- Superdesign concrete draft generation
+- Alpha/Beta 선택안의 actual UI prototype
+- Beta image → real component/motion translation
+- Superdesign concrete draft generation은 별도 재검증 요청에서만
 - 대용량 release/package 작업
 
 ## 4. Handoff Packet
@@ -96,3 +125,29 @@ mode=CONCRETIZER + 선택 A/B/Hybrid IDs/intent와 필요한 reference/원리, b
 A/B 둘 다 동결한 뒤에만 양쪽 결과, 입력 manifests, 독립성 판정, 비교 이유, 기각안, optional Hybrid 부모와 가설을 합친다. 한쪽이 handoff/blocked면 cross-review 완료로 처리하지 않는다.
 
 Chat은 A 수행 + clean B packet을 만들고 shell 가능한 새 context로 넘긴다. Work/Codex/Claude도 격리 context를 못 만들면 같은 방식을 쓴다. 별도 context에서는 위 최소 role packet만 읽고 전체 orchestrator 대화를 상속하지 않는다.
+
+
+## 7A. Alpha / Beta packet
+
+새 creative round의 기본 handoff는 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`를 따른다.
+
+### Common packet
+- Round ID
+- target/zone
+- baseline SHA
+- current screenshot/live URL
+- 3s/15s goal
+- Creative Intent
+- research story/content
+- data/state hard constraints
+- Reference Pack IDs
+- fidelity target
+
+### Alpha packet
+Common packet + `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`. 반환: Reference Adaptation Map, Scene Blueprint, Component Inventory, Motion Spec, Data Contract, Implementation Blueprint.
+
+### Beta packet
+Common packet + `19_BETA_IMAGE_CONCEPT_TRACK.md`. Chat에서 image generation을 수행하고, 반환: generated still + Visual Breakdown + Component Translation + Interaction/Motion Storyboard + Image-to-Implementation Gap.
+
+### Implementation packet
+selected Alpha/Beta/Hybrid card + image(if any) + translation tables + data contract + acceptance criteria + branch/PR. 전체 Chat transcript는 기본 입력이 아니다.

@@ -343,3 +343,11 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Publish stacked PR and check head CI; no merge, no actual generation or UI modification.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-09-25 — UI/UX 재설계 기준선 분석
+
+- Branch survey: main is the canonical UI/UX system; dual-attract has more files only because of experiment artifacts and lacks 17–20/CASE-005. Recovered Attract vNext branch is main+1, unmerged.
+- v2.2.1: `prepare-v2` → `npm ci` → build PASS; engine/plot-scale/attract tests 12/12 PASS. 600-second replay absent (Release ZIP not in session), chunk test not run.
+- Headless Chromium captures (10-second archive): Lab 1920/1366, Large compare, Attract. Only console error is expected `replay/manifest.json` 404.
+- Finding: `scripts/prepare-v2.cjs` regenerates `methods.json` from `prototype/app.js` and silently reverts the v2.2.1 M04 description; reproduced and restored, not fixed.
+- No UI source, data, release or other branch changed. Next: user decisions Q1–Q4 in the analysis doc.

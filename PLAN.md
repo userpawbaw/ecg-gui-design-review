@@ -183,3 +183,9 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 원격 PR/CI 확인 후 보고. 실제 시안 생성·UI 수정·main merge는 수행하지 않는다.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-09-25 — UI/UX 재설계 기준선 분석
+
+- [x] 20 remote branch 비교: canonical UI/UX 시스템 = `main` `cfef430` (Alpha/Beta 17~20 + CASE-005 포함). `experiment/dual-attract-20260919`는 파일 수가 많지만 실험 원자료이며 최신 계약 누락. `feat/attract-vnext-recovered-20260924`는 main+1 Beta A/B prototype(PR 없음, winner 미선정).
+- [x] v2.2.1 분석: build PASS, 단위 테스트 12/12, headless 1920/1366 캡처 → `docs/uiux_system/handoffs/REDESIGN_BASELINE_ANALYSIS_2026-09-25.md`, `verification/redesign-baseline-20260925/`.
+- [ ] 사용자 결정 Q1~Q4(범위, recovered Beta A/B 지위, deferred 항목, Release ZIP) 후 Alpha/Beta Step 1 Intent/Reference Freeze + 범위 D 기록.

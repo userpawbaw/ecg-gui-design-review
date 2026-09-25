@@ -19,6 +19,20 @@ async function acquire(a) {
     if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} ${s.url}`);
     return Buffer.from(await r.arrayBuffer());
   }
+  if (s.type === 'polyhaven') {
+    // Poly Haven API terms: identify the tool via User-Agent. md5 from the API is checked.
+    const ua = {'User-Agent': 'ECG-Signal-Studio-asset-pipeline/1.0 (non-profit academic exhibit)'};
+    const files = await (await fetch(`https://api.polyhaven.com/files/${s.slug}`, {headers: ua})).json();
+    const f = files[s.asset_type]?.[s.resolution]?.[s.format];
+    if (!f) throw Error(`${a.id}: no ${s.asset_type}/${s.resolution}/${s.format} in Poly Haven files`);
+    const r = await fetch(f.url, {headers: ua});
+    if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} ${f.url}`);
+    const buf = Buffer.from(await r.arrayBuffer());
+    const md5 = createHash('md5').update(buf).digest('hex');
+    if (f.md5 && md5 !== f.md5) throw Error(`${a.id}: md5 mismatch with Poly Haven API`);
+    s.resolved_url = f.url;
+    return buf;
+  }
   if (s.type === 'npm') {
     const dir = path.join(root, 'assets/.npm-cache');
     await mkdir(dir, {recursive: true});
@@ -41,7 +55,7 @@ function checkOrPin(a, slot, buf) {
   }
 }
 
-for (const a of reg.assets) {
+for (const a of reg.assets.filter(a => a.status !== 'superseded' || process.argv.includes('--all'))) {
   if (!reg.policy.licence_allowlist.includes(a.licence)) throw Error(`${a.id}: licence ${a.licence} not allowed`);
   const buf = await acquire(a);
   checkOrPin(a, 'original', buf);
@@ -55,6 +69,16 @@ for (const a of reg.assets) {
     await copyFile(src, out);
   }
   checkOrPin(a, 'processed', await readFile(out));
+  for (const v of a.variants || []) {
+    // Higher-quality variant: resize only, then WebP at quality 90 (default optimize WebP showed blocky reflections).
+    const vout = path.join(root, v.processed.file), tmp = vout + '.tmp.glb';
+    execFileSync('npx', ['--yes', '@gltf-transform/cli@4', 'optimize', src, tmp,
+      '--compress', 'meshopt', '--texture-compress', 'false', '--texture-size', '1024'], {stdio: 'inherit'});
+    execFileSync('npx', ['--yes', '@gltf-transform/cli@4', 'webp', tmp, vout, '--quality', '90'], {stdio: 'inherit'});
+    await (await import('node:fs/promises')).rm(tmp);
+    checkOrPin(v, 'processed', await readFile(vout));
+    console.log(`${v.id}: ${a.original.bytes} → ${v.processed.bytes} bytes`);
+  }
   console.log(`${a.id}: ${a.original.bytes} → ${a.processed.bytes} bytes`);
 }
 if (pin) await writeFile(regPath, JSON.stringify(reg, null, 2) + '\n');

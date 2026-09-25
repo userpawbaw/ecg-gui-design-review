@@ -7,21 +7,57 @@
     "licence_allowlist": [
       "CC0-1.0",
       "CC-BY-4.0",
+      "CC-BY-SA-4.0",
+      "CC-BY-NC-4.0",
+      "CC-BY-NC-SA-4.0",
       "public-domain"
     ],
     "licence_blocklist": [
-      "CC-BY-NC-4.0",
-      "CC-BY-NC-SA-3.0",
       "editorial-only",
-      "unknown"
-    ]
+      "unknown",
+      "no-AI-training-only-without-permission"
+    ],
+    "use_context": "2026-09-25 user decision: non-profit academic exhibit, no revenue → NC (non-commercial) licences allowed. BY/SA still require attribution / share-alike; record them in 'attribution'.",
+    "api_etiquette": "Poly Haven API: send an app-identifying User-Agent; downloaded assets need no attribution."
   },
   "assets": [
+    {
+      "id": "hdri-polyhaven-studio_small_09-1k",
+      "title": "Poly Haven — Studio Small 09 (1k EXR)",
+      "kind": "hdri",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "studio_small_09",
+        "asset_type": "hdri",
+        "resolution": "1k",
+        "format": "exr",
+        "page": "https://polyhaven.com/a/studio_small_09",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/exr/1k/studio_small_09_1k.exr"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/hdri-polyhaven-studio_small_09-1k.exr",
+        "sha256": "44dcbed056512ecd8afd2a3d7ba73d2dd4c24694d0c72005fafcb2469bbc8fd4",
+        "bytes": 1319434
+      },
+      "processing": "none",
+      "processed": {
+        "file": "assets/processed/hdri-polyhaven-studio_small_09-1k.exr",
+        "sha256": "44dcbed056512ecd8afd2a3d7ba73d2dd4c24694d0c72005fafcb2469bbc8fd4",
+        "bytes": 1319434
+      },
+      "used_by": [
+        "prototype/spikes/scroll-globe/asset-test.html"
+      ],
+      "review": "Named Poly Haven source with API md5 verification. 1k chosen for reflections; compare against 512 in the asset-test capture."
+    },
     {
       "id": "hdri-studio-512",
       "title": "Studio environment HDRI (512×256 EXR)",
       "kind": "hdri",
-      "status": "test-only",
+      "status": "superseded",
       "source": {
         "type": "npm",
         "package": "@pmndrs/assets",
@@ -46,7 +82,8 @@
       "used_by": [
         "prototype/spikes/scroll-globe/asset-test.html"
       ],
-      "review": "Licence OK (package licence CC0-1.0). Provenance gap: upstream asset name unknown → keep test-only until matched to a named Poly Haven HDRI."
+      "review": "Licence OK (package licence CC0-1.0). Provenance gap: upstream asset name unknown → keep test-only until matched to a named Poly Haven HDRI. Superseded 2026-09-25: direct Poly Haven access restored; replaced by a named 1k source to fix provenance gap (B6) and low-res reflections.",
+      "superseded_by": "hdri-polyhaven-studio_small_09-1k"
     },
     {
       "id": "model-waterbottle",
@@ -75,7 +112,18 @@
       "used_by": [
         "prototype/spikes/scroll-globe/asset-test.html"
       ],
-      "review": "Metallic PBR test object for environment lighting and velocity-coupled rotation. Not an ECG design asset."
+      "review": "Metallic PBR test object for environment lighting and velocity-coupled rotation. Not an ECG design asset.",
+      "variants": [
+        {
+          "id": "model-waterbottle-webp90",
+          "processing": "optimize (meshopt, resize ≤1024, no texture compression) → gltf-transform webp --quality 90",
+          "processed": {
+            "file": "assets/processed/model-waterbottle-webp90.glb",
+            "sha256": "6cdded52b8de7c8de1ed935cc87d092462ee95cbc24f4caad373eac0eef83ff2",
+            "bytes": 683088
+          }
+        }
+      ]
     }
   ],
   "rejected": [

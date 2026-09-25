@@ -394,3 +394,73 @@ Meshy, Tripo 등은 텍스트나 이미지로 GLB 모델을 만든다. 형태 �
 
 Claude가 단독으로 가능한 것: 목록화, 라이선스 1차 검토, 다운로드 스크립트, sha256 고정, 가공, registry 기록, 코드 적용, headless 검증.
 사용자가 해야 하는 것: B1(네트워크), B2(계정·토큰·결제), B3(라이선스 정책 결정), B5(시각 승인).
+
+## 18. moto-card.com 소스 분석 (네트워크 허용 적용 후, 2026-09-25)
+
+새 컨테이너에서 `www.moto-card.com`, `polyhaven.com`, `sketchfab.com`, `cdn.jsdelivr.net`, `www.google.com` 접속이 가능해졌다(`www.awwwards.com`은 여전히 실패). 페이지 HTML 1개와 인라인 스크립트를 읽었다 `[코드]`. **사이트의 텍스처·모델·셰이더는 저작물이므로 저장소에 복사하지 않고 구조만 기록한다.**
+
+### 18.1 전체 스택
+
+| 층 | 실제 사용 |
+|---|---|
+| 사이트 빌더 | Webflow (+ jQuery 3.5.1) |
+| 3D | **three.js r181** (importmap, jsDelivr CDN), `WebGPURenderer({forceWebGL:true})` + **TSL 노드 재질**. React 없이 vanilla 클래스(`EarthScene`, 카드 씬) |
+| 스크롤·모션 | **Lenis 1.3.18** `{duration: 1.6, wheelMultiplier: 1.25}` + **GSAP 3.15 + ScrollTrigger + SplitText**, `lenis.on('scroll', ScrollTrigger.update)`, `gsap.ticker.lagSmoothing(0)` |
+| 에셋 | 지구 텍스처 webp 3장(day 315 KB, night 186 KB, 채널 묶음 bump/구름/거칠기 566 KB), 카드 `card2kvert.glb` 87 KB(Webflow 업로드 제한을 피하려고 `.glb.txt`로 호스팅), 카드 UV 맵, **matcap** 1K 이미지, 카드 GLSL 셰이더 2개(.glsl.txt), 사진 타일 webp 9장, 히어로(받침대 카드) = **mp4 영상**, 섹션 사진 webp/avif |
+
+P5 관련: 레퍼런스 자체가 **vanilla three.js + GSAP** 구조다. §13의 권장(vanilla 엔진 + 앱 프레임워크는 mount만)과 일치한다.
+
+### 18.2 지구 파트 — 녹화 추정과 실제 코드
+
+| 항목 | 녹화 기반 추정(§14.1) | 실제 코드 |
+|---|---|---|
+| 기본 회전 | 있음 | `globe.rotation.y += dt × 0.025` (rad/s, 매우 느림) |
+| 스크롤 반응 | "속도 비례 가속" | **위치 연동**: ScrollTrigger `pin`, 길이 2.5 × 화면 높이, **`scrub: 1`**(1초 지연 추종), `earthGroup.rotation.y`를 −π/1.4 → −π/5(약 1.35 rad) 선형 이동 |
+| 역광 강화 | 광원을 진행률로 이동 | **광원은 고정**(태양 위치 (0.26, 1.39, −3) = 지구 뒤 위쪽). 진행률에 따라 지구 **scale 1 → 0.4**(power2.out), **opacity 1 → 0**(진행 0.2~0.35), 헤더 위로 이동, chip이 무작위 순서로 사라짐. 지구가 작아지고 흐려지면서 역광 rim이 상대적으로 강해 보인 것 |
+| 셰이더 | fresnel 대기 | TSL: 낮/밤 텍스처를 태양 방향 `smoothstep(−0.25, 0.5)`로 섞음, 대기색 day `#a3afbd` / twilight `#47649e`, BackSide 대기 구(×1.04), bump 채널에서 구름·거칠기·해양 마스크를 꺼냄, ACES 톤매핑, 노출 1.16 |
+
+**정정:** "속도에 비례해 도는 것"처럼 보인 현상의 실제 원인은 **위치 선형 매핑 + `scrub: 1` 지연 추종 + Lenis 관성**이다. 위치를 선형으로 매핑하면 회전 속도는 스크롤 속도에 비례하므로, 녹화에서는 두 메커니즘을 구분할 수 없다. 둘을 가르는 것은 **위로 되돌릴 때 회전도 거꾸로 가는가**이다. D-017 촬영 순서 7번(되돌리기)이 바로 이 판별용이다. → F-012
+
+### 18.3 카드 파트 — 두 개의 다른 메커니즘
+
+1. **카드 본체**: 위치 연동. `rotation.y`가 `기준 − 1.5π × cardTurns` → `기준`으로, 위치 y는 −2 → 0(power3.out), `scrub: 1`. 앞 장면의 "선 → 카드"는 카드가 옆모습(모서리)에서 시작해 회전하며 올라오는 이 트윈이다. 카드 재질은 matcap + UV 맵 + 전용 GLSL.
+2. **사진 타일 = 원통(tube) 갤러리**: 속도 **충격 + 감쇠** 방식. 녹화에서 측정한 "빠른 회전 → 느린 회전의 부드러운 전환"의 정체가 이것이다.
+   ```
+   onWheel:  spinVelocity += deltaY × 0.0015;  naturalDir = sign(deltaY)
+   매 프레임: spinVelocity *= 0.92^(60·dt)     // 시간상수 약 0.2 s
+             angle += (naturalDir × 0.08 + spinVelocity) × dt × rotationSpeedScale
+   ```
+   행마다 회전 방향이 번갈아 바뀌고(`alternateRowDir`), 마우스를 올리면 0.35배로 느려진다(`hoverSlowdownScale`, 속도 배율도 lerp 0.12로 부드럽게 전환). 아래쪽 흐림은 반해상도 blur 패스를 `uHeight` 선 아래에 섞는 후처리이고, 원통은 스크롤 진행률로 13 단위 세로 이동한다.
+
+§14.2에서 추정한 "적분형 회전 + 지수 감쇠 + 0이 아닌 기본 속도"는 **이 원통 갤러리에 정확히 해당**한다(감쇠 시간상수 추정 0.2~0.3 s ↔ 실제 약 0.2 s). 다만 입력이 스크롤 속도가 아니라 **wheel 이벤트 deltaY**다.
+
+### 18.4 타이포 파트 — 끊겨 보이는 원인
+
+```
+각 줄 i마다:  ScrollTrigger({trigger: 그 줄의 부모, start: "top 70%", end: "bottom 70%", scrub: true})
+             오른쪽 줄 scale 1 → 0 (origin bottom right, power1.in)
+             왼쪽  줄 scale 0 → 1 (origin top left,  power1.out)
+```
+- 트윈 하나의 스크롤 구간이 **줄 높이 하나**(수십 px)뿐이다. 보통 속도로 스크롤하면 0.1~0.3 s 만에 끝나서 계단처럼 보인다.
+- `scrub: true`(지연 0)로, 지구·카드의 `scrub: 1`(1초 지연 추종)과 달리 여유가 없다.
+- 이동 경로 없이 오른쪽 축소와 왼쪽 확대가 **따로** 일어난다(§14.3 관찰과 일치).
+- 멈추면 아무것도 움직이지 않는다(기본 움직임 없음).
+
+→ 부드럽게 하려면: 트리거 구간을 여러 줄 높이로 늘리고 겹치게 하거나(stagger), `scrub: 0.8~1`로 지연 추종을 주거나, FLIP으로 실제 이동 경로를 만든다(§14.3).
+
+### 18.5 우리 프로젝트용 번안 메모 `[추론]`
+
+| 레퍼런스 기법 | 파라미터 출발점 | ECG 번안 후보 |
+|---|---|---|
+| Lenis + ScrollTrigger 동기 | `duration 1.6`, `lagSmoothing(0)` | 전시 Attract는 시간 구동, 체험 모드는 스크롤 |
+| 위치 연동 + `scrub: 1` | 장면 전환·큰 변형 | 장면 사이 전환(파형 → 다른 오브젝트 match cut) |
+| 충격 + 감쇠 회전 | `impulse 0.0015/deltaY`, `decay 0.92^(60dt)`, `base 0.08 rad/s` | 방법 갤러리·원통형 결과 목록 같은 "살아 있는" 배경층 |
+| 역광 + 축소 + 페이드 | 광원 고정, scale 1 → 0.4, opacity 1 → 0 | 광원을 움직이지 않고 오브젝트 변형만으로 분위기 전환 |
+| matcap 재질 | 1K matcap 이미지 1장 | HDRI 없이도 금속감을 싸게 얻는 방법 |
+
+## 19. 에셋 파이프라인 재시험 (Poly Haven 직접 접근)
+
+- 라이선스 정책 갱신: **비영리 학술 전시**(사용자 확인 `[대화]`) → CC-BY-NC 계열도 허용. BY·SA의 표기·동일조건 의무는 registry의 `attribution`에 계속 기록한다.
+- Poly Haven 공식 API(`api.polyhaven.com`, 키 불필요, 도구 식별 User-Agent 필수)에 `polyhaven` 소스 유형을 추가했다. API가 준 **md5로 다운로드를 검증**한다. `studio_small_09` 1k EXR(1.32 MB)로 교체해 **B6(출처 불명)을 해소**했고, 기존 512 HDRI는 `superseded`로 남겼다.
+- B5(가공 품질) 비교: 기본 optimize(WebP 기본 품질, 91 KB)는 반사에 블록 얼룩이 생겼다. **WebP 품질 90 변형(683 KB)**은 얼룩이 사라졌다 `[캡처]`. `asset-test.html?q=low` / 기본(high)으로 나란히 비교할 수 있다.
+- 남은 사용자 몫: B2(Sketchfab 로그인/API 토큰 — 필요할 때만), B5(최종 품질 눈 확인). B1·B3·B6은 해소됐다.

@@ -5,8 +5,13 @@ import {MeshoptDecoder} from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 import Lenis from 'lenis';
 import './style.css';
 // Assets come from the repository asset database (assets/registry.json → assets/processed/).
-import modelUrl from '../../../../assets/processed/model-waterbottle.glb?url';
-import hdriUrl from '../../../../assets/processed/hdri-studio-512.exr?url';
+import modelLowUrl from '../../../../assets/processed/model-waterbottle.glb?url';
+import modelHighUrl from '../../../../assets/processed/model-waterbottle-webp90.glb?url';
+import hdriLowUrl from '../../../../assets/processed/hdri-studio-512.exr?url';
+import hdriHighUrl from '../../../../assets/processed/hdri-polyhaven-studio_small_09-1k.exr?url';
+// ?q=low reproduces the first pipeline test (default WebP + 512 HDRI) for side-by-side review.
+const low=new URLSearchParams(location.search).get('q')==='low';
+const modelUrl=low?modelLowUrl:modelHighUrl, hdriUrl=low?hdriLowUrl:hdriHighUrl;
 
 const state={ready:false,speed:0,angle:0,velocity:0,frames:[] as number[]};(window as any).__assetTest=state;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -22,7 +27,7 @@ const [env,gltf]=await Promise.all([new EXRLoader().loadAsync(hdriUrl),new GLTFL
 env.mapping=THREE.EquirectangularReflectionMapping;scene.environment=env;
 const model=gltf.scene;const box=new THREE.Box3().setFromObject(model);const size=box.getSize(new THREE.Vector3()).length();
 model.position.sub(box.getCenter(new THREE.Vector3()));pivot.scale.setScalar(.55/size);pivot.add(model);pivot.rotation.z=.18;
-document.getElementById('credits')!.textContent='Model: WaterBottle © Microsoft, CC0 (Khronos glTF-Sample-Assets) · HDRI: @pmndrs/assets studio (Poly Haven selection, CC0)';
+document.getElementById('credits')!.textContent='Model: WaterBottle © Microsoft, CC0 (Khronos glTF-Sample-Assets) · HDRI: '+(low?'@pmndrs/assets studio 512 (Poly Haven selection, CC0)':'Poly Haven studio_small_09 1k (CC0)')+(low?' · QUALITY: LOW':' · QUALITY: HIGH');
 
 // Velocity-coupled rotation with damping and a non-zero idle speed (moto-card §14.2 model).
 const BASE=reduced?0:.35, GAIN=reduced?0:.004, LAMBDA=3.5; // rad/s, rad per px, 1/s (τ≈0.29 s)

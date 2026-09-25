@@ -190,5 +190,5 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] Shared `SignalView` / `SignalGeometry` / `AttractSession`; implement B comparison lens using identical absolute sample index and x/y scale.
 - [x] Add B data/time/handoff tests; implement A real output/input, shared-path glow, divergence-bounded particles, local pointer glow, approximately one-second enter acceleration; optional A→B→Compare.
 - [x] Build and targeted tests; record design choice D-016. B-first does not select a winner. No WebGL or merge.
-- [x] User-approved direct local Playwright: 1920×1080 A/B screenshots, 17.7-second browser recording, same-time/method transitions, reduced motion, RAF frame intervals, zero console errors and source-to-browser visual comparison.
+- [x] User-approved direct local Playwright: 1920×1080 A/B screenshots, 17.3-second browser recording, same-time/method transitions, reduced motion, RAF frame intervals, zero console errors and source-to-browser visual comparison.
 - [x] Corrected header bleed, Korean font, A plot scale and B mountain/heading/card placement. Design QA passes for the requested 1920×1080 prototype. Existing full-test `chunks.test.ts` lacks ignored legacy `public/long/d1-mixed--5.json` fixture in the release ZIP; it was not synthesized. Commit/push this isolated branch; do not merge.

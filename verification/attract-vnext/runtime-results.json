@@ -10,8 +10,8 @@
       "step": "B to Compare",
       "sceneBefore": "d1-mixed-10",
       "methodBefore": "M08",
-      "timeBefore": 11.233,
-      "timeAfter": "11.483"
+      "timeBefore": 11.133,
+      "timeAfter": "11.333"
     },
     {
       "step": "A to B",
@@ -22,8 +22,8 @@
       "step": "A accelerated handoff",
       "sceneBefore": "d1-mixed-10",
       "methodBefore": "M08",
-      "clickTime": 18.266,
-      "timeAfter": 20.411
+      "clickTime": 17.766,
+      "timeAfter": 20.009
     }
   ],
   "motion": {
@@ -38,7 +38,7 @@
       "p95Ms": 16.700000000000728
     },
     "A": {
-      "samples": 501,
+      "samples": 527,
       "medianMs": 16.69999999999891,
       "p95Ms": 33.399999999999636
     }

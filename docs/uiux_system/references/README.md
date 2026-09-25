@@ -8,6 +8,7 @@
 |---|---|---|---|
 | [REF-001](REF-001_MOTO_CARD.md) | moto-card.com | EFX-001-01 ~ 08 (역광 지구, match cut, 원통 갤러리, 금속 카드 반사, 곡면 숫자 벽, clip reveal, 타이포 끊김 사례, 히어로 반복 영상) | 녹화 + 소스 + 라이브 측정 |
 | [REF-002](REF-002_LEOPARPEIX.md) | leoparpeix.com | EFX-002-01 ~ 07 (베이크 조명 3D 방 + 포인터 시선, 스크롤 카메라 하강·접근, 같은 집 속 다락방 섹션, 관성·스냅 드래그 갤러리, 틀 안 이미지 시차, GPU 유체 왜곡, 3D 벌 동반자) | 녹화(HUD) + 소스 + 라이브 측정 |
+| [REF-003](REF-003_WHITE_DESERT.md) | white-desert.com | EFX-003-01 ~ 05 (두 겹 구름 덮기, 스크롤로 그리는 비행 경로 + 표시점, 소나 링, 안개 판 전환, 문장 마스크) — **WebGL 없음** | 녹화(HUD) + 소스 + 라이브 측정 |
 
 ## 레시피 색인
 
@@ -18,7 +19,7 @@
 | ID | 이름 | 핵심 | 사례 |
 |---|---|---|---|
 | RCP-08 | 프레임률 독립 지수 보간 | `x = lerp(x, target, 1 − exp(−k·dt))` / `v *= k^(60·dt)` — "부드럽게 따라옴·감속"의 공통 도구 | REF-001 EFX-001-04, REF-002 EFX-002-01·04 |
-| RCP-01 | Lenis 관성 스크롤을 단일 시간축으로 | `gsap.ticker`로 Lenis 구동 + `lagSmoothing(0)`, 3D·DOM이 같은 스크롤 값을 읽음 | REF-001(Lenis duration 1.6 + scrub 1), REF-002(Lenis lerp 0.085 + 카메라 직접 매핑) |
+| RCP-01 | Lenis 관성 스크롤을 단일 시간축으로 | `gsap.ticker`로 Lenis 구동 + `lagSmoothing(0)`, 3D·DOM이 같은 스크롤 값을 읽음 | REF-001(Lenis duration 1.6 + scrub 1), REF-002(Lenis lerp 0.085 + 카메라 직접 매핑), REF-003(Lenis 1.3.15 lerp 0.1 + scrub true) |
 
 ### 단일 사례 후보
 
@@ -37,3 +38,8 @@
 | RCP-12 | 관성·스냅 드래그 루프 | REF-002 |
 | RCP-13 | 틀 안 이미지 시차 | REF-002 |
 | RCP-14 | 저해상도 GPU 유체 → 화면 왜곡 | REF-002 |
+| RCP-15 | 고정 화면 위 다른 속도의 덮개 층 | REF-003 |
+| RCP-16 | 스크롤로 그리는 경로 + 따라가는 표시점 | REF-003 |
+| RCP-17 | 스크롤과 독립된 시간 루프("숨쉬는" 표시) | REF-003 |
+| RCP-18 | 3D 기울기 판 전환 | REF-003 |
+| RCP-19 | CSS 변수 마스크 scrub | REF-003 |

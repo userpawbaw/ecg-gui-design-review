@@ -219,6 +219,9 @@
       ],
       "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
     },
-    "next": "REF-003 white-desert.com, REF-004 seasats.com (recordings received 2026-09-25)"
+    "next": "REF-004 seasats.com (recording received 2026-09-25)",
+    "references_done": [
+      "REF-003"
+    ]
   }
 }

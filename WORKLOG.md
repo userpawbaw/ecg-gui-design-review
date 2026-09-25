@@ -351,3 +351,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Headless Chromium captures (10-second archive): Lab 1920/1366, Large compare, Attract. Only console error is expected `replay/manifest.json` 404.
 - Finding: `scripts/prepare-v2.cjs` regenerates `methods.json` from `prototype/app.js` and silently reverts the v2.2.1 M04 description; reproduced and restored, not fixed.
 - No UI source, data, release or other branch changed. Next: user decisions Q1–Q4 in the analysis doc.
+
+## 2026-09-25 — 레퍼런스 연출 제작 파이프라인 점검
+
+- moto-card.com / awwwards.com are denied by this environment's egress policy; stack taken from Awwwards tags via web search (Three.js, GSAP, Webflow). npm registry and raw.githubusercontent.com are reachable; NASA/Poly Haven/Sketchfab are not.
+- Built isolated spike `prototype/spikes/scroll-globe` (no v2.2.1 change). Build PASS (660 kB JS, untuned). Headless SwiftShader WebGL 2.0: scroll 0/30/60/100% → progress 0/0.30/0.60/1.00, rotationY 0/1.178/2.356/3.927; reduced-motion and autoplay drivers PASS; one favicon 404. Frame intervals ~200 ms are CPU software rendering, not performance evidence.
+- Spike textures come from the three.js examples repo without stated licence; gitignored, not for product.
+- Added F-010 and the audit handoff; records:check 37 PASS. Pipeline adoption (D-017/CASE-006) deferred to user decision.

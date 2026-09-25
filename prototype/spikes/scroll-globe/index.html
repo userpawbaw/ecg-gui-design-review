@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scroll Globe Spike</title>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<header class="bar"><span>TECH SPIKE · 3D scroll choreography</span><span id="mode"></span></header>
+<main class="scroller" id="scroller">
+  <section class="stage" id="stage">
+    <div class="copy">
+      <div class="headlines" aria-live="polite">
+        <h1 class="headline" data-step="0">INFRASTRUCTURE<br/>FOR SCROLL-DRIVEN 3D</h1>
+        <h1 class="headline" data-step="1">ONE TIMELINE<br/>DRIVES EVERY LAYER</h1>
+        <h1 class="headline" data-step="2">WEBGL SCENE,<br/>DOM TYPOGRAPHY</h1>
+      </div>
+      <p class="lead">스크롤 위치 하나가 3D 회전·조명·문구·버튼 상태를 동시에 결정합니다.</p>
+      <button class="cta" id="cta"><span class="cta-label" data-step="0">Start</span><span class="cta-label" data-step="1">Keep scrolling</span><span class="cta-label" data-step="2">Enter</span></button>
+    </div>
+    <ul class="chips">
+      <li class="chip" style="--x:14%;--y:70%">✓ Scene loaded</li>
+      <li class="chip" style="--x:68%;--y:62%">✓ Timeline scrubbed</li>
+      <li class="chip" style="--x:55%;--y:86%">✓ Layers synced</li>
+    </ul>
+  </section>
+</main>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

@@ -41,6 +41,7 @@ Superdesign 관련 14/15/16번은 DUAL-ATTRACT-001의 이력과 향후 별도 ca
 
 ## Current next-stage plan
 
+- `handoffs/EFFECT_PRODUCTION_PIPELINE_AUDIT_2026-09-25.md` — 레퍼런스 wow 재현 실패 원인 진단(F-010), 에셋 형식/조달처/제작 도구(Unity 판정 포함), three.js+GSAP+Lenis 스택과 `prototype/spikes/scroll-globe` 검증, 제작 파이프라인 계층 채택안(사용자 결정 대기).
 - `handoffs/REDESIGN_BASELINE_ANALYSIS_2026-09-25.md` — UI/UX 재설계 착수 전 기준선: canonical 시스템 branch(main) 판정, v2.2.1 구조·보존 계약·화면 관찰(L3 headless), 이전 Attract 탐색의 입력 가치, 사용자 결정 필요 항목.
 
 - `handoffs/DUAL_ATTRACT_CROSS_REVIEW_AND_VNEXT_PLAN_2026-09-20.md` — frozen A/B 결과를 cross-review/validator로 비교하고 v2.2.1을 보존한 채 Attract vNext variant를 구현·검증·선정하는 다음 단계 계획. 새 Source Registry의 실사용 테스트는 다음 creative round로 연기한다.

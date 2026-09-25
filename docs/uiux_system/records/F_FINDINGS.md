@@ -321,3 +321,34 @@ creative system 문서와 routing이 늘어나지만, 이미지가 implementatio
 
 ### 일반화
 Creative AI workflow에서는 "아이디어 다양성"과 "사용자가 기대하는 reference fidelity / near-final completeness"를 별개 capability로 검증해야 한다. 생성물이 빠르더라도 후자가 낮으면 실제 디자인 의사결정에는 도움이 적다.
+
+---
+
+## F-010. 레퍼런스 wow 재현 실패의 주원인은 발상이 아니라 **에셋·렌더링 엔진·시간축 사양의 부재**였다
+
+| | |
+|---|---|
+| 상태 | 확인됨 — 제작 파이프라인 계층 채택 여부는 사용자 결정 대기 |
+| 발견 | 2026-09-25 moto-card.com 지구 회전 사례 논의 `[대화]` `[사용자평가]` + scroll-globe spike `[런타임]` `[테스트]` |
+| 영향 | 재설계 전 제작 파이프라인(에셋 registry, WebGL/timeline stack, motion spec, 입력 번안, motion QA) 도입 검토 |
+| 연결 | F-009, D-015, D-016, `handoffs/EFFECT_PRODUCTION_PIPELINE_AUDIT_2026-09-25.md` |
+
+### 발단 — 무엇이 이상해 보였나
+사용자는 이전 결과물이 우수 레퍼런스의 연출을 제대로 살리지 못했다고 평가했다. 예로 moto-card.com의 "스크롤에서의 버튼 및 문구 전환 효과"와 "wow 포인트인 스크롤시 지구 회전 효과"를 들었고, 필요한 에셋, 3D 데이터 형식과 제작처, HTML 연동 기술 스택까지 "좀 더 백엔드적으로 체계를 더 구축할 필요가 있다"고 했다. `[대화]`
+
+### 먼저 의심한 것과 배제 방법
+F-009 이후의 해석은 "reference fidelity가 낮다 → creative track(Alpha/Beta)을 강화한다"였다. 그러나 기존 기록을 확인한 결과, D-016이 Attract 구현을 Canvas 2D로 제한했고 `[커밋]`, 저장소에 텍스처·모델·HDR 에셋 경로와 공통 scroll timeline이 없었으며 `[코드]`, 레퍼런스는 정지 이미지로만 분석되어 있었다 `[커밋]`. 즉 creative track을 아무리 개선해도 렌더링 상한과 재료가 없으면 결과가 같다는 것이 드러났다. `[추론]`
+
+### 결정적 근거
+three.js + GSAP ScrollTrigger + Lenis spike에서 지구 텍스처 2~3장과 셰이더만으로 "스크롤 → 지구 회전 + 헤드라인·버튼 교체" 메커니즘을 재현했다. 스크롤 0/30/60/100%에서 timeline progress와 회전값이 정확히 일치했고, 같은 timeline이 autoplay와 reduced-motion으로도 구동되었다 `[런타임]` `[테스트]`. 레퍼런스도 Three.js·GSAP·Webflow 태그를 가진다 `[문헌]`. 반면 대기 rim의 미감 차이는 여전히 남아, wow의 나머지 부분이 레퍼런스 동작과의 비교 튜닝(motion QA)에 있음을 확인했다. `[캡처]`
+
+### 조치와 검토한 대안
+- Alpha/Beta prompt만 보강 — 렌더링/에셋 상한을 넘지 못하므로 단독으로는 부족.
+- Unity WebGL로 3D 장면 제작 — DOM/스크롤 timeline과 통합이 어렵고 무거워 HTML 연출용으로 비권장.
+- **제작 파이프라인 계층(에셋 registry, WebGL stack, motion spec, 입력 번안, motion QA)을 creative track 아래에 둠** — 제안. 채택은 D-017에서 사용자 확인 후 결정.
+
+### 놓쳤다면
+다음 재설계 round에서도 Alpha/Beta 설계는 풍부한데 결과물은 2D 흉내 수준에 머무르는 같은 실패가 반복되고, 원인을 다시 "창의성 부족"으로 오진했을 것이다.
+
+### 일반화
+레퍼런스 기반 creative workflow에서는 "무엇을 만들지"와 별도로 **"무엇으로 만들지"(재료·엔진·시간축 사양·실측 기준)**를 사전 계층으로 갖춰야 한다. 그렇지 않으면 fidelity 목표가 구현 단계에서 조용히 하향된다.

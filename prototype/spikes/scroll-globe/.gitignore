@@ -1,0 +1,5 @@
+node_modules/
+dist/
+public/textures/*.jpg
+public/textures/*.png
+qa-output/

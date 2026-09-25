@@ -189,3 +189,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] 20 remote branch 비교: canonical UI/UX 시스템 = `main` `cfef430` (Alpha/Beta 17~20 + CASE-005 포함). `experiment/dual-attract-20260919`는 파일 수가 많지만 실험 원자료이며 최신 계약 누락. `feat/attract-vnext-recovered-20260924`는 main+1 Beta A/B prototype(PR 없음, winner 미선정).
 - [x] v2.2.1 분석: build PASS, 단위 테스트 12/12, headless 1920/1366 캡처 → `docs/uiux_system/handoffs/REDESIGN_BASELINE_ANALYSIS_2026-09-25.md`, `verification/redesign-baseline-20260925/`.
 - [ ] 사용자 결정 Q1~Q4(범위, recovered Beta A/B 지위, deferred 항목, Release ZIP) 후 Alpha/Beta Step 1 Intent/Reference Freeze + 범위 D 기록.
+
+## 2026-09-25 — 레퍼런스 연출 제작 파이프라인 점검
+
+- [x] 원인 진단 G1~G6(Canvas 2D 상한, 에셋 계층 없음, timeline 엔진 없음, 정지 이미지 분석, 전시 입력 번안 부재, motion QA 부재) → F-010.
+- [x] 에셋 형식(glTF .glb/KTX2/HDR/2:1 텍스처/영상/Lottie/woff2), 제작 도구(Blender 권장, Unity는 HTML 연출용 비권장), 조달처·라이선스 정리.
+- [x] `prototype/spikes/scroll-globe`: three 0.186.1 + GSAP 3.15 ScrollTrigger + Lenis 1.3.26 build PASS, headless WebGL2 스크롤/autoplay/reduced-motion 상태 동기 PASS. 실제 GPU 성능·미감·텍스처 라이선스 미검증.
+- [ ] 사용자 결정 P1~P5(파이프라인 채택, target PC GPU, 에셋 제작 주체, 레퍼런스 근거 확보, r3f 여부) → 채택 시 D-017/CASE-006/21번 계약 → 재설계 Q1~Q4.

@@ -207,6 +207,17 @@
       "P2 target PC GPU at implementation",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "Analyse the next reference (REF-003) the user provides per rule 21; after 2-3 references decide P1 (pipeline adoption). Note: REF-002 shows baked-lighting 3D scenes need Blender/outsourced modelling (P3)."
+    "next_action": "Analyse the next reference (REF-003) the user provides per rule 21; after 2-3 references decide P1 (pipeline adoption). Note: REF-002 shows baked-lighting 3D scenes need Blender/outsourced modelling (P3).",
+    "lab_corner_spike": {
+      "status": "done",
+      "date": "2026-09-25",
+      "location": "prototype/spikes/lab-corner",
+      "result": "360° light drag; modes A/B/C; C recommended; headless QA PASS; real GPU fps unverified",
+      "records": [
+        "F-013",
+        "EFFECT_PRODUCTION_PIPELINE_AUDIT §20"
+      ],
+      "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
+    }
   }
 }

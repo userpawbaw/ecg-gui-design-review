@@ -1,0 +1,157 @@
+{
+  "runs": {
+    "baked": [
+      {
+        "angle": 0,
+        "file": "baked-0.png",
+        "errors": [
+          "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        ]
+      },
+      {
+        "angle": 22.5,
+        "file": "baked-22_5.png",
+        "errors": []
+      },
+      {
+        "angle": 45,
+        "file": "baked-45.png",
+        "errors": []
+      },
+      {
+        "angle": 90,
+        "file": "baked-90.png",
+        "errors": []
+      },
+      {
+        "angle": 135,
+        "file": "baked-135.png",
+        "errors": []
+      },
+      {
+        "angle": 180,
+        "file": "baked-180.png",
+        "errors": []
+      },
+      {
+        "angle": 225,
+        "file": "baked-225.png",
+        "errors": []
+      },
+      {
+        "angle": 270,
+        "file": "baked-270.png",
+        "errors": []
+      },
+      {
+        "angle": 315,
+        "file": "baked-315.png",
+        "errors": []
+      }
+    ],
+    "realtime": [
+      {
+        "angle": 0,
+        "file": "realtime-0.png",
+        "errors": []
+      },
+      {
+        "angle": 22.5,
+        "file": "realtime-22_5.png",
+        "errors": []
+      },
+      {
+        "angle": 45,
+        "file": "realtime-45.png",
+        "errors": []
+      },
+      {
+        "angle": 90,
+        "file": "realtime-90.png",
+        "errors": []
+      },
+      {
+        "angle": 135,
+        "file": "realtime-135.png",
+        "errors": []
+      },
+      {
+        "angle": 180,
+        "file": "realtime-180.png",
+        "errors": []
+      },
+      {
+        "angle": 225,
+        "file": "realtime-225.png",
+        "errors": []
+      },
+      {
+        "angle": 270,
+        "file": "realtime-270.png",
+        "errors": []
+      },
+      {
+        "angle": 315,
+        "file": "realtime-315.png",
+        "errors": []
+      }
+    ],
+    "hybrid": [
+      {
+        "angle": 0,
+        "file": "hybrid-0.png",
+        "errors": []
+      },
+      {
+        "angle": 22.5,
+        "file": "hybrid-22_5.png",
+        "errors": []
+      },
+      {
+        "angle": 45,
+        "file": "hybrid-45.png",
+        "errors": []
+      },
+      {
+        "angle": 90,
+        "file": "hybrid-90.png",
+        "errors": []
+      },
+      {
+        "angle": 135,
+        "file": "hybrid-135.png",
+        "errors": []
+      },
+      {
+        "angle": 180,
+        "file": "hybrid-180.png",
+        "errors": []
+      },
+      {
+        "angle": 225,
+        "file": "hybrid-225.png",
+        "errors": []
+      },
+      {
+        "angle": 270,
+        "file": "hybrid-270.png",
+        "errors": []
+      },
+      {
+        "angle": 315,
+        "file": "hybrid-315.png",
+        "errors": []
+      }
+    ]
+  },
+  "drag": {
+    "start": 0,
+    "atRelease": 114.5,
+    "after600ms": 123.1,
+    "after2100ms": 135
+  },
+  "frameIntervalsMs": {
+    "samples": 4,
+    "median": 483.4
+  }
+}

@@ -25,6 +25,18 @@ async function acquire(a) {
     const files = await (await fetch(`https://api.polyhaven.com/files/${s.slug}`, {headers: ua})).json();
     const f = files[s.asset_type]?.[s.resolution]?.[s.format];
     if (!f) throw Error(`${a.id}: no ${s.asset_type}/${s.resolution}/${s.format} in Poly Haven files`);
+    if (s.format === 'gltf') {
+      // glTF + textures: every file md5-checked, stored beside the .gltf under assets/source/<id>/
+      const dir = path.join(root, path.dirname(a.original.file));
+      for (const [rel, inc] of Object.entries(f.include || {})) {
+        const rr = await fetch(inc.url, {headers: ua});
+        if (!rr.ok) throw Error(`${a.id}: HTTP ${rr.status} ${inc.url}`);
+        const b = Buffer.from(await rr.arrayBuffer());
+        if (inc.md5 && createHash('md5').update(b).digest('hex') !== inc.md5) throw Error(`${a.id}: md5 mismatch ${rel}`);
+        await mkdir(path.dirname(path.join(dir, rel)), {recursive: true});
+        await writeFile(path.join(dir, rel), b);
+      }
+    }
     const r = await fetch(f.url, {headers: ua});
     if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} ${f.url}`);
     const buf = Buffer.from(await r.arrayBuffer());
@@ -55,13 +67,17 @@ function checkOrPin(a, slot, buf) {
   }
 }
 
-for (const a of reg.assets.filter(a => a.status !== 'superseded' || process.argv.includes('--all'))) {
+const only = (process.argv.find(x => x.startsWith('--only=')) || '').slice(7);
+for (const a of reg.assets.filter(a => (a.status !== 'superseded' || process.argv.includes('--all')) && a.id.startsWith(only))) {
   if (!reg.policy.licence_allowlist.includes(a.licence)) throw Error(`${a.id}: licence ${a.licence} not allowed`);
   const buf = await acquire(a);
   checkOrPin(a, 'original', buf);
-  const src = path.join(root, a.original.file), out = path.join(root, a.processed.file);
-  await mkdir(path.dirname(src), {recursive: true}); await mkdir(path.dirname(out), {recursive: true});
+  const src = path.join(root, a.original.file);
+  await mkdir(path.dirname(src), {recursive: true});
   await writeFile(src, buf);
+  if (!a.processed) { console.log(`${a.id}: source only (${buf.length} bytes) — consumed by a build script`); continue; }
+  const out = path.join(root, a.processed.file);
+  await mkdir(path.dirname(out), {recursive: true});
   if (a.kind === 'model') {
     execFileSync('npx', ['--yes', '@gltf-transform/cli@4', 'optimize', src, out,
       '--compress', 'meshopt', '--texture-compress', 'webp', '--texture-size', '1024'], {stdio: 'inherit'});

@@ -1,0 +1,450 @@
+{
+  "lm_scale": 4.0,
+  "encoding": "png sqrt(linear / lm_scale)",
+  "stats": {
+    "ao_shell.png": {
+      "p50_used": 0.987500011920929,
+      "p99_used": 1.0,
+      "max": 1.0,
+      "used_texels": 0.6823244094848633
+    },
+    "ao_props.png": {
+      "p50_used": 0.15000000596046448,
+      "p99_used": 0.925000011920929,
+      "max": 1.0,
+      "used_texels": 0.23635101318359375
+    },
+    "light_shell_00.png": {
+      "p50_used": 0.3009999394416809,
+      "p99_used": 1.4354402840137483,
+      "max": 2.7292280197143555,
+      "used_texels": 0.6882400512695312
+    },
+    "light_props_00.png": {
+      "p50_used": 0.2257547825574875,
+      "p99_used": 1.411471416950226,
+      "max": 13.217500686645508,
+      "used_texels": 0.2800302505493164
+    },
+    "indirect_shell_00.png": {
+      "p50_used": 0.099227674305439,
+      "p99_used": 0.5113248896598811,
+      "max": 2.630307674407959,
+      "used_texels": 0.34557437896728516
+    },
+    "indirect_props_00.png": {
+      "p50_used": 0.09201135486364365,
+      "p99_used": 0.6221833539009095,
+      "max": 13.114449501037598,
+      "used_texels": 0.2766447067260742
+    },
+    "light_shell_01.png": {
+      "p50_used": 0.25871653854846954,
+      "p99_used": 1.0350807738304133,
+      "max": 2.335829019546509,
+      "used_texels": 0.687774658203125
+    },
+    "light_props_01.png": {
+      "p50_used": 0.12895648181438446,
+      "p99_used": 1.2628405094146729,
+      "max": 15.788067817687988,
+      "used_texels": 0.2794218063354492
+    },
+    "indirect_shell_01.png": {
+      "p50_used": 0.05197463557124138,
+      "p99_used": 0.19064453452825503,
+      "max": 2.240891456604004,
+      "used_texels": 0.3450593948364258
+    },
+    "indirect_props_01.png": {
+      "p50_used": 0.04869232326745987,
+      "p99_used": 0.39211374521255493,
+      "max": 15.769003868103027,
+      "used_texels": 0.27561473846435547
+    },
+    "light_shell_02.png": {
+      "p50_used": 0.22888708114624023,
+      "p99_used": 1.35078763961792,
+      "max": 1.6708943843841553,
+      "used_texels": 0.687748908996582
+    },
+    "light_props_02.png": {
+      "p50_used": 0.06688276678323746,
+      "p99_used": 0.9044763302803028,
+      "max": 4.012488842010498,
+      "used_texels": 0.2773466110229492
+    },
+    "indirect_shell_02.png": {
+      "p50_used": 0.025814897380769253,
+      "p99_used": 0.08620682157576083,
+      "max": 0.5559423565864563,
+      "used_texels": 0.34702110290527344
+    },
+    "indirect_props_02.png": {
+      "p50_used": 0.023296494968235493,
+      "p99_used": 0.12142152152955481,
+      "max": 3.658578395843506,
+      "used_texels": 0.27343177795410156
+    },
+    "light_shell_03.png": {
+      "p50_used": 0.2488567978143692,
+      "p99_used": 1.0187556743621826,
+      "max": 1.3426049947738647,
+      "used_texels": 0.6877899169921875
+    },
+    "light_props_03.png": {
+      "p50_used": 0.06228715553879738,
+      "p99_used": 0.9937909448146822,
+      "max": 13.706014633178711,
+      "used_texels": 0.2771930694580078
+    },
+    "indirect_shell_03.png": {
+      "p50_used": 0.023221733048558235,
+      "p99_used": 0.07767469510436045,
+      "max": 0.5015987157821655,
+      "used_texels": 0.3477363586425781
+    },
+    "indirect_props_03.png": {
+      "p50_used": 0.02124703675508499,
+      "p99_used": 0.3053533434867859,
+      "max": 12.90484619140625,
+      "used_texels": 0.27335548400878906
+    },
+    "light_shell_04.png": {
+      "p50_used": 0.223249614238739,
+      "p99_used": 1.3507863283157349,
+      "max": 1.7030775547027588,
+      "used_texels": 0.687769889831543
+    },
+    "light_props_04.png": {
+      "p50_used": 0.06209418550133705,
+      "p99_used": 1.1013480567932128,
+      "max": 5.29508113861084,
+      "used_texels": 0.2773170471191406
+    },
+    "indirect_shell_04.png": {
+      "p50_used": 0.022217980585992336,
+      "p99_used": 0.07224519051611422,
+      "max": 0.5015987753868103,
+      "used_texels": 0.3472023010253906
+    },
+    "indirect_props_04.png": {
+      "p50_used": 0.020880162715911865,
+      "p99_used": 0.41683030128479004,
+      "max": 5.29508113861084,
+      "used_texels": 0.2734689712524414
+    },
+    "light_shell_05.png": {
+      "p50_used": 0.2519998550415039,
+      "p99_used": 1.031959950923919,
+      "max": 1.585188865661621,
+      "used_texels": 0.6878290176391602
+    },
+    "light_props_05.png": {
+      "p50_used": 0.08354689925909042,
+      "p99_used": 1.0857925415039062,
+      "max": 12.388433456420898,
+      "used_texels": 0.27803897857666016
+    },
+    "indirect_shell_05.png": {
+      "p50_used": 0.04631323553621769,
+      "p99_used": 0.2271979373693472,
+      "max": 0.7291988134384155,
+      "used_texels": 0.34777069091796875
+    },
+    "indirect_props_05.png": {
+      "p50_used": 0.034115083515644073,
+      "p99_used": 0.3133530980348589,
+      "max": 12.332350730895996,
+      "used_texels": 0.27441978454589844
+    },
+    "light_shell_06.png": {
+      "p50_used": 0.3009999394416809,
+      "p99_used": 1.4267977476119995,
+      "max": 2.736518621444702,
+      "used_texels": 0.6885929107666016
+    },
+    "light_props_06.png": {
+      "p50_used": 0.17135997116565704,
+      "p99_used": 1.431929951906205,
+      "max": 6.960311412811279,
+      "used_texels": 0.2899284362792969
+    },
+    "indirect_shell_06.png": {
+      "p50_used": 0.08950275927782059,
+      "p99_used": 0.5348487985134178,
+      "max": 1.507805585861206,
+      "used_texels": 0.34805774688720703
+    },
+    "indirect_props_06.png": {
+      "p50_used": 0.0656115934252739,
+      "p99_used": 0.49536219239234924,
+      "max": 6.960311412811279,
+      "used_texels": 0.2860755920410156
+    },
+    "light_shell_07.png": {
+      "p50_used": 0.3009999990463257,
+      "p99_used": 1.3257064127922078,
+      "max": 2.5537428855895996,
+      "used_texels": 0.6884746551513672
+    },
+    "light_props_07.png": {
+      "p50_used": 0.24294213950634003,
+      "p99_used": 1.4059207439422607,
+      "max": 15.880675315856934,
+      "used_texels": 0.2803659439086914
+    },
+    "indirect_shell_07.png": {
+      "p50_used": 0.12206187844276428,
+      "p99_used": 0.5740696996450417,
+      "max": 1.4124451875686646,
+      "used_texels": 0.3458290100097656
+    },
+    "indirect_props_07.png": {
+      "p50_used": 0.10309037938714027,
+      "p99_used": 0.6335836112499241,
+      "max": 15.86158561706543,
+      "used_texels": 0.27710914611816406
+    }
+  },
+  "size": 1024,
+  "samples": 128,
+  "elevation": 32.0,
+  "azimuths": [
+    {
+      "index": 0,
+      "azimuth_deg": 0.0,
+      "sun_dir": [
+        0.8480480909347534,
+        0.0,
+        0.5299192667007446
+      ],
+      "files": {
+        "shell": "light_shell_00.webp",
+        "props": "light_props_00.webp"
+      },
+      "indirect_files": {
+        "shell": "indirect_shell_00.webp",
+        "props": "indirect_props_00.webp"
+      }
+    },
+    {
+      "index": 1,
+      "azimuth_deg": 45.0,
+      "sun_dir": [
+        0.5996605753898621,
+        0.5996605753898621,
+        0.5299192667007446
+      ],
+      "files": {
+        "shell": "light_shell_01.webp",
+        "props": "light_props_01.webp"
+      },
+      "indirect_files": {
+        "shell": "indirect_shell_01.webp",
+        "props": "indirect_props_01.webp"
+      }
+    },
+    {
+      "index": 2,
+      "azimuth_deg": 90.0,
+      "sun_dir": [
+        5.192797025380062e-17,
+        0.8480480909347534,
+        0.5299192667007446
+      ],
+      "files": {
+        "shell": "light_shell_02.webp",
+        "props": "light_props_02.webp"
+      },
+      "indirect_files": {
+        "shell": "indirect_shell_02.webp",
+        "props": "indirect_props_02.webp"
+      }
+    },
+    {
+      "index": 3,
+      "azimuth_deg": 135.0,
+      "sun_dir": [
+        -0.5996605753898621,
+        0.5996605753898621,
+        0.5299192667007446
+      ],
+      "files": {
+        "shell": "light_shell_03.webp",
+        "props": "light_props_03.webp"
+      },
+      "indirect_files": {
+        "shell": "indirect_shell_03.webp",
+        "props": "indirect_props_03.webp"
+      }
+    },
+    {
+      "index": 4,
+      "azimuth_deg": 180.0,
+      "sun_dir": [
+        -0.8480480909347534,
+        1.0385594050760124e-16,
+        0.5299192667007446
+      ],
+      "files": {
+        "shell": "light_shell_04.webp",
+        "props": "light_props_04.webp"
+      },
+      "indirect_files": {
+        "shell": "indirect_shell_04.webp",
+        "props": "indirect_props_04.webp"
+      }
+    },
+    {
+      "index": 5,
+      "azimuth_deg": 225.0,
+      "sun_dir": [
+        -0.5996605753898621,
+        -0.5996605753898621,
+        0.5299192667007446
+      ],
+      "files": {
+        "shell": "light_shell_05.webp",
+        "props": "light_props_05.webp"
+      },
+      "indirect_files": {
+        "shell": "indirect_shell_05.webp",
+        "props": "indirect_props_05.webp"
+      }
+    },
+    {
+      "index": 6,
+      "azimuth_deg": 270.0,
+      "sun_dir": [
+        -1.5578390414395696e-16,
+        -0.8480480909347534,
+        0.5299192667007446
+      ],
+      "files": {
+        "shell": "light_shell_06.webp",
+        "props": "light_props_06.webp"
+      },
+      "indirect_files": {
+        "shell": "indirect_shell_06.webp",
+        "props": "indirect_props_06.webp"
+      }
+    },
+    {
+      "index": 7,
+      "azimuth_deg": 315.0,
+      "sun_dir": [
+        0.5996605753898621,
+        -0.5996605753898621,
+        0.5299192667007446
+      ],
+      "files": {
+        "shell": "light_shell_07.webp",
+        "props": "light_props_07.webp"
+      },
+      "indirect_files": {
+        "shell": "indirect_shell_07.webp",
+        "props": "indirect_props_07.webp"
+      }
+    }
+  ],
+  "groups": {
+    "shell": {
+      "object": "Lab_shell",
+      "uv_coverage": 0.708,
+      "materials": [
+        "Floor",
+        "Wall",
+        "WindowFrame",
+        "Trim",
+        "MonitorBody",
+        "Screen"
+      ]
+    },
+    "props": {
+      "object": "Lab_props",
+      "uv_coverage": 0.076,
+      "materials": [
+        "metal_office_desk",
+        "modern_arm_chair_01_legs",
+        "modern_arm_chair_01_pillow",
+        "desk_lamp_arm_01",
+        "desk_lamp_arm_01_light",
+        "industrial_microscope",
+        "retro_multimeter",
+        "retro_multimeter_glass",
+        "steel_frame_shelves_01",
+        "potted_plant_01_pot",
+        "potted_plant_01_leaves"
+      ]
+    }
+  },
+  "timing_s": {
+    "ao_shell.png": 20.2,
+    "ao_props.png": 4.9,
+    "light_shell_00.png": 39.1,
+    "light_props_00.png": 8.6,
+    "indirect_shell_00.png": 33.1,
+    "indirect_props_00.png": 7.3,
+    "light_shell_01.png": 42.0,
+    "light_props_01.png": 7.9,
+    "indirect_shell_01.png": 33.9,
+    "indirect_props_01.png": 7.4,
+    "light_shell_02.png": 43.5,
+    "light_props_02.png": 7.8,
+    "indirect_shell_02.png": 33.2,
+    "indirect_props_02.png": 6.9,
+    "light_shell_03.png": 46.2,
+    "light_props_03.png": 8.0,
+    "indirect_shell_03.png": 34.5,
+    "indirect_props_03.png": 7.0,
+    "light_shell_04.png": 46.7,
+    "light_props_04.png": 8.0,
+    "indirect_shell_04.png": 34.1,
+    "indirect_props_04.png": 7.1,
+    "light_shell_05.png": 42.8,
+    "light_props_05.png": 8.4,
+    "indirect_shell_05.png": 35.6,
+    "indirect_props_05.png": 7.8,
+    "light_shell_06.png": 40.9,
+    "light_props_06.png": 8.8,
+    "indirect_shell_06.png": 33.3,
+    "indirect_props_06.png": 7.5,
+    "light_shell_07.png": 36.2,
+    "light_props_07.png": 9.3,
+    "indirect_shell_07.png": 33.4,
+    "indirect_props_07.png": 7.3
+  },
+  "sun": {
+    "energy": 4.199999809265137,
+    "angle_deg": 2.5,
+    "color": [
+      1.0,
+      0.9300000071525574,
+      0.8199999928474426
+    ]
+  },
+  "world": {
+    "color": [
+      0.62,
+      0.72,
+      0.86
+    ],
+    "strength": 0.35
+  },
+  "camera": {
+    "type": "ORTHO",
+    "ortho_scale": 6.400000095367432,
+    "dir": [
+      0.6117151975631714,
+      -0.6117151975631714,
+      0.5016064643859863
+    ],
+    "target": [
+      1.899999976158142,
+      2.200000047683716,
+      1.0499999523162842
+    ]
+  },
+  "web_encoding": "lightmaps: libwebp q92 of the sqrt-encoded PNG; glb: gltf-transform optimize (meshopt, WebP <=1024, TEXCOORD_1 kept, no simplify)"
+}

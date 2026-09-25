@@ -124,6 +124,202 @@
           }
         }
       ]
+    },
+    {
+      "id": "ph-metal_office_desk",
+      "title": "Poly Haven — Metal office desk (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "metal_office_desk",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/metal_office_desk",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/metal_office_desk/metal_office_desk_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-metal_office_desk/metal_office_desk_1k.gltf",
+        "sha256": "f07032a5ee89aacceebf10fd9fa192c22775ae81861cfb0bdb1594497179373c",
+        "bytes": 13510
+      },
+      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/lab-corner"
+      ],
+      "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
+    },
+    {
+      "id": "ph-modern_arm_chair_01",
+      "title": "Poly Haven — Modern arm chair 01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "modern_arm_chair_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/modern_arm_chair_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modern_arm_chair_01/modern_arm_chair_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-modern_arm_chair_01/modern_arm_chair_01_1k.gltf",
+        "sha256": "d31be520add2603447b43acedbdacf9516866f7c89e9ea9230c9edbac9cc6e6a",
+        "bytes": 5121
+      },
+      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/lab-corner"
+      ],
+      "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
+    },
+    {
+      "id": "ph-desk_lamp_arm_01",
+      "title": "Poly Haven — Desk lamp arm 01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "desk_lamp_arm_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/desk_lamp_arm_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/desk_lamp_arm_01/desk_lamp_arm_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-desk_lamp_arm_01/desk_lamp_arm_01_1k.gltf",
+        "sha256": "2ac8389afc1519449a9cfdf7efd9fa36780a2177bb47ab58f7a7dda7d247dc8c",
+        "bytes": 4453
+      },
+      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/lab-corner"
+      ],
+      "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
+    },
+    {
+      "id": "ph-steel_frame_shelves_01",
+      "title": "Poly Haven — Steel frame shelves 01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "steel_frame_shelves_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/steel_frame_shelves_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/steel_frame_shelves_01/steel_frame_shelves_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-steel_frame_shelves_01/steel_frame_shelves_01_1k.gltf",
+        "sha256": "4eff8994825d654e337f8dc425e959ed6add7f4773188c87ba64402d9edd9842",
+        "bytes": 2766
+      },
+      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/lab-corner"
+      ],
+      "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
+    },
+    {
+      "id": "ph-industrial_microscope",
+      "title": "Poly Haven — Industrial microscope (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "industrial_microscope",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/industrial_microscope",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/industrial_microscope/industrial_microscope_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-industrial_microscope/industrial_microscope_1k.gltf",
+        "sha256": "91151cd484cf8f991c822f53a48487b8fa0a228cd7ccf63fbba625e1d70abb2a",
+        "bytes": 4270
+      },
+      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/lab-corner"
+      ],
+      "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
+    },
+    {
+      "id": "ph-retro_multimeter",
+      "title": "Poly Haven — Retro multimeter (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "retro_multimeter",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/retro_multimeter",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/retro_multimeter/retro_multimeter_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-retro_multimeter/retro_multimeter_1k.gltf",
+        "sha256": "47b51486a9fc1b5dab3449b3541e6bcbc3ae866e72372fcd8b67f3f45e803a97",
+        "bytes": 13821
+      },
+      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/lab-corner"
+      ],
+      "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
+    },
+    {
+      "id": "ph-potted_plant_01",
+      "title": "Poly Haven — Potted plant 01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "potted_plant_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/potted_plant_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_01/potted_plant_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-potted_plant_01/potted_plant_01_1k.gltf",
+        "sha256": "23b30294407684b02f14800d6685bd8938da5d2111e17753ac8dd3c37d8c88a0",
+        "bytes": 7969
+      },
+      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/lab-corner"
+      ],
+      "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
     }
   ],
   "rejected": [

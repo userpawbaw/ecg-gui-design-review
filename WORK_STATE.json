@@ -238,6 +238,19 @@
         "mobile/touch",
         "4K exhibit display"
       ]
+    },
+    "attic_spike": {
+      "status": "done (headless)",
+      "location": "prototype/spikes/attic",
+      "doc": "docs/uiux_system/handoffs/ATTIC_BOOKSHELF_STUDY_2026-09-25.md",
+      "records": [
+        "F-016"
+      ],
+      "unverified": [
+        "real GPU fps (volumetric 48 steps)",
+        "mobile",
+        "4K display"
+      ]
     }
   }
 }

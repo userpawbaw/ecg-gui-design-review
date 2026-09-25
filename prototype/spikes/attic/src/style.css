@@ -1,0 +1,14 @@
+:root{--paper:#faf7f4;--ink:#1c1a18;color-scheme:light}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter Tight Variable',system-ui,sans-serif}
+#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0}
+.top{position:fixed;inset:0 0 auto;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px 3vw;font-size:14px;mix-blend-mode:difference;color:#fff}
+.top nav{display:flex;gap:18px;align-items:center}.top button{font:inherit;color:inherit;background:none;border:1px solid currentColor;border-radius:99px;padding:4px 12px;cursor:pointer}
+.top button[aria-pressed=false]{opacity:.5}
+.paper{position:relative;z-index:2;background:var(--paper)}
+.intro{min-height:100vh;padding:28vh 8vw 10vh}.intro h2{margin:0;font:500 clamp(40px,6vw,96px)/1 'Inter Tight Variable';letter-spacing:-.02em}
+.kicker,.small{font-size:14px;opacity:.6}.outro{padding:24vh 8vw}
+/* the window: transparent section — the fixed WebGL canvas shows through */
+.window{position:relative;z-index:1;height:260vh}
+.lines{position:sticky;top:34vh;padding-left:8vw;display:grid;color:#fff;font:600 clamp(40px,6.2vw,110px)/.92 'Inter Tight Variable';letter-spacing:-.01em;text-shadow:0 2px 30px #0003}
+.lines span{display:block;clip-path:inset(0 0 100% 0);transform:translateY(40%);opacity:.0}
+@media (prefers-reduced-motion: reduce){.lines span{clip-path:none;transform:none;opacity:1}}

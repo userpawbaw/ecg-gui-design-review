@@ -1,0 +1,15 @@
+{
+  "name": "ecg-spike-attic",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Spike: REF-002 attic bookshelf study — fully baked lighting, raymarched sun shafts, dust in the beam, scroll camera descent. Not ECG product UI.",
+  "scripts": {
+    "scene": "python3 ../../../scripts/blender/build_attic.py --out prototype/spikes/attic/public/scene --size 2048 --samples 160 && python3 scripts/package.py public/scene",
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4192"
+  },
+  "dependencies": {"three": "0.186.1", "lenis": "1.3.26", "@fontsource-variable/inter-tight": "5.3.0"},
+  "devDependencies": {"@playwright/test": "^1.56.0", "@types/three": "^0.186.0", "typescript": "^5.9.0", "vite": "^7.0.0"}
+}

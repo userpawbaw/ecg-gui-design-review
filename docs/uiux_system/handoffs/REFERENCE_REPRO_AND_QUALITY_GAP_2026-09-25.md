@@ -114,6 +114,7 @@ node tools/spike-capture/capture-frames.mjs ref003|ref004|lab <outDir>
 | 글꼴 | @fontsource(OFL) | 충분. 상용 서체는 deferred |
 | **추가 권장 후보** | — | ① **KTX2 인코더(KTX-Software `toktx`)** — 큰 텍스처를 GPU 압축으로(이 환경엔 없음, 전시 PC GPU 메모리 P2와 함께). ② **pmndrs `postprocessing`**(SMAA·N8AO 등) — three 기본 후처리보다 품질·성능 좋음, 필요 시. ③ **Theatre.js** — 스크롤 카메라 경로가 여러 개가 되면 키프레임 저작 도구로. 모두 선택 사항 |
 | 불필요 | r3f(P5), Spline, Unity, Lottie(이번 효과에는 무관) | — |
+| 후속 판단 | — | 추가 후보 3종의 득실(손해가 나는 경우 포함)은 `ATTIC_BOOKSHELF_STUDY_2026-09-25.md` §5 — 셋 다 **문제가 측정된 뒤 도입** |
 | QA | `tools/spike-capture/capture-frames.mjs`(프레임 단위 캡처 → mp4) | 헤드리스 결과 영상은 가능. **실제 GPU fps 측정은 여전히 사용자 PC 필요** |
 
 ## 6. 검증과 한계

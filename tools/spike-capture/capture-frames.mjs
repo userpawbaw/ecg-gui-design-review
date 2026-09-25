@@ -42,7 +42,15 @@ if (which === 'lab') {
   for (let i = 0; i < 60; i++) { await p.evaluate(y => scrollTo(0, y), ease(i / 59) * max); await raf(p); await shot(p); }          // camera descends to the monitor
   for (let i = 0; i < 6; i++) { await raf(p); await shot(p); }
 }
+if (which === 'attic') {
+  const p = await b.newPage({viewport: {width: 1600, height: 900}});
+  await p.goto('http://127.0.0.1:4192/'); await p.waitForFunction(() => window.__attic !== undefined); await p.waitForTimeout(3000);
+  const [top, h] = await p.evaluate(() => { const r = document.getElementById('win').getBoundingClientRect(); return [r.top + scrollY, r.height]; });
+  const y0 = top - 900 * 0.35, y1 = top + h - 900 * 0.2, N = 96;          // enter the window → walk down the bookcase
+  for (let i = 0; i < N; i++) { await p.evaluate(y => window.__lenis.scrollTo(y, {immediate: true}), y0 + ease(i / (N - 1)) * (y1 - y0)); await raf(p); await shot(p); }
+  for (let i = 0; i < 12; i++) { await raf(p); await shot(p); }
+}
 await b.close();
-execFileSync(FF, ['-hide_banner', '-loglevel', 'error', '-y', '-framerate', which === 'lab' ? '12' : '24', '-i', `${frames}/f%04d.png`,
+execFileSync(FF, ['-hide_banner', '-loglevel', 'error', '-y', '-framerate', which === 'lab' ? '12' : which === 'attic' ? '16' : '24', '-i', `${frames}/f%04d.png`,
   '-vf', 'scale=1280:-2', '-c:v', 'libx264', '-crf', '24', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', `${outDir}/${which}.mp4`]);
 console.log(which, n, 'frames →', `${outDir}/${which}.mp4`);

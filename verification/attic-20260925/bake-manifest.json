@@ -1,0 +1,324 @@
+{
+ "lm_scale": 4.0,
+ "encoding": "png sqrt(linear / lm_scale), albedo-free full lighting (direct + indirect)",
+ "size": 2048,
+ "samples": 160,
+ "denoise": "OIDN (compositor Denoise, HDR)",
+ "groups": {
+  "shell": {
+   "object": "Attic_shell",
+   "uv_coverage": 0.861,
+   "file": "light_shell.webp"
+  },
+  "books": {
+   "object": "Attic_books",
+   "uv_coverage": 0.563,
+   "file": "light_books.webp"
+  },
+  "props": {
+   "object": "Attic_props",
+   "uv_coverage": 0.217,
+   "file": "light_props.webp"
+  },
+  "decor": {
+   "object": "Attic_decor",
+   "vertex_color": "COLOR_0 = sqrt(light / lm_scale)"
+  }
+ },
+ "stats": {
+  "light_shell.png": {
+   "p50_used": 1.4048628211021423,
+   "p99_used": 3.565110921859741,
+   "used_texels": 0.7628240585327148
+  },
+  "light_books.png": {
+   "p50_used": 0.012535341084003448,
+   "p99_used": 1.1976050376892087,
+   "used_texels": 0.556837797164917
+  },
+  "light_props.png": {
+   "p50_used": 0.07097532600164413,
+   "p99_used": 2.141616058349607,
+   "used_texels": 0.2666757106781006
+  },
+  "decor_vc": {
+   "p50": 0.002657854580320418,
+   "p99": 2.3045481562614416
+  }
+ },
+ "timing_s": {
+  "light_shell.png": 541.0,
+  "light_books.png": 988.0,
+  "light_props.png": 211.2,
+  "decor_vc": 211.3
+ },
+ "books": 478,
+ "props": [
+  {
+   "slug": "marble_bust_01",
+   "size_m": [
+    0.137,
+    0.151,
+    0.26
+   ],
+   "at": [
+    1.72,
+    2.04
+   ]
+  },
+  {
+   "slug": "ceramic_vase_02",
+   "size_m": [
+    0.17,
+    0.17,
+    0.24
+   ],
+   "at": [
+    -1.35,
+    2.04
+   ]
+  },
+  {
+   "slug": "ceramic_vase_01",
+   "size_m": [
+    0.153,
+    0.153,
+    0.3
+   ],
+   "at": [
+    0.25,
+    0.95
+   ]
+  },
+  {
+   "slug": "jug_01",
+   "size_m": [
+    0.208,
+    0.127,
+    0.16
+   ],
+   "at": [
+    -1.95,
+    1.32
+   ]
+  },
+  {
+   "slug": "potted_plant_04",
+   "size_m": [
+    0.126,
+    0.138,
+    0.2
+   ],
+   "at": [
+    1.1,
+    1.32
+   ]
+  },
+  {
+   "slug": "mantel_clock_01",
+   "size_m": [
+    0.405,
+    0.149,
+    0.19
+   ],
+   "at": [
+    -1.15,
+    1.68
+   ]
+  },
+  {
+   "slug": "horse_statue_01",
+   "size_m": [
+    0.149,
+    0.098,
+    0.2
+   ],
+   "at": [
+    1.55,
+    2.48
+   ]
+  },
+  {
+   "slug": "lambis_shell",
+   "size_m": [
+    0.21,
+    0.112,
+    0.07
+   ],
+   "at": [
+    -0.45,
+    0.54
+   ]
+  },
+  {
+   "slug": "seadogs_compass",
+   "size_m": [
+    0.065,
+    0.128,
+    0.073
+   ],
+   "at": [
+    -1.0,
+    0.95
+   ]
+  },
+  {
+   "slug": "wooden_bowl_01",
+   "size_m": [
+    0.301,
+    0.297,
+    0.09
+   ],
+   "at": [
+    0.45,
+    1.32
+   ]
+  },
+  {
+   "slug": "brass_candleholders",
+   "size_m": [
+    0.867,
+    0.096,
+    0.22
+   ],
+   "at": [
+    -1.95,
+    2.48
+   ]
+  },
+  {
+   "slug": "carved_wooden_elephant",
+   "size_m": [
+    0.159,
+    0.084,
+    0.14
+   ],
+   "at": [
+    1.25,
+    2.48
+   ]
+  },
+  {
+   "slug": "round_spectacles",
+   "size_m": [
+    0.136,
+    0.129,
+    0.04
+   ],
+   "at": [
+    -0.35,
+    1.32
+   ]
+  },
+  {
+   "slug": "alarm_clock_01",
+   "size_m": [
+    0.098,
+    0.05,
+    0.13
+   ],
+   "at": [
+    1.92,
+    1.68
+   ]
+  },
+  {
+   "slug": "ceramic_vase_04",
+   "size_m": [
+    0.117,
+    0.117,
+    0.22
+   ],
+   "at": [
+    1.95,
+    0.72
+   ]
+  },
+  {
+   "slug": "book_encyclopedia_set_01",
+   "size_m": [
+    0.556,
+    0.185,
+    0.27
+   ],
+   "at": [
+    -1.1,
+    0.54
+   ]
+  },
+  {
+   "slug": "potted_plant_02",
+   "size_m": [
+    0.458,
+    0.43,
+    0.656
+   ],
+   "at": [
+    1.6,
+    3.45
+   ]
+  },
+  {
+   "slug": "ceramic_vase_01",
+   "size_m": [
+    0.173,
+    0.173,
+    0.34
+   ],
+   "at": [
+    -1.7,
+    3.45
+   ]
+  }
+ ],
+ "sun": {
+  "to_dir": [
+   -0.4205681085586548,
+   -0.7209739685058594,
+   -0.5507439970970154
+  ],
+  "color": [
+   1.0,
+   0.88,
+   0.72
+  ],
+  "energy": 8.0,
+  "angle_deg": 1.2
+ },
+ "skylight": {
+  "center": [
+   0.949999988079071,
+   4.4517645835876465,
+   1.850000023841858
+  ],
+  "size_m": [
+   1.7,
+   1.4
+  ],
+  "slope_deg": 24
+ },
+ "camera_path": {
+  "pos_top": [
+   0.15000000596046448,
+   2.450000047683716,
+   3.3499999046325684
+  ],
+  "pos_bottom": [
+   0.15000000596046448,
+   0.949999988079071,
+   3.3499999046325684
+  ],
+  "look_top": [
+   0.10000000149011612,
+   2.25,
+   -0.4000000059604645
+  ],
+  "look_bottom": [
+   0.10000000149011612,
+   0.949999988079071,
+   -0.4000000059604645
+  ],
+  "fov_v_deg": 30
+ },
+ "web_encoding": "lightmaps libwebp q92 of sqrt-encoded PNG; glb gltf-transform optimize (meshopt, WebP \u22641024, TEXCOORD_1 + COLOR_0 kept, no simplify)"
+}

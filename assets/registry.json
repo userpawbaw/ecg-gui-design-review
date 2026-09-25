@@ -592,6 +592,538 @@
         "prototype/spikes/ref-repro"
       ],
       "review": "Photo for the REF-004 repro hover card (demo content)."
+    },
+    {
+      "id": "ph-ash_veneer",
+      "title": "Poly Haven — ash_veneer (2k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "ash_veneer",
+        "asset_type": "gltf",
+        "resolution": "2k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/ash_veneer",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/2k/ash_veneer/ash_veneer_2k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-ash_veneer/ash_veneer_2k.gltf",
+        "sha256": "c28ea2b61c313d63863d1e5f5c64fa86af5cca08272f1de86a68e0b138520091",
+        "bytes": 2765
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 wood texture for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-walnut_veneer",
+      "title": "Poly Haven — walnut_veneer (2k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "walnut_veneer",
+        "asset_type": "gltf",
+        "resolution": "2k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/walnut_veneer",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/2k/walnut_veneer/walnut_veneer_2k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-walnut_veneer/walnut_veneer_2k.gltf",
+        "sha256": "cba0b5933c19fb956363f97203d010fc7c15b300d67976deb6be1a56d764481d",
+        "bytes": 2550
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 wood texture for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-marble_bust_01",
+      "title": "Poly Haven — marble_bust_01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "marble_bust_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/marble_bust_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/marble_bust_01/marble_bust_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-marble_bust_01/marble_bust_01_1k.gltf",
+        "sha256": "b6f192fc01be4349470b66f6f6948bd37620267bdbc86f4568e4d078f97ff09b",
+        "bytes": 2793
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-ceramic_vase_01",
+      "title": "Poly Haven — ceramic_vase_01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "ceramic_vase_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/ceramic_vase_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ceramic_vase_01/ceramic_vase_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-ceramic_vase_01/ceramic_vase_01_1k.gltf",
+        "sha256": "4e2c69eb5bbccf86e9fbf92af438464669d804c1f0eae041ee28651a5b57d91e",
+        "bytes": 2706
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-ceramic_vase_02",
+      "title": "Poly Haven — ceramic_vase_02 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "ceramic_vase_02",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/ceramic_vase_02",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ceramic_vase_02/ceramic_vase_02_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-ceramic_vase_02/ceramic_vase_02_1k.gltf",
+        "sha256": "1bda047833b68c2c1b190ee53a55b1aa42d30748c84739909b6ca65b2f2d76c9",
+        "bytes": 2716
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-ceramic_vase_04",
+      "title": "Poly Haven — ceramic_vase_04 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "ceramic_vase_04",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/ceramic_vase_04",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ceramic_vase_04/ceramic_vase_04_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-ceramic_vase_04/ceramic_vase_04_1k.gltf",
+        "sha256": "ca6461229bd6379b621396581e32400f93884fe77f7fa8abe6ddbeb64d57421b",
+        "bytes": 2716
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-jug_01",
+      "title": "Poly Haven — jug_01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "jug_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/jug_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/jug_01/jug_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-jug_01/jug_01_1k.gltf",
+        "sha256": "87dc40eb3e45b0185699f18cf5988b81fe5b1a01f0cf76c1daa93774878d7e44",
+        "bytes": 2612
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-potted_plant_02",
+      "title": "Poly Haven — potted_plant_02 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "potted_plant_02",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/potted_plant_02",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_02/potted_plant_02_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-potted_plant_02/potted_plant_02_1k.gltf",
+        "sha256": "c533dcce0d1aa4379eb7db04601a04983f8df2422b28578de922655a416e64a9",
+        "bytes": 6653
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-potted_plant_04",
+      "title": "Poly Haven — potted_plant_04 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "potted_plant_04",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/potted_plant_04",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_04/potted_plant_04_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-potted_plant_04/potted_plant_04_1k.gltf",
+        "sha256": "b3a3bc3e97da75844999c4da07b7104b6c023f729a7c045979929b9504184339",
+        "bytes": 7081
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-wooden_bowl_01",
+      "title": "Poly Haven — wooden_bowl_01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "wooden_bowl_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/wooden_bowl_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_bowl_01/wooden_bowl_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-wooden_bowl_01/wooden_bowl_01_1k.gltf",
+        "sha256": "7fe0d6aa4b58e1b9bfc704a8142f4f23f651640c5701b26037fbee3c01613c3b",
+        "bytes": 2811
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-mantel_clock_01",
+      "title": "Poly Haven — mantel_clock_01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "mantel_clock_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/mantel_clock_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/mantel_clock_01/mantel_clock_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-mantel_clock_01/mantel_clock_01_1k.gltf",
+        "sha256": "e4c4f264175626fa14f12409ee5d687cf7f0d68fd1881cb7eb927c5f112de6ab",
+        "bytes": 5628
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-horse_statue_01",
+      "title": "Poly Haven — horse_statue_01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "horse_statue_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/horse_statue_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/horse_statue_01/horse_statue_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-horse_statue_01/horse_statue_01_1k.gltf",
+        "sha256": "64e33e68ef427d0e7e401808d605b7d24208ae72b63f97ddf6716bc423b374ba",
+        "bytes": 5858
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-lambis_shell",
+      "title": "Poly Haven — lambis_shell (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "lambis_shell",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/lambis_shell",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/lambis_shell/lambis_shell_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-lambis_shell/lambis_shell_1k.gltf",
+        "sha256": "3fbfbe990b12f33af079671bc9ea9b1dd46b50f823692b72aa0d89fe850328e3",
+        "bytes": 2772
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-seadogs_compass",
+      "title": "Poly Haven — seadogs_compass (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "seadogs_compass",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/seadogs_compass",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/seadogs_compass/seadogs_compass_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-seadogs_compass/seadogs_compass_1k.gltf",
+        "sha256": "eb43affaa88dcf40d47318d096f14b709d8ddc34bad46b67ed038b807e56df07",
+        "bytes": 6060
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-book_encyclopedia_set_01",
+      "title": "Poly Haven — book_encyclopedia_set_01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "book_encyclopedia_set_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/book_encyclopedia_set_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/book_encyclopedia_set_01/book_encyclopedia_set_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-book_encyclopedia_set_01/book_encyclopedia_set_01_1k.gltf",
+        "sha256": "89eb80fffd619ebbe5043d632bd8cf25b2d68a3614aee2f356e850c69ae498ba",
+        "bytes": 55011
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-brass_candleholders",
+      "title": "Poly Haven — brass_candleholders (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "brass_candleholders",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/brass_candleholders",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/brass_candleholders/brass_candleholders_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-brass_candleholders/brass_candleholders_1k.gltf",
+        "sha256": "a1de928d1c7d2241f0727dbad2c9b52d49c3245e1f7dd0c45a9a6482bc5c9101",
+        "bytes": 14865
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-carved_wooden_elephant",
+      "title": "Poly Haven — carved_wooden_elephant (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "carved_wooden_elephant",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/carved_wooden_elephant",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/carved_wooden_elephant/carved_wooden_elephant_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-carved_wooden_elephant/carved_wooden_elephant_1k.gltf",
+        "sha256": "c2378354ecd283c5c8d9459b6829ef7e61bdefd6d0f7a6b2d628362bd9bbef25",
+        "bytes": 2791
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-round_spectacles",
+      "title": "Poly Haven — round_spectacles (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "round_spectacles",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/round_spectacles",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/round_spectacles/round_spectacles_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-round_spectacles/round_spectacles_1k.gltf",
+        "sha256": "1e3121eafce63f14d5ab4c562d1c6336c4273ff6473b3ad6d9cc295086340cb7",
+        "bytes": 5976
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "ph-alarm_clock_01",
+      "title": "Poly Haven — alarm_clock_01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "alarm_clock_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/alarm_clock_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/alarm_clock_01/alarm_clock_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-alarm_clock_01/alarm_clock_01_1k.gltf",
+        "sha256": "ca16e83e334e28f8eaf2bf1fbf8ce043b7e4fe5d0e171d01a264b12f5f42a78c",
+        "bytes": 10056
+      },
+      "processing": "consumed by scripts/blender/build_attic.py (joined and baked into the attic bookshelf scene)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/attic"
+      ],
+      "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
     }
   ],
   "rejected": [
@@ -599,6 +1131,11 @@
       "id": "model-damagedhelmet",
       "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/DamagedHelmet/metadata.json",
       "reason": "metadata lists a CC-BY-NC-4.0 component (non-commercial) in addition to CC-BY-4.0 — blocked by licence policy"
+    },
+    {
+      "id": "ph-decorative_book_set_01",
+      "url": "https://polyhaven.com/a/decorative_book_set_01",
+      "reason": "no glTF download offered by the Poly Haven API (2026-09-25); books are generated procedurally instead"
     }
   ]
 }

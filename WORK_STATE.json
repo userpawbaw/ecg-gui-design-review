@@ -194,10 +194,11 @@
   "uiux_reference_analysis_stage": {
     "date": "2026-09-25",
     "branch": "claude/optimistic-goldberg-jnzpni",
-    "status": "REF-001 complete; ready for next reference",
+    "status": "REF-001, REF-002 complete; ready for next reference",
     "rule": "docs/uiux_system/21_REFERENCE_EFFECT_RECORDS.md (D-018, CASE-006); capture protocol tools/reference-capture/README.md (D-017)",
     "records": [
-      "docs/uiux_system/references/REF-001_MOTO_CARD.md"
+      "docs/uiux_system/references/REF-001_MOTO_CARD.md",
+      "docs/uiux_system/references/REF-002_LEOPARPEIX.md"
     ],
     "pipeline_audit": "docs/uiux_system/handoffs/EFFECT_PRODUCTION_PIPELINE_AUDIT_2026-09-25.md",
     "asset_database": "assets/registry.json + scripts/assets/fetch.mjs (non-profit academic: NC allowed)",
@@ -206,6 +207,6 @@
       "P2 target PC GPU at implementation",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "Analyse the next reference site the user provides: recording (D-017) + source + live measurement → REF-002 per rule 21, commit before moving on."
+    "next_action": "Analyse the next reference (REF-003) the user provides per rule 21; after 2-3 references decide P1 (pipeline adoption). Note: REF-002 shows baked-lighting 3D scenes need Blender/outsourced modelling (P3)."
   }
 }

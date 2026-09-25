@@ -201,3 +201,4 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-09-25 후속3: 네트워크 점검(기본값 환경, google.com까지 403) + 대안(capture-site.mjs, 로컬 세션, HAR). 에셋 1)~4) 시험 완료: `assets/registry.json` + `scripts/assets/fetch.mjs` + spike `asset-test.html`(HDRI + glTF + 감쇠 회전). 병목 B1~B6 §17. 촬영 규칙 순서 합의 → D-017.
 - 2026-09-25 후속4: 네트워크 허용 적용 확인(awwwards 제외). moto 소스 분석 §18(three r181 WebGPU/TSL + Lenis 1.3.18 + GSAP 3.15; 지구=위치 연동 scrub 1, 원통 갤러리=충격+감쇠, 타이포=줄 단위 scrub true) → F-012. 비영리 학술 → NC 허용. Poly Haven API 소스 추가·md5 검증, HDRI 교체(B6 해소), WebP q90 변형으로 반사 얼룩 해소(B5 비교).
 - 2026-09-25 후속5: 기록 목적 확정(효과 재현 정보 강제) → 21_REFERENCE_EFFECT_RECORDS.md + records:check 확장(REF 절·효과 카드 15필드·입력 모델·재현 상태·지도 연결) + 회귀 fixture 6개. REF-001 moto-card 작성(EFX 8개, 라이브 측정·소스 보강). D-018, CASE-006. 다음: 컨텍스트 압축 후 REF-002.
+- 2026-09-25 REF-002 leoparpeix.com: 녹화(HUD)+소스+라이브 측정으로 효과 카드 7개. 사용자 가설(부분 로딩) → 실시간 3D 카메라 회전으로 정정. RCP-08·RCP-01을 공통 레시피로 승격. 다음: REF-003.

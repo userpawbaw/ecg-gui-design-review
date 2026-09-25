@@ -4,6 +4,8 @@
 "방은 그대로 두고 드래그로 빛 방향을 360° 돌릴 수 있는가"를 확인하는 spike다.
 결과·판단: `docs/uiux_system/handoffs/EFFECT_PRODUCTION_PIPELINE_AUDIT_2026-09-25.md` §20, F-013.
 
+v3(2026-09-25): 스크롤하면 카메라가 전경에서 모니터 앞으로 내려온다(`?p=0..1`로 시작 위치 지정), 포인터 시선, 2048 px 화면(저장 replay 파형, 장식), 반사 전용 환경, 먼지. 문서: `docs/uiux_system/handoffs/REFERENCE_REPRO_AND_QUALITY_GAP_2026-09-25.md` §2.
+
 v2(2026-09-25): C 방식 전용. v1 A/B/C 비교는 커밋 `d1e669c`와 audit §20에 있다. v2 변경: audit §21.
 
 ```bash

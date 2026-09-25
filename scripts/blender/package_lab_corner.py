@@ -25,4 +25,13 @@ for a in m['azimuths']:
 if 'sky_files' in m: m['sky_files'] = {g: f.replace('.png', '.webp') for g, f in m['sky_files'].items()}
 m['web_encoding'] = 'lightmaps: libwebp q92 of the sqrt-encoded PNG; glb: gltf-transform optimize (meshopt, WebP <=1024, TEXCOORD_1 kept, no simplify)'
 json.dump(m, open(mp, 'w'), indent=2)
+# v3: the monitor screen is redrawn in the browser at 2048 px from the same stored trace (decorative, labelled on the page)
+import base64, numpy as np
+root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+arch = json.load(open(os.path.join(root, 'prototype/v2/public/archive.json')))
+sc = next(x for x in arch['scenes'] if x['axis'] == 'd1' and x['cond'] == 'mixed' and x['snr'] == 10)
+tr = np.frombuffer(base64.b64decode(sc['traces']['M08']), dtype='<i2').astype(np.float64) * sc['scale']
+json.dump({'source': 'prototype/v2/public/archive.json scene %s trace M08 (stored replay)' % sc['id'], 'fs': arch['fs'], 'unit': 'mV',
+           'use': 'decorative monitor texture in the lab-corner spike, not a measurement display',
+           'samples': [round(float(v), 4) for v in tr[:1250]]}, open(os.path.join(out, 'ecg_trace.json'), 'w'))
 print('packaged', out, round(sum(os.path.getsize(f) for f in glob.glob(os.path.join(out, '*'))) / 1e6, 2), 'MB')

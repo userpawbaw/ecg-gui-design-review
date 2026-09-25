@@ -4,13 +4,15 @@
 <body>
 <canvas id="gl" aria-label="아이소메트릭 연구실 코너. 좌우로 드래그하면 빛의 방향이 회전합니다." role="img"></canvas>
 <header class="bar">
-  <span>SPIKE v2 · 실시간 직접광 + 베이크 하늘빛·반사광 · 드래그로 빛 방향 360°</span>
+  <span>SPIKE v3 · 드래그 = 빛 방향 360° · 스크롤 = 시점이 내려와 모니터로</span>
   <button id="fx" aria-pressed="true">후처리</button>
 </header>
 <div class="hud">
   <svg class="dial" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="24" rx="17" ry="9" /><circle id="dial-sun" cx="41" cy="24" r="4" /></svg>
-  <span id="angle">0°</span><span id="hint">← 드래그 · 방향키 →</span>
+  <span id="angle">0°</span><span id="hint">← 드래그 · 방향키 → · 스크롤 ↓</span>
 </div>
+<p class="caption" id="caption">모니터 화면 → 파형 뷰어로 이어지는 match cut 지점 (데모)</p>
+<div class="scroll-track" aria-hidden="true"></div>
 <p class="credit">Props &amp; textures: Poly Haven (CC0) — metal office desk, modern arm chair 01, desk lamp arm 01, steel frame shelves 01, industrial microscope, retro multimeter, potted plant 01, herringbone parquet, painted plaster wall. Monitor trace: stored replay d1-mixed-10 M08 (decorative).</p>
 <script type="module" src="/src/main.ts"></script>
 </body>

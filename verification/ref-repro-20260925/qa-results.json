@@ -1,0 +1,90 @@
+{
+ "ref004": {
+  "hoverTarget": "b",
+  "hovered": "b",
+  "filterRotation": {
+   "before": [
+    1.53588974175501,
+    1.2566370614359172
+   ],
+   "afterPolar": [
+    0.9707271872198848,
+    1.5979203056938687
+   ]
+  },
+  "drag": {
+   "atRelease": 1.8467334739239512,
+   "after1500ms": 1.8538667970826093
+  },
+  "errors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+ },
+ "ref003": {
+  "height": 7789,
+  "tops": {
+   "hero": 0,
+   "intro": 2064,
+   "hero2": 2872,
+   "travel": 4396.890625
+  },
+  "shots": [
+   {
+    "y": 0,
+    "f": "ref003-00000.png",
+    "progress": 0
+   },
+   {
+    "y": 450,
+    "f": "ref003-00450.png",
+    "progress": 0
+   },
+   {
+    "y": 900,
+    "f": "ref003-00900.png",
+    "progress": 0
+   },
+   {
+    "y": 1300,
+    "f": "ref003-01300.png",
+    "progress": 0
+   },
+   {
+    "y": 2264,
+    "f": "ref003-02264.png",
+    "progress": 0
+   },
+   {
+    "y": 3172,
+    "f": "ref003-03172.png",
+    "progress": 0
+   },
+   {
+    "y": 3772,
+    "f": "ref003-03772.png",
+    "progress": 0.07464454976303317
+   },
+   {
+    "y": 4096.890625,
+    "f": "ref003-04097.png",
+    "progress": 0.1709123222748815
+   },
+   {
+    "y": 5096.890625,
+    "f": "ref003-05097.png",
+    "progress": 0.4671208530805687
+   },
+   {
+    "y": 5896.890625,
+    "f": "ref003-05897.png",
+    "progress": 0.7040876777251185
+   },
+   {
+    "y": 6696.890625,
+    "f": "ref003-06697.png",
+    "progress": 0.9410545023696683
+   }
+  ],
+  "errors": []
+ }
+}

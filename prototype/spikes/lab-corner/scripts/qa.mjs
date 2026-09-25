@@ -17,6 +17,17 @@ for (const fx of (process.env.FX || '1,0').split(',')) {
   }
   result.runs[`fx${fx}`] = shots;
 }
+// v3: scroll path (camera descends to the monitor) at a window-light angle
+const scrollShots = [];
+for (const sp of (process.env.SCROLLS || '0,0.3,0.55,0.8,1').split(',').map(Number)) {
+  const q = await b.newPage({viewport: {width: 1440, height: 900}}); const errors = [];
+  q.on('pageerror', e => errors.push(String(e))); q.on('console', m => m.type() === 'error' && errors.push(m.text()));
+  await q.goto(`${url}?angle=${process.env.SCROLL_ANGLE || 90}&p=${sp}`); await q.waitForFunction(() => window.__lab?.ready, null, {timeout: 120000});
+  await q.waitForTimeout(1500);
+  const file = `scroll-${String(sp).replace('.', '_')}.png`; await q.screenshot({path: out + file});
+  scrollShots.push({p: sp, camP: await q.evaluate(() => window.__lab.scroll), file, errors}); await q.close();
+}
+result.scroll = scrollShots;
 const p = await b.newPage({viewport: {width: 1440, height: 900}});
 await p.goto(url + '?angle=0'); await p.waitForFunction(() => window.__lab?.ready, null, {timeout: 120000});
 const a0 = await p.evaluate(() => window.__lab.angle);

@@ -15,7 +15,7 @@ const sha = b => createHash('sha256').update(b).digest('hex');
 async function acquire(a) {
   const s = a.source;
   if (s.type === 'url') {
-    const r = await fetch(s.url);
+    const r = await fetch(s.url, {headers: {'User-Agent': 'ECG-Signal-Studio-asset-pipeline/1.0 (non-profit academic exhibit)'}});
     if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} ${s.url}`);
     return Buffer.from(await r.arrayBuffer());
   }

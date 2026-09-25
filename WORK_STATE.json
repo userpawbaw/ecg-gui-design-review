@@ -203,13 +203,15 @@
     "pipeline_audit": "docs/uiux_system/handoffs/EFFECT_PRODUCTION_PIPELINE_AUDIT_2026-09-25.md",
     "asset_database": "assets/registry.json + scripts/assets/fetch.mjs (non-profit academic: NC allowed)",
     "open_user_decisions": [
-      "P1 production pipeline adoption after 2-3 more references",
+      "P1 production pipeline adoption (4 references + repro spikes recorded)",
       "P2 target PC GPU at implementation",
+      "P5 vanilla three engine + React mount (supported by REF-004 vanilla repro)",
+      "P6 reference fidelity gate (proposal in REFERENCE_REPRO_AND_QUALITY_GAP §4.1)",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "User decision P1 (pipeline adoption) now that 4 references are recorded; then P5 and redesign Q1-Q4",
+    "next_action": "User pipeline decision: P1 adoption scope, P5 vanilla+React, P6 fidelity gate; then redesign Q1-Q4",
     "lab_corner_spike": {
-      "status": "v2 done",
+      "status": "v3 done (scroll camera descent)",
       "date": "2026-09-25",
       "location": "prototype/spikes/lab-corner",
       "result": "mode C v2: sky+bounce bake split, OIDN, PBR, backdrop, post; headless QA PASS; real GPU fps unverified",
@@ -219,10 +221,23 @@
       ],
       "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
     },
-    "next": "User decision P1 (pipeline adoption) now that 4 references are recorded; then P5 and redesign Q1-Q4",
+    "next": "User pipeline decision: P1 adoption scope, P5 vanilla+React, P6 fidelity gate; then redesign Q1-Q4",
     "references_done": [
       "REF-003",
       "REF-004"
-    ]
+    ],
+    "repro_spikes": {
+      "status": "done (headless)",
+      "location": "prototype/spikes/ref-repro",
+      "doc": "docs/uiux_system/handoffs/REFERENCE_REPRO_AND_QUALITY_GAP_2026-09-25.md",
+      "records": [
+        "F-015"
+      ],
+      "unverified": [
+        "real GPU fps",
+        "mobile/touch",
+        "4K exhibit display"
+      ]
+    }
   }
 }

@@ -8,8 +8,8 @@
 |---|---|---|---|
 | [REF-001](REF-001_MOTO_CARD.md) | moto-card.com | EFX-001-01 ~ 08 (역광 지구, match cut, 원통 갤러리, 금속 카드 반사, 곡면 숫자 벽, clip reveal, 타이포 끊김 사례, 히어로 반복 영상) | 녹화 + 소스 + 라이브 측정 |
 | [REF-002](REF-002_LEOPARPEIX.md) | leoparpeix.com | EFX-002-01 ~ 07 (베이크 조명 3D 방 + 포인터 시선, 스크롤 카메라 하강·접근, 같은 집 속 다락방 섹션, 관성·스냅 드래그 갤러리, 틀 안 이미지 시차, GPU 유체 왜곡, 3D 벌 동반자) | 녹화(HUD) + 소스 + 라이브 측정 |
-| [REF-003](REF-003_WHITE_DESERT.md) | white-desert.com | EFX-003-01 ~ 05 (두 겹 구름 덮기, 스크롤로 그리는 비행 경로 + 표시점, 소나 링, 안개 판 전환, 문장 마스크) — **WebGL 없음** | 녹화(HUD) + 소스 + 라이브 측정 |
-| [REF-004](REF-004_SEASATS.md) | seasats.com | EFX-004-01 ~ 06 (합성 셰이더 홀로그램 지구, 시계 눈금 점선 링, hover 원형 사진 카드, 필터 → 최대 군집 회전, 드래그 관성, 스크롤 연속 이미지 끊김 사례) | 녹화 + 소스 + 라이브 측정(지구 렌더는 헤드리스에서 마운트 안 됨) |
+| [REF-003](REF-003_WHITE_DESERT.md) | white-desert.com | EFX-003-01 ~ 05 (두 겹 구름 덮기, 스크롤로 그리는 비행 경로 + 표시점, 소나 링, 안개 판 전환, 문장 마스크) — **WebGL 없음** | 녹화(HUD) + 소스 + 라이브 측정 · 재현 spike `prototype/spikes/ref-repro/ref003.html` |
+| [REF-004](REF-004_SEASATS.md) | seasats.com | EFX-004-01 ~ 06 (합성 셰이더 홀로그램 지구, 시계 눈금 점선 링, hover 원형 사진 카드, 필터 → 최대 군집 회전, 드래그 관성, 스크롤 연속 이미지 끊김 사례) | 녹화 + 소스 + 라이브 측정(지구 렌더는 헤드리스에서 마운트 안 됨) · 재현 spike `prototype/spikes/ref-repro/ref004.html` |
 
 ## 레시피 색인
 

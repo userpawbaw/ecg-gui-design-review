@@ -1,0 +1,35 @@
+{
+ "map": {
+  "w": 1440,
+  "h": 2455,
+  "lon": [
+   -78.0,
+   -50.0
+  ],
+  "lat": [
+   -44.0,
+   -70.0
+  ],
+  "source": "NASA Blue Marble NG 2004-07 tile B2 (public domain)"
+ },
+ "start": {
+  "name": "Punta Arenas",
+  "lat": -53.1638,
+  "lon": -70.9171,
+  "px": [
+   364.2634285714283,
+   865.2741923076925
+  ]
+ },
+ "end": {
+  "name": "King Sejong Station",
+  "lat": -62.2231,
+  "lon": -58.7864,
+  "px": [
+   988.128,
+   1720.6811730769232
+  ]
+ },
+ "distance_km": 1234.4,
+ "note": "Distance = great-circle (haversine, R 6371 km). Demo content, not an itinerary."
+}

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>REF-004 Repro</title></head>
+<body>
+<section class="globe-sec" id="sec">
+  <header class="g-head">
+    <div class="logo">TIDELINE<small>demo</small></div>
+    <h1>Station after station</h1>
+    <p>Demo network of ocean monitoring stations. All kinds of sea states. Click and drag to explore, hover a vessel for details.</p>
+  </header>
+  <canvas id="gl" aria-label="Interactive globe with demo monitoring vessels. Drag to rotate; hover a vessel for its card."></canvas>
+  <div class="overlay" id="overlay"></div>
+  <nav class="filters" id="filters" aria-label="Filter vessels by type">
+    <button data-f="" aria-pressed="true">ALL</button><button data-f="coastal" aria-pressed="false">COASTAL</button><button data-f="offshore" aria-pressed="false">OFFSHORE</button><button data-f="polar" aria-pressed="false">POLAR</button>
+  </nav>
+  <p class="credit">Earth: NASA Blue Marble NG (public domain), restyled. Photos: Poly Haven (CC0). Fonts: Instrument Sans, IBM Plex Mono (OFL). All stations, names and texts are demo content.</p>
+</section>
+<script type="module" src="/src/ref004.ts"></script>
+</body>
+</html>

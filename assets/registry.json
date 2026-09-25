@@ -376,6 +376,222 @@
         "prototype/spikes/lab-corner"
       ],
       "review": "CC0 PBR texture for the lab-corner v2 floor/walls (2.0 m tile), 2026-09-25."
+    },
+    {
+      "id": "nasa-bluemarble-200407-5400",
+      "title": "NASA Blue Marble Next Generation, July 2004, 5400x2700",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74092/world.200407.3x5400x2700.jpg",
+        "page": "https://visibleearth.nasa.gov/images/74092"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/nasa-bluemarble-200407-5400/world.200407.3x5400x2700.jpg",
+        "sha256": "f55226d46d27e05511f2118dc6aa24f5dbf9b6b2cddc87cc6e0e7dd067c00b11",
+        "bytes": 1617810
+      },
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/ref-repro"
+      ],
+      "review": "Globe colour source for the REF-004 repro (restyled in shader). NASA imagery is public domain; credit \"NASA Earth Observatory\" shown on the page."
+    },
+    {
+      "id": "nasa-bluemarble-200407-B2",
+      "title": "NASA Blue Marble Next Generation, July 2004, tile B2 (90W-0, 0-90S) 21600x21600",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74092/world.200407.3x21600x21600.B2.jpg",
+        "page": "https://visibleearth.nasa.gov/images/74092"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/nasa-bluemarble-200407-B2/world.200407.3x21600x21600.B2.jpg",
+        "sha256": "ba7f8e4b9ef4858e14d74b5a7d69be142524f6838775ed0ec00296ca26c89e99",
+        "bytes": 40104616
+      },
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/ref-repro"
+      ],
+      "review": "Regional map (Patagonia - Antarctic Peninsula) for the REF-003 repro route map; 240 px/deg."
+    },
+    {
+      "id": "ph-horn-koppe_snow-tonemapped",
+      "title": "Poly Haven - horn-koppe_snow HDRI, tonemapped JPG (full resolution)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/horn-koppe_snow.jpg",
+        "page": "https://polyhaven.com/a/horn-koppe_snow"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-horn-koppe_snow-tonemapped/horn-koppe_snow.jpg",
+        "sha256": "9f295fcdd425b481866f60b41091a8805585234865c13bfb24ebb5a6ca9a299a",
+        "bytes": 33095963
+      },
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/ref-repro"
+      ],
+      "review": "Snow-field panorama used as Blender world to render the REF-003 repro hero clip (perspective crop, slow pan)."
+    },
+    {
+      "id": "ph-thumb-abandoned_slipway",
+      "title": "Poly Haven - abandoned_slipway preview image",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://cdn.polyhaven.com/asset_img/primary/abandoned_slipway.png?width=480",
+        "page": "https://polyhaven.com/a/abandoned_slipway"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-thumb-abandoned_slipway/abandoned_slipway.png",
+        "sha256": "0a2b71c5713e1777d4617dc27d2df05e95f24cc9d94f035efd9e2970da944b96",
+        "bytes": 125038
+      },
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/ref-repro"
+      ],
+      "review": "Photo for the REF-004 repro hover card (demo content)."
+    },
+    {
+      "id": "ph-thumb-bell_park_pier",
+      "title": "Poly Haven - bell_park_pier preview image",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://cdn.polyhaven.com/asset_img/primary/bell_park_pier.png?width=480",
+        "page": "https://polyhaven.com/a/bell_park_pier"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-thumb-bell_park_pier/bell_park_pier.png",
+        "sha256": "31e5d8237b27dbe9fe16df0adfb412efa1f748464ed4b59ec9633ed830189b71",
+        "bytes": 158096
+      },
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/ref-repro"
+      ],
+      "review": "Photo for the REF-004 repro hover card (demo content)."
+    },
+    {
+      "id": "ph-thumb-blue_lagoon",
+      "title": "Poly Haven - blue_lagoon preview image",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://cdn.polyhaven.com/asset_img/primary/blue_lagoon.png?width=480",
+        "page": "https://polyhaven.com/a/blue_lagoon"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-thumb-blue_lagoon/blue_lagoon.png",
+        "sha256": "c130183df0d2a4194502b67f712a6d54bf578a0928c1eacea6737af70bb32c95",
+        "bytes": 122556
+      },
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/ref-repro"
+      ],
+      "review": "Photo for the REF-004 repro hover card (demo content)."
+    },
+    {
+      "id": "ph-thumb-fish_hoek_beach",
+      "title": "Poly Haven - fish_hoek_beach preview image",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://cdn.polyhaven.com/asset_img/primary/fish_hoek_beach.png?width=480",
+        "page": "https://polyhaven.com/a/fish_hoek_beach"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-thumb-fish_hoek_beach/fish_hoek_beach.png",
+        "sha256": "e958b339a2707e44d7766662ceb8ba24b0347a657bed03231e84bd243a4865c7",
+        "bytes": 85475
+      },
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/ref-repro"
+      ],
+      "review": "Photo for the REF-004 repro hover card (demo content)."
+    },
+    {
+      "id": "ph-thumb-aristea_wreck",
+      "title": "Poly Haven - aristea_wreck preview image",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://cdn.polyhaven.com/asset_img/primary/aristea_wreck.png?width=480",
+        "page": "https://polyhaven.com/a/aristea_wreck"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-thumb-aristea_wreck/aristea_wreck.png",
+        "sha256": "a9c78faffd90c325de3e5b69b4809ea3c74562c92348f06bad63961416c28b18",
+        "bytes": 187073
+      },
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/ref-repro"
+      ],
+      "review": "Photo for the REF-004 repro hover card (demo content)."
+    },
+    {
+      "id": "ph-thumb-dalkey_view",
+      "title": "Poly Haven - dalkey_view preview image",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://cdn.polyhaven.com/asset_img/primary/dalkey_view.png?width=480",
+        "page": "https://polyhaven.com/a/dalkey_view"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-thumb-dalkey_view/dalkey_view.png",
+        "sha256": "470992d4e407342b0e15de1ba9ce7877327d845433263f2fede699467ca23b0a",
+        "bytes": 151980
+      },
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/ref-repro"
+      ],
+      "review": "Photo for the REF-004 repro hover card (demo content)."
     }
   ],
   "rejected": [

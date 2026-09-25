@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>REF-003 Repro</title></head>
+<body>
+<nav class="nav"><div class="nav-l"><a>Expedition</a><a>Station</a><a>About</a></div><div class="brand">SOUTHBOUND<small>demo</small></div><div class="nav-r"><a>Data</a><a class="cta">Enquire</a></div></nav>
+
+<section class="hero" id="hero">
+  <div class="hero-wrap" id="heroWrap">
+    <video class="hero-video" autoplay muted loop playsinline poster="./ref003/hero.webp"><source src="./ref003/hero.webm" type="video/webm" /><source src="./ref003/hero.mp4" type="video/mp4" /></video>
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <p class="hero-kicker">Fieldwork at the edge of the map, measured carefully.</p>
+      <h1 class="hero-title" id="heroTitle">KING SEJONG</h1>
+    </div>
+  </div>
+  <div class="cloud" data-speed="1.8"><img src="./ref003/cloud_back.webp" alt="" /></div>
+  <div class="cloud" data-speed="1.1"><img src="./ref003/cloud_front.webp" alt="" /></div>
+</section>
+
+<section class="intro">
+  <p class="intro-label">The Last Continent</p>
+  <p class="intro-text mask-fade">Vast, quiet and unimaginably bright — a short hop south of Patagonia, the Antarctic Peninsula is where the signal gets clean and the noise gets honest.</p>
+</section>
+
+<section class="hero2">
+  <img class="hero2-img" src="./ref003/hero.webp" alt="" />
+  <h2 class="hero2-title" id="hero2Title">PUQ — KSG</h2>
+  <div class="mist" id="mist"><img src="./ref003/mist.webp" alt="" /></div>
+</section>
+
+<section class="travel" id="travel">
+  <div class="travel-head">
+    <p class="coord">53° 09′ S 70° 55′ W<br />Punta Arenas</p>
+    <div class="travel-head-c"><h3>To the edge of the map</h3><p>From the southern tip of Patagonia across the Drake Passage to King George Island. Scroll to fly the route.</p></div>
+    <p class="coord r">62° 13′ S 58° 47′ W<br />King Sejong Station</p>
+  </div>
+  <div class="travel-comp" id="travelComp">
+    <div class="travel-inner" id="travelInner">
+      <img class="map-img" id="mapImg" src="./ref003/map.webp" alt="Satellite map, Patagonia to the Antarctic Peninsula" />
+      <svg class="route" id="route" preserveAspectRatio="none"><path class="route-base" id="routeBase" /><path class="route-flown" id="routeFlown" /></svg>
+      <div class="pt start" id="ptStart"></div><div class="pt end" id="ptEnd"></div>
+      <div class="indicator" id="indicator"><i></i><i></i><i></i></div>
+      <div class="label" id="lblStart"><em>Starting point</em><b>Punta Arenas, Chile</b></div>
+      <div class="label faded" style="left:62%;top:34%"><b>Drake<br />Passage</b></div>
+      <div class="label faded" style="left:14%;top:48%"><b>South<br />Pacific Ocean</b></div>
+      <div class="label brand-c" id="lblEnd"><em>King George Island</em><b>King Sejong Station</b></div>
+    </div>
+    <div class="sticky-outer"><div class="sticky-wrap">
+      <div class="card info" id="infoCard">
+        <div class="item"><em>Great-circle distance</em><h4 id="dist">— km</h4></div><div class="dash"></div>
+        <div class="item"><em>Latitude span</em><h4 id="latSpan">—</h4></div><div class="dash"></div>
+        <div class="item"><em>Progress</em><h4 id="prog">0%</h4></div>
+        <p class="demo">Demo content. Distance computed (haversine), not an itinerary.</p>
+      </div>
+      <div class="card film" id="filmCard"><video autoplay muted loop playsinline poster="./ref003/hero.webp"><source src="./ref003/hero.webm" type="video/webm" /><source src="./ref003/hero.mp4" type="video/mp4" /></video><span>▶ Watch film</span></div>
+    </div></div>
+  </div>
+</section>
+
+<footer class="foot"><p>Imagery: NASA Earth Observatory Blue Marble (public domain) · Poly Haven horn-koppe_snow (CC0) · clouds rendered in Blender. Fonts: Oswald, Instrument Serif, Inter Tight (OFL). Spike — not ECG product UI.</p></footer>
+<script type="module" src="/src/ref003.ts"></script>
+</body>
+</html>

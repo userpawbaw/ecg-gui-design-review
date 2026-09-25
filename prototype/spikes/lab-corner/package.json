@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Spike: isometric baked lab corner with 360° drag-controlled light. Not ECG product UI.",
   "scripts": {
-    "scene": "python3 ../../../scripts/blender/build_lab_corner.py --out prototype/spikes/lab-corner/public/scene --azimuths 8 --size 1024 --samples 96",
+    "scene": "python3 ../../../scripts/blender/build_lab_corner.py --out prototype/spikes/lab-corner/public/scene --azimuths 8 --size 1024 --samples 256 --passes sky,bounce && python3 ../../../scripts/blender/package_lab_corner.py public/scene",
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4190",

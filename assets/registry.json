@@ -320,6 +320,62 @@
         "prototype/spikes/lab-corner"
       ],
       "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
+    },
+    {
+      "id": "ph-herringbone_parquet",
+      "title": "Poly Haven — Herringbone parquet (1k PBR texture, glTF package)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "herringbone_parquet",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/herringbone_parquet",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/1k/herringbone_parquet/herringbone_parquet_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-herringbone_parquet/herringbone_parquet_1k.gltf",
+        "sha256": "df54ac8bdc3ff862d19c9e44e1d37bdaa61e374942981a763222d8224bc75ce1",
+        "bytes": 2875
+      },
+      "processing": "textures (diff / nor_gl / arm) applied to the room shell by scripts/blender/build_lab_corner.py; web copies are produced by gltf-transform inside lab_corner.glb",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/lab-corner"
+      ],
+      "review": "CC0 PBR texture for the lab-corner v2 floor/walls (3.4 m tile), 2026-09-25."
+    },
+    {
+      "id": "ph-painted_plaster_wall",
+      "title": "Poly Haven — Painted plaster wall (1k PBR texture, glTF package)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "painted_plaster_wall",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/painted_plaster_wall",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/1k/painted_plaster_wall/painted_plaster_wall_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-painted_plaster_wall/painted_plaster_wall_1k.gltf",
+        "sha256": "6e12fc6512192d3030263c8c19d34444b23b15384708622292a94fdd8b06c4e0",
+        "bytes": 2845
+      },
+      "processing": "textures (diff / nor_gl / arm) applied to the room shell by scripts/blender/build_lab_corner.py; web copies are produced by gltf-transform inside lab_corner.glb",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/lab-corner"
+      ],
+      "review": "CC0 PBR texture for the lab-corner v2 floor/walls (2.0 m tile), 2026-09-25."
     }
   ],
   "rejected": [

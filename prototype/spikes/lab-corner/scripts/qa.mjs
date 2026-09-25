@@ -1,25 +1,24 @@
-// Headless evidence: both lighting modes at fixed angles (incl. between two bakes), drag + inertia, console errors.
+// Headless evidence (v2, mode C): fixed angles incl. between two bakes, post on/off, drag + inertia, console errors.
 import {chromium} from '@playwright/test';
 import {mkdir, writeFile} from 'node:fs/promises';
 const url = process.env.LAB_URL || 'http://127.0.0.1:4190/';
 const out = new URL('../qa-output/', import.meta.url).pathname; await mkdir(out, {recursive: true});
 const b = await chromium.launch({executablePath: process.env.CHROMIUM || undefined, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
 const result = {runs: {}};
-for (const mode of (process.env.MODES || 'baked,realtime,hybrid').split(',')) {
+for (const fx of (process.env.FX || '1,0').split(',')) {
   const shots = [];
   for (const angle of (process.env.ANGLES || '0,22.5,45,90,135,180,225,270,315').split(',').map(Number)) {
     const p = await b.newPage({viewport: {width: 1440, height: 900}}); const errors = [];
     p.on('pageerror', e => errors.push(String(e))); p.on('console', m => m.type() === 'error' && errors.push(m.text()));
-    await p.goto(`${url}?mode=${mode}&angle=${angle}`); await p.waitForFunction(() => window.__lab?.ready, null, {timeout: 120000});
+    await p.goto(`${url}?fx=${fx}&angle=${angle}`); await p.waitForFunction(() => window.__lab?.ready, null, {timeout: 120000});
     await p.waitForTimeout(800);
-    const file = `${mode}-${String(angle).replace('.', '_')}.png`; await p.screenshot({path: out + file});
+    const file = `c-fx${fx}-${String(angle).replace('.', '_')}.png`; await p.screenshot({path: out + file});
     shots.push({angle, file, errors}); await p.close();
   }
-  result.runs[mode] = shots;
+  result.runs[`fx${fx}`] = shots;
 }
-// drag + inertia
 const p = await b.newPage({viewport: {width: 1440, height: 900}});
-await p.goto(url + '?mode=baked&angle=0'); await p.waitForFunction(() => window.__lab?.ready, null, {timeout: 120000});
+await p.goto(url + '?angle=0'); await p.waitForFunction(() => window.__lab?.ready, null, {timeout: 120000});
 const a0 = await p.evaluate(() => window.__lab.angle);
 await p.mouse.move(500, 450); await p.mouse.down();
 for (let i = 1; i <= 10; i++) { await p.mouse.move(500 + i * 30, 450); await p.waitForTimeout(16); }

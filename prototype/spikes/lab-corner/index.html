@@ -4,15 +4,14 @@
 <body>
 <canvas id="gl" aria-label="아이소메트릭 연구실 코너. 좌우로 드래그하면 빛의 방향이 회전합니다." role="img"></canvas>
 <header class="bar">
-  <span>SPIKE · 베이크 연구실 코너 · 드래그로 빛 방향 360°</span>
-  <div class="modes" role="group" aria-label="조명 방식">
-    <button data-mode="baked" aria-pressed="true">A · 8방향 베이크 블렌드</button>
-    <button data-mode="realtime" aria-pressed="false">B · 실시간 광원 + 베이크 AO</button>
-    <button data-mode="hybrid" aria-pressed="false">C · 실시간 직접광 + 베이크 간접광</button>
-  </div>
+  <span>SPIKE v2 · 실시간 직접광 + 베이크 하늘빛·반사광 · 드래그로 빛 방향 360°</span>
+  <button id="fx" aria-pressed="true">후처리</button>
 </header>
-<div class="hud"><span id="angle">0°</span><span id="hint">← 드래그 · 방향키 →</span></div>
-<p class="credit">Props: Poly Haven (CC0) — metal office desk, modern arm chair 01, desk lamp arm 01, steel frame shelves 01, industrial microscope, retro multimeter, potted plant 01. Monitor trace: stored replay d1-mixed-10 M08 (decorative).</p>
+<div class="hud">
+  <svg class="dial" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="24" rx="17" ry="9" /><circle id="dial-sun" cx="41" cy="24" r="4" /></svg>
+  <span id="angle">0°</span><span id="hint">← 드래그 · 방향키 →</span>
+</div>
+<p class="credit">Props &amp; textures: Poly Haven (CC0) — metal office desk, modern arm chair 01, desk lamp arm 01, steel frame shelves 01, industrial microscope, retro multimeter, potted plant 01, herringbone parquet, painted plaster wall. Monitor trace: stored replay d1-mixed-10 M08 (decorative).</p>
 <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

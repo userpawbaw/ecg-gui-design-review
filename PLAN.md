@@ -203,3 +203,4 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-09-25 후속5: 기록 목적 확정(효과 재현 정보 강제) → 21_REFERENCE_EFFECT_RECORDS.md + records:check 확장(REF 절·효과 카드 15필드·입력 모델·재현 상태·지도 연결) + 회귀 fixture 6개. REF-001 moto-card 작성(EFX 8개, 라이브 측정·소스 보강). D-018, CASE-006. 다음: 컨텍스트 압축 후 REF-002.
 - 2026-09-25 REF-002 leoparpeix.com: 녹화(HUD)+소스+라이브 측정으로 효과 카드 7개. 사용자 가설(부분 로딩) → 실시간 3D 카메라 회전으로 정정. RCP-08·RCP-01을 공통 레시피로 승격. 다음: REF-003.
 - 2026-09-25 연구실 코너 시험: AI 단독 headless bpy 4.5.3 + Poly Haven CC0 7종으로 아이소메트릭 방 → Cycles 8방위 bake(약 12.6분) → gltf-transform → `prototype/spikes/lab-corner`. 360° 빛 드래그 3모드(A bake 블렌드 / B 실시간 / C 실시간 직접광+bake 간접광) 모두 headless QA PASS, 권장 C. 품질 격차(UV·bake 해상도·아트 디렉션) 9개 → audit §20, F-013. 다음: REF-003.
+- 2026-09-25 연구실 코너 C v2: 하늘빛/반사광 베이크 분리(반구광 보정 제거), OIDN, 소품 UV 7.6→32 %, 잎 프로브, 마루·회벽 PBR, 창밖 배경, 후처리, 방위 다이얼. audit §21. 남은 것: 실제 GPU fps, 135° 흰 삼각형 반사, 아트 디렉션. 다음: REF-003 white-desert, REF-004 seasats(사용자 녹화 수신).

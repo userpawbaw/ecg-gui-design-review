@@ -1,0 +1,110 @@
+{
+  "runs": {
+    "fx1": [
+      {
+        "angle": 0,
+        "file": "c-fx1-0.png",
+        "errors": [
+          "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        ]
+      },
+      {
+        "angle": 22.5,
+        "file": "c-fx1-22_5.png",
+        "errors": []
+      },
+      {
+        "angle": 45,
+        "file": "c-fx1-45.png",
+        "errors": []
+      },
+      {
+        "angle": 90,
+        "file": "c-fx1-90.png",
+        "errors": []
+      },
+      {
+        "angle": 135,
+        "file": "c-fx1-135.png",
+        "errors": []
+      },
+      {
+        "angle": 180,
+        "file": "c-fx1-180.png",
+        "errors": []
+      },
+      {
+        "angle": 225,
+        "file": "c-fx1-225.png",
+        "errors": []
+      },
+      {
+        "angle": 270,
+        "file": "c-fx1-270.png",
+        "errors": []
+      },
+      {
+        "angle": 315,
+        "file": "c-fx1-315.png",
+        "errors": []
+      }
+    ],
+    "fx0": [
+      {
+        "angle": 0,
+        "file": "c-fx0-0.png",
+        "errors": []
+      },
+      {
+        "angle": 22.5,
+        "file": "c-fx0-22_5.png",
+        "errors": []
+      },
+      {
+        "angle": 45,
+        "file": "c-fx0-45.png",
+        "errors": []
+      },
+      {
+        "angle": 90,
+        "file": "c-fx0-90.png",
+        "errors": []
+      },
+      {
+        "angle": 135,
+        "file": "c-fx0-135.png",
+        "errors": []
+      },
+      {
+        "angle": 180,
+        "file": "c-fx0-180.png",
+        "errors": []
+      },
+      {
+        "angle": 225,
+        "file": "c-fx0-225.png",
+        "errors": []
+      },
+      {
+        "angle": 270,
+        "file": "c-fx0-270.png",
+        "errors": []
+      },
+      {
+        "angle": 315,
+        "file": "c-fx0-315.png",
+        "errors": []
+      }
+    ]
+  },
+  "drag": {
+    "start": 0,
+    "atRelease": 114.3,
+    "after600ms": 114.3,
+    "after2100ms": 122.6
+  },
+  "frameIntervalsMs": {
+    "samples": 1,
+    "median": 1683.3
+  }
+}

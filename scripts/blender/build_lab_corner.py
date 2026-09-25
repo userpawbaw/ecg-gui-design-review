@@ -1,12 +1,16 @@
 """Isometric ECG lab-corner bake test (headless Blender via the `bpy` wheel).
 
-Builds a cut-away room corner, places Poly Haven CC0 props from assets/source (see assets/registry.json),
-bakes lighting-only lightmaps for N sun azimuths plus one AO map, and exports a glTF for the three.js spike.
+Builds a cut-away room corner, places Poly Haven CC0 props and floor/wall PBR textures from assets/source
+(see assets/registry.json), bakes albedo-free lightmaps and exports a glTF for the three.js spike.
 
     python3 scripts/blender/build_lab_corner.py --out prototype/spikes/lab-corner/public/scene \
-        --azimuths 8 --size 1024 --samples 96
+        --azimuths 8 --size 1024 --samples 256 --passes sky,bounce
 
-Outputs: lab_corner.glb, light_XX.png (lighting only, per azimuth), ao.png, manifest.json.
+Passes (v2, hybrid mode C): `sky` = sky light only (direct + indirect, sun hidden), baked once;
+`bounce` = sun bounce only (indirect, sky off), per azimuth. The web page adds the real-time sun on top, so
+nothing is double counted. v1 passes `full` / `indirect` are kept for comparison. Every bake is denoised
+with OIDN (compositor Denoise node) unless --no-denoise.
+Groups: shell (room), props (furniture), foliage (dense plant leaves, own small atlas).
 The monitor waveform is drawn from the canonical archive (d1-mixed-10, M08 output) and is decorative.
 """
 import argparse, json, math, os, sys, time
@@ -20,7 +24,9 @@ ap.add_argument('--azimuths', type=int, default=8)
 ap.add_argument('--size', type=int, default=1024)
 ap.add_argument('--samples', type=int, default=96)
 ap.add_argument('--elevation', type=float, default=32.0)
-ap.add_argument('--passes', default='full,indirect', help='per-azimuth bakes: full (direct+indirect) and/or indirect only')
+ap.add_argument('--passes', default='sky,bounce', help='sky (once), bounce (per azimuth); v1: full, indirect (per azimuth)')
+ap.add_argument('--no-denoise', action='store_true')
+ap.add_argument('--uv-only', action='store_true', help='print lightmap UV coverage per group and exit')
 ap.add_argument('--preview', action='store_true', help='render a camera preview instead of baking')
 args = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 OUT = os.path.join(ROOT, args.out)
@@ -40,8 +46,17 @@ def mat(name, rgb, rough=0.8, emit=None, emit_strength=0.0):
         b.inputs['Emission Strength'].default_value = emit_strength
     return m
 
-M_WALL = mat('Wall', (0.80, 0.76, 0.69), 0.9)
-M_FLOOR = mat('Floor', (0.46, 0.31, 0.19), 0.55)
+def ph_material(slug):
+    # Poly Haven texture packages ship as a glTF plane; keep its material (diff / nor_gl / arm), drop the plane
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=os.path.join(ROOT, f'assets/source/ph-{slug}/{slug}_1k.gltf'))
+    new = [o for o in bpy.data.objects if o not in before]
+    m = next(o for o in new if o.type == 'MESH').data.materials[0]
+    for o in new: bpy.data.objects.remove(o)
+    m.name = slug; return m
+
+M_WALL = ph_material('painted_plaster_wall')   # 2.0 m tile
+M_FLOOR = ph_material('herringbone_parquet')   # 3.4 m tile
 M_TRIM = mat('Trim', (0.93, 0.91, 0.86), 0.6)
 M_FRAME = mat('WindowFrame', (0.22, 0.20, 0.18), 0.5)
 M_DARK = mat('MonitorBody', (0.05, 0.05, 0.055), 0.35)
@@ -71,6 +86,17 @@ for name, s, l in [('SillTop', (1.62, 0.2, 0.05), (2.75, D + 0.02, 1.0)),
 box('BaseBack', (W, 0.02, 0.1), (W / 2, D - 0.01, 0.05), M_TRIM)
 box('BaseLeft', (0.02, D, 0.1), (0.01, D / 2, 0.05), M_TRIM)
 
+def world_uv(o, tile):
+    # texture UV in metres / tile, projected on the dominant axis of each face (box mapping)
+    uv = o.data.uv_layers[0].data if o.data.uv_layers else o.data.uv_layers.new(name='UVMap').data
+    for poly in o.data.polygons:
+        n = poly.normal; ax = max(range(3), key=lambda k: abs(n[k]))
+        for li in poly.loop_indices:
+            co = o.matrix_world @ o.data.vertices[o.data.loops[li].vertex_index].co
+            u, v = [(co.y, co.z), (co.x, co.z), (co.x, co.y)][ax]
+            uv[li].uv = (u / tile, v / tile)
+world_uv(floor, 3.4); world_uv(back, 2.0); world_uv(left, 2.0)
+
 # ---------- props from Poly Haven (CC0) ----------
 def world_bbox(objs):
     pts = [o.matrix_world @ Vector(c) for o in objs if o.type == 'MESH' for c in o.bound_box]
@@ -87,7 +113,8 @@ def place(slug, loc, rot_z=0.0, scale=1.0):
         r.location = loc; r.rotation_euler.z += math.radians(rot_z); r.scale = tuple(v * scale for v in r.scale)
     bpy.context.view_layer.update()
     lo, hi = world_bbox(new)
-    print(f'[prop] {slug}: size {tuple(round(v, 2) for v in (hi - lo))} m', flush=True)
+    for o in new: o['ph_slug'] = slug
+    print(f'[prop] {slug}: size {tuple(round(v, 2) for v in (hi - lo))} m, faces {[len(o.data.polygons) for o in new if o.type == "MESH"]}', flush=True)
     return new
 
 desk = place('metal_office_desk', (1.55, D - 0.45, 0), 180)
@@ -206,19 +233,49 @@ def join(name, objs):
     return o, area
 
 shell_objs = [o for o in meshes if o.name.startswith(SHELL_PREFIX)]
-prop_objs = [o for o in meshes if o not in shell_objs]
+foliage_objs = [o for o in meshes if o not in shell_objs and o.get('ph_slug') == 'potted_plant_01' and len(o.data.polygons) > 20000]
+prop_objs = [o for o in meshes if o not in shell_objs and o not in foliage_objs]
 groups = {}
-for gname, objs in (('shell', shell_objs), ('props', prop_objs)):
+for gname, objs in (('shell', shell_objs), ('props', prop_objs), ('foliage', foliage_objs)):
+    if not objs: continue
     o, cov = join('Lab_' + gname, objs); groups[gname] = {'obj': o, 'uv_coverage': round(cov, 3)}
 
-bake = scene.render.bake; bake.margin = 6; bake.use_clear = True
-manifest = {'lm_scale': 4.0, 'encoding': 'png sqrt(linear / lm_scale)', 'stats': {}, 'size': args.size, 'samples': args.samples,
+if args.uv_only: sys.exit(0)
+bake = scene.render.bake; bake.margin = 8; bake.use_clear = True
+GROUP_SIZE = {'shell': args.size, 'props': args.size, 'foliage': max(256, args.size // 2)}
+manifest = {'lm_scale': 4.0, 'encoding': 'png sqrt(linear / lm_scale)', 'stats': {}, 'size': GROUP_SIZE, 'samples': args.samples,
+            'passes': args.passes.split(','), 'denoise': 'none' if args.no_denoise else 'OIDN (compositor Denoise, HDR, accurate prefilter)',
             'elevation': args.elevation, 'azimuths': [], 'groups': {}, 'timing_s': {}}
+SIZE = args.size
+
+def denoise(rgb, n):
+    # OIDN through the compositor: Image -> Denoise -> Composite, rendered with Workbench (no scene render)
+    src = bpy.data.images.new('dn_src', n, n, alpha=False, float_buffer=True)
+    src.pixels.foreach_set(np.concatenate([rgb, np.ones((rgb.shape[0], 1), np.float32)], axis=1).ravel())
+    scene.use_nodes = True; t = scene.node_tree
+    for nd in list(t.nodes): t.nodes.remove(nd)
+    a = t.nodes.new('CompositorNodeImage'); a.image = src
+    d = t.nodes.new('CompositorNodeDenoise'); d.inputs['HDR'].default_value = True
+    c = t.nodes.new('CompositorNodeComposite')
+    t.links.new(a.outputs['Image'], d.inputs['Image']); t.links.new(d.outputs['Image'], c.inputs['Image'])
+    engine = scene.render.engine; scene.render.engine = 'BLENDER_WORKBENCH'
+    scene.render.resolution_x = scene.render.resolution_y = n; scene.render.resolution_percentage = 100
+    scene.view_settings.view_transform = 'Standard'
+    scene.render.image_settings.file_format = 'OPEN_EXR'; scene.render.image_settings.color_depth = '32'
+    bpy.ops.render.render()
+    tmp = os.path.join(OUT, '_dn.exr'); bpy.data.images['Render Result'].save_render(tmp)
+    e = bpy.data.images.load(tmp); px = np.empty(n * n * 4, np.float32); e.pixels.foreach_get(px)
+    bpy.data.images.remove(e); bpy.data.images.remove(src); os.remove(tmp)
+    scene.render.engine = engine; scene.use_nodes = False
+    out = px.reshape(-1, 4)[:, :3].copy()
+    out[rgb.max(axis=1) <= 0] = 0          # keep unused texels empty (the bake margin already dilated islands)
+    return np.clip(out, 0, None)
 LM_SCALE = manifest['lm_scale']
 
 def bake_group(gname, kind, img_name, encode, passes=('DIRECT', 'INDIRECT')):
     g = groups[gname]; o = g['obj']
-    img = bpy.data.images.new(img_name, args.size, args.size, alpha=False, float_buffer=True)
+    sz = GROUP_SIZE[gname]
+    img = bpy.data.images.new(img_name, sz, sz, alpha=False, float_buffer=True)
     img.colorspace_settings.name = 'Non-Color'
     for m in o.data.materials:
         nt = m.node_tree
@@ -230,29 +287,45 @@ def bake_group(gname, kind, img_name, encode, passes=('DIRECT', 'INDIRECT')):
     t0 = time.time()
     if kind == 'AO': bpy.ops.object.bake(type='AO')
     else: bpy.ops.object.bake(type='DIFFUSE', pass_filter=set(passes))
-    px = np.empty(args.size * args.size * 4, np.float32); img.pixels.foreach_get(px)
+    px = np.empty(sz * sz * 4, np.float32); img.pixels.foreach_get(px)
     rgb = px.reshape(-1, 4)[:, :3]; used = rgb.max(axis=1) > 0
+    if gname == 'foliage':   # 164k leaf faces cover ~3 % of any atlas: keep only the mean light as a probe
+        manifest.setdefault('probes', {})[img_name.rsplit('.', 1)[0]] = [float(v) for v in rgb[used].mean(axis=0)] if used.any() else [0.0, 0.0, 0.0]
+        bpy.data.images.remove(img); manifest['timing_s'][img_name] = round(time.time() - t0, 1)
+        print('probe', img_name, manifest['probes'][img_name.rsplit('.', 1)[0]], flush=True); return
+    if kind != 'AO' and not args.no_denoise: rgb = denoise(rgb, sz)
     stats = {'p50_used': float(np.percentile(rgb[used], 50)) if used.any() else 0.0, 'p99_used': float(np.percentile(rgb[used], 99)) if used.any() else 0.0, 'max': float(rgb.max()), 'used_texels': float(used.mean())}
     rgb = np.sqrt(np.clip(rgb / LM_SCALE, 0, 1)) if encode else np.clip(rgb, 0, 1)
-    out = bpy.data.images.new(img_name + '_out', args.size, args.size, alpha=False); out.colorspace_settings.name = 'Non-Color'
+    out = bpy.data.images.new(img_name + '_out', sz, sz, alpha=False); out.colorspace_settings.name = 'Non-Color'
     out.pixels.foreach_set(np.concatenate([rgb, np.ones((rgb.shape[0], 1), np.float32)], axis=1).ravel())
     out.filepath_raw = os.path.join(OUT, img_name); out.file_format = 'PNG'; out.save()
     bpy.data.images.remove(out); bpy.data.images.remove(img)
     manifest['stats'][img_name] = stats; manifest['timing_s'][img_name] = round(time.time() - t0, 1)
     print('baked', img_name, manifest['timing_s'][img_name], 's', stats, flush=True)
 
+P = set(args.passes.split(','))
 for gname in groups:
-    bake_group(gname, 'AO', f'ao_{gname}.png', encode=False)
+    if P & {'full', 'indirect'}: bake_group(gname, 'AO', f'ao_{gname}.png', encode=False)
     manifest['groups'][gname] = {'object': groups[gname]['obj'].name, 'uv_coverage': groups[gname]['uv_coverage'],
                                  'materials': [m.name for m in groups[gname]['obj'].data.materials]}
+if 'sky' in P:   # sky only: sun hidden, world on, direct + indirect
+    sun.hide_render = True
+    for gname in groups: bake_group(gname, 'DIFFUSE', f'sky_{gname}.png', encode=True)
+    manifest['sky_files'] = {g: f'sky_{g}.png' for g in groups if g != 'foliage'}
+    sun.hide_render = False
 for i in range(args.azimuths):
     az = 360.0 * i / args.azimuths
     d = set_sun(az, args.elevation)
     entry = {'index': i, 'azimuth_deg': az, 'sun_dir': d}
-    if 'full' in args.passes:
+    if 'bounce' in P:   # sun bounce only: world off, indirect
+        bg.inputs['Strength'].default_value = 0.0
+        for gname in groups: bake_group(gname, 'DIFFUSE', f'bounce_{gname}_{i:02d}.png', encode=True, passes=('INDIRECT',))
+        entry['bounce_files'] = {g: f'bounce_{g}_{i:02d}.png' for g in groups if g != 'foliage'}
+        bg.inputs['Strength'].default_value = 0.35
+    if 'full' in P:
         for gname in groups: bake_group(gname, 'DIFFUSE', f'light_{gname}_{i:02d}.png', encode=True)
         entry['files'] = {g: f'light_{g}_{i:02d}.png' for g in groups}
-    if 'indirect' in args.passes:
+    if 'indirect' in P:
         for gname in groups: bake_group(gname, 'DIFFUSE', f'indirect_{gname}_{i:02d}.png', encode=True, passes=('INDIRECT',))
         entry['indirect_files'] = {g: f'indirect_{g}_{i:02d}.png' for g in groups}
     manifest['azimuths'].append(entry)

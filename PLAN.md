@@ -183,3 +183,12 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 원격 PR/CI 확인 후 보고. 실제 시안 생성·UI 수정·main merge는 수행하지 않는다.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-09-24 — Attract vNext prototype recovery
+
+- [x] Recover the exact main `cfef430`, verify v2.2.1 replay ZIP SHA-256 `9070d4aa…22ee0fa1e98ed`, inspect both Beta reference images.
+- [x] Shared `SignalView` / `SignalGeometry` / `AttractSession`; implement B comparison lens using identical absolute sample index and x/y scale.
+- [x] Add B data/time/handoff tests; implement A real output/input, shared-path glow, divergence-bounded particles, local pointer glow, approximately one-second enter acceleration; optional A→B→Compare.
+- [x] Build and targeted tests; record design choice D-016. B-first does not select a winner. No WebGL or merge.
+- [x] User-approved direct local Playwright: 1920×1080 A/B screenshots, 17.7-second browser recording, same-time/method transitions, reduced motion, RAF frame intervals, zero console errors and source-to-browser visual comparison.
+- [x] Corrected header bleed, Korean font, A plot scale and B mountain/heading/card placement. Design QA passes for the requested 1920×1080 prototype. Existing full-test `chunks.test.ts` lacks ignored legacy `public/long/d1-mixed--5.json` fixture in the release ZIP; it was not synthesized. Commit/push this isolated branch; do not merge.

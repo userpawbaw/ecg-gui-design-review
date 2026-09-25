@@ -343,3 +343,18 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Publish stacked PR and check head CI; no merge, no actual generation or UI modification.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-09-24 — Attract vNext interrupted-session recovery
+
+- Earlier local prototype commit `cfa4aaf7…` and screenshots were lost to scratch maintenance after remote push was auto-review blocked; no remote feature branch existed. Recovered user Beta images and v2.2.1 ZIP from persistent files; ZIP checksum matched the prior verified value. Fetched remote main `cfef430` and isolated recovery branch, preserving another worktree's unrelated edits.
+- Rebuilt shared sample-index view/geometry/session, B lens, A neon waveform/actual noisy ghost/divergence particles, optional A→B→Compare, source-true mini traces and semantic copy. Canvas 2D only.
+- PASS: `npm run build`, targeted `node --import tsx --test tests/attract-vnext.test.ts tests/attract.test.ts tests/engine.test.ts tests/plot-scale.test.ts` (4 files/15 assertions in prior verbose run), `npm run records:check` (37 records), `git diff --check`.
+- CONDITIONAL: full `npm test` 4 files pass, `tests/chunks.test.ts` fails because release ZIP lacks ignored `public/long/d1-mixed--5.json` fixture. This is unrelated to Attract code.
+- BLOCKED: cloud browser rejects both local preview addresses (`ERR_BLOCKED_BY_CLIENT`), so no new browser screenshot/video/FPS/console/reduced-motion proof. Direct Playwright CLI requires user authorization under Product Design's browser-choice contract. The design QA explicitly remains blocked rather than claiming a visual pass.
+- No merge, no push, no release changes or data regeneration. Continue with authorized browser verification and QA iteration only.
+
+## 2026-09-24 — Attract vNext browser verification and visual revision
+
+- User authorized direct local Playwright and isolated branch push. Captured 1920×1080 A/B Chromium screenshots and 17.7-second A/B/Compare video. Directly compared both attached Beta images, corrected white inherited header, missing Korean glyphs, plot amplitude, B heading/card overlaps and landscape seam. `prototype/v2/design-qa.md` records remaining intentional differences; 1920×1080 prototype visual QA PASS.
+- Data/time geometry and same-method handoff tests: 15/15 targeted assertions PASS; TypeScript/Vite build PASS; root records check 37 records PASS; diff whitespace PASS. Full `npm test` remains limited by the release ZIP's missing ignored legacy `public/long/d1-mixed--5.json` fixture, unrelated to Attract.
+- Browser evidence: B comparison lens keyboard 50→52%; B→Compare `d1-mixed-10`/`M08` 11.233→11.483 s; A→B same scene/method; accelerated A handoff 18.266→20.411 s. Reduced motion enters paused and handoff succeeds. RAF intervals (headless, recording disabled) B median/p95 16.7/16.7 ms (299 samples), A 16.7/33.4 ms (501 samples); these are frame intervals rather than paint cost. Console/page errors 0. No WebGL, merge or data regeneration.

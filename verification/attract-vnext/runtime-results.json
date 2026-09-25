@@ -1,0 +1,46 @@
+{
+  "consoleErrors": [],
+  "transitions": [
+    {
+      "step": "B lens keyboard",
+      "before": 50,
+      "after": "52"
+    },
+    {
+      "step": "B to Compare",
+      "sceneBefore": "d1-mixed-10",
+      "methodBefore": "M08",
+      "timeBefore": 11.233,
+      "timeAfter": "11.483"
+    },
+    {
+      "step": "A to B",
+      "scene": "d1-mixed-10",
+      "method": "M08"
+    },
+    {
+      "step": "A accelerated handoff",
+      "sceneBefore": "d1-mixed-10",
+      "methodBefore": "M08",
+      "clickTime": 18.266,
+      "timeAfter": 20.411
+    }
+  ],
+  "motion": {
+    "reducedMotion": true,
+    "pausedOnEntry": true,
+    "handoff": true
+  },
+  "fps": {
+    "B": {
+      "samples": 299,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 16.700000000000728
+    },
+    "A": {
+      "samples": 501,
+      "medianMs": 16.69999999999891,
+      "p95Ms": 33.399999999999636
+    }
+  }
+}

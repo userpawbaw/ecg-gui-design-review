@@ -45,6 +45,7 @@
     }
   ],
   "completed_verified": [
+    "Attract vNext A/B 1920×1080 screenshot/video, same-time/method handoff, reduced motion, FPS and zero console errors; visual QA PASS (2026-09-24)",
     "S0–S5 source review, independent freeze, comparison, synthesis and scoped automated checks",
     "R1 GUI implementation and v2.2.1 requested revision; actual browser NV",
     "R2 98 conditions × 600 s data and chunk verification",
@@ -61,7 +62,7 @@
     "2026-09-16 concurrency policy revision: docs/23 added at 2f39ff9, WORK_RESUME_POLICY v1.2 at 0d38797, AGENTS updated at aabfd19",
     "Existing ECG 6-hour automation prompt updated to policy v1.2; repository-wide lock removed and resource-scoped conflict checks retained"
   ],
-  "current_request": "Retire the repository-wide Work execution lock while preserving checkpoint/resume tracking and resource-scoped duplicate-job protection.",
+  "current_request": "Complete the approved Attract vNext A/B prototype, browser verification and isolated branch push without merging.",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",

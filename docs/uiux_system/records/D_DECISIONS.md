@@ -422,3 +422,29 @@ Alpha는 reference의 visual world를 처음부터 component/state/motion/implem
 - Alpha/Beta 중복 비용이 실제 품질 이득보다 큼
 - Superdesign 또는 다른 generator가 별도 재시험에서 reference fidelity와 near-final completeness를 안정적으로 충족함
 - target task가 LOW/polish라 두 track이 불필요함
+
+---
+
+## D-016. Attract Beta A/B의 실제 파형 기반 prototype을 병렬 후보로 유지한다
+
+| | |
+|---|---|
+| 시점 | 2026-09-24 feasibility 승인 및 Beta A/B 이미지 대조 `[대화]` |
+| 상태 | prototype 구현·검증; 최종 A/B 채택 미결정 |
+| 연결 | D-015, Attract-vNext-feasibility.md |
+| CASE | 불필요 — 새 AI 협업 방법론이 아니라 이 GUI의 비교 장면 구현 결정 |
+
+### 갈림길
+B를 먼저 구현해 자료·시간 계약을 검증하는 순서를 최종 시안 선정으로 오해할 위험이 있었다. 생성 이미지의 가짜 지표/문구를 복제하면 저장 replay의 진실성을 해친다.
+
+### 검토한 선택지
+1. A 단독 hero, 2. B 단독 비교 화면, 3. 독립 A/B와 선택 가능한 `A → B → Compare` 경로.
+
+### 고른 것과 근거
+3번. B는 동일 sample index와 mV scale의 input/output을 클립하는 `CompareLensBoundary`로 먼저 구현한다. A는 실제 선택 출력의 cyan trace, 실제 noisy 입력 ghost, 동일 경로 glow와 제한적인 차이 기반 입자로 구현한다. 둘 다 단일 Transport/SignalView/AttractSession을 공유한다. Canvas 2D+HTML/CSS를 사용하고 profiling 후에만 WebGL을 재검토한다. `[대화]` `[이미지대조]`
+
+### 버린 것과 이유
+`ProcessingBoundary`라는 이름과 처리 완료 시점처럼 보이는 문구·연출을 버린다. 가짜 BPM/실시간 계측/이미지 생성 지표를 복제하지 않는다. B-first를 final winner로 간주하지 않는다. 3단 경로는 optional prototype이며 기본 경로 확정은 시각·사용자 검토 이후다.
+
+### 되돌려야 하는 조건
+실제 브라우저에서 ECG 선의 판독성이 떨어지거나 기준 시각이 혼동되면 효과·경계·카피를 재조정한다. 1920×1080 프레임 성능이 목표에 못 미치면 입자/발광 계층을 먼저 줄이고 재측정한다.

@@ -23,6 +23,7 @@
 - `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md` — reference의 visual world를 component/state/motion/implementation까지 처음부터 설계하는 Alpha 경로
 - `19_BETA_IMAGE_CONCEPT_TRACK.md` — reference-grounded image still을 만들고 component/interaction/motion으로 다시 번역하는 Beta 경로
 - `20_ALPHA_BETA_OPERATING_PROTOCOL.md` — Alpha/Beta 공통 packet, 평가 기준, trigger, template, Chat/Work/Codex 실행 계약
+- `21_REFERENCE_EFFECT_RECORDS.md` — 레퍼런스의 특징적 효과를 재현하는 데 필요한 정보를 효과 카드 단위로 강제하는 기록 규칙. 기록은 `references/REF-*.md`, 촬영은 `tools/reference-capture/`
 
 프로젝트 local skill:
 
@@ -71,6 +72,7 @@ Superdesign 관련 14/15/16번은 DUAL-ATTRACT-001의 이력과 향후 별도 ca
 - `cases/CASE-002_TRANSCRIPT_EXCERPTS.md` — CASE-002의 판단 전환을 다시 읽기 위한 핵심 사용자/AI 대화 발췌
 - `cases/CASE-003_SUPERDESIGN_GENERATOR_LAYER.md` — validator-heavy 시스템에서 visual generator gap을 발견하고 Superdesign을 bounded generator로 채택한 검증·통합 과정
 - `cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md` — Superdesign을 독립 B로 확장한 판단과 첫 실행 계약의 진화
+- `cases/CASE-006_REFERENCE_EFFECT_PRODUCTION_PIPELINE.md` — 레퍼런스 wow 재현 실패를 제작 정보·재료 부재로 재정의하고, 녹화·소스 검증과 효과 카드 기록 규칙으로 체계화한 과정
 - `cases/CASE-005_ALPHA_BETA_CREATIVE_TRACKS.md` — 첫 creative system 실사용의 fidelity 한계를 바탕으로 Alpha implementation-aware + Beta image-first 구조로 전환한 과정
 
 `CASE`는 다섯 번째 운영 기록 종류가 아니다. 여러 F/D/O/R과 대화를 묶어 **배경 → 문제 제기 → AI 응답 → 반론 → 판단 변화 → 구축 결과 → 재사용 패턴 → 한계**를 설명하는 해설 계층이다.

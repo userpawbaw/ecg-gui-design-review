@@ -8,6 +8,7 @@ const ROOT = path.resolve(process.env.UIUX_RECORDS_ROOT || path.join(__dirname, 
 const UIUX = path.join(ROOT, 'docs', 'uiux_system');
 const RECORD_DIR = path.join(UIUX, 'records');
 const CASE_DIR = path.join(UIUX, 'cases');
+const REF_DIR = path.join(UIUX, 'references');
 
 const evidenceTags = [
   '[캡처]', '[영상]', '[런타임]', '[테스트]', '[코드]', '[커밋]',
@@ -231,6 +232,47 @@ function checkCases(errors, validIds) {
   }
 }
 
+// Reference effect records (21_REFERENCE_EFFECT_RECORDS.md): every REF file must carry the
+// sections and per-effect fields needed to re-implement the effect without reopening the site.
+const REF_SECTIONS = ['1. 레퍼런스 개요', '2. 입력 증거', '3. 기술 스택과 전역 설정', '4. 디자인 토큰',
+  '5. 장면·전환 지도', '6. 효과 카드', '7. 에셋 목록과 조달 경로', '8. 성능·접근성·폴백', '9. 레시피 후보', '10. 열린 질문'];
+const EFFECT_FIELDS = ['선정 이유', '지각', '입력 모델', '판별 근거', '구현 메커니즘', '파라미터', '타임라인', '에셋',
+  '성능 기법', '접근성·폴백', '근거', '재현 요구사항', '수용 기준', 'ECG 번안', '재현 상태'];
+const INPUT_MODELS = ['시간', '스크롤 위치', '스크롤 속도', '휠 충격', '문턱 발동', '포인터', '로드'];
+
+function checkReferences(errors) {
+  if (!fs.existsSync(REF_DIR)) return;
+  for (const name of fs.readdirSync(REF_DIR).filter(n => /^REF-\d{3}_.*\.md$/.test(n))) {
+    const text = fs.readFileSync(path.join(REF_DIR, name), 'utf8');
+    const num = name.slice(4, 7);
+    for (const sec of REF_SECTIONS) {
+      if (!new RegExp('^## ' + sec.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*$', 'm').test(text)) fail(errors, `${name}: 필수 절 누락 (## ${sec})`);
+    }
+    const cards = text.split(/^(?=### EFX-)/m).slice(1).map(c => c.split(/^## /m)[0]);
+    if (!cards.length) fail(errors, `${name}: 효과 카드(### EFX-${num}-NN)가 없다`);
+    const ids = new Set();
+    for (const card of cards) {
+      const id = (card.match(/^### (EFX-\d{3}-\d{2})/) || [])[1];
+      if (!id || id.slice(4, 7) !== num) { fail(errors, `${name}: 잘못된 효과 ID (${card.split('\n')[0]})`); continue; }
+      if (ids.has(id)) fail(errors, `${name}: 중복 효과 ID ${id}`);
+      ids.add(id);
+      for (const f of EFFECT_FIELDS) {
+        const m = card.match(new RegExp('\\*\\*' + f + '\\*\\*[ \\t]*[:：]?[ \\t]*([^\\n]*)'));
+        if (!m) { fail(errors, `${id}: 필드 누락 (**${f}**)`); continue; }
+        const rest = card.slice(m.index + m[0].length).split(/\n\*\*/)[0];
+        if (!(m[1] + rest).replace(/[\s|:-]/g, '').length) fail(errors, `${id}: 필드 값이 비어 있다 (**${f}**) — 모르면 '미확인 — 이유'`);
+      }
+      const im = card.match(/\*\*입력 모델\*\*[^\n]*/);
+      if (im && !INPUT_MODELS.some(k => im[0].includes(k))) fail(errors, `${id}: 입력 모델은 ${INPUT_MODELS.join('/')} 중에서 적는다`);
+      const st = card.match(/\*\*재현 상태\*\*[^\n]*/);
+      if (st && !/`?(none|spike|verified)`?/.test(st[0])) fail(errors, `${id}: 재현 상태는 none/spike/verified 중 하나`);
+      if (!evidenceTags.some(t => card.includes(t))) fail(errors, `${id}: 근거 태그가 없다`);
+    }
+    const map = (text.split(/^## 5\. 장면·전환 지도\s*$/m)[1] || '').split(/^## /m)[0];
+    for (const id of ids) if (!map.includes(id)) fail(errors, `${name}: ${id}가 장면·전환 지도에 없다`);
+  }
+}
+
 function checkSkillProvenance(errors) {
   const skillRoot = path.join(ROOT, '.claude', 'skills');
   if (!fs.existsSync(skillRoot)) return;
@@ -273,6 +315,7 @@ function main() {
   const validIds = checkRecords(errors);
   checkCases(errors, validIds);
   checkSkillProvenance(errors);
+  checkReferences(errors);
   checkEntrypoints(errors);
 
   if (errors.length) {

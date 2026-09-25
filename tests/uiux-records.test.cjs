@@ -52,6 +52,13 @@ fixture('duplicate main case number', (_, tmp) => fs.copyFileSync(
 fixture('transcript is not a main case', (_, tmp) => fs.renameSync(
   path.join(tmp, 'docs/uiux_system/cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md'),
   path.join(tmp, 'docs/uiux_system/cases/CASE-004_SUMMARY_EN.md')), 1, '존재하지 않는 main CASE');
+const ref = 'docs/uiux_system/references/REF-001_MOTO_CARD.md';
+fixture('reference missing section', edit => edit(ref, s => s.replace('## 7. 에셋 목록과 조달 경로', '## 7. 에셋')), 1, '필수 절 누락');
+fixture('effect card missing field', edit => edit(ref, s => s.replace('**판별 근거**', '**판별**')), 1, '필드 누락');
+fixture('effect card empty field', edit => edit(ref, s => s.replace(/\*\*수용 기준\*\*[^\n]*/, '**수용 기준**:')), 1, '필드 값이 비어');
+fixture('effect card bad input model', edit => edit(ref, s => s.replace(/\*\*입력 모델\*\*[^\n]*/, '**입력 모델**: 알 수 없음')), 1, '입력 모델');
+fixture('effect card bad status', edit => edit(ref, s => s.replace('**재현 상태**: `none`', '**재현 상태**: 진행 중')), 1, '재현 상태');
+fixture('effect card not on scene map', edit => edit(ref, s => s.replace('| EFX-001-07 |', '| — |')), 1, '장면·전환 지도');
 for (const [prefix, file] of Object.entries({F: 'F_FINDINGS.md', D: 'D_DECISIONS.md', O: 'O_INCIDENTS.md', R: 'R_AI_COLLABORATION.md'})) {
   fixture('duplicate record ID ' + prefix, edit => edit('docs/uiux_system/records/' + file, s => {
     const block = s.match(new RegExp('^## ' + prefix + '-\\d+\\.[\\s\\S]*?(?=^## ' + prefix + '-|$(?![\\s\\S]))', 'm'));

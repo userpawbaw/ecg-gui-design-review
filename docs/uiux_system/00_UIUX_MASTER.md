@@ -108,6 +108,8 @@ Alpha/Beta round는 동일 Common Creative Packet과 Reference Pack을 사용하
 
 - 단순 polish, 이미 visual direction/reference가 freeze된 구현, 사용자가 reference 조사 없이 바로 실행하라고 한 경우
 
+레퍼런스의 **연출·기술을 분석**할 때(특정 효과를 재현하려는 목적)는 `21_REFERENCE_EFFECT_RECORDS.md`의 효과 카드 형식으로 `references/REF-*.md`에 기록하고, 촬영은 `tools/reference-capture/README.md`(D-017)를 따른다.
+
 목표는 reference를 늘리는 것이 아니라 **사용자가 AI 제안이 어떤 실제 장면에서 어떤 느낌을 차용하려는지 직접 확인**하게 하는 것이다.
 
 ## 5. Creative Freedom Zones

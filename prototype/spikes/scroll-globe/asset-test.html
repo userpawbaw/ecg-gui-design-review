@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Asset Pipeline Test</title></head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<header class="bar"><span>ASSET PIPELINE TEST · registry → download → optimize → scene</span><span id="mode"></span></header>
+<main class="scroller" style="height:400vh">
+  <section class="stage" style="position:sticky;top:0">
+    <div class="copy"><h1 class="headline" style="position:relative">SCROLL TO SPIN</h1>
+      <p class="lead">스크롤 속도에 비례해 빨라지고, 멈추면 약 0.3초 시간상수로 기본 회전 속도까지 감속합니다.</p></div>
+    <p id="credits" style="position:absolute;left:28px;bottom:20px;margin:0;font-size:11px;color:#8b949c"></p>
+  </section>
+</main>
+<script type="module" src="/src/asset-test.ts"></script>
+</body>
+</html>

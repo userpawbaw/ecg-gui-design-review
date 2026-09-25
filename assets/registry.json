@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "policy": {
+    "note": "Asset database for ECG Signal Studio. Every file used by a prototype or product must have an entry here. Status 'approved' is required before product use; 'test-only' may be used in spikes.",
+    "originals": "assets/source/ (gitignored, re-downloadable by scripts/assets/fetch.mjs, sha256-pinned)",
+    "processed": "assets/processed/ (committed, web-ready)",
+    "licence_allowlist": [
+      "CC0-1.0",
+      "CC-BY-4.0",
+      "public-domain"
+    ],
+    "licence_blocklist": [
+      "CC-BY-NC-4.0",
+      "CC-BY-NC-SA-3.0",
+      "editorial-only",
+      "unknown"
+    ]
+  },
+  "assets": [
+    {
+      "id": "hdri-studio-512",
+      "title": "Studio environment HDRI (512×256 EXR)",
+      "kind": "hdri",
+      "status": "test-only",
+      "source": {
+        "type": "npm",
+        "package": "@pmndrs/assets",
+        "version": "1.7.0",
+        "path": "hdri/studio.exr.js",
+        "encoding": "base64 data URL inside an ES module",
+        "upstream": "Poly Haven HDRI selection (the exact Poly Haven asset name is not stated by the package)"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/hdri-studio-512.exr",
+        "sha256": "08038ed9159c24bb732d2218dafa09cef2abaa44f9ce11ec511d87c842d88fad",
+        "bytes": 110735
+      },
+      "processing": "none (already resized/compressed by the package)",
+      "processed": {
+        "file": "assets/processed/hdri-studio-512.exr",
+        "sha256": "08038ed9159c24bb732d2218dafa09cef2abaa44f9ce11ec511d87c842d88fad",
+        "bytes": 110735
+      },
+      "used_by": [
+        "prototype/spikes/scroll-globe/asset-test.html"
+      ],
+      "review": "Licence OK (package licence CC0-1.0). Provenance gap: upstream asset name unknown → keep test-only until matched to a named Poly Haven HDRI."
+    },
+    {
+      "id": "model-waterbottle",
+      "title": "Khronos glTF sample: WaterBottle",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/WaterBottle/glTF-Binary/WaterBottle.glb",
+        "metadata": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/WaterBottle/metadata.json"
+      },
+      "licence": "CC0-1.0",
+      "author": "Microsoft",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/model-waterbottle.glb",
+        "sha256": "b337e526fd6a162013c2984aeec163f5fbb4f717252724dfc3f3458bd51df94b",
+        "bytes": 8966700
+      },
+      "processing": "gltf-transform optimize: meshopt geometry, textures resized to ≤1024 and converted to WebP",
+      "processed": {
+        "file": "assets/processed/model-waterbottle.glb",
+        "sha256": "a38a978adde83d3aa2e26bfe1f3a188da88eed76b11fbfcaed20a88e1a393b8c",
+        "bytes": 91092
+      },
+      "used_by": [
+        "prototype/spikes/scroll-globe/asset-test.html"
+      ],
+      "review": "Metallic PBR test object for environment lighting and velocity-coupled rotation. Not an ECG design asset."
+    }
+  ],
+  "rejected": [
+    {
+      "id": "model-damagedhelmet",
+      "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/DamagedHelmet/metadata.json",
+      "reason": "metadata lists a CC-BY-NC-4.0 component (non-commercial) in addition to CC-BY-4.0 — blocked by licence policy"
+    }
+  ]
+}

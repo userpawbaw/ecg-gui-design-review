@@ -358,3 +358,39 @@ Meshy, Tripo 등은 텍스트나 이미지로 GLB 모델을 만든다. 형태 �
 - **입력 표시**: `tools/reference-capture/scroll-hud.js`(DevTools 콘솔이나 북마클릿). 휠 입력, 방향, scrollY, 스크롤 속도가 화면 구석에 표시된다
 - **파트별 동작 순서**: 정지 3 s → 휠 1칸씩 3회(1 s 간격) → 연속 스크롤 2 s → 정지 3 s → 빠른 휙 스크롤 1회 → 정지 2 s → 위로 되돌리기
 - **분석 산출 단위**: 앞으로 영상 분석은 **화면별 · 전환 효과별**로 나눠 기록한다(사용자 요청 `[대화]`)
+
+## 16. 네트워크 허용 점검과 대안 (2026-09-25)
+
+- 이 세션의 환경은 **`기본값` (`env_01PaLW1Rmj3iFwHcwUhFYZjm`)**이다. 계정에는 이 밖에 `Default - trusted network access` 환경이 2개 더 있다.
+- 컨테이너가 재시작된 뒤(proxy 포트 변경)에도 `www.moto-card.com`, `www.awwwards.com`, `polyhaven.com`, `ambientcg.com`, `sketchfab.com`, NASA, `cdn.jsdelivr.net`, `unpkg.com`, **`www.google.com`까지** CONNECT 403으로 거부된다 `[런타임]`. 허용되는 것은 npm registry, `raw.githubusercontent.com`, `github.com`(git)뿐이다.
+- 해석 `[추론]`: `기본값` 환경의 Network access가 제한 모드이고, 사용자가 추가한 허용이 이 환경에 저장되지 않았거나(다른 `Default` 환경을 수정했을 가능성) 새 세션부터 적용되는 것으로 보인다.
+- **대안 A — 로컬 캡처 스크립트** `tools/reference-capture/capture-site.mjs`: 사용자 PC에서 실행하면 network HAR(모든 JS·에셋 요청과 내용), 에셋 목록, 라이브러리 흔적, 스크롤 단계 스크린샷, 영상을 한 폴더로 저장한다. 이 세션에서 로컬 spike 페이지로 동작을 확인했다. 번들된 라이브러리는 전역 변수로 드러나지 않을 수 있으므로, HAR 안의 JS 본문을 검색해 판별한다.
+- **대안 B — 사용자 PC의 로컬 Claude Code 세션**: 네트워크 제한이 없고, Playwright headed 브라우저 창을 사용자가 직접 보면서 진행할 수 있다.
+- **대안 C — 브라우저 DevTools에서 HAR 직접 저장**(Network 탭 → Export HAR): 설치 없이 가능하다.
+
+## 17. 외부 에셋 1)~4) 전 과정 시험 결과
+
+목표: 접근 → 목록화·검토 → 다운로드·저장 → 적용을 에셋 하나 이상으로 끝까지 수행하고 병목을 찾는다. 차단되지 않은 두 경로(npm, GitHub raw)로 진행했다.
+
+| 단계 | 한 일 | 결과 |
+|---|---|---|
+| 1) 접근 | Poly Haven, ambientCG, Sketchfab, NASA 직접 접근 시도 | **차단.** 우회 경로: `@pmndrs/assets`(npm, Poly Haven HDRI를 줄인 CC0 모음), Khronos glTF-Sample-Assets(GitHub) |
+| 2) 목록화·검토 | Khronos 모델 9종의 `metadata.json` 라이선스 확인 | WaterBottle·BoomBox·Lantern 등은 CC0 → 채택 가능. **DamagedHelmet은 CC-BY-NC 구성요소가 있어 기각**(registry `rejected`에 기록). HDRI는 CC0이지만 원본 Poly Haven 자산명이 패키지에 없음 → `test-only` |
+| 3) 다운로드·저장 | `assets/registry.json`(자산 DB), `scripts/assets/fetch.mjs`(다운로드 → sha256 고정 → 가공) | 원본 `assets/source/`(gitignore, 재다운로드 가능) / 가공본 `assets/processed/`(커밋). WaterBottle **8.97 MB → 91 KB**(meshopt + WebP 1024), HDRI 111 KB |
+| 4) 적용 | spike `asset-test.html`: HDRI 환경광 + glTF 모델 + §14.2의 **속도 비례·감쇠 회전** | headless 측정: 정지 0.30 rad/s → 스크롤 중 15.9 → 멈춘 뒤 0.2/0.4/0.8/1.6 s에 13.3/9.4/3.4/0.72로 **부드럽게 감속**, 오류 0(favicon 404 제외) |
+
+발견한 품질 문제 `[캡처]`: 금속 반사에 **얼룩진 블록**이 보인다. 원인 후보는 (a) WebP 압축으로 metallicRoughness 텍스처 손실, (b) 512 px 저해상도 HDRI다. **가공 파라미터도 시각 검수가 필요한 결정 항목**이며, "자동 최적화 = 완료"로 보면 안 된다. 회전 이득(GAIN)도 레퍼런스보다 과하다(튜닝 전).
+
+### 17.1 병목과 역할 분담
+
+| # | 병목 | 누가 | 필요한 조치 |
+|---|---|---|---|
+| B1 | 에셋·레퍼런스 사이트가 네트워크 정책으로 차단 | **사용자** | `기본값` 환경의 Network access를 넓히거나 도메인 추가 → **새 세션**에서 확인. 또는 대안 A/B/C |
+| B2 | Sketchfab 다운로드는 로그인/API 토큰 필요, Fab·유료 마켓은 계정·결제 필요 | **사용자** | 계정 생성, API 토큰을 환경 secret으로 등록(대화에 붙여넣지 않음), 유료 구매 결정 |
+| B3 | 라이선스 최종 판단(특히 CC-BY 표기 위치, 전시가 "상업"인지) | **사용자 결정** | 전시 성격(비영리 학술 / 상업)을 알려 주면 허용 목록을 확정 |
+| B4 | 원본 대용량 파일(수십~수백 MB)을 git에 넣을 수 없음. git-lfs 미설치 | 공동 | 지금은 원본을 gitignore하고 URL + sha256으로 재현. 가공본이 커지면 GitHub Release 첨부 또는 LFS 도입 결정 |
+| B5 | 가공 품질(압축률, 해상도)은 자동으로 결정할 수 없음 | Claude 제안 → **사용자 시각 확인** | 에셋마다 비교 캡처를 제공하고 승인받기 |
+| B6 | 출처 불명확(HDRI 원본명 미상) | Claude | 네트워크 허용 뒤 Poly Haven 원본과 대조해 확정 |
+
+Claude가 단독으로 가능한 것: 목록화, 라이선스 1차 검토, 다운로드 스크립트, sha256 고정, 가공, registry 기록, 코드 적용, headless 검증.
+사용자가 해야 하는 것: B1(네트워크), B2(계정·토큰·결제), B3(라이선스 정책 결정), B5(시각 승인).

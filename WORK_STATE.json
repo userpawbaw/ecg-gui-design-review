@@ -207,7 +207,7 @@
       "P2 target PC GPU at implementation",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "Analyse the next reference (REF-003) the user provides per rule 21; after 2-3 references decide P1 (pipeline adoption). Note: REF-002 shows baked-lighting 3D scenes need Blender/outsourced modelling (P3).",
+    "next_action": "User decision P1 (pipeline adoption) now that 4 references are recorded; then P5 and redesign Q1-Q4",
     "lab_corner_spike": {
       "status": "v2 done",
       "date": "2026-09-25",
@@ -219,9 +219,10 @@
       ],
       "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
     },
-    "next": "REF-004 seasats.com (recording received 2026-09-25)",
+    "next": "User decision P1 (pipeline adoption) now that 4 references are recorded; then P5 and redesign Q1-Q4",
     "references_done": [
-      "REF-003"
+      "REF-003",
+      "REF-004"
     ]
   }
 }

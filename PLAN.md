@@ -197,3 +197,4 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] `prototype/spikes/scroll-globe`: three 0.186.1 + GSAP 3.15 ScrollTrigger + Lenis 1.3.26 build PASS, headless WebGL2 스크롤/autoplay/reduced-motion 상태 동기 PASS. 실제 GPU 성능·미감·텍스처 라이선스 미검증.
 - [ ] 사용자 결정 P1~P5(파이프라인 채택, target PC GPU, 에셋 제작 주체, 레퍼런스 근거 확보, r3f 여부) → 채택 시 D-017/CASE-006/21번 계약 → 재설계 Q1~Q4.
 - 2026-09-25 후속: P1 레퍼런스 2~3개 추가 분석 후 결정, P2 구현 시 결정, P3 외부 에셋 우선(조달처 §12), P5 설명 완료(vanilla 엔진 + React hybrid 권장, 미확정). moto 녹화 분해 → F-011. 이 세션은 도메인 허용 뒤에도 CONNECT 거부됨.
+- 2026-09-25 후속2: moto 파트별 정량 분석(지구 회전=기본+속도 비례 r=0.96, 카드 감쇠 약 0.7 s, 타이포=문턱 트윈+reflow 점프) §14. 촬영 규칙 초안과 scroll HUD `tools/reference-capture/` — 사용자 합의 대기. 앞으로 영상 분석은 화면별·전환 효과별로 기록.

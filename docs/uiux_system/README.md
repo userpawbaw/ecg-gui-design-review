@@ -27,6 +27,7 @@
 - `22_AI_VIDEO_SCROLL_PIPELINE.md` — 고정 경로 스크롤 구간을 AI 영상으로 만드는 시험 경로: 적합성 판정, 브리프(`templates/AI_VIDEO_BRIEF.md`), 입고 QA(`tools/video-qa/`), 스크롤 플레이어(`prototype/spikes/video-scrub`)
 - `23_EXTERNAL_COMPONENT_REVIEW.md` — 외부 UI 컴포넌트 후보 목록(접근·라이선스 확인)과 구현 전 C1–C4 검토 단계
 - `24_ASSET_RESEARCH_STAGE.md` — 에셋 조달처 전체 탐색(`explore.mjs`)과 계정 조달처 로그인 요청 규칙
+- `25_EFFECT_PRODUCTION_PIPELINE.md` — **채택된 연출 제작 파이프라인 계약**(P1·P5·P6): 적용 범위(HIGH·MEDIUM), 작업 순서 S1–S7, 스택 기준, vanilla 엔진 + React 마운트 인터페이스, 임시 성능 예산, 충실도 게이트 G1–G6
 
 프로젝트 local skill:
 

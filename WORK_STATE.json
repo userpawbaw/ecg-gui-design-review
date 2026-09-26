@@ -112,7 +112,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-27T00:30:00+09:00",
+  "updated_at": "2026-09-27T01:30:00+09:00",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -209,7 +209,7 @@
       "P6 reference fidelity gate (proposal in REFERENCE_REPRO_AND_QUALITY_GAP §4.1)",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "User: confirm AI-video pipeline; add Sketchfab/Pexels tokens when ready; then pipeline decision P1/P5/P6",
+    "next_action": "Redesign Q1-Q4 under the adopted pipeline (25); P2 target PC when available; Sketchfab/Pexels tokens when ready",
     "lab_corner_spike": {
       "status": "v3 done (scroll camera descent)",
       "date": "2026-09-25",
@@ -221,7 +221,7 @@
       ],
       "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
     },
-    "next": "User: confirm AI-video pipeline; add Sketchfab/Pexels tokens when ready; then pipeline decision P1/P5/P6",
+    "next": "Redesign Q1-Q4 under the adopted pipeline (25); P2 target PC when available; Sketchfab/Pexels tokens when ready",
     "references_done": [
       "REF-003",
       "REF-004"
@@ -300,7 +300,6 @@
         "scripts/assets/fetch.mjs page/gdrive types"
       ],
       "awaiting_user": [
-        "confirm the AI-video pipeline (22) → then pipeline decision P1/P5/P6",
         "SKETCHFAB_API_TOKEN env var (candidates found: bookshelf, furniture)",
         "PEXELS_API_KEY env var (photo/video clouds search blocked)",
         "first real AI video + brief for a chosen section",
@@ -316,6 +315,18 @@
         "temporal-consistent video depth model",
         "Gaussian splatting from video",
         "GPU cost of the live layer"
+      ]
+    },
+    "pipeline_decision_2026_09_26": {
+      "status": "decided by user",
+      "P1": "adopt for HIGH+MEDIUM; WebGL allowed in HIGH (D-027)",
+      "P5": "vanilla engine modules + React mount (D-028)",
+      "P6": "fidelity gate G1-G6, AI self-correction max 3 rounds (D-029)",
+      "ai_video_pipeline": "confirmed (D-023)",
+      "contract": "docs/uiux_system/25_EFFECT_PRODUCTION_PIPELINE.md",
+      "still_open": [
+        "P2 target exhibit PC (performance budget provisional)",
+        "redesign Q1-Q4"
       ]
     }
   }

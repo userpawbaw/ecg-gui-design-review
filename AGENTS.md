@@ -79,3 +79,12 @@ User-approved workflow: source-project analysis → independent design/prototype
 - B NATIVE_DIRECTOR: native inspiration → 4–6 cards → prefilter → 1–2 drafts. CONCRETIZER renders selected A/B/Hybrid ideas. Both preserve data contracts and have no approval authority.
 - Chat runs A + clean B handoff. Shell environments run both only when vendor/auth/network and context isolation work; report blocked/handoff honestly.
 - Cross-review follows both frozen passes; one complementary Hybrid at most within authorized budget. User alignment + validator precede production implementation.
+
+## Effect production pipeline (2026-09-26)
+
+- The user adopted the effect production pipeline (P1 = D-027, P5 = D-028, P6 = D-029). For HIGH and MEDIUM zone effect work, follow `docs/uiux_system/25_EFFECT_PRODUCTION_PIPELINE.md`: effect card → route choice → asset research (`24`) and external component review (`23`) → implementation with the shader/post review (`11_CHECKLISTS.md` §12) → fidelity gate G1–G6 (§13) before showing results → user check. LOW/polish work is exempt.
+- HIGH zone may use WebGL (this replaces D-016's Canvas 2D limit on the recovered Attract branch). MEDIUM defaults to DOM/Canvas 2D/SVG unless a D record justifies WebGL.
+- 3D/scroll effects are vanilla engine modules (three, GSAP, Lenis) mounted by React; per-frame values never flow through React state; one Lenis per page.
+- AI self-correction before asking the user is limited to 3 rounds; reference comparison uses at least 6 (recommended 12) frames per effect segment. Fixed-path scroll video follows `22_AI_VIDEO_SCROLL_PIPELINE.md` (D-023, confirmed).
+- Performance budget values in `25` §5 are provisional until the target exhibit PC (P2) is known.
+

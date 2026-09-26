@@ -45,6 +45,30 @@ async function acquire(a) {
     s.resolved_url = f.url;
     return buf;
   }
+  if (s.type === 'ambientcg') {
+    // ambientCG API v2 (all assets CC0). The zip link redirects to their CDN; size from the API is checked.
+    const ua = {'User-Agent': 'ECG-Signal-Studio-asset-pipeline/1.0 (non-profit academic exhibit)'};
+    const j = await (await fetch(`https://ambientcg.com/api/v2/full_json?id=${s.asset_id}&include=downloadData`, {headers: ua})).json();
+    const dl = j.foundAssets?.[0]?.downloadFolders?.default?.downloadFiletypeCategories?.zip?.downloads?.find(x => x.attribute === s.attribute);
+    if (!dl) throw Error(`${a.id}: no ${s.attribute} zip for ${s.asset_id} in ambientCG API`);
+    const r = await fetch(dl.downloadLink, {headers: ua});
+    if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} ${dl.downloadLink}`);
+    const buf = Buffer.from(await r.arrayBuffer());
+    if (dl.size && buf.length !== dl.size) throw Error(`${a.id}: size ${buf.length} != API ${dl.size}`);
+    s.resolved_url = dl.downloadLink;
+    return buf;
+  }
+  if (s.type === 'openverse') {
+    // Openverse (CC search index). The API's licence must match the registry licence before download.
+    const ua = {'User-Agent': 'ECG-Signal-Studio-asset-pipeline/1.0 (non-profit academic exhibit)'};
+    const m = await (await fetch(`https://api.openverse.org/v1/images/${s.openverse_id}/`, {headers: ua})).json();
+    const lic = m.license === 'pdm' ? 'public-domain' : `${m.license === 'cc0' ? 'CC0' : 'CC-' + m.license.toUpperCase()}-${m.license_version}`;
+    if (lic !== a.licence) throw Error(`${a.id}: Openverse licence ${lic} != registry ${a.licence}`);
+    const r = await fetch(m.url, {headers: ua});
+    if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} ${m.url}`);
+    s.resolved_url = m.url; s.attribution = m.attribution;
+    return Buffer.from(await r.arrayBuffer());
+  }
   if (s.type === 'npm') {
     const dir = path.join(root, 'assets/.npm-cache');
     await mkdir(dir, {recursive: true});

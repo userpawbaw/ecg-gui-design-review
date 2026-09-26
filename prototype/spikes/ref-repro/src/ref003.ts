@@ -65,11 +65,25 @@ const L = flown.getTotalLength();
 const setIndicator = (p: number) => { const pt = flown.getPointAtLength(p * L); place(ind, pt.x, pt.y); ind.style.transform = 'translate(-50%,-50%)'; };
 gsap.set(flown, {drawSVG: '0%'}); setIndicator(0);
 const comp = $('travelComp');
-ScrollTrigger.create({trigger: '#route', start: 'top 85%', end: 'bottom 75%', scrub: true,   // page ends right after the map: finish the draw while the station is on screen
-  onUpdate: s => {
-  gsap.set(flown, {drawSVG: `0% ${(s.progress * 100).toFixed(3)}%`}); setIndicator(s.progress);
-  state.progress = s.progress; $('prog').textContent = `${Math.round(s.progress * 100)}%`;
-}});
+// v2 follow mapping (fix after a 12-frame comparison): the reference's indicator stays near the middle of the screen
+// while the map scrolls under it. Instead of a fixed scroll window, solve p each frame so the indicator sits at
+// FOLLOW_Y of the viewport (path y is monotonic in p because the route runs south), clamped to the ends.
+const FOLLOW_Y = 0.56;
+const screenYAt = (p: number, r: DOMRect) => r.top + flown.getPointAtLength(p * L).y / H * r.height;
+function solveP() {
+  const r = svg.getBoundingClientRect(), target = innerHeight * FOLLOW_Y;
+  if (screenYAt(0, r) >= target) return 0;
+  if (screenYAt(1, r) <= target) return 1;
+  let lo = 0, hi = 1; for (let k = 0; k < 18; k++) { const m = (lo + hi) / 2; screenYAt(m, r) < target ? lo = m : hi = m; } return (lo + hi) / 2;
+}
+let followP = 0;
+gsap.ticker.add(() => {
+  const p = solveP();
+  followP = reduced ? p : followP + (p - followP) * 0.35;           // light smoothing on top of Lenis
+  if (Math.abs(p - followP) < 1e-4) followP = p;
+  gsap.set(flown, {drawSVG: `0% ${(followP * 100).toFixed(3)}%`}); setIndicator(followP);
+  state.progress = followP; $('prog').textContent = `${Math.round(followP * 100)}%`;
+});
 // map parallax: inner moves down while the component scrolls → map travels slower than the page
 gsap.to('#travelInner', {y: () => innerHeight * 0.55, ease: 'none', scrollTrigger: {trigger: comp, start: 'top top', end: 'bottom top', scrub: true, invalidateOnRefresh: true}});
 gsap.fromTo('#infoCard', {y: 0}, {y: () => innerHeight * 0.1, ease: 'none', scrollTrigger: {trigger: comp, start: 'top bottom', end: 'bottom bottom', scrub: true}});

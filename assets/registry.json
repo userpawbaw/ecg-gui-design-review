@@ -1124,6 +1124,52 @@
         "prototype/spikes/attic"
       ],
       "review": "CC0 prop for the REF-002 attic bookshelf study (2026-09-25)."
+    },
+    {
+      "id": "mat-ambientcg-wood095-1k",
+      "title": "ambientCG — Wood095 (1K JPG PBR set, zip)",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "ambientcg",
+        "asset_id": "Wood095",
+        "attribute": "1K-JPG",
+        "page": "https://ambientcg.com/view?id=Wood095",
+        "resolved_url": "https://ambientcg.com/get?file=Wood095_1K-JPG.zip"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/mat-ambientcg-wood095-1k.zip",
+        "sha256": "04acff5a13e8ada6749b58ff5f6c49402692aadbfde87d65b06d35d70a9601d8",
+        "bytes": 3882297
+      },
+      "processing": "none (source only; a build script unzips Color/NormalGL/Roughness)",
+      "used_by": [],
+      "review": "2026-09-26 source-type smoke test for ambientCG (asset survey). API size checked; sha256 pinned. Not used by any page yet."
+    },
+    {
+      "id": "photo-openverse-cumulus-wing",
+      "title": "Openverse/Flickr — airplane wing over cumulus clouds (D Coetzee)",
+      "kind": "image",
+      "status": "test-only",
+      "source": {
+        "type": "openverse",
+        "openverse_id": "ef8bc7b4-70ce-425c-bbac-2e44ce1f7d42",
+        "page": "https://www.flickr.com/photos/29507259@N02/3527948344",
+        "resolved_url": "https://live.staticflickr.com/2404/3527948344_878499f824_b.jpg",
+        "attribution": "\"Airplane wing in front of cumulus clouds\" by D Coetzee is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/photo-openverse-cumulus-wing.jpg",
+        "sha256": "a415f9cae69cdace3c15f4011305af487a960e74ce17f1b900689d95b4af7837",
+        "bytes": 124268
+      },
+      "processing": "none (source only)",
+      "used_by": [],
+      "review": "2026-09-26 source-type smoke test for Openverse (asset survey). Licence re-checked against the API at every fetch. Candidate cloud-plate reference only; not used."
     }
   ],
   "rejected": [

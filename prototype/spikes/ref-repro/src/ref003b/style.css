@@ -1,0 +1,6 @@
+@import "tailwindcss";
+/* Magic UI ripple tokens (registry cssVars/css), themed to the route cyan */
+@theme { --animate-ripple: ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite; }
+@keyframes ripple { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(0.9); } }
+:root { --foreground: #72e6f5; }
+html, body { margin: 0; background: #f7f7f4; }

@@ -29,3 +29,45 @@ Work 사용량 제한으로 중단된 뒤 `execution_lock.active=true`가 남아
 - force push로 다른 변경을 덮지 않는다.
 
 자동 검사는 아니지만 `AGENTS.md`, `WORK_RESUME_POLICY.md`, `00_UIUX_MASTER.md`의 상위 운영 규칙으로 승급됐다. `[커밋]`
+
+## O-002. OpenCV를 설치하다 시스템 numpy가 2.x로 올라가 Blender(bpy)가 깨졌다
+
+| | |
+|---|---|
+| 시점 | 2026-09-26, AI 영상 입고 QA 도구 준비 중 `[런타임]` |
+| 잃은 것 | 되돌리기 1회, 이후 모든 Blender 베이크·렌더 스크립트가 깨질 위험 |
+| 재발 방지 | 시스템 파이썬은 numpy 1.26 고정 + OpenCV 4.10(호환판). torch·transformers 같은 ML 의존성은 별도 가상환경 |
+
+### 증상
+`pip install opencv-python-headless`가 최신 OpenCV와 함께 numpy 2.4.6을 설치했고, pip가 "bpy 4.5.3 requires numpy<2.0" 경고를 냈다 `[런타임]`.
+
+### 원인
+bpy·OpenCV·torch가 같은 시스템 파이썬을 공유하는데 버전 고정이 없었다 `[추론]`.
+
+### 조치
+`numpy>=1.26,<2.0`과 `opencv-python-headless==4.10.0.84`로 되돌리고 `import bpy`를 확인했다. 깊이 추정(torch 2.14 CPU, transformers 5.17, torchvision)은 scratchpad 가상환경에 따로 설치했다 `[런타임]`.
+
+### 재발 방지와 자동화 상태
+- 시스템 파이썬에 패키지를 더할 때는 `import bpy`를 바로 확인한다.
+- 무거운 ML 의존성은 가상환경에서만. `25` §3 스택 기준에 명시. 자동 검사는 없음.
+
+## O-003. 사용자가 로컬에서 AI 영상 플레이어를 열자 `loading frames 0%`에서 멈췄다
+
+| | |
+|---|---|
+| 시점 | 2026-09-26, 사용자 로컬 확인 "loading frame 0%에서 바뀌지 않네. readme도 없는데" `[대화]` |
+| 잃은 것 | 사용자 검증 시도 1회, 신뢰 |
+| 재발 방지 | 생성 데이터에 의존하는 spike는 준비 명령·README·누락 시 화면 안내를 갖추고, 깨끗한 클론 기준으로 확인한다 |
+
+### 증상
+플레이어가 로딩 화면에서 오류 표시 없이 0 %에 머물렀다 `[대화]`.
+
+### 원인
+플레이어가 읽는 `public/clips/`는 `.gitignore` 대상이었고, 대역 영상 원본(다락방·지구 렌더, 깊이 맵)은 AI의 scratchpad에만 있었다 `[코드]`. 매니페스트 요청이 실패하면 예외만 나고 화면은 초기 문구(0 %)에 그대로 남았다 `[코드]`. AI의 모든 시험은 원본이 있는 컨테이너에서만 돌았다 — "내 환경에서 PASS"가 "받은 사람도 실행 가능"을 뜻하지 않았다 `[추론]`.
+
+### 조치
+대역 원본을 재압축해 `prototype/spikes/video-scrub/standins/`(5.3 MB)로 커밋, `npm run clips` 한 번으로 시험 영상 5개 생성, 매니페스트·프레임이 없으면 이유와 명령을 화면에 표시, README(준비·URL별 확인 항목)를 추가했다. `public/clips/`를 지운 상태에서 `npm run clips` → 개발 서버에서 없는 클립 안내·pan·attic·globe 로딩을 확인했다 `[테스트]`.
+
+### 재발 방지와 자동화 상태
+- spike를 "사용자가 확인할 수 있다"고 보고하기 전에: README, 준비 명령, 누락 안내, 커밋된 원본만으로 재생성되는지(깨끗한 상태) 확인.
+- 자동 검사 없음 — 체크리스트 §9(커밋 전)에 항목 추가.

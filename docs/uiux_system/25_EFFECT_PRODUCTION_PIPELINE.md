@@ -1,7 +1,7 @@
 # 25. 연출 제작 파이프라인 (계약)
 
 상태: **채택 — 2026-09-26 사용자 결정** (P1 = D-027, P5 = D-028, P6 = D-029). 이 문서는 21–24번과 체크리스트 §12를 하나의 작업 순서로 묶는 계약이다.
-연결: F-010, F-015, F-016, F-017, D-017, D-018, D-019, D-020–D-026, CASE-006, `handoffs/EFFECT_PRODUCTION_PIPELINE_AUDIT_2026-09-25.md` §7(원 제안).
+연결: F-010, F-013–F-020, D-017–D-032, O-002, O-003, R-014, R-015, CASE-006, `handoffs/RECORD_AUDIT_2026-09-26.md`(대화 대응표), `handoffs/EFFECT_PRODUCTION_PIPELINE_AUDIT_2026-09-25.md` §7(원 제안).
 
 ## 1. 적용 범위 (P1)
 
@@ -21,7 +21,9 @@
 ```text
 S1 레퍼런스 효과 카드 (21번, D-017 촬영 규칙)          ── 무엇을 재현하나, 입력 모델, 수치, 수용 기준
 S2 경로 선택                                          ── 실시간 3D / Blender 사전 렌더·베이크 / AI 영상(22번 V0) / DOM·SVG
-S3 재료: 에셋 조사(24번) · 외부 컴포넌트 검토(23번 C1–C3)
+                                                         (Blender는 AI가 헤드리스 bpy로 — D-030, 조명은 실시간 직접광 + 베이크 간접광 — D-032,
+                                                          AI 영상은 입력 정책 D-025·시선 F-019·정지 생명감 D-026)
+S3 재료: 외부 조달 우선(D-030) · 에셋 조사(24번) · 등록부·라이선스(D-031) · 외부 컴포넌트 검토(23번 C1–C3)
 S4 구현 — 스택 기준(§3), 통합 구조(§4), 셰이더·후처리 검토(체크리스트 §12)
 S5 충실도 게이트(§6) — 통과 전에는 사용자에게 "완성"으로 보이지 않는다
 S6 사용자 확인 — 게이트가 남긴 GAP만 질문 + 실제 브라우저 체감
@@ -34,7 +36,7 @@ S7 기록 — REF 카드 재현 상태, verification/, F/D/O/R, registry
 |---|---|---|
 | 3D | three.js (vanilla, 현재 0.186) + 공식 addon(GLTFLoader, EffectComposer, …) | r3f/drei 미사용(D-028) |
 | 모션·스크롤 | GSAP 3.15(ScrollTrigger, DrawSVG, MotionPath 무료) + Lenis 1.3 | 한 페이지에 Lenis 하나(§4) |
-| 사전 제작 | Blender `bpy`(헤드리스), gltf-transform, ffmpeg, Pillow·numpy·OpenCV | bpy 때문에 시스템 numpy 1.26 고정. torch 등은 별도 가상환경 |
+| 사전 제작 | Blender `bpy`(헤드리스), gltf-transform, ffmpeg, Pillow·numpy·OpenCV | bpy 때문에 시스템 numpy 1.26·OpenCV 4.10 고정, torch 등은 별도 가상환경(O-002) |
 | AI 영상 | 22번 파이프라인(입고 QA, 스크롤 플레이어) | D-023 |
 | 에셋 | `assets/registry.json` + `fetch.mjs`(sha256 고정) + `explore.mjs` | D-020, D-022 |
 | 추가 후보 | KTX2(`toktx`), pmndrs postprocessing, Theatre.js | **문제가 측정된 뒤** 도입(ATTIC §5) |
@@ -103,3 +105,9 @@ interface Stage {
 | 6 Input Translation | §4 규칙 3, spike의 키오스크 자동 시선·reduced-motion |
 | 7 Motion QA | §6 충실도 게이트 |
 | (추가) | 셰이더·후처리 검토(체크리스트 §12), 외부 컴포넌트 검토(23번), AI 영상 경로(22번) |
+| (추가) | 넘기기 전 재현성: README·준비 명령·누락 안내·깨끗한 상태 재생성(O-003, 체크리스트 §9) |
+
+## 8. 이 문서가 담지 않는 것
+
+이번 대화의 논의 전체와 각 항목이 어느 기록에 있는지는 `handoffs/RECORD_AUDIT_2026-09-26.md`의 대응표에 있다. 이 문서는 **작업 규칙**만 담고, 근거·반박·정정의 흐름은 D/F/O/R 기록과 CASE-006에 있다.
+

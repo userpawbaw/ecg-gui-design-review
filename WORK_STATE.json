@@ -112,7 +112,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-27T01:30:00+09:00",
+  "updated_at": "2026-09-27T03:00:00+09:00",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -209,7 +209,7 @@
       "P6 reference fidelity gate (proposal in REFERENCE_REPRO_AND_QUALITY_GAP §4.1)",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "Redesign Q1-Q4 under the adopted pipeline (25); P2 target PC when available; Sketchfab/Pexels tokens when ready",
+    "next_action": "Redesign Q1-Q4 decision (user); P2 target PC when available",
     "lab_corner_spike": {
       "status": "v3 done (scroll camera descent)",
       "date": "2026-09-25",
@@ -221,7 +221,7 @@
       ],
       "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
     },
-    "next": "Redesign Q1-Q4 under the adopted pipeline (25); P2 target PC when available; Sketchfab/Pexels tokens when ready",
+    "next": "Redesign Q1-Q4 decision (user); P2 target PC when available",
     "references_done": [
       "REF-003",
       "REF-004"
@@ -328,6 +328,23 @@
         "P2 target exhibit PC (performance budget provisional)",
         "redesign Q1-Q4"
       ]
+    },
+    "record_audit_2026_09_26": {
+      "status": "done",
+      "doc": "docs/uiux_system/handoffs/RECORD_AUDIT_2026-09-26.md",
+      "method": "19 substantive user messages from the session transcript vs repo records",
+      "added": [
+        "D-030 P3 external-first",
+        "D-031 registry + NC licence",
+        "D-032 lighting mode C",
+        "O-002 numpy/bpy",
+        "O-003 local run stuck at 0%",
+        "R-014 AI limits are hypotheses",
+        "R-015 verify other-AI lists",
+        "AGENTS: Korean stage messages",
+        "25 links + section 8"
+      ],
+      "local_run_fix": "video-scrub: standins/ committed (5.3 MB), npm run clips, missing-clip message, README"
     }
   }
 }

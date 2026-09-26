@@ -6,6 +6,7 @@
 - The repository-wide GitHub `execution_lock` protocol introduced on 2026-09-15 is retired by the user's 2026-09-16 decision. Do not block unrelated work because another session exists or because a stale owner record remains. Use Git branches/commits plus the resource-scoped conflict rules in WORK_RESUME_POLICY.md §3. Avoid only actual conflicts on the same files, semantic contract, generated output, release/deployment target, expensive job, or exclusive device/resource.
 - Verify interrupted results before continuing; preserve verified stages and continue all remaining authorized work. Distinguish blocked/deferred work from completion.
 - UI refinement follows `docs/21_ui_refinement_workflow_final.md` when present; `docs/20_ui_refinement_workflow.md` is its historical input, not the final operating rule.
+- Write all chat to this user in Korean, including intermediate stage/progress messages (user request 2026-09-26).
 - Record meaningful checkpoints and concise chat stage logs. No-op periodic checks do not require file changes or commits. These are project instructions, not an account-wide memory setting.
 
 User-approved workflow: source-project analysis → independent design/prototype freeze → previous-artifact review → comparison → final synthesis → verification.

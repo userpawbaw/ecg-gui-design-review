@@ -26,7 +26,12 @@ const state: any = {ready: false, progress: 0, frame: 0, gaze: [0, 0], opt};
 (window as any).__vs = state;
 
 const base = `./clips/${opt.clip}/`;
-const man: Manifest = await (await fetch(base + 'manifest.json')).json();
+// public/clips/ is generated (npm run clips), not committed — say so instead of hanging at 0 % (O-003)
+const fail = (msg: string) => { $('loader').innerHTML = `<div style="max-width:560px;line-height:1.6;text-transform:none;letter-spacing:0">${msg}</div>`; throw Error(msg); };
+const mres = await fetch(base + 'manifest.json').catch(() => null);
+if (!mres || !mres.ok || !(mres.headers.get('content-type') || '').includes('json'))
+  fail(`Clip "${opt.clip}" not found (${base}manifest.json).<br>Run <b>npm run clips</b> in prototype/spikes/video-scrub first, then reload.<br>Available after setup: pan, eased, attic, attic_est, globe — see README.md.`);
+const man: Manifest = await mres!.json();
 const N = man.frames;
 
 // 1) Sequences: every compressed frame is downloaded before start (no missing-frame substitution — REF-004),
@@ -38,7 +43,9 @@ class Sequence {
   constructor(public pattern: string, public window = 24) {}
   async load() {
     this.blobs = await Promise.all(Array.from({length: N}, async (_, i) => {
-      const b = await (await fetch(base + this.pattern.replace('{i}', String(i).padStart(man.pad, '0')))).blob();
+      const r = await fetch(base + this.pattern.replace('{i}', String(i).padStart(man.pad, '0')));
+      if (!r.ok) fail(`Frame ${i} of "${opt.clip}" is missing (HTTP ${r.status}). Re-run <b>npm run clips</b>.`);
+      const b = await r.blob();
       $('lp').textContent = `${Math.round(++loadedN / totalN * 100)}%`; return b;
     }));
   }

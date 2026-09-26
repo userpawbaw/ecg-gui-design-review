@@ -188,7 +188,7 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 
 - [x] 20 remote branch 비교: canonical UI/UX 시스템 = `main` `cfef430` (Alpha/Beta 17~20 + CASE-005 포함). `experiment/dual-attract-20260919`는 파일 수가 많지만 실험 원자료이며 최신 계약 누락. `feat/attract-vnext-recovered-20260924`는 main+1 Beta A/B prototype(PR 없음, winner 미선정).
 - [x] v2.2.1 분석: build PASS, 단위 테스트 12/12, headless 1920/1366 캡처 → `docs/uiux_system/handoffs/REDESIGN_BASELINE_ANALYSIS_2026-09-25.md`, `verification/redesign-baseline-20260925/`.
-- [ ] 사용자 결정 Q1~Q4(범위, recovered Beta A/B 지위, deferred 항목, Release ZIP) 후 Alpha/Beta Step 1 Intent/Reference Freeze + 범위 D 기록.
+- [x] 사용자 결정 Q1~Q4 — 2026-09-26: Q1 전체·두 라운드(D-033), Q2 비교 입력만(D-034), Q3 UI-02만(D-035), Q4 릴리스 ZIP 확인(사용자 조치 불필요). 다음: 1라운드 Alpha/Beta Step 1 Intent/Reference Freeze.
 
 ## 2026-09-25 — 레퍼런스 연출 제작 파이프라인 점검
 
@@ -213,3 +213,4 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-09-26 AI 영상 절차 정리 + 2차 자체 시험: 시선 — REF-002형 작은 회전은 여백 이동이 진짜 회전과 오차 4.6/255로 거의 정확(첫 판 "한계" 판단 정정, F-019), 변형 영상 섞기는 잔상. 정지 생명감 — 카메라 경로는 영상 위 시간 층, 반복 영상만 "멈춰도 재생 + 스크롤 가속"(F-020, D-026). 입력 정책 — 학습 단계 레퍼런스 금지, 적용 단계 우리 재현 결과 입력(D-025). 깊이 추정 — 상관 0.905지만 프레임 떨림. API 없는 5곳도 스크립트 받기 확인. 다음: 사용자 파이프라인 확정 → P1·P5·P6.
 - 2026-09-26 **파이프라인 결정 완료**: AI 영상 파이프라인 확정(D-023). P1 = HIGH·MEDIUM 전체 채택, HIGH에서 WebGL 허용(D-027, D-016 개정). P5 = vanilla 엔진 + React 마운트(D-028). P6 = 충실도 게이트 G1–G6, 자기 수정 3회(D-029). 계약 `docs/uiux_system/25_EFFECT_PRODUCTION_PIPELINE.md`, 체크리스트 §13, AGENTS.md 절 추가. 남은 것: P2 전시 PC(성능 예산 임시값), 재설계 Q1–Q4.
 - 2026-09-26 기록 감사: 세션 원문 사용자 발언 19건 대 저장소 기록 대조(`handoffs/RECORD_AUDIT_2026-09-26.md`). 보완: D-030(P3 외부 우선), D-031(등록부·NC 라이선스), D-032(조명 C 모드), O-002(numpy/bpy), O-003(로컬 0 % 정지), R-014, R-015, AGENTS 한국어 중간 메시지, 25번 연결·§8. video-scrub 로컬 실행 수정(standins 커밋, `npm run clips`, 누락 안내, README). 다음: 재설계 Q1–Q4.
+- 2026-09-26 재설계 질문 결정: Q1 전체 경험·두 라운드(1R Attract·Story·전환 / 2R Lab·Compare), Q2 Beta A/B 비교 입력만(데이터 안전 장치는 재사용), Q3 UI-02만 승인(글꼴·Loss 뷰 보류 유지), Q4 GitHub 릴리스 ZIP 이미 존재·받기 확인. D-033–D-035, docs/22 §7, 기준선 분석 §7.1. 다음: **1라운드 Step 1 — Common Creative Packet + Reference Pack freeze**.

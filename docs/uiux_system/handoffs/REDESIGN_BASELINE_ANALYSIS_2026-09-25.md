@@ -156,6 +156,17 @@ Beta A 화면(recovered branch `verification/attract-vnext/A-1920x1080.png`)은 
 - **Q3 deferred 항목 해제 여부**: 전면 글꼴 교체, UI-02 sweep 선단 발광, Loss 뷰/탭 통합 중 재설계에 포함할 것.
 - **Q4 Release ZIP**: 600초 replay 검증을 위해 v2.2.1 ZIP(SHA-256 `9070d4aa…e98ed`)을 이 환경에 제공할 수 있는가.
 
+### 7.1 결정 (2026-09-26)
+
+| 질문 | 결정 | 기록 |
+|---|---|---|
+| Q1 | 전체 경험, 두 라운드: 1라운드 Attract·Story·전환(HIGH), 2라운드 Lab·Compare 재배치(UX) | D-033 |
+| Q2 | Beta A/B는 비교 입력으로만. 동일 sample index CompareLens·same-time handoff·RAF 측정 등은 코드 자산으로 재사용 | D-034 |
+| Q3 | UI-02 sweep 선단 발광만 포함. 글꼴 교체·Loss 뷰 통합 계속 보류, 10후보 논의 상태 유지 | D-035 |
+| Q4 | 사용자 조치 불필요 — GitHub 릴리스 `archive-v2.2.1-recovery`에 `ecg-signal-studio-v2.2.1.zip`(340,775,483 B, SHA-256 `9070d4aa…e98ed` 일치)이 있고 이 환경에서 받기 확인(범위 요청 206). 600초 replay 검증 단계에서 받아 해시 확인 후 저장소 밖에서 사용. UI-01/03/04 수정은 포함되지 않은 배포본이라 **재생 자료 원천**으로만 쓴다 | 이 절 |
+
+**§6 실행 제약 갱신**: "Canvas 2D 우선(WebGL은 profiling 후)"은 D-027로 대체 — HIGH 구역 WebGL 허용, MEDIUM 기본 DOM/Canvas 2D/SVG. 구현은 `25_EFFECT_PRODUCTION_PIPELINE.md`(vanilla 엔진 + React 마운트, 게이트 G1–G6)를 따른다.
+
 ---
 
 ## 8. 단계 종료 판정

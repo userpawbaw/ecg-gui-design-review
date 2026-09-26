@@ -14,6 +14,11 @@
       "id": "UI-04",
       "status": "completed_conditional_browser_not_verified",
       "task": "Replace checkbox presentation with semantic switches/toggle and grouped difference gain"
+    },
+    {
+      "id": "UI-02",
+      "status": "approved_in_redesign_2026-09-26",
+      "task": "Sweep leading-edge glow inside the redesign; spec after comparison per docs/22 §4 (D-035)"
     }
   ],
   "automation": {
@@ -66,7 +71,7 @@
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
     "Loss evolution view and tab integration",
-    "Sweep leading-edge glow and the additional ten-candidate UI/UX shortlist: discussion concluded, no implementation approval inferred"
+    "Additional ten-candidate UI/UX shortlist: discussion only, not auto-fed to the redesign (D-035)"
   ],
   "last_execution": {
     "status": "interrupted_usage_limit_user_confirmed",
@@ -112,7 +117,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-27T03:00:00+09:00",
+  "updated_at": "2026-09-27T04:00:00+09:00",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -209,7 +214,7 @@
       "P6 reference fidelity gate (proposal in REFERENCE_REPRO_AND_QUALITY_GAP §4.1)",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "Redesign Q1-Q4 decision (user); P2 target PC when available",
+    "next_action": "Round 1: Alpha/Beta Step 1 — Common Creative Packet + Reference Pack freeze for Attract/Story/transitions (20, 13, 17), then Alpha and Beta first passes",
     "lab_corner_spike": {
       "status": "v3 done (scroll camera descent)",
       "date": "2026-09-25",
@@ -221,7 +226,7 @@
       ],
       "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
     },
-    "next": "Redesign Q1-Q4 decision (user); P2 target PC when available",
+    "next": "Round 1: Alpha/Beta Step 1 — Common Creative Packet + Reference Pack freeze for Attract/Story/transitions (20, 13, 17), then Alpha and Beta first passes",
     "references_done": [
       "REF-003",
       "REF-004"
@@ -345,6 +350,12 @@
         "25 links + section 8"
       ],
       "local_run_fix": "video-scrub: standins/ committed (5.3 MB), npm run clips, missing-clip message, README"
+    },
+    "redesign_decisions_2026_09_26": {
+      "Q1": "whole experience in two rounds: R1 Attract/Story/transitions (HIGH), R2 Lab/Compare (UX) (D-033)",
+      "Q2": "recovered Beta A/B = comparison input only; reuse data-safe code assets (D-034)",
+      "Q3": "UI-02 only; font replacement and Loss view stay deferred (D-035)",
+      "Q4": "release ZIP already on GitHub release archive-v2.2.1-recovery (ecg-signal-studio-v2.2.1.zip, sha256 9070d4aa…e98ed, 340,775,483 B), downloadable from this environment (HTTP 206 range test); fetch + verify at the 600 s replay verification step"
     }
   }
 }

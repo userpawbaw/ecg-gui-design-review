@@ -1,0 +1,16 @@
+{
+  "id": "VB-TEST-001",
+  "status": "test — stand-in clip (Blender HDRI pan, not AI video)",
+  "purpose": "Prove the intake QA and scrub player on a known clip before a real AI video arrives.",
+  "reference": {"ref": "REF-003 EFX-003-01 hero (slow pan over a snow field)", "what_to_keep": "slow, steady lateral camera move; no cuts"},
+  "camera": {"move": "pan right, constant speed", "start": "keyframes.first", "end": "keyframes.last", "lens_mm": 35, "height": "eye level"},
+  "keyframes": {"first": null, "last": null},
+  "overscan_pct": 6,
+  "forbidden": ["text", "logos", "UI", "ECG waveforms or numbers", "people"],
+  "acceptance": {
+    "min_width": 1920, "min_height": 1080, "aspect": 1.7778, "min_fps": 24, "duration_s": [8, 12],
+    "max_duplicates": 2, "cut_ratio": 4.0, "min_direction_consistency": 0.9, "max_speed_cv": 0.35,
+    "max_flicker": 2.0, "min_keyframe_ssim": 0.8
+  },
+  "human_review": ["형태가 녹아내리거나 변형되는 물체(AI morphing)가 없는가", "글자·로고·가짜 UI가 생기지 않았는가", "지정 금지 요소가 없는가", "레퍼런스의 분위기(빛·색·속도감)가 맞는가"]
+}

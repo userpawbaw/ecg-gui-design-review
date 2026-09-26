@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Video Scrub Spike</title>
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <header class="intro"><p>Spike · AI-video → scroll (D-023) · demo content</p><h1>Scroll the film</h1></header>
+  <section id="track">
+    <div class="sticky">
+      <canvas id="view"></canvas>
+      <div class="layer far" data-depth="0.4"><span>Punta Arenas → King George Island</span></div>
+      <div class="layer near" data-depth="1.6"><em>Demo overlay — not project data</em></div>
+      <div id="loader">loading frames <b id="lp">0%</b></div>
+      <div id="hud"></div>
+    </div>
+  </section>
+  <footer class="outro">Test clip: Blender stand-in pan (Poly Haven CC0 HDRI), not AI video. Depth map is synthetic when shown.</footer>
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

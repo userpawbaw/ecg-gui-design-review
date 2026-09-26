@@ -1,0 +1,50 @@
+{
+  "query": "clouds",
+  "kind": "photo",
+  "date": "2026-09-26",
+  "sources": {
+    "openverse": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Clouds",
+          "page": "https://www.flickr.com/photos/22178197@N00/9686255739",
+          "licence": "by-sa 2.0",
+          "size": "1024×681",
+          "attribution": "\"Clouds\" by Kamil Porembiński is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/.",
+          "fetch": {
+            "type": "openverse",
+            "openverse_id": "4f50c59d-3e3c-48bb-b2d2-faadf6a6ebe9"
+          }
+        },
+        {
+          "title": "Cloud Texture 02",
+          "page": "https://www.flickr.com/photos/31288116@N02/3909268647",
+          "licence": "by 2.0",
+          "size": "1024×768",
+          "attribution": "\"Cloud Texture 02\" by SixRevisions is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.",
+          "fetch": {
+            "type": "openverse",
+            "openverse_id": "75b6ba79-3cc3-4020-8e28-c06f0f42ed8a"
+          }
+        },
+        {
+          "title": "Clouds",
+          "page": "https://www.flickr.com/photos/14612880@N05/8281891497",
+          "licence": "by-nc 2.0",
+          "size": "1024×683",
+          "attribution": "\"Clouds\" by kndynt2099 is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/.",
+          "fetch": {
+            "type": "openverse",
+            "openverse_id": "49a34704-aa36-4130-b21d-82aa40fdd3c5"
+          }
+        }
+      ]
+    },
+    "pexels": {
+      "status": "auth-required",
+      "reason": "search needs the API key"
+    }
+  }
+}

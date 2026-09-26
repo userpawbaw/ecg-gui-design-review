@@ -69,6 +69,30 @@ async function acquire(a) {
     s.resolved_url = m.url; s.attribution = m.attribution;
     return Buffer.from(await r.arrayBuffer());
   }
+  if (s.type === 'sketchfab' || s.type === 'pexels') {
+    // Account sources (D-022): the token comes from the environment, never from chat or the repo.
+    const env = s.type === 'sketchfab' ? 'SKETCHFAB_API_TOKEN' : 'PEXELS_API_KEY', key = process.env[env];
+    if (!key) throw Error(`${a.id}: LOGIN REQUIRED — ask the user to add ${env} in the environment settings (see assets/auth-requests.json)`);
+    let url;
+    if (s.type === 'sketchfab') {
+      const m = await (await fetch(`https://api.sketchfab.com/v3/models/${s.uid}`)).json();
+      const lic = {cc0: 'CC0-1.0', by: 'CC-BY-4.0', 'by-sa': 'CC-BY-SA-4.0', 'by-nc': 'CC-BY-NC-4.0', 'by-nc-sa': 'CC-BY-NC-SA-4.0'}[m.license?.slug];
+      if (lic !== a.licence) throw Error(`${a.id}: Sketchfab licence ${m.license?.slug} != registry ${a.licence}`);
+      const d = await (await fetch(`https://api.sketchfab.com/v3/models/${s.uid}/download`, {headers: {Authorization: `Token ${key}`}})).json();
+      url = d[s.format || 'glb']?.url;
+      if (!url) throw Error(`${a.id}: no ${s.format || 'glb'} download for ${s.uid}`);
+      s.attribution = `"${m.name}" by ${m.user?.displayName} (${m.viewerUrl}), ${m.license?.label}`;
+    } else {
+      const ep = s.media === 'video' ? `https://api.pexels.com/videos/videos/${s.pexels_id}` : `https://api.pexels.com/v1/photos/${s.pexels_id}`;
+      const p = await (await fetch(ep, {headers: {Authorization: key}})).json();
+      url = s.media === 'video' ? p.video_files?.find(f => f.quality === (s.quality || 'hd'))?.link : p.src?.[s.size || 'original'];
+      if (!url) throw Error(`${a.id}: no Pexels file for ${s.pexels_id}`);
+      s.attribution = `${s.media === 'video' ? p.user?.name : p.photographer} on Pexels (${p.url})`;
+    }
+    const r = await fetch(url);
+    if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} download`);
+    return Buffer.from(await r.arrayBuffer());   // signed URLs expire; resolved_url is not stored
+  }
   if (s.type === 'npm') {
     const dir = path.join(root, 'assets/.npm-cache');
     await mkdir(dir, {recursive: true});

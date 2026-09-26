@@ -1,0 +1,161 @@
+{
+  "query": "furniture",
+  "kind": "model",
+  "date": "2026-09-26",
+  "sources": {
+    "polyhaven": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Arm Chair 01",
+          "page": "https://polyhaven.com/a/ArmChair_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "ArmChair_01"
+          }
+        },
+        {
+          "title": "Barber Shop Chair 01",
+          "page": "https://polyhaven.com/a/BarberShopChair_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "BarberShopChair_01"
+          }
+        },
+        {
+          "title": "Classic Console 01",
+          "page": "https://polyhaven.com/a/ClassicConsole_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "ClassicConsole_01"
+          }
+        },
+        {
+          "title": "Classic Nightstand 01",
+          "page": "https://polyhaven.com/a/ClassicNightstand_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "ClassicNightstand_01"
+          }
+        }
+      ]
+    },
+    "ambientcg": {
+      "status": "no-match",
+      "access": "api-auto",
+      "candidates": []
+    },
+    "kenney": {
+      "status": "ok",
+      "access": "url-auto",
+      "candidates": [
+        {
+          "title": "furniture-kit",
+          "page": "https://kenney.nl/assets/furniture-kit",
+          "licence": "CC0-1.0",
+          "note": "name match"
+        }
+      ]
+    },
+    "quaternius": {
+      "status": "ok",
+      "access": "explore-only",
+      "candidates": [
+        {
+          "title": "ultimatefurniture",
+          "page": "https://quaternius.com/packs/ultimatefurniture.html",
+          "licence": "CC0-1.0",
+          "note": "download is a Google Drive/itch link — manual"
+        },
+        {
+          "title": "furniture",
+          "page": "https://quaternius.com/packs/furniture.html",
+          "licence": "CC0-1.0",
+          "note": "download is a Google Drive/itch link — manual"
+        }
+      ]
+    },
+    "threedscans": {
+      "status": "no-match",
+      "access": "explore-only",
+      "candidates": []
+    },
+    "opengameart": {
+      "status": "ok",
+      "access": "explore-only",
+      "candidates": [
+        {
+          "title": "furniture-kit",
+          "page": "https://opengameart.org/content/furniture-kit",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "3td-furniture-pack",
+          "page": "https://opengameart.org/content/3td-furniture-pack",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "lpc-misc-tile-atlas-interior-exterior-trees-bridges-furniture",
+          "page": "https://opengameart.org/content/lpc-misc-tile-atlas-interior-exterior-trees-bridges-furniture",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "low-poly-furniture",
+          "page": "https://opengameart.org/content/low-poly-furniture",
+          "licence": "per item — check page"
+        }
+      ]
+    },
+    "sketchfab": {
+      "status": "candidates-need-login",
+      "access": "auth",
+      "candidates": [
+        {
+          "title": "some furniture",
+          "page": "https://sketchfab.com/3d-models/none-403f2737ce9e466092242169a813676d",
+          "licence": "CC Attribution",
+          "faces": 11104,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "403f2737ce9e466092242169a813676d"
+          }
+        },
+        {
+          "title": "Indian Furniture",
+          "page": "https://sketchfab.com/3d-models/none-78fda707b826402282369d7f73bf0dba",
+          "licence": "CC Attribution",
+          "faces": 5165,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "78fda707b826402282369d7f73bf0dba"
+          }
+        },
+        {
+          "title": "Furniture set",
+          "page": "https://sketchfab.com/3d-models/none-09b8b458fbad4986b6fd44698f5bc6dc",
+          "licence": "CC Attribution",
+          "faces": 18512,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "09b8b458fbad4986b6fd44698f5bc6dc"
+          }
+        },
+        {
+          "title": "Furniture set",
+          "page": "https://sketchfab.com/3d-models/none-4eb801eccae644ee9ded7a13f8d49d8a",
+          "licence": "CC Attribution",
+          "faces": 183528,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "4eb801eccae644ee9ded7a13f8d49d8a"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -188,3 +188,7 @@
 - [ ] 수정한 뒤 같은 구간을 **다시 전부** 캡처했나 — 수정 하나가 다른 결함을 드러낼 수 있다.
 - [ ] 레퍼런스 프레임이 든 비교 이미지는 저장소 밖에 두고, 우리 캡처만 `verification/`에 남겼나.
 - [ ] 에셋은 D-020 순서(Poly Haven → ambientCG → Openverse → Kenney·Quaternius → NASA)로 찾아봤나. 외부 UI 컴포넌트는 D-021에 따라 기법 공급원으로만 보고, 코드 채택은 같은 대조를 통과할 때만 했나.
+- [ ] 영상·연속 이미지 구간이면 `22_AI_VIDEO_SCROLL_PIPELINE.md` V0 적합성 판정을 했나. 디코딩 메모리(폭×높이×4×동시 보유 장수)를 예산에 넣었나(F-018).
+- [ ] 에셋은 `24_ASSET_RESEARCH_STAGE.md`대로 `explore.mjs`로 모든 조달처를 탐색했나. 로그인 요청이 나왔으면 후보와 함께 사용자에게 전달했나(토큰은 채팅으로 받지 않음, D-022).
+- [ ] 구현 전에 `23_EXTERNAL_COMPONENT_REVIEW.md` C1–C3(분류·후보·예측)을 적었나. 라이선스(MIT·재배포 금지·Commons Clause·AGPL)를 확인했나(D-024).
+

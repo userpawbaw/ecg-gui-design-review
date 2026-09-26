@@ -112,7 +112,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-26T16:00:00+09:00",
+  "updated_at": "2026-09-26T21:00:00+09:00",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -209,7 +209,7 @@
       "P6 reference fidelity gate (proposal in REFERENCE_REPRO_AND_QUALITY_GAP §4.1)",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "User pipeline decision: P1 adoption scope, P5 vanilla+React, P6 fidelity gate (now includes D-019 frame rule); then redesign Q1-Q4",
+    "next_action": "User: test AI-video pipeline and add Sketchfab/Pexels tokens when ready; pipeline decision P1/P5/P6; next reference implementation runs component review C1-C4",
     "lab_corner_spike": {
       "status": "v3 done (scroll camera descent)",
       "date": "2026-09-25",
@@ -221,7 +221,7 @@
       ],
       "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
     },
-    "next": "User pipeline decision: P1 adoption scope, P5 vanilla+React, P6 fidelity gate (now includes D-019 frame rule); then redesign Q1-Q4",
+    "next": "User: test AI-video pipeline and add Sketchfab/Pexels tokens when ready; pipeline decision P1/P5/P6; next reference implementation runs component review C1-C4",
     "references_done": [
       "REF-003",
       "REF-004"
@@ -268,6 +268,43 @@
         "scroll smoothing feel in a real browser",
         "real GPU fps",
         "mobile/touch"
+      ]
+    },
+    "production_routes_2026_09_26": {
+      "status": "built + self-tested (stand-in clip); real AI video, Sketchfab/Pexels downloads not yet tested",
+      "docs": [
+        "docs/uiux_system/22_AI_VIDEO_SCROLL_PIPELINE.md",
+        "docs/uiux_system/23_EXTERNAL_COMPONENT_REVIEW.md",
+        "docs/uiux_system/24_ASSET_RESEARCH_STAGE.md",
+        "docs/uiux_system/templates/AI_VIDEO_BRIEF.md"
+      ],
+      "records": [
+        "F-018",
+        "D-022",
+        "D-023",
+        "D-024"
+      ],
+      "tools": [
+        "tools/video-qa/check_video.py",
+        "tools/video-qa/make_test_clip.py",
+        "prototype/spikes/video-scrub",
+        "scripts/assets/explore.mjs",
+        "assets/sources.json",
+        "assets/auth-requests.json"
+      ],
+      "awaiting_user": [
+        "SKETCHFAB_API_TOKEN env var (candidates found: bookshelf, furniture)",
+        "PEXELS_API_KEY env var (photo/video clouds search blocked)",
+        "first real AI video + brief for a chosen section",
+        "decision before copying any coss.com/ui (former Origin UI, AGPL-3.0) code"
+      ],
+      "unverified": [
+        "real AI video",
+        "estimated depth maps",
+        "all-intra video/WebCodecs route",
+        "4K upscale",
+        "real browser scroll feel",
+        "real GPU"
       ]
     }
   }

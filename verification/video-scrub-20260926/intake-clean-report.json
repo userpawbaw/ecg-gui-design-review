@@ -1,0 +1,108 @@
+{
+  "video": "hero.mp4",
+  "brief": "VB-TEST-001",
+  "overall": "PASS",
+  "size": [
+    1920,
+    1080
+  ],
+  "fps": 24.0,
+  "frames": 240,
+  "checks": [
+    {
+      "check": "resolution",
+      "value": "1920x1080",
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "aspect",
+      "value": 1.778,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "fps",
+      "value": 24.0,
+      "unit": "fps",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "duration",
+      "value": 10.0,
+      "unit": "s",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "single_take (no cuts)",
+      "value": [],
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "duplicate_frames",
+      "value": 0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "motion_direction",
+      "value": 1.0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "motion_speed_cv",
+      "value": 0.219,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "luminance_flicker",
+      "value": 0.1,
+      "unit": "/255",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "sharpness_drops",
+      "value": 0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "first_frame_match",
+      "value": 1.0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "last_frame_match",
+      "value": 1.0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    }
+  ],
+  "motion_px_per_frame": {
+    "median": 0.343258872628212,
+    "max": 0.5106589794158936
+  },
+  "human_review_required": [
+    "형태가 녹아내리거나 변형되는 물체(AI morphing)가 없는가",
+    "글자·로고·가짜 UI가 생기지 않았는가",
+    "지정 금지 요소가 없는가",
+    "레퍼런스의 분위기(빛·색·속도감)가 맞는가"
+  ],
+  "note": "Automatic checks do not detect AI morphing, garbled text/logos or anatomy errors — review sheet.jpg."
+}

@@ -1,0 +1,141 @@
+{
+  "query": "bookshelf",
+  "kind": "model",
+  "date": "2026-09-26",
+  "sources": {
+    "polyhaven": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Shelf 01",
+          "page": "https://polyhaven.com/a/Shelf_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "Shelf_01"
+          }
+        },
+        {
+          "title": "Book Encyclopedia Set 01",
+          "page": "https://polyhaven.com/a/book_encyclopedia_set_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "book_encyclopedia_set_01"
+          }
+        },
+        {
+          "title": "Decorative Book Set 01",
+          "page": "https://polyhaven.com/a/decorative_book_set_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "decorative_book_set_01"
+          }
+        },
+        {
+          "title": "Steel Frame Shelves 01",
+          "page": "https://polyhaven.com/a/steel_frame_shelves_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "steel_frame_shelves_01"
+          }
+        }
+      ]
+    },
+    "ambientcg": {
+      "status": "no-match",
+      "access": "api-auto",
+      "candidates": []
+    },
+    "kenney": {
+      "status": "no-match",
+      "access": "url-auto",
+      "candidates": []
+    },
+    "quaternius": {
+      "status": "no-match",
+      "access": "explore-only",
+      "candidates": []
+    },
+    "threedscans": {
+      "status": "no-match",
+      "access": "explore-only",
+      "candidates": []
+    },
+    "opengameart": {
+      "status": "ok",
+      "access": "explore-only",
+      "candidates": [
+        {
+          "title": "bookshelf-1",
+          "page": "https://opengameart.org/content/bookshelf-1",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "bookshelf",
+          "page": "https://opengameart.org/content/bookshelf",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "bookshelf-0",
+          "page": "https://opengameart.org/content/bookshelf-0",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "bookshelf-flat-shaded",
+          "page": "https://opengameart.org/content/bookshelf-flat-shaded",
+          "licence": "per item — check page"
+        }
+      ]
+    },
+    "sketchfab": {
+      "status": "candidates-need-login",
+      "access": "auth",
+      "candidates": [
+        {
+          "title": "Bookshelf",
+          "page": "https://sketchfab.com/3d-models/none-8df6adc634bd4004894a5e70565dc52a",
+          "licence": "CC Attribution",
+          "faces": 29784,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "8df6adc634bd4004894a5e70565dc52a"
+          }
+        },
+        {
+          "title": "Dusty bookshelfs",
+          "page": "https://sketchfab.com/3d-models/none-caaf76f4506f4b01a2dffb553bae9342",
+          "licence": "CC Attribution",
+          "faces": 22782,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "caaf76f4506f4b01a2dffb553bae9342"
+          }
+        },
+        {
+          "title": "Bookshelf",
+          "page": "https://sketchfab.com/3d-models/none-964ae9ee60394ca3bad68d5d4a4c6b04",
+          "licence": "CC Attribution",
+          "faces": 930,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "964ae9ee60394ca3bad68d5d4a4c6b04"
+          }
+        },
+        {
+          "title": "Victorian Bookshelf",
+          "page": "https://sketchfab.com/3d-models/none-9f548046646f404782b8838ec14932f8",
+          "licence": "CC Attribution-NonCommercial",
+          "faces": 39468,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "9f548046646f404782b8838ec14932f8"
+          }
+        }
+      ]
+    }
+  }
+}

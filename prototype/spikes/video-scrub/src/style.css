@@ -1,0 +1,16 @@
+:root { --ink: #f4f6f8; --bg: #07090d; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.4 system-ui, sans-serif; }
+.intro { height: 70vh; display: grid; place-content: center; text-align: center; }
+.intro h1 { font-size: clamp(40px, 7vw, 96px); margin: 8px 0 0; font-weight: 500; letter-spacing: -.02em; }
+.intro p { opacity: .6; margin: 0; }
+#track { height: 500vh; position: relative; }
+.sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+#view { width: 100%; height: 100%; display: block; }
+.layer { position: absolute; left: 0; right: 0; pointer-events: none; text-align: center; will-change: transform; }
+.layer.far { top: 18%; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; opacity: .85; }
+.layer.near { bottom: 12%; font-size: 22px; font-family: Georgia, serif; }
+#loader { position: absolute; inset: 0; display: grid; place-content: center; background: var(--bg); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; transition: opacity .6s; }
+#loader.done { opacity: 0; pointer-events: none; }
+#hud { position: absolute; left: 12px; top: 12px; font: 11px/1.5 ui-monospace, monospace; opacity: .7; white-space: pre; }
+.outro { padding: 40vh 6vw; opacity: .6; font-size: 12px; }
+@media (max-width: 600px) { .layer.near { font-size: 16px; } }

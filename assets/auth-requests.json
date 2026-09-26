@@ -1,0 +1,75 @@
+{
+  "note": "Written by explore.mjs. Each open request means: the user creates an account and adds the env var in the cloud environment settings. Never paste tokens into chat.",
+  "requests": [
+    {
+      "source": "pexels",
+      "env": "PEXELS_API_KEY",
+      "query": "clouds",
+      "kind": "photo",
+      "date": "2026-09-26",
+      "status": "open",
+      "why": "Pexels: cannot search without a key",
+      "how": "Search itself needs the key (API 401, site 403 from this container). Key: pexels.com/api after login.",
+      "candidates": []
+    },
+    {
+      "source": "pexels",
+      "env": "PEXELS_API_KEY",
+      "query": "clouds",
+      "kind": "video",
+      "date": "2026-09-26",
+      "status": "open",
+      "why": "Pexels: cannot search without a key",
+      "how": "Search itself needs the key (API 401, site 403 from this container). Key: pexels.com/api after login.",
+      "candidates": []
+    },
+    {
+      "source": "sketchfab",
+      "env": "SKETCHFAB_API_TOKEN",
+      "query": "furniture",
+      "kind": "model",
+      "date": "2026-09-26",
+      "status": "open",
+      "why": "Sketchfab: 4 downloadable candidates found; download needs a token",
+      "how": "Search is public; download (/v3/models/{uid}/download) returns 401 without a token. Token: sketchfab.com → Settings → Password & API.",
+      "candidates": [
+        "some furniture — CC Attribution — https://sketchfab.com/3d-models/none-403f2737ce9e466092242169a813676d",
+        "Indian Furniture — CC Attribution — https://sketchfab.com/3d-models/none-78fda707b826402282369d7f73bf0dba",
+        "Furniture set — CC Attribution — https://sketchfab.com/3d-models/none-09b8b458fbad4986b6fd44698f5bc6dc",
+        "Furniture set — CC Attribution — https://sketchfab.com/3d-models/none-4eb801eccae644ee9ded7a13f8d49d8a"
+      ]
+    },
+    {
+      "source": "sketchfab",
+      "env": "SKETCHFAB_API_TOKEN",
+      "query": "rock",
+      "kind": "model",
+      "date": "2026-09-26",
+      "status": "open",
+      "why": "Sketchfab: 4 downloadable candidates found; download needs a token",
+      "how": "Search is public; download (/v3/models/{uid}/download) returns 401 without a token. Token: sketchfab.com → Settings → Password & API.",
+      "candidates": [
+        "Crystal stone (rock) — CC Attribution-NonCommercial — https://sketchfab.com/3d-models/none-1ad829e2f464446fa4945562ab611255",
+        "Rock Jacket (mid-poly) — CC Attribution — https://sketchfab.com/3d-models/none-25711a832a344c2dbe0b592c9d98707b",
+        "Silent Rock — CC Attribution — https://sketchfab.com/3d-models/none-719ae2f6967c4321b56a1211df3e79cd",
+        "#5 - \"Take it From the Top: Latin Rock\" House — CC Attribution — https://sketchfab.com/3d-models/none-e74f7497dbcb43b2b29111d6393224c4"
+      ]
+    },
+    {
+      "source": "sketchfab",
+      "env": "SKETCHFAB_API_TOKEN",
+      "query": "bookshelf",
+      "kind": "model",
+      "date": "2026-09-26",
+      "status": "open",
+      "why": "Sketchfab: 4 downloadable candidates found; download needs a token",
+      "how": "Search is public; download (/v3/models/{uid}/download) returns 401 without a token. Token: sketchfab.com → Settings → Password & API.",
+      "candidates": [
+        "Bookshelf — CC Attribution — https://sketchfab.com/3d-models/none-8df6adc634bd4004894a5e70565dc52a",
+        "Dusty bookshelfs — CC Attribution — https://sketchfab.com/3d-models/none-caaf76f4506f4b01a2dffb553bae9342",
+        "Bookshelf — CC Attribution — https://sketchfab.com/3d-models/none-964ae9ee60394ca3bad68d5d4a4c6b04",
+        "Victorian Bookshelf — CC Attribution-NonCommercial — https://sketchfab.com/3d-models/none-9f548046646f404782b8838ec14932f8"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "query": "clouds",
+  "kind": "video",
+  "date": "2026-09-26",
+  "sources": {
+    "mixkit": {
+      "status": "ok",
+      "access": "url-auto",
+      "candidates": [
+        {
+          "title": "mixkit video 4132",
+          "page": "https://mixkit.co/free-stock-video/4132/",
+          "preview": "https://assets.mixkit.co/videos/4132/4132-360.mp4",
+          "licence": "Mixkit License — check item"
+        },
+        {
+          "title": "mixkit video 51105",
+          "page": "https://mixkit.co/free-stock-video/51105/",
+          "preview": "https://assets.mixkit.co/videos/51105/51105-360.mp4",
+          "licence": "Mixkit License — check item"
+        },
+        {
+          "title": "mixkit video 2168",
+          "page": "https://mixkit.co/free-stock-video/2168/",
+          "preview": "https://assets.mixkit.co/videos/2168/2168-360.mp4",
+          "licence": "Mixkit License — check item"
+        }
+      ]
+    },
+    "pexels": {
+      "status": "auth-required",
+      "reason": "search needs the API key"
+    }
+  }
+}

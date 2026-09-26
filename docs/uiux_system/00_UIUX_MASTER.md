@@ -110,6 +110,8 @@ Alpha/Beta round는 동일 Common Creative Packet과 Reference Pack을 사용하
 
 레퍼런스의 **연출·기술을 분석**할 때(특정 효과를 재현하려는 목적)는 `21_REFERENCE_EFFECT_RECORDS.md`의 효과 카드 형식으로 `references/REF-*.md`에 기록하고, 촬영은 `tools/reference-capture/README.md`(D-017)를 따른다.
 
+재현·구현 단계에서는 에셋 조사(`24_ASSET_RESEARCH_STAGE.md`), 외부 UI 컴포넌트 검토(`23_EXTERNAL_COMPONENT_REVIEW.md`), 3D 셰이더·후처리와 12장 대조(`11_CHECKLISTS.md` §12)를 거친다. 고정 경로 스크롤 연출을 AI 영상으로 만들 때는 `22_AI_VIDEO_SCROLL_PIPELINE.md`를 따른다.
+
 목표는 reference를 늘리는 것이 아니라 **사용자가 AI 제안이 어떤 실제 장면에서 어떤 느낌을 차용하려는지 직접 확인**하게 하는 것이다.
 
 ## 5. Creative Freedom Zones

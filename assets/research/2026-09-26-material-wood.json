@@ -1,0 +1,95 @@
+{
+  "query": "wood",
+  "kind": "material",
+  "date": "2026-09-26",
+  "sources": {
+    "polyhaven": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Aerial Wood Snips",
+          "page": "https://polyhaven.com/a/aerial_wood_snips",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "aerial_wood_snips"
+          }
+        },
+        {
+          "title": "American Walnut Veneer",
+          "page": "https://polyhaven.com/a/american_walnut_veneer",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "american_walnut_veneer"
+          }
+        },
+        {
+          "title": "Angli Veneer",
+          "page": "https://polyhaven.com/a/angli_veneer",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "angli_veneer"
+          }
+        },
+        {
+          "title": "Ash Veneer",
+          "page": "https://polyhaven.com/a/ash_veneer",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "ash_veneer"
+          }
+        }
+      ]
+    },
+    "ambientcg": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Wood 095",
+          "page": "https://ambientcg.com/view?id=Wood095",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Wood095",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Wood 094",
+          "page": "https://ambientcg.com/view?id=Wood094",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Wood094",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Wood 092",
+          "page": "https://ambientcg.com/view?id=Wood092",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Wood092",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Wood Floor 051",
+          "page": "https://ambientcg.com/view?id=WoodFloor051",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "WoodFloor051",
+            "attribute": "1K-JPG"
+          }
+        }
+      ]
+    }
+  }
+}

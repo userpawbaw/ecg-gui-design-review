@@ -10,7 +10,9 @@
       "CC-BY-SA-4.0",
       "CC-BY-NC-4.0",
       "CC-BY-NC-SA-4.0",
-      "public-domain"
+      "public-domain",
+      "Pexels-License",
+      "Mixkit-License"
     ],
     "licence_blocklist": [
       "editorial-only",
@@ -18,7 +20,8 @@
       "no-AI-training-only-without-permission"
     ],
     "use_context": "2026-09-25 user decision: non-profit academic exhibit, no revenue → NC (non-commercial) licences allowed. BY/SA still require attribution / share-alike; record them in 'attribution'.",
-    "api_etiquette": "Poly Haven API: send an app-identifying User-Agent; downloaded assets need no attribution."
+    "api_etiquette": "Poly Haven API: send an app-identifying User-Agent; downloaded assets need no attribution.",
+    "licence_note_2026_09_26": "Pexels-License and Mixkit-License added for the asset-research stage (D-022, user will create a Pexels account). Both are free-use stock licences without attribution; do not redistribute unmodified files as stock. Sketchfab 'Standard'/'Editorial' licences stay blocked."
   },
   "assets": [
     {

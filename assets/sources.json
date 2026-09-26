@@ -1,20 +1,165 @@
 {
   "schema": 1,
-  "note": "Asset source catalogue for the asset-research stage (D-022). scripts/assets/explore.mjs searches every source whose kinds match, in this order. access: api-auto = search + download scripted; url-auto = search scraped, direct file URL works with the 'url' source type; explore-only = search works, download is manual (user) or not scripted; auth = needs a user account token in the environment. Verified from this container on 2026-09-26.",
+  "note": "Asset source catalogue for the asset-research stage (D-022). scripts/assets/explore.mjs searches every source whose kinds match, in this order. access: api-auto = search + download scripted; url-auto = search scraped, direct file URL works with the 'url' source type; scripted = no API, but search is scraped and the file link is resolved from the item page / public folder (fetch types page, gdrive, url) — no browser automation or login; auth = needs a user account token in the environment. Verified from this container on 2026-09-26.",
   "auth_policy": "Never ask for a token or password in chat. When explore.mjs finds candidates on an auth source (or cannot search it without a key), it writes assets/auth-requests.json; the agent then asks the user to create an account and add the named environment variable in the cloud environment settings (Edit → environment variables). A new session picks it up.",
   "sources": [
-    {"id": "polyhaven", "name": "Poly Haven", "kinds": ["model", "material", "hdri"], "licence": "CC0-1.0", "access": "api-auto", "fetch_type": "polyhaven", "search": "https://api.polyhaven.com/assets (local filter on name/tags/categories)"},
-    {"id": "ambientcg", "name": "ambientCG", "kinds": ["material", "hdri", "model"], "licence": "CC0-1.0", "access": "api-auto", "fetch_type": "ambientcg", "search": "https://ambientcg.com/api/v2/full_json?q="},
-    {"id": "openverse", "name": "Openverse (Flickr, Wikimedia …)", "kinds": ["photo"], "licence": "per item (search limited to cc0, pdm, by, by-sa, by-nc, by-nc-sa)", "access": "api-auto", "fetch_type": "openverse", "search": "https://api.openverse.org/v1/images/?q="},
-    {"id": "kenney", "name": "Kenney", "kinds": ["model", "sprite"], "licence": "CC0-1.0", "access": "url-auto", "fetch_type": "url", "search": "https://kenney.nl/assets?search= (page scrape); pack zip link on each asset page"},
-    {"id": "quaternius", "name": "Quaternius", "kinds": ["model"], "licence": "CC0-1.0", "access": "explore-only", "search": "https://quaternius.com/ pack list (name match)", "download_note": "Pack downloads are a Google Drive folder or itch.io — the user downloads and uploads, or the agent uses a direct file link if one is given."},
-    {"id": "threedscans", "name": "Three D Scans", "kinds": ["model"], "licence": "no copyright restrictions (site statement) — record as public-domain after checking the item page", "access": "explore-only", "search": "https://threedscans.com/?s="},
-    {"id": "opengameart", "name": "OpenGameArt", "kinds": ["model", "sprite", "texture"], "licence": "per item (CC0 / CC-BY / CC-BY-SA / GPL mixed)", "access": "explore-only", "search": "https://opengameart.org/art-search-advanced?keys=", "download_note": "Check the licence line on every item page; GPL-only items are not allowed."},
-    {"id": "mixkit", "name": "Mixkit", "kinds": ["video"], "licence": "Mixkit License (free; check the item's licence type)", "access": "url-auto", "fetch_type": "url", "search": "https://mixkit.co/free-stock-video/<query>/ (page scrape; preview mp4 on assets.mixkit.co)"},
-    {"id": "nasa", "name": "NASA (Visible Earth, SVS)", "kinds": ["photo", "texture"], "licence": "public-domain", "access": "url-auto", "fetch_type": "url", "search": "manual (topic-specific)"},
-    {"id": "sketchfab", "name": "Sketchfab", "kinds": ["model"], "licence": "per item (CC0 / CC-BY / CC-BY-SA / CC-BY-NC …; 'Standard' and 'Editorial' are not allowed)", "access": "auth", "auth_env": "SKETCHFAB_API_TOKEN", "fetch_type": "sketchfab", "search": "https://api.sketchfab.com/v3/search?type=models&downloadable=true&q= (public, no login)", "auth_note": "Search is public; download (/v3/models/{uid}/download) returns 401 without a token. Token: sketchfab.com → Settings → Password & API."},
-    {"id": "pexels", "name": "Pexels", "kinds": ["photo", "video"], "licence": "Pexels License", "access": "auth", "auth_env": "PEXELS_API_KEY", "fetch_type": "pexels", "search": "https://api.pexels.com/v1/search?query= , /videos/search?query=", "auth_note": "Search itself needs the key (API 401, site 403 from this container). Key: pexels.com/api after login."},
-    {"id": "unsplash", "name": "Unsplash", "kinds": ["photo"], "licence": "Unsplash License", "access": "auth", "auth_env": "UNSPLASH_ACCESS_KEY", "search": "https://api.unsplash.com/search/photos?query=", "auth_note": "Not requested by the user yet; listed for completeness, not searched."}
+    {
+      "id": "polyhaven",
+      "name": "Poly Haven",
+      "kinds": [
+        "model",
+        "material",
+        "hdri"
+      ],
+      "licence": "CC0-1.0",
+      "access": "api-auto",
+      "fetch_type": "polyhaven",
+      "search": "https://api.polyhaven.com/assets (local filter on name/tags/categories)"
+    },
+    {
+      "id": "ambientcg",
+      "name": "ambientCG",
+      "kinds": [
+        "material",
+        "hdri",
+        "model"
+      ],
+      "licence": "CC0-1.0",
+      "access": "api-auto",
+      "fetch_type": "ambientcg",
+      "search": "https://ambientcg.com/api/v2/full_json?q="
+    },
+    {
+      "id": "openverse",
+      "name": "Openverse (Flickr, Wikimedia …)",
+      "kinds": [
+        "photo"
+      ],
+      "licence": "per item (search limited to cc0, pdm, by, by-sa, by-nc, by-nc-sa)",
+      "access": "api-auto",
+      "fetch_type": "openverse",
+      "search": "https://api.openverse.org/v1/images/?q="
+    },
+    {
+      "id": "kenney",
+      "name": "Kenney",
+      "kinds": [
+        "model",
+        "sprite"
+      ],
+      "licence": "CC0-1.0",
+      "access": "scripted",
+      "fetch_type": "page",
+      "search": "https://kenney.nl/assets?search= (page scrape); pack zip link on each asset page",
+      "download_note": "pack zip link on the asset page (fetch type page) — verified 2026-09-26 (furniture-kit 5.1 MB)"
+    },
+    {
+      "id": "quaternius",
+      "name": "Quaternius",
+      "kinds": [
+        "model"
+      ],
+      "licence": "CC0-1.0",
+      "access": "scripted",
+      "search": "https://quaternius.com/ pack list (name match)",
+      "download_note": "public Google Drive folder: embeddedfolderview listing → drive.usercontent download (fetch type gdrive) — verified 2026-09-26",
+      "fetch_type": "gdrive"
+    },
+    {
+      "id": "threedscans",
+      "name": "Three D Scans",
+      "kinds": [
+        "model"
+      ],
+      "licence": "no copyright restrictions (site statement) — record as public-domain after checking the item page",
+      "access": "scripted",
+      "search": "https://threedscans.com/?s=",
+      "fetch_type": "page",
+      "download_note": "wp-content/uploads/*.obj.zip link on the item page (fetch type page) — verified 2026-09-26 (3.6 MB)"
+    },
+    {
+      "id": "opengameart",
+      "name": "OpenGameArt",
+      "kinds": [
+        "model",
+        "sprite",
+        "texture"
+      ],
+      "licence": "per item (CC0 / CC-BY / CC-BY-SA / GPL mixed)",
+      "access": "scripted",
+      "search": "https://opengameart.org/art-search-advanced?keys=",
+      "download_note": "sites/default/files/* link on the item page (fetch type page); check the licence line per item — verified 2026-09-26",
+      "fetch_type": "page"
+    },
+    {
+      "id": "mixkit",
+      "name": "Mixkit",
+      "kinds": [
+        "video"
+      ],
+      "licence": "Mixkit License (free; check the item's licence type)",
+      "access": "scripted",
+      "fetch_type": "url",
+      "search": "https://mixkit.co/free-stock-video/<query>/ (page scrape; preview mp4 on assets.mixkit.co)",
+      "download_note": "assets.mixkit.co/videos/<id>/<id>-<360|720|1080>.mp4 direct (fetch type url) — verified 2026-09-26 (1080p 35.7 MB, 720p 3.7 MB)"
+    },
+    {
+      "id": "nasa",
+      "name": "NASA (Visible Earth, SVS)",
+      "kinds": [
+        "photo",
+        "texture"
+      ],
+      "licence": "public-domain",
+      "access": "url-auto",
+      "fetch_type": "url",
+      "search": "manual (topic-specific)"
+    },
+    {
+      "id": "sketchfab",
+      "name": "Sketchfab",
+      "kinds": [
+        "model"
+      ],
+      "licence": "per item (CC0 / CC-BY / CC-BY-SA / CC-BY-NC …; 'Standard' and 'Editorial' are not allowed)",
+      "access": "auth",
+      "auth_env": "SKETCHFAB_API_TOKEN",
+      "fetch_type": "sketchfab",
+      "search": "https://api.sketchfab.com/v3/search?type=models&downloadable=true&q= (public, no login)",
+      "auth_note": "Search is public; download (/v3/models/{uid}/download) returns 401 without a token. Token: sketchfab.com → Settings → Password & API."
+    },
+    {
+      "id": "pexels",
+      "name": "Pexels",
+      "kinds": [
+        "photo",
+        "video"
+      ],
+      "licence": "Pexels License",
+      "access": "auth",
+      "auth_env": "PEXELS_API_KEY",
+      "fetch_type": "pexels",
+      "search": "https://api.pexels.com/v1/search?query= , /videos/search?query=",
+      "auth_note": "Search itself needs the key (API 401, site 403 from this container). Key: pexels.com/api after login."
+    },
+    {
+      "id": "unsplash",
+      "name": "Unsplash",
+      "kinds": [
+        "photo"
+      ],
+      "licence": "Unsplash License",
+      "access": "auth",
+      "auth_env": "UNSPLASH_ACCESS_KEY",
+      "search": "https://api.unsplash.com/search/photos?query=",
+      "auth_note": "Not requested by the user yet; listed for completeness, not searched."
+    }
   ],
-  "blocked_2026_09_26": ["Poly Pizza (403)", "Smithsonian 3D (403)", "Behance (403)", "land-book (403)", "Lapa Ninja (403)"]
+  "blocked_2026_09_26": [
+    "Poly Pizza (403)",
+    "Smithsonian 3D (403)",
+    "Behance (403)",
+    "land-book (403)",
+    "Lapa Ninja (403)"
+  ]
 }

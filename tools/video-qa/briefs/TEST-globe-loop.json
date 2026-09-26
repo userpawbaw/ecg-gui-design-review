@@ -1,0 +1,48 @@
+{
+  "id": "VB-TEST-003",
+  "status": "test \u2014 stand-in rendered from our attic spike (three.js), not AI video",
+  "purpose": "One full turn of a globe (loopable) for the idle-playback test (idle option 2, REF-001 moto globe style).",
+  "reference": {
+    "ref": "REF-001 moto globe spin (F-012), REF-004 EFX-004-01 globe",
+    "what_to_keep": "steady spin, seamless loop"
+  },
+  "camera": {
+    "move": "static camera, object rotates at constant speed",
+    "lens_mm": 35,
+    "height": "level"
+  },
+  "keyframes": {
+    "first": null,
+    "last": null
+  },
+  "overscan_pct": 6,
+  "forbidden": [
+    "text",
+    "logos",
+    "UI",
+    "ECG waveforms or numbers",
+    "people"
+  ],
+  "acceptance": {
+    "min_width": 1280,
+    "min_height": 720,
+    "aspect": 1.7778,
+    "min_fps": 24,
+    "duration_s": [
+      5,
+      8
+    ],
+    "max_duplicates": 2,
+    "cut_ratio": 4.0,
+    "min_direction_consistency": 0.6,
+    "max_speed_cv": 0.35,
+    "max_flicker": 2.0,
+    "min_keyframe_ssim": 0.8,
+    "loop": true
+  },
+  "human_review": [
+    "\ud615\ud0dc\uac00 \ub179\uc544\ub0b4\ub9ac\ub294 \ubb3c\uccb4\uac00 \uc5c6\ub294\uac00",
+    "\uae00\uc790\u00b7\ub85c\uace0\uac00 \uc0dd\uae30\uc9c0 \uc54a\uc558\ub294\uac00",
+    "\ube5b\uc904\uae30\u00b7\uba3c\uc9c0\uac00 \ub808\ud37c\ub7f0\uc2a4\ucc98\ub7fc \ubcf4\uc774\ub294\uac00"
+  ]
+}

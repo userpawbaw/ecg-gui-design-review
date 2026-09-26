@@ -188,6 +188,34 @@ fxBtn.setAttribute('aria-pressed', String(state.fx));
 const look = new THREE.Vector3(), eul = new THREE.Euler(0, 0, 0, 'YXZ');
 
 let last = 0, frame = 0;
+
+// ---------- one frame: shared by the live loop and ?capture=1 (video pipeline tests, D-023) ----------
+// yaw/pitch in degrees (head turn = pure rotation), dx = sideways head translation in scene units, t = effect time
+const capture = params.has('capture');
+const right = new THREE.Vector3();
+const depthMat = new THREE.ShaderMaterial({vertexShader: 'varying float vz; void main(){ vec4 mv = modelViewMatrix * vec4(position,1.); vz = -mv.z; gl_Position = projectionMatrix * mv; }',
+  fragmentShader: 'varying float vz; void main(){ float v = clamp(vz / 12., 0., 1.) * 255.; gl_FragColor = vec4(floor(v) / 255., fract(v), 0., 1.); }'});   // linear view depth / 12 (scene units), 16-bit in R (hi) + G (lo)
+function renderFrame(p: number, yaw: number, pitch: number, dx: number, t: number, dt: number, depth: boolean) {
+  camera.position.lerpVectors(P0, P1, p); look.lerpVectors(L0, L1, p); camera.lookAt(look);
+  if (dx) { right.setFromMatrixColumn(camera.matrix, 0); camera.position.addScaledVector(right, dx); look.addScaledVector(right, dx); camera.lookAt(look); }
+  eul.setFromQuaternion(camera.quaternion); eul.y += THREE.MathUtils.degToRad(yaw); eul.x += THREE.MathUtils.degToRad(pitch); camera.quaternion.setFromEuler(eul);
+  camera.updateMatrixWorld();
+  if (depth) {
+    const tm = renderer.toneMapping; renderer.toneMapping = THREE.NoToneMapping; dust.visible = false; scene.overrideMaterial = depthMat;
+    renderer.setRenderTarget(null); renderer.clear(); renderer.render(scene, camera);
+    scene.overrideMaterial = null; dust.visible = true; renderer.toneMapping = tm; return;
+  }
+  dustMat.uniforms.uTime.value = t;
+  vol.uniforms.uInvProj.value.copy(camera.projectionMatrixInverse); vol.uniforms.uInvView.value.copy(camera.matrixWorld);
+  vol.uniforms.uCam.value.copy(camera.position); vol.uniforms.uTime.value = t; vol.uniforms.uFrame.value = capture ? 0 : frame++ % 64; vol.uniforms.uOn.value = state.fx ? 1 : 0;
+  grade.uniforms.uTime.value = capture ? 0 : (frame % 97) * 0.13;   // capture: fixed ray jitter + grain so A/B renders differ only by the camera
+  renderer.setRenderTarget(sceneRT); renderer.clear(); renderer.render(scene, camera); renderer.setRenderTarget(null);
+  composer.render(dt);
+}
+(window as any).__shot = (o: {p: number; yaw?: number; pitch?: number; dx?: number; t?: number; fov?: number; depth?: boolean}) => {
+  if (o.fov && o.fov !== camera.fov) { camera.fov = o.fov; camera.updateProjectionMatrix(); }
+  renderFrame(o.p, o.yaw ?? 0, o.pitch ?? 0, o.dx ?? 0, o.t ?? 0, 1 / 24, !!o.depth);
+};
 function tick(now: number) {
   lenis.raf(now);
   const dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60; if (last) state.frames.push(now - last); last = now;
@@ -197,16 +225,7 @@ function tick(now: number) {
     el.style.clipPath = `inset(0 0 ${(1 - k) * 100}% 0)`; el.style.transform = `translateY(${(1 - k) * 40}%)`; el.style.opacity = String(k); });
   if (!visible && state.ready) { requestAnimationFrame(tick); return; }     // render gate: only while the window is on screen (as the reference)
   head.x = THREE.MathUtils.damp(head.x, reduced ? 0 : head.tx, 2, dt); head.y = THREE.MathUtils.damp(head.y, reduced ? 0 : head.ty, 2, dt);
-  camera.position.lerpVectors(P0, P1, p); look.lerpVectors(L0, L1, p); camera.lookAt(look);
-  eul.setFromQuaternion(camera.quaternion); eul.y += THREE.MathUtils.degToRad(-head.x * 0.75); eul.x += THREE.MathUtils.degToRad(-head.y * 0.2); camera.quaternion.setFromEuler(eul);
-  camera.updateMatrixWorld();
-  const t = reduced ? 0 : now / 1000;
-  dustMat.uniforms.uTime.value = t;
-  vol.uniforms.uInvProj.value.copy(camera.projectionMatrixInverse); vol.uniforms.uInvView.value.copy(camera.matrixWorld);
-  vol.uniforms.uCam.value.copy(camera.position); vol.uniforms.uTime.value = t; vol.uniforms.uFrame.value = frame++ % 64; vol.uniforms.uOn.value = state.fx ? 1 : 0;
-  grade.uniforms.uTime.value = (frame % 97) * 0.13;
-  renderer.setRenderTarget(sceneRT); renderer.clear(); renderer.render(scene, camera); renderer.setRenderTarget(null);
-  composer.render(dt);
+  if (!capture) renderFrame(p, -head.x * 0.75, -head.y * 0.2, 0, reduced ? 0 : now / 1000, dt, false);
   state.ready = true;
   requestAnimationFrame(tick);
 }

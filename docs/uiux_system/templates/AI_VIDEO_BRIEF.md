@@ -6,13 +6,18 @@
 
 > 예: "스크롤하면 카메라가 다락방 천창 아래로 천천히 내려가, 마지막 장면이 책장 위 모니터 정면에서 멈춘다(다음 섹션 UI와 match cut)."
 
-## 2. 레퍼런스에서 가져올 것 / 가져오지 않을 것
+## 2. 레퍼런스에서 가져올 것 / 가져오지 않을 것 / 입력 자료
 
 | 가져올 것(원칙) | 출처 카드 | 가져오지 않을 것 |
 |---|---|---|
 | 예: 카메라가 한 방향으로 느리게 하강, 빛줄기 속 먼지 | REF-002 EFX-002-03 | 레퍼런스 화면·로고·구도 그대로 복제 |
 
-레퍼런스 영상·캡처를 **생성 도구에 입력으로 넣지 않는다.** 원칙을 글로 쓰고, 구도는 우리가 만든 키프레임으로 준다(저작권, AGENTS.md "Never copy reference sites' assets").
+**입력 자료 — 단계별 정책(`22` §11, D-025)**
+
+| 단계 | 넣는 것 | 넣지 않는 것 |
+|---|---|---|
+| 재현 학습(REF 재현) | 우리 키프레임·블록아웃 렌더 | 레퍼런스 영상·캡처(정답지) |
+| 적용(ECG·다른 프로젝트) | **우리 재현 결과 영상·스틸**(구도·카메라·속도 참고), 우리 사진·CC0 사진 | 레퍼런스 영상(비공개 탐색 시안에만 `derivative-draft`로 허용, 배포 금지). 레퍼런스 캡처는 스타일 참고 입력으로만, 첫 프레임 입력 금지 |
 
 ## 3. 구도 고정 — 키프레임과 가이드
 
@@ -29,12 +34,14 @@
 | 항목 | 요청 | 이유 |
 |---|---|---|
 | 해상도 | 1920×1080 이상 (전시 4K면 업스케일 계획) | 선명도 검사 |
-| 화면비 | 16:9 + **overscan 여백 6 % 이상**(더 넓게 생성 후 크롭) | 마우스 시선 이동·세로 화면 크롭 여유 |
+| 화면비 | 16:9 + **overscan 여백 6 % 이상**(주 피사체 둘레를 비워 두고 더 넓게) | 마우스 시선(작은 회전)은 이 여백을 옮겨 만든다 — 진짜 회전과 오차 4.6/255(`22` §5.2). 세로 화면 크롭 여유 |
 | fps · 길이 | 24 fps 이상 · 8–12 s | 스크롤 길이 대비 프레임 수(1 px당 1프레임 이하) |
 | 단일 테이크 | 컷·장면 전환 금지 | scrub 중 점프 |
 | 속도 | 일정 속도(ease-in/out 금지) | 불균일하면 remap으로 보정 가능하나 중복 프레임이 생김 |
 | 노출·조명 | 고정(깜빡임 금지) | 밝기 flicker 검사 |
 | 모션 블러 | 최소 | 멈췄을 때 흐린 프레임이 보임 |
+| 코드로 얹을 요소 | 먼지·입자·흔들리는 빛을 **영상에 넣지 않기**(정지 생명감 층을 쓸 때) | 영상에 구워진 요소는 스크롤을 멈추면 같이 멈춘다(`22` §10) |
+| 반복 (`idle=play`를 쓸 때만) | 끝 프레임이 첫 프레임 직전 모습 — 완전 반복, 회전·흐름처럼 위치가 없는 움직임 | 카메라 경로 영상에는 쓰지 않는다 |
 | 세로 화면 | 중앙 9:16 안에 주요 피사체 | 모바일·세로 키오스크 |
 
 ## 5. 금지 요소
@@ -47,6 +54,8 @@
 Single continuous shot, no cuts. [scene in one sentence].
 Camera: [move] at constant speed, no rotation, no shake, [lens] lens.
 Start exactly on the provided first frame; end exactly on the provided last frame.
+[Application stage only] Follow the camera path, framing and pace of the provided reference video (our own render); change only [theme / materials / objects].
+Leave empty margin around the subject (about 6 % on every side). [If a live particle layer will be added:] no dust, particles or flickering light.
 Lighting: [fixed light description], constant exposure, no flicker.
 Sharp focus throughout, minimal motion blur.
 No text, no logos, no UI, no people. Screens in the scene are blank.

@@ -11,6 +11,7 @@ const regPath = path.join(root, 'assets/registry.json');
 const reg = JSON.parse(await readFile(regPath, 'utf8'));
 const pin = process.argv.includes('--pin');
 const sha = b => createHash('sha256').update(b).digest('hex');
+const BROWSER = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) ECG-Signal-Studio-asset-pipeline/1.0 (non-profit academic exhibit)'};
 
 async function acquire(a) {
   const s = a.source;
@@ -67,6 +68,35 @@ async function acquire(a) {
     const r = await fetch(m.url, {headers: ua});
     if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} ${m.url}`);
     s.resolved_url = m.url; s.attribution = m.attribution;
+    return Buffer.from(await r.arrayBuffer());
+  }
+  if (s.type === 'page') {
+    // Sites without an API (Kenney, OpenGameArt, Three D Scans, Mixkit — D-022): read the item page, take the first
+    // link matching `pattern`, download it. The page is the licence record; sha256 pinning catches silent changes.
+    const html = await (await fetch(s.page, {headers: BROWSER})).text();
+    const m = html.match(new RegExp(s.pattern));
+    if (!m) throw Error(`${a.id}: no link matching ${s.pattern} on ${s.page}`);
+    const url = new URL(m[0].replace(/&amp;/g, '&'), s.page).href;
+    const r = await fetch(url, {headers: BROWSER});
+    if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} ${url}`);
+    s.resolved_url = url;
+    return Buffer.from(await r.arrayBuffer());
+  }
+  if (s.type === 'gdrive') {
+    // Public Google Drive folder (Quaternius packs): walk `path` (folder names, then file name) via the embedded
+    // folder view, then download through drive.usercontent. Works without login for publicly shared folders.
+    let id = s.folder, file;
+    for (const [k, name] of s.path.entries()) {
+      const html = await (await fetch(`https://drive.google.com/embeddedfolderview?id=${id}`, {headers: BROWSER})).text();
+      const entries = [...html.matchAll(/href="https:\/\/drive\.google\.com\/(drive\/folders|file\/d)\/([A-Za-z0-9_-]+)[^"]*"[\s\S]*?flip-entry-title">([^<]*)/g)].map(m => ({kind: m[1], id: m[2], name: m[3]}));
+      const e = entries.find(x => x.name === name);
+      if (!e) throw Error(`${a.id}: "${name}" not in Drive folder ${id} (${entries.map(x => x.name).slice(0, 8).join(', ')})`);
+      if (k === s.path.length - 1) file = e.id; else id = e.id;
+    }
+    const url = `https://drive.usercontent.google.com/download?id=${file}&export=download&confirm=t`;
+    const r = await fetch(url, {headers: BROWSER});
+    if (!r.ok) throw Error(`${a.id}: HTTP ${r.status} Drive file ${file}`);
+    s.resolved_url = url;
     return Buffer.from(await r.arrayBuffer());
   }
   if (s.type === 'sketchfab' || s.type === 'pexels') {

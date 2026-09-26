@@ -105,6 +105,12 @@ for key, path in (('first', a.first or brief.get('keyframes', {}).get('first')),
         check(f'{key}_frame_match', round(s, 3), s >= spec['min_keyframe_ssim'], s >= spec['min_keyframe_ssim'] * 0.8,
               f"{'첫' if key == 'first' else '마지막'} 프레임이 지정 키프레임과 다름(SSIM {s:.2f}) — 키프레임 이미지를 {'시작' if key == 'first' else '끝'} 프레임 조건으로 넣어 재생성")
 
+if spec.get('loop'):
+    # loop seam: the wrap last → first must look like one more ordinary step (idle=play relies on it)
+    wrap = float(np.abs(norm[0] - norm[-1]).mean()); ratio = wrap / (float(np.median(sdiff)) or 1e-6)
+    check('loop_seam', round(ratio, 2), ratio <= 2.0, ratio <= 4.0,
+          f"마지막→첫 프레임 이음매가 보통 한 걸음의 {ratio:.1f}배 — 끝 프레임이 첫 프레임 직전 모습이 되도록(완전 반복) 요청", '× step')
+
 # Motion-normalising remap: cumulative visual motion -> frame index, sampled at 256 progress steps.
 cum = np.concatenate([[0], np.cumsum(np.maximum(mag, 1e-3))]); cum /= cum[-1]
 remap = [float(np.interp(p, cum, np.arange(N))) for p in np.linspace(0, 1, 256)]
@@ -136,7 +142,7 @@ if a.frames_width:
         cv2.imwrite(os.path.join(fd, f'f{i:04d}.webp'), cv2.resize(f, (a.frames_width, fh), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_WEBP_QUALITY, 82])
 
 overall = 'FAIL' if any(c['verdict'] == 'FAIL' for c in checks) else 'TUNE' if any(c['verdict'] == 'TUNE' for c in checks) else 'PASS'
-report = {'video': os.path.basename(a.video), 'brief': brief.get('id'), 'overall': overall, 'size': [W, H], 'fps': fps, 'frames': N,
+report = {'video': os.path.basename(a.video), 'brief': brief.get('id'), 'overall': overall, 'loopable': bool(spec.get('loop')) and any(c['check'] == 'loop_seam' and c['verdict'] != 'FAIL' for c in checks), 'size': [W, H], 'fps': fps, 'frames': N,
           'checks': checks, 'motion_px_per_frame': {'median': float(np.median(mag)), 'max': float(mag.max())},
           'human_review_required': brief.get('human_review', []),
           'note': 'Automatic checks do not detect AI morphing, garbled text/logos or anatomy errors — review sheet.jpg.'}

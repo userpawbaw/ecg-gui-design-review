@@ -1,0 +1,62 @@
+{
+ "focal_px": 1499.5,
+ "rotation_shift_px": 19.6,
+ "rotation": {
+  "static_vs_true": {
+   "ssim": 0.6369,
+   "ssim_blur2": 0.7493,
+   "mae": 18.39
+  },
+  "overscan_shift_vs_true": {
+   "ssim": 0.8122,
+   "ssim_blur2": 0.9715,
+   "mae": 4.61
+  },
+  "revealed_edge_static": {
+   "ssim": 0.586,
+   "ssim_blur2": 0.7274,
+   "mae": 23.07
+  },
+  "revealed_edge_overscan": {
+   "ssim": 0.6664,
+   "ssim_blur2": 0.8963,
+   "mae": 8.46
+  }
+ },
+ "translate_0.12": {
+  "static_vs_true": {
+   "ssim": 0.6019,
+   "ssim_blur2": 0.71,
+   "mae": 23.74
+  },
+  "best_2d_shift_vs_true": {
+   "ssim": 0.7904,
+   "ssim_blur2": 0.9558,
+   "mae": 5.82
+  },
+  "best_shift_px": -52,
+  "true_depth_warp_vs_true": {
+   "ssim": 0.8066,
+   "ssim_blur2": 0.9451,
+   "mae": 5.87
+  }
+ },
+ "translate_0.30": {
+  "static_vs_true": {
+   "ssim": 0.5588,
+   "ssim_blur2": 0.6684,
+   "mae": 29.2
+  },
+  "best_2d_shift_vs_true": {
+   "ssim": 0.7238,
+   "ssim_blur2": 0.9025,
+   "mae": 9.54
+  },
+  "best_shift_px": -128,
+  "true_depth_warp_vs_true": {
+   "ssim": 0.721,
+   "ssim_blur2": 0.8742,
+   "mae": 10.57
+  }
+ }
+}

@@ -1173,6 +1173,119 @@
       "processing": "none (source only)",
       "used_by": [],
       "review": "2026-09-26 source-type smoke test for Openverse (asset survey). Licence re-checked against the API at every fetch. Candidate cloud-plate reference only; not used."
+    },
+    {
+      "id": "model-kenney-furniture-kit",
+      "title": "Kenney — Furniture Kit (zip)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://kenney.nl/assets/furniture-kit",
+        "pattern": "https://kenney\\.nl/media/pages/assets/furniture-kit/[^\"']+\\.zip",
+        "resolved_url": "https://kenney.nl/media/pages/assets/furniture-kit/440e0608a4-1677580847/kenney_furniture-kit.zip"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/model-kenney-furniture-kit.zip",
+        "sha256": "e67652d0932cee41683f74711c03d3e192a2af9979ef8e6b237711f5482d46b0",
+        "bytes": 5130729
+      },
+      "processing": "none (source only)",
+      "used_by": [],
+      "review": "2026-09-26 download smoke test for a site without an API (D-022 follow-up). Licence CC0 stated on kenney.nl/support. Not used by any page."
+    },
+    {
+      "id": "model-opengameart-bench2",
+      "title": "OpenGameArt — Low Poly Furniture: bench2.blend",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://opengameart.org/content/low-poly-furniture",
+        "pattern": "https://opengameart\\.org/sites/default/files/bench2\\.blend",
+        "resolved_url": "https://opengameart.org/sites/default/files/bench2.blend"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/model-opengameart-bench2.blend",
+        "sha256": "08da737168624719ad4eecb9b6dd1fc527b6a87fc69a15383390d67d0f2aa563",
+        "bytes": 243920
+      },
+      "processing": "none (source only)",
+      "used_by": [],
+      "review": "2026-09-26 download smoke test for a site without an API (D-022 follow-up). Item page licence line CC0 (checked 2026-09-26). Not used by any page."
+    },
+    {
+      "id": "model-threedscans-resting-goat",
+      "title": "Three D Scans — Statue of Resting Goat (OBJ zip)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://threedscans.com/fondazione-torlonia/statue-of-resting-goat/",
+        "pattern": "https://threedscans\\.com/wp-content/uploads/[^\"']+\\.obj\\.zip",
+        "resolved_url": "https://threedscans.com/wp-content/uploads/2022/01/GOAT.obj.zip"
+      },
+      "licence": "public-domain",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/model-threedscans-resting-goat.zip",
+        "sha256": "7569971330981776e75f2d21306786dd925a63a73de9301e7e76efbae02f386e",
+        "bytes": 3647598
+      },
+      "processing": "none (source only)",
+      "used_by": [],
+      "review": "2026-09-26 download smoke test for a site without an API (D-022 follow-up). Site statement: scans free to use without copyright restrictions. Not used by any page."
+    },
+    {
+      "id": "video-mixkit-1704-720",
+      "title": "Mixkit — stock video 1704 (720p)",
+      "kind": "video",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://assets.mixkit.co/videos/1704/1704-720.mp4",
+        "page": "https://mixkit.co/free-stock-video/clouds/"
+      },
+      "licence": "Mixkit-License",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/video-mixkit-1704-720.mp4",
+        "sha256": "6b380250effb12a62d675993d5fe632b7158869cbe86a7a90b682d0455d2c63c",
+        "bytes": 3723741
+      },
+      "processing": "none (source only)",
+      "used_by": [],
+      "review": "2026-09-26 download smoke test (D-022 follow-up). File URLs follow assets.mixkit.co/videos/<id>/<id>-<360|720|1080>.mp4; found via the category page. Mixkit License (free, no attribution). Not used by any page."
+    },
+    {
+      "id": "model-quaternius-bathtub-fbx",
+      "title": "Quaternius — Ultimate House Interior: Bathroom_Bathtub.fbx",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "gdrive",
+        "folder": "1SNK9PwPi8xqqxmpU5xEZeiQjB26C1oX6",
+        "path": [
+          "FBX",
+          "Bathroom_Bathtub.fbx"
+        ],
+        "page": "https://quaternius.com/packs/ultimatehomeinterior.html",
+        "resolved_url": "https://drive.usercontent.google.com/download?id=1MTl-woKPd1BE9vyviBm8UVR4FKzWq0Gt&export=download&confirm=t"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/model-quaternius-bathtub-fbx.fbx",
+        "sha256": "0260784a86e4202f5a942ffedd0b6a534fbd209adfd2874478d245f3afc61ea4",
+        "bytes": 19628
+      },
+      "processing": "none (source only)",
+      "used_by": [],
+      "review": "2026-09-26 download smoke test for a site without an API (D-022 follow-up). License.txt in the Drive folder: CC0 1.0. Not used by any page."
     }
   ],
   "rejected": [

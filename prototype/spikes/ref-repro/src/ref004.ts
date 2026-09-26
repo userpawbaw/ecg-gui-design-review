@@ -312,7 +312,9 @@ function frame(now: number, fixedDt?: number) {
   renderer.setRenderTarget(null); renderer.clear(); renderer.render(compScene, compCam);
   state.ready = true;
 }
-if (manual) { (window as any).__tick = (dt: number, n = 1) => { for (let i = 0; i < n; i++) frame(performance.now(), dt); }; frame(0, 1 / 60); }
+if (manual) { (window as any).__tick = (dt: number, n = 1) => { for (let i = 0; i < n; i++) frame(performance.now(), dt); }; frame(0, 1 / 60);
+  (window as any).__setTheta = (th: number) => { rot.theta = th; vel.theta = 0; target.active = false; };   // loop capture for the video pipeline test (D-023)
+}
 else renderer.setAnimationLoop(now => frame(now));
 (window as any).__setFilter = (f: string) => { state.filter = f; buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === f))); for (const m of marks) m.visTarget = !f || m.st.type === f ? 1 : 0; focusBiggestCluster(STATIONS.filter(s => !f || s.type === f)); };
 (window as any).__hoverAt = (x: number, y: number) => { pointer.set(x / canvas.clientWidth * 2 - 1, -(y / canvas.clientHeight) * 2 + 1); pointerMoved = true; };

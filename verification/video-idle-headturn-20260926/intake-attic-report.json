@@ -1,0 +1,94 @@
+{
+  "video": "attic_c.mp4",
+  "brief": "VB-TEST-002",
+  "overall": "PASS",
+  "loopable": false,
+  "size": [
+    1280,
+    720
+  ],
+  "fps": 24.0,
+  "frames": 48,
+  "checks": [
+    {
+      "check": "resolution",
+      "value": "1280x720",
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "aspect",
+      "value": 1.778,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "fps",
+      "value": 24.0,
+      "unit": "fps",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "duration",
+      "value": 2.0,
+      "unit": "s",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "single_take (no cuts)",
+      "value": [],
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "duplicate_frames",
+      "value": 0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "motion_direction",
+      "value": 1.0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "motion_speed_cv",
+      "value": 0.007,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "luminance_flicker",
+      "value": 0.7,
+      "unit": "/255",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "sharpness_drops",
+      "value": 0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    }
+  ],
+  "motion_px_per_frame": {
+    "median": 8.595855712890625,
+    "max": 8.687246322631836
+  },
+  "human_review_required": [
+    "형태가 녹아내리는 물체가 없는가",
+    "글자·로고가 생기지 않았는가",
+    "빛줄기·먼지가 레퍼런스처럼 보이는가"
+  ],
+  "note": "Automatic checks do not detect AI morphing, garbled text/logos or anatomy errors — review sheet.jpg."
+}

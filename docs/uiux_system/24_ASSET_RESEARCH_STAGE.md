@@ -22,16 +22,20 @@
 | Poly Haven | 모델·재질·HDRI | CC0 | API | O | O `polyhaven` |
 | **ambientCG** | 재질·HDRI(모델은 사실상 없음) | CC0 | API | O | O `ambientcg` |
 | **Openverse** | 사진 | 항목별(CC0·PD·BY·BY-SA·BY-NC·BY-NC-SA로 제한) | API | O | O `openverse`(받을 때마다 라이선스 재확인) |
-| Kenney | 로우폴리 모델·스프라이트 | CC0 | 사이트 | O | 팩 zip 직접 링크 → `url` |
-| Quaternius | 로우폴리 모델 | CC0 | 사이트 | O(팩 이름) | 수동(Google Drive/itch) |
-| Three D Scans | 조각상 스캔 | 저작권 제한 없음(사이트 표기, 항목 확인) | 사이트 | O | 수동 |
-| OpenGameArt | 모델·스프라이트·텍스처 | 항목별 혼재(GPL 전용 불가) | 사이트 | O | 수동 |
-| Mixkit | 영상 | Mixkit License | 사이트 | O | 미리보기 mp4 → `url` |
+| Kenney | 로우폴리 모델·스프라이트 | CC0 | 사이트 | O | O `page` — 에셋 페이지의 팩 zip (furniture-kit 5.1 MB) |
+| Quaternius | 로우폴리 모델 | CC0 | 사이트 | O(팩 이름) | O `gdrive` — 공개 드라이브 폴더 목록 → 파일 받기(Bathroom_Bathtub.fbx) |
+| Three D Scans | 조각상 스캔 | 저작권 제한 없음(사이트 표기, 항목 확인) | 사이트 | O | O `page` — 항목 페이지의 OBJ zip (3.6 MB) |
+| OpenGameArt | 모델·스프라이트·텍스처 | 항목별 혼재(GPL 전용 불가) | 사이트 | O | O `page` — 항목 페이지 파일 링크(bench2.blend) |
+| Mixkit | 영상 | Mixkit License | 사이트 | O | O `url` — `…/<id>-<360·720·1080>.mp4` (1080p 35.7 MB) |
 | NASA | 위성영상·지도 | 공공 | 일부 | 주제별 수동 | `url` |
 | **Sketchfab** | 모델 | 항목별(Standard·Editorial 불가) | 검색 공개, **받기는 토큰** | O | `sketchfab` — `SKETCHFAB_API_TOKEN` |
 | **Pexels** | 사진·영상 | Pexels License | **검색부터 키 필요** | 키 있을 때 | `pexels` — `PEXELS_API_KEY` |
 | Unsplash | 사진 | Unsplash License | 키 필요 | 미포함(요청 없음) | — |
 | 차단 | Poly Pizza, Smithsonian 3D, Behance, Landbook, Lapa Ninja | — | 403 | — | — |
+
+### 2.1 API가 없는 다섯 곳도 받을 수 있다 (2026-09-26 확인)
+
+처음 표의 "수동"은 **받는 코드를 아직 안 만들었다**는 뜻이었지, 막혀 있다는 뜻이 아니었다. 다섯 곳 모두 로그인·브라우저 자동화(Playwright) 없이 일반 HTTP 요청으로 받아진다: 항목 페이지 HTML에서 파일 링크를 찾거나(`page`), 공개 구글 드라이브 폴더 목록을 읽거나(`gdrive`), 규칙적인 파일 주소를 쓴다(`url`). 다섯 항목을 registry에 `test-only`로 등록해 받기 → sha256 고정 → 재검증까지 통과했고, 받은 파일의 형식도 확인했다(FBX 7400, Blender 2.49 .blend, OBJ zip, mp4) `[테스트]`. 한계: 사이트 구조가 바뀌면 링크 패턴이 깨진다 — 해시 고정이 조용한 변경을 잡고, 받기 실패는 오류로 멈춘다.
 
 ## 3. 로그인 요청 규칙
 
@@ -58,4 +62,4 @@
 
 ## 5. 한계
 
-사이트 긁기(Kenney·Quaternius·Three D Scans·OpenGameArt·Mixkit)는 사이트 구조가 바뀌면 깨진다 — 결과가 0이면 `error`/`no-match`를 구별해 본다. Sketchfab·Pexels 받기 경로는 토큰이 없어 실제 다운로드는 미시험(요청 형식은 공개 API 문서 기준).
+사이트 긁기(Kenney·Quaternius·Three D Scans·OpenGameArt·Mixkit)는 검색과 받기 모두 사이트 구조가 바뀌면 깨진다 — 결과가 0이면 `error`/`no-match`를 구별해 본다. Sketchfab·Pexels 받기 경로는 토큰이 없어 실제 다운로드는 미시험(요청 형식은 공개 API 문서 기준).

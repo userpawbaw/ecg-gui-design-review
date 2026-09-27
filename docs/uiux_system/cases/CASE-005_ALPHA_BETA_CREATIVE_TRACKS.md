@@ -163,6 +163,14 @@ Beta는 generated still 뒤에 Visual Breakdown, Component Translation, Interact
 4. 이미지 이후 component/state/motion/data mapping이 없으면 design workflow가 완료되지 않은 것으로 본다.
 5. 두 생성 방식은 반대 스타일이 아니라 같은 문제의 서로 다른 representation으로 비교한다.
 
+## 2026-09-27 추가 — Beta 이미지 생성기를 실측으로 고름 (D-037)
+
+- **문제**: Claude Code에서 Beta를 돌리면 이미지 생성기가 필요하다. `20` §8은 Chat 환경을 가정했다.
+- **AI 대응**: Alpha를 보지 않은 별도 에이전트가 콘셉트 5개와 프롬프트를 쓰고, 연결된 Canva로 1장을 시험했다. 판정 BORDERLINE(썸네일만 받을 수 있음, 잡음 속 박동 없음, 커서처럼 읽히는 점).
+- **사용자 개입**: "먼저 시험 후 내게 보여줘 … gpt를 이용해서도 한번 뽑아볼꺼고. 두 이미지 모두 품질 미달이면 alpha로만 진행." `[대화]` — 사용자가 같은 프롬프트로 ChatGPT를 돌려 비교 자료를 만들었다.
+- **판단 변화**: ChatGPT 결과는 원본 해상도·정확한 문구·잡음 속 박동까지 반영돼 PASS. 생성은 사용자, 프롬프트·분해·번역은 Beta 에이전트로 역할을 나눴다.
+- **시스템**: 생성기 선택을 "같은 프롬프트로 두 도구 1장씩 시험 → 같은 기준 표로 비교 → 미달이면 Alpha만" 순서로 고정(BETA-R1-TOOL-TEST §8). 사용자 생성이 들어가도 프롬프트 작성자는 Alpha를 보지 않은 에이전트여야 독립성이 유지된다.
+
 ## 한계
 
 이번 변경은 workflow 문서화다. Alpha/Beta가 실제로 기존 Dual/Superdesign보다 더 좋은 최종 UI를 만든다는 runtime 비교 결과는 아직 없다.

@@ -273,6 +273,18 @@ function checkReferences(errors) {
   }
 }
 
+function checkRecipeIndex(errors) {
+  const index = fs.readFileSync(path.join(REF_DIR, 'README.md'), 'utf8');
+  const section = index.split(/^## 레시피 색인\s*$/m)[1] || '';
+  const seen = new Map();
+  for (const match of section.matchAll(/^\|\s*(RCP-\d{2,})\s*\|\s*([^|]+)\|/gm)) {
+    const [, id, name] = match;
+    if (seen.has(id)) fail(errors, `references/README.md: 중복 레시피 ID ${id} (${seen.get(id)} / ${name.trim()})`);
+    seen.set(id, name.trim());
+  }
+  if (!seen.size) fail(errors, 'references/README.md: 레시피 색인이 비어 있다');
+}
+
 function checkSkillProvenance(errors) {
   const skillRoot = path.join(ROOT, '.claude', 'skills');
   if (!fs.existsSync(skillRoot)) return;
@@ -299,6 +311,9 @@ function checkEntrypoints(errors) {
     if (!master.includes(target)) fail(errors, `00_UIUX_MASTER.md가 ${target}를 가리키지 않는다`);
     if (!index.includes(target)) fail(errors, `docs/uiux_system/README.md가 ${target}를 가리키지 않는다`);
   }
+  for (const file of [master, index, agents]) {
+    if (!file.includes('26_REFERENCE_TO_ECG_WORKFLOW.md')) fail(errors, 'MASTER/Index/AGENTS 중 하나가 신규 canonical workflow 26을 가리키지 않는다');
+  }
   if (!master.includes('records/') || !index.includes('records/')) {
     fail(errors, 'MASTER/Index 중 하나가 records/ 계층을 설명하지 않는다');
   }
@@ -316,6 +331,7 @@ function main() {
   checkCases(errors, validIds);
   checkSkillProvenance(errors);
   checkReferences(errors);
+  checkRecipeIndex(errors);
   checkEntrypoints(errors);
 
   if (errors.length) {

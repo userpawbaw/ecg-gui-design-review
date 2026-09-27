@@ -66,7 +66,7 @@
     "2026-09-16 concurrency policy revision: docs/23 added at 2f39ff9, WORK_RESUME_POLICY v1.2 at 0d38797, AGENTS updated at aabfd19",
     "Existing ECG 6-hour automation prompt updated to policy v1.2; repository-wide lock removed and resource-scoped conflict checks retained"
   ],
-  "current_request": "Retire the repository-wide Work execution lock while preserving checkpoint/resume tracking and resource-scoped duplicate-job protection.",
+  "current_request": "D-038: formalize the Reference-to-ECG workflow and route new HIGH/MEDIUM signature effects through reproduction, parity, recipe and product QA before user detail review.",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
@@ -102,7 +102,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "R4 target-PC verification remains an independent blocked task. Other documentation, UI/UX design and branch-based code work may proceed after refreshing remote refs and checking only actual file/resource conflicts.",
+  "next_action": "After D-038 documentation checkpoint, run REF-006 EFX-006-01 independent reproduction and full Phase 5 state parity; separately test REF-001 EFX-001-03 match cut. R4 target-PC verification remains independently open.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -214,7 +214,7 @@
       "P6 reference fidelity gate (proposal in REFERENCE_REPRO_AND_QUALITY_GAP §4.1)",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "Round 1 Step 1: Common Creative Packet + Reference Pack freeze (see resume_notes_2026_09_27)",
+    "next_action": "D-038 route: gap audit in handoffs/REF003_PARITY_RETROSPECTIVE_AND_R1_GAP_2026-09-27.md; then REF-006 EFX-006-01 reproduction/parity before ECG synthesis.",
     "lab_corner_spike": {
       "status": "v3 done (scroll camera descent)",
       "date": "2026-09-25",
@@ -226,7 +226,7 @@
       ],
       "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
     },
-    "next": "Round 1 Step 1: Common Creative Packet + Reference Pack freeze (see resume_notes_2026_09_27)",
+    "next": "D-038 route: REF-006 EFX-006-01 reproduction/parity after the recorded R1 gap audit.",
     "references_done": [
       "REF-003",
       "REF-004"
@@ -358,7 +358,7 @@
       "Q4": "release ZIP already on GitHub release archive-v2.2.1-recovery (ecg-signal-studio-v2.2.1.zip, sha256 9070d4aa…e98ed, 340,775,483 B), downloadable from this environment (HTTP 206 range test); fetch + verify at the 600 s replay verification step"
     },
     "resume_notes_2026_09_27": {
-      "next": "R1 Step 1 done as provisional freeze (see round1); after user answers → Step 2 Alpha first pass.",
+      "next": "R1 Step 1 and Alpha first pass frozen. D-038 next: REF-006 EFX-006-01 Phase 2–6, then ECG synthesis/Alpha revision; preserve historical first pass.",
       "step1_inputs": [
         "handoffs/REDESIGN_BASELINE_ANALYSIS_2026-09-25.md §6 packet draft + §7.1 decisions (Canvas 2D constraint replaced by D-027)",
         "D-033 (two rounds), D-034 (Beta A/B = comparison input only; reuse CompareLens/handoff/RAF code), D-035 (UI-02 approved; fonts + Loss view deferred)",
@@ -400,11 +400,19 @@
       ],
       "central_story": "S1",
       "user_questions": [],
-      "next": "Step 3 BETA-R1-001 in a separate agent context (packet + REF records only, never ALPHA-R1-001); test the image generator with one still first; then Step 4 cross-review",
+      "next": "D-038 default effect route: REF-006 EFX-006-01 freeze/forensics/reproduction/full-state parity/recipe, then ECG synthesis and Alpha revision. Preserve D-037 user-authorized independent R1 Beta prompt set; its S01–S07 images await user generation and remain comparison evidence, not effect parity.",
       "input_device": "mouse wheel + click",
       "ref006": "effect record REF-006 (EFX-006-01..05)",
       "alpha": "ALPHA-R1-001 frozen first pass (docs/uiux_system/rounds/R1/ALPHA-R1-001.md)",
-      "finding": "F-025 same-ECG claim only holds for D0 S038"
+      "finding": "F-025 same-ECG claim only holds for D0 S038",
+      "beta": "D-037: ChatGPT still tool test PASS; clean-context Beta S01–S07 prompts are ready in rounds/R1/beta/BETA-R1-PROMPTS.md; user image generation pending. Preserve independent first-pass provenance.",
+      "workflow_migration": {
+        "decision": "D-038",
+        "contract": "docs/uiux_system/26_REFERENCE_TO_ECG_WORKFLOW.md",
+        "retrospective": "docs/uiux_system/handoffs/REF003_PARITY_RETROSPECTIVE_AND_R1_GAP_2026-09-27.md",
+        "status": "documentation and routing implemented; REF-003 retrospective CANDIDATE, fresh REF-006 effect parity not yet executed",
+        "evidence_level": "records/checker only; actual product/browser/target-PC quality NOT VERIFIED"
+      }
     }
   }
 }

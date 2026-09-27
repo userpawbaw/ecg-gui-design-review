@@ -1,7 +1,7 @@
 # Beta Track — Reference-Grounded Image Concept
 
 작성 기준: 2026-09-23  
-상태: **새 significant CREATIVE 작업의 저비용 image-first 시각 탐색 경로**  
+상태: **`26_REFERENCE_TO_ECG_WORKFLOW.md`의 선택적 Phase 8B 구도 확인 도구; 2026-09-23 Alpha/Beta 독립 비교 기록에도 적용**
 상위 기준: `00_UIUX_MASTER.md`, `01_CREATIVE_DIRECTION.md`, `04_VALIDATION_AND_GUARDRAILS.md`, `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`, `17_REFERENCE_SOURCE_REGISTRY.md`
 
 ## 0. Beta의 목적
@@ -328,4 +328,4 @@ Performance risk:
 6. image-only fantasy와 실제 구현 영역을 구분했는가?
 7. canonical waveform/data는 이미지가 아니라 실제 renderer가 담당한다는 점이 명확한가?
 
-완료 후 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`의 비교 단계로 보낸다.
+Phase 8B에서는 이미 구체적인 blueprint에 대한 정지 구도와 구현 gap을 Phase 8로 되돌린다. 사용자가 독립 Alpha/Beta 비교를 명시한 경우에만 `20`의 비교 단계로 보낸다.

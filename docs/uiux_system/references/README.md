@@ -15,7 +15,9 @@
 
 ## 레시피 색인
 
-두 개 이상의 레퍼런스에서 반복되면 여기서 공통 레시피로 승격한다.
+두 개 이상의 레퍼런스에서 반복되면 여기서 공통 레시피로 승격한다. 이 표는 **후보 색인**이며 재현 품질의 PASS를 뜻하지 않는다. `26_REFERENCE_TO_ECG_WORKFLOW.md` Phase 6의 `observed → spiked → parity-checked → target-PC-verified → production-used`와 버전·코드·QA 증거를 별도로 기록한 뒤에만 ‘verified’라고 쓴다. 공통 원리라는 분류와 제작 성숙도는 서로 다른 축이다.
+
+2026-09-27 D-038: 과거 `RCP-01`이 두 뜻으로 중복되었다. 공통 ‘Lenis 단일 시간축’은 `RCP-01`을 유지하고 REF-001의 ‘지연 추종 위치 매핑’은 `RCP-28`로 분리했다. 이전 문서의 `RCP-01`을 볼 때는 효과 이름/REF-ID를 함께 확인한다.
 
 ### 공통 레시피 (2개 이상 레퍼런스)
 
@@ -30,7 +32,7 @@
 
 | ID | 이름 | 사례 |
 |---|---|---|
-| RCP-01 | 지연 추종 위치 매핑 (`scrub: 1` + Lenis) | REF-001 |
+| RCP-28 | 지연 추종 위치 매핑 (`scrub: 1` + Lenis) | REF-001 (이전 중복 ID `RCP-01`) |
 | RCP-02 | 충격-감쇠 회전 (base ≠ 0) | REF-001 |
 | RCP-03 | 형태 연속 match cut | REF-001 |
 | RCP-04 | DOM 레이아웃 + WebGL 그리기 하이브리드 | REF-001 |

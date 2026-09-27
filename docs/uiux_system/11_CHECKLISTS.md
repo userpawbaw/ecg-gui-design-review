@@ -198,11 +198,21 @@
 
 ## §13 사용자에게 연출 결과를 보이기 전 — 충실도 게이트 (D-029, `25` §6)
 
+- [ ] `26` Phase 2에서 primary wow·supporting detail·제외 대상과 실제로 관찰된 입력/상태 범위를 동결했나.
 - [ ] G1 효과 카드의 수치를 코드 상수로 옮기고 REF-ID·EFX-ID 주석을 달았나(없으면 "미확인 — 이유").
 - [ ] G2 모든 재료가 registry에 있고 해시 고정·허용 라이선스·해상도(텍셀 ≥ 1:1)·용량(§5 임시 예산)을 지키나.
 - [ ] G3 효과 구간마다 레퍼런스와 최소 6장(권장 12장) 나란히 대조하고 KEEP/TUNE/GAP 표를 썼나(비교 이미지는 저장소 밖).
 - [ ] G4 룩을 맞추는 작업이면 밝기 분위·채도·난색을 레퍼런스와 수치 비교했나.
 - [ ] G5 모든 상태(각도·필터·스크롤 구간·hover·정지 시간축·reduced-motion)를 캡처했나.
 - [ ] G6 자기 수정은 3회 이내였고, 수정할 때마다 G3·G5를 다시 전부 캡처했나. 남은 GAP만 사용자에게 묻나.
+- [ ] 같은 viewport/입력/진행률에서 onset·중간·전환을 비교하고, 핵심 연속 motion과 stop/resume/reverse를 영상·입력 로그로 확인했나. 상태 조합 제외 이유가 있나.
+- [ ] 결함마다 원본 증거·관측 차이·P0/P1/P2·원인 가설·수정·신뢰도·회귀 위험을 남겼나. 미해결 P0/P1은 `REPRO_PARITY_READY`가 아니라 `BLOCKED_FOR_REVIEW`인가.
 - [ ] `verification/<작업>-<날짜>/fidelity.md`를 남겼나. 헤드리스 결과와 실제 GPU·체감 확인이 필요한 항목을 구별했나.
 
+## §14 ECG 제품 최종 검토 전 — `26` Phase 10–11
+
+- [ ] 실제 앱에서 진입/이탈/복귀/오프라인 load와 Story→Lab의 동일 sample index·시각·축 인계가 확인됐나.
+- [ ] ‘같은 ECG’에 동일 기록 근거가 있는가(F-025). D0 합성/D1 실제 기록, REPLAY 상태, Reference/Difference, ±mV, 지표의 범위가 실제 자료와 맞나.
+- [ ] 원본 효과 parity와 ECG 번안의 의도적 차이를 구분하고, recipe version·핵심 수치가 제품에서도 살아 있는가.
+- [ ] keyboard/touch/resize/reduced motion, loading/fallback, 성능·10분 soak를 가능한 환경에서 확인하고 L3와 목표 Windows PC의 L4를 분리했나.
+- [ ] AI가 남은 차이(P2 포함)와 미검증 조건을 먼저 목록화했나. 제품 P0/P1=0일 때만 `HUMAN_REVIEW_READY`인가. 한도 초과 시 사용자에게 버그 탐색이 아니라 증거가 있는 결정 packet을 주는가.

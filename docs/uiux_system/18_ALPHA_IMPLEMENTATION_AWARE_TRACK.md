@@ -1,7 +1,7 @@
 # Alpha Track — Implementation-Aware Reference Adaptation
 
 작성 기준: 2026-09-23  
-상태: **새 significant CREATIVE 작업의 구현 친화형 설계 경로**  
+상태: **`26_REFERENCE_TO_ECG_WORKFLOW.md` Phase 8 제품 설계 계약; 2026-09-23 Alpha/Beta 독립 비교 기록에도 적용**
 상위 기준: `00_UIUX_MASTER.md`, `01_CREATIVE_DIRECTION.md`, `04_VALIDATION_AND_GUARDRAILS.md`, `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`, `17_REFERENCE_SOURCE_REGISTRY.md`
 
 ## 0. Alpha의 목적
@@ -348,4 +348,4 @@ Component의 exact brand color/text/logo를 복사하지 않는다.
 6. 구현자가 추가 디자인 결정을 크게 하지 않고 prototype을 만들 수 있는가?
 7. 데이터 hard constraint를 건드리지 않는가?
 
-완료 후 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`의 비교 단계로 보낸다.
+신규 효과는 `26` Phase 9 구현으로 인계한다. 사용자가 독립 Alpha/Beta 비교를 명시한 경우에만 `20`의 비교 단계로 보낸다.

@@ -2,6 +2,18 @@
 
 Updated: 2026-09-15 (KST)
 
+## 2026-09-27 — Reference-to-ECG 공식 workflow (D-038)
+
+- [x] `claude/optimistic-goldberg-jnzpni`의 REF-003 12장 사례, `21/25/11`, R1 동결 Alpha 및 F-025를 대조하고 방법론 갈림길을 D-038/CASE-006에 기록.
+- [x] 신규 HIGH/MEDIUM 효과의 12단계 공식 계약 `docs/uiux_system/26_REFERENCE_TO_ECG_WORKFLOW.md`와 Master/AGENTS/Index/Skill routing 연결. 기존 독립 Alpha/Beta는 이력·명시적 비교, Alpha 제품 설계는 Phase 8, Beta still은 선택적 8B.
+- [x] Phase 5 결함/캡처 및 Phase 6 recipe 양식, 상태 게이트, 레시피 ID 중복 검사. REF-003 소급 P1 장부와 R1 첫 효과 gap audit은 과거 기록에 근거한 `CANDIDATE` 판정.
+- [ ] 새 REF-006 EFX-006-01의 Phase 2–6 전체 실전 시험: 동결 wow → 입력 기법 판별 → 독립 spike → 같은 진행률 6–12장·연속/stop/reverse 대조 → P0/P1=0의 recipe/version. REF-001 EFX-001-03 match cut은 별도 효과로 시험.
+- [ ] 검증된 recipe와 F-025 자료 범위를 사용해 R1 ECG 아이디어·Alpha 개정 → 실제 구현·통합·제품 자체 QA → 사용자 최종 미감 검토. Windows/Edge/전시 PC L4는 별도 증거가 필요.
+
+문서/기록 PASS는 효과 parity나 제품 QA의 PASS가 아니다. 과거 R1 packet/`ALPHA-R1-001`은 동결 이력으로 보존한다. 현재 다음 기본 단계는 Beta 이미지 생성이 아니다.
+
+병행 R1 Beta는 이미 사용자가 D-037로 승인해 도구 시험을 통과했고 `rounds/R1/beta/BETA-R1-PROMPTS.md` S01–S07의 사용자 이미지 생성을 기다린다. 이는 중단·취소하지 않고 독립 비교 입력으로 보존한다. 새 효과 parity gate의 PASS와는 별개다.
+
 ## Current Work control
 
 Generation 6 closeout 2026-09-15 18:01 KST: regenerated `ecg-signal-studio-v2.2.1.zip` from current UI plus verified replay. Independent ZIP CRC/content checks pass; 1,960 chunks are present and the embedded verification matches. QA run from the extracted package's own server/config passes 2 non-soak tests with the 10-minute test skipped. The updated package is preserved for user download. Target-PC headed/Hangul/OS-scale/touch and 10-minute soak remain R4; generation 6 is released.

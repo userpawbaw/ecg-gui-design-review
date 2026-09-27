@@ -14,10 +14,10 @@
 - TinyFish — live browser workflow
 - Vercel — preview deployment
 
-### Alpha / Beta 기본 creative tracks (2026-09-23~)
+### Alpha / Beta tracks (2026-09-23~27 기본, 이후 `26`의 후단/명시적 비교)
 - **Alpha**: reference-grounded + implementation-aware. 실제 component/state/motion/implementation blueprint까지.
 - **Beta**: reference-grounded + image-first. Chat image generation으로 scene still을 만들고 component/interaction/motion translation을 반드시 붙인다.
-- 공통 계약: `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`, `19_BETA_IMAGE_CONCEPT_TRACK.md`, `20_ALPHA_BETA_OPERATING_PROTOCOL.md`.
+- 신규 HIGH/MEDIUM 시그니처 효과의 진입 계약: `26_REFERENCE_TO_ECG_WORKFLOW.md`. Alpha는 Phase 8, Beta still은 필요 시 8B. `20`은 과거 결과 또는 명시적 독립 비교용.
 
 ### Superdesign 두 모드 — 기본 자동 경로 중지
 - NATIVE_DIRECTOR / CONCRETIZER의 과거 계약은 14/16번에 보존한다.
@@ -41,11 +41,11 @@
 
 | Task | 먼저 읽을 문서 | Skill/Plugin 후보 |
 |---|---|---|
-| 기존 방향 안의 가벼운 창의 개선 / non-significant polish | 01 Creative, 04 Validation | expo-ui-art-director, Creative Production, Product Design; **새 significant direction이면 아래 16 Dual 행으로 승격** |
-| **새 creative direction / 디자인적 놀라움 / reference 기반 발상** | 01 Creative, **18 Alpha**, **19 Beta**, **20 AB Protocol**, 13 Reference Mining, **17 Source Registry**, 04 Validation | HIGH: Alpha+Beta 권장 → cross-review → validator. MEDIUM: Alpha 우선, Beta 필요성 판단. LOW: creative track 생략 |
+| 기존 방향 안의 가벼운 창의 개선 / non-significant polish | 01 Creative, 04 Validation | expo-ui-art-director, Creative Production, Product Design; 새 HIGH/MEDIUM 시그니처 효과가 필요하면 아래 26 경로로 승격 |
+| **새 creative direction / 디자인적 놀라움 / reference 기반 발상** | 01 Creative, **26 workflow**, 13 Reference Mining, **17 Source Registry**, 21/25 effect production, 04 Validation | HIGH/MEDIUM 신규 효과: 재현·parity·recipe → ECG 번안 → Alpha. Beta still은 후단에서 필요할 때만. LOW/polish는 전체 경로 생략 |
 | **같은 baseline에서 visual direction을 저비용 비교** | 18/19/20, 13/17, 04 Validation | Alpha 설계 + Beta image still 비교. 구현 후보는 이후 Work/Codex에서 actual UI prototype |
-| Attract/Intro | 01 Creative, 03 Motion, 13/17, **18/19/20** | HIGH 신규는 Alpha+Beta 기본; image still은 Chat, actual UI prototype은 Work/Codex |
-| Replay↔Live transition | 03 Motion, 13/17, 18/19/20, 04 Validation | HIGH 신규는 Alpha+Beta; 이후 motion-review/Context7/Playwright |
+| Attract/Intro | 01 Creative, 03 Motion, 13/17, **26 + 21/25** | HIGH 신규 효과의 독립 재현과 품질 확보 후 ECG 장면 설계. Image still은 선택 |
+| Replay↔Live transition | 03 Motion, 13/17, 26, 04 Validation | 새 효과라면 재현·recipe 후 제품 전환의 자료/상태 연속성을 Playwright로 검증 |
 | 데이터 관계/스토리 | 02 Data, 04 Validation | Flourish, Product Design; story 표현이 새롭고 visual intent 공유가 필요하면 reference-mining |
 | 기존 UI polish | docs/21, docs/22, 04 Validation | design-taste, ui-ux-pro-max |
 | 컴포넌트/디자인 시스템 | docs/15, 01/04 | Figma, design-taste |
@@ -58,7 +58,7 @@
 ## 3. Reference Mining 자동 라우팅
 
 ### 자동 실행
-20번으로 target/zone과 Alpha/Beta 필요성을 먼저 판정한다. 아래 reference mining은 두 track의 공통 source layer다.
+26번으로 target/zone과 새 효과 재현 필요성을 먼저 판정한다. 아래 reference mining은 Phase 1의 source layer다.
 
 다음 요청은 `docs/uiux_system/13_REFERENCE_GROUNDED_CREATIVE_MINING.md`와 `reference-mining` skill을 자동 포함한다.
 
@@ -81,8 +81,8 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 2. 작업 분류
 3. 관련 문서 1~3개
 4. 필요한 Skill/Plugin만 선택
-5. significant CREATIVE 작업이면 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`로 HIGH/MEDIUM/LOW를 판정하고 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md`를 공통 source layer로 추가한다.
-6. Alpha는 `18`로 implementation-aware design을, Beta는 `19`로 reference-grounded image still + translation을 만든다. 두 결과는 freeze 뒤 비교한다. Superdesign은 별도 재검증 요청이 있을 때만 14/16번으로 호출한다.
+5. 신규 시그니처 효과면 `26_REFERENCE_TO_ECG_WORKFLOW.md`로 HIGH/MEDIUM/LOW와 재현 증거의 성숙도를 판정하고 필요한 `13/17/21/25`만 읽는다.
+6. 재현·parity·recipe 뒤 Alpha는 `18`로 제품 설계를, Beta는 필요 시 `19`로 구도 still + translation을 만든다. 독립 비교를 명시적으로 요청받은 경우만 `20`을 실행한다. Superdesign은 별도 재검증 요청에서만 14/16번으로 호출한다.
 
 모든 skill/reference/plugin을 한 번에 로드하지 않는다.
 
@@ -114,7 +114,7 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 
 ## 7. 명시 trigger와 자동 activation
 
-`새 디자인 라운드 시작해줘` → zone/task 분류. HIGH 신규 significant CREATIVE → Alpha+Beta 권장, MEDIUM → Alpha 우선/Beta 가치 판단, LOW 또는 polish/frozen 구현 → creative track 생략.
+`새 디자인 라운드 시작해줘` → zone/task 분류. HIGH/MEDIUM 신규 시그니처 효과 → 26번 재현·recipe부터. 검증된 recipe면 기존 증거를 재사용. LOW 또는 polish/frozen 구현 → 전체 경로 생략.
 `Alpha안으로 [scene] 설계해줘` → Alpha. `Beta안으로 [scene] 진행해줘` → Beta. `Alpha/Beta 라운드로 [scene] 진행해줘` → 두 track first pass 후 cross-review. `Alpha/Beta 결과 비교해줘` → 20번 공통 평가. 기존 Dual/Superdesign trigger는 역사/명시적 재검증 요청에서만 사용한다.
 
-실행 entrypoint는 특정 skill loader가 아니라 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`의 workflow contract다. Chat/Work/Codex/Claude Code는 같은 문서를 읽어 동일 trigger 의미를 따른다. 이 자동 선택은 account-wide hook 보장이 아니다.
+신규 효과 실행 entrypoint는 특정 skill loader가 아니라 `26_REFERENCE_TO_ECG_WORKFLOW.md`의 workflow contract다. 20번은 명시적 비교 trigger의 계약이다. Chat/Work/Codex/Claude Code는 같은 문서와 증거 상태를 읽는다. 이 자동 선택은 account-wide hook 보장이 아니다.

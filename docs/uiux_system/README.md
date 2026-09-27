@@ -28,6 +28,7 @@
 - `23_EXTERNAL_COMPONENT_REVIEW.md` — 외부 UI 컴포넌트 후보 목록(접근·라이선스 확인)과 구현 전 C1–C4 검토 단계
 - `24_ASSET_RESEARCH_STAGE.md` — 에셋 조달처 전체 탐색(`explore.mjs`)과 계정 조달처 로그인 요청 규칙
 - `25_EFFECT_PRODUCTION_PIPELINE.md` — **채택된 연출 제작 파이프라인 계약**(P1·P5·P6): 적용 범위(HIGH·MEDIUM), 작업 순서 S1–S7, 스택 기준, vanilla 엔진 + React 마운트 인터페이스, 임시 성능 예산, 충실도 게이트 G1–G6
+- `26_REFERENCE_TO_ECG_WORKFLOW.md` — **신규 HIGH/MEDIUM 시그니처 효과의 공식 경로**(D-038): wow 고정 → 판별·독립 재현·상태별 자체 QA → 검증된 recipe → ECG 번안 → Alpha 제품 설계 → 구현·통합·제품 QA → 사용자 최종 검토. Beta still은 선택적 구도 확인
 
 프로젝트 local skill:
 
@@ -38,18 +39,21 @@
 - `.claude/skills/reference-mining/SKILL.md`
 - `.claude/skills/superdesign-routing/SKILL.md`
 
-`레퍼런스 마이닝 진행해줘`, `Reference mining`, `Attract 레퍼런스 마이닝`은 `13_REFERENCE...`의 전체 절차를 실행하는 짧은 trigger다. Alpha/Beta 모두 `17_REFERENCE_SOURCE_REGISTRY.md`에서 과업에 맞는 2~4 source family를 선택하며 Awwwards/Godly만 기본값으로 고정하지 않는다.
+`레퍼런스 마이닝 진행해줘`, `Reference mining`, `Attract 레퍼런스 마이닝`은 `13_REFERENCE...`의 Phase 1 절차를 실행하는 짧은 trigger다. 필요하면 `17_REFERENCE_SOURCE_REGISTRY.md`에서 과업에 맞는 source family를 고른다.
 
-새 trigger: `Alpha안으로 [scene] 설계해줘`, `Beta안으로 [scene] 진행해줘`, `Alpha/Beta 라운드로 [scene] 진행해줘`, `Alpha/Beta 결과 비교해줘`. 정확한 의미는 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`가 source of truth다.
+신규 효과의 기본 trigger는 `이 레퍼런스의 [구간/효과]를 ECG에 적용해줘`이며 `26`의 대상 범위부터 시작한다. `Alpha안으로 [scene] 설계해줘`, `Beta안으로 [scene] 진행해줘`, `Alpha/Beta 라운드로 [scene] 진행해줘`, `Alpha/Beta 결과 비교해줘`는 명시적 요청으로 유지하며 정확한 의미는 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`를 따른다.
 
 Superdesign 관련 14/15/16번은 DUAL-ATTRACT-001의 이력과 향후 별도 capability 재검증을 위해 보존한다. 2026-09-23 이후 새 creative round의 기본 generator가 아니다.
 
 ## Current next-stage plan
 
+- D-038 이후 신규 효과 제작의 다음 기본 단계는 지정 wow의 효과 카드·재현·parity·recipe 성숙도 gap audit이다(`26` §5). R1 packet/Alpha는 FROZEN이다. D-037의 사용자 승인으로 병행 중인 독립 Beta 시험(도구 PASS, S01–S07 프롬프트 작성, 사용자 이미지 대기)은 보존하며 effect parity·제품 구현 승인과 구분한다.
 - `handoffs/EFFECT_PRODUCTION_PIPELINE_AUDIT_2026-09-25.md` — 레퍼런스 wow 재현 실패 원인 진단(F-010), 에셋 형식/조달처/제작 도구(Unity 판정 포함), three.js+GSAP+Lenis 스택과 `prototype/spikes/scroll-globe` 검증, 제작 파이프라인 계층 채택안(사용자 결정 대기).
 - `handoffs/REDESIGN_BASELINE_ANALYSIS_2026-09-25.md` — UI/UX 재설계 착수 전 기준선: canonical 시스템 branch(main) 판정, v2.2.1 구조·보존 계약·화면 관찰(L3 headless), 이전 Attract 탐색의 입력 가치, 사용자 결정 필요 항목.
 - `rounds/R1/R1_STEP1_PACKET_AND_REFERENCE_PACK.md` — 재설계 1라운드(Attract·Story·전환) Step 1: 공통 창작 패킷, 검증 자료 스토리 S1–S5, Reference Pack(REF-001–006, D-036). Alpha·Beta 1차의 유일한 공통 입력.
 - `rounds/R1/ALPHA-R1-001.md` — 1라운드 Alpha 1차(동결): 발산 8개, 장면 설계·컴포넌트·모션 M-01~M-11·자료 계약·구현 설계. Beta 1차 동결 전에는 Beta 입력에 넣지 않는다.
+- `handoffs/REF003_PARITY_RETROSPECTIVE_AND_R1_GAP_2026-09-27.md` — 12장 사례의 P1 결함 장부 소급 판정과 R1 첫 EFX들의 재현·recipe gap. 새 캡처 PASS는 아님.
+- `templates/EFFECT_PARITY_AND_RECIPE.md` — Phase 2–6의 입력·상태 캡처·결함·recipe/버전 인계 양식.
 
 - `handoffs/DUAL_ATTRACT_CROSS_REVIEW_AND_VNEXT_PLAN_2026-09-20.md` — frozen A/B 결과를 cross-review/validator로 비교하고 v2.2.1을 보존한 채 Attract vNext variant를 구현·검증·선정하는 다음 단계 계획. 새 Source Registry의 실사용 테스트는 다음 creative round로 연기한다.
 
@@ -95,7 +99,7 @@ CASE는 다음 AI의 provenance만을 위한 문서가 아니다. **사용자가
 
 ## 환경별 사용
 
-프로젝트 로컬 Claude skill은 `.claude/skills/` 아래에 둔다. Claude Code에서는 project-local skill로 직접 활용할 수 있고, Chat/Work/Codex가 같은 skill loader를 제공하지 않는 환경에서도 `00_UIUX_MASTER.md` → `05_TOOL_SKILL_ROUTING.md` → 필요 시 `13/17` → 새 significant CREATIVE는 `18/19/20`의 동일한 프로젝트 계약을 읽어 같은 절차를 수행한다.
+프로젝트 로컬 Claude skill은 `.claude/skills/` 아래에 둔다. Claude Code에서는 project-local skill로 직접 활용할 수 있고, Chat/Work/Codex가 같은 skill loader를 제공하지 않는 환경에서도 `00_UIUX_MASTER.md` → `26_REFERENCE_TO_ECG_WORKFLOW.md` → 필요한 `05/13/17/21/25` → 후단의 `18`, 선택적 `19`를 읽어 같은 절차를 수행한다.
 
 즉 short trigger의 의미는 **skill loader 자체가 아니라 GitHub에 고정된 workflow contract**에 있다. 어떤 환경이든 repo 문서를 읽을 수 있으면 `레퍼런스 마이닝 진행`이라는 짧은 요청으로 같은 흐름을 재현한다.
 
@@ -105,7 +109,7 @@ Chat memory는 이 구조의 **인덱스**로만 사용한다. exact 승인 상�
 
 [CASE-004](cases/CASE-004_DUAL_CREATIVE_DIRECTOR_EVOLUTION.md)와 [발췌 부록](cases/CASE-004_TRANSCRIPT_EXCERPTS.md)은 CASE-001 → CASE-002 → CASE-003의 후속 판단을 기록한다. D-010의 설계 채택은 실행 구현 완료가 아니다. 기록 검사 후 별도 사용자 승인을 받아 다음 단계를 시작한다.
 
-## Alpha / Beta creative 실행 진입점 (2026-09-23)
+## Alpha / Beta creative 실행 진입점 (2026-09-23, 이력 및 명시적 비교)
 
 - `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`: Alpha 전체 계약.
 - `19_BETA_IMAGE_CONCEPT_TRACK.md`: Beta image-first 전체 계약.

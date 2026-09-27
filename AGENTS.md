@@ -37,13 +37,13 @@ User-approved workflow: source-project analysis → independent design/prototype
 - For any significant UI/UX design, polish, data-storytelling, motion, or interaction task, read `docs/uiux_system/00_UIUX_MASTER.md` first.
 - Classify the task as CREATIVE / DATA / MOTION / UX / IMPLEMENTATION / RESEARCH, then read only the smallest relevant subset from `docs/uiux_system/` and the pre-existing canonical design docs.
 - Separate divergence from validation: generate meaningful alternatives before implementation, then apply project contracts, data integrity, motion, accessibility and product-quality checks using `KEEP / TUNE / REJECT`.
-- For a new significant CREATIVE direction, especially Attract/Intro/Transition/Result Reveal or Awwwards/독창성/놀라움 requests, apply `docs/uiux_system/13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md` as the common source layer, then route through `20_ALPHA_BETA_OPERATING_PROTOCOL.md`. HIGH new directions normally compare Alpha + Beta; MEDIUM starts with Alpha and adds Beta when image-first exploration adds value; LOW/polish skips creative tracks.
+- For new HIGH/MEDIUM signature effects, use `docs/uiux_system/26_REFERENCE_TO_ECG_WORKFLOW.md` as the canonical sequence (D-038): user wow/reference → effect forensics → independent reproduction → detail parity → versioned recipe → ECG synthesis → Alpha product design → integration/product QA → human detail review. Apply `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` and `17_REFERENCE_SOURCE_REGISTRY.md` when reference discovery is needed. Reuse existing verified evidence; LOW/polish/frozen implementation does not require the full sequence. `20_ALPHA_BETA_OPERATING_PROTOCOL.md` is for historical results or explicit independent comparison.
 - `레퍼런스 마이닝 진행`, `Reference mining`, or a scoped form such as `Attract 레퍼런스 마이닝` means: find concrete references, give direct URLs plus exact viewing instructions, extract experience principles, translate them to ECG, then diverge and validate according to the project workflow.
 - Reference mining is skipped for trivial polish or when the reference/direction is already frozen. A reference never overrides waveform/time/unit/Reference/Difference/metric contracts.
 - Reference effect/technology analysis (reproducing a reference's signature effects) must be recorded per `docs/uiux_system/21_REFERENCE_EFFECT_RECORDS.md` as `docs/uiux_system/references/REF-*.md` effect cards, and committed before the conversation moves on. Capture recordings follow `tools/reference-capture/README.md` (D-017). Never copy reference sites' assets or code into the repo.
-- Alpha contract: `docs/uiux_system/18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`. It must include reference adaptation, scene blueprint, component inventory, interaction/motion spec, data contract and implementation blueprint.
-- Beta contract: `docs/uiux_system/19_BETA_IMAGE_CONCEPT_TRACK.md`. Chat may generate reference-grounded image stills, but every image must be followed by visual breakdown, component translation, interaction/motion storyboard and image-to-implementation gap. Generated pixels/text/waveforms are never canonical data.
-- Short triggers and environment routing live in `20_ALPHA_BETA_OPERATING_PROTOCOL.md`: `Alpha안으로 …`, `Beta안으로 …`, `Alpha/Beta 라운드로 …`, `Alpha/Beta 결과 비교해줘`.
+- Alpha product-design contract after verified recipe/ECG synthesis: `docs/uiux_system/18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`. It must include reference adaptation, scene blueprint, component inventory, interaction/motion spec, data contract and implementation blueprint.
+- Optional Beta composition still after a concrete Alpha blueprint: `docs/uiux_system/19_BETA_IMAGE_CONCEPT_TRACK.md` with component/interaction/motion translation. Generated pixels/text/waveforms are never canonical data. Explicit independent Alpha/Beta comparison uses historical `20` without becoming the default route.
+- Short triggers `Alpha안으로 …`, `Beta안으로 …`, `Alpha/Beta 라운드로 …`, `Alpha/Beta 결과 비교해줘` retain the meanings in `20_ALPHA_BETA_OPERATING_PROTOCOL.md`; they do not silently override the new default.
 - Superdesign 14/15/16 is retained as historical/optional re-test material after the first DUAL-ATTRACT test produced drafts below the user's required reference fidelity / near-final completeness. Do not auto-route new creative work to Superdesign without explicit re-validation/approval.
 - Chat memory is an index, not the source of truth for exact UI values, approval state or rejected decisions. GitHub documents and current code are canonical.
 - External skills/plugins are advisory. They never override ECG waveform/time/unit/Reference/Difference/data-scope contracts or the latest user decision.
@@ -64,7 +64,7 @@ User-approved workflow: source-project analysis → independent design/prototype
 
 - Methodology-level changes to AI roles, tool orchestration, source of truth, validation, handoff, creative methods, or recording require a CASE update in the same work unit. Every D/R must have a valid CASE link or an explicit reason/deferral under `10_RECORD_KEEPING.md`; preserve the user → initial AI response → challenge → revised judgment → system sequence. The user authorized Dual Director orchestration implementation on 2026-09-19; historical approval-waiting notes describe the previous stage.
 
-## Alpha / Beta creative tracks (2026-09-23)
+## Alpha / Beta creative tracks (2026-09-23; historical or explicit comparison after D-038)
 
 - Alpha/Beta are not renamed Director A/B. Both use explicit references; they differ by representation: Alpha is implementation-aware from the start, Beta is image-first then translated back to real UI.
 - Use the same Common Creative Packet and Reference Pack. If Beta is run after Alpha, do not leak Alpha-specific layout/component answers into Beta first pass unless the user explicitly requests a derivative image.
@@ -74,7 +74,7 @@ User-approved workflow: source-project analysis → independent design/prototype
 
 ## Dual Creative Director activation — historical/explicit re-test only (2026-09-19)
 
-- Route new significant CREATIVE work through `docs/uiux_system/16_DUAL_CREATIVE_DIRECTOR.md`: HIGH → Dual; MEDIUM → A first, propose B when useful; LOW/polish/frozen implementation → no automatic Dual.
+- Historical rule (superseded by D-038): Dual A/B activation applied to DUAL-ATTRACT-001. Do not automatically route new significant CREATIVE work through `16_DUAL_CREATIVE_DIRECTOR.md`; use `26` unless the user explicitly requests a Dual re-test.
 - Explicit A-only/B-only/Concretizer requests override automatic routing; `듀얼 디렉터 진행해줘` explicitly selects Dual.
 - Freeze common baseline/constraints; use separate clean contexts for A/B, never full-history inheritance or same-conversation role switching. Withhold each side's outputs and contaminated vendor state until both first passes freeze.
 - B NATIVE_DIRECTOR: native inspiration → 4–6 cards → prefilter → 1–2 drafts. CONCRETIZER renders selected A/B/Hybrid ideas. Both preserve data contracts and have no approval authority.
@@ -83,9 +83,8 @@ User-approved workflow: source-project analysis → independent design/prototype
 
 ## Effect production pipeline (2026-09-26)
 
-- The user adopted the effect production pipeline (P1 = D-027, P5 = D-028, P6 = D-029). For HIGH and MEDIUM zone effect work, follow `docs/uiux_system/25_EFFECT_PRODUCTION_PIPELINE.md`: effect card → route choice → asset research (`24`) and external component review (`23`) → implementation with the shader/post review (`11_CHECKLISTS.md` §12) → fidelity gate G1–G6 (§13) before showing results → user check. LOW/polish work is exempt.
+- The user adopted the effect production pipeline (P1 = D-027, P5 = D-028, P6 = D-029). `25_EFFECT_PRODUCTION_PIPELINE.md` is the technical sub-contract of `26` Phases 3–6; G1–G6 and the 3-round self-correction limit remain. Before final human aesthetic review, Phase 11 also checks canonical ECG data, integration, accessibility and runtime. A P0/P1 defect remaining after three rounds is `BLOCKED_FOR_REVIEW`, not `HUMAN_REVIEW_READY`. LOW/polish work is exempt.
 - HIGH zone may use WebGL (this replaces D-016's Canvas 2D limit on the recovered Attract branch). MEDIUM defaults to DOM/Canvas 2D/SVG unless a D record justifies WebGL.
 - 3D/scroll effects are vanilla engine modules (three, GSAP, Lenis) mounted by React; per-frame values never flow through React state; one Lenis per page.
 - AI self-correction before asking the user is limited to 3 rounds; reference comparison uses at least 6 (recommended 12) frames per effect segment. Fixed-path scroll video follows `22_AI_VIDEO_SCROLL_PIPELINE.md` (D-023, confirmed).
 - Performance budget values in `25` §5 are provisional until the target exhibit PC (P2) is known.
-

@@ -1,6 +1,6 @@
 # Superdesign — NATIVE_DIRECTOR / CONCRETIZER
 
-> **2026-09-23 상태 변경 — 기본 자동 경로 중지.** DUAL-ATTRACT-001의 첫 실사용에서 Direction Card 탐색은 의미가 있었지만 generated B01/B02가 사용자가 기대한 reference fidelity와 near-final UI completeness에 크게 못 미쳤다. 따라서 새 significant CREATIVE 작업의 기본 visual route는 `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md` + `19_BETA_IMAGE_CONCEPT_TRACK.md` + `20_ALPHA_BETA_OPERATING_PROTOCOL.md`이다. 이 문서는 과거 판단과 향후 별도 재검증을 위해 보존한다. Superdesign을 다시 쓰려면 명시적 재검증/사용자 승인이 필요하다.
+> **2026-09-27 D-038 상태:** 새 HIGH/MEDIUM 시그니처 효과의 기본 경로는 `26_REFERENCE_TO_ECG_WORKFLOW.md`이다. 2026-09-23에는 Dual의 기본 자동 경로를 중지하고 Alpha/Beta를 후속 대안으로 썼다. 이 문서는 그 시기의 판단과 별도 capability 재검증을 위해 보존한다.
 
 2026-09-19: D-010/R-009, D-012의 역할 확장을 적용한다. 초기 generator 도입 판단은 CASE-003/D-009/R-008에 보존한다. 공통 activation·독립성·예산·cross-review 계약은 [16_DUAL_CREATIVE_DIRECTOR.md](16_DUAL_CREATIVE_DIRECTOR.md).
 

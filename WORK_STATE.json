@@ -117,7 +117,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-27T04:00:00+09:00",
+  "updated_at": "2026-09-27T12:00:00+09:00",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -214,7 +214,7 @@
       "P6 reference fidelity gate (proposal in REFERENCE_REPRO_AND_QUALITY_GAP §4.1)",
       "Redesign Q1-Q4 (scope, recovered Beta A/B status, deferred items, release ZIP)"
     ],
-    "next_action": "Round 1: Alpha/Beta Step 1 — Common Creative Packet + Reference Pack freeze for Attract/Story/transitions (20, 13, 17), then Alpha and Beta first passes",
+    "next_action": "Round 1 Step 1: Common Creative Packet + Reference Pack freeze (see resume_notes_2026_09_27)",
     "lab_corner_spike": {
       "status": "v3 done (scroll camera descent)",
       "date": "2026-09-25",
@@ -226,7 +226,7 @@
       ],
       "p3_evidence": "AI-only Blender pipeline works end to end; quality gap is UV/bake resolution and art direction"
     },
-    "next": "Round 1: Alpha/Beta Step 1 — Common Creative Packet + Reference Pack freeze for Attract/Story/transitions (20, 13, 17), then Alpha and Beta first passes",
+    "next": "Round 1 Step 1: Common Creative Packet + Reference Pack freeze (see resume_notes_2026_09_27)",
     "references_done": [
       "REF-003",
       "REF-004"
@@ -356,6 +356,35 @@
       "Q2": "recovered Beta A/B = comparison input only; reuse data-safe code assets (D-034)",
       "Q3": "UI-02 only; font replacement and Loss view stay deferred (D-035)",
       "Q4": "release ZIP already on GitHub release archive-v2.2.1-recovery (ecg-signal-studio-v2.2.1.zip, sha256 9070d4aa…e98ed, 340,775,483 B), downloadable from this environment (HTTP 206 range test); fetch + verify at the 600 s replay verification step"
+    },
+    "resume_notes_2026_09_27": {
+      "next": "Round 1 Step 1 (Attract/Story/transitions, HIGH): build the Common Creative Packet + freeze the Reference Pack per docs/uiux_system/20_ALPHA_BETA_OPERATING_PROTOCOL.md Step 1, then Alpha first pass and Beta first pass separately (no cross-leak), freeze both, cross-review, user visual alignment. Implementation later follows 25_EFFECT_PRODUCTION_PIPELINE.md (fidelity gate G1-G6).",
+      "step1_inputs": [
+        "handoffs/REDESIGN_BASELINE_ANALYSIS_2026-09-25.md §6 packet draft + §7.1 decisions (Canvas 2D constraint replaced by D-027)",
+        "D-033 (two rounds), D-034 (Beta A/B = comparison input only; reuse CompareLens/handoff/RAF code), D-035 (UI-02 approved; fonts + Loss view deferred)",
+        "references/REF-001..004 effect cards + recipe index (references/README.md)",
+        "13_REFERENCE_GROUNDED_CREATIVE_MINING.md, 17_REFERENCE_SOURCE_REGISTRY.md",
+        "AI-video route (22) and 3D route (attic look=both, F-024) are both available production routes"
+      ],
+      "user_environment": "Windows + Microsoft Edge, Python 3.14 (cp949 locale → UTF-8 guard test in npm test). User runs spikes locally from a clone and sends screen recordings.",
+      "verified_by_user": [
+        "video-scrub clips generate on Windows after the cp949 fix (user recorded attic_est on 2026-09-27)"
+      ],
+      "pending_user": [
+        "Sketchfab SKETCHFAB_API_TOKEN / Pexels PEXELS_API_KEY env vars (login requests open in assets/auth-requests.json)",
+        "P2 target exhibit PC spec (budget in 25 §5 is provisional)",
+        "first real AI video (22 pipeline) when a section is chosen",
+        "decision before copying coss.com/ui (AGPL) code"
+      ],
+      "not_in_repo_by_design": [
+        "reference-site recordings and reference frame comparison images (copyright; user uploads live only in this container's upload folder)",
+        "scratchpad renders/venv (torch depth venv, HF cache) — re-creatable: render_standins.mjs, estimate_depth.py"
+      ],
+      "defaults_decided": {
+        "attic_pointer": "look=both (F-024)",
+        "video_depth_parallax": "off by default; iterative sampling when on (F-022)",
+        "video_frame_density": "<= 3 px/frame at 1920 (F-021)"
+      }
     }
   }
 }

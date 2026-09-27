@@ -193,8 +193,8 @@ let last = 0, frame = 0;
 // yaw/pitch in degrees (head turn = pure rotation), dx = sideways head translation in scene units, t = effect time
 const capture = params.has('capture');
 const right = new THREE.Vector3(), up = new THREE.Vector3();
-// pointer response: turn = REF-002 (rotation only, ±0.75° / ±0.2° — no parallax), move = head translation (parallax), both
-const lookMode = params.get('look') || 'turn', MOVE = Number(params.get('move') ?? 0.15);
+// pointer response (default both — user decision 2026-09-27, F-024): turn = REF-002 rotation only (±0.75° / ±0.2°, no parallax), move = head translation (parallax), both
+const lookMode = params.get('look') || 'both', MOVE = Number(params.get('move') ?? 0.15);
 const depthMat = new THREE.ShaderMaterial({vertexShader: 'varying float vz; void main(){ vec4 mv = modelViewMatrix * vec4(position,1.); vz = -mv.z; gl_Position = projectionMatrix * mv; }',
   fragmentShader: 'varying float vz; void main(){ float v = clamp(vz / 12., 0., 1.) * 255.; gl_FragColor = vec4(floor(v) / 255., fract(v), 0., 1.); }'});   // linear view depth / 12 (scene units), 16-bit in R (hi) + G (lo)
 function renderFrame(p: number, yaw: number, pitch: number, dx: number, t: number, dt: number, depth: boolean, ox = 0, oy = 0) {

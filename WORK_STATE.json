@@ -387,7 +387,7 @@
       }
     },
     "round1": {
-      "status": "step1 FROZEN 2026-09-27",
+      "status": "autopilot branch: steps 3–10 done, awaiting user review",
       "doc": "docs/uiux_system/rounds/R1/R1_STEP1_PACKET_AND_REFERENCE_PACK.md",
       "decision": "D-036",
       "reference_pack": [
@@ -400,7 +400,7 @@
       ],
       "central_story": "S1",
       "user_questions": [],
-      "next": "Step 3 BETA-R1-001 in a separate agent context (packet + REF records only, never ALPHA-R1-001); test the image generator with one still first; then Step 4 cross-review",
+      "next": "user reviews the autopilot result; fix per AP feedback on this branch, or restart from claude/optimistic-goldberg-jnzpni 1570dd4 at Step 4",
       "input_device": "mouse wheel + click",
       "ref006": "effect record REF-006 (EFX-006-01..05)",
       "alpha": "ALPHA-R1-001 frozen first pass (docs/uiux_system/rounds/R1/ALPHA-R1-001.md)",
@@ -409,7 +409,13 @@
       "restart_point": {
         "note": "User away for hours (2026-09-27). Autopilot continues on branch claude/r1-autopilot-recommended with every user decision taken as the recommended option. If that result is unrecoverable, the user restarts HERE and reviews each decision point from Step 3 (Beta breakdown) onward.",
         "autopilot_branch": "claude/r1-autopilot-recommended"
-      }
+      },
+      "beta": "BETA-R1-001 frozen",
+      "cross_review": "AB-R1-001 (AI proxy alignment)",
+      "hybrid": "HYB-R1-001 (D-038, auto-adopted)",
+      "implementation": "prototype/v2/src/story/",
+      "report": "docs/uiux_system/handoffs/R1_AUTOPILOT_REPORT_2026-09-27.md",
+      "auto_decisions": "docs/uiux_system/rounds/R1/AUTOPILOT_DECISIONS.md"
     }
   }
 }

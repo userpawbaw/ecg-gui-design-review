@@ -14,6 +14,7 @@ test('D1 win counts and EXP-A bars equal stored values',{skip:!bank&&'run script
  assert.equal(s.winCounts.total,49);assert.deepEqual(s.winCounts.counts,{M06L6:18,M09:8,M04:8,M08:7,M06:4,M_FE:3,M01:1});
  assert.equal(s.experiment.scaled[0].id,'M08');assert.equal(s.experiment.psd.at(-1)!.id,'M01');
  assert.equal(Math.round(s.experiment.m00.scaled*100)/100,2.56);assert.ok(Math.abs(s.experiment.m00.strict)<1e-9);
+ assert.equal(s.grid.cells.length,49);assert.deepEqual(s.grid.snrs,[-5,0,5,10,15,20,25]);assert.equal(s.grid.conds.length,7);assert.equal(s.attractSceneId,'d0-pli-0');
  assert.deepEqual(s.support.map(b=>[b.record,b.winner.id]),[['219','M04'],['123','M06L6'],['202','M_FE']]);
 });
 test('ranking ties break by id and oracle is separated',()=>{

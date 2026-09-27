@@ -1,0 +1,21 @@
+{
+ "counts": [
+  10,
+  10,
+  10
+ ],
+ "lab": {
+  "story": false,
+  "canvas": "동일 시간·진폭의 입력 및 M06L6 출력과 회색 Reference",
+  "mode": "inspect",
+  "heading": "S038 · 근육 잡음 · 합성 · 20 dB · 250 Hz · REPLAY"
+ },
+ "afterBurst": 1,
+ "afterBack": 0,
+ "errors": [
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ]
+}

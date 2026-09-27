@@ -413,7 +413,7 @@ bake = scene.render.bake; bake.margin = 8; bake.use_clear = True
 scene.cycles.samples = args.samples
 ONLY = set(args.groups.split(','))
 GS = {k: int(v) for k, v in (x.split('=') for x in args.group_samples.split(',') if x)}
-old = json.load(open(os.path.join(OUT, 'manifest.json'))) if os.path.exists(os.path.join(OUT, 'manifest.json')) else {}
+old = json.load(open(os.path.join(OUT, 'manifest.json'), encoding='utf-8')) if os.path.exists(os.path.join(OUT, 'manifest.json')) else {}
 for g, info in groups.items():
     o = info['obj']; sz = args.size; name = f'light_{g}.png'
     scene.cycles.samples = GS.get(g, args.samples)
@@ -462,5 +462,5 @@ b2t = lambda v: [v.x, v.z, -v.y]   # Blender z-up → glTF y-up
 manifest['sun'] = {'to_dir': b2t(SUN_TO), 'color': list(sun_color) if (sun_color := (1.0, 0.88, 0.72)) else None, 'energy': 8.0, 'angle_deg': 1.2}
 manifest['skylight'] = {'center': b2t(sky_cut_center), 'size_m': [1.7, 1.4], 'slope_deg': 24}
 manifest['camera_path'] = {'pos_top': b2t(CAM_TOP), 'pos_bottom': b2t(CAM_BOT), 'look_top': b2t(LOOK_TOP), 'look_bottom': b2t(LOOK_BOT), 'fov_v_deg': 30}
-json.dump(manifest, open(os.path.join(OUT, 'manifest.json'), 'w'), indent=1)
+json.dump(manifest, open(os.path.join(OUT, 'manifest.json'), 'w', encoding='utf-8'), indent=1)
 print('done', OUT, 'books', book_count)

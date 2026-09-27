@@ -3,7 +3,7 @@ import argparse, concurrent.futures, hashlib, json, pathlib, urllib.request
 SHA='5eb27946087faca3c6e70b3925e2ba132b2ee680'
 REPO='userpawbaw/ECG_denoising_method_comparision'
 p=argparse.ArgumentParser();p.add_argument('--tree',required=True);p.add_argument('--out',required=True);a=p.parse_args()
-tree=json.loads(pathlib.Path(a.tree).read_text())
+tree=json.loads(pathlib.Path(a.tree).read_text(encoding='utf-8'))
 assert tree['sha']=='8292544f1813e753536a427daf4a6dfc44984552' and not tree.get('truncated')
 root=pathlib.Path(a.out)
 def needed(path):
@@ -17,5 +17,5 @@ def fetch(e):
  tmp=path.with_suffix(path.suffix+'.part');tmp.write_bytes(b);tmp.replace(path);return e['path']
 entries=[e for e in tree['tree'] if e['type']=='blob' and needed(e['path'])]
 with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:done=list(pool.map(fetch,entries))
-(root/'source-receipt.json').write_text(json.dumps({'sourceCommit':SHA,'files':entries},indent=2))
+(root/'source-receipt.json').write_text(json.dumps({'sourceCommit':SHA,'files':entries},indent=2), encoding='utf-8')
 print(json.dumps({'verifiedFiles':len(done),'sourceCommit':SHA,'output':str(root)}))

@@ -128,7 +128,7 @@ place('steel_frame_shelves_01', (0.3, 1.7, 0), 90, scale=1.9 / 21.41)  # asset s
 place('potted_plant_01', (0.45, 0.5, 0), 0)
 
 # ---------- monitor with a decorative ECG trace from canonical data ----------
-arch = json.load(open(os.path.join(ROOT, 'prototype/v2/public/archive.json')))
+arch = json.load(open(os.path.join(ROOT, 'prototype/v2/public/archive.json'), encoding='utf-8'))
 sc = next(s for s in arch['scenes'] if s['axis'] == 'd1' and s['cond'] == 'mixed' and s['snr'] == 10)
 import base64
 raw = np.frombuffer(base64.b64decode(sc['traces']['M08']), dtype='<i2').astype(np.float32) * sc['scale']
@@ -342,5 +342,5 @@ bpy.ops.export_scene.gltf(filepath=os.path.join(OUT, 'lab_corner.glb'), export_f
 manifest['sun'] = {'energy': sun.data.energy, 'angle_deg': 2.5, 'color': list(sun.data.color)}
 manifest['world'] = {'color': [0.62, 0.72, 0.86], 'strength': 0.35}
 manifest['camera'] = {'type': 'ORTHO', 'ortho_scale': cam.data.ortho_scale, 'dir': list(cam_dir), 'target': list(target)}
-json.dump(manifest, open(os.path.join(OUT, 'manifest.json'), 'w'), indent=2)
+json.dump(manifest, open(os.path.join(OUT, 'manifest.json'), 'w', encoding='utf-8'), indent=2)
 print('done', OUT)

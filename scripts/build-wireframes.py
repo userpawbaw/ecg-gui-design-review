@@ -59,7 +59,7 @@ class Board:
         for i,t in enumerate(lines or ['Wavelet U-Net','Quick explanation','Purpose in comparison','Reference 35 / 55 / 75%','Pin current method','Details / limitations','Local / Session / Experiment']):
             self.text(1528,220+i*60,t,20,MUTED)
     def save(self):
-        self.svg.append('</svg>');(OUT/f'{self.id}.svg').write_text('\n'.join(self.svg))
+        self.svg.append('</svg>');(OUT/f'{self.id}.svg').write_text('\n'.join(self.svg), encoding='utf-8')
         self.im.save(OUT/f'{self.id}.png')
         plots=[r for r in self.regions if 'plotHeight'in r]
         records.append(dict(id=self.id,title=self.title,width=self.w,height=self.h,regions=self.regions,plotAreaFraction=round(sum(r['plotWidth']*r['plotHeight'] for r in plots)/(self.w*self.h),4)))
@@ -128,7 +128,7 @@ for i,t in enumerate(['Local: fixed range 02:14-02:19','Session: this record / f
 b.timeline();b.box('scope',32,924,1856,56,'Scope and data coverage remain visible. No invented score. Unavailable evidence shows a reason.')
 b.controls();b.save()
 
-(OUT/'geometry.json').write_text(json.dumps(records,indent=2)+'\n')
+(OUT/'geometry.json').write_text(json.dumps(records,indent=2)+'\n', encoding='utf-8')
 notes={
 'W1':('기본 발표 화면','2행 내부 높이 각각 280px. 기본은 하단 방법 rail; 파형 폭을 우선 확보합니다. Session 수치는 근거를 펼칠 때 한 개만 노출합니다.'),
 'W2':('정밀 비교·Reference','고정 구간을 유지하고 오른쪽 설명 패널을 엽니다. 회색 Reference는 모든 행에서 같은 세기·축을 씁니다.'),
@@ -148,5 +148,5 @@ parts.append('</nav>')
 for r in records:
     id=r['id'];title,desc=notes[id]
     parts.append(f'<section id="{id}"><h2>{id} · {title}</h2><p>{desc}</p><p class="badge">{r["width"]} × {r["height"]} 기준 · 실제 plot 영역 {r["plotAreaFraction"]*100:.1f}% · <a href="{id}.svg">벡터 원본</a></p><img src="{id}.png" width="{r["width"]}" height="{r["height"]}" loading="lazy" alt="{escape(title)} 공간 배치. {escape(desc)}"></section>')
-parts.append('</main></html>');(OUT/'index.html').write_text('\n'.join(parts))
+parts.append('</main></html>');(OUT/'index.html').write_text('\n'.join(parts), encoding='utf-8')
 print(json.dumps({'boards':len(records),'svg':len(list(OUT.glob('*.svg'))),'png':len(list(OUT.glob('*.png'))),'bounds':'PASS'},indent=2))

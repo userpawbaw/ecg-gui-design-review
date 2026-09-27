@@ -14,7 +14,7 @@ ap.add_argument('--depth-dir'); ap.add_argument('--depth-source', default='')   
 a = ap.parse_args()
 out = os.path.join(here, '..', 'public', 'clips', a.name)
 subprocess.run([sys.executable, os.path.join(root, 'tools/video-qa/check_video.py'), a.video, '--brief', a.brief, '--out', out, '--frames-width', str(a.width)], check=True)
-rep = json.load(open(os.path.join(out, 'report.json'))); remap = json.load(open(os.path.join(out, 'remap.json')))
+rep = json.load(open(os.path.join(out, 'report.json'), encoding='utf-8')); remap = json.load(open(os.path.join(out, 'remap.json'), encoding='utf-8'))
 if rep['overall'] == 'FAIL' and not a.allow_fail: sys.exit(f"QA FAIL — see {out}/feedback.md (use --allow-fail only for tests)")
 f0 = cv2.imread(os.path.join(out, 'frames', 'f0000.webp')); h, w = f0.shape[:2]
 depth = None; depth_pattern = None; variants = {}
@@ -41,5 +41,5 @@ if a.synthetic_depth:
 json.dump({'name': a.name, 'frames': remap['frames'], 'fps': remap['fps'], 'size': [w, h], 'pattern': 'frames/f{i}.webp', 'pad': 4,
            'remap': remap['progress_to_frame'], 'depth': depth, 'depth_is_synthetic': bool(depth), 'qa': rep['overall'],
            'depth_pattern': depth_pattern, 'depth_source': a.depth_source, 'variants': variants or None, 'loopable': rep.get('loopable', False),
-           'brief': rep['brief']}, open(os.path.join(out, 'manifest.json'), 'w'))
+           'brief': rep['brief']}, open(os.path.join(out, 'manifest.json'), 'w', encoding='utf-8'))
 print('imported', a.name, remap['frames'], 'frames', f'{w}x{h}', 'QA', rep['overall'])

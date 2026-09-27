@@ -49,5 +49,5 @@ flicker = float(np.median(np.abs(np.diff(seq, axis=0)))) if len(seq) > 1 else 0.
 rep = {'model': name, 'smooth': a.smooth, 'frames': len(files), 'seconds_per_frame_cpu': round((time.time() - t0) / max(len(files), 1), 2),
        'temporal_change_median': round(flicker, 4), 'vs_true': rows,
        'summary': {k: round(float(np.mean([r[k] for r in rows])), 4) for k in ('disp_corr', 'median_rel_depth_err', 'edge_recall_2px')} if rows else None}
-json.dump(rep, open(os.path.join(a.out, 'depth_report.json'), 'w'), indent=2)
+json.dump(rep, open(os.path.join(a.out, 'depth_report.json'), 'w', encoding='utf-8'), indent=2)
 print(json.dumps({k: v for k, v in rep.items() if k != 'vs_true'}, indent=1))

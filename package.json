@@ -4,13 +4,18 @@
   "private": true,
   "description": "Offline ECG GUI prototype and reproducible review checks",
   "scripts": {
-    "test": "node tests/core.test.cjs && node tests/final-data.test.cjs && node tests/dom.test.cjs && node tests/uiux-records.test.cjs",
+    "test": "node tests/core.test.cjs && node tests/final-data.test.cjs && node tests/dom.test.cjs && node tests/uiux-records.test.cjs && node tests/encoding.test.cjs",
     "records:check": "node scripts/check-uiux-records.cjs",
     "preview": "node scripts/preview.cjs",
     "build": "node scripts/build-single-file.cjs",
     "test:portable": "node scripts/build-single-file.cjs && node tests/portable.test.cjs",
-    "audit": "node scripts/audit-deliverables.cjs"
+    "audit": "node scripts/audit-deliverables.cjs",
+    "encoding:check": "node tests/encoding.test.cjs"
   },
-  "engines": {"node": ">=24"},
-  "devDependencies": {"jsdom": "30.0.1"}
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "jsdom": "30.0.1"
+  }
 }

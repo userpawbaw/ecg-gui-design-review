@@ -71,3 +71,26 @@ bpy·OpenCV·torch가 같은 시스템 파이썬을 공유하는데 버전 고�
 ### 재발 방지와 자동화 상태
 - spike를 "사용자가 확인할 수 있다"고 보고하기 전에: README, 준비 명령, 누락 안내, 커밋된 원본만으로 재생성되는지(깨끗한 상태) 확인.
 - 자동 검사 없음 — 체크리스트 §9(커밋 전)에 항목 추가.
+
+## O-004. 한국어 Windows에서 파이썬 도구가 UTF-8 JSON을 cp949로 읽다가 멈췄다 — 반복되던 오류
+
+| | |
+|---|---|
+| 시점 | 2026-09-27, 사용자 로컬 `npm run clips` 실행 `[대화]` |
+| 잃은 것 | 사용자 확인 시도 1회. 사용자 말: "cp 949 에러는 항상 생기는 오류인데, 매번 강제로 utf-8로 읽도록 수정해야 하니 번거롭네" |
+| 재발 방지 | `tests/encoding.test.cjs`(npm test 포함, `npm run encoding:check`) + 스크립트 실행 시 `PYTHONUTF8=1` |
+
+### 증상
+`check_video.py` 23번 줄 `json.load(open(a.brief))`에서 `UnicodeDecodeError: 'cp949' codec can't decode byte 0xe2` — 브리프 JSON의 UTF-8 문자(×, — 등) `[대화]`.
+
+### 원인
+파이썬은 `open()`에 encoding이 없으면 OS 로캘 인코딩을 쓴다. 한국어 Windows는 cp949, AI가 시험하는 Linux 컨테이너는 UTF-8이라 AI 쪽 시험에서는 한 번도 드러나지 않았다 `[추론]`. 저장소 파이썬 18개 파일에 인코딩 없는 텍스트 파일 접근이 30곳 있었다 `[코드]`.
+
+### 조치
+30곳 모두 `encoding='utf-8'` 추가(바이너리 `rb`·`Image.open`·`urlopen` 제외). 모든 파일 `py_compile` 통과. 정적 검사 테스트를 만들어 수정 전 `check_video.py`로 되돌리면 23·117·149·150번 줄 4곳을 잡는 것을 확인했다 `[테스트]`. Windows 실기 재실행은 사용자 확인 대기.
+
+### 재발 방지와 자동화 상태
+- **자동화됨**: `npm test`가 모든 추적 파이썬 파일의 `open`/`read_text`/`write_text`에 인코딩이 있는지 검사(검사기 자체 시험 7개 포함).
+- Node에서 파이썬을 부를 때는 `PYTHONUTF8=1`을 넘긴다(두 번째 방어).
+- 체크리스트 §9에 "Windows(cp949) 사용자" 항목.
+

@@ -8,11 +8,11 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 const here = path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
 const root = path.resolve(here, '..'), repo = path.resolve(root, '../../..');
-const py = ['python3', 'python', 'py'].find(c => spawnSync(c, ['-c', 'import cv2, numpy'], {stdio: 'ignore'}).status === 0);
+const py = ['python3', 'python', 'py'].find(c => spawnSync(c, ['-c', 'import cv2, numpy'], {stdio: 'ignore', env: {...process.env, PYTHONUTF8: '1'}}).status === 0);
 if (!py) { console.error('Python with OpenCV not found. Install: pip install opencv-python-headless numpy'); process.exit(1); }
 const run = (args, label) => {
   console.log(`\n== ${label}`);
-  const r = spawnSync(py, args, {cwd: root, stdio: 'inherit'});
+  const r = spawnSync(py, args, {cwd: root, stdio: 'inherit', env: {...process.env, PYTHONUTF8: '1'}});   // second guard for cp949 Windows (O-004)
   if (r.status !== 0) { console.error(`failed: ${label}`); process.exit(r.status || 1); }
 };
 const brief = n => path.join(repo, 'tools/video-qa/briefs', n);

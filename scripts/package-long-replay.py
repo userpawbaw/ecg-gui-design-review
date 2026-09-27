@@ -19,7 +19,7 @@ for axis in ['d0','d1']:
    if not file.exists():
     assert a.allow_partial,f'Missing {sid}'
     continue
-   j=json.loads(file.read_text());meta=j['metadata'];assert j['id']==sid and meta['sourceCommit']==sha and meta['durationSeconds']==600
+   j=json.loads(file.read_text(encoding='utf-8'));meta=j['metadata'];assert j['id']==sid and meta['sourceCommit']==sha and meta['durationSeconds']==600
    assert len(j['traces'])==13 and j['scale']>0
    if raw_hash:assert raw_hash==meta['rawSha256'],'base ECG changed across conditions'
    raw_hash=meta['rawSha256'];ids=list(j['traces']);binary={k:base64.b64decode(v,validate=True)for k,v in j['traces'].items()};assert all(len(v)==300000 for v in binary.values())
@@ -42,7 +42,7 @@ for axis in ['d0','d1']:
    scenes.append({**{k:j[k]for k in ['id','axis','cond','snr','record','scale']},'traces':{},'channels':ids,'chunks':chunks,'metadata':meta,'sessionMetrics':summary})
    files.append(dict(scene=sid,sha256=hashlib.sha256(file.read_bytes()).hexdigest()))
 assert a.allow_partial or len(scenes)==98
-archive=json.loads((root/'prototype/v2/public/archive.json').read_text())
+archive=json.loads((root/'prototype/v2/public/archive.json').read_text(encoding='utf-8'))
 manifest=dict(schema=3,fs=250,n=150000,long=True,chunkSamples=7500,scenes=scenes,provenance={'sourceCommit':sha,'mode':'GENERATED REPLAY','reference':'FE(x_raw)','noise':'synthetic presets, not NSTDB recordings','retrained':False,'continuousSeconds':600,'quantization':'shared int16 scale; metrics verified against float source'},evidence=archive['evidence'])
 write(target/'manifest.json',json.dumps(manifest,ensure_ascii=False,separators=(',',':'),allow_nan=False).encode())
 report=dict(sceneCount=len(scenes),durationSeconds=600,samples=150000,traceArrays=len(scenes)*13,verifiedMethodMetrics=metrics_count,chunks=len(scenes)*20,chunkReassembly='byte-identical',metricTolerances={'snrDb':.05,'cc':.001,'rmseMv':.001,'alpha':.01},maxMixedUnitMetricDifference=max_error,sourceCommit=sha,files=files,complete=len(scenes)==98)

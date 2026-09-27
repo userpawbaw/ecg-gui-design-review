@@ -47,4 +47,4 @@ with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=4)as z:
   if license.is_file() and license.name.lower().startswith(('license','licence')):z.write(license,'licenses/dependencies/'+str(license.relative_to(root/'prototype/v2/node_modules')))
 with zipfile.ZipFile(out)as z:assert z.testzip() is None;assert len([p for p in z.namelist()if p.endswith('.bin')])==1960
 receipt={'file':out.name,'bytes':out.stat().st_size,'sha256':hashlib.sha256(out.read_bytes()).hexdigest(),'zipCRC':'PASS','chunks':1960,'browser':'HEADLESS NON-SOAK PASS; TARGET-PC HEADED AND 10-MINUTE SOAK NOT VERIFIED'}
-(root/'verification/v2-package.json').write_text(json.dumps(receipt,indent=2));print(json.dumps(receipt,indent=2))
+(root/'verification/v2-package.json').write_text(json.dumps(receipt,indent=2), encoding='utf-8');print(json.dumps(receipt,indent=2))

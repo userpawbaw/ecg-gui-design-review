@@ -62,4 +62,4 @@ tiles = [('true yaw +0.75', rotR), ('overscan shift (emulated)', emu_rot), ('|di
          ('depth warp (true depth)', depth_warp(rot0, z, 0.30))]
 th = [cv2.putText(cv2.resize(t, (480, 270)), n, (8, 22), cv2.FONT_HERSHEY_SIMPLEX, .6, (255, 255, 255), 2) for n, t in tiles]
 cv2.imwrite(os.path.join(out, 'head_turn_compare.jpg'), np.vstack([np.hstack(th[:3]), np.hstack(th[3:])]), [cv2.IMWRITE_JPEG_QUALITY, 85])
-json.dump(res, open(os.path.join(out, 'head_turn.json'), 'w'), indent=1); print(json.dumps(res, indent=1))
+json.dump(res, open(os.path.join(out, 'head_turn.json'), 'w', encoding='utf-8'), indent=1); print(json.dumps(res, indent=1))

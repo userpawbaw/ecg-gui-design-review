@@ -53,7 +53,7 @@ if 'map' in ONLY:
              'end': {'name': e[0], 'lat': e[1], 'lon': e[2], 'px': to_px(e[1], e[2])},
              'distance_km': round(haversine(s[1:], e[1:]), 1),
              'note': 'Distance = great-circle (haversine, R 6371 km). Demo content, not an itinerary.'}
-    json.dump(route, open(os.path.join(O3, 'route.json'), 'w'), indent=1)
+    json.dump(route, open(os.path.join(O3, 'route.json'), 'w', encoding='utf-8'), indent=1)
     print('map', MAP_W, MAP_H, route['distance_km'], 'km', route['start']['px'], route['end']['px'])
 
 # ---------- REF-004 globe: Blue Marble 5400 restyled (teal ocean, sage land, white ice) + relief normal map ----------

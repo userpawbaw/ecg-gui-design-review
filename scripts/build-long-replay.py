@@ -40,7 +40,7 @@ for cond in expected:
  for snr in snrs:
   sid=f'{axis}-{cond}-{snr}';path=out/(sid+'.json')
   if path.exists():
-   saved=json.loads(path.read_text());assert saved['metadata']['sourceCommit']==SHA and len(saved['traces'])==13
+   saved=json.loads(path.read_text(encoding='utf-8'));assert saved['metadata']['sourceCommit']==SHA and len(saved['traces'])==13
    entries.append({k:saved[k] for k in ['id','axis','cond','snr','record','scale']});continue
   begin=time.time();y,_,_=mix_at_snr(raw,noise,float(snr));traces={'clean':reference[guard:-guard],'input':y[guard:-guard]};metrics={};runtime={}
   for mid,model in models.items():
@@ -50,7 +50,7 @@ for cond in expected:
   scale=max(float(np.max(np.abs(v))) for v in traces.values())/32760
   encoded={k:base64.b64encode(np.round(v/scale).astype('<i2').tobytes()).decode('ascii') for k,v in traces.items()}
   assert all(len(base64.b64decode(s))==n*2 for s in encoded.values())
-  meta={'sourceCommit':SHA,'record':record,'split':'test','lead':'MLII' if axis=='d1' else 'synthetic','sourceStartSeconds':5,'sourceStartSample':1800 if axis=='d1' else guard,'sourceFs':360 if axis=='d1' else fs,'processedStartSample':guard,'durationSeconds':600,'guardSecondsEachSide':5,'noiseKind':'synthetic','noiseSeedParts':seed,'noiseSeed':derive_seed(*seed),'noiseWeights':weights,'snrNormalization':'whole 610s raw input before FE, guards excluded for displayed metrics','reference':'FE(x_raw)','checkpoints':checkpoint,'methodConfig':cfg,'swtTuning':json.loads((root/f'results/{axis}/tune_swt/best.json').read_text()),'methodSeconds':runtime,'torch':torch.__version__,'numpy':np.__version__,'python':platform.python_version(),'rawSha256':hashlib.sha256(raw.astype('<f8').tobytes()).hexdigest(),'inputSha256':hashlib.sha256(y.astype('<f8').tobytes()).hexdigest(),'annotationsShown':False}
+  meta={'sourceCommit':SHA,'record':record,'split':'test','lead':'MLII' if axis=='d1' else 'synthetic','sourceStartSeconds':5,'sourceStartSample':1800 if axis=='d1' else guard,'sourceFs':360 if axis=='d1' else fs,'processedStartSample':guard,'durationSeconds':600,'guardSecondsEachSide':5,'noiseKind':'synthetic','noiseSeedParts':seed,'noiseSeed':derive_seed(*seed),'noiseWeights':weights,'snrNormalization':'whole 610s raw input before FE, guards excluded for displayed metrics','reference':'FE(x_raw)','checkpoints':checkpoint,'methodConfig':cfg,'swtTuning':json.loads((root/f'results/{axis}/tune_swt/best.json').read_text(encoding='utf-8')),'methodSeconds':runtime,'torch':torch.__version__,'numpy':np.__version__,'python':platform.python_version(),'rawSha256':hashlib.sha256(raw.astype('<f8').tobytes()).hexdigest(),'inputSha256':hashlib.sha256(y.astype('<f8').tobytes()).hexdigest(),'annotationsShown':False}
   payload={'id':sid,'axis':axis,'cond':cond,'snr':snr,'record':record,'scale':scale,'traces':encoded,'metadata':meta,'storedMetrics':metrics}
   atomic(path,payload);entries.append({k:payload[k] for k in ['id','axis','cond','snr','record','scale']});count+=1
   print(json.dumps({'scene':sid,'seconds':round(time.time()-begin,2),'completed':len(entries),'elapsed':round(time.time()-start,1)}),flush=True)

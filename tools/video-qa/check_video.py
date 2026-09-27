@@ -20,7 +20,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument('video'); ap.add_argument('--brief', required=True); ap.add_argument('--out', required=True)
 ap.add_argument('--frames-width', type=int, default=0); ap.add_argument('--first'); ap.add_argument('--last')
 a = ap.parse_args()
-brief = json.load(open(a.brief)); spec = brief['acceptance']
+brief = json.load(open(a.brief, encoding='utf-8')); spec = brief['acceptance']
 os.makedirs(a.out, exist_ok=True)
 
 cap = cv2.VideoCapture(a.video)
@@ -114,7 +114,7 @@ if spec.get('loop'):
 # Motion-normalising remap: cumulative visual motion -> frame index, sampled at 256 progress steps.
 cum = np.concatenate([[0], np.cumsum(np.maximum(mag, 1e-3))]); cum /= cum[-1]
 remap = [float(np.interp(p, cum, np.arange(N))) for p in np.linspace(0, 1, 256)]
-json.dump({'frames': N, 'fps': fps, 'progress_to_frame': remap}, open(os.path.join(a.out, 'remap.json'), 'w'))
+json.dump({'frames': N, 'fps': fps, 'progress_to_frame': remap}, open(os.path.join(a.out, 'remap.json'), 'w', encoding='utf-8'))
 
 # 12-frame sheet
 idx = np.linspace(0, N - 1, 12).round().astype(int)
@@ -146,8 +146,8 @@ report = {'video': os.path.basename(a.video), 'brief': brief.get('id'), 'overall
           'checks': checks, 'motion_px_per_frame': {'median': float(np.median(mag)), 'max': float(mag.max())},
           'human_review_required': brief.get('human_review', []),
           'note': 'Automatic checks do not detect AI morphing, garbled text/logos or anatomy errors — review sheet.jpg.'}
-json.dump(report, open(os.path.join(a.out, 'report.json'), 'w'), indent=2, ensure_ascii=False)
-with open(os.path.join(a.out, 'feedback.md'), 'w') as fb:
+json.dump(report, open(os.path.join(a.out, 'report.json'), 'w', encoding='utf-8'), indent=2, ensure_ascii=False)
+with open(os.path.join(a.out, 'feedback.md'), 'w', encoding='utf-8') as fb:
     fb.write(f"# 영상 피드백 — {report['video']} ({overall})\n\n")
     for c in checks:
         if c['feedback']: fb.write(f"- [{c['verdict']}] {c['feedback']}\n")

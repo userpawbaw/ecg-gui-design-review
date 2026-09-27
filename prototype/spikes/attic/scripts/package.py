@@ -12,9 +12,9 @@ ff = imageio_ffmpeg.get_ffmpeg_exe()
 for png in sorted(glob.glob(os.path.join(out, 'light_*.png'))):
     subprocess.run([ff, '-hide_banner', '-loglevel', 'error', '-y', '-i', png, '-c:v', 'libwebp', '-quality', '92', png[:-4] + '.webp'], check=True); os.remove(png)
 for png in sorted(glob.glob(os.path.join(out, 'print_*.png'))): os.remove(png)       # prints are embedded in the glb
-mp = os.path.join(out, 'manifest.json'); m = json.load(open(mp))
+mp = os.path.join(out, 'manifest.json'); m = json.load(open(mp, encoding='utf-8'))
 for g in m['groups'].values():
     if 'file' in g: g['file'] = g['file'].replace('.png', '.webp')
 m['web_encoding'] = 'lightmaps libwebp q92 of sqrt-encoded PNG; glb gltf-transform optimize (meshopt, WebP ≤1024, TEXCOORD_1 + COLOR_0 kept, no simplify)'
-json.dump(m, open(mp, 'w'), indent=1)
+json.dump(m, open(mp, 'w', encoding='utf-8'), indent=1)
 print('packaged', round(sum(os.path.getsize(f) for f in glob.glob(os.path.join(out, '*'))) / 1e6, 2), 'MB')

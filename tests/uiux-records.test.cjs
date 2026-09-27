@@ -59,6 +59,8 @@ fixture('effect card empty field', edit => edit(ref, s => s.replace(/\*\*수용 
 fixture('effect card bad input model', edit => edit(ref, s => s.replace(/\*\*입력 모델\*\*[^\n]*/, '**입력 모델**: 알 수 없음')), 1, '입력 모델');
 fixture('effect card bad status', edit => edit(ref, s => s.replace('**재현 상태**: `none`', '**재현 상태**: 진행 중')), 1, '재현 상태');
 fixture('effect card not on scene map', edit => edit(ref, s => s.replace('| EFX-001-07 |', '| — |')), 1, '장면·전환 지도');
+fixture('duplicate recipe ID in index', edit => edit('docs/uiux_system/references/README.md', s =>
+  s.replace('| RCP-28 | 지연 추종 위치 매핑', '| RCP-01 | 지연 추종 위치 매핑')), 1, '중복 레시피 ID RCP-01');
 for (const [prefix, file] of Object.entries({F: 'F_FINDINGS.md', D: 'D_DECISIONS.md', O: 'O_INCIDENTS.md', R: 'R_AI_COLLABORATION.md'})) {
   fixture('duplicate record ID ' + prefix, edit => edit('docs/uiux_system/records/' + file, s => {
     const block = s.match(new RegExp('^## ' + prefix + '-\\d+\\.[\\s\\S]*?(?=^## ' + prefix + '-|$(?![\\s\\S]))', 'm'));

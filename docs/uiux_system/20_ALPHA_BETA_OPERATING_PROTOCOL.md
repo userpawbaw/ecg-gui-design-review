@@ -1,8 +1,10 @@
 # Alpha / Beta Creative Operating Protocol
 
 작성 기준: 2026-09-23  
-상태: **새 creative round의 기본 비교 프로토콜**  
+상태: **2026-09-23~27 Alpha/Beta 라운드 이력 및 명시적 독립 비교 프로토콜**. D-038 이후 신규 시그니처 효과의 기본 순서는 `26_REFERENCE_TO_ECG_WORKFLOW.md`. 기존 R1 packet과 FROZEN Alpha first pass의 provenance는 유지한다.
 관련: `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`, `19_BETA_IMAGE_CONCEPT_TRACK.md`
+
+이 문서의 Step 1–10은 이미 승인되어 진행 중인 R1 Beta(D-037)의 독립 비교를 끝내거나, 사용자가 새로 **명시적 Alpha/Beta 독립 비교**를 요청한 경우에만 통째로 실행한다. 일반 신규 HIGH/MEDIUM 효과는 `26`에서 재현·parity·recipe를 통과한 뒤 ECG 번안 및 Alpha 제품 설계를 하고, Beta still은 구도 확인에 도움이 될 때만 Phase 8B로 사용한다. 이때 Beta는 Alpha의 확정 blueprint를 입력으로 쓰는 **파생 이미지**이므로 이 문서의 독립 first pass라고 주장하지 않는다.
 
 ## 0. Alpha/Beta는 Director A/B와 다르다
 
@@ -409,7 +411,7 @@ project-local skill을 이용할 수 있으면 같은 GitHub 문서 계약을 �
 - NATIVE_DIRECTOR 자동 실행 중지
 - CONCRETIZER 자동 실행 중지
 - 기존 14/15/16 문서는 역사/재검증용으로 보존
-- 새 creative round는 Alpha/Beta가 기본
+- 역사적 2026-09-23~27 creative round는 Alpha/Beta가 기본이었다. D-038 이후 신규 효과 기본 경로는 26번이다.
 - Superdesign 재도입은 별도 capability re-test와 사용자 승인 필요
 
 과거 채택을 삭제하거나 당시 판단이 없었던 것처럼 수정하지 않는다.

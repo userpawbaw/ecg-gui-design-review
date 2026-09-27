@@ -1,8 +1,8 @@
 # Reference Source Registry v1
 
 작성 기준: 2026-09-20  
-상태: **명시적 reference 탐색의 공통 source registry — Alpha/Beta 공용**  
-상위 계약: `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`, `18_ALPHA_IMPLEMENTATION_AWARE_TRACK.md`, `19_BETA_IMAGE_CONCEPT_TRACK.md`, `20_ALPHA_BETA_OPERATING_PROTOCOL.md`
+상태: **명시적 reference 탐색의 공통 source registry — `26` Phase 1 및 명시적 Alpha/Beta 비교 공용**
+상위 계약: `26_REFERENCE_TO_ECG_WORKFLOW.md`, `13_REFERENCE_GROUNDED_CREATIVE_MINING.md`; 역사/명시적 비교 `18–20`
 
 ## 1. 목적
 

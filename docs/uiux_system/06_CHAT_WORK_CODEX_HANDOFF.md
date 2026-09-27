@@ -129,7 +129,7 @@ Chat은 A 수행 + clean B packet을 만들고 shell 가능한 새 context로 �
 
 ## 7A. Alpha / Beta packet
 
-새 creative round의 기본 handoff는 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`를 따른다.
+2026-09-27 이후 신규 시그니처 효과의 기본 handoff는 `26_REFERENCE_TO_ECG_WORKFLOW.md`의 EFX → parity 증거 → recipe/version → ECG concept → Alpha blueprint → 구현/제품 QA packet 순서다. 아래 Alpha/Beta packet은 과거 라운드 또는 사용자 명시적 독립 비교에 적용한다.
 
 ### Common packet
 - Round ID

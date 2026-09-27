@@ -3,14 +3,16 @@
 작성 기준: 2026-09-18  
 상태: **Creative reference 탐색과 visual-intent 공유를 위한 운영 규칙**
 
-## Alpha/Beta에서의 적용 (2026-09-23)
+## 현재 적용 — `26` Phase 1 (2026-09-27)
 
-새 significant CREATIVE round에서는 이 문서가 **Alpha/Beta 공통 source layer**다.
+신규 HIGH/MEDIUM 시그니처 효과에는 이 문서의 reference discovery/viewing instruction을 `26_REFERENCE_TO_ECG_WORKFLOW.md` Phase 1에 사용한다. 사용자가 이미 특정 wow를 지목했으면 후보 재탐색보다 구간 동결과 기술 판별로 간다. 이 문서의 아래 ‘ECG TRANSLATION → DIVERGENCE → visual draft’ 직행 파이프라인은 과거 standalone/Alpha/Beta 탐색을 해석하는 자료이며, 신규 효과의 기본 실행 순서가 아니다.
+
+## Alpha/Beta에서의 적용 — 역사/명시적 독립 비교 (2026-09-23~27)
 
 - Alpha: Reference Card를 실제 scene/layout/component/motion/implementation으로 번역한다.
 - Beta: 동일 Reference Card에서 image-specific palette/composition/signature features를 추출해 scene still을 만들고 다시 UI로 번역한다.
 - source selection은 `17_REFERENCE_SOURCE_REGISTRY.md`.
-- 공통 운영은 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`.
+- 명시적 독립 비교의 공통 운영은 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`.
 
 기존 Dual Director 적용 규칙은 DUAL-ATTRACT-001 이력/명시적 재검증에서만 사용한다.
 
@@ -106,7 +108,7 @@ Reference mining은 `DIVERGE`를 대신하지 않는다. **reference를 groundin
 
 ## 6. Step 2 — Reference Source 역할
 
-**`17_REFERENCE_SOURCE_REGISTRY.md`를 Alpha/Beta 공통 source-of-truth registry로 사용한다.**
+**`17_REFERENCE_SOURCE_REGISTRY.md`를 레퍼런스 후보의 source-of-truth registry로 사용한다.** 명시적 Alpha/Beta 비교 때는 두 track이 같은 frozen pack을 공유한다.
 
 한 플랫폼이나 한 미감에만 의존하지 않는다. Awwwards/Godly는 중요한 creative source지만 Director A 자체를 Awwwards-style director로 정의하지 않는다.
 
@@ -236,26 +238,11 @@ Evidence level now (usually L0)
 
 Reference mining 자체가 mockup 전 단계의 visual alignment다.
 
-```text
-5~10 ideas
-  ↓
-reference를 직접 보고 의도 이해
-  ↓
-Alpha implementation-aware design
-  + Beta image-first scenes (필요 시)
-  ↓
-두 first pass freeze
-  ↓
-user alignment / cross-review
-  ↓
-validator
-  ↓
-selected real implementation
-```
+2026-09-27 D-038: 기존 독립 Alpha/Beta round는 명시적 비교 이력으로 유지한다. 신규 HIGH/MEDIUM 효과는 이 문서의 레퍼런스 관찰·wow 선택 후 `26` Phase 2–6에서 기술 판별·재현·품질 검증·recipe를 확보하고, Phase 7–12에서 ECG 번안·제품 설계·구현·검증을 진행한다.
 
 모든 아이디어를 Figma/React/Superdesign 시안으로 만들지 않는다. reference만으로 충분히 reject 가능한 후보는 여기서 줄인다.
 
-Superdesign은 현재 기본 시안 경로가 아니다. first DUAL-ATTRACT test 이후 별도 re-test 승인이 있을 때만 `14/16` 계약으로 사용한다. 기본 visual comparison은 `18/19/20`의 Alpha/Beta를 따른다.
+Superdesign은 현재 기본 시안 경로가 아니다. 신규 시그니처 효과의 기본 순서는 `26`을 따른다. 독립 Alpha/Beta 비교가 명시된 때에는 `18/19/20`을 적용한다.
 
 ## 13. Validator pass
 

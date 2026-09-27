@@ -345,7 +345,7 @@ onTouchMove: spinVelocity += Δy × 6 × 0.004
 
 | ID | 이름 | 핵심 | 사례 |
 |---|---|---|---|
-| RCP-01 | 지연 추종 위치 매핑 | ScrollTrigger `scrub: 1` + Lenis(duration 1.6). 되돌리면 역재생 | EFX-001-02, EFX-001-03, EFX-001-05 |
+| RCP-28 | 지연 추종 위치 매핑 (이전 중복 ID RCP-01) | ScrollTrigger `scrub: 1` + Lenis(duration 1.6). 되돌리면 역재생 | EFX-001-02, EFX-001-03, EFX-001-05 |
 | RCP-02 | 충격-감쇠 회전 | `v += impulse; v *= k^(60dt); angle += (base + v)·dt`, base ≠ 0 | EFX-001-04 |
 | RCP-03 | 형태 연속 match cut | 앞 오브젝트의 잔상과 같은 형태(선·점)로 다음 오브젝트를 시작 | EFX-001-03 |
 | RCP-04 | DOM 레이아웃 + WebGL 그리기 하이브리드 | 매 프레임 DOM rect → WebGL 평면 | EFX-001-06 |

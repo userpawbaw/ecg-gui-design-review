@@ -106,11 +106,7 @@ Superdesign draft는 **후보를 더 잘 보기 위한 시안**이지 승인된 
 
 다만 reference를 썼다는 이유만으로 외형 복제를 승인하지 않는다. ECG waveform, 연구 story, replay/live/data semantics가 원본의 hero object를 대신해야 한다.
 
-새 significant CREATIVE는 기본적으로:
-- Alpha: implementation-aware reference adaptation
-- Beta: reference-grounded image concept
-
-두 경로를 `18/19/20`에 따라 사용할 수 있다.
+새 HIGH/MEDIUM 시그니처 효과는 `26_REFERENCE_TO_ECG_WORKFLOW.md`의 레퍼런스 효과 판별·독립 재현·자체 품질 검사·recipe 확보 후 ECG 번안과 Alpha 제품 설계로 진행한다. Beta 정지 시안은 구체 장면의 구도가 필요할 때 선택한다. 사용자 명시 독립 Alpha/Beta 비교는 `20`의 별도 실험으로 수행한다.
 
 Superdesign 생성물은 현재 기본 경로가 아니다. 과거 B draft는 이력/실험 증거로 보존한다.
 

@@ -76,10 +76,10 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 기본 절차:
 
 1. **BASELINE** — 현재 화면/코드/버전/승인 상태 확인
-2. **ROUTE** — 2026-09-23 이후의 significant CREATIVE는 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`로 먼저 분기한다. HIGH의 새 Attract/Intro/major transition은 Alpha+Beta를 기본 후보로, MEDIUM은 Alpha 우선/Beta 필요성 판단, LOW/polish/frozen 구현은 creative track을 자동 생략한다. 기존 `16_DUAL_CREATIVE_DIRECTOR.md`는 DUAL-ATTRACT-001 이력·재검증용 계약으로 보존한다. 이후 `05_TOOL_SKILL_ROUTING.md`로 필요한 문서·Skill·Plugin 선택
-3. **REFERENCE GROUNDING WHEN USEFUL** — 중요한 새 CREATIVE 방향, Attract/Transition/Result Reveal, Awwwards/독창성/놀라움 요구, 또는 text-only 아이디어의 느낌을 공유하기 어려운 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md`를 실행한다. Alpha/Beta가 같은 frozen Reference Pack을 공유한다. 단순 polish에는 자동 삽입하지 않는다.
+2. **ROUTE** — 신규 HIGH/MEDIUM 시그니처 효과는 `26_REFERENCE_TO_ECG_WORKFLOW.md`의 1–12단계로 라우팅한다(D-038). 효과 카드·독립 재현·parity·recipe를 확보한 뒤 ECG 번안과 Alpha 제품 설계를 한다. 검증된 recipe 재사용은 기존 증거를 인계하고, LOW/polish/frozen 구현은 이 전체 경로를 생략한다. `20_ALPHA_BETA_OPERATING_PROTOCOL.md`는 과거 라운드 해석과 사용자가 명시한 독립 비교 실험에 쓴다. `16_DUAL_CREATIVE_DIRECTOR.md`는 DUAL-ATTRACT-001 이력·재검증용이다. 이후 `05_TOOL_SKILL_ROUTING.md`로 필요한 문서·Skill·Plugin 선택
+3. **REFERENCE GROUNDING WHEN USEFUL** — 중요한 새 CREATIVE 방향, Attract/Transition/Result Reveal, Awwwards/독창성/놀라움 요구, 또는 text-only 아이디어의 느낌을 공유하기 어려운 경우 `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` + `17_REFERENCE_SOURCE_REGISTRY.md`를 실행한다. 사용자가 이미 지목한 효과는 재탐색하지 않고 정확한 구간을 먼저 고정한다. 단순 polish에는 자동 삽입하지 않는다.
 4. **DIVERGE** — 디자인 판단 작업이면 3개 이상 대안을 발산. 창의 작업은 검증 전에 과도하게 보수화하지 않는다. reference mining을 썼다면 원본 외형이 아니라 추출한 experience principle을 기반으로 발산한다.
-5. **VISUALIZATION WHEN USEFUL** — Alpha는 component/state/motion까지 포함한 near-implementation 설계를 만든다. Beta는 `19_BETA_IMAGE_CONCEPT_TRACK.md`에 따라 reference-grounded image still을 생성하고 반드시 component/interaction/motion translation을 붙인다. Superdesign Native/Concretizer는 DUAL-ATTRACT-001의 첫 실사용에서 near-final/reference fidelity가 사용자 기대에 미달해 기본 자동 경로에서 제외되었으며, 14/16번은 역사·별도 재검증용으로 유지한다.
+5. **VISUALIZATION WHEN USEFUL** — 재현된 효과와 ECG 번안이 정해진 뒤 Alpha가 component/state/motion까지 포함한 제품 설계를 만든다. 장면 구도를 정지 이미지로 확인할 가치가 있을 때만 `19_BETA_IMAGE_CONCEPT_TRACK.md`를 제한된 8B 도구로 쓰고 component/interaction/motion translation을 붙인다. 기존 독립 Beta 비교는 명시적 재시험으로만 사용한다. Superdesign 14/16번은 역사·별도 재검증용으로 유지한다.
 6. **PRE-DECISION RECORD** — 결과의 성격을 바꾸는 갈림길이면 구현 전에 D를 작성하고, 기각 후보까지 남긴다.
 7. **CONVERGE** — 프로젝트 UX·데이터 무결성·motion·접근성 규칙으로 `KEEP / TUNE / REJECT` 판정
 8. **CHANGE CONTRACT** — 변경 대상, 변경 금지, 유지 조건, acceptance criteria 명시
@@ -90,11 +90,11 @@ F/D/O/R은 **왜** 현재 설계가 되었는지 설명하는 이력이다. 최�
 
 상세 기록 규약: `10_RECORD_KEEPING.md`. 작업 직전에는 `11_CHECKLISTS.md`에서 해당 트리거 절만 본다.
 
-Alpha/Beta round는 동일 Common Creative Packet과 Reference Pack을 사용하되 first pass 동안 서로의 구체 설계 결과를 보지 않는 것을 기본으로 한다. 실행 순서는 Alpha→Beta여도 Beta prompt에는 Alpha-specific layout/component 답을 넣지 않고, 둘 다 freeze된 뒤 cross-review한다. 자세한 계약은 18/19/20번 문서다.
+과거 Alpha/Beta round의 독립 비교를 다시 요청받으면 동일 Common Creative Packet과 Reference Pack을 쓰고 first pass 간 구체 설계 결과를 분리한다. 일반 신규 효과의 기본 경로는 `26`이다. R1의 이미 동결된 packet/Alpha는 보존하고 `26`의 재현·recipe 증거를 평가한 뒤 후속 실행을 정한다.
 
 ### 4.1 새 설계를 시작할 때 reference mining을 언제 부르는가
 
-다음에는 Alpha/Beta 공통 source layer로 자동 포함한다.
+다음에는 신규 효과 후보를 고르는 Phase 1의 source layer로 포함한다.
 
 - 사용자가 `레퍼런스 마이닝`, `Awwwards`, `실제 우수작 참고`, `이런 느낌의 사례`를 명시
 - Attract/Intro/Transition/Result Reveal의 새로운 visual direction을 처음 설계
@@ -110,7 +110,7 @@ Alpha/Beta round는 동일 Common Creative Packet과 Reference Pack을 사용하
 
 레퍼런스의 **연출·기술을 분석**할 때(특정 효과를 재현하려는 목적)는 `21_REFERENCE_EFFECT_RECORDS.md`의 효과 카드 형식으로 `references/REF-*.md`에 기록하고, 촬영은 `tools/reference-capture/README.md`(D-017)를 따른다.
 
-HIGH·MEDIUM 구역의 연출 구현은 **`25_EFFECT_PRODUCTION_PIPELINE.md`(채택 계약, D-027–D-029)** 순서를 따른다: 효과 카드 → 경로 선택 → 에셋 조사(`24`)·컴포넌트 검토(`23`) → 구현(셰이더·후처리 검토, 체크리스트 §12) → 충실도 게이트 G1–G6 → 사용자 확인. 고정 경로 스크롤 연출을 AI 영상으로 만들 때는 `22_AI_VIDEO_SCROLL_PIPELINE.md`를 따른다.
+HIGH·MEDIUM 구역의 시그니처 연출은 **`26_REFERENCE_TO_ECG_WORKFLOW.md`**가 전체 순서를 정한다. 기술 제작 하위 계약은 `25_EFFECT_PRODUCTION_PIPELINE.md`(D-027–D-029)이며, 효과 카드 → 경로·재료 → 독립 구현 → G1–G6 충실도 게이트를 담당한다. 고정 경로 스크롤 연출을 AI 영상으로 만들 때는 `22_AI_VIDEO_SCROLL_PIPELINE.md`를 따른다.
 
 목표는 reference를 늘리는 것이 아니라 **사용자가 AI 제안이 어떤 실제 장면에서 어떤 느낌을 차용하려는지 직접 확인**하게 하는 것이다.
 

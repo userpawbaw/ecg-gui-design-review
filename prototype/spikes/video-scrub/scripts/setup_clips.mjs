@@ -27,11 +27,13 @@ const jobs = {
     run([path.join(repo, 'tools/video-qa/make_test_clip.py'), hero, tmp, '--only-ease'], 'eased — make uneven-speed test clip');
     run(['scripts/import_clip.py', tmp, 'eased', '--brief', brief('TEST-stand-in-pan.json'), '--synthetic-depth', '--allow-fail'], 'eased — import (QA FAIL on purpose: remap test)');
   },
-  attic: () => run(['scripts/import_clip.py', s('attic_c.mp4'), 'attic', '--brief', brief('TEST-attic-descent.json'), '--variant-l', s('attic_l.mp4'), '--variant-r', s('attic_r.mp4'),
-    '--variant-offset', 'dx ±0.12', '--depth-dir', s('depth_true'), '--depth-source', 'true (render)'], 'attic — descent + head-offset variants + true depth'),
-  attic_est: () => run(['scripts/import_clip.py', s('attic_c.mp4'), 'attic_est', '--brief', brief('TEST-attic-descent.json'), '--depth-dir', s('depth_est'),
+  attic: () => run(['scripts/import_clip.py', s('attic_c.mp4'), 'attic', '--brief', brief('TEST-attic-descent.json'),
+    '--depth-video', s('depth_true.mp4'), '--depth-source', 'true (render)'], 'attic — 240-frame descent + true depth'),
+  attic_est: () => run(['scripts/import_clip.py', s('attic_c.mp4'), 'attic_est', '--brief', brief('TEST-attic-descent.json'), '--depth-video', s('depth_est.mp4'),
     '--depth-source', 'estimated (Depth Anything V2 S)'], 'attic_est — same descent + estimated depth'),
-  globe: () => run(['scripts/import_clip.py', s('globe.mp4'), 'globe', '--brief', brief('TEST-globe-loop.json')], 'globe — one turn, loopable (idle=play test)'),
+  attic_grid: () => run(['scripts/import_clip.py', s('attic48_c.mp4'), 'attic_grid', '--brief', brief('TEST-attic-48-grid.json'), '--variant-l', s('attic48_l.mp4'),
+    '--variant-r', s('attic48_r.mp4'), '--variant-offset', 'dx ±0.12', '--allow-fail'], 'attic_grid — old 48-frame clip + l/r variants (QA FAIL on purpose: too few frames; grid demo only)'),
+  globe: () => run(['scripts/import_clip.py', s('globe.mp4'), 'globe', '--brief', brief('TEST-globe-loop.json'), '--allow-fail'], 'globe — one turn, loopable (idle=play test; QA FAIL on purpose: 144 frames per turn = 31 px/frame)'),
 };
 for (const [k, f] of Object.entries(jobs)) if (!only || only === k) f();
 console.log('\nclips ready → npm run dev, then open the URLs in README.md');

@@ -1,0 +1,38 @@
+{
+ "static": {
+  "all": 23.73,
+  "edge_band": 26.81
+ },
+ "true_single": {
+  "all": 5.8,
+  "edge_band": 6.93
+ },
+ "true_iter": {
+  "all": 4.11,
+  "edge_band": 4.43
+ },
+ "est_raw_single": {
+  "all": 6.11,
+  "edge_band": 7.02
+ },
+ "est_raw_iter": {
+  "all": 4.66,
+  "edge_band": 5.03
+ },
+ "est_640_single": {
+  "all": 6.12,
+  "edge_band": 7.01
+ },
+ "est_640_iter": {
+  "all": 4.63,
+  "edge_band": 4.99
+ },
+ "est_refined_single": {
+  "all": 6.08,
+  "edge_band": 7.02
+ },
+ "est_refined_iter": {
+  "all": 4.69,
+  "edge_band": 5.15
+ }
+}

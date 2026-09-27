@@ -10,7 +10,7 @@ here = os.path.dirname(os.path.abspath(__file__)); root = os.path.abspath(os.pat
 ap = argparse.ArgumentParser(); ap.add_argument('video'); ap.add_argument('name'); ap.add_argument('--brief', required=True)
 ap.add_argument('--width', type=int, default=1280); ap.add_argument('--synthetic-depth', action='store_true'); ap.add_argument('--allow-fail', action='store_true')
 ap.add_argument('--variant-l'); ap.add_argument('--variant-r'); ap.add_argument('--variant-offset', default='')   # head-offset variant videos (same length)
-ap.add_argument('--depth-dir'); ap.add_argument('--depth-source', default='')                                   # per-frame depth PNGs (near = bright)
+ap.add_argument('--depth-dir'); ap.add_argument('--depth-video'); ap.add_argument('--depth-source', default='')   # depth as PNG folder or as a grayscale video (same frame count)                                   # per-frame depth PNGs (near = bright)
 a = ap.parse_args()
 out = os.path.join(here, '..', 'public', 'clips', a.name)
 subprocess.run([sys.executable, os.path.join(root, 'tools/video-qa/check_video.py'), a.video, '--brief', a.brief, '--out', out, '--frames-width', str(a.width)], check=True)
@@ -29,6 +29,14 @@ def export_frames(video, sub):
 for k, v in (('l', a.variant_l), ('r', a.variant_r)):
     if v: variants[k] = {'pattern': export_frames(v, f'frames_{k}')}
 if variants: variants['offset'] = a.variant_offset
+if a.depth_video:
+    dd = os.path.join(out, 'depth'); os.makedirs(dd, exist_ok=True); cap = cv2.VideoCapture(a.depth_video); i = 0
+    while True:
+        ok, fr = cap.read()
+        if not ok: break
+        cv2.imwrite(os.path.join(dd, f'f{i:04d}.png'), cv2.resize(cv2.cvtColor(fr, cv2.COLOR_BGR2GRAY), (w, h))); i += 1
+    if i != remap['frames']: sys.exit(f'depth video: {i} frames for {remap["frames"]} frames')
+    depth_pattern = 'depth/f{i}.png'
 if a.depth_dir:
     dd = os.path.join(out, 'depth'); os.makedirs(dd, exist_ok=True)
     src = sorted(f for f in os.listdir(a.depth_dir) if f.endswith('.png'))

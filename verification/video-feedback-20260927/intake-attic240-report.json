@@ -1,0 +1,104 @@
+{
+  "video": "attic240.mp4",
+  "brief": "VB-TEST-002",
+  "overall": "PASS",
+  "loopable": false,
+  "size": [
+    1280,
+    720
+  ],
+  "fps": 24.0,
+  "frames": 240,
+  "checks": [
+    {
+      "check": "resolution",
+      "value": "1280x720",
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "aspect",
+      "value": 1.778,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "fps",
+      "value": 24.0,
+      "unit": "fps",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "duration",
+      "value": 10.0,
+      "unit": "s",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "single_take (no cuts)",
+      "value": [],
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "duplicate_frames",
+      "value": 0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "motion_direction",
+      "value": 1.0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "motion_per_frame",
+      "value": 2.65,
+      "unit": "px/frame",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "motion_speed_cv",
+      "value": 0.016,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "luminance_flicker",
+      "value": 0.2,
+      "unit": "/255",
+      "verdict": "PASS",
+      "feedback": null
+    },
+    {
+      "check": "sharpness_drops",
+      "value": 0,
+      "unit": "",
+      "verdict": "PASS",
+      "feedback": null
+    }
+  ],
+  "motion_px_per_frame": {
+    "median": 1.731521487236023,
+    "p90": 1.7691855907440186,
+    "max": 1.811269998550415,
+    "at_display_p90": 2.65,
+    "frames_needed_for_limit": 213
+  },
+  "human_review_required": [
+    "형태가 녹아내리는 물체가 없는가",
+    "글자·로고가 생기지 않았는가",
+    "빛줄기·먼지가 레퍼런스처럼 보이는가"
+  ],
+  "note": "Automatic checks do not detect AI morphing, garbled text/logos or anatomy errors — review sheet.jpg."
+}

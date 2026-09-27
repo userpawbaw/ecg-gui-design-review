@@ -1,7 +1,7 @@
 {
-  "id": "VB-TEST-002",
+  "id": "VB-TEST-002-48",
   "status": "test — stand-in rendered from our attic spike (three.js), not AI video",
-  "purpose": "Camera descent for scroll + head-offset variants (l/c/r) + true depth, to test head-turn options and idle options. 2026-09-27: 240 frames (10 s) — the 48-frame version failed motion_per_frame (13 px/frame) and stuttered on slow scroll.",
+  "purpose": "48-frame version kept only to demonstrate the head-offset variant crossfade (grid, rejected) and the frame-density failure.",
   "reference": {
     "ref": "REF-002 EFX-002-02/03 (camera descends along the bookcase), EFX-002-01 (pointer head turn)",
     "what_to_keep": "slow descent, light shafts, dust in the beam"
@@ -29,8 +29,8 @@
     "aspect": 1.7778,
     "min_fps": 24,
     "duration_s": [
-      8,
-      12
+      1.5,
+      3
     ],
     "max_duplicates": 2,
     "cut_ratio": 4.0,

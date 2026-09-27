@@ -102,7 +102,13 @@ float motes(vec2 q, float t){
 void main(){
   vec2 c = (uv - .5) * vec2(aspectFix, 1.) * (1. - overscan) + .5;          // cover-fit, keep overscan margin
   c += gaze * overscan * .5;                                               // gaze = pan inside the margin (exact for pure rotation)
-  if (useDepth > .5) { float d = texture(D, c).r; c += gaze * (d - .5) * depthAmp; }   // near (bright) moves more
+  if (useDepth > .5) {
+    // near (bright) moves more. Solve c = base + shift(depth(c)) by fixed-point iteration: reading the depth once at the
+    // destination made thin foreground (ladder rails, book spines) borrow the background's depth and break into steps —
+    // even with true depth (F-022). 6 steps: edge-band error 7.0 → 5.0 (est. depth), 6.9 → 4.4 (true depth)
+    vec2 b = c;
+    for (int k = 0; k < 6; k++) { float d = texture(D, c).r; c = b + gaze * (d - .5) * depthAmp; }
+  }
   vec3 col = mix(texture(A, c).rgb, texture(B, c).rgb, mixAB);
   if (mixSide > 0.) col = mix(col, mix(texture(C, c).rgb, texture(E, c).rgb, mixAB), mixSide);
   if (live > .5) {
@@ -156,7 +162,7 @@ const frameAt = (p: number) => {
 };
 // idle=play: playhead is a phase, not a scroll position. Loop clips wrap; non-loop clips drift ahead of the scroll
 // position and clamp at the end (the failure mode this test is meant to show).
-let phase = 0, prevP = 0;
+let phase = 0, prevP = 0, restT = 0, snap = 0;
 
 // 4) pointer gaze (REF-002 EFX-002-01 constants) + kiosk auto-gaze
 const target = [0, 0], gaze = [0, 0];
@@ -196,7 +202,13 @@ function tick(now: number) {
     const s = gaze[0] >= 0 ? side.r : side.l;
     if (s) { upload('C', `${gaze[0] >= 0}${i}`, s.get(i)); upload('E', `${gaze[0] >= 0}${j}`, s.get(j)); mixSide = Math.abs(gaze[0]); }
   }
-  gl.uniform1f(U('mixAB'), opt.blend && uploaded.A === i ? f - Math.floor(f) : 0);
+  // rest snap (F-021): if scrolling stops between two frames, a 50/50 blend would stay on screen as a double image —
+  // after 150 ms at rest, ease the blend to the nearest source frame (≤ half a frame of drift; invisible on dense clips)
+  const moving = Math.abs(lenis.velocity) > 0.05 || opt.idle === 'play';
+  restT = moving ? 0 : restT + dt;
+  snap += ((restT > 0.15 && !reduced ? 1 : 0) - snap) * (1 - Math.exp(-dt / 0.12));
+  const frac = f - Math.floor(f), mix = frac + (Math.round(frac) - frac) * snap;
+  gl.uniform1f(U('mixAB'), opt.blend && uploaded.A === i ? mix : 0); state.mix = mix;
   gl.uniform1f(U('mixSide'), mixSide);
   gl.uniform2f(U('gaze'), side ? 0 : gaze[0], gaze[1] * 0.27);    // grid mode: x comes from the variants, not the pan
   gl.uniform1f(U('overscan'), opt.overscan); gl.uniform1f(U('depthAmp'), opt.depthAmp);

@@ -46,7 +46,10 @@ sharp = np.array([cv2.Laplacian(cv2.cvtColor(f, cv2.COLOR_BGR2GRAY), cv2.CV_64F)
 flow = []
 for i in range(N - 1):
     fl = cv2.calcOpticalFlowFarneback(small[i], small[i + 1], None, 0.5, 3, 21, 3, 5, 1.1, 0)
-    flow.append((float(np.median(fl[..., 0])), float(np.median(fl[..., 1])), float(np.median(np.hypot(fl[..., 0], fl[..., 1])))))
+    # measure on textured pixels only — flat sky/walls read as 0 motion and drag the median down (pan clip: 0.34 → see below)
+    gm = cv2.Laplacian(small[i], cv2.CV_32F); tex = np.abs(gm) > np.percentile(np.abs(gm), 70)
+    fx, fy = fl[..., 0][tex], fl[..., 1][tex]
+    flow.append((float(np.median(fx)), float(np.median(fy)), float(np.median(np.hypot(fx, fy)))))
 flow = np.array(flow)
 mag = flow[:, 2] * (W / sw)                       # px per frame at source resolution
 dom = np.arctan2(np.median(flow[:, 1]), np.median(flow[:, 0]))
@@ -93,6 +96,12 @@ check('duplicate_frames', len(dups), len(dups) <= spec.get('max_duplicates', 2),
       f"정지·중복 프레임 {len(dups)}장({dups[:8]}…) — 멈춤 없이 일정하게 움직이도록 요청")
 check('motion_direction', round(consistent, 3), consistent >= spec['min_direction_consistency'], consistent >= 0.6,
       f"카메라 이동 방향 일관성 {consistent:.0%} — '{brief['camera']['move']}' 한 방향으로만, 되돌아가거나 흔들리지 않게")
+# frame density: on-screen motion per source frame at the display width. Above ~3 px the player's blend between
+# neighbouring frames shows as a double image when scrolling slowly (user report 2026-09-27, attic 48 frames ≈ 13 px)
+disp_w = spec.get('display_width', 1920); per_frame = float(np.percentile(mag, 90)) * disp_w / W
+need = int(np.ceil(N * per_frame / spec.get('max_motion_px_per_frame', 3.0))) if per_frame > 0 else N
+check('motion_per_frame', round(per_frame, 2), per_frame <= spec.get('max_motion_px_per_frame', 3.0), per_frame <= spec.get('max_motion_px_per_frame', 3.0) * 2,
+      f"프레임당 화면 이동 {per_frame:.1f}px(화면 폭 {disp_w} 기준, 상위 10 %) — 같은 움직임을 약 {need}프레임 이상으로: 길이를 늘리거나 fps를 올려 재생성, 또는 interpolate_frames.py로 보간(보간은 차선)", 'px/frame')
 check('motion_speed_cv', round(speed_cv, 3), speed_cv <= spec['max_speed_cv'], True,
       f"속도 변화(CV {speed_cv:.2f}) — 일정 속도 요청. 불균일하면 remap으로 보정(TUNE)")
 check('luminance_flicker', round(float(np.abs(flicker).max()), 2), float(np.abs(flicker).max()) <= spec['max_flicker'], float(np.abs(flicker).max()) <= spec['max_flicker'] * 2,
@@ -143,7 +152,7 @@ if a.frames_width:
 
 overall = 'FAIL' if any(c['verdict'] == 'FAIL' for c in checks) else 'TUNE' if any(c['verdict'] == 'TUNE' for c in checks) else 'PASS'
 report = {'video': os.path.basename(a.video), 'brief': brief.get('id'), 'overall': overall, 'loopable': bool(spec.get('loop')) and any(c['check'] == 'loop_seam' and c['verdict'] != 'FAIL' for c in checks), 'size': [W, H], 'fps': fps, 'frames': N,
-          'checks': checks, 'motion_px_per_frame': {'median': float(np.median(mag)), 'max': float(mag.max())},
+          'checks': checks, 'motion_px_per_frame': {'median': float(np.median(mag)), 'p90': float(np.percentile(mag, 90)), 'max': float(mag.max()), 'at_display_p90': round(per_frame, 2), 'frames_needed_for_limit': need},
           'human_review_required': brief.get('human_review', []),
           'note': 'Automatic checks do not detect AI morphing, garbled text/logos or anatomy errors — review sheet.jpg.'}
 json.dump(report, open(os.path.join(a.out, 'report.json'), 'w', encoding='utf-8'), indent=2, ensure_ascii=False)

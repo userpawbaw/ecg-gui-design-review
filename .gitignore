@@ -8,3 +8,7 @@ prototype/v2/playwright-report/
 # External asset originals are re-downloadable from assets/registry.json (sha256-pinned)
 assets/source/
 assets/.npm-cache/
+
+# Python bytecode
+__pycache__/
+*.pyc

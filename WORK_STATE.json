@@ -358,7 +358,7 @@
       "Q4": "release ZIP already on GitHub release archive-v2.2.1-recovery (ecg-signal-studio-v2.2.1.zip, sha256 9070d4aa…e98ed, 340,775,483 B), downloadable from this environment (HTTP 206 range test); fetch + verify at the 600 s replay verification step"
     },
     "resume_notes_2026_09_27": {
-      "next": "Round 1 Step 1 (Attract/Story/transitions, HIGH): build the Common Creative Packet + freeze the Reference Pack per docs/uiux_system/20_ALPHA_BETA_OPERATING_PROTOCOL.md Step 1, then Alpha first pass and Beta first pass separately (no cross-leak), freeze both, cross-review, user visual alignment. Implementation later follows 25_EFFECT_PRODUCTION_PIPELINE.md (fidelity gate G1-G6).",
+      "next": "R1 Step 1 done as provisional freeze (see round1); after user answers → Step 2 Alpha first pass.",
       "step1_inputs": [
         "handoffs/REDESIGN_BASELINE_ANALYSIS_2026-09-25.md §6 packet draft + §7.1 decisions (Canvas 2D constraint replaced by D-027)",
         "D-033 (two rounds), D-034 (Beta A/B = comparison input only; reuse CompareLens/handoff/RAF code), D-035 (UI-02 approved; fonts + Loss view deferred)",
@@ -385,6 +385,26 @@
         "video_depth_parallax": "off by default; iterative sampling when on (F-022)",
         "video_frame_density": "<= 3 px/frame at 1920 (F-021)"
       }
+    },
+    "round1": {
+      "status": "step1 provisional freeze — waiting on user",
+      "doc": "docs/uiux_system/rounds/R1/R1_STEP1_PACKET_AND_REFERENCE_PACK.md",
+      "decision": "D-036",
+      "reference_pack": [
+        "REF-001",
+        "REF-002",
+        "REF-003",
+        "REF-004",
+        "REF-005",
+        "REF-006"
+      ],
+      "central_story": "S1 (proposed)",
+      "user_questions": [
+        "input device (wheel+click / touch / none)",
+        "agree S1 as central story",
+        "check REF-005/006"
+      ],
+      "next": "FROZEN → Step 2 ALPHA-R1-001, then BETA-R1-001 in a separate agent context"
     }
   }
 }

@@ -4,7 +4,7 @@
 규약: `20_ALPHA_BETA_OPERATING_PROTOCOL.md` §2·§3 Step 1, `13_REFERENCE_GROUNDED_CREATIVE_MINING.md` §5–§10, `17_REFERENCE_SOURCE_REGISTRY.md` §5·§7, `11_CHECKLISTS.md` §1·§1C·§1D
 관련 결정: D-033(두 라운드), D-034(Beta A/B는 비교 입력), D-035(UI-02만), D-027/D-028/D-029(제작 파이프라인), **D-036(이 팩의 구성)**
 
-**상태: 제안 동결(PROVISIONAL FREEZE).** 사용자가 §3의 새 레퍼런스(REF-005·006)를 직접 보고, §7의 질문에 답하면 FROZEN으로 바꾼 뒤 Step 2(Alpha 1차)로 간다. 이 문서 이후 Alpha와 Beta는 **이 문서만** 공통 입력으로 받는다(§6).
+**상태: FROZEN (2026-09-27).** 사용자 답(§7.1): 입력 장치 = 마우스 휠 + 클릭, 중심 스토리 = S1, REF-006의 객체 연속 재배열을 핵심으로 지목 → 효과 기록 `references/REF-006_R2D3_VISUAL_INTRO_ML.md`로 승격. Beta는 별도 에이전트에서 실행. 이 문서 이후 Alpha와 Beta는 **이 문서만** 공통 입력으로 받는다(§6).
 
 ---
 
@@ -19,7 +19,7 @@
 | Creative Freedom Zone | Attract·Story 배경·전환 = **HIGH**(WebGL 허용, D-027) · Story 안의 수치·설명 = **MEDIUM** · 파형·시간축·단위·Reference·Difference = **LOW**(변경 금지) |
 | 3-second goal | 어두운 화면에서 잡음에 묻힌 선 하나가 심장 박동으로 드러나는 순간을 보고, "잡음 속 심장 신호를 꺼내는 비교 전시"라는 것을 안다 |
 | 15-second goal | **같은 ECG라도 잡음 종류가 바뀌면 가장 잘 맞는 방법이 바뀐다**는 것을 한 번의 장면 전환으로 본다(§2 S1) |
-| Next user action | 화면을 누르면(또는 스크롤을 이어 가면) 방금 본 **같은 신호·같은 시각** 그대로 Lab에 들어가 잡음 하나를 직접 바꿔 본다(same-time handoff, D-034 재사용 자산) |
+| Next user action | 클릭하면(또는 휠 스크롤을 이어 가면) 방금 본 **같은 신호·같은 시각** 그대로 Lab에 들어가 잡음 하나를 직접 바꿔 본다(same-time handoff, D-034 재사용 자산) |
 | Creative Intent | 관람객이 잡음 속 심장 신호를 **발견**하고, "잡음이 무엇이냐에 따라 답이 달라진다"는 연구의 핵심을 한 번의 여정으로 **겪은 뒤**, 끊김 없이 실험실로 들어가게 한다 |
 | Research story/content | §2의 S1–S5(저장소 안 검증 자료에서 추출, 범위 표기 포함) |
 | Hard data/state constraints | §1.1 |
@@ -36,7 +36,7 @@
 4. `REPLAY / ARCHIVED REPLAY / GENERATED REPLAY` 구분과 "실제 장치 세션 없음" 고지를 유지한다. 실시간 계측처럼 보이는 연출(가짜 BPM, "처리 중" 시점 연출)은 금지(D-016에서 이미 기각).
 5. Story 수치는 **범위를 함께 쓴다**: 장면 단위 = "저장된 10초 한 구간", 집계 = "EXP-A · D1 · TEST 22 records · 혼합 잡음 −5…20 dB". 두 범위를 한 문장에 섞지 않는다.
 6. Oracle(B01·B02)은 "참조가 있어야 쓸 수 있는 비교 기준"으로만 표기한다. n.s.를 동등으로 읽지 않는다. QRS 폭 차이는 해상도 한계(p95 ≈ 28 ms) 아래에서 우열 색을 주지 않는다.
-7. 실행 환경: 오프라인 Windows 전시 PC, 1920×1080 우선, reduced-motion에서 구조가 성립, 10분 soak, 한 페이지에 Lenis 하나, 프레임 값은 React state로 흐르지 않는다(D-028). 성능 예산은 P2(전시 PC) 전까지 잠정(`25` §5).
+7. 실행 환경: 오프라인 Windows 전시 PC, **입력 = 마우스 휠 + 클릭**(터치·키보드 전용 경로는 설계 대상 아님, 키보드 접근은 유지), 1920×1080 우선, reduced-motion에서 구조가 성립, 10분 soak, 한 페이지에 Lenis 하나, 프레임 값은 React state로 흐르지 않는다(D-028). 성능 예산은 P2(전시 PC) 전까지 잠정(`25` §5).
 8. 글꼴은 현재 시스템 글꼴 기준(D-035, 교체 보류). UI-02 sweep 선단 발광은 승인 범위 안에서만(docs/22 §4).
 9. 레퍼런스 사이트의 에셋·코드·로고·문구를 복사하지 않는다. 모방 거리 기본 3–4(`13` §9).
 
@@ -128,7 +128,7 @@ REF-001–004는 효과 기록(`references/REF-*.md`)이 canonical이다. 여기
 
 #### REF-006 R2D3 "A Visual Introduction to Machine Learning" — 스크롤마다 한 통찰, 같은 점들의 재배열 (신규)
 - Source / URL: Stephanie Yee · Tony Chu, https://r2d3.us/visual-intro-to-machine-learning-part-1/
-- Nature / Family / Granularity / Evidence: LIVE_WEBSITE(scrollytelling) / G / flow / **L1 — 스크롤 순서를 텍스트로 확인(2026-09-27 WebFetch). 브라우저 스크롤 관찰은 안 함** `[문헌]`
+- Nature / Family / Granularity / Evidence: LIVE_WEBSITE(scrollytelling) / G / flow / **효과 기록으로 승격** — 소스 + 헤드리스 측정(`references/REF-006_R2D3_VISUAL_INTRO_ML.md`, EFX-006-01~05). 사용자 지목: "같은 점이 사라지지 않고 모양만 바꿔 재배열되는 시각화 아이디어가 놀랍네. 애니메이션의 완성도도 높고." `[대화]`
 - Target: Story 구조 → Lab 진입
 - Viewing instruction: 처음부터 끝까지 스크롤하되 **점들이 사라지지 않고 계속 같은 점으로 남아** 축 → 산점도 → 히스토그램 → 나무 갈래로 재배열되는 것, 그리고 마지막에 **학습 자료에서 100 %였던 나무를 새 자료에 적용하면 틀리는(overfitting)** 반전만 보세요. 도시·집값 내용은 무관
 - Unforgettable moment: 같은 점들이 모양을 바꿔 가며 하나의 결론을 쌓다가, 마지막에 그 결론의 한계를 스스로 보여 준다
@@ -172,8 +172,8 @@ REF-001–004는 효과 기록(`references/REF-*.md`)이 canonical이다. 여기
 - [x] fidelity 목표 지정(§1)
 - [x] 모방 거리 3–4, Do NOT copy 명시
 - [x] Beta용 금지 요소(파형·숫자·가짜 실시간)를 §1.1에 명시
-- [ ] REF-005·006 사용자 직접 확인 — **대기**
-- [ ] 입력 장치(P2 관련) — **대기**(§7-Q1)
+- [x] REF-006 사용자 확인·지목 → 효과 기록. REF-005는 사용자 의견 없음(유지, L1)
+- [x] 입력 장치 = 마우스 휠 + 클릭(§7.1)
 
 ---
 
@@ -192,9 +192,18 @@ REF-001–004는 효과 기록(`references/REF-*.md`)이 canonical이다. 여기
 - **Q2 중심 스토리**: §2 S1(잡음이 바뀌면 1등이 바뀐다)을 중심으로 두는 것에 동의하나?
 - **Q3 새 레퍼런스 확인**: REF-005 "Sound"의 두 데모, REF-006 R2D3의 재배열 + 반전을 직접 보고 "살릴 것 / 거슬리는 것"이 있으면 알려 주기. 교체를 원하면 이 단계에서.
 
+### 7.1 사용자 답 (2026-09-27)
+
+> "1번 (a)만, S1 동의, 레퍼런스 006에서 네가 말했듯 같은 점이 사라지지 않고 모양만 바꿔 재배열되는 시각화 아이디어가 놀랍네. 애니메이션의 완성도도 높고. 실제 브라우저에서 캡쳐해서 참조하는게 나을까? 아니면 내가 영상으로 찍어 줄까. beta안은 별도 에이전트에서 실행되어야 한다는 의견에 동의해." `[대화]`
+
+- Q1 → (a) 마우스 휠 + 클릭. 스크롤 기반 레퍼런스(REF-002·003·006)를 그대로 번역할 수 있다.
+- Q2 → S1 중심.
+- Q3 → REF-006의 객체 연속 재배열이 핵심. 캡처 방식: R2D3는 DOM/SVG/Canvas 2D라 헤드리스가 실제와 같은 화면을 그리므로 AI가 소스 + 헤드리스 측정으로 확보했다(사용자 녹화는 실제 휠 부드러움 확인이 필요할 때만). 결과 = REF-006 효과 기록.
+- Beta → 별도 에이전트(새 컨텍스트)에 이 문서만 전달.
+
 ## 8. 단계 판정
 
 - 수행: 20/13/17/18/11 규약 확인, REDESIGN_BASELINE §6·§7.1 반영, archive.json 저장 지표 정렬로 S1–S5 추출, REF-005·006 존재·구성 확인(WebFetch), 계약 §1.1 정리.
-- 판정: **CONDITIONAL PASS** — 패킷과 레퍼런스 팩은 완성, 동결은 §7 답을 기다림.
+- 판정: **PASS** — 사용자 답 반영 후 FROZEN(§7.1). REF-006 효과 기록 추가.
 - 미검증: REF-005·006의 실제 인터랙션(브라우저 조작 안 함), S1–S2의 600초 replay 자료 기준 재확인(ZIP 미적용), 전시 PC 입력 장치.
 - 다음: §7 답 → FROZEN 표기 → Step 2 `ALPHA-R1-001`.

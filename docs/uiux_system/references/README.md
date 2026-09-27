@@ -11,7 +11,7 @@
 | [REF-003](REF-003_WHITE_DESERT.md) | white-desert.com | EFX-003-01 ~ 05 (두 겹 구름 덮기, 스크롤로 그리는 비행 경로 + 표시점, 소나 링, 안개 판 전환, 문장 마스크) — **WebGL 없음** | 녹화(HUD) + 소스 + 라이브 측정 · 재현 spike `prototype/spikes/ref-repro/ref003.html` |
 | [REF-004](REF-004_SEASATS.md) | seasats.com | EFX-004-01 ~ 06 (합성 셰이더 홀로그램 지구, 시계 눈금 점선 링, hover 원형 사진 카드, 필터 → 최대 군집 회전, 드래그 관성, 스크롤 연속 이미지 끊김 사례) | 녹화 + 소스 + 라이브 측정(지구 렌더는 헤드리스에서 마운트 안 됨) · 재현 spike `prototype/spikes/ref-repro/ref004.html` |
 | REF-005 | ciechanow.ski/sound | 효과 카드 없음 — R1 레퍼런스 카드만(`../rounds/R1/R1_STEP1_PACKET_AND_REFERENCE_PACK.md` §3.2) | 텍스트 확인(L1), 재현 대상이 되면 21번 규칙으로 승격 |
-| REF-006 | r2d3.us visual intro to ML | 효과 카드 없음 — R1 레퍼런스 카드만(같은 문서) | 텍스트 확인(L1) |
+| [REF-006](REF-006_R2D3_VISUAL_INTRO_ML.md) | r2d3.us visual intro to ML | EFX-006-01 ~ 05 (막대 → 점 연속 재배열, 회전·낙하 히스토그램, 산점도 행렬 전개, 경로 흐름 + 정확도 반전, ZENO 평활·고정 패널) — **WebGL 없음** | 소스 + 헤드리스 측정(로컬 사본, 사용자 녹화 없음) |
 
 ## 레시피 색인
 
@@ -21,7 +21,7 @@
 
 | ID | 이름 | 핵심 | 사례 |
 |---|---|---|---|
-| RCP-08 | 프레임률 독립 지수 보간 | `x = lerp(x, target, 1 − exp(−k·dt))` / `v *= k^(60·dt)` — "부드럽게 따라옴·감속"의 공통 도구 | REF-001 EFX-001-04, REF-002 EFX-002-01·04, REF-004 EFX-004-04(`min(60·dt·0.05,1)`; 페이드·관성은 프레임 의존 반례) |
+| RCP-08 | 프레임률 독립 지수 보간 | `x = lerp(x, target, 1 − exp(−k·dt))` / `v *= k^(60·dt)` — "부드럽게 따라옴·감속"의 공통 도구 | REF-001 EFX-001-04, REF-002 EFX-002-01·04, REF-004 EFX-004-04(`min(60·dt·0.05,1)`; 페이드·관성은 프레임 의존 반례), REF-006 EFX-006-05(ZENO 0.85/프레임 — 프레임 의존 반례) |
 | RCP-01 | Lenis 관성 스크롤을 단일 시간축으로 | `gsap.ticker`로 Lenis 구동 + `lagSmoothing(0)`, 3D·DOM이 같은 스크롤 값을 읽음 | REF-001(Lenis duration 1.6 + scrub 1), REF-002(Lenis lerp 0.085 + 카메라 직접 매핑), REF-003(Lenis 1.3.15 lerp 0.1 + scrub true) |
 | RCP-12 | 관성 드래그 | 드래그 중 속도 추정·클램프 → 놓은 뒤 지수 감쇠(스냅은 선택) | REF-002 EFX-002-04(관성·스냅 갤러리), REF-004 EFX-004-05(지구 회전) |
 | RCP-17 | 스크롤과 독립된 시간 루프("숨쉬는" 표시) | 위치는 스크롤·데이터로, 생동감은 무한 시간 루프(퍼지는 링·위상 물결)로 분리 | REF-003 EFX-003-03(소나 링), REF-004 EFX-004-02(시계 눈금 링) |
@@ -50,3 +50,7 @@
 | RCP-21 | 3D 점 → DOM 카드 투영 | REF-004 |
 | RCP-22 | 필터 → 최대 군집으로 시점 이동 | REF-004 |
 | RCP-23 | 렌더 온디맨드(ticker 등록·변화 시 RT 재렌더) | REF-004 |
+| RCP-24 | 객체 연속 재배열(object constancy) | REF-006 |
+| RCP-25 | 점별 순차 지연 + 범주 절반 분리 | REF-006 |
+| RCP-26 | 구간별 선형 키프레임(clamp) | REF-006 |
+| RCP-27 | 경로 흐름 + 도착 집계 | REF-006 |

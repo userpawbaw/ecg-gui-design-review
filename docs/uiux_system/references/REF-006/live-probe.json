@@ -1,0 +1,248 @@
+{
+ "note": "R2D3 visual-intro-to-machine-learning-part-1, probed 2026-09-27 from a local mirror of files fetched over verified TLS (scratchpad, not in repo). Headless Chromium 1920x1080, third-party requests (Twitter, maxcdn) blocked. No site assets or code are stored here.",
+ "docHeight": 24418,
+ "sections": [
+  {
+   "id": "main",
+   "top": 160,
+   "h": 23668
+  },
+  {
+   "id": "intro",
+   "top": 160,
+   "h": 5381
+  },
+  {
+   "id": "set-up",
+   "top": 180,
+   "h": 621
+  },
+  {
+   "id": "first-two",
+   "top": 1173,
+   "h": 450
+  },
+  {
+   "id": "add-nuance",
+   "top": 2102,
+   "h": 507
+  },
+  {
+   "id": "set-boundaries",
+   "top": 2980,
+   "h": 480
+  },
+  {
+   "id": "more-variables",
+   "top": 4108,
+   "h": 1432
+  },
+  {
+   "id": "listing-the-variables",
+   "top": 4108,
+   "h": 295
+  },
+  {
+   "id": "from-boundaries-to-pattern",
+   "top": 4430,
+   "h": 759
+  },
+  {
+   "id": "split",
+   "top": 5541,
+   "h": 7581
+  },
+  {
+   "id": "elevation-to-histogram",
+   "top": 5541,
+   "h": 1315
+  },
+  {
+   "id": "introduce-split",
+   "top": 6883,
+   "h": 616
+  },
+  {
+   "id": "explain-gini",
+   "top": 7527,
+   "h": 3791
+  },
+  {
+   "id": "further-split",
+   "top": 11318,
+   "h": 1803
+  },
+  {
+   "id": "tree",
+   "top": 13121,
+   "h": 3925
+  },
+  {
+   "id": "test",
+   "top": 17046,
+   "h": 5034
+  },
+  {
+   "id": "classify-training-data",
+   "top": 17046,
+   "h": 1858
+  },
+  {
+   "id": "classify-test-data",
+   "top": 18932,
+   "h": 2502
+  },
+  {
+   "id": "misclassification",
+   "top": 21461,
+   "h": 619
+  },
+  {
+   "id": "conclusion",
+   "top": 22080,
+   "h": 1748
+  },
+  {
+   "id": "footnote-list",
+   "top": 23894,
+   "h": 495
+  },
+  {
+   "id": "shadow-scatterplot",
+   "top": 0,
+   "h": 1080
+  },
+  {
+   "id": "intro-scatterplot",
+   "top": 0,
+   "h": 1080
+  },
+  {
+   "id": "split-quality",
+   "top": 5541,
+   "h": 1080
+  },
+  {
+   "id": "rotating-canvas",
+   "top": 5541,
+   "h": 1080
+  },
+  {
+   "id": "decision-tree",
+   "top": 13091,
+   "h": 1026
+  },
+  {
+   "id": "train-vs-test",
+   "top": 17016,
+   "h": 1069
+  },
+  {
+   "id": "footer",
+   "top": 23828,
+   "h": 590
+  },
+  {
+   "id": "footer-content",
+   "top": 23898,
+   "h": 360
+  },
+  {
+   "id": "bio-column",
+   "top": 23898,
+   "h": 360
+  }
+ ],
+ "canvases": [
+  {
+   "w": 1056,
+   "h": 1056,
+   "parent": "shadow-scatterplot"
+  },
+  {
+   "w": 1056,
+   "h": 1056,
+   "parent": "intro-scatterplot"
+  },
+  {
+   "w": 1017,
+   "h": 1017,
+   "parent": "rotating-canvas"
+  }
+ ],
+ "svgs": 5,
+ "circles": 492,
+ "fonts": [
+  "\"Helvetica Neue\", Helvetica, Arial, sans-serif 14px 400",
+  "\"Helvetica Neue\", Helvetica, Arial, sans-serif 60px 300",
+  "\"Helvetica Neue\", Helvetica, Arial, sans-serif 16px 300",
+  "\"Helvetica Neue\", Helvetica, Arial, sans-serif 21px 300",
+  "\"Helvetica Neue\", Helvetica, Arial, sans-serif 21px 700",
+  "\"Helvetica Neue\", Helvetica, Arial, sans-serif 48px 300"
+ ],
+ "colors": {
+  "bg": "rgb(255, 255, 255)",
+  "text": "rgb(51, 51, 51)"
+ },
+ "d3": "3.4.11",
+ "payload_same_site_bytes": {
+  "script": 799217,
+  "stylesheet": 115119,
+  "document": 23211,
+  "image": 10865,
+  "requests": 20
+ },
+ "data_points": {
+  "training": 250,
+  "test": 242
+ },
+ "settle_after_400px_jump_ms": {
+  "changed_pixels_by_elapsed_ms": [
+   [
+    3,
+    20694
+   ],
+   [
+    104,
+    7149
+   ],
+   [
+    196,
+    8982
+   ],
+   [
+    301,
+    3702
+   ],
+   [
+    437,
+    2374
+   ],
+   [
+    522,
+    1436
+   ],
+   [
+    739,
+    823
+   ],
+   [
+    819,
+    460
+   ],
+   [
+    908,
+    196
+   ],
+   [
+    1004,
+    38
+   ],
+   [
+    1080,
+    0
+   ]
+  ],
+  "caveat": "headless SwiftShader, screenshot overhead lowers frame rate; ZENO is per-frame so real 60 fps settles faster (~0.3 s computed)"
+ }
+}

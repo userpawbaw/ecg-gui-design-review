@@ -387,7 +387,7 @@
       }
     },
     "round1": {
-      "status": "step1 provisional freeze — waiting on user",
+      "status": "step1 FROZEN 2026-09-27",
       "doc": "docs/uiux_system/rounds/R1/R1_STEP1_PACKET_AND_REFERENCE_PACK.md",
       "decision": "D-036",
       "reference_pack": [
@@ -398,13 +398,11 @@
         "REF-005",
         "REF-006"
       ],
-      "central_story": "S1 (proposed)",
-      "user_questions": [
-        "input device (wheel+click / touch / none)",
-        "agree S1 as central story",
-        "check REF-005/006"
-      ],
-      "next": "FROZEN → Step 2 ALPHA-R1-001, then BETA-R1-001 in a separate agent context"
+      "central_story": "S1",
+      "user_questions": [],
+      "next": "Step 2 ALPHA-R1-001, then BETA-R1-001 in a separate agent context",
+      "input_device": "mouse wheel + click",
+      "ref006": "effect record REF-006 (EFX-006-01..05)"
     }
   }
 }

@@ -312,5 +312,5 @@ No other text, no numbers besides the axis tick labels, "20 dB" and "250 Hz".
 
 > "Noise 띠는 넣어줘, 나머지는 그대로 진행할게" `[대화]`
 
-- Q1 Noise 띠(입력 − Reference): **포함** — S03–S05 프롬프트 그대로. 실제 UI에서는 행 이름을 "Noise"가 아니라 "입력 − Reference"로 표기하고 Difference(출력 − Reference)와 구분한다(패킷 §1.1, ALPHA와 무관한 계약 문구).
+- Q1 Noise 띠(입력 − Reference): **포함** — S03–S05 프롬프트 그대로. 실제 UI에서는 행 이름을 "Noise"가 아니라 "입력 − Reference"로 표기하고 Difference(출력 − Reference)와 구분한다(패킷 §1.1의 계약).
 - Q2 영어 임시 문구, Q3 1위 값만 숫자, Q4 Attract SNR은 구현 단계 결정: **제안 그대로**.

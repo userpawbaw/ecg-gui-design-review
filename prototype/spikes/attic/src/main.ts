@@ -192,11 +192,17 @@ let last = 0, frame = 0;
 // ---------- one frame: shared by the live loop and ?capture=1 (video pipeline tests, D-023) ----------
 // yaw/pitch in degrees (head turn = pure rotation), dx = sideways head translation in scene units, t = effect time
 const capture = params.has('capture');
-const right = new THREE.Vector3();
+const right = new THREE.Vector3(), up = new THREE.Vector3();
+// pointer response: turn = REF-002 (rotation only, ±0.75° / ±0.2° — no parallax), move = head translation (parallax), both
+const lookMode = params.get('look') || 'turn', MOVE = Number(params.get('move') ?? 0.15);
 const depthMat = new THREE.ShaderMaterial({vertexShader: 'varying float vz; void main(){ vec4 mv = modelViewMatrix * vec4(position,1.); vz = -mv.z; gl_Position = projectionMatrix * mv; }',
   fragmentShader: 'varying float vz; void main(){ float v = clamp(vz / 12., 0., 1.) * 255.; gl_FragColor = vec4(floor(v) / 255., fract(v), 0., 1.); }'});   // linear view depth / 12 (scene units), 16-bit in R (hi) + G (lo)
-function renderFrame(p: number, yaw: number, pitch: number, dx: number, t: number, dt: number, depth: boolean) {
+function renderFrame(p: number, yaw: number, pitch: number, dx: number, t: number, dt: number, depth: boolean, ox = 0, oy = 0) {
   camera.position.lerpVectors(P0, P1, p); look.lerpVectors(L0, L1, p); camera.lookAt(look);
+  // look=move: lean the head sideways/up while still looking at the same point on the bookcase → true parallax
+  // (the ladder in front slides more than the books behind and uncovers what it hid). Same scene, no extra assets.
+  if (ox || oy) { right.setFromMatrixColumn(camera.matrix, 0); up.setFromMatrixColumn(camera.matrix, 1);
+    camera.position.addScaledVector(right, ox).addScaledVector(up, oy); camera.lookAt(look); }
   if (dx) { right.setFromMatrixColumn(camera.matrix, 0); camera.position.addScaledVector(right, dx); look.addScaledVector(right, dx); camera.lookAt(look); }
   eul.setFromQuaternion(camera.quaternion); eul.y += THREE.MathUtils.degToRad(yaw); eul.x += THREE.MathUtils.degToRad(pitch); camera.quaternion.setFromEuler(eul);
   camera.updateMatrixWorld();
@@ -212,9 +218,9 @@ function renderFrame(p: number, yaw: number, pitch: number, dx: number, t: numbe
   renderer.setRenderTarget(sceneRT); renderer.clear(); renderer.render(scene, camera); renderer.setRenderTarget(null);
   composer.render(dt);
 }
-(window as any).__shot = (o: {p: number; yaw?: number; pitch?: number; dx?: number; t?: number; fov?: number; depth?: boolean}) => {
+(window as any).__shot = (o: {p: number; yaw?: number; pitch?: number; dx?: number; t?: number; fov?: number; depth?: boolean; ox?: number; oy?: number}) => {
   if (o.fov && o.fov !== camera.fov) { camera.fov = o.fov; camera.updateProjectionMatrix(); }
-  renderFrame(o.p, o.yaw ?? 0, o.pitch ?? 0, o.dx ?? 0, o.t ?? 0, 1 / 24, !!o.depth);
+  renderFrame(o.p, o.yaw ?? 0, o.pitch ?? 0, o.dx ?? 0, o.t ?? 0, 1 / 24, !!o.depth, o.ox ?? 0, o.oy ?? 0);
 };
 function tick(now: number) {
   lenis.raf(now);
@@ -225,7 +231,10 @@ function tick(now: number) {
     el.style.clipPath = `inset(0 0 ${(1 - k) * 100}% 0)`; el.style.transform = `translateY(${(1 - k) * 40}%)`; el.style.opacity = String(k); });
   if (!visible && state.ready) { requestAnimationFrame(tick); return; }     // render gate: only while the window is on screen (as the reference)
   head.x = THREE.MathUtils.damp(head.x, reduced ? 0 : head.tx, 2, dt); head.y = THREE.MathUtils.damp(head.y, reduced ? 0 : head.ty, 2, dt);
-  if (!capture) renderFrame(p, -head.x * 0.75, -head.y * 0.2, 0, reduced ? 0 : now / 1000, dt, false);
+  if (!capture) {
+    const turn = lookMode !== 'move', move = lookMode !== 'turn';
+    renderFrame(p, turn ? -head.x * 0.75 : 0, turn ? -head.y * 0.2 : 0, 0, reduced ? 0 : now / 1000, dt, false, move ? head.x * MOVE : 0, move ? -head.y * MOVE * 0.5 : 0);
+  }
   state.ready = true;
   requestAnimationFrame(tick);
 }

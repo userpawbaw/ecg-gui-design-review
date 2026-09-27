@@ -400,9 +400,11 @@
       ],
       "central_story": "S1",
       "user_questions": [],
-      "next": "Step 2 ALPHA-R1-001, then BETA-R1-001 in a separate agent context",
+      "next": "Step 3 BETA-R1-001 in a separate agent context (packet + REF records only, never ALPHA-R1-001); test the image generator with one still first; then Step 4 cross-review",
       "input_device": "mouse wheel + click",
-      "ref006": "effect record REF-006 (EFX-006-01..05)"
+      "ref006": "effect record REF-006 (EFX-006-01..05)",
+      "alpha": "ALPHA-R1-001 frozen first pass (docs/uiux_system/rounds/R1/ALPHA-R1-001.md)",
+      "finding": "F-025 same-ECG claim only holds for D0 S038"
     }
   }
 }

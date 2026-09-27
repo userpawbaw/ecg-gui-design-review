@@ -307,3 +307,10 @@ No other text, no numbers besides the axis tick labels, "20 dB" and "250 Hz".
 2. **Story 헤드라인 문구** "Change the noise, the best method changes." — 제품 문구가 아니라 이미지용 임시 문구. 한국어 화면이 기본이면 실제 UI에서 교체한다(글꼴 D-035 기준).
 3. **1위 값만 숫자로 표시**하고 나머지는 숫자 없는 표시점으로 두는 결정에 동의하는지(한 장면 값이라 순위를 크게 보이면 일반 법칙으로 읽힐 위험, 패킷 S1 범위 주의).
 4. Attract 잡음 강도: 이미지의 Attract는 극적으로 강한 잡음이지만 Story는 20 dB(약한 잡음)다. 실제 Attract 장면을 D0 S038 pli의 더 낮은 SNR(예: 0 dB)로 둘지는 구현 단계 결정 — 이미지에는 dB를 쓰지 않았다.
+
+### 8.1 사용자 답 (2026-09-27)
+
+> "Noise 띠는 넣어줘, 나머지는 그대로 진행할게" `[대화]`
+
+- Q1 Noise 띠(입력 − Reference): **포함** — S03–S05 프롬프트 그대로. 실제 UI에서는 행 이름을 "Noise"가 아니라 "입력 − Reference"로 표기하고 Difference(출력 − Reference)와 구분한다(패킷 §1.1, ALPHA와 무관한 계약 문구).
+- Q2 영어 임시 문구, Q3 1위 값만 숫자, Q4 Attract SNR은 구현 단계 결정: **제안 그대로**.

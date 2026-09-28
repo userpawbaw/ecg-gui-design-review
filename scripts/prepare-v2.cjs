@@ -8,7 +8,9 @@ fs.writeFileSync(path.join(dest,'archive.json'),JSON.stringify({...base,methods:
 const source=fs.readFileSync(path.join(root,'prototype/app.js'),'utf8');
 const metadata=vm.runInNewContext('('+source.match(/const methods = (\{[\s\S]*?\n  \});/)[1]+')');
 fs.mkdirSync(path.join(root,'prototype/v2/src'),{recursive:true});
-fs.writeFileSync(path.join(root,'prototype/v2/src/methods.json'),JSON.stringify(metadata,null,2));
+// R-a: v2.2.1 edited methods.json after migration (M04 SWT text). Keep the checked-in file unless --methods is given.
+const methodsFile=path.join(root,'prototype/v2/src/methods.json');
+if(process.argv.includes('--methods')||!fs.existsSync(methodsFile))fs.writeFileSync(methodsFile,JSON.stringify(metadata,null,2));else console.log('Kept prototype/v2/src/methods.json (pass --methods to regenerate from prototype/app.js).');
 // Preserve access to all earlier evidence/acquisition/detail capabilities during migration.
 fs.mkdirSync(path.join(dest,'legacy/data'),{recursive:true});
 for(const name of ['index.html','style.css','app.js','core.js']){let s=fs.readFileSync(path.join(root,'prototype',name),'utf8');if(name==='index.html')s=s.replaceAll('../data/','data/');fs.writeFileSync(path.join(dest,'legacy',name),s);}

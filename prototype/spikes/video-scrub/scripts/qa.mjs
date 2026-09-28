@@ -11,7 +11,7 @@ const configs = [
   {id: 'eased-noremap', q: 'clip=eased&remap=0&hud=0&fx=0'},
   {id: 'pan-full', q: 'clip=pan&depth=1&hud=1'},
 ];
-const b = await chromium.launch({executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
+const b = await chromium.launch({executablePath: process.env.PW_EXECUTABLE || (process.platform === 'linux' ? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' : undefined), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
 const res = {};
 for (const c of configs) {
   const pg = await b.newPage({viewport: {width: 1280, height: 720}});

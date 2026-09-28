@@ -1,0 +1,16 @@
+# Keep LF in every working tree (Windows Git defaults to CRLF via core.autocrlf, which breaks line-anchored checks).
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+# binaries
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.mp4 binary
+*.glb binary
+*.zip binary
+*.woff2 binary
+*.hdr binary
+*.exr binary

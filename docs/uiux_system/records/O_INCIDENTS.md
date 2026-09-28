@@ -94,3 +94,35 @@ bpy·OpenCV·torch가 같은 시스템 파이썬을 공유하는데 버전 고�
 - Node에서 파이썬을 부를 때는 `PYTHONUTF8=1`을 넘긴다(두 번째 방어).
 - 체크리스트 §9에 "Windows(cp949) 사용자" 항목.
 
+
+## O-005. 사용자가 로컬 확인 전마다 Windows 호환 오류(cp949·`&&`·호환성)를 손으로 고쳐야 했다
+
+| | |
+|---|---|
+| 시점 | 2026-09-28, 사용자 "로컬에서 실행할 때 항상 오류가 발생하는데 … 윈도우 vs code의 터미널에서 실행하는데. 매번 cp949 오류나 호환성 오류, 터미널에서 &&를 받지 못해 발생하는 오류 등 로컬 확인 전 자잘하게 수정해야 하는게 번거롭네." `[대화]` |
+| 잃은 것 | 매 확인마다 사용자 수정 시간(횟수 기록 없음). O-003·O-004와 같은 계열의 반복 |
+| 재발 방지 | `npm run …` 단일 진입점(`scripts/local/run.mjs`), VS Code 작업(cmd.exe), `tests/portability.test.cjs`(npm test 포함), `docs/LOCAL_WINDOWS.md` |
+
+### 증상
+사용자 보고: cp949 오류, 호환성 오류, PowerShell이 `&&`를 받지 못하는 오류 `[대화]`. 저장소 점검 결과 `[코드]`:
+- 실행 안내가 `a && b`, `python3 …` 형태(Windows PowerShell 5.1은 `&&` 미지원, Windows에는 `python3`가 없거나 스토어 안내용 가짜 실행 파일).
+- 스파이크 npm 스크립트 4곳이 `python3` 고정.
+- 캡처·QA 스크립트 13곳이 컨테이너 전용 브라우저 경로(`/opt/pw-browsers/…`) 고정.
+- `prepare-v2.cjs`가 실행할 때마다 `methods.json`을 옛 문구로 덮어씀(R-a, 2026-09-25 기준선 분석에서 알려졌으나 고치지 않았음).
+- 영상 도구 설치 안내가 클라우드용 numpy 1.26 고정(Blender 전용)이라 Python 3.14 휠이 없음.
+- 설치된 Playwright가 기대하는 브라우저 빌드와 실제 설치 빌드가 다르면 테스트가 바로 실패.
+
+### 원인
+AI가 시험하는 곳이 Linux 컨테이너(bash, UTF-8, `python3`, 고정 브라우저 경로)뿐이었고, 실행 안내도 그 환경의 문법으로 썼다 `[추론]`. O-004(cp949)는 파이썬 인코딩만 막았고 명령·경로·도구 버전은 다루지 않았다.
+
+### 조치
+- `scripts/local/run.mjs` + 루트 npm 스크립트: `doctor`(환경 점검, Playwright가 기대하는 빌드 확인), `story`, `story:check`, `spike -- <이름>`, `py -- <스크립트>`(py → python → python3, UTF-8 강제), `py:setup`(로컬용 요구사항), `browsers`, `v2:prepare`.
+- 스파이크 스크립트의 `python3` → `run.mjs py`. 브라우저 경로 13곳 → `PW_EXECUTABLE` → (Linux만) 컨테이너 경로 → Playwright 기본.
+- `prepare-v2.cjs`는 기존 `methods.json`을 유지(`--methods`일 때만 다시 생성).
+- `.vscode/tasks.json`(Windows에서 cmd.exe로 실행 — 실행 정책·`&&` 회피), `.vscode/settings.json`(터미널 `PYTHONUTF8=1`).
+- `.gitattributes`로 작업 폴더 LF 고정. 기록 검사기는 CRLF를 정규화 — 단, CRLF 사본 시뮬레이션에서 기존 검사기도 통과했으므로 이 둘은 **관측된 실패의 수정이 아니라 예방**이다 `[테스트]`.
+- 이 컨테이너에서 확인: `npm run doctor`, `npm run py`(한글 출력), 자료를 지운 상태에서 `npm run story:check`(자료 재생성·`methods.json` 유지·빌드·단위 15/16·브라우저 5 PASS), `npm run story` 개발 서버 200 `[테스트]`. **Windows 실기 확인은 사용자 몫** — 미검증.
+
+### 재발 방지와 자동화 상태
+- **자동화됨**: `tests/portability.test.cjs`(npm test) — npm 스크립트의 `python3`·`VAR=` 접두·POSIX 명령·작은따옴표·`$VAR` 금지, 대체 경로 없는 `/opt/pw-browsers` 금지, Windows 파이썬 탐색 순서, CRLF 사본에서 기록 검사 통과.
+- 체크리스트 §9와 AGENTS.md: 사용자에게 주는 실행 안내는 `npm run …` 한 줄 형식.

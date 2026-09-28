@@ -5,7 +5,7 @@
 import {chromium} from '@playwright/test';
 import {mkdir, writeFile} from 'node:fs/promises';
 const out = process.argv[2]; const N = +(process.argv[3] || 48); const probesOnly = process.argv.includes('--probes-only'); const centerOnly = process.argv.includes('--center-only');   // centre + true depth only (no l/r variants, no globe)
-const b = await chromium.launch({executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
+const b = await chromium.launch({executablePath: process.env.PW_EXECUTABLE || (process.platform === 'linux' ? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' : undefined), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
 const onlyCanvas = p => p.addStyleTag({content: 'body > *:not(canvas):not(:has(canvas)) { visibility: hidden !important } [data-l], header, nav, .hud, .lede { visibility: hidden !important }'});
 const pad = i => String(i).padStart(4, '0');
 { // attic

@@ -1,7 +1,7 @@
 // Idle indicator behaviour over time (12 shots, ~170 ms apart) for variants A and B — the reference fires 3 expanding rings every 2 s.
 import {chromium} from '@playwright/test';
 const out = new URL('../qa-output/route/', import.meta.url).pathname;
-const b = await chromium.launch({executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
+const b = await chromium.launch({executablePath: process.env.PW_EXECUTABLE || (process.platform === 'linux' ? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' : undefined), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
 for (const [k, url, comp, ind] of [['A', 'ref003.html', '#travelComp', '#indicator'], ['B', 'ref003b.html', 'div.overflow-clip', 'div.z-10']]) {
   const p = await b.newPage({viewport: {width: 1600, height: 900}});
   await p.goto('http://127.0.0.1:4191/' + url); await p.waitForFunction(() => window.__repro?.ready && window.__lenis); await p.waitForTimeout(1200);

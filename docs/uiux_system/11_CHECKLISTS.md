@@ -141,6 +141,7 @@
 ---
 
 - [ ] 파이썬 텍스트 파일 접근에 `encoding='utf-8'`을 썼나 — 사용자는 한국어 Windows(cp949)다. `npm test`의 encoding 검사가 막는다(O-004).
+- [ ] 사용자에게 주는 실행 안내가 Windows VS Code 터미널에서 그대로 되는가 — `npm run …` 한 줄(`&&`·`python3`·POSIX 명령 없이), 새 npm 스크립트·브라우저 경로는 `tests/portability.test.cjs`가 막는다(O-005, `docs/LOCAL_WINDOWS.md`).
 - [ ] spike·도구를 사용자가 확인하도록 넘기기 전에 README·준비 명령·누락 시 화면 안내가 있고, 커밋된 원본만으로 재생성되는지(생성 폴더를 지운 상태) 확인했나(O-003).
 
 ## 승급 대장 — 사람 체크에서 기계 검사로 옮긴 것

@@ -7,6 +7,7 @@
 - Verify interrupted results before continuing; preserve verified stages and continue all remaining authorized work. Distinguish blocked/deferred work from completion.
 - UI refinement follows `docs/21_ui_refinement_workflow_final.md` when present; `docs/20_ui_refinement_workflow.md` is its historical input, not the final operating rule.
 - Write all chat to this user in Korean, including intermediate stage/progress messages (user request 2026-09-26).
+- The user runs locally on Windows + VS Code terminal (PowerShell) + Edge, Python 3.14 (cp949). Give local run instructions only as single `npm run …` lines (see `docs/LOCAL_WINDOWS.md`); never `&&` chains, `python3`, or POSIX-only commands. `npm test` includes the portability guard (O-005, 2026-09-28).
 - Record meaningful checkpoints and concise chat stage logs. No-op periodic checks do not require file changes or commits. These are project instructions, not an account-wide memory setting.
 
 User-approved workflow: source-project analysis → independent design/prototype freeze → previous-artifact review → comparison → final synthesis → verification.

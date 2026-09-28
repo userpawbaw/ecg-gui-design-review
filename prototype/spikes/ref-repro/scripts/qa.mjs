@@ -3,7 +3,7 @@ import {chromium} from '@playwright/test';
 import {mkdir, writeFile} from 'node:fs/promises';
 const url = process.env.URL || 'http://127.0.0.1:4191/';
 const out = new URL('../qa-output/', import.meta.url).pathname; await mkdir(out, {recursive: true});
-const b = await chromium.launch({executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--autoplay-policy=no-user-gesture-required']});
+const b = await chromium.launch({executablePath: process.env.CHROMIUM || process.env.PW_EXECUTABLE || (process.platform === 'linux' ? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' : undefined), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--autoplay-policy=no-user-gesture-required']});
 const which = (process.env.PAGES || 'ref004,ref003').split(',');
 const res = {};
 const errs = p => { const e = []; p.on('pageerror', x => e.push(String(x))); p.on('console', m => m.type() === 'error' && e.push(m.text())); return e; };

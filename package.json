@@ -4,13 +4,21 @@
   "private": true,
   "description": "Offline ECG GUI prototype and reproducible review checks",
   "scripts": {
-    "test": "node tests/core.test.cjs && node tests/final-data.test.cjs && node tests/dom.test.cjs && node tests/uiux-records.test.cjs && node tests/encoding.test.cjs",
+    "test": "node tests/core.test.cjs && node tests/final-data.test.cjs && node tests/dom.test.cjs && node tests/uiux-records.test.cjs && node tests/encoding.test.cjs && node tests/portability.test.cjs",
     "records:check": "node scripts/check-uiux-records.cjs",
     "preview": "node scripts/preview.cjs",
     "build": "node scripts/build-single-file.cjs",
     "test:portable": "node scripts/build-single-file.cjs && node tests/portable.test.cjs",
     "audit": "node scripts/audit-deliverables.cjs",
-    "encoding:check": "node tests/encoding.test.cjs"
+    "encoding:check": "node tests/encoding.test.cjs",
+    "doctor": "node scripts/local/run.mjs doctor",
+    "story": "node scripts/local/run.mjs story",
+    "story:check": "node scripts/local/run.mjs story:check",
+    "spike": "node scripts/local/run.mjs spike",
+    "py": "node scripts/local/run.mjs py",
+    "py:setup": "node scripts/local/run.mjs py:setup",
+    "browsers": "node scripts/local/run.mjs browsers",
+    "v2:prepare": "node scripts/local/run.mjs v2:prepare"
   },
   "engines": {
     "node": ">=24"

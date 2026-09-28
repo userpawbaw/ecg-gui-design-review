@@ -19,7 +19,11 @@ for(const f of tracked.filter(f=>/\.(mjs|cjs|js|ts)$/.test(f))){
 // 3. python candidates: Windows tries the py launcher first
 import('../scripts/local/run.mjs').then(m=>{
  const w=m.pythonCandidates('win32').map(c=>c.join(' '));if(w[0]!=='py -3'||!w.includes('python'))bad.push('run.mjs: Windows python order must start with "py -3" and include "python"');
- // 4. records checker on a CRLF copy of the checked files
+ // 4. data files parse the same with CRLF line ends (prepare-v2 failed on Windows: "Unexpected non-whitespace character after JSON")
+ {const {parseDataFile}=require('../scripts/lib/data-file.cjs');
+  for(const f of ['data/bank.js','data/extension.js']){const lf=fs.readFileSync(path.join(root,f),'utf8').replace(/\r\n/g,'\n');
+   try{const a=parseDataFile(lf),b=parseDataFile(lf.replace(/\n/g,'\r\n'));if(JSON.stringify(a)!==JSON.stringify(b))bad.push(f+': CRLF parse differs');}catch(e){bad.push(f+': '+e.message);}}}
+ // 5. records checker on a CRLF copy of the checked files
  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'crlf-'));
  for(const f of tracked.filter(f=>/\.(md|json)$/.test(f)&&!/^(prototype|data|dist|assets|verification)\//.test(f)&&fs.statSync(path.join(root,f)).size<2e6)){
   const src=path.join(root,f),dst=path.join(tmp,f);fs.mkdirSync(path.dirname(dst),{recursive:true});

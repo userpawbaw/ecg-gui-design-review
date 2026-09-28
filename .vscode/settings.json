@@ -1,0 +1,6 @@
+{
+  // Windows 터미널에서 Python이 cp949 대신 UTF-8로 읽고 쓰게 한다(O-004, O-005).
+  "terminal.integrated.env.windows": {"PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"},
+  "files.encoding": "utf8",
+  "files.eol": "\n"
+}

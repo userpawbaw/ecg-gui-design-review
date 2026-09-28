@@ -3,7 +3,7 @@
 import {chromium} from '@playwright/test';
 import {mkdir, writeFile} from 'node:fs/promises';
 const out = new URL('../qa-output/route/', import.meta.url).pathname; await mkdir(out, {recursive: true});
-const b = await chromium.launch({executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
+const b = await chromium.launch({executablePath: process.env.PW_EXECUTABLE || (process.platform === 'linux' ? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' : undefined), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
 const V = {A: {url: 'ref003.html', comp: '#travelComp', ind: '#indicator'}, B: {url: 'ref003b.html', comp: 'div.overflow-clip', ind: 'div.z-10'}};
 const res = {};
 for (const [k, v] of Object.entries(V)) {

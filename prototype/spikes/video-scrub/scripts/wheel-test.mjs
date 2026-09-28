@@ -1,6 +1,6 @@
 // Continuous wheel scroll through the track (100 px notches every 50 ms) — counts decode holds.
 import {chromium} from '@playwright/test';
-const b = await chromium.launch({executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
+const b = await chromium.launch({executablePath: process.env.PW_EXECUTABLE || (process.platform === 'linux' ? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' : undefined), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
 const pg = await b.newPage({viewport: {width: 1280, height: 720}});
 await pg.goto(`http://127.0.0.1:${process.argv[2] || 4193}/?clip=pan&hud=0`); await pg.waitForFunction(() => window.__vs?.ready);
 await pg.mouse.move(640, 360);

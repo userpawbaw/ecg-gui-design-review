@@ -19,11 +19,13 @@
 
 ## 2. 직접 보는 법
 
-```bash
-git fetch origin claude/r1-autopilot-recommended && git checkout claude/r1-autopilot-recommended
-node scripts/prepare-v2.cjs          # public/archive.json (gitignore) 생성 — 주의: methods.json을 덮어쓴다(R-a), 끝나면 git checkout prototype/v2/src/methods.json
-cd prototype/v2 && npm install && npm run dev
 ```
+git fetch origin claude/r1-autopilot-recommended
+git checkout claude/r1-autopilot-recommended
+npm run story
+```
+
+(2026-09-28: Windows VS Code 터미널용으로 바꿈 — 자료 준비·의존성 설치를 `npm run story`가 한다. 처음이면 `npm run doctor`, 자세한 내용은 `docs/LOCAL_WINDOWS.md`.)
 
 | URL (`http://127.0.0.1:5173/` 뒤) | 볼 것 |
 |---|---|

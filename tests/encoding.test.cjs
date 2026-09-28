@@ -37,7 +37,7 @@ assert.equal(findings("Image.open(p); urllib.request.urlopen(u)").length, 0);
 
 const files = execFileSync('git', ['ls-files', '*.py'], {encoding: 'utf8'}).split('\n').filter(Boolean);
 const bad = [];
-for (const f of files) for (const x of findings(fs.readFileSync(f, 'utf8'))) bad.push(`${f}:${x.line}  ${x.call.slice(0, 90)}`);
+for (const f of files) for (const x of findings(fs.readFileSync(f, 'utf8').replace(/\r\n/g, '\n'))) bad.push(`${f}:${x.line}  ${x.call.slice(0, 90)}`);
 if (bad.length) {
   console.error(`[encoding] FAIL — ${bad.length} text-mode file access without encoding='utf-8' (breaks on cp949 Windows):\n  ` + bad.join('\n  '));
   process.exit(1);

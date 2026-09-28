@@ -56,7 +56,7 @@ const specs = {
 };
 
 function read(rel) {
-  return fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  return fs.readFileSync(path.join(ROOT, rel), 'utf8').replace(/\r\n/g, '\n');  // Windows CRLF checkouts
 }
 
 function blocks(text, prefix) {
@@ -177,7 +177,7 @@ function checkCases(errors, validIds) {
   }
 
   for (const name of mainCases) {
-    const text = fs.readFileSync(path.join(CASE_DIR, name), 'utf8');
+    const text = fs.readFileSync(path.join(CASE_DIR, name), 'utf8').replace(/\r\n/g, '\n');
     const requiredPatterns = [
       /^## 배경/m,
       /^## 논의 흐름/m,
@@ -218,7 +218,7 @@ function checkCases(errors, validIds) {
   }
 
   for (const name of transcriptFiles) {
-    const text = fs.readFileSync(path.join(CASE_DIR, name), 'utf8');
+    const text = fs.readFileSync(path.join(CASE_DIR, name), 'utf8').replace(/\r\n/g, '\n');
     const n = caseNumber(name);
     if (!n || !mainCases.some(f => f.startsWith(`CASE-${n}_`))) {
       fail(errors, `${name}: 대응하는 main CASE가 없다`);
@@ -243,7 +243,7 @@ const INPUT_MODELS = ['시간', '스크롤 위치', '스크롤 속도', '휠 충
 function checkReferences(errors) {
   if (!fs.existsSync(REF_DIR)) return;
   for (const name of fs.readdirSync(REF_DIR).filter(n => /^REF-\d{3}_.*\.md$/.test(n))) {
-    const text = fs.readFileSync(path.join(REF_DIR, name), 'utf8');
+    const text = fs.readFileSync(path.join(REF_DIR, name), 'utf8').replace(/\r\n/g, '\n');
     const num = name.slice(4, 7);
     for (const sec of REF_SECTIONS) {
       if (!new RegExp('^## ' + sec.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*$', 'm').test(text)) fail(errors, `${name}: 필수 절 누락 (## ${sec})`);
@@ -280,7 +280,7 @@ function checkSkillProvenance(errors) {
   for (const dir of fs.readdirSync(skillRoot, { withFileTypes: true }).filter(d => d.isDirectory())) {
     const skillPath = path.join(skillRoot, dir.name, 'SKILL.md');
     if (!fs.existsSync(skillPath)) continue;
-    const text = fs.readFileSync(skillPath, 'utf8');
+    const text = fs.readFileSync(skillPath, 'utf8').replace(/\r\n/g, '\n');
     const m = text.match(/^name:\s*(.+)$/m);
     const name = (m ? m[1] : dir.name).trim();
     if (!provenance.includes(name) && !provenance.includes(`.claude/skills/${dir.name}`)) {

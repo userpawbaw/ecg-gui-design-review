@@ -6,6 +6,8 @@
 
 **2026-09-12 v2.2 구현 업데이트:** Sweep/Scroll·큰 비교 창·Reference 차이·Pin·30초 청크 재생·Attract를 구현했습니다. 98조건 전체의 600초 출력과 1,078건 지표 검증을 완료했습니다. [팀 실행 안내](docs/17_v2_team_handoff.md), [구현·복구 기록](docs/16_implementation_progress.md), [데이터 검사](verification/v2-long-data.json)를 먼저 읽어주세요. 실제 브라우저와 AFE 검수는 아직 미완료입니다.
 
+**Windows 로컬 실행: [`docs/LOCAL_WINDOWS.md`](docs/LOCAL_WINDOWS.md) — `npm run doctor` → `npm run story`.**
+
 v2 개발 소스는 `prototype/v2`입니다. 실행 ZIP은 앱과 생성 자료를 함께 포함하며 Node 로컬 서버로 실행합니다. 대용량 자료는 Git에 포함하지 않습니다. 아래 S5 단일 HTML 실행법은 보존한 이전 버전용입니다.
 
 ECG denoising 프로젝트를 원본 소스에서 다시 이해하고, 독립 설계안을 먼저 동결한 뒤 기존 GUI와 비교해 만든 연구용 프로토타입입니다.

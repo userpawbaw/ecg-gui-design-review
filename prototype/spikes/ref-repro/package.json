@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Spike: fidelity reproductions of REF-003 (scroll clouds + route map) and REF-004 (composited globe) with external CC0/public-domain assets. Not ECG product UI; all content is demo.",
   "scripts": {
-    "assets": "python3 scripts/prepare_assets.py",
+    "assets": "node ../../../scripts/local/run.mjs py scripts/prepare_assets.py",
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4191",

@@ -4,6 +4,8 @@
 
 ## 1. 준비 (처음 한 번)
 
+> **Windows:** 저장소 루트에서 `npm run py:setup` 한 번, 그다음 `npm run spike -- video-scrub` 한 줄이면 설치·클립 생성·실행까지 된다(`docs/LOCAL_WINDOWS.md`). 아래는 macOS/Linux 수동 절차.
+
 필요한 것: Node 20+, Python 3.10+ 와 OpenCV.
 
 ```bash

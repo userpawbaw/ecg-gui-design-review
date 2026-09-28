@@ -1,0 +1,4 @@
+# Local (Windows/macOS) video tools — no Blender here, so no numpy 1.26 pin (that pin is only for bpy in the cloud container, O-002).
+# Wheels exist for Python 3.10–3.14 at these versions.
+numpy>=2.1
+opencv-python-headless>=4.12

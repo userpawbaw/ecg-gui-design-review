@@ -2,7 +2,7 @@
 import {chromium} from '@playwright/test';
 import {mkdir, writeFile} from 'node:fs/promises';
 const out = new URL('../qa-output/', import.meta.url).pathname; await mkdir(out, {recursive: true});
-const b = await chromium.launch({executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
+const b = await chromium.launch({executablePath: process.env.PW_EXECUTABLE || (process.platform === 'linux' ? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' : undefined), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
 const res = {shots: [], errors: []};
 const p = await b.newPage({viewport: {width: 1600, height: 900}});
 p.on('pageerror', e => res.errors.push(String(e))); p.on('console', m => m.type() === 'error' && res.errors.push(m.text()));

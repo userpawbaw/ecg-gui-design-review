@@ -2,7 +2,7 @@
 import {chromium} from '../../prototype/v2/node_modules/@playwright/test/index.mjs';
 import {mkdirSync,writeFileSync} from 'node:fs';
 const out=process.argv[2]||'verification/r1-autopilot-20260927/shots';mkdirSync(out,{recursive:true});
-const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome',args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-proxy-server']});
+const b=await chromium.launch({executablePath:process.env.PW_EXECUTABLE || (process.platform === 'linux' ? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' : undefined),args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-proxy-server']});
 const log=[];
 async function page(q=''){const p=await b.newPage({viewport:{width:1920,height:1080}});p.on('console',m=>{if(m.type()==='error')log.push(m.text());});p.on('pageerror',e=>log.push('pageerror '+e.message));await p.goto('http://127.0.0.1:4173/'+q);await p.waitForFunction(()=>window.__story,null,{timeout:20000});await p.waitForTimeout(2500);return p;}
 const p=await page('?t=6.4');

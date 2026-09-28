@@ -126,3 +126,6 @@ AI가 시험하는 곳이 Linux 컨테이너(bash, UTF-8, `python3`, 고정 브�
 ### 재발 방지와 자동화 상태
 - **자동화됨**: `tests/portability.test.cjs`(npm test) — npm 스크립트의 `python3`·`VAR=` 접두·POSIX 명령·작은따옴표·`$VAR` 금지, 대체 경로 없는 `/opt/pw-browsers` 금지, Windows 파이썬 탐색 순서, CRLF 사본에서 기록 검사 통과.
 - 체크리스트 §9와 AGENTS.md: 사용자에게 주는 실행 안내는 `npm run …` 한 줄 형식.
+
+### 후속 (2026-09-28, 같은 날) — CRLF가 실제로 깨뜨린 곳
+사용자 Windows 실행: `SyntaxError: Unexpected non-whitespace character after JSON at position 2987852` at `prepare-v2.cjs:3` `[대화]`. 원인: `prepare-v2.cjs`가 `data/*.js`에서 JSON 끝을 `';\n'`으로 찾았는데, `.gitattributes` 이전에 받은 Windows 작업 폴더는 CRLF(`;\r\n`)라 찾지 못하고 뒤 코드까지 파싱했다. 앞의 "CRLF는 예방"이라는 판단은 기록 검사기에 대해서만 맞았고, **데이터 파서는 실제로 깨졌다** — 정정. 조치: 파서를 `scripts/lib/data-file.cjs`로 분리(`/;\r?\n/`), 컨테이너에서 CRLF 사본으로 옛 파서 실패 재현 → 새 파서 통과(98 장면) 확인 `[테스트]`. `tests/portability.test.cjs`에 `data/bank.js`·`data/extension.js`의 LF/CRLF 파싱 동일성 검사 추가. `doctor`는 pull이 다시 쓰지 않는 파일(`data/bank.js` 등)로 CRLF를 판정(전에는 `package.json`만 봐서 놓쳤다).

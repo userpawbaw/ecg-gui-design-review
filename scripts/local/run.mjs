@@ -51,8 +51,9 @@ function doctor(){
  }else warn('Python 3 없음 — 영상 도구·Blender 스크립트를 쓸 때만 필요. https://www.python.org 설치 시 "py launcher" 포함');
  const b=browserPath();b?ok(`Playwright 브라우저: ${b}`):warn('Playwright가 쓰는 브라우저가 설치돼 있지 않음 — 브라우저 테스트를 쓸 때만: npm run browsers');
  const eol=capture('git',['config','--get','core.autocrlf']);
- const crlf=existsSync(join(root,'package.json'))&&readFileSync(join(root,'package.json'),'utf8').includes('\r\n');
- crlf?bad(`작업 폴더 파일이 CRLF(core.autocrlf=${eol}) — 한 번만: git add --renormalize . 후 LOCAL_WINDOWS.md §4의 재체크아웃`):ok(`줄바꿈 LF (core.autocrlf=${eol??'미설정'}; .gitattributes가 LF 고정)`);
+ // check files a pull does not rewrite (package.json was re-written as LF when it changed)
+ const crlf=['data/bank.js','AGENTS.md','prototype/v2/src/main.tsx'].some(f=>existsSync(join(root,f))&&readFileSync(join(root,f),'utf8').slice(0,200000).includes('\r\n'));
+ crlf?warn(`작업 폴더 파일이 CRLF(core.autocrlf=${eol}) — 이 저장소 도구는 CRLF도 처리하지만, LF로 맞추려면 LOCAL_WINDOWS.md §4`):ok(`줄바꿈 LF (core.autocrlf=${eol??'미설정'}; .gitattributes가 LF 고정)`);
  if(win){const cp=capture('cmd',['/c','chcp']);cp&&!/65001/.test(cp)?warn(`터미널 코드 페이지 ${cp.replace(/\D+/g,'')} (cp949). 이 저장소 명령은 UTF-8을 강제하므로 그대로 써도 됨`):ok('터미널 UTF-8');
   say('\n  참고: PowerShell에서 "스크립트를 실행할 수 없으므로" 오류가 나면 LOCAL_WINDOWS.md §3');}
  ok(`PYTHONUTF8=1 (npm run 경유 시 자동)`);

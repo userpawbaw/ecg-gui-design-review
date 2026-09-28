@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..'),dest=path.join(root,'prototype/v2/public');fs.mkdirSync(dest,{recursive:true});
-const parse=s=>JSON.parse(s.slice(s.indexOf('=')+1,s.indexOf(';\n')));
+const {parseDataFile:parse}=require('./lib/data-file.cjs');
 const base=parse(fs.readFileSync(path.join(root,'data/bank.js'),'utf8')),ext=parse(fs.readFileSync(path.join(root,'data/extension.js'),'utf8'));
 const m=new Map(base.scenes.map(s=>[s.id,s]));for(const s of ext.scenes){const old=m.get(s.id);m.set(s.id,{...old,...s,traces:{...old?.traces,...s.traces}});}
 fs.writeFileSync(path.join(dest,'archive.json'),JSON.stringify({...base,methods:ext.methods,scenes:[...m.values()]}));

@@ -27,8 +27,8 @@
     },
     {
       "id": "R1-NEXT-SCREENS",
-      "status": "queued_after_R1-INTRO",
-      "task": "Apply the user's feedback on the Story screens after the intro (autopilot steps 1-5 and Lab handoff). User is writing the feedback now (2026-09-29); start only after the intro implementation is done."
+      "status": "flow_recorded_queued_after_R1-INTRO",
+      "task": "Noise-by-noise scenes after the intro (PLI -> baseline wander -> muscle): user flow and AI flow analysis recorded in docs/uiux_system/rounds/R1/IDEA-R1-NOISE.md (F-028). After the intro is implemented: option round, stack check, then the user's further feedback on grid/bars/Lab handoff."
     }
   ],
   "automation": {

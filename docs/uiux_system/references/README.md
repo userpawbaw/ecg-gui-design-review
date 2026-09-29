@@ -8,10 +8,14 @@
 |---|---|---|---|
 | [REF-001](REF-001_MOTO_CARD.md) | moto-card.com | EFX-001-01 ~ 08 (역광 지구, match cut, 원통 갤러리, 금속 카드 반사, 곡면 숫자 벽, clip reveal, 타이포 끊김 사례, 히어로 반복 영상) | 녹화 + 소스 + 라이브 측정 |
 | [REF-002](REF-002_LEOPARPEIX.md) | leoparpeix.com | EFX-002-01 ~ 07 (베이크 조명 3D 방 + 포인터 시선, 스크롤 카메라 하강·접근, 같은 집 속 다락방 섹션, 관성·스냅 드래그 갤러리, 틀 안 이미지 시차, GPU 유체 왜곡, 3D 벌 동반자) | 녹화(HUD) + 소스 + 라이브 측정 |
-| [REF-003](REF-003_WHITE_DESERT.md) | white-desert.com | EFX-003-01 ~ 05 (두 겹 구름 덮기, 스크롤로 그리는 비행 경로 + 표시점, 소나 링, 안개 판 전환, 문장 마스크) — **WebGL 없음** | 녹화(HUD) + 소스 + 라이브 측정 · 재현 spike `prototype/spikes/ref-repro/ref003.html` |
+| [REF-003](REF-003_WHITE_DESERT.md) | white-desert.com | EFX-003-01 ~ 06 (두 겹 구름 덮기, 스크롤로 그리는 비행 경로 + 표시점, 소나 링, 안개 판 전환, 문장 마스크, 세 층 시차 — 사진은 늦게 들어와 먼저 나감) — **WebGL 없음** | 녹화(HUD) + 소스 + 라이브 측정 · 재현 spike `prototype/spikes/ref-repro/ref003.html` |
 | [REF-004](REF-004_SEASATS.md) | seasats.com | EFX-004-01 ~ 06 (합성 셰이더 홀로그램 지구, 시계 눈금 점선 링, hover 원형 사진 카드, 필터 → 최대 군집 회전, 드래그 관성, 스크롤 연속 이미지 끊김 사례) | 녹화 + 소스 + 라이브 측정(지구 렌더는 헤드리스에서 마운트 안 됨) · 재현 spike `prototype/spikes/ref-repro/ref004.html` |
 | REF-005 | ciechanow.ski/sound | 효과 카드 없음 — R1 레퍼런스 카드만(`../rounds/R1/R1_STEP1_PACKET_AND_REFERENCE_PACK.md` §3.2) | 텍스트 확인(L1), 재현 대상이 되면 21번 규칙으로 승격 |
 | [REF-006](REF-006_R2D3_VISUAL_INTRO_ML.md) | r2d3.us visual intro to ML | EFX-006-01 ~ 05 (막대 → 점 연속 재배열, 회전·낙하 히스토그램, 산점도 행렬 전개, 경로 흐름 + 정확도 반전, ZENO 평활·고정 패널) — **WebGL 없음** | 소스 + 헤드리스 측정(로컬 사본, 사용자 녹화 없음) |
+| [REF-007](REF-007_HAUNTED_BOULDER_CITY.md) | hauntedbouldercity.com | EFX-007-01 ~ 04 (초점선 현재 항목만 채움·이동·세로선, 양방향 흐림 등장 + 테마 전환, 읽는 만큼 켜지는 단어, 멈춤이 있는 가로 장 넘김) — **WebGL 없음** | 녹화(2026-09-30) + 소스 |
+| [REF-008](REF-008_SEARCHING_FOR_BIRDS.md) | searchingforbirds.visualcinnamon.com | EFX-008-01 ~ 02 (고정 차트 + 흐르는 단계 카드 + 차트 안 강조 띠, 데이터에 붙는 주석) — **WebGL 없음** | 소스 + 헤드리스 로컬 사본(R-016) |
+| [REF-009](REF-009_IGLOO_INC.md) | igloo.inc (Awwwards SOTY 2024) | EFX-009-01 (고정폭 HUD 글자 뒤섞임) | 로더 소스 + 사례 연구만 — **시각 확인 없음**(WebGL, 녹화 필요) |
+| [REF-010](REF-010_BRIGHT_BIOTECH.md) | brightbiotech.co.uk (SOTD 2025-07-18) | EFX-010-01 (한 글꼴 극단 크기 대비 + 줄 단위 헤드라인) | HTML·CSS 소스만 — **시각 확인 없음** |
 
 ## 레시피 색인
 

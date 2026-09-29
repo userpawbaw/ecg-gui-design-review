@@ -8,7 +8,7 @@ import {detectR,makeLoop} from './beats';
 import {createIntro,type Intro} from './introStage';
 import './intro.css';
 
-export const INTRO_SCENE='d0-awgn--5';   // D0 S038, white noise −5 dB (D-041)
+export const INTRO_SCENE='d0-awgn-0';    // D0 S038, white noise 0 dB (D-041 → D-042: R peaks must stay visible in the noise)
 type Props={bank:Bank,onNext:()=>void,onLab:(t:{axis:string,noise:string,snr:number,method:string})=>void};
 
 export function IntroShell({bank,onNext,onLab}:Props){
@@ -16,7 +16,7 @@ export function IntroShell({bank,onNext,onLab}:Props){
  const reduced=params.get('reduced')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches;
  const scene=useMemo(()=>{
   const s=bank.scenes.find(x=>x.id===INTRO_SCENE);if(!s)throw Error('intro scene missing: '+INTRO_SCENE);
-  const winner=rankScene(s as never).ranking[0].id;       // oracle excluded; −5 dB winners are all deep learning (D-040)
+  const winner=rankScene(s as never).ranking[0].id;       // oracle excluded; winner is deep learning (M06) at −5 and 0 dB (D-040, D-042)
   const d=(k:string)=>decode(s.traces[k],s.scale,bank.n);
   const clean=d('clean'),input=d('input'),output=d(winner);
   const loop=makeLoop(detectR(clean,bank.fs),[clean,input,output],bank.fs);
@@ -51,7 +51,7 @@ export function IntroShell({bank,onNext,onLab}:Props){
   <p ref={refs.sub} className="it-sub">잡음이 섞인 심전도에서 원래 신호를 되살리는 방법들을, 같은 기록으로 비교합니다.</p>
   <div ref={refs.hint} className="it-hint"><span className="wheel" aria-hidden="true"/>스크롤</div>
   <div ref={refs.labels} className="it-labels" aria-live="polite">
-   <span ref={refs.labelIn} className="in">잡음 섞인 입력 · 백색 잡음 −5 dB</span>
+   <span ref={refs.labelIn} className="in">잡음 섞인 입력 · 백색 잡음 0 dB</span>
    <span ref={refs.labelOut} className="out">잡음 제거 출력 · 저장값</span>
   </div>
   <div ref={refs.scale} className="it-scale" aria-hidden="true"><i className="sec"/>1 s<i className="mv"/>1 mV</div>

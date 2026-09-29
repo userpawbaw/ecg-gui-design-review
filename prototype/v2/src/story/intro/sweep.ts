@@ -3,7 +3,9 @@
 // afterglow colour are style layers that never move a vertex. Physical scale is fixed (mV per px) for both traces.
 import type {Loop} from './beats';
 
-export type SweepTrace={values:Float32Array,color:[number,number,number]};
+// glow/white: per-trace luminance balance — the dense noisy input stacks far more glow per pixel than the clean output,
+// and #ffbc79 is brighter than #67e7c3, so the input is scaled down to read at the same level (user feedback 2026-09-30).
+export type SweepTrace={values:Float32Array,color:[number,number,number],glow?:number,core?:number,white?:number};
 export type SweepView={
  t:number,                       // playback clock (s) — same clock as the heart
  startAbs:number|null,           // first absolute sample drawn (W4: the trace starts at the R the light pulse lands on)
@@ -64,17 +66,18 @@ export function createSweep(canvas:HTMLCanvasElement,opts:{fs:number,loop:Loop,i
  function layer(tr:SweepTrace,headAbs:number,first:number,a:number,focus:number,boost:number){
   if(a<=.003)return;
   const headSlot=((headAbs%count)+count)%count,headX=xOfSlot(headSlot);
-  const gr=gradient(tr.color,headX,1,boost),p=path(tr.values,headAbs,first);
+  const gr=gradient(tr.color,headX,1,boost*(tr.white??1)),p=path(tr.values,headAbs,first);
+  const ga=a*(tr.glow??1),ca=a*(tr.core??1);
   const gx=box.l-PAD,gy=box.t-PAD,gw=box.r-box.l+2*PAD,gh=box.b-box.t+2*PAD;
   lv.forEach((l,i)=>{const w=Math.ceil(gw/2**(i+1)),h=Math.ceil(gh/2**(i+1));if(l.c.width!==w||l.c.height!==h){l.c.width=w;l.c.height=h;}l.g.setTransform(1,0,0,1,0,0);l.g.clearRect(0,0,w,h);l.g.imageSmoothingEnabled=true;});
   const l0=lv[0];l0.g.setTransform(.5,0,0,.5,-gx*.5,-gy*.5);l0.g.lineJoin='round';l0.g.lineCap='round';l0.g.strokeStyle=gr;l0.g.lineWidth=3.4;l0.g.stroke(p);
   for(let i=1;i<3;i++)lv[i].g.drawImage(lv[i-1].c,0,0,lv[i].c.width,lv[i].c.height);
   g.imageSmoothingEnabled=true;g.globalCompositeOperation='lighter';
-  g.globalAlpha=.9*a;g.drawImage(lv[2].c,gx,gy,gw,gh);                   // wide bloom
-  g.globalAlpha=.7*a;g.drawImage(lv[1].c,gx,gy,gw,gh);                   // mid glow
-  g.globalAlpha=(.35+.9*focus)*a;g.drawImage(lv[0].c,gx,gy,gw,gh);       // inner glow / defocused core
+  g.globalAlpha=.9*ga;g.drawImage(lv[2].c,gx,gy,gw,gh);                   // wide bloom
+  g.globalAlpha=.7*ga;g.drawImage(lv[1].c,gx,gy,gw,gh);                   // mid glow
+  g.globalAlpha=(.35*ga+.9*focus*ca);g.drawImage(lv[0].c,gx,gy,gw,gh);       // inner glow / defocused core
   // core: always the same vertices; out of focus it fades into the soft level instead of moving
-  g.globalAlpha=a*(1-focus);g.lineJoin='round';g.lineCap='round';g.strokeStyle=gr;g.lineWidth=1.6;g.stroke(p);
+  g.globalAlpha=ca*(1-focus);g.lineJoin='round';g.lineCap='round';g.strokeStyle=gr;g.lineWidth=1.6;g.stroke(p);
   g.globalAlpha=1;g.globalCompositeOperation='source-over';
   return headX;
  }

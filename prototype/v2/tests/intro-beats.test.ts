@@ -6,7 +6,7 @@ const bank=existsSync(file)?JSON.parse(readFileSync(file,'utf8')):null;
 const skip=!bank&&'run scripts/prepare-v2.cjs first';
 
 test('R peaks of D0 S038 include the ectopic beat and give real R–R intervals (D-041)',{skip},()=>{
- const s=bank.scenes.find((x:{id:string})=>x.id==='d0-awgn--5');assert.equal(s.record,'S038');
+ const s=bank.scenes.find((x:{id:string})=>x.id==='d0-awgn-0');assert.equal(s.record,'S038');
  const r=detectR(decode(s.traces.clean,s.scale,bank.n),bank.fs);
  assert.equal(r.length,17);
  const rr=r.slice(1).map((v,i)=>(v-r[i])*1000/bank.fs);
@@ -15,7 +15,7 @@ test('R peaks of D0 S038 include the ectopic beat and give real R–R intervals 
 });
 
 test('loop seam keeps a real R–R interval and a small jump on every shown trace',{skip},()=>{
- const s=bank.scenes.find((x:{id:string})=>x.id==='d0-awgn--5');
+ const s=bank.scenes.find((x:{id:string})=>x.id==='d0-awgn-0');
  const tr=['clean','input','M06'].map(k=>decode(s.traces[k],s.scale,bank.n));
  const r=detectR(tr[0],bank.fs),l=makeLoop(r,tr,bank.fs);
  const rrSet=new Set(r.slice(1).map((v,i)=>v-r[i]));

@@ -49,7 +49,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  // --- post: bloom only on bright parts (threshold), never on the Canvas 2D data layer ---
  const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.55,.35,.78);composer.addPass(bloom);composer.addPass(new OutputPass());
- const sweep=createSweep(dom.sweep,{fs:data.fs,loop:data.loop,input:{values:data.input,color:SWEEP_COLORS.input},output:{values:data.output,color:SWEEP_COLORS.output},mvPerBox:3.6});
+ const sweep=createSweep(dom.sweep,{fs:data.fs,loop:data.loop,input:{values:data.input,color:SWEEP_COLORS.input,glow:.45,core:.78,white:.35},output:{values:data.output,color:SWEEP_COLORS.output},mvPerBox:3.6});
 
  // --- input: Lenis smooth scroll + scrub smoothing on top (REF-001: Lenis 1.6 s + scrub 1) ---
  const lenis=opt.frozenP===null?new Lenis({wrapper:dom.wrapper,content:dom.content,duration:opt.reduced?.2:1.6,wheelMultiplier:1.1,autoRaf:false}):null;

@@ -22,8 +22,8 @@
     },
     {
       "id": "R1-INTRO",
-      "status": "implemented_conditional_user_check_pending",
-      "task": "R1 intro implemented per IDEA-R1-INTRO + D-041 (prototype/v2/src/story/intro). Headless L3 verified (sync e2e, 12-frame sequences, G1-G6 in verification/r1-intro-20260929). Pending: user local check via npm run story (GPU frame rate, wheel/mouse feel), REF-001 recording side-by-side."
+      "status": "wave_part_ideation_round1",
+      "task": "R1 intro implemented per IDEA-R1-INTRO + D-041 (prototype/v2/src/story/intro). Headless L3 verified (sync e2e, 12-frame sequences, G1-G6 in verification/r1-intro-20260929). Pending: user local check via npm run story (GPU frame rate, wheel/mouse feel), REF-001 recording side-by-side. 2026-09-30: user feedback on the waveform part (F-029); 0 dB + brightness applied (D-042); IDEA-R1-WAVE round 1 awaiting user reactions; globe/person/heart feedback after that."
     },
     {
       "id": "R1-NEXT-SCREENS",
@@ -127,7 +127,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-29",
+  "updated_at": "2026-09-30",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",

@@ -70,6 +70,7 @@ User-approved workflow: source-project analysis → independent design/prototype
 - Alpha/Beta are not renamed Director A/B. Both use explicit references; they differ by representation: Alpha is implementation-aware from the start, Beta is image-first then translated back to real UI.
 - Use the same Common Creative Packet and Reference Pack. If Beta is run after Alpha, do not leak Alpha-specific layout/component answers into Beta first pass unless the user explicitly requests a derivative image.
 - Freeze Alpha and Beta before cross-review. User visual alignment precedes final implementation choice.
+- Screen ideation from references is co-ideation with the user (`20` Step 5A, D-039, 2026-09-29): per beat, offer 2–4 grounded options (at least one bold) with implementation know-how and data-contract risk, record the user's reactions in `rounds/<R>/IDEA-*.md`, and concretize only the directions the user keeps. Never proxy this step in autopilot; feasibility review looks for ways to reach the target, not reasons to shrink it.
 - For Beta, image generation is a cheap design artifact, not the goal. Actual implementation must reuse canonical waveform/data/state and rebuild components/motion in code.
 - Chat owns creative/reference/image generation and cross-review; Work/Codex own multi-file implementation, runtime, screenshots, Playwright and target-like QA.
 

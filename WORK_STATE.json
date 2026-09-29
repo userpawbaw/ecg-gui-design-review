@@ -19,6 +19,16 @@
       "id": "UI-02",
       "status": "approved_in_redesign_2026-09-26",
       "task": "Sweep leading-edge glow inside the redesign; spec after comparison per docs/22 §4 (D-035)"
+    },
+    {
+      "id": "R1-INTRO",
+      "status": "ideation_round1_accepted",
+      "task": "R1 intro redesign per IDEA-R1-INTRO.md (user accepted all round-1 recommendations 2026-09-29): round 2 concretization -> freeze -> D + change contract -> implementation -> G1-G6"
+    },
+    {
+      "id": "R1-NEXT-SCREENS",
+      "status": "queued_after_R1-INTRO",
+      "task": "Apply the user's feedback on the Story screens after the intro (autopilot steps 1-5 and Lab handoff). User is writing the feedback now (2026-09-29); start only after the intro implementation is done."
     }
   ],
   "automation": {
@@ -117,7 +127,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-27T12:00:00+09:00",
+  "updated_at": "2026-09-29",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",

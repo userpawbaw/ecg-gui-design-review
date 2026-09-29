@@ -397,10 +397,11 @@
         "sha256": "f55226d46d27e05511f2118dc6aa24f5dbf9b6b2cddc87cc6e0e7dd067c00b11",
         "bytes": 1617810
       },
-      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder); scripts/assets/build-intro.py → prototype/v2/src/story/intro/assets/",
       "processed": null,
       "used_by": [
-        "prototype/spikes/ref-repro"
+        "prototype/spikes/ref-repro",
+        "prototype/v2 R1 intro"
       ],
       "review": "Globe colour source for the REF-004 repro (restyled in shader). NASA imagery is public domain; credit \"NASA Earth Observatory\" shown on the page."
     },
@@ -1286,6 +1287,78 @@
       "processing": "none (source only)",
       "used_by": [],
       "review": "2026-09-26 download smoke test for a site without an API (D-022 follow-up). License.txt in the Drive folder: CC0 1.0. Not used by any page."
+    },
+    {
+      "id": "nasa-blackmarble-2012-3600",
+      "title": "NASA Black Marble 2012 (night lights, land/ocean/ice), 3600x1800",
+      "kind": "scene-source",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/79000/79765/dnb_land_ocean_ice.2012.3600x1800.jpg",
+        "page": "https://visibleearth.nasa.gov/images/79765"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/nasa-blackmarble-2012-3600/dnb_land_ocean_ice.2012.3600x1800.jpg",
+        "sha256": "373e5a08c9f378a2ce6320214a613148e4b1e3946b3f39a516c9093b76cb7124",
+        "bytes": 794479
+      },
+      "processing": "scripts/assets/build-intro.py resizes into prototype/v2/public/intro/",
+      "processed": null,
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "Night side of the backlit globe (REF-001 EFX-001-02 night term). Credit NASA Earth Observatory."
+    },
+    {
+      "id": "nasa-clouds-2048",
+      "title": "NASA Blue Marble clouds (combined), 2048x1024",
+      "kind": "scene-source",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57747/cloud_combined_2048.jpg",
+        "page": "https://visibleearth.nasa.gov/images/57747"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/nasa-clouds-2048/cloud_combined_2048.jpg",
+        "sha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+        "bytes": 829367
+      },
+      "processing": "packed into the globe channel texture by scripts/assets/build-intro.py",
+      "processed": null,
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "Cloud layer (REF-001 bump pack b channel equivalent). Credit NASA Earth Observatory."
+    },
+    {
+      "id": "makehuman-base-mesh",
+      "title": "MakeHuman base mesh (base.obj)",
+      "kind": "model",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/3dobjs/base.obj",
+        "page": "https://github.com/makehumancommunity/makehuman/blob/master/LICENSE.md"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/makehuman-base-mesh/base.obj",
+        "sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
+        "bytes": 1749303
+      },
+      "processing": "scripts/assets/build-intro.py (Blender bpy): body group only, arms lowered, decimated, exported to prototype/v2/public/intro/body.glb + front silhouette polyline",
+      "processed": null,
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "MakeHuman assets (base mesh) are CC0 per LICENSE.md section C. Shown only as a rim-lit outline, no face."
     }
   ],
   "rejected": [

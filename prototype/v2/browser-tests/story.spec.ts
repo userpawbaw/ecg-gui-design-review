@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 // R1 story shell (HYB-R1-001): wheel gesture = one step, method dots persist, stored values, Lab handoff keeps the scene.
 test('story: attract → conditions → grid → bars → Lab on the same scene',async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('/');await page.waitForFunction(()=>(window as any).__story);
+ await page.goto('/?step=0');await page.waitForFunction(()=>(window as any).__story);
  await expect(page.locator('.story')).toHaveAttribute('data-step','0');await expect(page.getByText('ARCHIVED REPLAY — 실제 장치 세션 없음')).toBeVisible();
  const burst=(dy:number,n:number)=>page.evaluate(([dy,n])=>new Promise<void>(r=>{let i=0;const t=setInterval(()=>{dispatchEvent(new WheelEvent('wheel',{deltaY:dy,cancelable:true}));if(++i>=n){clearInterval(t);r();}},30);}),[dy,n]);
  await burst(120,20);await expect(page.locator('.story')).toHaveAttribute('data-step','1');
@@ -20,6 +20,6 @@ test('story: attract → conditions → grid → bars → Lab on the same scene'
  expect(errors).toEqual([]);
 });
 test('story: reduced motion keeps the structure',async({page})=>{
- await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/');await page.waitForFunction(()=>(window as any).__story);
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/?step=0');await page.waitForFunction(()=>(window as any).__story);
  await expect(page.locator('.story.reduced')).toHaveCount(1);await page.keyboard.press('ArrowRight');await expect(page.locator('.story')).toHaveAttribute('data-step','1');await expect(page.locator('.st-dot[data-main]')).toHaveCount(10);
 });

@@ -22,8 +22,8 @@
     },
     {
       "id": "R1-INTRO",
-      "status": "ideation_round1_accepted",
-      "task": "R1 intro redesign per IDEA-R1-INTRO.md (user accepted all round-1 recommendations 2026-09-29): round 2 concretization -> freeze -> D + change contract -> implementation -> G1-G6"
+      "status": "implemented_conditional_user_check_pending",
+      "task": "R1 intro implemented per IDEA-R1-INTRO + D-041 (prototype/v2/src/story/intro). Headless L3 verified (sync e2e, 12-frame sequences, G1-G6 in verification/r1-intro-20260929). Pending: user local check via npm run story (GPU frame rate, wheel/mouse feel), REF-001 recording side-by-side."
     },
     {
       "id": "R1-NEXT-SCREENS",

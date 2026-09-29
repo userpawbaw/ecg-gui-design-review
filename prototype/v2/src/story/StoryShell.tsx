@@ -15,7 +15,7 @@ gsap.ticker.lagSmoothing(0); // RCP-01: never stretch tweens after a slow frame
 
 const methods=methodData as Record<string,{name:string,family:string,principle:string,limit:string}>;
 export type LabTarget={axis:string,noise:string,snr:number,method:string};
-type Props={bank:Bank,onEnterLab:(t:LabTarget)=>void,onDone:()=>void};
+type Props={bank:Bank,onEnterLab:(t:LabTarget)=>void,onDone:()=>void,initialStep?:number,onIntro?:()=>void};
 const STEPS=6; // 0 attract · 1–3 conditions · 4 grid · 5 bars
 const AMPLITUDE=1.2,STRIP_MV=.15; // AP-01: fixed physical scale for the component strip
 
@@ -33,10 +33,10 @@ function rowsFor(step:number,W:number,H:number){
  return{attract:hidden(box(W,H,.05,.95,.31,.54)),strip:hidden(box(W,H,.18,.80,.20,.22)),input:box(W,H,.18,.80,.215,.30),output:box(W,H,.18,.80,.345,.43)};
 }
 
-export function StoryShell({bank,onEnterLab,onDone}:Props){
+export function StoryShell({bank,onEnterLab,onDone,initialStep=0,onIntro}:Props){
  const story:StoryData=useMemo(()=>buildStory(bank),[bank]);
  const params=new URLSearchParams(location.search);
- const [step,setStep]=useState(()=>Math.max(0,Math.min(STEPS-1,Number(params.get('step'))||0)));
+ const [step,setStep]=useState(()=>Math.max(0,Math.min(STEPS-1,params.has('step')?Number(params.get('step'))||0:initialStep)));
  const [leaving,setLeaving]=useState(false);
  const reduced=useMemo(()=>params.get('reduced')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches,[]);
  const root=useRef<HTMLDivElement>(null),horizonCanvas=useRef<HTMLCanvasElement>(null),signalCanvas=useRef<HTMLCanvasElement>(null);
@@ -109,14 +109,14 @@ export function StoryShell({bank,onEnterLab,onDone}:Props){
 
  // --- input: one wheel gesture = one step; keyboard; idle return ---
  const lastInput=useRef(performance.now());
- function go(delta:number){if(leaving)return;const next=stepRef.current+delta;lastInput.current=performance.now();if(next>=STEPS){enterLab();return;}if(next<0)return;setStep(next);}
+ function go(delta:number){if(leaving)return;const next=stepRef.current+delta;lastInput.current=performance.now();if(next>=STEPS){enterLab();return;}if(next<initialStep&&onIntro){onIntro();return;}if(next<0)return;setStep(next);}
  useEffect(()=>{
   let acc=0,locked=false,lastWheel=0,movedAt=0;
   const wheel=(e:WheelEvent)=>{e.preventDefault();const now=performance.now();lastWheel=now;lastInput.current=now;if(locked)return;acc+=e.deltaY;if(Math.abs(acc)>30){go(Math.sign(acc));acc=0;locked=true;movedAt=now;}};
   // a gesture ends after 350 ms without wheel events; at most one step per gesture and per 700 ms
   const release=setInterval(()=>{const now=performance.now();if(locked&&now-lastWheel>350&&now-movedAt>700){locked=false;acc=0;}},50);
   const key=(e:KeyboardEvent)=>{if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();go(1);}else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(-1);}};
-  const idle=setInterval(()=>{if(stepRef.current>0&&!leaving&&performance.now()-lastInput.current>180000)setStep(0);},1000);
+  const idle=setInterval(()=>{if(stepRef.current>0&&!leaving&&performance.now()-lastInput.current>180000){if(onIntro)onIntro();else setStep(0);}},1000);
   addEventListener('wheel',wheel,{passive:false});addEventListener('keydown',key);
   return()=>{removeEventListener('wheel',wheel);removeEventListener('keydown',key);clearInterval(release);clearInterval(idle);};
  },[leaving]);

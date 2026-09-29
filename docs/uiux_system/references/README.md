@@ -13,7 +13,7 @@
 | REF-005 | ciechanow.ski/sound | 효과 카드 없음 — R1 레퍼런스 카드만(`../rounds/R1/R1_STEP1_PACKET_AND_REFERENCE_PACK.md` §3.2) | 텍스트 확인(L1), 재현 대상이 되면 21번 규칙으로 승격 |
 | [REF-006](REF-006_R2D3_VISUAL_INTRO_ML.md) | r2d3.us visual intro to ML | EFX-006-01 ~ 05 (막대 → 점 연속 재배열, 회전·낙하 히스토그램, 산점도 행렬 전개, 경로 흐름 + 정확도 반전, ZENO 평활·고정 패널) — **WebGL 없음** | 소스 + 헤드리스 측정(로컬 사본, 사용자 녹화 없음) |
 | [REF-007](REF-007_HAUNTED_BOULDER_CITY.md) | hauntedbouldercity.com | EFX-007-01 ~ 04 (초점선 현재 항목만 채움·이동·세로선, 양방향 흐림 등장 + 테마 전환, 읽는 만큼 켜지는 단어, 멈춤이 있는 가로 장 넘김) — **WebGL 없음** | 녹화(2026-09-30) + 소스 |
-| [REF-008](REF-008_SEARCHING_FOR_BIRDS.md) | searchingforbirds.visualcinnamon.com | EFX-008-01 ~ 02 (고정 차트 + 흐르는 단계 카드 + 차트 안 강조 띠, 데이터에 붙는 주석) — **WebGL 없음** | 소스 + 헤드리스 로컬 사본(R-016) |
+| [REF-008](REF-008_SEARCHING_FOR_BIRDS.md) | searchingforbirds.visualcinnamon.com | EFX-008-01 ~ 03 (고정 차트 + 흐르는 단계 카드 + 차트 안 강조 띠, 데이터에 붙는 주석, 여러 파형 한 판 + 점선 격자 + 의미 구획 띠 — 격자 비교 기준) — **WebGL 없음** | 소스 + 헤드리스 로컬 사본(R-016) |
 | [REF-009](REF-009_IGLOO_INC.md) | igloo.inc (Awwwards SOTY 2024) | EFX-009-01 (고정폭 HUD 글자 뒤섞임) | 로더 소스 + 사례 연구만 — **시각 확인 없음**(WebGL, 녹화 필요) |
 | [REF-010](REF-010_BRIGHT_BIOTECH.md) | brightbiotech.co.uk (SOTD 2025-07-18) | EFX-010-01 (한 글꼴 극단 크기 대비 + 줄 단위 헤드라인) | HTML·CSS 소스만 — **시각 확인 없음** |
 

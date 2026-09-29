@@ -7,7 +7,7 @@
 .it-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;z-index:1}
 .it-scroll::-webkit-scrollbar{display:none}
 .it-scroll-content{height:1000vh}
-.it-title,.it-sub,.it-hint,.it-labels,.it-scale,.it-end,.it-skip,.it-notice{position:absolute;z-index:2}
+.it-title,.it-sub,.it-hint,.it-labels,.it-end,.it-skip,.it-notice{position:absolute;z-index:2}
 .it-title{left:0;top:0;margin:0;transform-origin:0 0;font-weight:700;font-size:clamp(46px,5.2vw,100px);letter-spacing:-.02em;line-height:1.02;white-space:nowrap;pointer-events:none;will-change:transform}
 .it-title small{display:block;margin-bottom:.9vh;font-size:.17em;font-weight:500;letter-spacing:.32em;color:var(--ink-2)}
 .it-noise i{display:inline-block;font-style:normal;will-change:transform}
@@ -16,12 +16,37 @@
 .it-hint .wheel{width:18px;height:28px;border:1.5px solid currentColor;border-radius:9px;position:relative}
 .it-hint .wheel::after{content:"";position:absolute;left:50%;top:5px;width:2px;height:6px;margin-left:-1px;background:currentColor;border-radius:1px;animation:it-wheel 1.6s ease-in-out infinite}
 @keyframes it-wheel{0%{transform:translateY(0);opacity:1}70%{transform:translateY(8px);opacity:0}100%{opacity:0}}
-.it-labels{display:grid;font-size:15px;letter-spacing:.06em;opacity:0;pointer-events:none}
-.it-labels span{grid-area:1/1}
-.it-labels .in{color:#ffbc79}.it-labels .out{color:#67e7c3}
-.it-scale{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);opacity:0;pointer-events:none}
-.it-scale .sec{display:block;width:var(--sec,100px);height:1px;background:currentColor}
-.it-scale .mv{display:block;width:1px;height:var(--mv,40px);background:currentColor;margin-left:18px}
+.it-grid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
+/* L1 — two-tier labels: large Korean word (Pretendard ExtraBold, tight tracking) over a small mono HUD line (REF-010 size
+   contrast ≈ 6 : 1, REF-009 mono tier). Only the current tier is filled with its bar grown; the other is an outline
+   pushed back 14 px (REF-007 EFX-007-01 numbers: 0.65 s colour, 0.8 s cubic-bezier(.2,.75,.25,1) move). */
+.it-labels{--mono:"IBM Plex Mono",ui-monospace,monospace;display:grid;gap:clamp(10px,1.4vh,18px);opacity:0;pointer-events:none;will-change:transform}
+.it-lab{position:relative;padding-left:22px}
+.it-lab b{display:block;font-family:"Pretendard Variable",Pretendard,"Malgun Gothic",sans-serif;font-weight:800;font-size:clamp(40px,4.4vw,84px);line-height:1.02;letter-spacing:-.035em;
+ color:transparent;-webkit-text-stroke:1px rgba(238,240,242,.32);transform:translateX(-14px);
+ transition:color .65s,-webkit-text-stroke-color .65s,transform .8s cubic-bezier(.2,.75,.25,1)}
+.it-lab small{display:block;margin-top:8px;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.14em;color:var(--ink-3);white-space:nowrap;
+ transform:translateX(-14px);transition:color .65s,transform .8s cubic-bezier(.2,.75,.25,1)}
+.it-lab .bar{position:absolute;left:0;top:6px;width:3px;height:22px;border-radius:2px;opacity:.35;transition:height .65s,opacity .65s}
+.it-lab.in .bar{background:#ffbc79}.it-lab.out .bar{background:#67e7c3}
+.it-lab.is-current b{color:#eef0f2;-webkit-text-stroke-color:transparent;transform:none}
+.it-lab.is-current small{transform:none}
+.it-lab.in.is-current small{color:#ffbc79}.it-lab.out.is-current small{color:#67e7c3}
+.it-lab.is-current .bar{height:calc(100% - 8px);opacity:1}
+.it-steps{display:flex;align-items:center;gap:6px;padding-left:22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-3)}
+.it-steps i{width:22px;height:3px;border-radius:2px;background:rgba(238,240,242,.14);transition:background .3s}
+.it-steps i.on{background:#67e7c3;box-shadow:0 0 8px rgba(103,231,195,.6)}
+.it-steps em{font-style:normal;margin-left:8px}
+/* L2 — annotation pinned to an R sample: dotted guide down to the peak + two-tier note (REF-008 EFX-008-02) */
+.it-ann{position:absolute;left:0;top:0;opacity:0;pointer-events:none;will-change:transform}
+.it-ann i{position:absolute;left:0;top:30px;height:var(--h,60px);border-left:1px dashed rgba(238,240,242,.45)}
+.it-ann span{position:absolute;left:8px;top:0;display:grid;gap:2px;white-space:nowrap}
+.it-ann b{font-family:"Pretendard Variable",Pretendard,sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#eef0f2}
+.it-ann small{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;color:var(--ink-2)}
+.it-ann.flip span{animation:it-ann-in .45s cubic-bezier(.2,.75,.25,1) both}
+@keyframes it-ann-in{from{opacity:0;transform:translateY(8px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.it-scale{position:absolute;display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--ink-3);opacity:0;pointer-events:none}
+.intro.reduced .it-lab b,.intro.reduced .it-lab small{transition:none}
 .it-end{left:47%;bottom:10%;text-align:left;opacity:0;pointer-events:none}
 .it-end p{margin:0 0 22px;font-size:clamp(17px,1.35vw,26px)}
 .it-end div{display:flex;gap:16px}

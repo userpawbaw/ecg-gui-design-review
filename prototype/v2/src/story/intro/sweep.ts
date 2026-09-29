@@ -14,18 +14,22 @@ export type SweepView={
  reduced:boolean,
  ring:{x:number,y:number,r:number,a:number}|null,          // pulse ring around the heart (screen px)
  comet:{x0:number,y0:number,x1:number,y1:number,k:number,a:number}|null, // light streak heart → sweep head
+ flash?:number,                  // T2: brief brightening of the whole trace when an R peak releases a cross-fade step
+ gridAlpha?:number,              // G3: grid visibility (the grid itself is drawn once by waveUi)
 };
 export const WINDOW_S=2.5,GAP_S=.12,ERASE_S=.3,GLOW_TAU=.2;
 
-export function createSweep(canvas:HTMLCanvasElement,opts:{fs:number,loop:Loop,input:SweepTrace,output:SweepTrace,mvPerBox:number}){
+export function createSweep(canvas:HTMLCanvasElement,opts:{fs:number,loop:Loop,input:SweepTrace,output:SweepTrace,mvPerBox:number,gridHot?:HTMLCanvasElement}){
  const g=canvas.getContext('2d')!;
  const {fs,loop}=opts,count=Math.round(WINDOW_S*fs),gap=Math.round(GAP_S*fs),erase=Math.round(ERASE_S*fs);
  const len=loop.end-loop.start;
  let W=0,H=0,dpr=1,box={l:0,r:0,t:0,b:0};
- function resize(b:{l:number,r:number,t:number,b:number}){
+let mvPerBox=opts.mvPerBox;
+ function resize(b:{l:number,r:number,t:number,b:number},mv?:number){
+  if(mv)mvPerBox=mv;
   dpr=Math.min(2,devicePixelRatio||1);W=canvas.clientWidth;H=canvas.clientHeight;canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);box=b;
  }
- const yOf=(mv:number)=>{const mid=(box.t+box.b)/2;return mid-mv*(box.b-box.t)/opts.mvPerBox;};
+ const yOf=(mv:number)=>{const mid=(box.t+box.b)/2;return mid-mv*(box.b-box.t)/mvPerBox;};
  const xOfSlot=(slot:number)=>box.l+slot/count*(box.r-box.l);
  const idx=(abs:number)=>loop.start+((abs%len)+len)%len;
  // age (samples) → [intensity, whiteness]: fresh samples are hot and near-white, then cool to the trace colour;
@@ -86,9 +90,17 @@ export function createSweep(canvas:HTMLCanvasElement,opts:{fs:number,loop:Loop,i
   if(v.alpha>.003&&v.startAbs!==null){
    const headAbs=Math.floor(v.t*fs+1e-6);
    if(headAbs>=v.startAbs){
-    const m=v.mix,blurMax=v.reduced?0:1;
-    layer(opts.input,headAbs,v.startAbs,v.alpha*(1-m),blurMax*m,1);
-    const hx=layer(opts.output,headAbs,v.startAbs,v.alpha*m,blurMax*(1-m),1.15);
+    const m=v.mix,blurMax=v.reduced?0:1,fl=1+.9*(v.flash??0);
+    // G3: the grid squares the head has just passed light up and cool down with the trace afterglow
+    if(opts.gridHot&&(v.gridAlpha??0)>.003){
+     const hx0=xOfSlot(((headAbs%count)+count)%count),band=(box.r-box.l)/WINDOW_S*.35,sc=opts.gridHot.width/W;
+     g.globalCompositeOperation='lighter';
+     for(let i=0;i<5;i++){const x0=hx0-band*(i+1)/5,w=band/5;if(x0<box.l-2)continue;g.globalAlpha=(v.gridAlpha??0)*(1-i/5)*.7*fl;
+      g.drawImage(opts.gridHot,x0*sc,0,w*sc,opts.gridHot.height,x0,0,w,H);}
+     g.globalAlpha=1;g.globalCompositeOperation='source-over';
+    }
+    layer(opts.input,headAbs,v.startAbs,Math.min(1,v.alpha*(1-m)*fl),blurMax*m,1);
+    const hx=layer(opts.output,headAbs,v.startAbs,Math.min(1,v.alpha*m*fl),blurMax*(1-m),1.15);
     // head marker: small hot point at the newest sample (position marker only)
     const cur=m<.5?opts.input:opts.output,x=hx??xOfSlot(((headAbs%count)+count)%count),y=yOf(cur.values[idx(headAbs)]);
     const rg=g.createRadialGradient(x,y,0,x,y,18);rg.addColorStop(0,`rgba(255,255,255,${.75*v.alpha})`);rg.addColorStop(1,'rgba(255,255,255,0)');

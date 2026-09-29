@@ -14,11 +14,12 @@ import {createGlobe} from './globe';
 import {createFigure,type FigureData} from './figure';
 import {createSweep,type SweepView} from './sweep';
 import {beatPhase,type Loop} from './beats';
+import {createGrid,createBeatMix,mvPerBoxFor,scrambled} from './waveUi';
 
-export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Array};
+export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Array,metrics:{snrIn:number,snrOut:number,cc:number}};
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
- title:HTMLElement,noiseChars:HTMLElement[],sub:HTMLElement,hint:HTMLElement,labels:HTMLElement,labelIn:HTMLElement,labelOut:HTMLElement,
- scale:HTMLElement,end:HTMLElement,parallax:HTMLElement[]};
+ title:HTMLElement,noiseChars:HTMLElement[],sub:HTMLElement,hint:HTMLElement,labels:HTMLElement,labelIn:HTMLElement,labelOut:HTMLElement,outMono:HTMLElement,steps:HTMLElement[],
+ scale:HTMLElement,grid:HTMLCanvasElement,ann:HTMLElement,sweepWrap:HTMLElement,end:HTMLElement,parallax:HTMLElement[]};
 export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null};
 
 const clamp=(x:number,a=0,b=1)=>Math.min(b,Math.max(a,x));
@@ -26,10 +27,13 @@ const seg=(p:number,a:number,b:number)=>clamp((p-a)/(b-a));
 const inOut=(t:number)=>t<.5?2*t*t:1-(-2*t+2)**2/2;
 const out2=(t:number)=>1-(1-t)**2;
 const damp=(dt:number,tau:number)=>1-Math.exp(-dt/tau);        // frame-rate independent smoothing
-export const GATE_WAVE=.735;
+export const GATE_WAVE=.8;
 // scroll map (fraction of the whole intro). Globe segment follows REF-001 EFX-001-02 (rotation, shrink, fade).
 export const MAP={title:[.015,.11],globe:[0,.3],globeScale:[.03,.3],globeFade:[.19,.27],rim:[.15,.21],morph:[.22,.39],
- body:[.36,.45],lineOut:[.42,.56],heart:[.38,.47],cam:[.52,.72],waveFade:[.72,.745],mix:[.79,.94],end:[.955,.99]} as const;
+ body:[.36,.45],lineOut:[.42,.56],heart:[.38,.47],cam:[.52,.72],enter:[.7,.8],waveFade:[.79,.81],mix:[.84,.95],end:[.965,.995]} as const;
+// P1 (REF-003 EFX-003-06): screen speeds × scroll — label block 0.85, wave stage 1.45; the wave starts further down,
+// enters later and overtakes. Travel over the enter segment is ENTER_D screen heights.
+const SPEED={label:.85,wave:1.45},ENTER_D=.7;
 const SWEEP_COLORS={input:[255,188,121] as [number,number,number],output:[103,231,195] as [number,number,number]};
 
 export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
@@ -49,7 +53,8 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  // --- post: bloom only on bright parts (threshold), never on the Canvas 2D data layer ---
  const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.55,.35,.78);composer.addPass(bloom);composer.addPass(new OutputPass());
- const sweep=createSweep(dom.sweep,{fs:data.fs,loop:data.loop,input:{values:data.input,color:SWEEP_COLORS.input,glow:.45,core:.78,white:.35},output:{values:data.output,color:SWEEP_COLORS.output},mvPerBox:3.6});
+ const grid=createGrid(dom.grid);
+ const sweep=createSweep(dom.sweep,{gridHot:grid.hot,fs:data.fs,loop:data.loop,input:{values:data.input,color:SWEEP_COLORS.input,glow:.45,core:.78,white:.35},output:{values:data.output,color:SWEEP_COLORS.output},mvPerBox:3.6});
 
  // --- input: Lenis smooth scroll + scrub smoothing on top (REF-001: Lenis 1.6 s + scrub 1) ---
  const lenis=opt.frozenP===null?new Lenis({wrapper:dom.wrapper,content:dom.content,duration:opt.reduced?.2:1.6,wheelMultiplier:1.1,autoRaf:false}):null;
@@ -64,15 +69,14 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
 
  // --- layout ---
  let W=0,H=0;
- const box=()=>({l:.47*W,r:.93*W,t:.29*H,b:.69*H});
+ const box=()=>({l:.47*W,r:.93*W,t:.34*H,b:.72*H});
  function resize(){
   W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio||1,1.25);
   renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);bloom.resolution.set(W*pr/2,H*pr/2);
   camera.aspect=W/H;camera.updateProjectionMatrix();figure.setResolution(W*pr,H*pr);
-  const b=box();sweep.resize(b);
-  Object.assign(dom.labels.style,{left:b.l+'px',top:(b.t-44)+'px'});
-  Object.assign(dom.scale.style,{left:b.l+'px',top:(b.b+16)+'px'});
-  dom.scale.style.setProperty('--sec',((b.r-b.l)/2.5)+'px');dom.scale.style.setProperty('--mv',((b.b-b.t)/3.6)+'px');
+  const b=box(),mv=mvPerBoxFor(b,2.5);sweep.resize(b,mv);grid.resize(b,2.5,mv);
+  Object.assign(dom.labels.style,{left:b.l+'px',top:(H*.075)+'px'});
+  Object.assign(dom.scale.style,{left:b.l+'px',top:(b.b+14)+'px',width:(b.r-b.l)+'px'});
  }
  resize();addEventListener('resize',resize);
 
@@ -81,6 +85,9 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const clock=()=>frozenT??(performance.now()-t0)/1000;
  type Wave={state:'off'|'flying'|'on',t0:number,t1:number,start:number|null};
  const wave:Wave={state:'off',t0:0,t1:0,start:null};
+ const mix=createBeatMix(4);
+ const labelState={current:'in' as 'in'|'out',handoff:-1,annAbs:NaN};
+ const outBase=dom.outMono.textContent||'',outFinal=`SNR ${data.metrics.snrIn} dB → ${data.metrics.snrOut.toFixed(2)} dB · cc ${data.metrics.cc.toFixed(3)}`;
  const L=data.loop;
  const valueAtAbs=(arr:Float32Array,abs:number)=>{const len=L.end-L.start;return arr[L.start+((abs%len)+len)%len];};
 
@@ -117,7 +124,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const small=el.firstElementChild as HTMLElement|null;if(small)small.style.opacity=String(1-e);   // the eyebrow is unreadable once shrunk
  }
 
- const state={p:0,t:0,frame:0,headAbs:0,heart:{V:0,flash:0},wave:wave as Wave};
+ const state={p:0,t:0,frame:0,headAbs:0,heart:{V:0,flash:0},wave:wave as Wave,get mix(){return mix.value;},get label(){return labelState.current;}};
  let raf=0,disposed=false;
  function frame(dt:number,draw=true){
   const t=clock();
@@ -152,11 +159,14 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const waveA=seg(p,...MAP.waveFade);
   if(p>=GATE_WAVE&&wave.state==='off'){const n1=ph.untilNext<.08?beatPhase(L,data.fs,ph.next+1e-3).next:ph.next;wave.t0=n1;wave.t1=beatPhase(L,data.fs,n1+1e-3).next;
    wave.start=Math.floor((opt.reduced?wave.t0:wave.t1-.05)*data.fs+1e-6);wave.state='flying';}
-  if(waveA<=0&&p<GATE_WAVE&&wave.state!=='off'){wave.state='off';wave.start=null;}
+  if(waveA<=0&&p<GATE_WAVE&&wave.state!=='off'){wave.state='off';wave.start=null;mix.reset();}
   if(wave.state==='flying'&&t>=wave.t1)wave.state='on';
   const headAbs=Math.floor(t*data.fs+1e-6);state.headAbs=headAbs;
   const hs=toScreen(H3);
-  const v:SweepView={t,startAbs:wave.start,mix:inOut(seg(p,...MAP.mix)),alpha:wave.state==='off'?0:waveA,reduced:opt.reduced,ring:null,comet:null};
+  // T2: scroll sets the target, R peaks release it a quarter at a time (only once the trace is running)
+  mix.update(wave.state==='on'?inOut(seg(p,...MAP.mix)):0,ph.prev,t,opt.reduced);
+  const enterA=seg(p,...MAP.enter);
+  const v:SweepView={t,startAbs:wave.start,mix:mix.value,flash:opt.reduced?0:mix.flash,gridAlpha:enterA,alpha:wave.state==='off'?0:waveA,reduced:opt.reduced,ring:null,comet:null};
   if(wave.state==='flying'&&!opt.reduced&&t>=wave.t0){
    const k=clamp((t-wave.t0)/(wave.t1-wave.t0)),a1=Math.floor(wave.t1*data.fs+1e-6);
    v.ring={x:hs.x,y:hs.y,r:30+(t-wave.t0)*420,a:.85*Math.exp(-(t-wave.t0)/.32)*waveA};
@@ -167,11 +177,35 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
 
   // DOM
   titleAt(seg(p,...MAP.title));
-  const jitter=opt.reduced?0:1.7*(1-v.mix);
+  const jitter=opt.reduced?0:1.7*(1-mix.value);
   dom.noiseChars.forEach((c,i)=>{const dx=Math.sin(t*41+i*1.7)*Math.sin(t*17.3+i*.6)*jitter,dy=Math.sin(t*33.1+i*2.3)*Math.cos(t*21.7)*jitter*.8;c.style.transform=`translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px)`;});
   dom.sub.style.opacity=String(1-seg(p,.015,.07));dom.hint.style.opacity=String(1-seg(p,0,.035));
-  const labA=wave.state==='on'?waveA:0;dom.labels.style.opacity=String(labA);dom.scale.style.opacity=String(labA*.8);
-  dom.labelIn.style.opacity=String(1-v.mix);dom.labelOut.style.opacity=String(v.mix);
+  // P1: label block (0.85) arrives first, wave stage (1.45) starts lower and overtakes; both settle at q = 1
+  const q=enterA,labA=seg(p,MAP.enter[0],MAP.enter[0]+.06);
+  dom.labels.style.opacity=String(labA);dom.labels.style.transform=`translateY(${((1-q)*SPEED.label*ENTER_D*H).toFixed(1)}px)`;
+  dom.sweepWrap.style.transform=`translateY(${((1-q)*SPEED.wave*ENTER_D*H).toFixed(1)}px)`;
+  dom.grid.style.opacity=String(q);dom.scale.style.opacity=String(q*.9);
+  // L1: the current tier is filled with its bar grown; the other is an outline (REF-007 EFX-007-01)
+  const cur=mix.value>.999?'out':'in';
+  if(cur!==labelState.current){labelState.current=cur;labelState.handoff=t;
+   dom.labelIn.classList.toggle('is-current',cur==='in');dom.labelOut.classList.toggle('is-current',cur==='out');}
+  if(t<labelState.handoff)labelState.handoff=t;
+  const hk=cur==='out'?clamp((t-labelState.handoff)/.35):0;
+  const mono=cur==='out'?(opt.reduced||hk>=1?outFinal:scrambled(outFinal,hk,Math.floor(t*30))):outBase;
+  if(dom.outMono.textContent!==mono)dom.outMono.textContent=mono;
+  const filled=Math.round(mix.value*4);dom.steps.forEach((el,i)=>el.classList.toggle('on',i<filled));
+  // L2: annotation pinned to an R sample that is 0.35–1.9 s old (stays with its sample until the sweep erases it)
+  let annA=0;
+  if(wave.state==='on'&&wave.start!==null){
+   let r=ph.prev,pick=NaN;
+   for(let k=0;k<5;k++){const age=t-r,abs=Math.floor(r*data.fs+1e-6);if(abs<wave.start)break;if(age>=.35&&age<=1.9){pick=abs;break;}r=beatPhase(L,data.fs,r-1e-3).prev;}
+   if(!Number.isNaN(pick)){
+    if(pick!==labelState.annAbs){labelState.annAbs=pick;dom.ann.classList.remove('flip');void dom.ann.offsetWidth;dom.ann.classList.add('flip');}
+    const x=sweep.slotX(pick),trace=mix.value<.5?data.input:data.output,y=sweep.yOf(valueAtAbs(trace,pick)),top=sweep.box.t+6;
+    dom.ann.style.transform=`translate(${x.toFixed(1)}px,${top.toFixed(1)}px)`;dom.ann.style.setProperty('--h',Math.max(0,y-top-6).toFixed(1)+'px');annA=waveA;
+   }
+  }
+  dom.ann.style.opacity=String(annA);
   const endA=seg(p,...MAP.end);dom.end.style.opacity=String(endA);dom.end.style.pointerEvents=endA>.5?'auto':'none';
   if(!opt.reduced)dom.parallax.forEach((el,i)=>{const d=i===0?6:3;el.style.translate=`${(-pointer.sx*d).toFixed(2)}px ${(-pointer.sy*d*.6).toFixed(2)}px`;});
 
@@ -187,7 +221,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   pause(v:boolean){paused=v;},
   set(o:{p?:number,t?:number|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;},
   scrollToEnd(){lenis?.scrollTo('bottom');},
-  scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;},
+  scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;mix.reset();},
   dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
    globe.dispose();figure.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},

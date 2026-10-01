@@ -2,6 +2,9 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {decodePng} from './png.mjs';
+import {runPython} from './py.mjs';
+import {fileURLToPath} from 'node:url';
+import {rmSync} from 'node:fs';
 import {activeWindow, curveStats, diffEnergy, findJumps, frameHash} from './analysis.mjs';
 
 const mean = (a) => (a.length ? a.reduce((s, v) => s + v, 0) / a.length : 0);
@@ -52,4 +55,27 @@ export function trackCurves(tracks, selectors, step) {
     });
   }
   return out;
+}
+
+/** Build diff.json from per-tick energies (python/OpenCV path: JPEG screencast frames, hover analysis). ticks: [{stage, i, vt, file, rect?}] */
+export function diffFromEnergies(ticks, energies, step, note = '') {
+  const stages = {};
+  ticks.forEach((t, n) => {
+    const e = energies[n];
+    (stages[t.stage] ||= {frames: []}).frames.push({i: t.i, vt: t.vt, file: t.file, all: e.all === null ? null : r4(e.all), regions: e.regions});
+  });
+  for (const s of Object.values(stages)) {
+    const e = s.frames.map((x) => x.all).filter((v) => v !== null);
+    s.count = s.frames.length;s.meanEnergy = r4(mean(e));s.maxEnergy = e.length ? Math.max(...e) : 0;
+    s.activeWindow = activeWindow(s.frames.map((x) => x.all ?? 0));
+    s.jumps = findJumps(s.frames.map((x) => x.all ?? NaN));
+  }
+  return {frameStepMs: step, energyScale: 'mean absolute RGB difference per pixel, 0–255, sampled every 2nd pixel; regions = 3×3 grid row-major' + note, stages};
+}
+
+/** Run frame_diff.py (OpenCV) over ticks [{file(abs), rect?}] → energies [{all, regions, local, outside}]. */
+export function pythonEnergies(dir, ticks) {
+  const script = fileURLToPath(new URL('../frame_diff.py', import.meta.url)), tin = join(dir, '_ticks.json'), tout = join(dir, '_energy.json');
+  writeFileSync(tin, JSON.stringify({ticks: ticks.map((t) => ({file: t.file, rect: t.rect || null}))}), 'utf8');
+  try {runPython(script, [tin, tout]);return JSON.parse(readFileSync(tout, 'utf8'));} finally {rmSync(tin, {force: true});rmSync(tout, {force: true});}
 }

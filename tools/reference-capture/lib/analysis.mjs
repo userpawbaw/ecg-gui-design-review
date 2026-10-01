@@ -134,3 +134,19 @@ export function longTasksByStage(longTasks, marks, endT) {
   marks.forEach((m, i) => {const t1 = i + 1 < marks.length ? marks[i + 1].t : endT;out[m.name] = longTasks.filter((l) => l.ts >= m.t && l.ts < t1).length;});
   return out;
 }
+
+/**
+ * Resample screencast frames (delivered only when the screen changes) onto a uniform grid per stage: every stepMs, hold the latest frame.
+ * frameTimes ascending (ms); stageMarks [{name, t}] ascending; endT closes the last stage. vt = ms since the first stage start.
+ */
+export function buildGrid(frameTimes, stageMarks, endT, stepMs = 1000 / 60) {
+  const ticks = [];
+  if (!frameTimes.length || !stageMarks.length) return ticks;
+  const find = (t) => {let lo = 0, hi = frameTimes.length - 1, ans = 0;while (lo <= hi) {const m = (lo + hi) >> 1;if (frameTimes[m] <= t) {ans = m;lo = m + 1;} else hi = m - 1;}return ans;};
+  const t0 = stageMarks[0].t;
+  stageMarks.forEach((m, k) => {
+    const t1 = k + 1 < stageMarks.length ? stageMarks[k + 1].t : endT;
+    for (let i = 0, t = m.t; t < t1; i++, t = m.t + i * stepMs) ticks.push({stage: m.name, i, vt: Math.round((t - t0) * 10) / 10, src: find(t)});
+  });
+  return ticks;
+}

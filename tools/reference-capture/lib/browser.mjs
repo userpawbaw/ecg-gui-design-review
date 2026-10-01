@@ -42,8 +42,9 @@ export async function launchBrowser({browser = 'edge', extraArgs = []} = {}) {
 /** Page-side hooks (installed before any site script runs): wheel counter, canvas context kinds, workers, WebGPU, rAF/long-task recorder. */
 export const INIT_SCRIPT = `(() => {
   if (window.__ecg) return;
-  const H = window.__ecg = {wheelCount: 0, contexts: [], workers: 0, offscreen: 0, webgpuAdapters: 0, raf: [], stages: [], longTasks: [], recording: false};
+  const H = window.__ecg = {wheelCount: 0, moveCount: 0, contexts: [], workers: 0, offscreen: 0, webgpuAdapters: 0, raf: [], stages: [], longTasks: [], recording: false};
   addEventListener('wheel', () => { H.wheelCount++; }, {capture: true, passive: true});
+  addEventListener('mousemove', () => { H.moveCount++; }, {capture: true, passive: true});
   const seen = new WeakSet(), gc = HTMLCanvasElement.prototype.getContext;
   HTMLCanvasElement.prototype.getContext = function (type, ...rest) {
     if (!seen.has(this)) { seen.add(this); H.contexts.push({type: String(type), width: this.width, height: this.height, cls: String(this.className || '').slice(0, 60)}); }
@@ -74,6 +75,36 @@ export const INIT_SCRIPT = `(() => {
     return best;
   };
   H.progress = () => { const s = H.scroller(), top = s.el === (document.scrollingElement || document.documentElement) ? scrollY : s.el.scrollTop; return s.range > 0 ? top / s.range : NaN; };
+  // Hover candidates (read-only): visible interactive elements inside the viewport, outermost only, spread evenly in reading order.
+  H.targets = (spec, n) => {
+    const vw = innerWidth, vh = innerHeight;
+    let els;
+    if (spec === 'auto') {
+      const sel = 'a[href],button,[role=button],[role=link],[onclick],summary,input[type=button],[tabindex]:not([tabindex="-1"])';
+      const set = new Set(document.querySelectorAll(sel));
+      let k = 0;
+      for (const el of document.querySelectorAll('body *')) { if (++k > 4000) break; if (getComputedStyle(el).cursor === 'pointer') set.add(el); }
+      els = [...set];
+    } else {
+      els = String(spec).split(',').map((q) => q.trim()).filter(Boolean).map((q) => document.querySelector(q)).filter(Boolean);
+    }
+    const info = (el) => {
+      const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      const label = (el.getAttribute('aria-label') || el.innerText || el.getAttribute('title') || el.getAttribute('alt') || '').trim().replace(/\\s+/g, ' ').slice(0, 24);
+      return {el, x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height / 2), w: Math.round(r.width), h: Math.round(r.height), l: Math.round(r.left), t: Math.round(r.top), tag: el.tagName.toLowerCase(), label,
+        ok: r.width >= 14 && r.height >= 14 && r.width * r.height <= 0.35 * vw * vh && r.left + r.width / 2 > 0 && r.left + r.width / 2 < vw && r.top + r.height / 2 > 0 && r.top + r.height / 2 < vh
+          && cs.visibility !== 'hidden' && cs.display !== 'none' && Number(cs.opacity) > 0.05 && cs.pointerEvents !== 'none'};
+    };
+    let c = els.map(info).filter((i) => i.ok);
+    if (spec === 'auto') {
+      const set = new Set(c.map((i) => i.el));
+      c = c.filter((i) => { for (let p = i.el.parentElement; p; p = p.parentElement) if (set.has(p)) return false; return true; });   // outermost only
+      c.sort((a, b) => a.t - b.t || a.l - b.l);
+      if (c.length > n) c = Array.from({length: n}, (_, i) => c[Math.round(i * (c.length - 1) / Math.max(1, n - 1))]);
+    } else c = c.slice(0, n);
+    return c.map((i, k) => ({id: k + 1, x: i.x, y: i.y, w: i.w, h: i.h, l: i.l, t: i.t, tag: i.tag, label: i.label}));
+  };
+  H.viewport = () => ({w: innerWidth, h: innerHeight});
   H.resolve = (v) => {
     if (typeof v === 'number') return v;
     const el = document.querySelector(v); if (!el) return NaN;

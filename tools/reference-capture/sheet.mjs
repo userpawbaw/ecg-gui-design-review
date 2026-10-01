@@ -7,11 +7,44 @@ import {basename, join, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {launchHeadless} from './lib/browser.mjs';
 import {compareSheets, loadDiff, stageSheets} from './lib/sheet.mjs';
+import {hoverReport, rectOf} from './lib/hover.mjs';
+import {pythonEnergies, saveJson} from './lib/post.mjs';
+import {readFileSync} from 'node:fs';
+import {hysteresisSummary, pairByProgress} from './lib/survey.mjs';
+import {surveySheets} from './lib/sheet.mjs';
 
 export async function main(argv) {
+  const hoverOnly = argv.includes('--hover'), surveyOnly = argv.includes('--survey');argv = argv.filter((a) => a !== '--hover' && a !== '--survey');
   const dirs = [];let out = null;
   for (let i = 0; i < argv.length; i++) {if (argv[i] === '--out') out = argv[++i];else if (argv[i].startsWith('--out=')) out = argv[i].slice(6);else dirs.push(resolve(argv[i]));}
-  if (dirs.length < 1 || dirs.length > 2) {console.error('사용법: npm run ref:sheet -- <캡처 폴더>   또는   npm run ref:sheet -- <레퍼런스 폴더> <우리 앱 폴더>');process.exit(1);}
+  if (dirs.length < 1 || (dirs.length > 2 && !hoverOnly && !surveyOnly)) {console.error('사용법: npm run ref:sheet -- <캡처 폴더>   또는   npm run ref:sheet -- <레퍼런스 폴더> <우리 앱 폴더>');process.exit(1);}
+  if (surveyOnly) {   // re-summarise saved survey.json (comparison rules changed) and redraw its sheets
+    const hb = await launchHeadless();
+    try {
+      for (const dir of dirs) {
+        const rep = JSON.parse(readFileSync(join(dir, 'survey.json'), 'utf8'));
+        const pairs = pairByProgress(rep.stops), seq = pairs.flatMap(([d, u]) => [d, u].map((st) => ({file: join(dir, 'frames', 'stills', st + '.jpg')}))), en = seq.length ? pythonEnergies(dir, seq) : [];
+        const diffs = {};pairs.forEach(([d, u], k) => {diffs[d] = diffs[u] = Math.round(en[2 * k + 1].all * 100) / 100;});
+        for (const r of rep.stops) r.stillDiffVsOtherDirection = diffs[r.stage] ?? null;
+        rep.summary.hysteresis = hysteresisSummary(rep.stops);
+        saveJson(dir, 'survey.json', rep);
+        const written = await surveySheets(hb, dir, rep, {meta: basename(dir)});
+        console.log(String.fromCharCode(10) + dir + String.fromCharCode(10) + '  왕복 비교: ' + JSON.stringify(rep.summary.hysteresis) + String.fromCharCode(10) + '  ' + written.join(', '));
+      }
+    } finally {await hb.close();}
+    return;
+  }
+  if (hoverOnly) {   // recompute hover.json from the saved frames (e.g. after the metric changed)
+    for (const dir of dirs) {
+      const diff = loadDiff(dir), notes = JSON.parse(readFileSync(join(dir, 'input.json'), 'utf8')).notes;
+      const ticks = Object.entries(diff.stages).flatMap(([stage, st]) => st.frames.map((f) => ({stage, file: join(dir, f.file), rect: rectOf(notes, stage)})));
+      const rep = hoverReport(ticks, pythonEnergies(dir, ticks), notes, diff.frameStepMs);
+      saveJson(dir, 'hover.json', rep);
+      console.log(String.fromCharCode(10) + dir);
+      for (const [st, h] of Object.entries(rep)) console.log(`  ${st} [${h.target.tag} "${h.target.label}"] ${h.metrics.reacted ? '반응 있음(' + (h.metrics.scope === 'local' ? '영역' : '화면 전체') + ')' : '반응 없음'} · 전체 피크 ${h.metrics.peakAll}(평소 ${h.metrics.calmLevel}) · 영역 피크 ${h.metrics.peakLocal} · t90 ${h.metrics.effectT90Ms} ms · 이탈 후 ${h.metrics.changeAfterExitShare}`);
+    }
+    return;
+  }
   const browser = await launchHeadless();
   try {
     if (dirs.length === 1) {

@@ -2,12 +2,14 @@
 import assert from 'node:assert/strict';
 import zlib from 'node:zlib';
 import {decodePng, encodePng} from '../tools/reference-capture/lib/png.mjs';
-import {pixelDelta, activeWindow, analyzeTrace, curveStats, diffEnergy, findJumps, frameHash, intervalsOf, longTasksByStage, selectFrames, summarizeByStage, summarizeIntervals} from '../tools/reference-capture/lib/analysis.mjs';
+import {buildGrid, pixelDelta, activeWindow, analyzeTrace, curveStats, diffEnergy, findJumps, frameHash, intervalsOf, longTasksByStage, selectFrames, summarizeByStage, summarizeIntervals} from '../tools/reference-capture/lib/analysis.mjs';
 import {SCRIPTS, makeContext} from '../tools/reference-capture/lib/script.mjs';
 import {outName, parseArgs} from '../tools/reference-capture/lib/args.mjs';
 import {compareHashes, trackCurves} from '../tools/reference-capture/lib/post.mjs';
 import {pickForSheet} from '../tools/reference-capture/lib/sheet.mjs';
 import {findEdge} from '../tools/reference-capture/lib/browser.mjs';
+import {pairByProgress, surveyReport} from '../tools/reference-capture/lib/survey.mjs';
+import {hoverMetrics, hoverReport, rectOf} from '../tools/reference-capture/lib/hover.mjs';
 
 let n = 0;
 const t = (name, fn) => {Promise.resolve(fn()).then(() => {n++;}, (e) => {console.error(`[reference-capture] FAIL ${name}\n`, e);process.exit(1);});};
@@ -181,6 +183,83 @@ t('findEdge looks in the standard Windows install folders only', () => {
   const slash = (p) => p.split(String.fromCharCode(92)).join('/');   // path.join gives backslashes on Windows, slashes elsewhere
   assert.equal(slash(findEdge(env, 'win32', (p) => slash(p).endsWith('PF86/Microsoft/Edge/Application/msedge.exe'))), 'C:/PF86/Microsoft/Edge/Application/msedge.exe');
   assert.equal(findEdge(env, 'win32', () => false), null);
+});
+
+t('buildGrid holds the latest frame on a 60 Hz grid per stage and starts each stage at its mark', () => {
+  const times = [1000, 1010, 1100, 1500], marks = [{name: 'a', t: 1000}, {name: 'b', t: 1100}];
+  const g = buildGrid(times, marks, 1200);
+  const a = g.filter((x) => x.stage === 'a'), b = g.filter((x) => x.stage === 'b');
+  assert.equal(a.length, 6);assert.equal(b.length, 6);   // 100 ms / 16.67 ms
+  assert.equal(a[0].src, 0);assert.equal(a[1].src, 1);assert.equal(a.at(-1).src, 1);   // 1010 ≤ t < 1100 → frame 1
+  assert.equal(b[0].src, 2);assert.equal(b.at(-1).src, 2);   // nothing newer until 1500
+  assert.equal(b[0].vt, 100);assert.deepEqual(buildGrid([], marks, 1200), []);
+});
+
+t('hover script: sweeps, then glides onto each target, dwells and leaves; targets and rectangles are logged', async () => {
+  const log = {stages: [], events: []}, moves = [];let now = 0;
+  const exec = {now: () => now, wait: async (ms) => {now += ms;}, wheel: async () => {}, progress: () => 0, resolve: (v) => v, move: async (x, y) => {moves.push([x, y]);},
+    viewport: async () => ({w: 1000, h: 600}), targets: async (spec, n) => [{id: 1, x: 200, y: 100, w: 80, h: 30, l: 160, t: 85, tag: 'a', label: 'Home'}, {id: 2, x: 700, y: 400, w: 60, h: 20, l: 670, t: 390, tag: 'button', label: 'Go'}].slice(0, n)};
+  await SCRIPTS.hover(makeContext(exec, log), {hover: 'auto', count: 2});
+  assert.deepEqual(log.stages.map((s) => s.name), ['h0-idle', 'h1-sweep', 'hover-01', 'hover-02']);
+  const notes = log.notes.filter((n) => n.key === 'stageTarget');
+  assert.equal(notes.length, 2);assert.equal(notes[1].value.stage, 'hover-02');assert.deepEqual(rectOf(log.notes, 'hover-02'), [670, 390, 60, 20]);
+  assert.ok(moves.some(([x, y]) => x === 200 && y === 100), 'reaches target 1 centre');assert.ok(moves.some(([x, y]) => x === 700 && y === 400), 'reaches target 2 centre');
+  assert.deepEqual(moves.at(-1), [996, 596]);   // parks in the corner
+});
+
+t('hoverMetrics: whole-frame reaction vs calm, local vs global scope, timing, reverse animation', () => {
+  const step = 1000 / 60, n = 150, arrive = Math.round(400 / step), exit = Math.round(1600 / step);
+  const burst = (i, at, amp) => (i >= at && i < at + 30 ? amp * Math.exp(-(i - at) / 8) : 0);
+  const calm = Array.from({length: n}, () => 0.1);
+  const localBurst = Array.from({length: n}, (_, i) => 0.05 + burst(i, arrive, 6)), allSmall = Array.from({length: n}, (_, i) => 0.1 + burst(i, arrive, 6) * 0.05);
+  const loc = hoverMetrics(localBurst, calm, allSmall, step, {minPeak: 0.2});
+  assert.equal(loc.reacted, true);assert.equal(loc.scope, 'local');assert.ok(loc.peakAtMsAfterArrival <= 40);assert.ok(loc.effectT90Ms > 100 && loc.effectT90Ms < 500, 'T90 ' + loc.effectT90Ms);
+  // the whole scene dims on hover (Oryzo nav link): box and outside change alike → global
+  const dim = Array.from({length: n}, (_, i) => 0.1 + burst(i, arrive, 9));
+  const glob = hoverMetrics(dim, dim, dim, step);
+  assert.equal(glob.reacted, true);assert.equal(glob.scope, 'global');
+  assert.equal(hoverMetrics(calm, calm, calm, step).reacted, false);   // nothing happens
+  const rev = Array.from({length: n}, (_, i) => 0.1 + burst(i, arrive, 6) + burst(i, exit, 6));
+  assert.ok(hoverMetrics(rev, rev, rev, step).changeAfterExitShare > 0.3, 'reverse animation on leave');
+  assert.ok(hoverMetrics(dim, dim, dim, step).changeAfterExitShare < 0.2);
+});
+
+t('hoverReport groups ticks by hover stage', () => {
+  const ticks = Array.from({length: 120}, (_, i) => ({stage: i < 60 ? 'x' : 'hover-01'})), en = ticks.map((_, i) => ({local: i >= 70 && i < 90 ? 5 : 0.02, outside: 0.05, all: 0.1}));
+  const notes = [{key: 'stageTarget', value: {stage: 'hover-01', label: 'L', tag: 'a', l: 1, t: 2, w: 3, h: 4}}];
+  const r = hoverReport(ticks, en, notes, 1000 / 60);
+  assert.deepEqual(Object.keys(r), ['hover-01']);assert.equal(r['hover-01'].frames, 60);assert.deepEqual(r['hover-01'].target.rect, [1, 2, 3, 4]);
+});
+
+t('survey script: walks down until the page end, then back up the same stops, stills at every stop', async () => {
+  let pos = 0;const log = {stages: [], events: []}, stills = [];let now = 0;
+  const exec = {now: () => now, wait: async (ms) => {now += ms;}, wheel: async (dy) => {pos = Math.max(0, Math.min(4000, pos + dy));}, progress: () => pos / 4000, resolve: (v) => v, range: async () => 4000,
+    viewport: async () => ({w: 1000, h: 800}), move: async () => {}, targets: async () => [], still: async (n) => {stills.push(n);}};
+  await SCRIPTS.survey(makeContext(exec, log), {stops: 36});
+  const names = log.stages.map((s) => s.name);
+  assert.equal(names[0], 's00');assert.ok(names.includes("d10"), "reaches the end (4000 px / 400 px per stop)");assert.ok(!names.includes("d11"), 'stops at the page end');
+  const downs = names.filter((n) => n.startsWith('d')).length, ups = names.filter((n) => /^u[0-9]/.test(n) && n !== 'u00').length;
+  assert.equal(ups, downs - 1);assert.equal(names.at(-1), 'u00');assert.ok(pos < 12, 'back at the top');assert.equal(stills.length, names.length);
+  assert.equal(log.notes.filter((n) => n.key === 'stop').length, names.length);
+  const stops = log.notes.filter((n) => n.key === 'stop').map((n) => n.value);
+  assert.equal(pairByProgress(stops).length, ups + 1, 'every up stop (and the top) lands at the progress of its down stop');
+});
+
+t('surveyReport: settle lag, ambient motion, hysteresis only on calm stops, hotspots', () => {
+  const step = 1000 / 60, mk = (travel, tail) => [...Array(30).fill(travel), ...tail];
+  const calm = Array(120).fill(0.05), laggy = [...Array(60).fill(2), ...Array(60).fill(0.05)];
+  const e = {d01: mk(3, calm), d02: mk(0.5, laggy), u02: mk(0.5, laggy), u01: mk(3, calm), s00: calm, d03: mk(1, Array(120).fill(1.2))};
+  const notes = [{key: 'stop', value: {stage: 's00', dir: 'top', i: 0, px: 0, progress: 0}}, {key: 'stop', value: {stage: 'd01', dir: 'down', i: 1, px: 500, progress: 0.1}}, {key: 'stop', value: {stage: 'd02', dir: 'down', i: 2, px: 1000, progress: 0.2}},
+    {key: 'stop', value: {stage: 'd03', dir: 'down', i: 3, px: 1500, progress: 0.3}}, {key: 'stop', value: {stage: 'u02', dir: 'up', i: 2, px: 1000, progress: 0.2}}, {key: 'stop', value: {stage: 'u01', dir: 'up', i: 1, px: 500, progress: 0.1}}]
+    .concat(['s00', 'd01', 'd02', 'd03', 'u02', 'u01'].map((s) => ({key: 'travelEndMs', value: {stage: s, ms: 500}})));
+  const r = surveyReport(e, notes, {d01: 0.2, u01: 0.2, d02: 9, u02: 9, d03: 7}, step);
+  const by = Object.fromEntries(r.stops.map((s) => [s.stage, s]));
+  assert.ok(by.d01.settleMs !== null && by.d01.settleMs < 100, 'calm after travel settles at once');
+  assert.ok(by.d02.settleMs > 800, 'lagging stop: ' + by.d02.settleMs);
+  assert.equal(by.d03.ambientEnergy, 1.2);assert.deepEqual(r.summary.ambientMotionStops, ['d03']);
+  assert.equal(r.summary.hysteresis.pairsMatched, 5);assert.equal(r.summary.hysteresis.pairs, 4);   // d03 has ambient motion (1.2) → its large diff is not counted as hysteresis
+  assert.equal(r.summary.hysteresis.differing, 2);   // d02 and u02
+  assert.equal(r.summary.hotspots[0].stage, 'd01');
 });
 
 process.on('exit', (c) => {if (c === 0) console.log(`[reference-capture] PASS — ${n} unit tests (png, diff energy, frame selection, jumps, curves, trace summary, scripts, args, sheets, edge lookup)`);});

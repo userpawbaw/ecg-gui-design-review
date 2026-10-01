@@ -129,7 +129,7 @@ export async function framesPass(browser, o, {save = null, stopAfter = Infinity,
   const loadMs = Date.now() - t0, loadVt = vt;
 
   const log = {stages: [], events: []}, frames = [], shots = [], tracks = [];
-  const state = {stage: '', stageIdx: 0, wheelSent: 0, truncated: new Set(), wheelTimeouts: 0, total: 0};
+  const state = {stage: '', stageIdx: 0, wheelSent: 0, moveSent: 0, moveTimeouts: 0, truncated: new Set(), wheelTimeouts: 0, total: 0};
   const rel = () => vt - loadVt;   // script time starts at 0 when capture starts
   const ext = 'png';
   if (save) mkdirSync(save.dir, {recursive: true});
@@ -162,12 +162,23 @@ export async function framesPass(browser, o, {save = null, stopAfter = Infinity,
     },
     progress: () => page.evaluate(() => window.__ecg.progress()),
     resolve: (v) => page.evaluate((v) => window.__ecg.resolve(v), v),
+    async move(x, y) {
+      state.moveSent++;
+      await page.mouse.move(x, y);
+      let ok = false;   // same ordering guarantee as the wheel: the page has seen the pointer move before the clock advances
+      for (let k = 0; k < 50 && !ok; k++) {ok = await page.evaluate((n) => window.__ecg.moveCount >= n, state.moveSent);if (!ok) await sleep(4);}
+      if (!ok) state.moveTimeouts++;
+      await syncAnims();
+    },
+    targets: (spec, n) => page.evaluate(([s, c]) => window.__ecg.targets(s, c), [spec, n]),
+    viewport: () => page.evaluate(() => window.__ecg.viewport()),
   };
   try {
-    await SCRIPTS[o.script](makeContext(exec, log), {from: o.from, to: o.to});
+    await SCRIPTS[o.script](makeContext(exec, log), {from: o.from, to: o.to, hover: o.hover, count: o.hoverCount});
   } catch (e) {
     if (!(e instanceof StopScript)) throw e;
   }
+  if (state.moveTimeouts) warnings.push(`마우스 이동 ${state.moveTimeouts}회가 페이지에서 확인되지 않음`);
   if (state.wheelTimeouts) warnings.push(`휠 이벤트 ${state.wheelTimeouts}회가 페이지에서 확인되지 않음(1 s 대기 초과)`);
   for (const s of state.truncated) warnings.push(`구간 ${s}: ${o.maxFrames}프레임에서 캡처 중단(--max-frames) — 이후는 시계만 진행`);
   const anim = await page.evaluate(() => ({seen: window.__ecgAnim?.seen || 0, driven: window.__ecgAnim?.driven || 0, infinite: window.__ecgAnim?.infinite || 0, maxConcurrent: window.__ecgAnim?.max || 0}));

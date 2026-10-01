@@ -69,3 +69,18 @@ export async function compareSheets(browser, refDir, appDir, outDir, {refName = 
   writeFileSync(join(outDir, 'compare.json'), JSON.stringify({ref: refDir, app: appDir, stages: report, onlyInRef: onlyA, onlyInApp: onlyB}, null, 1), 'utf8');
   return {written, report, onlyA, onlyB};
 }
+
+/** Survey stills: survey-down.png (top → bottom) and survey-up.png (back up), with a travel-energy bar per stop. */
+export async function surveySheets(browser, dir, report, {meta = ''} = {}) {
+  const written = [], cols = 6, w = 1920, tileW = Math.floor((w - 24 - (cols - 1) * 6) / cols);
+  const label = (r) => `${r.stage} · ${r.progress === null ? r.px + 'px' : 'p' + r.progress} · settle ${r.settleMs ?? '–'}ms · Δtravel ${r.travelMeanEnergy} · idle ${r.ambientEnergy}` + (r.stillDiffVsOtherDirection === null ? '' : ` · ↔${r.stillDiffVsOtherDirection}`);
+  const bars = (rows) => `<div style="display:flex;gap:2px;align-items:flex-end;height:66px;margin:0 12px 8px">${rows.map((r) => `<div title="${esc(r.stage)}" style="width:14px;height:${Math.max(2, Math.min(64, r.travelMeanEnergy * 30))}px;background:${r.dir === 'up' ? '#c18401' : '#4f8cff'}"></div>`).join('')}</div>`;
+  const sets = [['survey-down.png', report.stops.filter((r) => r.dir !== 'up'), '내려가며(위→아래)'], ['survey-up.png', report.stops.filter((r) => r.dir === 'up'), '올라가며(아래→위)']];
+  for (const [out, rows, title] of sets) {
+    if (!rows.length) continue;
+    const html = `<style>${CSS}</style><h1>${esc(meta)} — 위치 조사 ${title} · 막대 = 이동 중 평균 변화 에너지 · ↔ = 반대 방향 같은 위치 정지 화면과의 차이</h1>${bars(rows)}<div class="g" style="grid-template-columns:repeat(${cols},${tileW}px)">${rows.map((r) => tile(dir, {file: r.still}, label(r))).join('')}</div>`;
+    await render(browser, html, join(dir, '_survey.html'), join(dir, out), w);
+    written.push(out);
+  }
+  return written;
+}

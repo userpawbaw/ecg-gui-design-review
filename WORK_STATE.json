@@ -33,7 +33,7 @@
     {
       "id": "REF-CAPTURE-TOOL",
       "status": "implemented_user_check_pending",
-      "task": "Frame-level capture tool (tools/reference-capture; npm run ref:capture / ref:sheet / ref:capture -- selftest) implemented and verified on the local Windows PC (T1-T8 in WORKLOG 2026-10-01; D-045, F-031, R-018). Pending: user runs it from PowerShell on the 12 REFMINE references (RM-01 Oryzo, RM-02 Igloo, RM-03 ATMOS, RM-08 Superpower, RM-12 Spline heart first), then REF-020+ effect cards. Exhibit-PC performance (layer B) still unknown. Capture output stays outside the repo."
+      "task": "Frame-level capture tool (tools/reference-capture; npm run ref:capture / ref:sheet / ref:capture -- selftest) implemented and verified on the local Windows PC (T1-T8 in WORKLOG 2026-10-01; D-045, F-031, R-018). Pending: user runs it from PowerShell on the 12 REFMINE references (RM-01 Oryzo, RM-02 Igloo, RM-03 ATMOS, RM-08 Superpower, RM-12 Spline heart first), then REF-020+ effect cards. Exhibit-PC performance (layer B) still unknown. Capture output stays outside the repo. 2026-10-01 update: fast mode, survey, hover added (D-046); 5-reference comparison recorded in rounds/R1/CAPTURE-COMPARE-R1-INTRO-2026-10-01.md. Pending user decision: allow entry-button clicks (ATMOS)? which comparison findings to pursue (hover feedback, ambient motion)."
     }
   ],
   "automation": {

@@ -15,6 +15,23 @@
 - B층은 실제 GPU에서만 의미가 있다. WebGL이 소프트웨어 렌더(SwiftShader 등)이면 `perf-summary.json`에 "성능 판단 불가"가 찍힌다. 전시 PC 성능은 여전히 모른다.
 - Playwright `recordVideo`는 쓰지 않는다(프레임률 가변·압축 — REF-001 녹화의 중복 프레임 24.5 %와 같은 문제).
 
+## 0.5 어떤 방식으로 찍을까 (AI가 조작할 때 · D-046)
+
+D-017 촬영 순서(정지 → 휠 1칸 × 3 → 연속 → 정지 → 빠르게 → 정지 → 되돌리기)는 **사람이 직접 녹화할 때** 효과를 구분하려고 만든 규칙이다. AI가 조작할 때는 효과를 더 확실히 가려내는 실험을 쓴다.
+
+| 알고 싶은 것 | 방법(`--script`) | 모드 | 결과 |
+|---|---|---|---|
+| 페이지 전체에 어떤 장면·효과가 있고 어디가 크게 움직이나 | `survey`: 일정 거리씩 내려가며 **정지 화면**(2 s 정착 뒤) + 올라오며 같은 위치로 복귀 | `fast` | `survey.json`(정지 지점별 이동 중 변화량·정착 시간·평소 움직임·왕복 차이), `survey-down.png`·`survey-up.png` |
+| 스크롤 위치의 함수인가(scrub) vs 한 번 발동(trigger) vs 시간 | survey의 왕복 비교: 같은 스크롤 위치의 내려갈 때/올라올 때 정지 화면 차이 | `fast` | `hysteresis` 요약 |
+| 입력 후 정착이 얼마나 늦나(관성·감속) | survey의 정착 시간(입력이 끝난 뒤 변화가 평소 수준으로 돌아오는 시간) | `fast` | `settleMs` |
+| 가만히 있을 때 계속 움직이나(앰비언트) | survey 각 지점 마지막 0.6 s 변화량 | `fast` | `ambientEnergy` |
+| 큰 전환이 어떻게 진행되나 | survey에서 찾은 구간을 `transition --from --to`로 **프레임 정확** 캡처 | `frames`(A층) | 12장 시트·곡선 |
+| 마우스 호버·포인터 따라가기 | `hover`: 화면 가로·세로 훑기 + 후보 요소별 접근 → 머무름 → 이탈(클릭 없음) | `fast` 또는 `frames` | `hover.json`(반응 여부·범위(영역/화면 전체)·t50/t90·이탈 후 역방향 애니메이션), 구간별 시트 |
+| 실제 성능 | 표준 대본 실시간 + 추적 | `trace` | `perf-summary.json` |
+
+- `fast` 모드: 대본을 **실시간으로 한 번** 실행하면서 Chromium 화면 스트림(CDP screencast, JPEG)을 받는다. 화면이 바뀔 때만 프레임이 오므로 60 Hz 격자로 다시 맞춰(마지막 프레임 유지) OpenCV(`frame_diff.py`)로 변화량을 계산한다. 사이트당 **1–5분**. 프레임 정확도는 화면 주사율(이 PC 약 58 Hz)과 PC 성능에 묶이므로, 정밀 분석은 해당 구간만 A층으로 다시 찍는다.
+- 정지 화면(still)은 1920×1080 JPEG(품질 90)이고 `frames/stills/`에 남는다. 에너지 계산용 저해상도 프레임은 끝나면 지운다(`--keep-frames`로 보존).
+
 ## 1. 명령 (Windows PowerShell에서 한 줄씩)
 
 ```
@@ -26,13 +43,18 @@ npm run ref:capture -- https://atmos.leeroy.ca --script transition --from 0.18 -
 npm run ref:sheet -- C:\Users\사용자\ecg-captures\oryzo.ai-20261001-1330
 npm run ref:sheet -- <레퍼런스 폴더> <story 폴더>
 npm run ref:capture -- selftest
+npm run ref:capture -- https://oryzo.ai --mode fast --script survey
+npm run ref:capture -- https://oryzo.ai --mode fast --script hover --hover-count 4
+npm run ref:capture -- https://www.igloo.inc --mode fast --script hover --hover "a.link,button.menu"
+npm run ref:sheet -- <캡처 폴더> --hover
+npm run ref:sheet -- <캡처 폴더> --survey
 ```
 
 | 옵션 | 기본 | 뜻 |
 |---|---|---|
 | `<url>` / `story` | — | `story`는 우리 앱. 개발 서버가 안 떠 있으면 같은 서버(`prototype/v2`)를 띄웠다가 끝나면 끈다 |
-| `--mode all\|frames\|trace` | all | A+B+정보 / A층만 / B층만 |
-| `--script standard\|transition` | standard | 입력 대본(§4). `transition`은 `--from`·`--to`(진행률 0–1 또는 CSS 선택자) 필요 |
+| `--mode all\|frames\|trace\|fast` | all | A+B+정보 / A층만 / B층만 / 실시간 녹화 빠른 모드(§0.5) |
+| `--script standard\|transition\|hover\|survey` | standard | 입력 대본(§0.5, §4). `transition`은 `--from`·`--to`(진행률 0–1 또는 CSS 선택자) 필요. `survey`는 `fast` 전용(`--stops N` 기본 36, `--stop-px P`). `hover`는 `--hover auto\|"선택자,선택자"`, `--hover-count N`(기본 4), `--from`(먼저 그 진행률까지 스크롤) |
 | `--track ".a,.b"` | — | 선택자 요소의 위치·크기·opacity·transform을 프레임마다 `tracks.json`에 저장하고 곡선 통계(onset/t10·t50·t90/최대 속도/이징 종류/오버슈트)를 계산 |
 | `--out 폴더` | `%USERPROFILE%\ecg-captures\<host>-<날짜-시각>` | 저장소 밖 |
 | `--har` | 끔 | 네트워크 HAR 저장(용량 큼, 본문 제외) |

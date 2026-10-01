@@ -9,10 +9,14 @@ import {parseArgs, outName} from './lib/args.mjs';
 import {gpuInfo, launchBrowser, launchHeadless} from './lib/browser.mjs';
 import {framesPass} from './lib/frames.mjs';
 import {tracePass} from './lib/trace.mjs';
-import {analyzeSavedFrames, compareHashes, saveJson, trackCurves} from './lib/post.mjs';
+import {analyzeSavedFrames, compareHashes, diffFromEnergies, pythonEnergies, saveJson, trackCurves} from './lib/post.mjs';
+import {fastPass} from './lib/fast.mjs';
+import {hoverReport, rectOf} from './lib/hover.mjs';
 import {diffEnergy, frameHash, pixelDelta} from './lib/analysis.mjs';
 import {decodePng} from './lib/png.mjs';
-import {stageSheets} from './lib/sheet.mjs';
+import {stageSheets, surveySheets} from './lib/sheet.mjs';
+import {pairByProgress, surveyReport} from './lib/survey.mjs';
+import {rmSync} from 'node:fs';
 import {ensureDevServer} from './server.mjs';
 import {fileURLToPath} from 'node:url';
 
@@ -52,6 +56,20 @@ async function determinism(browser, o, mainHashes) {
   };
 }
 
+function printSurvey(rep) {
+  const s = rep.summary;
+  say(`    정지 지점 내려감 ${s.stopsDown}·올라감 ${s.stopsUp} · 정착 시간 중앙값 ${s.medianSettleMs} ms · 느린 정착 ${s.slowSettleStops.length}곳 · 정착 못함 ${s.neverSettled.length}곳 · 평소 움직임 있는 지점 ${s.ambientMotionStops.length}곳`);
+  if (s.hysteresis) say(`    왕복 비교 ${s.hysteresis.pairs}쌍 · 중앙 차이 ${s.hysteresis.medianDiff} · 다른 지점 ${s.hysteresis.differing}곳 → ${s.hysteresis.reading}`);
+  say('    이동 중 변화가 큰 지점: ' + s.hotspots.map((h) => `${h.stage}(${h.progress ?? h.px + 'px'}, Δ${h.travelMeanEnergy})`).join(', '));
+}
+
+function printHover(rep) {
+  for (const [stage, h] of Object.entries(rep)) {
+    const m = h.metrics;
+    say(`    ${stage} [${h.target.tag} "${h.target.label}"] ${m.reacted ? '반응 있음(' + (m.scope === 'local' ? '영역' : '화면 전체') + ')' : '반응 없음/약함'} · 전체 피크 ${m.peakAll}(평소 ${m.calmLevel}) · 영역 피크 ${m.peakLocal} · 영역/바깥 ${m.localToOutsideRatio}배 · 효과 t90 ${m.effectT90Ms} ms · 이탈 후 변화 비율 ${m.changeAfterExitShare}`);
+  }
+}
+
 export async function main(argv) {
   if (argv[0] === 'selftest') return (await import('./selftest.mjs')).main();
   let o;
@@ -62,8 +80,8 @@ export async function main(argv) {
   let server = null;
   try {
     if (o.isStory) server = await ensureDevServer(o.base);
-    const runA = o.mode === 'all' || o.mode === 'frames', runB = o.mode === 'all' || o.mode === 'trace';
-    let gpu = null, frames = null;
+    const runA = o.mode === 'all' || o.mode === 'frames', runB = o.mode === 'all' || o.mode === 'trace', runFast = o.mode === 'fast';
+    let gpu = null, frames = null, fastDone = false;
 
     if (runA) {
       say('\n[A층] 가상 시계 프레임 캡처 시작 (창이 뜹니다 — 가리거나 최소화하지 마세요)');
@@ -83,6 +101,12 @@ export async function main(argv) {
         saveJson(outDir, 'input.json', frames.log);
         saveJson(outDir, 'assets.json', {url: o.url, ...frames.info});
         if (o.track.length) saveJson(outDir, 'tracks.json', {selectors: o.track, frameStepMs: o.step, curves: trackCurves(frames.tracks, o.track, o.step), frames: frames.tracks});
+        if (o.script === 'hover') {
+          say('  호버 분석(대상 영역 변화 에너지, OpenCV)…');
+          const ticks = frames.frames.map((f) => ({...f, file: join(framesDir, f.file), rect: rectOf(frames.log.notes, f.stage)}));
+          const rep = hoverReport(ticks, pythonEnergies(outDir, ticks), frames.log.notes, o.step);
+          saveJson(outDir, 'hover.json', rep);printHover(rep);
+        }
         writeFileSync(join(outDir, 'frames.json'), JSON.stringify(frames.frames.map((f) => [f.stage, f.i, f.vt])), 'utf8');
         for (const [name, s] of Object.entries(diff.stages)) say(`    ${name.padEnd(14)} ${String(s.count).padStart(3)}프레임 · 평균 Δ ${s.meanEnergy.toFixed(2)} · 최대 Δ ${s.maxEnergy.toFixed(2)} · 급등 ${s.jumps.length}`);
         manifest.frameStepMs = o.step;
@@ -95,7 +119,10 @@ export async function main(argv) {
         const hashed = {list: hashes, imgs: []};
         if (o.determinism) {
           hashed.imgs = frames.frames.slice(0, HASH_FRAMES).map((f) => decodePng(readFileSync(join(framesDir, f.file))));
-          manifest.determinism = await determinism(browser, o, hashed);
+          try {manifest.determinism = await determinism(browser, o, hashed);} catch (e) {
+            const why = String(e.message).split(String.fromCharCode(10))[0];
+            manifest.determinism = {error: why, verdict: 'FAIL — 결정성 검사 중 페이지가 닫힘/충돌(무거운 사이트): ' + why};
+          }
           manifest.determinism.likelyCauses = frames.warnings.filter((w) => /Web Worker|<video>|OffscreenCanvas|무한 반복/.test(w));   // what the capture itself says can break repeatability
           say(`  결정성: ${manifest.determinism.verdict}`);
         } else manifest.determinism = {skipped: true, hashes: hashes.slice(0, HASH_FRAMES).map((h) => h.hash)};
@@ -122,8 +149,50 @@ export async function main(argv) {
       } finally {await browser.close();}
     }
 
+    if (runFast) {
+      say('\n[빠른 모드] 실시간 실행 + 화면 녹화(screencast) — 프레임 정확도는 화면 주사율·PC 성능에 묶임');
+      const {browser, info, warnings} = await launchBrowser({browser: o.browser});
+      manifest.browser = info;manifest.warnings.push(...warnings);
+      try {
+        gpu = await gpuInfo(browser);manifest.gpu = gpu;
+        say(`  브라우저: ${info.used} ${info.version} · GPU: ${gpu.renderer ?? 'WebGL 없음'}${gpu.software ? '  ← 소프트웨어 렌더' : ''}`);
+        const t0 = Date.now();
+        const f = await fastPass(browser, o, outDir);
+        manifest.warnings.push(...f.warnings);
+        say(`  녹화 ${f.times.length}프레임(변화가 있을 때만 도착), 60 Hz 격자 ${f.ticks.length}틱 · 실제 ${((Date.now() - t0) / 1000).toFixed(0)} s. 분석(OpenCV)…`);
+        const ticks = f.ticks.map((t) => ({stage: t.stage, i: t.i, vt: t.vt, file: 'frames/raw/' + String(t.src).padStart(6, '0') + '.jpg', rect: rectOf(f.log.notes, t.stage)}));
+        const energies = pythonEnergies(outDir, ticks.map((t) => ({...t, file: join(outDir, t.file)})));
+        const diff = diffFromEnergies(ticks, energies, f.step, '; fast mode: frames resampled to 60 Hz by holding the latest screencast frame');
+        saveJson(outDir, 'diff.json', diff);saveJson(outDir, 'input.json', f.log);
+        saveJson(outDir, 'video-summary.json', {layer: 'fast (real time, CDP screencast JPEG q85)', screencastFrames: f.times.length, delivery: f.delivery,
+          caveat: '프레임은 화면이 바뀔 때만 도착한다(정지 구간은 간격이 길어도 정상). 움직이는 구간의 간격이 16.7 ms를 넘으면 화면 주사율 또는 PC 성능 한계 — A층(가상 시계)으로 확인할 것'});
+        for (const [name, s] of Object.entries(diff.stages)) say(`    ${name.padEnd(14)} ${String(s.count).padStart(3)}틱 · 평균 Δ ${s.meanEnergy.toFixed(2)} · 최대 Δ ${s.maxEnergy.toFixed(2)} · 급등 ${s.jumps.length}`);
+        if (o.script === 'hover') {const rep = hoverReport(ticks, energies, f.log.notes, f.step);saveJson(outDir, 'hover.json', rep);printHover(rep);}
+        if (o.script === 'survey') {
+          const byStage = {};ticks.forEach((t, n) => {(byStage[t.stage] ||= []).push(energies[n].all);});
+          const stops = f.log.notes.filter((n) => n.key === 'stop').map((n) => n.value), pairs = [];
+          pairs.push(...pairByProgress(stops).map(([d, u]) => [d, u]));
+          const hyst = {};
+          if (pairs.length) {
+            const seq = pairs.flatMap(([d, u]) => [d, u].map((st) => ({file: join(outDir, 'frames', 'stills', st + '.jpg')})));
+            const en = pythonEnergies(outDir, seq);
+            pairs.forEach(([d, u], k) => {hyst[d] = hyst[u] = en[2 * k + 1].all;});
+          }
+          const rep = surveyReport(byStage, f.log.notes, hyst, f.step);
+          saveJson(outDir, 'survey.json', rep);printSurvey(rep);manifest.survey = rep.summary;
+          if (!o.keepFrames) rmSync(join(outDir, 'frames', 'raw'), {recursive: true, force: true});   // low-res energy frames are not needed afterwards; stills stay
+        }
+        manifest.frameStepMs = f.step;manifest.layer = 'fast';fastDone = true;
+      } finally {await browser.close();}
+    }
+
     manifest.sheets = [];
-    if (runA && frames) {
+    if (fastDone && o.script === 'survey') {
+      say(String.fromCharCode(10) + '위치 조사 시트…');
+      const hb = await launchHeadless();
+      try {manifest.sheets = await surveySheets(hb, outDir, JSON.parse(readFileSync(join(outDir, 'survey.json'), 'utf8')), {meta: o.isStory ? 'story' : new URL(o.url).host});} finally {await hb.close();}
+      say('  ' + manifest.sheets.join(', '));
+    } else if ((runA && frames) || fastDone) {
       say('\n시트 생성(구간별 12장)…');
       const hb = await launchHeadless();
       try {manifest.sheets = await stageSheets(hb, outDir, JSON.parse(readFileSync(join(outDir, 'diff.json'), 'utf8')), {meta: `${o.isStory ? 'story' : new URL(o.url).host} · ${o.script}`});}
@@ -131,7 +200,7 @@ export async function main(argv) {
       say(`  ${manifest.sheets.length}장: ${manifest.sheets.join(', ')}`);
     }
     saveJson(outDir, 'manifest.json', manifest);   // so the handoff list can include it
-    manifest.handoff = ['manifest.json', 'perf-summary.json', 'diff.json', 'input.json', 'assets.json', 'tracks.json', ...manifest.sheets].filter((f) => existsSync(join(outDir, f)));
+    manifest.handoff = ['manifest.json', 'perf-summary.json', 'video-summary.json', 'hover.json', 'survey.json', 'diff.json', 'input.json', 'assets.json', 'tracks.json', ...manifest.sheets].filter((f) => existsSync(join(outDir, f)));
     saveJson(outDir, 'manifest.json', manifest);
     if (manifest.warnings.length) say('\n경고:\n  - ' + manifest.warnings.join('\n  - '));
     say(`\n끝. 다른 세션에 넘길 파일: ${manifest.handoff.join(', ')}\n폴더: ${outDir}\n`);

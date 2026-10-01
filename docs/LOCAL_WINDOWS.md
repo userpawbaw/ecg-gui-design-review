@@ -10,7 +10,7 @@
 |---|---|---|
 | 1 | Node **22 이상**(권장 24 LTS) 설치 — https://nodejs.org | |
 | 2 | `npm run doctor` | Node·npm·Python·OpenCV·브라우저·줄바꿈·코드 페이지 점검, 고칠 방법 출력 |
-| 3 | `npm run browsers` | 브라우저 테스트용 Chromium 설치(테스트를 돌릴 때만) |
+| 3 | `npm run browsers` | 브라우저 테스트용 Chromium 설치(테스트를 돌릴 때만). `ref:capture`는 Edge가 있으면 Edge를 쓴다(`doctor`가 확인) |
 | 4 | `npm run py:setup` | 영상 도구용 numpy·OpenCV 설치(`tools/video-qa/requirements-local.txt`, 영상 도구를 쓸 때만) |
 
 ## 2. 자주 쓰는 명령
@@ -22,6 +22,9 @@
 | `npm test` | 저장소 전체 테스트 | 기록·인코딩·Windows 호환성 검사 |
 | `npm run spike -- video-scrub` | video-scrub spike 실행 | 의존성·클립 준비 후 실행. `attic`, `ref-repro`, `lab-corner`, `scroll-globe`도 같은 방식 |
 | `npm run py -- tools/video-qa/check_video.py <영상> --brief <json>` | — | 맞는 Python(py → python → python3)을 찾아 UTF-8로 실행 |
+| `npm run ref:capture -- <url>` 또는 `-- story` | — | 레퍼런스 사이트/우리 앱을 **Edge 창을 띄워** 같은 휠 대본으로 캡처: A층(가상 시계 16 ms 프레임 PNG) + B층(실시간 성능 추적) + 자산·라이브러리 목록. 결과는 `%USERPROFILE%ecg-captures<host>-<날짜-시각>`(저장소 밖). 옵션·읽는 법: `tools/reference-capture/README.md` |
+| `npm run ref:sheet -- <폴더>` / `-- <레퍼런스 폴더> <story 폴더>` | — | 구간별 12장 시트 / 같은 구간 나란히 비교 시트 |
+| `npm run ref:capture -- selftest` | — | 도구 자체 시험(정답이 알려진 페이지로 가상 시계·CSS 보정·결정성 확인) |
 
 Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `?reduced=1`(움직임 줄이기).
 

@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>clock probe (tool self-test fixture)</title>
+<style>
+  body{margin:0;background:#101114;height:2400px}
+  #a,#b,#c{position:fixed;left:0;width:60px;height:60px}
+  #a{top:40px;background:#e5484d}
+  #b{top:140px;background:#3e63dd;transition:transform 2s linear}
+  #c{top:240px;background:#30a46c}
+  .go #a{animation:mv 2s linear forwards}      /* CSS animation: 1000 px in 2 s, started by the first wheel notch */
+  .go #b{transform:translateX(1000px)}         /* CSS transition, same trigger */
+  @keyframes mv{from{transform:translateX(0)}to{transform:translateX(1000px)}}
+</style>
+<div id="a"></div><div id="b"></div><div id="c"></div>
+<script>
+  // Three ways to move 1000 px in 2 s, all started by the first wheel event: CSS animation (a), CSS transition (b),
+  // requestAnimationFrame + performance.now (c). On the virtual clock all three must stay together frame by frame.
+  const c = document.getElementById('c');
+  addEventListener('wheel', () => {
+    document.body.classList.add('go');
+    const t0 = performance.now();
+    (function tick() { c.style.transform = 'translateX(' + Math.min(1, (performance.now() - t0) / 2000) * 1000 + 'px)'; requestAnimationFrame(tick); })();
+  }, {once: true});
+</script>

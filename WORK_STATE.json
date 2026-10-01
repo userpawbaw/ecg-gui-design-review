@@ -29,6 +29,11 @@
       "id": "R1-NEXT-SCREENS",
       "status": "flow_recorded_queued_after_R1-INTRO",
       "task": "Noise-by-noise scenes after the intro (PLI -> baseline wander -> muscle): user flow and AI flow analysis recorded in docs/uiux_system/rounds/R1/IDEA-R1-NOISE.md (F-028). After the intro is implemented: option round, stack check, then the user's further feedback on grid/bars/Lab handoff."
+    },
+    {
+      "id": "REF-CAPTURE-TOOL",
+      "status": "implemented_user_check_pending",
+      "task": "Frame-level capture tool (tools/reference-capture; npm run ref:capture / ref:sheet / ref:capture -- selftest) implemented and verified on the local Windows PC (T1-T8 in WORKLOG 2026-10-01; D-045, F-031, R-018). Pending: user runs it from PowerShell on the 12 REFMINE references (RM-01 Oryzo, RM-02 Igloo, RM-03 ATMOS, RM-08 Superpower, RM-12 Spline heart first), then REF-020+ effect cards. Exhibit-PC performance (layer B) still unknown. Capture output stays outside the repo."
     }
   ],
   "automation": {
@@ -127,7 +132,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-30",
+  "updated_at": "2026-10-01",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",

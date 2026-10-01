@@ -12,3 +12,6 @@ assets/.npm-cache/
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Reference/app frame captures contain third-party pixels — never commit (AGENTS.md). Default output is outside the repo.
+ecg-captures/

@@ -7,11 +7,14 @@
 //   npm run spike -- video-scrub — install deps if missing and start a spike dev server
 //   npm run py -- <script> [args]— run a Python script with the right interpreter and UTF-8 forced
 //   npm run v2:prepare           — build prototype/v2/public (keeps the checked-in methods.json)
+//   npm run ref:capture -- <url|story> [--mode frames|trace] …  — frame-level capture of a reference site or our app (tools/reference-capture)
+//   npm run ref:sheet -- <folder> [<app folder>]               — 12-frame sheets / side-by-side comparison sheets
 import {spawnSync} from 'node:child_process';
 import {existsSync,readFileSync,readdirSync} from 'node:fs';
 import {dirname,join,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';
+import {findEdge} from '../../tools/reference-capture/lib/browser.mjs';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
 const win=process.platform==='win32';
@@ -50,6 +53,7 @@ function doctor(){
   cv?ok(`OpenCV·numpy ${cv} (영상 도구용)`):warn(`OpenCV 없음 — 영상 도구(video-scrub 클립)를 쓸 때만 필요: npm run py:setup`);
  }else warn('Python 3 없음 — 영상 도구·Blender 스크립트를 쓸 때만 필요. https://www.python.org 설치 시 "py launcher" 포함');
  const b=browserPath();b?ok(`Playwright 브라우저: ${b}`):warn('Playwright가 쓰는 브라우저가 설치돼 있지 않음 — 브라우저 테스트를 쓸 때만: npm run browsers');
+ const edge=findEdge();edge?ok(`Microsoft Edge: ${edge} (ref:capture가 창을 띄워 실제 GPU로 캡처)`):warn('Edge를 찾지 못함 — ref:capture는 Playwright Chromium으로 대체됨(GPU 정보 확인 필요). Chromium: npm run browsers');
  const eol=capture('git',['config','--get','core.autocrlf']);
  // check files a pull does not rewrite (package.json was re-written as LF when it changed)
  const crlf=['data/bank.js','AGENTS.md','prototype/v2/src/main.tsx'].some(f=>existsSync(join(root,f))&&readFileSync(join(root,f),'utf8').slice(0,200000).includes('\r\n'));
@@ -74,11 +78,13 @@ function spike(name){
  ensureDeps(dir);if(name==='video-scrub'&&!existsSync(join(dir,'public/clips')))run('npm',['run','clips'],{cwd:dir});
  run('npm',['run','dev','--','--open'],{cwd:dir});
 }
+// Reference / app frame capture. Both tools use the Playwright already installed in prototype/v2.
+function refTool(file){if(args[0]==='story')ensureV2Data();ensureDeps(join(root,'prototype/v2'));process.exit(run(process.execPath,[join(root,'tools/reference-capture',file),...args],{allowFail:true}));}
 function py(argv){const p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}const code=run(p.bin,[...p.pre,...argv],{allowFail:true,cwd:process.env.INIT_CWD||root});process.exit(code);}
 function pySetup(){const p=findPython();if(!p){bad('Python 3를 찾지 못함');process.exit(1);}run(p.bin,[...p.pre,'-m','pip','install','--upgrade','-r',join(root,'tools/video-qa/requirements-local.txt')]);}
 
-const table={doctor,story,'story:check':storyCheck,spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};
+const table={doctor,'ref:capture':()=>refTool('capture.mjs'),'ref:sheet':()=>refTool('sheet.mjs'),story,'story:check':storyCheck,spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};
 if(fileURLToPath(import.meta.url)===resolve(process.argv[1]||'')){
- if(!table[cmd]){say('사용법: npm run doctor | story | story:check | spike -- <이름> | py -- <스크립트> | py:setup | browsers | v2:prepare');process.exit(cmd?1:0);}
+ if(!table[cmd]){say('사용법: npm run doctor | story | story:check | spike -- <이름> | py -- <스크립트> | py:setup | browsers | v2:prepare | ref:capture -- <url|story> | ref:sheet -- <폴더>');process.exit(cmd?1:0);}
  table[cmd]();
 }

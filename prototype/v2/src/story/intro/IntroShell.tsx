@@ -72,7 +72,7 @@ export function IntroShell({bank,onNext,onLab}:Props){
   </div>
   <div ref={refs.end} className="it-end">
    <p>같은 심장, 같은 기록 — 잡음을 걷어내기 전과 후.</p>
-   <div><button className="hv hv-solid" data-sub="STORY · 잡음 종류별로 비교" onClick={onNext}>잡음마다 다를까요?<span className="arr" aria-hidden="true">→</span></button><button className="ghost hv" data-sub="LAB · 방법을 직접 고르기" onClick={lab}>직접 비교해 보기</button></div>
+   <div><button className="hv hv-primary" data-sub="STORY · 잡음 종류별로 비교" onClick={onNext}>잡음마다 다를까요?<span className="arr" aria-hidden="true">→</span></button><button className="ghost hv" data-sub="LAB · 방법을 직접 고르기" onClick={lab}>직접 비교해 보기</button></div>
   </div>
   <button className="it-skip hv" data-sub="LAB · 바로 이동" onClick={lab}>바로 실험실<span className="arr" aria-hidden="true">→</span></button>
   <p className="it-notice">합성 기록 S038 · 저장된 입력과 잡음 제거 출력 · {((scene.loop.end-scene.loop.start)/bank.fs).toFixed(1)} s 반복 재생 · 실제 장치 연결 없음</p>

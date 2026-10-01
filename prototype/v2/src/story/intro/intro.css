@@ -52,7 +52,7 @@
 .it-end div{display:flex;gap:16px}
 .it-end button,.it-skip{font:inherit;color:var(--ink);background-color:transparent;border:1px solid #5f6164;border-radius:999px;cursor:pointer}   /* hover/focus/fill states: hoverfx.css (D-048) */
 .it-end button{height:60px;padding:0 34px;font-size:19px}
-/* primary button: filled at rest by .hv-solid in hoverfx.css */
+/* primary button: neon outline at rest, same fill-on-hover as the others (.hv-primary in hoverfx.css) */
 .it-skip{right:2.6%;top:3.2%;height:38px;padding:0 18px;font-size:14px;color:var(--ink-2)}
 .it-notice{left:2.4%;bottom:3%;margin:0;font-size:12px;letter-spacing:.12em;color:var(--ink-3);pointer-events:none}
 .it-failed{left:50%;top:50%;transform:translate(-50%,-50%);color:#ffbc79}

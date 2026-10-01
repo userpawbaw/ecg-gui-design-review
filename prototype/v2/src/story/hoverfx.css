@@ -1,41 +1,44 @@
 /* Hover feedback — D-048 (IDEA-R1-HOVER A2 + B1 + C1 + D1). Scope: the intro (the Story part is being redone separately; nothing here touches it).
    A2  outline → fill rising from the bottom, arrow 10 px forward, 0.65–0.8 s cubic-bezier(.2,.75,.25,1) — the intro label language (REF-007 EFX-007-01).
-       Solid (primary) controls are the reverse: the fill drains. The fill is a background-size transition, so ::after can sit outside the button.
+       Every control behaves the same (rise on hover, drain on leave); the primary one only differs in hue (neon, user feedback 2026-10-01).
+       The fill is a background-size transition, so ::after can sit outside the button.
    B1  a dark veil between the 3D scene canvas and everything that carries data/text: scene brightness × (1 − opacity). Oryzo: whole scene dims, t90 ≈ 0.55 s, comes back on leave.
    C1  hover sub-line (stored values/conditions only, no method names — D-040): mono 13 px, blur 12 → 0, REF-007 EFX-007-02 shortened to 0.6 s.
    D1  :hover, :focus-visible and :active share the states; hover only on devices that hover (exhibit = mouse + wheel).
    The app-wide Lab rules `button:hover{background:#e8f1ee}` and `button:focus-visible{outline:… #ce873a}` (style.css) would otherwise leak in: every state below
    restates background-color/background-image itself. */
-.intro{--hv-fill:var(--chip-on,#c9ccd3);--hv-ink-on:#0b0e12;--hv-ease:cubic-bezier(.2,.75,.25,1);--hv-img:linear-gradient(var(--hv-fill),var(--hv-fill));
+.intro{--hv-fill:var(--chip-on,#c9ccd3);--hv-ink-on:#0b0e12;--hv-ease:cubic-bezier(.2,.75,.25,1);--hv-fill-ease:cubic-bezier(.45,0,.2,1);
+ --hv-neon:#cfff3f;   /* primary control only: lime, a hue that no waveform/scene colour uses (input orange, output mint, globe blue, heart red) */
  --hv-mono:"IBM Plex Mono","Pretendard Variable",Pretendard,"Malgun Gothic",ui-monospace,monospace}
 
 .hd-dim{position:absolute;inset:0;background:#050608;opacity:0;pointer-events:none;transition:opacity .6s cubic-bezier(.4,0,.2,1)}
 .intro[data-hd] .hd-dim{opacity:.62}
 
-.hv{background-color:transparent;background-image:var(--hv-img);background-repeat:no-repeat;background-position:0 100%;background-size:100% 0%;
- transition:background-size .8s var(--hv-ease),color .65s,border-color .65s,transform .12s}
+.hv{--hv-img:linear-gradient(var(--hv-fill),var(--hv-fill));   /* resolved per element so a control can carry its own --hv-fill */
+ background-color:transparent;background-image:var(--hv-img);background-repeat:no-repeat;background-position:0 100%;background-size:100% 0%;
+ /* one transition for both directions: the fill rises on hover and drains back the same way on leave. The text flips colour when the fill passes the
+    middle of the pill (delay), so it never sits light-on-light or dark-on-dark halfway. */
+ transition:background-size .6s var(--hv-fill-ease),color .14s ease .2s,border-color .35s ease,transform .12s}
 .it-end .hv{position:relative}   /* ::after needs a positioning context; the skip pill is already absolute */
 .hv .arr{display:inline-block;margin-left:.35em;transition:transform .8s var(--hv-ease)}
 .hv:active{transform:scale(.985)}
 .hv:focus-visible{outline:2px solid var(--ink-2);outline-offset:3px}
-/* solid = primary control: filled at rest, the fill drains on hover */
-.intro .hv-solid{background-size:100% 100%;color:var(--hv-ink-on);border-color:var(--hv-fill)}   /* (0,2,0): beats .it-end button { color } */
+/* primary control: same hover as the others, only the hue differs (neon outline + text at rest, neon fill on hover) */
+.intro .hv-primary{--hv-fill:var(--hv-neon);color:var(--hv-neon);border-color:var(--hv-neon)}   /* (0,2,0): beats .it-end button { color, border } */
 
 .hv[data-sub]::after{content:attr(data-sub);position:absolute;left:50%;top:calc(100% + 10px);transform:translate(-50%,8px);font:500 13px/1 var(--hv-mono);letter-spacing:.1em;
  color:var(--ink-2);white-space:nowrap;opacity:0;filter:blur(12px);pointer-events:none;
  transition:opacity .6s var(--hv-ease),filter .6s var(--hv-ease),transform .6s var(--hv-ease)}
 
 @media (hover:hover){
- .hv:is(:hover,:focus-visible){background-color:transparent;background-image:var(--hv-img);background-position:0 100%;background-size:100% 100%;color:var(--hv-ink-on);border-color:var(--hv-fill)}
- .hv:is(:hover,:focus-visible) .arr{transform:translateX(10px)}
- .hv-solid:is(:hover,:focus-visible){background-size:100% 0%;background-position:0 0;color:var(--ink);border-color:var(--ink)}
- .hv[data-sub]:is(:hover,:focus-visible)::after{opacity:1;filter:none;transform:translate(-50%,0)}
+ .intro .hv:hover{background-color:transparent;background-image:var(--hv-img);background-position:0 100%;background-size:100% 100%;color:var(--hv-ink-on);border-color:var(--hv-fill)}
+ .intro .hv:hover .arr{transform:translateX(10px)}
+ .intro .hv[data-sub]:hover::after{opacity:1;filter:none;transform:translate(-50%,0)}
 }
 /* keyboard focus shows the same state even where hover is not available */
-.hv:focus-visible{background-color:transparent;background-image:var(--hv-img);background-position:0 100%;background-size:100% 100%;color:var(--hv-ink-on);border-color:var(--hv-fill)}
-.hv-solid:focus-visible{background-size:100% 0%;background-position:0 0;color:var(--ink);border-color:var(--ink)}
-.hv:focus-visible .arr{transform:translateX(10px)}
-.hv[data-sub]:focus-visible::after{opacity:1;filter:none;transform:translate(-50%,0)}
+.intro .hv:focus-visible{background-color:transparent;background-image:var(--hv-img);background-position:0 100%;background-size:100% 100%;color:var(--hv-ink-on);border-color:var(--hv-fill)}
+.intro .hv:focus-visible .arr{transform:translateX(10px)}
+.intro .hv[data-sub]:focus-visible::after{opacity:1;filter:none;transform:translate(-50%,0)}
 
 /* reduced motion: colour and fill changes stay, nothing travels or blurs */
 .intro.reduced .hv .arr{transform:none!important}

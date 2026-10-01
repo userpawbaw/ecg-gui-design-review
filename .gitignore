@@ -12,3 +12,6 @@ assets/.npm-cache/
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Practice builds: reference originals stay local-only (user-authorized practice, never committed or shipped)
+prototype/practice/**/_original/

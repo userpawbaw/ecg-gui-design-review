@@ -1340,7 +1340,7 @@
       "id": "makehuman-base-mesh",
       "title": "MakeHuman base mesh (base.obj)",
       "kind": "model",
-      "status": "active",
+      "status": "superseded",
       "source": {
         "type": "url",
         "url": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/3dobjs/base.obj",
@@ -1358,7 +1358,56 @@
       "used_by": [
         "prototype/v2 R1 intro"
       ],
-      "review": "MakeHuman assets (base mesh) are CC0 per LICENSE.md section C. Shown only as a rim-lit outline, no face."
+      "review": "MakeHuman assets (base mesh) are CC0 per LICENSE.md section C. Shown only as a rim-lit outline, no face. Superseded 2026-10-01 by blender-human-base-meshes (O-007: head/eye/mouth quality)."
+    },
+    {
+      "id": "blender-human-base-meshes",
+      "title": "Blender Studio Human Base Meshes bundle v1.0.0 (GEO-body_male_realistic used)",
+      "kind": "model",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://archive.org/download/human-base-meshes-bundle-v1.0.0/human-base-meshes-bundle-v1.0.0.zip",
+        "page": "https://archive.org/details/human-base-meshes-bundle-v1.0.0"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/blender-human-base-meshes/bundle.zip",
+        "sha256": "46a912c0524072ac3b78c35d5d2471df7b8df102394a050ca8cd7184e3393648",
+        "bytes": 34586814
+      },
+      "processing": "scripts/assets/build-intro-figure.py (bpy): multires applied, eyes removed, face/ears projected onto a smooth egg head, arms relaxed 6°, voxel remesh 3.2 mm, decimated to 105k tris, scaled to 1.666 m, shape key 'breath' → prototype/v2/src/story/intro/assets/body.glb",
+      "processed": "prototype/v2/src/story/intro/assets/body.glb",
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "Blender Studio release, CC0 (archive.org licenseurl publicdomain/zero/1.0). Featureless mannequin head by user request 2026-10-01."
+    },
+    {
+      "id": "hra-heart-male",
+      "title": "HuBMAP HRA reference organ: heart, male v1.3 (3d-vh-m-heart.glb)",
+      "kind": "model",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://cdn.humanatlas.io/digital-objects/ref-organ/heart-male/v1.3/assets/3d-vh-m-heart.glb",
+        "page": "https://3d.nih.gov/entries/3DPX-021000"
+      },
+      "licence": "CC-BY-4.0",
+      "attribution_required": true,
+      "attribution": "Heart model: HuBMAP Human Reference Atlas 3D reference organ (heart, male), CC BY 4.0, created using data from the Visible Human Male, provided by the National Library of Medicine. Modified (chambers unioned, openings closed, vessel stubs added, scaled 1.25×).",
+      "original": {
+        "file": "assets/source/hra-heart-male/3d-vh-m-heart.glb",
+        "sha256": "689df039c8bc264ea06a44cd926762976f0666c0ff2dc532d046409b185e6b0c",
+        "bytes": 4071772
+      },
+      "processing": "scripts/assets/build-intro-figure.py (bpy): atria/ventricles/septum + valve plugs unioned, atrial through-holes closed (voxel closing r 9 mm), short aorta/pulmonary trunk stubs, outer shell only, decimated → prototype/v2/src/story/intro/assets/heart.glb",
+      "processed": "prototype/v2/src/story/intro/assets/heart.glb",
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "CC BY 4.0 (cdn.humanatlas.io metadata). Attribution must appear in the exhibit credits. Cite Ackerman 1998 / Spitzer et al. 1996 per NIH 3D entry."
     }
   ],
   "rejected": [

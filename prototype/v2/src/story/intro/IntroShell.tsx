@@ -62,7 +62,7 @@ export function IntroShell({bank,onNext,onLab}:Props){
   <div ref={refs.hint} className="it-hint"><span className="wheel" aria-hidden="true"/>스크롤</div>
   <div ref={refs.labels} className="it-labels" aria-live="polite">
    <div ref={refs.labelIn} className="it-lab in is-current"><i className="bar"/><b>잡음 섞인 입력</b><small>INPUT · WHITE NOISE {scene.s.snr} dB · {scene.s.record}</small></div>
-   <div ref={refs.labelOut} className="it-lab out"><i className="bar"/><b>잡음 제거 출력</b><small ref={refs.outMono as never}>OUTPUT · 저장값</small></div>
+   <div ref={refs.labelOut} className="it-lab out"><i className="bar"/><b>잡음 제거 출력</b><small ref={refs.outMono as never}>OUTPUT · STORED</small></div>
    <div ref={refs.steps} className="it-steps" aria-hidden="true"><i/><i/><i/><i/><em>박동마다 한 겹</em></div>
   </div>
   <div ref={refs.end} className="it-end">
@@ -71,6 +71,7 @@ export function IntroShell({bank,onNext,onLab}:Props){
   </div>
   <button className="it-skip" onClick={lab}>바로 실험실 →</button>
   <p className="it-notice">합성 기록 S038 · 저장된 입력과 잡음 제거 출력 · {((scene.loop.end-scene.loop.start)/bank.fs).toFixed(1)} s 반복 재생 · 실제 장치 연결 없음</p>
+  <p className="it-credit">심장 모델 HuBMAP HRA · Visible Human Male(NLM) · CC BY 4.0 · 지구 NASA Earth Observatory</p>
   {failed&&<p className="it-failed" role="alert">3D 장면을 불러오지 못했습니다: {failed}</p>}
   <div ref={refs.wrapper} className="it-scroll"><div ref={refs.content} className="it-scroll-content"/></div>
  </div>;

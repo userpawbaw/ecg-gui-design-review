@@ -1,6 +1,6 @@
-// Person outline + heart (IDEA-R1-INTRO M2, H3, H2). MakeHuman base mesh (CC0) and a metaball heart built in
-// scripts/assets/build-intro.py. Both render only as rim light (fresnel), so the figure reads as a backlit outline
-// with no face; the heart is visible through the body. The morph line carries the globe rim into the body outline.
+// Person outline + heart (IDEA-R1-INTRO M2, H3, H2). Blender Studio human base mesh (CC0, featureless egg head) and the
+// HRA reference heart (CC BY 4.0, Visible Human Male data, NLM), built in scripts/assets/build-intro-figure.py (P1, O-007).
+// Both render as light only (rim or contour rings), so the heart is visible through the body. The morph line carries the globe rim into the body outline.
 import * as THREE from 'three';
 import {Line2} from 'three/addons/lines/Line2.js';
 import {LineGeometry} from 'three/addons/lines/LineGeometry.js';
@@ -91,8 +91,12 @@ export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometr
  const heartMat=rimMaterial('#ff7482',2.4,look==='v2'?.05:.018,true);
  heartMat.uniforms.uMinY.value=bb.min.y;heartMat.uniforms.uMaxY.value=bb.max.y;
  const heartMesh=new THREE.Mesh(heart,heartMat);heartMesh.position.set(...data.heart);
- heartMesh.rotation.set(.1,-.35,-.28);           // apex points down, forward and to the person's left
+ // heart.glb (HRA reference organ) is already in body orientation: apex down, forward, to the person's left
  heartMesh.renderOrder=2;group.add(heartMesh);
+ // depth pre-pass with the same beat deformation: the additive rim then shows only the nearest surface, not every
+ // crease behind it (the anatomical heart has deep grooves between chambers)
+ const heartDepthMat=new THREE.ShaderMaterial({vertexShader:rimVert,fragmentShader:'void main(){gl_FragColor=vec4(0.);}',uniforms:heartMat.uniforms,colorWrite:false,transparent:true});   // transparent list: drawn after the backdrop glow (renderOrder)
+ const heartDepth=new THREE.Mesh(heart,heartDepthMat);heartDepth.renderOrder=1;heartMesh.add(heartDepth);
  const heartWorld=new THREE.Vector3(data.heart[0],data.heart[1]+FEET_Y,data.heart[2]);
  bodyMat.uniforms.uHeart.value.copy(heartWorld);   // conduction band + (v2) heart light centre
 
@@ -126,7 +130,7 @@ export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometr
  }
  return{group,line,bodyMat,look,heartMat,heartMesh,heartWorld,setMorph,beat,
   setResolution(w:number,h:number){lineMat.resolution.set(w,h);},
-  dispose(){body.dispose();heart.dispose();bodyMat.dispose();heartMat.dispose();lineGeo.dispose();lineMat.dispose();}};
+  dispose(){body.dispose();heart.dispose();bodyMat.dispose();heartMat.dispose();heartDepthMat.dispose();lineGeo.dispose();lineMat.dispose();}};
 }
 export type Figure=ReturnType<typeof createFigure>;
 

@@ -288,11 +288,90 @@ def build_heart(preview_dir=None):
     return [round(d.x, 4), round(d.z, 4), round(d.y, 4)], len(h.data.polygons)
 
 
+# ---------------- seated pose (D-046: the figure sits on a library ladder rung) ----------------
+# Joint positions measured by slicing the 1.666 m mesh (Blender frame: front −y, person's left +x).
+def _bones():
+    B = {'pelvis': ((0, 0, .80), (0, 0, .95), None), 'spine': ((0, 0, .95), (0, 0, 1.15), 'pelvis'),
+         'chest': ((0, 0, 1.15), (0, 0, 1.38), 'spine'), 'neck': ((0, 0, 1.38), (0, -.01, 1.47), 'chest'),
+         'head': ((0, -.01, 1.47), (0, -.01, 1.666), 'neck')}
+    for s, n in ((1, 'L'), (-1, 'R')):
+        B[f'thigh.{n}'] = ((s * .09, 0, .86), (s * .095, -.01, .47), 'pelvis')
+        B[f'shin.{n}'] = ((s * .095, -.01, .47), (s * .10, 0, .08), f'thigh.{n}')
+        B[f'foot.{n}'] = ((s * .10, 0, .08), (s * .11, -.13, .02), f'shin.{n}')
+        B[f'clav.{n}'] = ((s * .03, 0, 1.36), (s * .17, 0, 1.37), 'chest')
+        B[f'upper.{n}'] = ((s * .18, 0, 1.36), (s * .29, 0, 1.06), f'clav.{n}')
+        B[f'fore.{n}'] = ((s * .29, 0, 1.06), (s * .333, -.05, .83), f'upper.{n}')
+        B[f'hand.{n}'] = ((s * .333, -.05, .83), (s * .334, -.08, .72), f'fore.{n}')
+    return B
+
+# target directions in armature space (unit vectors are normalised below); front = −y
+SEATED = {
+    'spine': (0, -.10, 1), 'chest': (0, -.16, 1), 'neck': (0, -.32, 1), 'head': (0, -.38, 1),
+    'thigh.R': (-.10, -1, -.06), 'shin.R': (-.02, -.12, -1), 'foot.R': (-.05, -1, -.35),          # right leg dangles
+    'thigh.L': (.08, -1, .10), 'shin.L': (.02, .55, -1), 'foot.L': (.05, -1, -.1),               # left foot tucked on a lower rung
+    'upper.R': (-.25, .10, -1), 'fore.R': (-.12, -.22, -1), 'hand.R': (-.06, -.12, -1),            # right hand on the ladder stile
+    'upper.L': (.08, -.22, -1), 'fore.L': (-.02, -.85, -.62), 'hand.L': (0, -.55, -1),            # left hand resting on the left thigh
+}
+
+def build_seated(o, heart_b, preview_dir=None):
+    """Rig with heat weights, pose, bake the pose (basis + breath) into a new mesh → body_seated.glb.
+    Returns the posed heart transform and the seat point (buttock contact) in the figure frame."""
+    B = _bones()
+    ad = bpy.data.armatures.new('rig'); ar = bpy.data.objects.new('rig', ad); bpy.context.scene.collection.objects.link(ar)
+    bpy.context.view_layer.objects.active = ar; bpy.ops.object.mode_set(mode='EDIT')
+    for name, (h, t, par) in B.items():
+        eb = ad.edit_bones.new(name); eb.head, eb.tail = h, t
+    for name, (h, t, par) in B.items():
+        if par: ad.edit_bones[name].parent = ad.edit_bones[par]
+    bpy.ops.object.mode_set(mode='OBJECT')
+    bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); ar.select_set(True); bpy.context.view_layer.objects.active = ar
+    bpy.ops.object.parent_set(type='ARMATURE_AUTO')
+    bpy.context.view_layer.objects.active = ar; bpy.ops.object.mode_set(mode='POSE')
+    order = list(B)
+    for name in order:
+        if name not in SEATED: continue
+        pb = ar.pose.bones[name]; bpy.context.view_layer.update()
+        rest = pb.bone.matrix_local.to_3x3(); rd = rest @ mathutils.Vector((0, 1, 0))
+        d = mathutils.Vector(SEATED[name]).normalized()
+        rot = rd.rotation_difference(d).to_matrix() @ rest
+        head = pb.matrix.translation.copy()
+        pb.matrix = mathutils.Matrix.Translation(head) @ rot.to_4x4()
+    bpy.context.view_layer.update(); bpy.ops.object.mode_set(mode='OBJECT')
+    dg = bpy.context.evaluated_depsgraph_get()
+    kb = o.data.shape_keys.key_blocks
+    def posed(breath):
+        kb['breath'].value = breath; bpy.context.view_layer.update()
+        ev = o.evaluated_get(bpy.context.evaluated_depsgraph_get()); me = ev.to_mesh()
+        P = np.array([v.co[:] for v in me.vertices]); ev.to_mesh_clear(); return P
+    P0, P1 = posed(0.0), posed(1.0)
+    kb['breath'].value = 0
+    F = [list(p.vertices) for p in o.data.polygons]
+    me = bpy.data.meshes.new('body_seated'); me.from_pydata([tuple(p) for p in P0], [], F); me.update()
+    so = bpy.data.objects.new('body_seated', me); bpy.context.scene.collection.objects.link(so)
+    bpy.context.view_layer.objects.active = so; bpy.ops.object.select_all(action='DESELECT'); so.select_set(True)
+    bpy.ops.object.shade_smooth()
+    so.shape_key_add(name='Basis'); sk = so.shape_key_add(name='breath'); sk.data.foreach_set('co', P1.astype(np.float32).ravel())
+    # seat: lowest point under the pelvis; the archive places this on the rung
+    pel = (np.abs(P0[:, 0]) < .14) & (P0[:, 1] > -.12) & (P0[:, 1] < .12)
+    seat = P0[pel][np.argmin(P0[pel][:, 2])]
+    # heart follows the chest bone
+    pb = ar.pose.bones['chest']; Dm = pb.matrix @ pb.bone.matrix_local.inverted()
+    hb = Dm @ mathutils.Vector(heart_b)
+    q = Dm.to_quaternion()
+    if preview_dir:
+        import preview
+        preview.render_views(so, os.path.join(preview_dir, 'seated'), [
+            ('front', (0, -6, .75), (0, 0, .75), 1.6), ('34', (3.6, -4.4, .95), (0, 0, .75), 1.6), ('side', (6, 0, .75), (0, 0, .75), 1.6)])
+    export(so, os.path.join(OUT, 'body_seated.glb'), morphs=True)
+    return {'seat': [round(float(x), 4) for x in seat], 'heart_b': [round(x, 4) for x in hb], 'heart_q_wxyz': [round(x, 5) for x in q]}
+
+
 if __name__ == '__main__':
     pv = sys.argv[sys.argv.index('--preview') + 1] if '--preview' in sys.argv else None
     if pv:
         sys.path.insert(0, pv)
     o, V, heart = build_body(pv)
+    seated = build_seated(o, heart, pv)
     # front silhouette for the rim → body morph (reuses build-intro's routine on y-up coordinates)
     import importlib.util
     spec = importlib.util.spec_from_file_location('bi', os.path.join(os.path.dirname(__file__), 'build-intro.py'))
@@ -305,6 +384,7 @@ if __name__ == '__main__':
     hy = [float(heart[0]), float(heart[2]), float(-heart[1])]
     fig.update({'height': float(Vy[:, 1].max()), 'heart': [round(x, 4) for x in hy],
                 'silhouette': [[round(float(x), 4), round(float(y), 4)] for x, y in sil], 'source': 'blender-human-base-meshes'})
+    fig['seated'] = seated
     fig['heartSize'], fig['heartFaces'] = build_heart(pv)
     with open(fig_path, 'w', encoding='utf-8') as f:
         json.dump(fig, f)

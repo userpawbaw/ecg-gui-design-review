@@ -1408,6 +1408,342 @@
         "prototype/v2 R1 intro"
       ],
       "review": "CC BY 4.0 (cdn.humanatlas.io metadata). Attribution must appear in the exhibit credits. Cite Ackerman 1998 / Spitzer et al. 1996 per NIH 3D entry."
+    },
+    {
+      "id": "ph-wooden_ladder",
+      "title": "Poly Haven model wooden_ladder (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_ladder/wooden_ladder_1k.gltf",
+        "page": "https://polyhaven.com/a/wooden_ladder"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-wooden_ladder/wooden_ladder_1k.gltf",
+        "sha256": "ad20acb57354f726ef0970ba8e1e02ac12028581173d02b941a8dcf0325c333c",
+        "bytes": 4390
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-cardboard_box_01",
+      "title": "Poly Haven model cardboard_box_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cardboard_box_01/cardboard_box_01_1k.gltf",
+        "page": "https://polyhaven.com/a/cardboard_box_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-cardboard_box_01/cardboard_box_01_1k.gltf",
+        "sha256": "6038bcc5bba5a08a5f6643a265977e37e3d14553e62981e144c33a89f10b78e1",
+        "bytes": 2903
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-binder_notebook",
+      "title": "Poly Haven model binder_notebook (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/binder_notebook/binder_notebook_1k.gltf",
+        "page": "https://polyhaven.com/a/binder_notebook"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-binder_notebook/binder_notebook_1k.gltf",
+        "sha256": "714596552fad383ae3ca76d42038b03a20b6864d6ef5bc6d12620ac21fef1b1e",
+        "bytes": 4309
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-drawer_cabinet",
+      "title": "Poly Haven model drawer_cabinet (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/drawer_cabinet/drawer_cabinet_1k.gltf",
+        "page": "https://polyhaven.com/a/drawer_cabinet"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-drawer_cabinet/drawer_cabinet_1k.gltf",
+        "sha256": "899581e6a041644139a138f909c6ba001684cc55b5d1702e08f01094e20d0617",
+        "bytes": 8031
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-vintage_wooden_drawer_01",
+      "title": "Poly Haven model vintage_wooden_drawer_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_wooden_drawer_01/vintage_wooden_drawer_01_1k.gltf",
+        "page": "https://polyhaven.com/a/vintage_wooden_drawer_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-vintage_wooden_drawer_01/vintage_wooden_drawer_01_1k.gltf",
+        "sha256": "d39f4172d6fcbb285272168d585f4929c3ed27f05e7101d4fe1c4580408fb8e1",
+        "bytes": 11491
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-hanging_industrial_lamp",
+      "title": "Poly Haven model hanging_industrial_lamp (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_industrial_lamp/hanging_industrial_lamp_1k.gltf",
+        "page": "https://polyhaven.com/a/hanging_industrial_lamp"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-hanging_industrial_lamp/hanging_industrial_lamp_1k.gltf",
+        "sha256": "97e31aac7c350bc40294e78f39f66d5aa998ac2703be1d09b5dab9ae7027876f",
+        "bytes": 5436
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-television_02",
+      "title": "Poly Haven model television_02 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/television_02/television_02_1k.gltf",
+        "page": "https://polyhaven.com/a/television_02"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-television_02/television_02_1k.gltf",
+        "sha256": "8e7d7cb6bbdb5713b7d4ed21ece7c0f9c41912359c2c0f5065b7e77f5bf4cdcf",
+        "bytes": 2767
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-power_box_01",
+      "title": "Poly Haven model power_box_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/power_box_01/power_box_01_1k.gltf",
+        "page": "https://polyhaven.com/a/power_box_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-power_box_01/power_box_01_1k.gltf",
+        "sha256": "edb54e68fb1229e9f59906459d782c2ddc576f6bd1141cf09ad864f48d7cb93b",
+        "bytes": 4417
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-modular_electric_cables",
+      "title": "Poly Haven model modular_electric_cables (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modular_electric_cables/modular_electric_cables_1k.gltf",
+        "page": "https://polyhaven.com/a/modular_electric_cables"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-modular_electric_cables/modular_electric_cables_1k.gltf",
+        "sha256": "f9292a9eff5bea32dde06356633da84615c508c9c0ee0246fc96c301cfd71fe8",
+        "bytes": 82607
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-wooden_crate_01",
+      "title": "Poly Haven model wooden_crate_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_crate_01/wooden_crate_01_1k.gltf",
+        "page": "https://polyhaven.com/a/wooden_crate_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-wooden_crate_01/wooden_crate_01_1k.gltf",
+        "sha256": "fd9c6073acfc671e12b64666053f2805ae33aff5d3dbbcfe5c97c08c06644927",
+        "bytes": 5612
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-vintage_suitcase",
+      "title": "Poly Haven model vintage_suitcase (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_suitcase/vintage_suitcase_1k.gltf",
+        "page": "https://polyhaven.com/a/vintage_suitcase"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-vintage_suitcase/vintage_suitcase_1k.gltf",
+        "sha256": "5d040fdb26c5d97d5d60518ef4875cc72effcabe0a5f68f50e8970013e57a589",
+        "bytes": 15481
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-painted_wooden_table",
+      "title": "Poly Haven model painted_wooden_table (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_table/painted_wooden_table_1k.gltf",
+        "page": "https://polyhaven.com/a/painted_wooden_table"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-painted_wooden_table/painted_wooden_table_1k.gltf",
+        "sha256": "7e1ba86ae2c570e3464c42556e4e6cc09186a99127b86eaf54e7dbecb2fbafc3",
+        "bytes": 2830
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-wooden_stool_01",
+      "title": "Poly Haven model wooden_stool_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_stool_01/wooden_stool_01_1k.gltf",
+        "page": "https://polyhaven.com/a/wooden_stool_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-wooden_stool_01/wooden_stool_01_1k.gltf",
+        "sha256": "f28566454af27175839c10645a37a2a16b373e4be8aecddd0d8a3d704cfc0330",
+        "bytes": 2715
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-medical_box",
+      "title": "Poly Haven model medical_box (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/medical_box/medical_box_1k.gltf",
+        "page": "https://polyhaven.com/a/medical_box"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-medical_box/medical_box_1k.gltf",
+        "sha256": "ae52391cf95b6ec6505530ad00c098a5bafb173f39371296da3ce9db6808f01f",
+        "bytes": 8820
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
     }
   ],
   "rejected": [

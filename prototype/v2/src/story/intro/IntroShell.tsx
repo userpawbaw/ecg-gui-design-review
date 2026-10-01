@@ -11,6 +11,8 @@ import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import './intro.css';
+import '../hoverfx.css';
+import {useHoverDim} from '../hoverFx';
 
 export const INTRO_SCENE='d0-awgn-0';    // D0 S038, white noise 0 dB (D-041 → D-042: R peaks must stay visible in the noise)
 type Props={bank:Bank,onNext:()=>void,onLab:(t:{axis:string,noise:string,snr:number,method:string})=>void};
@@ -32,6 +34,8 @@ export function IntroShell({bank,onNext,onLab}:Props){
   labels:useRef<HTMLDivElement>(null),labelIn:useRef<HTMLDivElement>(null),labelOut:useRef<HTMLDivElement>(null),outMono:useRef<HTMLElement>(null),steps:useRef<HTMLDivElement>(null),scale:useRef<HTMLDivElement>(null),grid:useRef<HTMLCanvasElement>(null),ann:useRef<HTMLDivElement>(null),end:useRef<HTMLDivElement>(null),
   sweepWrap:useRef<HTMLDivElement>(null)};
  const [ready,setReady]=useState(false),[failed,setFailed]=useState('');
+ const rootRef=useRef<HTMLDivElement>(null);
+ useHoverDim(rootRef);   // D-048: delegated hover/focus → data-hd on the root (scene veil + control fill)
  const engine=useRef<Intro|null>(null);
  useEffect(()=>{
   let alive=true;
@@ -49,8 +53,9 @@ export function IntroShell({bank,onNext,onLab}:Props){
  },[]);
  useEffect(()=>{const k=(e:KeyboardEvent)=>{if(e.key==='Enter'&&engine.current&&engine.current.state.p>.95)onNext();};addEventListener('keydown',k);return()=>removeEventListener('keydown',k);},[onNext]);
  const lab=()=>onLab({axis:scene.s.axis,noise:scene.s.cond,snr:scene.s.snr,method:scene.winner});
- return <div className={'intro'+(ready?' ready':'')+(reduced?' reduced':'')}>
+ return <div ref={rootRef} className={'intro'+(ready?' ready':'')+(reduced?' reduced':'')}>
   <canvas ref={refs.gl} className="it-gl" aria-hidden="true"/>
+  <div className="hd-dim" aria-hidden="true"/>{/* B1: veil above the 3D scene, below the waveform stage and all text (D-048) */}
   <div ref={refs.sweepWrap} className="it-sweep-wrap">
    <canvas ref={refs.grid} className="it-grid" aria-hidden="true"/>
    <canvas ref={refs.sweep} className="it-sweep" aria-hidden="true"/>
@@ -67,9 +72,9 @@ export function IntroShell({bank,onNext,onLab}:Props){
   </div>
   <div ref={refs.end} className="it-end">
    <p>같은 심장, 같은 기록 — 잡음을 걷어내기 전과 후.</p>
-   <div><button onClick={onNext}>잡음마다 다를까요? →</button><button className="ghost" onClick={lab}>직접 비교해 보기</button></div>
+   <div><button className="hv hv-solid" data-sub="STORY · 잡음 종류별로 비교" onClick={onNext}>잡음마다 다를까요?<span className="arr" aria-hidden="true">→</span></button><button className="ghost hv" data-sub="LAB · 방법을 직접 고르기" onClick={lab}>직접 비교해 보기</button></div>
   </div>
-  <button className="it-skip" onClick={lab}>바로 실험실 →</button>
+  <button className="it-skip hv" data-sub="LAB · 바로 이동" onClick={lab}>바로 실험실<span className="arr" aria-hidden="true">→</span></button>
   <p className="it-notice">합성 기록 S038 · 저장된 입력과 잡음 제거 출력 · {((scene.loop.end-scene.loop.start)/bank.fs).toFixed(1)} s 반복 재생 · 실제 장치 연결 없음</p>
   {failed&&<p className="it-failed" role="alert">3D 장면을 불러오지 못했습니다: {failed}</p>}
   <div ref={refs.wrapper} className="it-scroll"><div ref={refs.content} className="it-scroll-content"/></div>

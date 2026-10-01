@@ -1,5 +1,5 @@
 /* R1 intro — tokens follow the story shell (#06090d family) and the reserved waveform colours (input #ffbc79, output #67e7c3). */
-.intro{--ink:#eef0f2;--ink-2:#9aa6ae;--ink-3:#6d777e;position:fixed;inset:0;z-index:2100;background:#050608;color:var(--ink);overflow:hidden;
+.intro{--chip-on:#c9ccd3;--ink:#eef0f2;--ink-2:#9aa6ae;--ink-3:#6d777e;position:fixed;inset:0;z-index:2100;background:#050608;color:var(--ink);overflow:hidden;
  font-family:"Malgun Gothic","Noto Sans KR",system-ui,sans-serif;user-select:none;opacity:0;transition:opacity 1.2s ease}
 .intro.ready{opacity:1}
 .intro canvas{display:block}
@@ -50,9 +50,9 @@
 .it-end{left:47%;bottom:10%;text-align:left;opacity:0;pointer-events:none}
 .it-end p{margin:0 0 22px;font-size:clamp(17px,1.35vw,26px)}
 .it-end div{display:flex;gap:16px}
-.it-end button,.it-skip{font:inherit;color:var(--ink);background:transparent;border:1px solid #5f6164;border-radius:999px;cursor:pointer}
+.it-end button,.it-skip{font:inherit;color:var(--ink);background-color:transparent;border:1px solid #5f6164;border-radius:999px;cursor:pointer}   /* hover/focus/fill states: hoverfx.css (D-048) */
 .it-end button{height:60px;padding:0 34px;font-size:19px}
-.it-end button:first-child{background:#c9ccd3;color:#0b0e12;border-color:#c9ccd3}
+/* primary button: filled at rest by .hv-solid in hoverfx.css */
 .it-skip{right:2.6%;top:3.2%;height:38px;padding:0 18px;font-size:14px;color:var(--ink-2)}
 .it-notice{left:2.4%;bottom:3%;margin:0;font-size:12px;letter-spacing:.12em;color:var(--ink-3);pointer-events:none}
 .it-failed{left:50%;top:50%;transform:translate(-50%,-50%);color:#ffbc79}

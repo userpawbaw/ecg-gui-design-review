@@ -99,7 +99,8 @@ export const INIT_SCRIPT = `(() => {
       const label = (el.getAttribute('aria-label') || el.innerText || el.getAttribute('title') || el.getAttribute('alt') || '').trim().replace(/\\s+/g, ' ').slice(0, 24);
       return {el, x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height / 2), w: Math.round(r.width), h: Math.round(r.height), l: Math.round(r.left), t: Math.round(r.top), tag: el.tagName.toLowerCase(), label,
         ok: r.width >= 14 && r.height >= 14 && r.width * r.height <= 0.35 * vw * vh && r.left + r.width / 2 > 0 && r.left + r.width / 2 < vw && r.top + r.height / 2 > 0 && r.top + r.height / 2 < vh
-          && cs.visibility !== 'hidden' && cs.display !== 'none' && Number(cs.opacity) > 0.05 && cs.pointerEvents !== 'none'};
+          && cs.visibility !== 'hidden' && cs.display !== 'none' && Number(cs.opacity) > 0.05 && cs.pointerEvents !== 'none'
+          && (() => { const top = document.elementFromPoint(Math.round(r.left + r.width / 2), Math.round(r.top + r.height / 2)); return !!top && (el.contains(top) || top.contains(el)); })()};   // not covered by an overlay (a hover on a covered element would hit the overlay)
     };
     let c = els.map(info).filter((i) => i.ok);
     if (spec === 'auto') {

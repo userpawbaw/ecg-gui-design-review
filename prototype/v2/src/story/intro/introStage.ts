@@ -11,7 +11,7 @@ import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import gsap from 'gsap';
 import Lenis from 'lenis';
 import {createGlobe} from './globe';
-import {createFigure,type FigureData} from './figure';
+import {createFigure,createSpace,type FigureData} from './figure';
 import {createSweep,type SweepView} from './sweep';
 import {beatPhase,type Loop} from './beats';
 import {createGrid,createBeatMix,mvPerBoxFor,scrambled} from './waveUi';
@@ -20,7 +20,7 @@ export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Arra
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
  title:HTMLElement,noiseChars:HTMLElement[],sub:HTMLElement,hint:HTMLElement,labels:HTMLElement,labelIn:HTMLElement,labelOut:HTMLElement,outMono:HTMLElement,steps:HTMLElement[],
  scale:HTMLElement,grid:HTMLCanvasElement,ann:HTMLElement,sweepWrap:HTMLElement,end:HTMLElement,parallax:HTMLElement[]};
-export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null};
+export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'};
 
 const clamp=(x:number,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const seg=(p:number,a:number,b:number)=>clamp((p-a)/(b-a));
@@ -49,7 +49,9 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const geom=async(u:string)=>{const g=await gl.loadAsync(u);let out:THREE.BufferGeometry|null=null;g.scene.traverse(o=>{if((o as THREE.Mesh).isMesh&&!out)out=(o as THREE.Mesh).geometry;});if(!out)throw Error('no mesh in '+u);return out as THREE.BufferGeometry;};
  const [day,night,clouds,bodyGeo,heartGeo,fig]=await Promise.all([tex(urls.day),tex(urls.night),tex(urls.clouds,false),geom(urls.body),geom(urls.heart),fetch(urls.fig).then(r=>r.json() as Promise<FigureData>)]);
  const globe=createGlobe({day,night,clouds});scene.add(globe.group);
- const figure=createFigure(bodyGeo,heartGeo,fig);scene.add(figure.group,figure.line);
+ const style=opt.look??'v2';
+ const figure=createFigure(bodyGeo,heartGeo,fig,style);scene.add(figure.group,figure.line);
+ const space=style==='v2'?createSpace():null;if(space)scene.add(space.group);
  // --- post: bloom only on bright parts (threshold), never on the Canvas 2D data layer ---
  const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.55,.35,.78);composer.addPass(bloom);composer.addPass(new OutputPass());
@@ -143,13 +145,20 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   globe.uniforms.uCloudShift.value=t*.0006;
 
   // rim line → body outline morph (M2)
-  const rimA=seg(p,...MAP.rim)*(1-seg(p,...MAP.lineOut));
+  const rimA=seg(p,...MAP.rim)*(1-(style==='v2'?seg(p,.39,.46):seg(p,...MAP.lineOut)));   // v2: the outline hands over to the scan
   const circR=gScale*1.04*1.035;
   figure.setMorph(seg(p,...MAP.morph),{cx:0,cy:-1.32,r:circR},rimA);
   // body + heart
   const cam=seg(p,...MAP.cam);
-  const bodyA=seg(p,...MAP.body)*(1.7-.7*seg(p,.5,.6))*(1-.95*THREE.MathUtils.smoothstep(cam,.1,.8));   // brighter while it takes over from the neon line
+  let bodyA:number;
+  if(style==='v2'){
+   // H3: the scan line runs head → feet over the body segment; rings stay, thinning out as the camera dives in
+   const sk=seg(p,...MAP.body),bu=figure.bodyMat.uniforms;
+   bu.uScan.value=(1-inOut(sk))*(fig.height+.04)-.02;bu.uScanOn.value=sk>0&&sk<1?1:Math.max(0,1-(sk-1)*20);
+   bodyA=(sk>0?1:0)*(1-.85*THREE.MathUtils.smoothstep(cam,.15,.75))*(1-THREE.MathUtils.smoothstep(cam,.7,.95));   // gone before the wave stage
+  }else bodyA=seg(p,...MAP.body)*(1.7-.7*seg(p,.5,.6))*(1-.95*THREE.MathUtils.smoothstep(cam,.1,.8));   // brighter while it takes over from the neon line
   figure.bodyMat.uniforms.uOpacity.value=bodyA;figure.group.children[0].visible=bodyA>.002;
+  if(space)space.set(seg(p,.33,.42)*(1-THREE.MathUtils.smoothstep(cam,.3,.85)),ph,1);
   const heartA=seg(p,...MAP.heart);figure.heartMat.uniforms.uOpacity.value=heartA*1.6;figure.heartMesh.visible=heartA>.002;
   figure.beat(ph,heartA>0?1:0);
   state.heart.V=figure.heartMat.uniforms.uV.value;state.heart.flash=figure.heartMat.uniforms.uFlash.value;
@@ -224,7 +233,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;mix.reset();},
   dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
-   globe.dispose();figure.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
+   globe.dispose();figure.dispose();space?.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
  };
 }
 export type Intro=Awaited<ReturnType<typeof createIntro>>;

@@ -11,7 +11,8 @@ import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import gsap from 'gsap';
 import Lenis from 'lenis';
 import {createGlobe} from './globe';
-import {createFigure,createSpace,type FigureData} from './figure';
+import {createFigure,type FigureData} from './figure';
+import {createSpace,createShafts,createGrade} from './space';
 import {createSweep,type SweepView} from './sweep';
 import {beatPhase,type Loop} from './beats';
 import {createGrid,createBeatMix,mvPerBoxFor,scrambled} from './waveUi';
@@ -39,7 +40,8 @@ const SWEEP_COLORS={input:[255,188,121] as [number,number,number],output:[103,23
 export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const urls={body:new URL('./assets/body.glb',import.meta.url).href,heart:new URL('./assets/heart.glb',import.meta.url).href,
   fig:new URL('./assets/figure.json',import.meta.url).href,day:new URL('./assets/earth_day.jpg',import.meta.url).href,
-  night:new URL('./assets/earth_night.jpg',import.meta.url).href,clouds:new URL('./assets/earth_clouds.jpg',import.meta.url).href};
+  night:new URL('./assets/earth_night.jpg',import.meta.url).href,clouds:new URL('./assets/earth_clouds.jpg',import.meta.url).href,
+  floor:new URL('./assets/floor_light.png',import.meta.url).href};
  // --- renderer (REF-001: ACES, exposure 1.16, pixel ratio capped) ---
  const renderer=new THREE.WebGLRenderer({canvas:dom.gl,antialias:true,powerPreference:'high-performance'});
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x000000,1);
@@ -47,14 +49,18 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const tl=new THREE.TextureLoader(),gl=new GLTFLoader();
  const tex=async(u:string,srgb=true)=>{const t=await tl.loadAsync(u);t.colorSpace=srgb?THREE.SRGBColorSpace:THREE.NoColorSpace;t.anisotropy=4;return t;};
  const geom=async(u:string)=>{const g=await gl.loadAsync(u);let out:THREE.BufferGeometry|null=null;g.scene.traverse(o=>{if((o as THREE.Mesh).isMesh&&!out)out=(o as THREE.Mesh).geometry;});if(!out)throw Error('no mesh in '+u);return out as THREE.BufferGeometry;};
- const [day,night,clouds,bodyGeo,heartGeo,fig]=await Promise.all([tex(urls.day),tex(urls.night),tex(urls.clouds,false),geom(urls.body),geom(urls.heart),fetch(urls.fig).then(r=>r.json() as Promise<FigureData>)]);
+ const [day,night,clouds,bodyGeo,heartGeo,fig,floorLm]=await Promise.all([tex(urls.day),tex(urls.night),tex(urls.clouds,false),geom(urls.body),geom(urls.heart),fetch(urls.fig).then(r=>r.json() as Promise<FigureData>),tex(urls.floor,false)]);
  const globe=createGlobe({day,night,clouds});scene.add(globe.group);
  const style=opt.look??'v2';
  const figure=createFigure(bodyGeo,heartGeo,fig,style);scene.add(figure.group,figure.line);
- const space=style==='v2'?createSpace():null;if(space)scene.add(space.group);
+ const space=style==='v2'?createSpace(floorLm):null;if(space)scene.add(space.group);
+ const reflection=style==='v2'?figure.mirror():null;if(reflection)scene.add(reflection.group);
  // --- post: bloom only on bright parts (threshold), never on the Canvas 2D data layer ---
+ // P2: light shafts (scene-linear, before bloom) and grade/vignette/grain (after the output transform)
  const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
+ const shafts=space?createShafts(renderer,camera,[figure.group.children[0],figure.heartMesh]):null;if(shafts)composer.addPass(shafts.pass);
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.55,.35,.78);composer.addPass(bloom);composer.addPass(new OutputPass());
+ const grade=createGrade();composer.addPass(grade);
  const grid=createGrid(dom.grid);
  const sweep=createSweep(dom.sweep,{gridHot:grid.hot,fs:data.fs,loop:data.loop,input:{values:data.input,color:SWEEP_COLORS.input,glow:.45,core:.78,white:.35},output:{values:data.output,color:SWEEP_COLORS.output},mvPerBox:3.6});
 
@@ -75,6 +81,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  function resize(){
   W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio||1,1.25);
   renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);bloom.resolution.set(W*pr/2,H*pr/2);
+  shafts?.setSize(W*pr,H*pr);space?.setPx(H,pr);grade.uniforms.uAspect.value=W/H;
   camera.aspect=W/H;camera.updateProjectionMatrix();figure.setResolution(W*pr,H*pr);
   const b=box(),mv=mvPerBoxFor(b,2.5);sweep.resize(b,mv);grid.resize(b,2.5,mv);
   Object.assign(dom.labels.style,{left:b.l+'px',top:(H*.075)+'px'});
@@ -127,7 +134,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  }
 
  const state={p:0,t:0,frame:0,headAbs:0,heart:{V:0,flash:0},wave:wave as Wave,get mix(){return mix.value;},get label(){return labelState.current;}};
- let raf=0,disposed=false;
+ let raf=0,disposed=false,shaftA=0;
  function frame(dt:number,draw=true){
   const t=clock();
   if(opt.frozenP===null)p+=(pRaw-p)*damp(dt,.33);else p=opt.frozenP;
@@ -158,7 +165,11 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
    bodyA=(sk>0?1:0)*(1-.85*THREE.MathUtils.smoothstep(cam,.15,.75))*(1-THREE.MathUtils.smoothstep(cam,.7,.95));   // gone before the wave stage
   }else bodyA=seg(p,...MAP.body)*(1.7-.7*seg(p,.5,.6))*(1-.95*THREE.MathUtils.smoothstep(cam,.1,.8));   // brighter while it takes over from the neon line
   figure.bodyMat.uniforms.uOpacity.value=bodyA;figure.group.children[0].visible=bodyA>.002;
-  if(space)space.set(seg(p,.33,.42)*(1-THREE.MathUtils.smoothstep(cam,.3,.85)),ph,1);
+  const spaceA=seg(p,.33,.42)*(1-THREE.MathUtils.smoothstep(cam,.3,.85));
+  if(space)space.set(spaceA,ph,1,t,spaceA*(1-THREE.MathUtils.smoothstep(cam,.1,.4)));   // the lamp leaves before the orbit shows it beside the head
+  if(reflection)reflection.group.visible=spaceA>.002;
+  shaftA=spaceA*(1-THREE.MathUtils.smoothstep(cam,.15,.6));
+  grade.uniforms.uSpace.value=spaceA;grade.uniforms.uTime.value=opt.frozenT!==null?0:(state.frame%97)*.13;
   const heartA=seg(p,...MAP.heart);figure.heartMat.uniforms.uOpacity.value=heartA*1.6;figure.heartMesh.visible=heartA>.002;
   figure.beat(ph,heartA>0?1:0);
   state.heart.V=figure.heartMat.uniforms.uV.value;state.heart.flash=figure.heartMat.uniforms.uFlash.value;
@@ -218,7 +229,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const endA=seg(p,...MAP.end);dom.end.style.opacity=String(endA);dom.end.style.pointerEvents=endA>.5?'auto':'none';
   if(!opt.reduced)dom.parallax.forEach((el,i)=>{const d=i===0?6:3;el.style.translate=`${(-pointer.sx*d).toFixed(2)}px ${(-pointer.sy*d*.6).toFixed(2)}px`;});
 
-  if(draw)composer.render(dt);
+  if(draw){shafts?.render(shaftA);composer.render(dt);}   // occlusion buffer after the camera update
  }
  let paused=false;
  const tick=(_time:number,deltaMs:number)=>{if(disposed||paused)return;lenis?.raf(performance.now());frame(Math.min(.1,deltaMs/1000||1/60));};
@@ -233,7 +244,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;mix.reset();},
   dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
-   globe.dispose();figure.dispose();space?.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
+   globe.dispose();figure.dispose();space?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
  };
 }
 export type Intro=Awaited<ReturnType<typeof createIntro>>;

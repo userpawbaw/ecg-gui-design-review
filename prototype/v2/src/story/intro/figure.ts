@@ -25,7 +25,7 @@ void main(){
  vec4 w=modelMatrix*vec4(p,1.);vW=w.xyz;vN=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*w;
 }`;
 const rimFrag=/* glsl */`
-uniform vec3 uColor;uniform float uOpacity,uPow,uFill,uFlash;
+uniform vec3 uColor;uniform float uOpacity,uPow,uFill,uFlash,uMirror,uFeet;
 uniform vec3 uHeart;uniform float uWaveT,uWaveAmp;
 varying vec3 vN,vW;varying float vH;
 void main(){
@@ -36,7 +36,8 @@ void main(){
  // H2: conduction wave — a thin bright band leaves the heart at each R and fades as it travels
  float d=distance(vW,uHeart),front=uWaveT*1.5;
  float band=exp(-pow((d-front)/.045,2.))*exp(-uWaveT/.32)*uWaveAmp;
- float a=(rim*(1.+uFlash)+uFill+band*(.35+fres))*uOpacity;
+ float mf=uMirror>.5?.22*exp(-(uFeet-vW.y)/.32):1.;
+ float a=(rim*(1.+uFlash)+uFill+band*(.35+fres))*uOpacity*mf;
  gl_FragColor=vec4(uColor*a,a);
  #include <tonemapping_fragment>
  #include <colorspace_fragment>
@@ -45,13 +46,16 @@ void main(){
 // H3 (IDEA-R1-INTRO §7.6, D-045): cross-section contour body — horizontal light rings at constant world height,
 // brighter towards the silhouette, back faces dimmer (volume), revealed top-down by a scan line. No skin, no face.
 const contourFrag=/* glsl */`
-uniform vec3 uColor,uWarm;uniform float uOpacity,uFlash,uFeet,uDensity,uScan,uScanOn;
+uniform vec3 uColor,uWarm;uniform float uOpacity,uFlash,uFeet,uDensity,uScan,uScanOn,uMirror;
 uniform vec3 uHeart;uniform float uWaveT,uWaveAmp;
 varying vec3 vN,vW;varying float vH;
 void main(){
  vec3 n=normalize(vN),v=normalize(cameraPosition-vW);
  float fres=1.-abs(dot(n,v));
- float y=vW.y-uFeet,d=y*uDensity,fw=max(fwidth(d),1e-4);
+ // P2 floor reflection: the mirrored copy samples the pattern at the reflected point and fades with depth
+ vec3 P=uMirror>.5?vec3(vW.x,2.*uFeet-vW.y,vW.z):vW;
+ float mf=uMirror>.5?.22*exp(-(uFeet-vW.y)/.32):1.;
+ float y=P.y-uFeet,d=y*uDensity,fw=max(fwidth(d),1e-4);
  float dist=min(fract(d),1.-fract(d));
  float ring=1.-smoothstep(.5*fw,1.6*fw,dist);
  ring*=.2+.7*fres*fres;
@@ -59,13 +63,13 @@ void main(){
  float rim=pow(fres,4.)*.1;                              // faint silhouette so gaps between rings still read as a body
  float reveal=smoothstep(uScan-.004,uScan+.012,y);        // visible above the scan line (top-down)
  float scanLine=exp(-pow((y-uScan)/.012,2.))*uScanOn*(.6+fres);
- float dh=distance(vW,uHeart),front=uWaveT*1.5;
+ float dh=distance(P,uHeart),front=uWaveT*1.5;
  float band=exp(-pow((dh-front)/.05,2.))*exp(-uWaveT/.32)*uWaveAmp;
  vec3 col=mix(uColor,uWarm,smoothstep(-.1,.9,n.y)*.55+(1.-reveal)*0.);   // warm backlight catches upward-facing rings
  // heart light: rings around the heart take its colour and brighten on each R (heart reads at full-body distance)
  float hl=exp(-dh*dh/.03);
  col=mix(col,vec3(1.,.36,.42),min(1.,hl*1.2));
- float a=((ring*face*(1.+hl*(.8+2.2*uFlash))+rim)*(1.+uFlash*.4)+band*(.5+ring*2.))*reveal*uOpacity+scanLine*uOpacity;
+ float a=(((ring*face*(1.+hl*(.8+2.2*uFlash))+rim)*(1.+uFlash*.4)+band*(.5+ring*2.))*reveal*uOpacity+scanLine*uOpacity)*mf;
  gl_FragColor=vec4(col*a,a);
  #include <tonemapping_fragment>
  #include <colorspace_fragment>
@@ -73,14 +77,14 @@ void main(){
 function contourMaterial(){
  return new THREE.ShaderMaterial({vertexShader:rimVert,fragmentShader:contourFrag,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
   uniforms:{uColor:{value:new THREE.Color('#b9d6ff')},uWarm:{value:new THREE.Color('#ffc58f')},uOpacity:{value:0},uFlash:{value:0},uFeet:{value:FEET_Y},
-   uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},
+   uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uMirror:{value:0},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},
    uA:{value:0},uV:{value:0},uMinY:{value:-1},uMaxY:{value:1},uDeform:{value:0}}});
 }
 
 function rimMaterial(color:string,pow:number,fill:number,deform:boolean){
  return new THREE.ShaderMaterial({vertexShader:rimVert,fragmentShader:rimFrag,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
   uniforms:{uColor:{value:new THREE.Color(color)},uOpacity:{value:0},uPow:{value:pow},uFill:{value:fill},uFlash:{value:0},
-   uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},uA:{value:0},uV:{value:0},uMinY:{value:-1},uMaxY:{value:1},uDeform:{value:deform?1:0}}});
+   uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},uA:{value:0},uV:{value:0},uMinY:{value:-1},uMaxY:{value:1},uDeform:{value:deform?1:0},uMirror:{value:0},uFeet:{value:FEET_Y}}});
 }
 
 export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometry,data:FigureData,look:'v1'|'v2'='v2'){
@@ -88,7 +92,7 @@ export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometr
  const bodyMat=look==='v2'?contourMaterial():rimMaterial('#9fb4d8',2.8,0,false);
  const bodyMesh=new THREE.Mesh(body,bodyMat);group.add(bodyMesh);
  heart.computeBoundingBox();const bb=heart.boundingBox!;
- const heartMat=rimMaterial('#ff7482',2.4,look==='v2'?.05:.018,true);
+ const heartMat=rimMaterial('#ff7482',2.4,look==='v2'?.09:.018,true);
  heartMat.uniforms.uMinY.value=bb.min.y;heartMat.uniforms.uMaxY.value=bb.max.y;
  const heartMesh=new THREE.Mesh(heart,heartMat);heartMesh.position.set(...data.heart);
  // heart.glb (HRA reference organ) is already in body orientation: apex down, forward, to the person's left
@@ -128,58 +132,16 @@ export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometr
   bodyMat.uniforms.uWaveT.value=s;bodyMat.uniforms.uWaveAmp.value=amp;
   if(look==='v2')bodyMat.uniforms.uFlash.value=Math.exp(-s/.15)*amp;
  }
- return{group,line,bodyMat,look,heartMat,heartMesh,heartWorld,setMorph,beat,
+ // P2: floor reflection — the same meshes scaled −1 about the floor, sharing every uniform except uMirror
+ function mirror(){
+  const g=new THREE.Group();g.position.set(0,FEET_Y,0);g.scale.y=-1;
+  const mm=(m:THREE.ShaderMaterial)=>{const c=m.clone();c.uniforms={...m.uniforms,uMirror:{value:1}};c.side=THREE.DoubleSide;return c;};
+  const b=new THREE.Mesh(body,mm(bodyMat));b.renderOrder=0;
+  const h=new THREE.Mesh(heart,mm(heartMat));h.position.copy(heartMesh.position);h.renderOrder=2;
+  g.add(b,h);return{group:g,body:b,heart:h,dispose(){(b.material as THREE.Material).dispose();(h.material as THREE.Material).dispose();}};
+ }
+ return{group,line,bodyMat,look,mirror,heartMat,heartMesh,heartWorld,setMorph,beat,
   setResolution(w:number,h:number){lineMat.resolution.set(w,h);},
   dispose(){body.dispose();heart.dispose();bodyMat.dispose();heartMat.dispose();heartDepthMat.dispose();lineGeo.dispose();lineMat.dispose();}};
 }
 export type Figure=ReturnType<typeof createFigure>;
-
-// SP4 (IDEA-R1-INTRO §7.7, D-045): the ECG-paper world — an endless square grid floor (same 1 : 5 small/large
-// proportion as the wave stage grid), a warm light pool under the figure, a heartbeat ring that runs out across the
-// floor at each R, and a warm backlight glow behind the figure. Decorative space; carries no data values.
-const floorVert=/* glsl */`varying vec3 vW;void main(){vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}`;
-const floorFrag=/* glsl */`
-uniform float uOpacity,uCell,uWaveT,uWaveAmp,uFog;uniform vec3 uLine,uWarm;uniform vec2 uCenter;
-varying vec3 vW;
-float grid(vec2 p,float cell){vec2 g=p/cell,fw=max(fwidth(g),vec2(1e-4));vec2 d=min(fract(g),1.-fract(g));
- vec2 l=1.-smoothstep(.5*fw,1.5*fw,d);float fade=1.-smoothstep(.25,.6,max(fw.x,fw.y));return max(l.x,l.y)*fade;}
-void main(){
- vec2 p=vW.xz-uCenter;float r=length(p);
- float fog=exp(-r/uFog);
- float minor=grid(vW.xz,uCell),major=grid(vW.xz,uCell*5.);
- float lines=minor*.035+major*.11;
- float pool=exp(-r*r/1.1);
- float ring=exp(-pow((r-uWaveT*2.2)/.06,2.))*exp(-uWaveT/.55)*uWaveAmp;
- vec3 col=uLine*(lines*(.45+1.6*pool)+ring*(.25+major*.8))*fog+uWarm*pool*.035;
- float a=uOpacity;
- gl_FragColor=vec4(col*a,1.);
- #include <tonemapping_fragment>
- #include <colorspace_fragment>
-}`;
-const glowFrag=/* glsl */`
-uniform float uOpacity,uPulse;uniform vec3 uWarm;varying vec2 vUv;
-void main(){vec2 q=(vUv-.5)*vec2(1.,1.6);float r=length(q);
- float g=exp(-r*r/.018)*.16+exp(-r*r/.09)*.055;
- gl_FragColor=vec4(uWarm*g*(1.+uPulse)*uOpacity,1.);
- #include <tonemapping_fragment>
- #include <colorspace_fragment>
-}`;
-export function createSpace(){
- const group=new THREE.Group();
- const floorMat=new THREE.ShaderMaterial({vertexShader:floorVert,fragmentShader:floorFrag,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
-  uniforms:{uOpacity:{value:0},uCell:{value:.1},uWaveT:{value:9},uWaveAmp:{value:0},uFog:{value:3.2},uLine:{value:new THREE.Color('#67e7c3')},
-   uWarm:{value:new THREE.Color('#ff9a52')},uCenter:{value:new THREE.Vector2(0,0)}}});
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(60,60),floorMat);floor.rotation.x=-Math.PI/2;floor.position.y=FEET_Y;floor.renderOrder=0;
- const glowMat=new THREE.ShaderMaterial({vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-  fragmentShader:glowFrag,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
-  uniforms:{uOpacity:{value:0},uPulse:{value:0},uWarm:{value:new THREE.Color('#ff8a3d')}}});
- const glow=new THREE.Mesh(new THREE.PlaneGeometry(9,9),glowMat);glow.position.set(0,FEET_Y+1.15,-3.2);glow.renderOrder=-1;
- group.add(glow,floor);
- return{group,floorMat,glowMat,
-  set(a:number,beat:{sincePrev:number},amp:number){
-   floorMat.uniforms.uOpacity.value=a;glowMat.uniforms.uOpacity.value=a;group.visible=a>.002;
-   floorMat.uniforms.uWaveT.value=beat.sincePrev;floorMat.uniforms.uWaveAmp.value=amp;
-   glowMat.uniforms.uPulse.value=.18*Math.exp(-beat.sincePrev/.2)*amp;
-  },
-  dispose(){floor.geometry.dispose();glow.geometry.dispose();floorMat.dispose();glowMat.dispose();}};
-}

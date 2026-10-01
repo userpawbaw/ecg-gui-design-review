@@ -1,0 +1,15 @@
+{
+  "kind": "ui-review-preview-lite",
+  "source_release": "archive-v2.2.1-recovery",
+  "source_asset": "ecg-signal-studio-v2.2.1.zip",
+  "source_asset_sha256": "9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed",
+  "zip_member": "app/archive.json",
+  "archive_bytes": 8684587,
+  "fs": 250,
+  "n": 2500,
+  "scene_count": 98,
+  "limitations": [
+    "10-second archive only; 600-second replay chunks are intentionally omitted",
+    "Preview Lite is for UI/UX review, not target-PC or full-data validation"
+  ]
+}

@@ -1,0 +1,58 @@
+name: Build UIUX Experiment Preview
+
+on:
+  push:
+    branches:
+      - experiments/uiux-a-f-baseline-20260917
+    paths:
+      - prototype/v2/src/**
+      - prototype/v2/index.html
+      - .github/workflows/preview-lite-assets.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-experiment-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout experiment branch
+        uses: actions/checkout@v4
+        with:
+          ref: experiments/uiux-a-f-baseline-20260917
+          fetch-depth: 0
+
+      - name: Verify inherited Preview Lite fixture
+        run: |
+          set -euo pipefail
+          test -f prototype/v2/public/archive.json
+          test -f prototype/v2/public/preview-lite.json
+          test -f prototype/v2/public/evidence-lite.json
+          python - <<'PY'
+          import json, pathlib
+          m=json.loads(pathlib.Path('prototype/v2/public/preview-lite.json').read_text())
+          assert m['source_asset_sha256']=='9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed'
+          assert m['n']==2500 and m['fs']==250 and m['scene_count']==98
+          print('Preview Lite fixture verified:', m['archive_bytes'], 'bytes')
+          PY
+
+      - name: Build browser-ready experiment preview
+        working-directory: prototype/v2
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run build -- --base=./
+
+      - name: Commit generated static build
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f dist/v2
+          if git diff --cached --quiet; then
+            echo 'Experiment preview build is already current.'
+            exit 0
+          fi
+          git commit -m 'chore(experiment): refresh browser-ready A-F preview [generated]'
+          git push origin HEAD:experiments/uiux-a-f-baseline-20260917

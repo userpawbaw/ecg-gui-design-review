@@ -1,13 +1,13 @@
 // Command-line parsing for `npm run ref:capture -- <url|story> [options]` (pure, unit-tested).
 import {SCRIPT_NAMES} from './script.mjs';
 
-const MODES = ['all', 'frames', 'trace', 'fast'];
+const MODES = ['all', 'frames', 'trace', 'fast', 'probe'];
 const num = (name, v) => {const n = Number(v);if (!Number.isFinite(n)) throw new Error(`--${name} 값이 숫자가 아님: ${v}`);return n;};
 const progressArg = (name, v) => (/^-?\d*\.?\d+$/.test(v) ? num(name, v) : v);   // number = page progress, otherwise a CSS selector
 
 export function parseArgs(argv) {
   const o = {target: null, mode: 'all', script: 'standard', from: undefined, to: undefined, track: [], out: null, har: false, browser: 'edge',
-    maxFrames: 180, step: 1000 / 60, settleMs: 4000, determinism: true, base: 'http://127.0.0.1:5173', ready: null, probe: null, hover: undefined, hoverCount: 4, stops: undefined, stopPx: undefined, keepFrames: false, width: 1920, height: 1080, wheelSettleMs: 40};
+    maxFrames: 180, step: 1000 / 60, settleMs: 4000, determinism: true, base: 'http://127.0.0.1:5173', ready: null, probe: null, hover: undefined, hoverCount: 4, stops: undefined, stopPx: undefined, keepFrames: false, enter: false, enterSelector: null, force: false, width: 1920, height: 1080, wheelSettleMs: 40};
   const rest = [];
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -29,6 +29,9 @@ export function parseArgs(argv) {
       case 'ready': o.ready = take();break;
       case 'hover': o.hover = take();break;
       case 'hover-count': o.hoverCount = num(k, take());break;
+      case 'enter': o.enter = true;break;
+      case 'enter-selector': o.enter = true;o.enterSelector = take();break;
+      case 'force': o.force = true;break;
       case 'stops': o.stops = num(k, take());break;
       case 'stop-px': o.stopPx = num(k, take());break;
       case 'keep-frames': o.keepFrames = true;break;
@@ -41,6 +44,7 @@ export function parseArgs(argv) {
   }
   if (rest.length !== 1) throw new Error('사용법: npm run ref:capture -- <url|story> [--mode frames|trace] [--script standard|transition --from 0.18 --to 0.30] [--track "css,css"] [--out 폴더] [--har] [--ready "JS 식"] [--script hover --hover auto|"sel,sel" --hover-count 4]');
   o.target = rest[0];
+  if (o.script === 'drag' && o.mode !== 'fast') throw new Error('--script drag 는 --mode fast 와 함께 사용(드래그 증거가 있는 사이트에서만 실행)');
   if (o.script === 'survey' && o.mode !== 'fast') throw new Error('--script survey 는 --mode fast 와 함께 사용(정지 화면 + 실시간 녹화)');
   if (o.script === 'transition' && (o.from === undefined || o.to === undefined)) throw new Error('--script transition 에는 --from 과 --to 가 필요함 (진행률 0–1 또는 CSS 선택자)');
   if (o.target === 'story') {o.isStory = true;o.url = o.base + '/';o.ready ??= 'window.__intro';}

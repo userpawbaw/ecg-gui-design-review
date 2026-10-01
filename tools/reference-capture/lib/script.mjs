@@ -4,7 +4,10 @@
 //   c.wheel(dy)    send one wheel notch       c.progress() page scroll progress 0–1, c.resolve(v) number|selector → progress
 //   c.move(x, y)   move the pointer (hover)   c.targets(spec, n) hover candidates on screen, c.viewport(), c.note(key, value) → input.json
 //   c.still(name)  save a full-resolution still of the settled screen (survey; fast mode only)
-export const SCRIPT_NAMES = ['standard', 'transition', 'hover', 'survey'];
+export const SCRIPT_NAMES = ['standard', 'transition', 'hover', 'survey', 'drag'];
+
+// drag stage (ms from the press): glide while pressed, hold, release; then the picture is watched for inertia after the release.
+export const DRAG_TIMING = {glide: 600, hold: 300, after: 1800};
 
 // Survey timing (ms): travel = NOTCH-sized wheel notches every NOTCH_GAP ms; then the screen is left alone for DWELL before the still.
 export const SURVEY_TIMING = {notch: 100, notchGap: 50, dwell: 2000};
@@ -49,17 +52,35 @@ export const SCRIPTS = {
     }
     await c.stage('end-idle');await c.wait(1500);
   },
+  // Drag study — only ever run on a site whose scripts/listeners show drag evidence (lib/evidence.mjs). Press on the biggest canvas, move, release.
+  async drag(c, o = {}) {
+    if (o.enter) {const r = await c.enter();c.note('enter', r);await c.wait(3000);}
+    const t = await c.dragTarget();
+    if (!t) {c.note('dragSkipped', 'no canvas or grab-cursor element in view');return;}
+    const {w, h} = await c.viewport(), D = DRAG_TIMING, span = Math.round(Math.min(t.w, w) * 0.25), spanY = Math.round(Math.min(t.h, h) * 0.25);
+    c.note('dragTarget', t);
+    await c.stage('g0-idle');await c.move(t.x, t.y);await c.wait(1000);
+    for (const [name, dx, dy] of [['g1-drag-x', span, 0], ['g2-drag-y', 0, spanY]]) {
+      await c.stage(name);
+      c.note('stageTarget', {stage: name, label: 'drag ' + (dx ? 'horizontal ' + dx : 'vertical ' + dy) + ' px', tag: t.kind, l: t.x - t.w / 2, t: t.y - t.h / 2, w: t.w, h: t.h});
+      await c.move(t.x, t.y);await c.down();
+      await glide(c, t.x, t.y, t.x + dx, t.y + dy, D.glide);
+      await c.wait(D.hold);await c.up();await c.wait(D.after);
+      await c.move(t.x, t.y);await c.wait(400);
+    }
+  },
   // Position survey (AI-driven, not the human D-017 order): walk down the page in equal wheel distances, let each stop settle, take a still;
   // then walk back up the same stops. Tells apart — per stop — what is a function of scroll position (scrub) vs of history (triggered once),
   // how long effects take to settle after the input stops (lag), how much ambient motion runs while idle, and where the big transitions are.
   // --stops N (default 36)  --stop-px P (default: spread over the page, 0.5–4 screens).
   async survey(c, o = {}) {
+    if (o.enter) {const r = await c.enter();c.note('enter', r);await c.wait(3000);}
     const {h} = await c.viewport(), T = SURVEY_TIMING, stops = o.stops ?? 36, range = await c.range();
     // spacing: half a screen on short pages; long pages are spread over the stops (≤ 4 screens apart); pages with no measurable scroll range use half a screen
     const px = o.stopPx ?? (Number.isFinite(range) && range > 0 ? Math.min(h * 4, Math.max(h * 0.5, range / stops)) : h * 0.5), per = Math.max(1, Math.round(px / T.notch));
     c.note('survey', {stops, px: per * T.notch, range});
     const pad = (i) => String(i).padStart(2, '0');
-    const closed = Number.isFinite(range) && range > 0, downP = [];
+    let closed = Number.isFinite(range) && range > 0;const downP = [];
     // down: fixed wheel distance per stop. up (scrollable pages): closed loop back to the progress each down stop had, so forward/back stills are
     // taken at the same position (a clamped page end or scroll-jacking would otherwise shift every up stop).
     const legDown = async (name, i) => {
@@ -89,11 +110,13 @@ export const SCRIPTS = {
     };
     await c.stage('s00');await c.wait(1500);await c.still('s00');
     downP[0] = await c.progress();c.note('stop', {stage: 's00', dir: 'top', i: 0, px: 0, progress: downP[0]});
-    let last = downP[0], stale = 0, reached = 0, escapes = 0;
+    let last = downP[0], stale = 0, reached = 0, escapes = 0, everMoved = false;
     for (let i = 1; i <= stops; i++) {
       await legDown('d' + pad(i), i);reached = i;
       const p = downP[i];   // end of page: the position stops advancing (only measurable on scrollable pages)
-      if (Number.isFinite(p)) {
+      if (Number.isFinite(p) && Math.abs(p - downP[0]) > 0.002) everMoved = true;
+      // progress that never leaves its start value is not a position (virtual scroll over a fixed page): then neither end detection nor closed-loop return apply
+      if (Number.isFinite(p) && everMoved) {
         if (p >= 0.995) break;
         if (p - last < 0.002) stale++;else stale = 0;
         // not at the end but not moving: often a modal/overlay locks the scroll — try Escape (keyboard only, no clicks) a couple of times before giving up
@@ -102,6 +125,7 @@ export const SCRIPTS = {
         last = p;
       }
     }
+    if (!everMoved) closed = false;
     for (let i = reached - 1; i >= 0; i--) await legUp('u' + pad(i), i);
   },
   // Hover study (no clicks): pointer sweeps across the screen (pointer-follow / parallax effects), then glides onto each target, dwells, and leaves.
@@ -114,6 +138,7 @@ export const SCRIPTS = {
       for (let i = 0; i < 400 && (await c.progress()) < fromP - 0.004; i++) {await c.wheel(200);await c.wait(50);}
       await c.wait(1000);
     }
+    if (o.enter) {const r = await c.enter();c.note('enter', r);await c.wait(3000);}
     if (c.key) await c.key('Escape');   // close a promo/consent overlay if one is up (keyboard only, no clicks)
     await c.stage('h0-idle');await c.move(...home);await c.wait(1000);
     await c.stage('h1-sweep');
@@ -152,6 +177,10 @@ export function makeContext(exec, log) {
     async move(x, y) {await exec.move(x, y);},
     targets: (spec, n) => exec.targets(spec, n),
     viewport: () => exec.viewport(),
+    async down() {await exec.down();},
+    async up() {await exec.up();},
+    dragTarget: () => exec.dragTarget(),
+    async enter() {return exec.enter ? exec.enter() : {clicked: false, reason: 'not supported in this mode'};},
     async still(name) {if (!exec.still) throw new Error('--script survey 는 --mode fast 에서만 실행됨');await exec.still(name);},
     note(key, value) {(log.notes ||= []).push({key, atMs: exec.now(), value});},
   };

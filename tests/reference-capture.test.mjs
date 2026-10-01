@@ -9,7 +9,8 @@ import {compareHashes, trackCurves} from '../tools/reference-capture/lib/post.mj
 import {pickForSheet} from '../tools/reference-capture/lib/sheet.mjs';
 import {findEdge} from '../tools/reference-capture/lib/browser.mjs';
 import {pairByProgress, surveyReport} from '../tools/reference-capture/lib/survey.mjs';
-import {hoverMetrics, hoverReport, rectOf} from '../tools/reference-capture/lib/hover.mjs';
+import {dragVerdict} from '../tools/reference-capture/lib/evidence.mjs';
+import {dragMetrics, dragReport, hoverMetrics, hoverReport, rectOf} from '../tools/reference-capture/lib/hover.mjs';
 
 let n = 0;
 const t = (name, fn) => {Promise.resolve(fn()).then(() => {n++;}, (e) => {console.error(`[reference-capture] FAIL ${name}\n`, e);process.exit(1);});};
@@ -260,6 +261,48 @@ t('surveyReport: settle lag, ambient motion, hysteresis only on calm stops, hots
   assert.equal(r.summary.hysteresis.pairsMatched, 5);assert.equal(r.summary.hysteresis.pairs, 4);   // d03 has ambient motion (1.2) → its large diff is not counted as hysteresis
   assert.equal(r.summary.hysteresis.differing, 2);   // d02 and u02
   assert.equal(r.summary.hotspots[0].stage, 'd01');
+});
+
+t('dragVerdict: drag only where the page shows evidence', () => {
+  assert.equal(dragVerdict({scripts: {orbit: 3}, page: {listeners: {}}}).verdict, 'likely');
+  assert.equal(dragVerdict({scripts: {}, page: {listeners: {'pointerdown@canvas': 1}}}).verdict, 'likely');
+  assert.equal(dragVerdict({scripts: {}, page: {listeners: {}, grabCursor: 2}}).verdict, 'likely');
+  assert.equal(dragVerdict({scripts: {}, page: {listeners: {'pointerdown@window': 1, 'pointermove@window': 2}}}).verdict, 'possible');
+  assert.equal(dragVerdict({scripts: {spline: 1}, page: {listeners: {}}}).verdict, 'possible');
+  // pointer-follow parallax alone (move listener, no press) is NOT drag evidence
+  const none = dragVerdict({scripts: {}, page: {listeners: {'pointermove@window': 4, 'wheel@window': 2}, grabCursor: 0}});
+  assert.equal(none.verdict, 'none');assert.ok(none.reasons.length > 0);
+});
+
+t('dragMetrics: reaction while pressed, inertia after release, nothing for a static scene', () => {
+  const step = 1000 / 60, n = Math.round(2700 / step), rel = Math.round(900 / step);
+  const moving = Array.from({length: n}, (_, i) => (i < rel ? 5 : 5 * Math.exp(-(i - rel) / 12)) + 0.05);
+  const m = dragMetrics(moving, step);
+  assert.equal(m.reacted, true);assert.ok(m.peakDuringDrag > 4);assert.ok(m.inertiaMs > 100 && m.inertiaMs < 1200, 'inertia ' + m.inertiaMs);assert.ok(m.afterShare > 0.05 && m.afterShare < 0.4, 'after ' + m.afterShare);
+  const still = dragMetrics(Array.from({length: n}, () => 0.02), step);
+  assert.equal(still.reacted, false);
+  const steady = dragMetrics(Array.from({length: n}, (_, i) => 3 + Math.sin(i / 3)), step);   // steady ambient motion is the calm level: no inertia, not a reaction
+  assert.equal(steady.inertiaMs, 0);assert.equal(steady.reacted, false);
+  const rep = dragReport([{stage: 'g1-drag-x'}, ...Array.from({length: n - 1}, () => ({stage: 'g1-drag-x'}))], moving.map((v) => ({all: v})), [{key: 'stageTarget', value: {stage: 'g1-drag-x', label: 'drag horizontal 300 px'}}], step);
+  assert.equal(rep['g1-drag-x'].metrics.reacted, true);
+});
+
+t('drag script: press on the biggest canvas, glide, hold, release, watch; skipped without a target; entry click only when asked', async () => {
+  const log = {stages: [], events: []}, calls = [];let now = 0;
+  const exec = {now: () => now, wait: async (ms) => {now += ms;}, wheel: async () => {}, progress: () => 0, resolve: (v) => v, move: async (x, y) => {calls.push(['move', x, y]);},
+    viewport: async () => ({w: 1000, h: 600}), targets: async () => [], down: async () => {calls.push(['down']);}, up: async () => {calls.push(['up']);},
+    dragTarget: async () => ({x: 500, y: 300, w: 800, h: 400, kind: 'canvas'}), enter: async () => {calls.push(['enter']);return {clicked: true, label: 'ENTER'};}, still: async () => {}};
+  await SCRIPTS.drag(makeContext(exec, log), {});
+  assert.deepEqual(log.stages.map((s) => s.name), ['g0-idle', 'g1-drag-x', 'g2-drag-y']);
+  const kinds = calls.map((c) => c[0]), first = kinds.indexOf('down');
+  assert.ok(first > 0 && kinds.indexOf('up') > first, 'press before release');assert.equal(kinds.filter((k) => k === 'down').length, 2);assert.ok(!kinds.includes('enter'), 'no entry click unless --enter');
+  assert.ok(calls.some((c) => c[0] === 'move' && c[1] === 700 && c[2] === 300), 'moves 25% of the canvas width to the right while pressed');
+  const l2 = {stages: [], events: []};calls.length = 0;
+  await SCRIPTS.drag(makeContext({...exec, dragTarget: async () => null}, l2), {});
+  assert.equal(l2.stages.length, 0);assert.ok(l2.notes.some((n) => n.key === 'dragSkipped'));
+  const l3 = {stages: [], events: []};calls.length = 0;
+  await SCRIPTS.hover(makeContext({...exec, targets: async () => []}, l3), {enter: true});
+  assert.ok(calls.some((c) => c[0] === 'enter'));assert.ok(l3.notes.some((n) => n.key === 'enter' && n.value.clicked));
 });
 
 process.on('exit', (c) => {if (c === 0) console.log(`[reference-capture] PASS — ${n} unit tests (png, diff energy, frame selection, jumps, curves, trace summary, scripts, args, sheets, edge lookup)`);});

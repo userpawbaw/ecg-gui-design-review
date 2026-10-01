@@ -27,7 +27,13 @@ D-017 촬영 순서(정지 → 휠 1칸 × 3 → 연속 → 정지 → 빠르게
 | 가만히 있을 때 계속 움직이나(앰비언트) | survey 각 지점 마지막 0.6 s 변화량 | `fast` | `ambientEnergy` |
 | 큰 전환이 어떻게 진행되나 | survey에서 찾은 구간을 `transition --from --to`로 **프레임 정확** 캡처 | `frames`(A층) | 12장 시트·곡선 |
 | 마우스 호버·포인터 따라가기 | `hover`: 화면 가로·세로 훑기 + 후보 요소별 접근 → 머무름 → 이탈(클릭 없음) | `fast` 또는 `frames` | `hover.json`(반응 여부·범위(영역/화면 전체)·t50/t90·이탈 후 역방향 애니메이션), 구간별 시트 |
+| 드래그(잡고 돌리기) 반응·관성 | `drag`: 가장 큰 캔버스(또는 grab 커서 요소)를 누른 채 가로·세로로 움직이고 놓은 뒤 정착을 본다. **증거가 있는 사이트에서만 실행** | `fast` | `drag.json`(반응 여부·놓은 뒤 정착 ms·놓은 뒤 변화 비율), `drag-evidence.json` |
+| 이 사이트에 드래그·호버 같은 상호작용이 있나 | `--mode probe`: 읽기 전용 조사(스크립트 라이브러리 이름 개수, 리스너 등록, grab 커서, draggable 요소, 입장 버튼 후보) | `probe` | `probe.json`, `assets.json` |
 | 실제 성능 | 표준 대본 실시간 + 추적 | `trace` | `perf-summary.json` |
+
+### 클릭 정책 (D-047)
+- **클릭은 하지 않는다.** 예외는 하나: `--enter`(또는 `--enter-selector ".sel"`)를 줬을 때 **입장·시작 관문 버튼 한 번**(같은 페이지 안 버튼, 라벨/클래스가 enter·start·begin·launch·explore·cta 류, 외부 링크 제외). 사용자 결정(2026-10-01). 클릭한 요소는 `input.json`의 `enter` 노트에 남는다.
+- **드래그는 증거가 있는 사이트에서만.** `drag` 실행 전에 같은 페이지에서 증거를 모은다: ① 스크립트 본문의 OrbitControls·Draggable 등 라이브러리 이름 개수(코드는 저장하지 않고 개수만), ② `pointerdown/mousedown/touchstart` 리스너 등록 위치(캔버스·window·document), ③ grab 커서, ④ `[draggable=true]`. **likely**(라이브러리·grab 커서·캔버스의 누름 리스너) 또는 **possible**(window/document에 누름+이동 리스너, Spline 런타임)이면 진행하고, **none**이면 건너뛴다(`--force`로만 강제). 포인터 이동 리스너만 있는 사이트(시차)는 증거로 치지 않는다.
 
 - `fast` 모드: 대본을 **실시간으로 한 번** 실행하면서 Chromium 화면 스트림(CDP screencast, JPEG)을 받는다. 화면이 바뀔 때만 프레임이 오므로 60 Hz 격자로 다시 맞춰(마지막 프레임 유지) OpenCV(`frame_diff.py`)로 변화량을 계산한다. 사이트당 **1–5분**. 프레임 정확도는 화면 주사율(이 PC 약 58 Hz)과 PC 성능에 묶이므로, 정밀 분석은 해당 구간만 A층으로 다시 찍는다.
 - 정지 화면(still)은 1920×1080 JPEG(품질 90)이고 `frames/stills/`에 남는다. 에너지 계산용 저해상도 프레임은 끝나면 지운다(`--keep-frames`로 보존).
@@ -53,8 +59,8 @@ npm run ref:sheet -- <캡처 폴더> --survey
 | 옵션 | 기본 | 뜻 |
 |---|---|---|
 | `<url>` / `story` | — | `story`는 우리 앱. 개발 서버가 안 떠 있으면 같은 서버(`prototype/v2`)를 띄웠다가 끝나면 끈다 |
-| `--mode all\|frames\|trace\|fast` | all | A+B+정보 / A층만 / B층만 / 실시간 녹화 빠른 모드(§0.5) |
-| `--script standard\|transition\|hover\|survey` | standard | 입력 대본(§0.5, §4). `transition`은 `--from`·`--to`(진행률 0–1 또는 CSS 선택자) 필요. `survey`는 `fast` 전용(`--stops N` 기본 36, `--stop-px P`). `hover`는 `--hover auto\|"선택자,선택자"`, `--hover-count N`(기본 4), `--from`(먼저 그 진행률까지 스크롤) |
+| `--mode all\|frames\|trace\|fast\|probe` | all | A+B+정보 / A층만 / B층만 / 실시간 녹화 빠른 모드(§0.5) / 읽기 전용 조사 |
+| `--script standard\|transition\|hover\|survey\|drag` | standard | 입력 대본(§0.5, §4). `transition`은 `--from`·`--to`(진행률 0–1 또는 CSS 선택자) 필요. `survey`는 `fast` 전용(`--stops N` 기본 36, `--stop-px P`). `hover`는 `--hover auto\|"선택자,선택자"`, `--hover-count N`(기본 4), `--from`(먼저 그 진행률까지 스크롤) |
 | `--track ".a,.b"` | — | 선택자 요소의 위치·크기·opacity·transform을 프레임마다 `tracks.json`에 저장하고 곡선 통계(onset/t10·t50·t90/최대 속도/이징 종류/오버슈트)를 계산 |
 | `--out 폴더` | `%USERPROFILE%\ecg-captures\<host>-<날짜-시각>` | 저장소 밖 |
 | `--har` | 끔 | 네트워크 HAR 저장(용량 큼, 본문 제외) |

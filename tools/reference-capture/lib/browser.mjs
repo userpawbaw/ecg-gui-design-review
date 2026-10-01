@@ -43,6 +43,12 @@ export async function launchBrowser({browser = 'edge', extraArgs = []} = {}) {
 export const INIT_SCRIPT = `(() => {
   if (window.__ecg) return;
   const H = window.__ecg = {wheelCount: 0, moveCount: 0, contexts: [], workers: 0, offscreen: 0, webgpuAdapters: 0, raf: [], stages: [], longTasks: [], recording: false};
+  // which interaction listeners the page registers (counts per event@target kind) — evidence for hover/drag, read-only
+  const watched = new Set(['pointerdown', 'mousedown', 'touchstart', 'pointermove', 'mousemove', 'dragstart', 'wheel', 'pointerenter', 'mouseenter', 'mouseover', 'pointerover']);
+  H.listeners = {};
+  const kindOf = (t) => (t === window ? 'window' : t === document ? 'document' : t === document.body ? 'body' : (typeof HTMLCanvasElement !== 'undefined' && t instanceof HTMLCanvasElement) ? 'canvas' : (typeof Element !== 'undefined' && t instanceof Element) ? 'element' : 'other');
+  const ael = EventTarget.prototype.addEventListener;
+  EventTarget.prototype.addEventListener = function (type, ...rest) { if (watched.has(type)) { const k = type + '@' + kindOf(this); H.listeners[k] = (H.listeners[k] || 0) + 1; } return ael.call(this, type, ...rest); };
   addEventListener('wheel', () => { H.wheelCount++; }, {capture: true, passive: true});
   addEventListener('mousemove', () => { H.moveCount++; }, {capture: true, passive: true});
   const seen = new WeakSet(), gc = HTMLCanvasElement.prototype.getContext;
@@ -105,6 +111,44 @@ export const INIT_SCRIPT = `(() => {
     return c.map((i, k) => ({id: k + 1, x: i.x, y: i.y, w: i.w, h: i.h, l: i.l, t: i.t, tag: i.tag, label: i.label}));
   };
   H.viewport = () => ({w: innerWidth, h: innerHeight});
+  H.interaction = () => {
+    let grab = 0, k = 0;
+    for (const el of document.querySelectorAll('body *')) { if (++k > 4000) break; const c = getComputedStyle(el).cursor; if (c === 'grab' || c === 'grabbing' || c === '-webkit-grab') grab++; }
+    return {listeners: H.listeners, grabCursor: grab, draggableAttr: document.querySelectorAll('[draggable=true]').length, canvases: document.querySelectorAll('canvas').length};
+  };
+  // the biggest visible canvas (or a grab-cursor element): where a drag would act
+  H.dragTarget = () => {
+    const vw = innerWidth, vh = innerHeight; let best = null;
+    for (const el of document.querySelectorAll('canvas, body *')) {
+      const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      if (r.width < 120 || r.height < 120 || cs.visibility === 'hidden' || cs.display === 'none' || Number(cs.opacity) < 0.05) continue;
+      const isCanvas = el.tagName === 'CANVAS', grab = /grab/.test(cs.cursor);
+      if (!isCanvas && !grab) continue;
+      const vx = Math.max(0, Math.min(vw, r.right) - Math.max(0, r.left)), vy = Math.max(0, Math.min(vh, r.bottom) - Math.max(0, r.top));
+      const area = vx * vy; if (area < 120 * 120) continue;
+      if (!best || area > best.area) best = {area, kind: grab ? 'grab' : 'canvas', x: Math.round(Math.max(0, r.left) + vx / 2), y: Math.round(Math.max(0, r.top) + vy / 2), w: Math.round(vx), h: Math.round(vy)};
+    }
+    return best;
+  };
+  // an entry/start gate: ONE visible, same-page button whose label says enter/start/…; the only click the tool ever makes (user decision 2026-10-01)
+  H.enterCandidates = (sel) => {
+    const re = /(enter|start|begin|launch|explore|discover|continue|입장|시작)/i, vw = innerWidth, vh = innerHeight, out = [];
+    const reClass = /(^|[-_ ])(cta|enter|start|begin|launch)([-_ ]|$)/i;   // icon-only buttons (SVG labels) are recognised by class name, e.g. intro__cta
+    for (const el of (sel ? document.querySelectorAll(sel) : document.querySelectorAll('button, a, [role=button], [onclick], div, span'))) {
+      const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      if (r.width < 24 || r.height < 14 || r.width > vw * 0.6 || r.height > vh * 0.4) continue;
+      if (r.right < 0 || r.bottom < 0 || r.left > vw || r.top > vh || cs.visibility === 'hidden' || cs.display === 'none' || Number(cs.opacity) < 0.3 || cs.pointerEvents === 'none') continue;
+      let label = (el.getAttribute('aria-label') || el.innerText || '').trim().replace(/\\s+/g, ' ');
+      if (!label && typeof el.className === 'string') label = el.className.trim().slice(0, 40);
+      if (!sel && (!label || label.length > 40 || !(re.test(label) || (typeof el.className === 'string' && reClass.test(el.className))))) continue;
+      const tag = el.tagName.toLowerCase(), clickable = tag === 'button' || tag === 'a' || el.getAttribute('role') === 'button' || el.hasAttribute('onclick') || cs.cursor === 'pointer';
+      if (!clickable) continue;
+      if (tag === 'a') { const h = el.getAttribute('href') || ''; try { const u = new URL(h, location.href); if (u.origin !== location.origin) continue; } catch { continue; } }
+      out.push({x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height / 2), w: Math.round(r.width), h: Math.round(r.height), tag, label});
+    }
+    out.sort((a, b) => a.w * a.h - b.w * b.h);   // innermost (smallest) match first
+    return out.slice(0, 3);
+  };
   H.resolve = (v) => {
     if (typeof v === 'number') return v;
     const el = document.querySelector(v); if (!el) return NaN;

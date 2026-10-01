@@ -11,7 +11,8 @@ import {framesPass} from './lib/frames.mjs';
 import {tracePass} from './lib/trace.mjs';
 import {analyzeSavedFrames, compareHashes, diffFromEnergies, pythonEnergies, saveJson, trackCurves} from './lib/post.mjs';
 import {fastPass} from './lib/fast.mjs';
-import {hoverReport, rectOf} from './lib/hover.mjs';
+import {probePass} from './lib/probe.mjs';
+import {dragReport, hoverReport, rectOf} from './lib/hover.mjs';
 import {diffEnergy, frameHash, pixelDelta} from './lib/analysis.mjs';
 import {decodePng} from './lib/png.mjs';
 import {stageSheets, surveySheets} from './lib/sheet.mjs';
@@ -80,7 +81,7 @@ export async function main(argv) {
   let server = null;
   try {
     if (o.isStory) server = await ensureDevServer(o.base);
-    const runA = o.mode === 'all' || o.mode === 'frames', runB = o.mode === 'all' || o.mode === 'trace', runFast = o.mode === 'fast';
+    const runA = o.mode === 'all' || o.mode === 'frames', runB = o.mode === 'all' || o.mode === 'trace', runFast = o.mode === 'fast', runProbe = o.mode === 'probe';
     let gpu = null, frames = null, fastDone = false;
 
     if (runA) {
@@ -149,6 +150,23 @@ export async function main(argv) {
       } finally {await browser.close();}
     }
 
+    if (runProbe) {
+      say('\n[probe] 페이지 읽기 전용 조사 — 라이브러리·자산·상호작용 증거(드래그·호버)·입장 버튼 후보');
+      const {browser, info, warnings} = await launchBrowser({browser: o.browser});
+      manifest.browser = info;manifest.warnings.push(...warnings);
+      try {
+        const p = await probePass(browser, o);
+        manifest.warnings.push(...p.warnings);
+        saveJson(outDir, 'probe.json', p);saveJson(outDir, 'assets.json', {url: o.url, libs: p.libs, fonts: p.fonts, requests: p.requests});
+        const d = p.drag;
+        say(`  라이브러리: three ${p.libs.three ?? '-'} · gsap ${p.libs.gsap ?? '-'} · lenis ${p.libs.lenis ? '있음' : '-'} · spline ${p.libs.spline ? '있음' : '-'} · 캔버스 ${p.libs.canvases.length}개 ${JSON.stringify(p.libs.contextKinds)}`);
+        say(`  드래그 증거: ${d.verdict.verdict} — ${d.verdict.reasons.join('; ')}`);
+        say(`  호버/포인터 리스너: ${Object.entries(d.page.listeners).map(([k, v]) => k + '×' + v).join(', ') || '없음'}`);
+        say(`  입장 버튼 후보: ${p.enterCandidates.length ? p.enterCandidates.map((c) => '"' + c.label + '"').join(', ') : '없음'}`);
+        manifest.drag = {verdict: d.verdict.verdict, reasons: d.verdict.reasons};manifest.probe = true;
+      } finally {await browser.close();}
+    }
+
     if (runFast) {
       say('\n[빠른 모드] 실시간 실행 + 화면 녹화(screencast) — 프레임 정확도는 화면 주사율·PC 성능에 묶임');
       const {browser, info, warnings} = await launchBrowser({browser: o.browser});
@@ -159,6 +177,11 @@ export async function main(argv) {
         const t0 = Date.now();
         const f = await fastPass(browser, o, outDir);
         manifest.warnings.push(...f.warnings);
+        if (f.evidence) {saveJson(outDir, 'drag-evidence.json', f.evidence);manifest.drag = {verdict: f.evidence.verdict.verdict, reasons: f.evidence.verdict.reasons};}
+        if (f.skipped) {
+          say(`  드래그 건너뜀 — 증거 없음: ${f.evidence.verdict.reasons.join('; ')} (강제하려면 --force)`);
+          manifest.drag.skipped = true;
+        } else {
         say(`  녹화 ${f.times.length}프레임(변화가 있을 때만 도착), 60 Hz 격자 ${f.ticks.length}틱 · 실제 ${((Date.now() - t0) / 1000).toFixed(0)} s. 분석(OpenCV)…`);
         const ticks = f.ticks.map((t) => ({stage: t.stage, i: t.i, vt: t.vt, file: 'frames/raw/' + String(t.src).padStart(6, '0') + '.jpg', rect: rectOf(f.log.notes, t.stage)}));
         const energies = pythonEnergies(outDir, ticks.map((t) => ({...t, file: join(outDir, t.file)})));
@@ -168,6 +191,11 @@ export async function main(argv) {
           caveat: '프레임은 화면이 바뀔 때만 도착한다(정지 구간은 간격이 길어도 정상). 움직이는 구간의 간격이 16.7 ms를 넘으면 화면 주사율 또는 PC 성능 한계 — A층(가상 시계)으로 확인할 것'});
         for (const [name, s] of Object.entries(diff.stages)) say(`    ${name.padEnd(14)} ${String(s.count).padStart(3)}틱 · 평균 Δ ${s.meanEnergy.toFixed(2)} · 최대 Δ ${s.maxEnergy.toFixed(2)} · 급등 ${s.jumps.length}`);
         if (o.script === 'hover') {const rep = hoverReport(ticks, energies, f.log.notes, f.step);saveJson(outDir, 'hover.json', rep);printHover(rep);}
+        if (o.script === 'drag') {
+          const rep = dragReport(ticks, energies, f.log.notes, f.step);saveJson(outDir, 'drag.json', rep);
+          say(`  드래그 증거: ${f.evidence.verdict.verdict} (${f.evidence.verdict.reasons.join('; ')})`);
+          for (const [st, d] of Object.entries(rep)) say(`    ${st} [${d.label}] ${d.metrics.reacted ? '반응 있음' : '반응 없음'} · 드래그 중 피크 ${d.metrics.peakDuringDrag}(평소 ${d.metrics.calmLevel}) · 놓은 뒤 정착 ${d.metrics.inertiaMs ?? '못 함'} ms · 놓은 뒤 변화 비율 ${d.metrics.afterShare}`);
+        }
         if (o.script === 'survey') {
           const byStage = {};ticks.forEach((t, n) => {(byStage[t.stage] ||= []).push(energies[n].all);});
           const stops = f.log.notes.filter((n) => n.key === 'stop').map((n) => n.value), pairs = [];
@@ -183,6 +211,7 @@ export async function main(argv) {
           if (!o.keepFrames) rmSync(join(outDir, 'frames', 'raw'), {recursive: true, force: true});   // low-res energy frames are not needed afterwards; stills stay
         }
         manifest.frameStepMs = f.step;manifest.layer = 'fast';fastDone = true;
+        }
       } finally {await browser.close();}
     }
 
@@ -200,7 +229,7 @@ export async function main(argv) {
       say(`  ${manifest.sheets.length}장: ${manifest.sheets.join(', ')}`);
     }
     saveJson(outDir, 'manifest.json', manifest);   // so the handoff list can include it
-    manifest.handoff = ['manifest.json', 'perf-summary.json', 'video-summary.json', 'hover.json', 'survey.json', 'diff.json', 'input.json', 'assets.json', 'tracks.json', ...manifest.sheets].filter((f) => existsSync(join(outDir, f)));
+    manifest.handoff = ['manifest.json', 'perf-summary.json', 'video-summary.json', 'hover.json', 'drag.json', 'drag-evidence.json', 'probe.json', 'survey.json', 'diff.json', 'input.json', 'assets.json', 'tracks.json', ...manifest.sheets].filter((f) => existsSync(join(outDir, f)));
     saveJson(outDir, 'manifest.json', manifest);
     if (manifest.warnings.length) say('\n경고:\n  - ' + manifest.warnings.join('\n  - '));
     say(`\n끝. 다른 세션에 넘길 파일: ${manifest.handoff.join(', ')}\n폴더: ${outDir}\n`);

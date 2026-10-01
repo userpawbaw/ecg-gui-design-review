@@ -23,7 +23,7 @@
     {
       "id": "R1-INTRO",
       "status": "wave_part_implemented_user_check_pending",
-      "task": "R1 intro implemented per IDEA-R1-INTRO + D-041 (prototype/v2/src/story/intro). Headless L3 verified (sync e2e, 12-frame sequences, G1-G6 in verification/r1-intro-20260929). Pending: user local check via npm run story (GPU frame rate, wheel/mouse feel), REF-001 recording side-by-side. 2026-09-30: user feedback on the waveform part (F-029); 0 dB + brightness applied (D-042); IDEA-R1-WAVE round 1 awaiting user reactions; globe/person/heart feedback after that. 2026-09-30: G3/T2/L1+L2/P1 implemented (D-043); T3 pending user; round 2 text proposals (D-044) awaiting reactions. 2026-09-30: asset/staging reference mining (F-030, rounds/R1/REFMINE-R1-INTRO-ASSET.md) awaiting user choice of render direction and priority."
+      "task": "R1 intro implemented per IDEA-R1-INTRO + D-041 (prototype/v2/src/story/intro). Headless L3 verified (sync e2e, 12-frame sequences, G1-G6 in verification/r1-intro-20260929). Pending: user local check via npm run story (GPU frame rate, wheel/mouse feel), REF-001 recording side-by-side. 2026-09-30: user feedback on the waveform part (F-029); 0 dB + brightness applied (D-042); IDEA-R1-WAVE round 1 awaiting user reactions; globe/person/heart feedback after that. 2026-09-30: G3/T2/L1+L2/P1 implemented (D-043); T3 pending user; round 2 text proposals (D-044) awaiting reactions. 2026-09-30: asset/staging reference mining (F-030, rounds/R1/REFMINE-R1-INTRO-ASSET.md) awaiting user choice of render direction and priority. 2026-10-01: hover-feedback idea board IDEA-R1-HOVER.md awaiting user reactions (options A/B/C/D)."
     },
     {
       "id": "R1-NEXT-SCREENS",

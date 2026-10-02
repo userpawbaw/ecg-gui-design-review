@@ -21,9 +21,9 @@
 
 | 항목 | 상태 |
 |---|---|
-| 서고 에셋 | `prototype/v2/src/story/intro/assets/archive/`(manifest.json, archive.glb, light_shell.webp) — Blender 굽기 + meshopt/WebP 압축본. 다시 만들기: `python scripts/blender/build_archive.py --bake prototype/v2/public/intro-archive --size 2048 --bsamples 128` → `python scripts/assets/package-archive.py prototype/v2/public/intro-archive` → 세 파일을 assets/archive/로 복사. 원본(assets/source/)은 저장소에 없음 — 필요하면 registry의 url로 받기 |
+| 서고 에셋 | `prototype/v2/src/story/intro/assets/archive/`(manifest.json, archive.glb 9.8 MB, light_shell.webp 0.5 MB) — Blender 굽기(셸 조명 이미지 2048², 책·소품은 정점 색) + meshopt/WebP 압축본. 다시 만들기: `python scripts/blender/build_archive.py --bake prototype/v2/public/intro-archive --size 2048 --bsamples 128` → `python scripts/assets/package-archive.py prototype/v2/public/intro-archive` → 세 파일을 assets/archive/로 복사. 원본(assets/source/)은 저장소에 없음 — 필요하면 registry의 url로 받기 |
 | 사람 | `assets/body_seated.glb`(앉은 자세, `_SLICE` 뼈 축 좌표 속성, 형태 키 breath·grip) — **수정 금지**(표현 H3b vs H5는 사용자 결정 대기) |
-| 웹 코드 | `archive.ts` 작성, `introStage.ts`에 연결(카메라 Catmull–Rom, 페이드, 고리 햇빛 반응, 빛줄기 패스, 먼지). **헤드리스 렌더 한 번도 확인 안 됨** |
+| 웹 코드 | `archive.ts` 작성, `introStage.ts`에 연결(카메라 Catmull–Rom, 페이드, 고리 햇빛 반응, 빛줄기 패스, 먼지). 발행 직전 확인: p .45·.53 두 장이 오류 없이 렌더됨(`verification/r1-intro-20260929/frames/arch-sanity-*.jpg` — 구운 방·H3b 고리·심장·먼지 보임). 그 외 구간·수치·테스트는 미검증 |
 | 기본값 | `IntroShell.tsx`·`introStage.ts` 모두 `v2`(격자). archive는 `?look=archive` |
 
 ## 3. 작업과 수용 기준

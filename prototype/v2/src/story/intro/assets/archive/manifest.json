@@ -1,0 +1,160 @@
+{
+ "lm_scale": 4.0,
+ "encoding": "png sqrt(linear / lm_scale), albedo-free full lighting (direct + indirect)",
+ "size": 2048,
+ "samples": 128,
+ "groups": {
+  "shell": {
+   "object": "Archive_shell",
+   "file": "light_shell.webp"
+  },
+  "books": {
+   "object": "Archive_books",
+   "vertex_color": "COLOR_0 = sqrt(light / lm_scale)"
+  },
+  "decor": {
+   "object": "Archive_decor",
+   "vertex_color": "COLOR_0 = sqrt(light / lm_scale)"
+  }
+ },
+ "timing_s": {
+  "shell": 803.8,
+  "books": 81.1,
+  "decor": 192.1
+ },
+ "counts": {
+  "books": 5914,
+  "boxes": 227,
+  "binders": 624,
+  "rolls": 331
+ },
+ "sun": {
+  "to_dir": [
+   0.8603,
+   -0.5061,
+   -0.0607
+  ],
+  "color": [
+   1.0,
+   0.6938717365264893,
+   0.3915724754333496
+  ],
+  "energy": 11.0
+ },
+ "shots": {
+  "s1_top": {
+   "pos": [
+    0.0,
+    4.75,
+    3.8
+   ],
+   "look": [
+    0.0,
+    0.0,
+    -1.2
+   ],
+   "fov_v_deg": 24
+  },
+  "s2_beams": {
+   "pos": [
+    0.0,
+    3.3,
+    4.6
+   ],
+   "look": [
+    0.2,
+    1.2,
+    -3.0
+   ],
+   "fov_v_deg": 22
+  },
+  "s3_aisle": {
+   "pos": [
+    0.0,
+    1.9,
+    3.2
+   ],
+   "look": [
+    0.5,
+    1.6,
+    -4.2
+   ],
+   "fov_v_deg": 30
+  },
+  "s4_person": {
+   "pos": [
+    0.25,
+    1.95,
+    -1.2
+   ],
+   "look": [
+    0.5,
+    1.85,
+    -3.9
+   ],
+   "fov_v_deg": 40
+  },
+  "s5_crane": {
+   "pos": [
+    0.9,
+    3.5,
+    -0.6
+   ],
+   "look": [
+    -1.0,
+    0.8,
+    -4.1
+   ],
+   "fov_v_deg": 34
+  },
+  "s6_grip": {
+   "pos": [
+    -0.437,
+    1.1337,
+    -2.9632
+   ],
+   "look": [
+    0.363,
+    1.7337,
+    -4.0132
+   ],
+   "fov_v_deg": 38
+  }
+ },
+ "room": {
+  "min": [
+   -3.6,
+   0.0,
+   -5.0
+  ],
+  "max": [
+   3.6,
+   5.0,
+   5.0
+  ]
+ },
+ "figure": {
+  "location": [
+   0.5499,
+   0.6978,
+   -3.8775
+  ],
+  "heart": [
+   0.5749,
+   1.8773,
+   -3.7876
+  ],
+  "heart_q_wxyz_blender": [
+   0.99686,
+   0.07924,
+   0.0,
+   0.0
+  ],
+  "hand_r": [
+   0.313,
+   1.4837,
+   -3.9132
+  ]
+ },
+ "web_encoding": "lightmaps libwebp q92 of sqrt-encoded PNG; glb gltf-transform optimize (meshopt, WebP <=1024, COLOR_0 kept, no simplify)"
+}

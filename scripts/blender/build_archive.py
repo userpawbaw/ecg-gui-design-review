@@ -21,6 +21,9 @@ ap.add_argument('--shots', default='')
 ap.add_argument('--res', default='1280x720')
 ap.add_argument('--seed', type=int, default=11)
 ap.add_argument('--save', default='')
+ap.add_argument('--bake', default='', help='bake lightmaps + export the web scene into this dir')
+ap.add_argument('--size', type=int, default=2048)
+ap.add_argument('--bsamples', type=int, default=128)
 args = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 rng = random.Random(args.seed)
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -116,7 +119,7 @@ box('BackWall', (2 * XW, 0.15, H), (0, Y1 + 0.075, H / 2), M_WALL, tile=2.0)
 box('WallR', (0.15, Y1 - Y0, H), (XW + 0.075, (Y0 + Y1) / 2, H / 2), M_WALL, tile=2.0)
 box('Ceiling', (2 * XW, Y1 - Y0, 0.15), (0, (Y0 + Y1) / 2, H + 0.075), M_WALL, tile=2.0)
 # left wall with three high windows (z 3.5–4.7), each with a frame and blinds that slice the sun
-WIN = [(-3.8, 0.9), (-2.2, 0.9), (-0.6, 0.9), (1.0, 0.9), (2.6, 0.9)]   # (centre y, width): aligned with the gaps between stacks
+WIN = [(-3.8, 0.9), (-2.2, 0.9), (-0.6, 0.9), (1.0, 0.9), (2.6, 0.9), (3.95, 1.0)]   # (centre y, width): gaps between stacks + one above the reading nook (sun onto the ladder)
 WZ0, WZ1 = 3.45, 4.7
 edges = [Y0] + sum([[c - w / 2, c + w / 2] for c, w in WIN], []) + [Y1]
 box('WallL_low', (0.15, Y1 - Y0, WZ0), (-XW - 0.075, (Y0 + Y1) / 2, WZ0 / 2), M_WALL, tile=2.0)
@@ -274,6 +277,7 @@ def place(slug, x, y, z, target_h, rot=0.0):
     for r in roots: r.scale = tuple(v * s for v in r.scale); r.rotation_euler.z += rot
     bpy.context.view_layer.update(); lo, hi = world_bbox(new); c = (lo + hi) / 2
     for r in roots: r.location += Vector((x - c.x, y - c.y, z - lo.z))
+    for o in new: o['group'] = 'decor'                 # dense CC0 meshes → vertex-colour light
     bpy.context.view_layer.update(); return new
 
 DESK = Vector((-2.35, 3.55, 0))
@@ -298,7 +302,6 @@ box('CartTray', (0.46, 0.36, 0.02), (CART.x, CART.y, 0.8), M_STEEL)
 box('CartShelf', (0.46, 0.36, 0.02), (CART.x, CART.y, 0.25), M_STEEL)
 box('ECG_Device', (0.40, 0.30, 0.12), (CART.x, CART.y, 0.87), M_BEIGE)
 box('ECG_PaperOut', (0.2, 0.18, 0.002), (CART.x - 0.02, CART.y - 0.24, 0.88), M_PAPER, rot=(math.radians(-25), 0, 0))
-place('medical_box', CART.x, CART.y, 0.26, 0.18)
 # wall outlet on the back-wall plinth below the desk, cable across the floor to the computer
 OUT = Vector((-1.95, BY + 0.27, 0.32))
 box('OutletPlate', (0.08, 0.012, 0.12), OUT, M_OUTLET)
@@ -363,19 +366,19 @@ if os.path.exists(fig_path):
     print('figure seat at', tuple(round(v, 3) for v in FIG.location), 'heart', tuple(round(v, 3) for v in HEART.location))
 
 # ---------------- light: sun through the blinds + dim sky + warm lamp bulbs ----------------
-sun = bpy.data.lights.new('sun', 'SUN'); sun.energy = 9.0; sun.angle = math.radians(1.2); sun.color = srgb('#ffd9a8')
+sun = bpy.data.lights.new('sun', 'SUN'); sun.energy = 11.0; sun.angle = math.radians(1.2); sun.color = srgb('#ffd9a8')
 so = bpy.data.objects.new('sun', sun); scene.collection.objects.link(so)
-SUN_TO = Vector((0.80, 0.10, -0.50)).normalized()   # across the gaps between stacks, over the aisle, onto the ladder side
+SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()   # across the gaps between stacks and over the nook onto the ladder and figure
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
-w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#5b6e88'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.0
+w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 0.7   # cool sky fill vs warm sun
 for y in (-1.8, 1.3):
     L = bpy.data.lights.new('bulb', 'POINT'); L.energy = 60; L.color = srgb('#ffb36b'); L.shadow_soft_size = 0.05
     lo_ = bpy.data.objects.new('bulb', L); lo_.location = (0, y, H - 1.45); scene.collection.objects.link(lo_)
 # preview-only haze so the beams read in stills (the web uses ray-marched shafts instead)
 hz = box('Haze', (2 * XW - 0.1, Y1 - Y0 - 0.1, H - 0.1), (0, (Y0 + Y1) / 2, H / 2), mat('haze_dummy', (1, 1, 1)))
 hm = bpy.data.materials.new('haze'); hm.use_nodes = True; nt = hm.node_tree
-nt.nodes.remove(nt.nodes['Principled BSDF']); vol = nt.nodes.new('ShaderNodeVolumePrincipled'); vol.inputs['Density'].default_value = 0.045
+nt.nodes.remove(nt.nodes['Principled BSDF']); vol = nt.nodes.new('ShaderNodeVolumePrincipled'); vol.inputs['Density'].default_value = 0.022
 nt.links.new(vol.outputs[0], nt.nodes['Material Output'].inputs['Volume']); hz.data.materials.clear(); hz.data.materials.append(hm)
 
 # ---------------- preview shots (SPACE-R1-ARCHIVE §3–4) ----------------
@@ -384,9 +387,12 @@ SHOTS = {
     's2_beams':   ((0.0, -4.6, 3.3), (0.2, 3.0, 1.2), 22),     # below the beams, beams in the foreground
     's3_aisle':   ((0.0, -3.2, 1.9), (0.5, 4.2, 1.6), 30),     # walking the aisle, stack ends pass
     's4_person':  ((0.25, 1.2, 1.95), (0.5, 3.9, 1.85), 40),    # medium on the seated figure
-    's5_crane':   ((0.9, 1.3, 3.4), (-1.6, 4.3, 0.5), 24),     # Story PLI: outlet, cable, desk, ladder in one frame
+    's5_crane':   ((0.9, 0.6, 3.5), (-1.0, 4.1, 0.8), 34),     # Story PLI: outlet, cable, desk, ladder + figure in one frame
     's6_grip':    ((-0.55, 2.75, 1.05), (0.25, 3.85, 1.55), 45),  # Story MA: low angle at the hand on the stile
 }
+if FIG is not None:
+    HR = FIG.location + Vector(fj['hand_r'])
+    SHOTS['s6_grip'] = (tuple(HR + Vector((-0.75, -0.95, -0.35))), tuple(HR + Vector((0.05, 0.1, 0.25))), 38)
 if args.save:
     bpy.ops.wm.save_as_mainfile(filepath=args.save)
 if args.preview:
@@ -405,3 +411,102 @@ if args.preview:
         scene.camera = c; scene.render.filepath = os.path.join(args.preview, name + '.png')
         bpy.ops.render.render(write_still=True)
         print('rendered', name)
+
+# ---------------- bake + web export (attic method: albedo-free direct + indirect light, sqrt-encoded) ----------------
+if args.bake:
+    import json, time
+    OUT = os.path.join(ROOT, args.bake); os.makedirs(OUT, exist_ok=True)
+    # the figure, heart and preview haze are not part of the baked room (the figure is light, it casts no shadow)
+    FIG_LOC = FIG.location.copy() if FIG is not None else None
+    for o in [x for x in (FIG, globals().get('HEART'), hz) if x is not None]:
+        bpy.data.objects.remove(o, do_unlink=True)
+    for o in [x for x in scene.objects if x.type == 'CURVE']:          # cable → mesh
+        bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); bpy.context.view_layer.objects.active = o
+        bpy.ops.object.convert(target='MESH')
+    scene.render.engine = 'CYCLES'; scene.cycles.device = 'CPU'
+    scene.cycles.max_bounces = 6; scene.cycles.diffuse_bounces = 4; scene.cycles.glossy_bounces = 1; scene.cycles.transparent_max_bounces = 8
+    meshes = [o for o in scene.objects if o.type == 'MESH']
+    for o in meshes:
+        if o.name in ('Shelved', 'Rolls'): o['group'] = 'books'
+        r = o
+        while r.parent is not None and not o.get('group'):
+            r = r.parent
+            if r.get('group'): o['group'] = r['group']
+    for o in meshes:
+        if not o.data.uv_layers: o.data.uv_layers.new(name='UVMap')
+        else: o.data.uv_layers[0].name = 'UVMap'
+        while len(o.data.uv_layers) > 1: o.data.uv_layers.remove(o.data.uv_layers[-1])
+    buckets = {'shell': [], 'books': [], 'decor': []}
+    for o in meshes: buckets[o.get('group', 'shell')].append(o)
+    print('buckets', {k: len(v) for k, v in buckets.items()}, flush=True)
+
+    def join(name, objs, lm=True):
+        bpy.ops.object.select_all(action='DESELECT')
+        for o in objs: o.select_set(True)
+        bpy.context.view_layer.objects.active = objs[0]
+        bpy.ops.object.parent_clear(type='CLEAR_KEEP_TRANSFORM'); bpy.ops.object.join()
+        o = bpy.context.active_object; o.name = name
+        bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+        if lm:
+            l = o.data.uv_layers.new(name='Lightmap'); o.data.uv_layers.active = l
+            bpy.ops.object.mode_set(mode='EDIT'); bpy.ops.mesh.select_all(action='SELECT'); bpy.ops.uv.select_all(action='SELECT')
+            bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=0.0, area_weight=0.0, scale_to_bounds=False)
+            bpy.ops.uv.select_all(action='SELECT'); bpy.ops.uv.average_islands_scale()
+            bpy.ops.uv.pack_islands(rotate=True, margin=0.0008 if 'books' in name else 0.0015, shape_method='AABB' if 'books' in name else 'CONCAVE')
+            bpy.ops.object.mode_set(mode='OBJECT')
+        return o
+    groups = {}
+    for g, objs in buckets.items():
+        if not objs: continue
+        if g == 'decor':
+            o = join('Archive_decor', objs, lm=False)
+            for a in list(o.data.color_attributes): o.data.color_attributes.remove(a)
+            ca = o.data.color_attributes.new('Light', 'FLOAT_COLOR', 'CORNER'); o.data.color_attributes.active_color = ca
+        else:
+            o = join('Archive_' + g, objs)
+        groups[g] = o
+        print('[group]', g, 'faces', len(o.data.polygons), flush=True)
+
+    LM_SCALE = 4.0
+    man = {'lm_scale': LM_SCALE, 'encoding': 'png sqrt(linear / lm_scale), albedo-free full lighting (direct + indirect)', 'size': args.size,
+           'samples': args.bsamples, 'groups': {}, 'timing_s': {}, 'counts': counts}
+    bake = scene.render.bake; bake.margin = 8; bake.use_clear = True; scene.cycles.samples = args.bsamples
+    for g, o in groups.items():
+        t0 = time.time()
+        bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); bpy.context.view_layer.objects.active = o
+        if g == 'decor':
+            bake.target = 'VERTEX_COLORS'; bpy.ops.object.bake(type='DIFFUSE', pass_filter={'DIRECT', 'INDIRECT'}); bake.target = 'IMAGE_TEXTURES'
+            ca = o.data.color_attributes['Light']; n = len(ca.data); v = np.empty(n * 4, np.float32); ca.data.foreach_get('color', v); v = v.reshape(-1, 4)
+            v[:, :3] = np.sqrt(np.clip(v[:, :3] / LM_SCALE, 0, 1)); v[:, 3] = 1; ca.data.foreach_set('color', v.ravel())
+            man['groups'][g] = {'object': o.name, 'vertex_color': 'COLOR_0 = sqrt(light / lm_scale)'}
+        else:
+            sz = args.size; name = f'light_{g}.png'
+            img = bpy.data.images.new(name, sz, sz, alpha=False, float_buffer=True); img.colorspace_settings.name = 'Non-Color'
+            for m in o.data.materials:
+                nt = m.node_tree
+                tn = nt.nodes.new('ShaderNodeTexImage'); tn.name = 'BakeTarget'; tn.image = img
+                uvn = nt.nodes.new('ShaderNodeUVMap'); uvn.name = 'BakeUV'; uvn.uv_map = 'Lightmap'; nt.links.new(uvn.outputs['UV'], tn.inputs['Vector']); nt.nodes.active = tn
+            bpy.ops.object.bake(type='DIFFUSE', pass_filter={'DIRECT', 'INDIRECT'})
+            px = np.empty(sz * sz * 4, np.float32); img.pixels.foreach_get(px); rgb = px.reshape(-1, 4)[:, :3]
+            enc = np.sqrt(np.clip(rgb / LM_SCALE, 0, 1))
+            out = bpy.data.images.new(name + '_o', sz, sz, alpha=False); out.colorspace_settings.name = 'Non-Color'
+            out.pixels.foreach_set(np.concatenate([enc, np.ones((enc.shape[0], 1), np.float32)], axis=1).ravel())
+            out.filepath_raw = os.path.join(OUT, name); out.file_format = 'PNG'; out.save(); bpy.data.images.remove(out); bpy.data.images.remove(img)
+            for m in o.data.materials:
+                for nd in [nd for nd in m.node_tree.nodes if nd.name in ('BakeTarget', 'BakeUV')]: m.node_tree.nodes.remove(nd)
+            man['groups'][g] = {'object': o.name, 'file': name}
+        man['timing_s'][g] = round(time.time() - t0, 1); print('baked', g, man['timing_s'][g], 's', flush=True)
+    bpy.data.objects.remove(so)
+    for o in [x for x in scene.objects if x.type in ('LIGHT', 'CAMERA')]: bpy.data.objects.remove(o)
+    bpy.ops.object.select_all(action='SELECT')
+    bpy.ops.export_scene.gltf(filepath=os.path.join(OUT, 'archive.glb'), export_format='GLB', export_cameras=False, export_lights=False,
+                              export_texcoords=True, export_normals=True, export_image_format='AUTO', export_vertex_color='ACTIVE', export_all_vertex_colors=False)
+    b2t = lambda v: [round(float(v[0]), 4), round(float(v[2]), 4), round(float(-v[1]), 4)]
+    man['sun'] = {'to_dir': b2t(SUN_TO), 'color': list(sun.color), 'energy': sun.energy}
+    man['shots'] = {k: {'pos': b2t(p), 'look': b2t(t), 'fov_v_deg': f} for k, (p, t, f) in SHOTS.items()}
+    man['room'] = {'min': b2t((-XW, Y1, 0)), 'max': b2t((XW, Y0, H))}
+    if FIG_LOC is not None:
+        man['figure'] = {'location': b2t(FIG_LOC), 'heart': b2t(FIG_LOC + Vector(fj['heart_b'])),
+                         'heart_q_wxyz_blender': fj['heart_q_wxyz'], 'hand_r': b2t(FIG_LOC + Vector(fj['hand_r']))}
+    json.dump(man, open(os.path.join(OUT, 'manifest.json'), 'w', encoding='utf-8'), indent=1)
+    print('exported', OUT)

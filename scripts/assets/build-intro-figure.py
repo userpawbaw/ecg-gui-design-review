@@ -300,8 +300,14 @@ def _bones():
         B[f'foot.{n}'] = ((s * .10, 0, .08), (s * .11, -.13, .02), f'shin.{n}')
         B[f'clav.{n}'] = ((s * .03, 0, 1.36), (s * .17, 0, 1.37), 'chest')
         B[f'upper.{n}'] = ((s * .18, 0, 1.36), (s * .29, 0, 1.06), f'clav.{n}')
-        B[f'fore.{n}'] = ((s * .29, 0, 1.06), (s * .333, -.05, .83), f'upper.{n}')
-        B[f'hand.{n}'] = ((s * .333, -.05, .83), (s * .334, -.08, .72), f'fore.{n}')
+        B[f'fore.{n}'] = ((s * .29, 0, 1.06), (s * .34, -.065, .86), f'upper.{n}')
+        # hand measured by slicing: palm faces the body (±x), thumb points forward (−y) at z 0.81–0.83, knuckles z ≈ 0.80
+        B[f'hand.{n}'] = ((s * .34, -.065, .86), (s * .345, -.075, .80), f'fore.{n}')
+        # three phalanx segments so a curl reads as a rounded grip, not a rigid flap
+        B[f'finger1.{n}'] = ((s * .345, -.075, .80), (s * .342, -.077, .772), f'hand.{n}')
+        B[f'finger2.{n}'] = ((s * .342, -.077, .772), (s * .339, -.078, .745), f'finger1.{n}')
+        B[f'finger3.{n}'] = ((s * .339, -.078, .745), (s * .335, -.08, .72), f'finger2.{n}')
+        B[f'thumb.{n}'] = ((s * .34, -.10, .84), (s * .335, -.158, .815), f'hand.{n}')
     return B
 
 # target directions in armature space (unit vectors are normalised below); front = −y
@@ -309,7 +315,7 @@ SEATED = {
     'spine': (0, -.10, 1), 'chest': (0, -.16, 1), 'neck': (0, -.32, 1), 'head': (0, -.38, 1),
     'thigh.R': (-.10, -1, -.06), 'shin.R': (-.02, -.12, -1), 'foot.R': (-.05, -1, -.35),          # right leg dangles
     'thigh.L': (.08, -1, .10), 'shin.L': (.02, .55, -1), 'foot.L': (.05, -1, -.1),               # left foot tucked on a lower rung
-    'upper.R': (-.25, .10, -1), 'fore.R': (-.12, -.22, -1), 'hand.R': (-.06, -.12, -1),            # right hand on the ladder stile
+    'upper.R': (-.20, .26, -1), 'fore.R': (-.06, .06, -1), 'hand.R': (-.03, .02, -1),             # right hand down by the hip, on the ladder stile
     'upper.L': (.08, -.22, -1), 'fore.L': (-.02, -.85, -.62), 'hand.L': (0, -.55, -1),            # left hand resting on the left thigh
 }
 
@@ -336,8 +342,21 @@ def build_seated(o, heart_b, preview_dir=None):
         rot = rd.rotation_difference(d).to_matrix() @ rest
         head = pb.matrix.translation.copy()
         pb.matrix = mathutils.Matrix.Translation(head) @ rot.to_4x4()
-    bpy.context.view_layer.update(); bpy.ops.object.mode_set(mode='OBJECT')
-    dg = bpy.context.evaluated_depsgraph_get()
+    bpy.context.view_layer.update()
+    # finger curl in the hand's rest frame (palm normal −s·x): fingers rotate about y through the knuckle, thumb about z
+    def curl(side, s_, fingers_deg, thumb_deg):        # fingers_deg = total curl over the three joints
+        hp = ar.pose.bones[f'hand.{side}']; Mh = hp.matrix @ hp.bone.matrix_local.inverted()
+        C = mathutils.Matrix.Identity(4)
+        for k, share in ((1, .38), (2, .36), (3, .26)):                # proximal bends most
+            pb = ar.pose.bones[f'finger{k}.{side}']; K = pb.bone.head_local
+            C = C @ mathutils.Matrix.Translation(K) @ mathutils.Matrix.Rotation(math.radians(s_ * fingers_deg * share), 4, (0, 1, 0)) @ mathutils.Matrix.Translation(-K)
+            pb.matrix = Mh @ C @ pb.bone.matrix_local
+            bpy.context.view_layer.update()
+        pb = ar.pose.bones[f'thumb.{side}']; K = pb.bone.head_local
+        pb.matrix = Mh @ mathutils.Matrix.Translation(K) @ mathutils.Matrix.Rotation(math.radians(-s_ * thumb_deg), 4, (0, 0, 1)) @ mathutils.Matrix.Translation(-K) @ pb.bone.matrix_local
+        bpy.context.view_layer.update()
+    curl('L', 1, 45, 10); curl('R', -1, 45, 10)                     # relaxed hands
+    bpy.ops.object.mode_set(mode='OBJECT')
     kb = o.data.shape_keys.key_blocks
     def posed(breath):
         kb['breath'].value = breath; bpy.context.view_layer.update()
@@ -345,12 +364,18 @@ def build_seated(o, heart_b, preview_dir=None):
         P = np.array([v.co[:] for v in me.vertices]); ev.to_mesh_clear(); return P
     P0, P1 = posed(0.0), posed(1.0)
     kb['breath'].value = 0
+    bpy.context.view_layer.objects.active = ar; bpy.ops.object.mode_set(mode='POSE')
+    curl('R', -1, 215, 45)                                           # Story muscle-noise scene: grip the stile (F-030)
+    bpy.ops.object.mode_set(mode='OBJECT')
+    PG = posed(0.0)
+    hand_r = PG[np.linalg.norm(PG - np.array(ar.pose.bones['finger1.R'].head), axis=1) < .06].mean(0)
     F = [list(p.vertices) for p in o.data.polygons]
     me = bpy.data.meshes.new('body_seated'); me.from_pydata([tuple(p) for p in P0], [], F); me.update()
     so = bpy.data.objects.new('body_seated', me); bpy.context.scene.collection.objects.link(so)
     bpy.context.view_layer.objects.active = so; bpy.ops.object.select_all(action='DESELECT'); so.select_set(True)
     bpy.ops.object.shade_smooth()
     so.shape_key_add(name='Basis'); sk = so.shape_key_add(name='breath'); sk.data.foreach_set('co', P1.astype(np.float32).ravel())
+    sg = so.shape_key_add(name='grip'); sg.data.foreach_set('co', PG.astype(np.float32).ravel())
     # seat: lowest point under the pelvis; the archive places this on the rung
     pel = (np.abs(P0[:, 0]) < .14) & (P0[:, 1] > -.12) & (P0[:, 1] < .12)
     seat = P0[pel][np.argmin(P0[pel][:, 2])]
@@ -361,9 +386,14 @@ def build_seated(o, heart_b, preview_dir=None):
     if preview_dir:
         import preview
         preview.render_views(so, os.path.join(preview_dir, 'seated'), [
-            ('front', (0, -6, .75), (0, 0, .75), 1.6), ('34', (3.6, -4.4, .95), (0, 0, .75), 1.6), ('side', (6, 0, .75), (0, 0, .75), 1.6)])
+            ('front', (0, -6, .75), (0, 0, .75), 1.6), ('34', (3.6, -4.4, .95), (0, 0, .75), 1.6), ('side', (6, 0, .75), (0, 0, .75), 1.6),
+            ('handR', (-1.2, -1.6, .95), tuple(hand_r), .32)])
+        kbs = so.data.shape_keys.key_blocks; kbs['grip'].value = 1
+        preview.render_views(so, os.path.join(preview_dir, 'seated_grip'), [('handR', (-1.2, -1.6, .95), tuple(hand_r), .32)])
+        kbs['grip'].value = 0
     export(so, os.path.join(OUT, 'body_seated.glb'), morphs=True)
-    return {'seat': [round(float(x), 4) for x in seat], 'heart_b': [round(x, 4) for x in hb], 'heart_q_wxyz': [round(x, 5) for x in q]}
+    return {'seat': [round(float(x), 4) for x in seat], 'heart_b': [round(x, 4) for x in hb], 'heart_q_wxyz': [round(x, 5) for x in q],
+            'hand_r': [round(float(x), 4) for x in hand_r]}
 
 
 if __name__ == '__main__':

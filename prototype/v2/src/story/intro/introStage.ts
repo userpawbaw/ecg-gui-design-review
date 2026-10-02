@@ -54,7 +54,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const globe=createGlobe({day,night,clouds});scene.add(globe.group);
  const style=opt.look??'v2';   // archive is opt-in (?look=archive) until it passes verification
  // D-046: the ECG record archive (baked room + shafts + dust), figure seated on the ladder with bone-aligned rings (H3b/H3c)
- const arch=style==='archive'?await createArchive(new URL('intro-archive/',document.baseURI).href):null;
+ const arch=style==='archive'?await createArchive():null;
  const figure=createFigure(arch?await geom(urls.seated):bodyGeo,heartGeo,fig,style==='v1'?'v1':'v2');scene.add(figure.group,figure.line);
  if(arch){
   scene.add(arch.room,arch.dust);

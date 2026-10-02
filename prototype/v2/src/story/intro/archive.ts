@@ -13,12 +13,17 @@ export type ArchiveManifest={lm_scale:number,groups:Record<string,{object:string
  sun:{to_dir:number[],color:number[]},shots:Record<string,{pos:number[],look:number[],fov_v_deg:number}>,
  room:{min:number[],max:number[]},figure:{location:number[],heart:number[],heart_q_wxyz_blender:number[],hand_r:number[]}};
 
-export async function createArchive(base:string){
- const manifest:ArchiveManifest=await (await fetch(base+'manifest.json')).json();
- const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(base+'archive.glb');
+// Packaged assets live in src/story/intro/assets/archive/ (tracked; prototype/v2/public/ is gitignored). Static URLs so
+// Vite fingerprints them; lightmap files are looked up by name from the manifest.
+const ASSET={manifest:new URL('./assets/archive/manifest.json',import.meta.url).href,glb:new URL('./assets/archive/archive.glb',import.meta.url).href,
+ 'light_shell.webp':new URL('./assets/archive/light_shell.webp',import.meta.url).href} as Record<string,string>;
+export async function createArchive(){
+ const manifest:ArchiveManifest=await (await fetch(ASSET.manifest)).json();
+ const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(ASSET.glb);
  const tl=new THREE.TextureLoader(),lightmaps:Record<string,THREE.Texture>={};
  for(const [g,info] of Object.entries(manifest.groups))if(info.file){
-  const t=await tl.loadAsync(base+info.file);t.flipY=false;t.colorSpace=THREE.NoColorSpace;t.channel=1;lightmaps[g]=t;}
+  const url=ASSET[info.file];if(!url)throw Error('archive: unknown lightmap '+info.file);
+  const t=await tl.loadAsync(url);t.flipY=false;t.colorSpace=THREE.NoColorSpace;t.channel=1;lightmaps[g]=t;}
  const groupOf=(o:THREE.Object3D)=>{let x:THREE.Object3D|null=o;while(x){for(const [g,i] of Object.entries(manifest.groups))if(x.name===i.object||x.name.startsWith(i.object+'_'))return g;x=x.parent;}return 'shell';};
  const room=gltf.scene;
  // baked material: albedo × decoded light (lightmap on UV1 or per-corner colour), × uFade for scene transitions

@@ -22,6 +22,8 @@ ap.add_argument('--res', default='1280x720')
 ap.add_argument('--seed', type=int, default=11)
 ap.add_argument('--save', default='')
 ap.add_argument('--look', default='h3', choices=['h3', 'h3b', 'h5'], help='figure look in stills: h3 world-height rings, h3b bone-aligned + distance-adaptive rings, h5 frosted glass + faint rings')
+ap.add_argument('--fig', default='v2', choices=['v2', 'v3'], help='v3 = D-048 deformé figure with ECG electrodes and lead wires')
+ap.add_argument('--signal', default='off', choices=['off', 'clean', 'noise'], help='v3 stills: neon dash preview — clean (blue heart→electrode, purple to the computer) or noise (red on the power line and leads)')
 ap.add_argument('--bake', default='', help='bake lightmaps + export the web scene into this dir')
 ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--bsamples', type=int, default=128)
@@ -338,14 +340,16 @@ print('counts', counts, 'shelved faces', len(books.polygons), 'rolls faces', len
 FIG = None
 import json
 A = os.path.join(ROOT, 'prototype/v2/src/story/intro/assets')
-fig_path = os.path.join(A, 'body_seated.glb')
+fig_path = os.path.join(A, 'body_seated_v3.glb' if args.fig == 'v3' else 'body_seated.glb')
 if os.path.exists(fig_path):
-    fj = json.load(open(os.path.join(A, 'figure.json'), encoding='utf-8'))['seated']
+    fj = json.load(open(os.path.join(A, 'figure.json'), encoding='utf-8'))['seated_v3' if args.fig == 'v3' else 'seated']
     before = set(bpy.data.objects); bpy.ops.import_scene.gltf(filepath=fig_path)
     FIG = [o for o in bpy.data.objects if o not in before and o.type == 'MESH'][0]
     rz, ry = RUNGS[4]                                            # 5th rung, 1.45 m
     seat = Vector(fj['seat'])
     FIG.location = (LAD_X - 0.0 - (seat.x + 0.08), ry - 0.06 - seat.y, rz + 0.015 - seat.z)
+    if args.fig == 'v3':                                         # v3 sits centred between the stiles (its right hand grips the right stile)
+        FIG.location = (LAD_X - seat.x, ry - 0.06 - seat.y, rz + 0.015 - seat.z)
     def ring_material(look):
         """Stills stand-in for the web shader. h3: object Z bands. h3b: bands on the bone-axis coordinate (_SLICE) whose
         density is set per shot (H3c: closer → denser) + a soft rim. h5: frosted glass surface + faint bands."""
@@ -386,6 +390,127 @@ if os.path.exists(fig_path):
     HEART.location = FIG.location + Vector(fj['heart_b'])
     hm2 = mat('heart_glow', srgb('#ff5a64'), .5, emit=6.0); HEART.data.materials.clear(); HEART.data.materials.append(hm2)
     print('figure seat at', tuple(round(v, 3) for v in FIG.location), 'heart', tuple(round(v, 3) for v in HEART.location))
+# ---------------- v3: ECG electrodes, lead wires, trunk to the cart, cable to the computer (D-048) ----------------
+def catmull(pts, n=10):
+    P = [Vector(p) for p in pts]; P = [P[0]] + P + [P[-1]]; out = []
+    for i in range(1, len(P) - 2):
+        p0, p1, p2, p3 = P[i - 1], P[i], P[i + 1], P[i + 2]
+        for k in range(n):
+            t = k / n; t2, t3 = t * t, t * t * t
+            out.append(0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 + (-p0 + 3 * p1 - 3 * p2 + p3) * t3))
+    out.append(P[-2]); return out
+
+def hang(a, b, sag, n=24):
+    a, b = Vector(a), Vector(b)
+    return [a.lerp(b, i / n) - Vector((0, 0, 4 * sag * (i / n) * (1 - i / n))) for i in range(n + 1)]
+
+def tube(name, pts, r, m, sides=8):
+    """Swept tube with UV u = length in metres (dash shaders count metres, not curve parameter)."""
+    pts = [Vector(p) for p in pts]
+    pts = [p for i, p in enumerate(pts) if i == 0 or (p - pts[i - 1]).length > 1e-5]
+    T = [(pts[min(i + 1, len(pts) - 1)] - pts[max(i - 1, 0)]).normalized() for i in range(len(pts))]
+    up = Vector((0, 0, 1)) if abs(T[0].z) < .9 else Vector((1, 0, 0))
+    N = (up - up.dot(T[0]) * T[0]).normalized(); V, F, U = [], [], []
+    acc = 0.0
+    for i, p in enumerate(pts):
+        if i: acc += (p - pts[i - 1]).length
+        N = (N - N.dot(T[i]) * T[i]).normalized(); Bn = T[i].cross(N)
+        for k in range(sides):
+            a = 2 * math.pi * k / sides; V.append(p + r * (math.cos(a) * N + math.sin(a) * Bn))
+        U.append(acc)
+    for i in range(len(pts) - 1):
+        for k in range(sides):
+            F.append((i * sides + k, i * sides + (k + 1) % sides, (i + 1) * sides + (k + 1) % sides, (i + 1) * sides + k))
+    me = bpy.data.meshes.new(name); me.from_pydata(V, [], F); me.update()
+    uv = me.uv_layers.new(name='UVMap')
+    for poly in me.polygons:
+        for li in poly.loop_indices:
+            vi = me.loops[li].vertex_index; uv.data[li].uv = (U[vi // sides], (vi % sides) / sides)
+    for poly in me.polygons: poly.use_smooth = True
+    o = bpy.data.objects.new(name, me); scene.collection.objects.link(o); me.materials.append(m)
+    o['length'] = acc; return o
+
+def dash_mat(name, col, base=None, period=.045, duty=.42, phase=0.0, strength=4.5):
+    """Neon dashes along the wire (stills preview of the web's moving dashed-line shader). base None = light only."""
+    m = bpy.data.materials.new(name); m.use_nodes = True; nt = m.node_tree; nt.nodes.clear()
+    out = nt.nodes.new('ShaderNodeOutputMaterial'); uvn = nt.nodes.new('ShaderNodeUVMap'); uvn.uv_map = 'UVMap'
+    sx = nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(uvn.outputs[0], sx.inputs[0])
+    dv = nt.nodes.new('ShaderNodeMath'); dv.operation = 'MULTIPLY'; dv.inputs[1].default_value = 1 / period; nt.links.new(sx.outputs['X'], dv.inputs[0])
+    ph = nt.nodes.new('ShaderNodeMath'); ph.operation = 'SUBTRACT'; ph.inputs[1].default_value = phase; nt.links.new(dv.outputs[0], ph.inputs[0])
+    fr = nt.nodes.new('ShaderNodeMath'); fr.operation = 'FRACT'; nt.links.new(ph.outputs[0], fr.inputs[0])
+    lt = nt.nodes.new('ShaderNodeMath'); lt.operation = 'LESS_THAN'; lt.inputs[1].default_value = duty; nt.links.new(fr.outputs[0], lt.inputs[0])
+    em = nt.nodes.new('ShaderNodeEmission'); em.inputs['Color'].default_value = (*col, 1); em.inputs['Strength'].default_value = strength
+    if base is None:
+        tr = nt.nodes.new('ShaderNodeBsdfTransparent'); bs = tr
+    else:
+        bs = nt.nodes.new('ShaderNodeBsdfPrincipled'); bs.inputs['Base Color'].default_value = (*base, 1); bs.inputs['Roughness'].default_value = .45
+    mx = nt.nodes.new('ShaderNodeMixShader'); nt.links.new(lt.outputs[0], mx.inputs[0]); nt.links.new(bs.outputs[0], mx.inputs[1]); nt.links.new(em.outputs[0], mx.inputs[2])
+    nt.links.new(mx.outputs[0], out.inputs['Surface']); return m
+
+C_BLUE, C_RED, C_PURPLE = srgb('#3d8bff'), srgb('#ff3048'), srgb('#b24dff')
+M_WIRE = mat('lead_wire', srgb('#2a2c30'), .45)
+if FIG is not None and args.fig == 'v3':
+    FL = Vector(FIG.location); E = {k: (FL + Vector(v['p']), Vector(v['n']).normalized()) for k, v in fj['electrodes'].items()}
+    J = {k: FL + Vector(v) for k, v in fj['joints'].items()}
+    M_FOAM = mat('electrode_foam', srgb('#e9e6df'), .85); M_GEL = mat('electrode_gel', srgb('#9aa3ad'), .5)
+    M_SNAP = mat('electrode_snap', srgb('#c9ccd1'), .25, metal=1.0); M_CLIP = mat('lead_clip', srgb('#33363b'), .5)
+    sig = args.signal
+    lead_col = {'clean': C_BLUE, 'noise': C_RED}.get(sig)
+    M_LEAD = dash_mat('lead_dash', lead_col, base=srgb('#2a2c30')) if lead_col else M_WIRE
+    # yoke (lead-wire junction) resting on the lap, trunk cable from there to the cart
+    knee = (J['shin.L'] + J['shin.R']) / 2; hip = (J['thigh.L'] + J['thigh.R']) / 2
+    YOKE = hip.lerp(knee, .45) + Vector((0, 0, .095))
+    box('LeadYoke', (.06, .035, .018), YOKE, M_CLIP)
+    for k, (p, n) in E.items():
+        rot = n.to_track_quat('Z', 'Y').to_euler()
+        cyl(f'El_{k}_foam', .019, .0016, p + n * .0008, M_FOAM, rot=tuple(rot), verts=24)
+        cyl(f'El_{k}_gel', .011, .0008, p + n * .0020, M_GEL, rot=tuple(rot), verts=20)
+        cyl(f'El_{k}_snap', .0045, .005, p + n * .0045, M_SNAP, rot=tuple(rot), verts=12)
+        to_y = (YOKE - p); tdir = (to_y - to_y.dot(n) * n).normalized()
+        clip = box(f'El_{k}_clip', (.016, .009, .007), p + n * .0085 + tdir * .006, M_CLIP)
+        clip.rotation_euler = Matrix((tdir, n.cross(tdir), n)).transposed().to_euler()
+        a = p + n * .009 + tdir * .015
+        if k.startswith('V'):            # chest leads: off the skin, down in front of the belly to the yoke
+            mid = Vector((p.x * .7 + YOKE.x * .3, min(p.y, YOKE.y) - .07, (p.z + YOKE.z) / 2))
+            pts = catmull([a, a + n * .02 + tdir * .02, mid, YOKE + Vector((0, -.01, .012))], 10)
+        elif k in ('LL', 'RL'):          # ankle leads: up along the shin front
+            mid = Vector((p.x * .6 + YOKE.x * .4, p.y - .05, (p.z + YOKE.z) / 2))
+            pts = catmull([a, a + n * .03, mid, YOKE + Vector((0, -.015, .01))], 10)
+        else:                            # wrist leads: a soft sag to the lap
+            mid = (a + YOKE) / 2 + n * .03 - Vector((0, .02, .05))
+            pts = catmull([a, a + n * .03, mid, YOKE + Vector((0, 0, .012))], 10)
+        tube(f'Lead_{k}', pts, .0013, M_LEAD, sides=6)
+    # trunk: yoke → over the right thigh → hanging catenary to the ECG device on the cart
+    dev_in = Vector((CART.x + .21, CART.y, .88))
+    t0 = YOKE + Vector((-.06, -.08, .0)); t1 = Vector((FL.x - .35, YOKE.y - .25, YOKE.z - .25))
+    trunk = catmull([YOKE, t0, t1], 8) + hang(t1, dev_in + Vector((.25, 0, .05)), .45, 30)[1:] + [dev_in + Vector((.06, 0, 0)), dev_in]
+    tube('TrunkCable', trunk, .0032, dash_mat('trunk_dash', lead_col, base=srgb('#2a2c30'), period=.06) if lead_col else M_WIRE, sides=10)
+    # communication cable: ECG device → floor → computer (purple in both states)
+    pc_in = Vector((DESK.x - .05 + .23, DESK.y + .2, .77 + .08))
+    dev_out = Vector((CART.x - .21, CART.y + .05, .88))
+    comm = catmull([dev_out, dev_out + Vector((-.06, 0, -.08)), Vector((CART.x - .3, CART.y + .1, .02)), Vector(((CART.x + DESK.x) / 2, CART.y + .15, .01)),
+                    Vector((pc_in.x + .1, pc_in.y + .05, .02)), pc_in + Vector((.06, 0, -.15)), pc_in], 10)
+    tube('CommCable', comm, .003, dash_mat('comm_dash', C_PURPLE, base=srgb('#2a2c30'), period=.06) if sig != 'off' else M_WIRE, sides=10)
+    # inside-body signal paths heart → electrode (blue, seen through the frosted H5 body)
+    if sig != 'off':
+        HB = Vector(HEART.location); M_SIG = dash_mat('signal_dash', C_BLUE, base=None, period=.03, duty=.5, strength=3.5)
+        for k, (p, n) in E.items():
+            q = p - n * .012
+            if k.startswith('V'): path = catmull([HB, HB.lerp(q, .5) + Vector((0, -.01, .01)), q], 8)
+            elif k == 'LA': path = catmull([HB, J['upper.L'], J['fore.L'], J['hand.L'].lerp(J['fore.L'], .25), q], 8)
+            elif k == 'RA': path = catmull([HB, J['upper.R'], J['fore.R'], q], 8)
+            elif k == 'LL': path = catmull([HB, J['spine'], J['thigh.L'], J['shin.L'], q], 8)
+            else: path = catmull([HB, J['spine'], J['thigh.R'], J['shin.R'], q], 8)
+            tube(f'Sig_{k}', path, .0016, M_SIG, sides=6)
+    # noise state: the power line from the outlet to the computer carries red dashes; RA (grip arm) site glows red
+    if sig == 'noise':
+        pw = bpy.data.objects.get('PowerCable')
+        if pw is not None:
+            pw.hide_render = True
+            tube('PowerNoise', catmull([tuple(p) for p in cpts], 10), .0062, dash_mat('power_dash', C_RED, base=srgb('#202020'), period=.05), sides=10)
+        ring = tube('RA_noise_ring', [E['RA'][0] + E['RA'][1] * .002 + (Matrix.Rotation(a, 3, E['RA'][1]) @ (E['RA'][1].orthogonal().normalized() * .024)) for a in np.linspace(0, 2 * math.pi, 33)],
+                    .0018, dash_mat('ra_ring', C_RED, base=None, period=.012, duty=.6, strength=6), sides=6)
+
 
 # ---------------- light: sun through the blinds + dim sky + warm lamp bulbs ----------------
 sun = bpy.data.lights.new('sun', 'SUN'); sun.energy = 11.0; sun.angle = math.radians(1.2); sun.color = srgb('#ffd9a8')
@@ -415,6 +540,10 @@ SHOTS = {
 if FIG is not None:
     HR = FIG.location + Vector(fj['hand_r'])
     SHOTS['s6_grip'] = (tuple(HR + Vector((-0.75, -0.95, -0.35))), tuple(HR + Vector((0.05, 0.1, 0.25))), 38)
+    if args.fig == 'v3':   # hand + RA electrode fill the frame (the v2 framing left the hand at the edge)
+        SHOTS['s6_grip'] = (tuple(HR + Vector((-0.42, -0.42, 0.08))), tuple(HR + Vector((0.0, 0.0, 0.07))), 30)
+        CH = FIG.location + Vector(fj['electrodes']['V3']['p'])
+        SHOTS['s7_chest'] = (tuple(CH + Vector((0.35, -1.25, 0.18))), tuple(CH + Vector((-0.04, 0.05, -0.12))), 34)
 if args.save:
     bpy.ops.wm.save_as_mainfile(filepath=args.save)
 if args.preview:
@@ -424,6 +553,16 @@ if args.preview:
     scene.render.resolution_x, scene.render.resolution_y = rx, ry; scene.view_settings.view_transform = 'AgX'; scene.view_settings.exposure = 0.8
     scene.cycles.max_bounces = 4; scene.cycles.volume_bounces = 0
     want = set(args.shots.split(',')) if args.shots else set(SHOTS)
+    if args.signal != 'off':                                      # neon glow for the dash preview (the web uses its bloom pass)
+        scene.use_nodes = True; ct = scene.node_tree; rl = ct.nodes.get('Render Layers') or ct.nodes.new('CompositorNodeRLayers')
+        cmp = ct.nodes.get('Composite') or ct.nodes.new('CompositorNodeComposite'); gl = ct.nodes.new('CompositorNodeGlare')
+        try: gl.glare_type = 'BLOOM'
+        except Exception: gl.glare_type = 'FOG_GLOW'
+        for nm_, v_ in (('threshold', 1.6), ('size', 7), ('mix', -0.55)):
+            if hasattr(gl, nm_): setattr(gl, nm_, v_)
+        for sock, v_ in (('Threshold', 1.6), ('Strength', .6), ('Size', .5)):
+            if sock in gl.inputs: gl.inputs[sock].default_value = v_
+        ct.links.new(rl.outputs['Image'], gl.inputs[0]); ct.links.new(gl.outputs[0], cmp.inputs['Image'])
     for name, (loc, tgt, fov) in SHOTS.items():
         if name not in want: continue
         cd = bpy.data.cameras.new(name); cd.angle = math.radians(fov * 16 / 9) if False else math.radians(fov)
@@ -435,7 +574,9 @@ if args.preview:
         if FIG is not None and args.look != 'h3':
             dist = (Vector(loc) - (FIG.location + Vector((0, 0, 1.0)))).length
             FIG.data.materials[0].node_tree.nodes['density'].outputs[0].default_value = float(np.clip(42 * 4.0 / max(dist, .5), 42, 170))   # H3c
-        scene.camera = c; scene.render.filepath = os.path.join(args.preview, f'{name}_{args.look}.png' if args.look != 'h3' else name + '.png')
+        scene.camera = c; tag = f'_{args.look}' if args.look != 'h3' else ''
+        if args.fig == 'v3': tag += f'_v3_{args.signal}'
+        scene.render.filepath = os.path.join(args.preview, name + tag + '.png')
         bpy.ops.render.render(write_still=True)
         print('rendered', name)
 

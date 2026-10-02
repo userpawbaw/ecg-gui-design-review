@@ -1362,7 +1362,7 @@
     },
     {
       "id": "blender-human-base-meshes",
-      "title": "Blender Studio Human Base Meshes bundle v1.0.0 (GEO-body_male_realistic used)",
+      "title": "Blender Studio Human Base Meshes bundle v1.0.0 (GEO-body_male_realistic v2; GEO-body_male_stylized v3)",
       "kind": "model",
       "status": "active",
       "source": {
@@ -1382,7 +1382,9 @@
       "used_by": [
         "prototype/v2 R1 intro"
       ],
-      "review": "Blender Studio release, CC0 (archive.org licenseurl publicdomain/zero/1.0). Featureless mannequin head by user request 2026-10-01."
+      "review": "Blender Studio release, CC0 (archive.org licenseurl publicdomain/zero/1.0). Featureless mannequin head by user request 2026-10-01.",
+      "processing_v3": "scripts/assets/build-figure-v3.py (bpy): GEO-body_male_stylized, modifiers applied, subsurf 1, egg head, arms relaxed 9°, voxel remesh 3.2 mm, decimate .22, 1.666 m, rig + seated on the archive ladder, right hand wrapped around the stile (geometric wrap), keys breath + grip, _SLICE → prototype/v2/src/story/intro/assets/body_seated_v3.glb (D-048)",
+      "processed_v3": "prototype/v2/src/story/intro/assets/body_seated_v3.glb"
     },
     {
       "id": "hra-heart-male",
@@ -1744,6 +1746,73 @@
         "R1 archive stills (verification/r1-archive-20261001)"
       ],
       "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "quaternius-ubc",
+      "title": "Quaternius Universal Base Characters (Standard, free) — Superhero_Male_FullBody",
+      "kind": "model",
+      "status": "candidate-not-selected",
+      "source": {
+        "type": "url",
+        "url": "https://quaternius.itch.io/universal-base-characters",
+        "page": "https://quaternius.itch.io/universal-base-characters"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/quaternius-ubc/Universal Base Characters[Standard]/Base Characters/Godot - UE/Superhero_Male_FullBody.gltf",
+        "sha256": "e7fcea214ecf8855afbf910b50de6f9c7d1decfb71ca28bad8a4481452dafeb4",
+        "bytes": 30989
+      },
+      "processing": "scripts/assets/figure-lineup.py (comparison render only)",
+      "used_by": [
+        "verification/r1-figure-v3-20261002 lineup (C)"
+      ],
+      "review": "License_Standard.txt in the pack: CC0 1.0. Game T-pose, muscular; not selected (D-048)."
+    },
+    {
+      "id": "oga-mannequiny",
+      "title": "Mannequiny — The Open 3D Mannequin 0.4.0 (GDQuest)",
+      "kind": "model",
+      "status": "candidate-not-selected",
+      "source": {
+        "type": "url",
+        "url": "https://opengameart.org/sites/default/files/glb-mannequiny-0.4.0.zip",
+        "page": "https://opengameart.org/node/184427"
+      },
+      "licence": "CC-BY-4.0",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/oga-mannequiny/glb-mannequiny-0.4.0.zip",
+        "sha256": "a592a9caad6ec2b6f191dbcaf3d1b4807b0aa4806b5d61114bcb75169cab0c0c",
+        "bytes": 452803
+      },
+      "processing": "scripts/assets/figure-lineup.py (comparison render only)",
+      "used_by": [
+        "verification/r1-figure-v3-20261002 lineup (D)"
+      ],
+      "review": "OpenGameArt page licence CC-BY 4.0. Mitten hands without fingers — the fist scene (F-030) is impossible; not selected (D-048)."
+    },
+    {
+      "id": "oga-basemesh-yw",
+      "title": "Base Rigged Stylized Humanoid Character (YW) by Girush",
+      "kind": "model",
+      "status": "rejected",
+      "source": {
+        "type": "url",
+        "url": "https://opengameart.org/sites/default/files/basemesh_a1_human_yw_by_girush_2.7z",
+        "page": "https://opengameart.org/node/190293"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/oga-basemesh-yw/basemesh.7z",
+        "sha256": "89b885ce4acb7663c236d4602b4f6e44e3384e153049f897f9b383ceee16aacb",
+        "bytes": 4577846
+      },
+      "processing": "none",
+      "used_by": [],
+      "review": "Anime-style low-poly base with hair; style mismatch, dropped from the lineup (D-048)."
     }
   ],
   "rejected": [

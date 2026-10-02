@@ -12,8 +12,14 @@ export const FEET_Y=-.633;   // body stands centred on the camera axis height (0
 const rimVert=/* glsl */`
 uniform float uA,uV,uMinY,uMaxY;uniform float uDeform;
 varying vec3 vN,vW;varying float vH;
+#ifdef USE_SLICE
+attribute float aSlice;varying float vS;
+#endif
 void main(){
  vec3 p=position;
+ #ifdef USE_SLICE
+ vS=aSlice;
+ #endif
  float h=clamp((p.y-uMinY)/(uMaxY-uMinY),0.,1.);vH=h;
  if(uDeform>0.){
   // H3 two-stage squeeze: atria (upper) lightly before R, ventricles (lower) strongly from R. Decorative timing.
@@ -46,18 +52,31 @@ void main(){
 // H3 (IDEA-R1-INTRO §7.6, D-045): cross-section contour body — horizontal light rings at constant world height,
 // brighter towards the silhouette, back faces dimmer (volume), revealed top-down by a scan line. No skin, no face.
 const contourFrag=/* glsl */`
-uniform vec3 uColor,uWarm;uniform float uOpacity,uFlash,uFeet,uDensity,uScan,uScanOn,uMirror;
+uniform vec3 uColor,uWarm,uSunCol;uniform float uOpacity,uFlash,uFeet,uDensity,uScan,uScanOn,uMirror,uRefDist,uSunOn;
 uniform vec3 uHeart;uniform float uWaveT,uWaveAmp;
+uniform sampler2D tLight;uniform mat4 uLightVP;
 varying vec3 vN,vW;varying float vH;
+#ifdef USE_SLICE
+varying float vS;
+#endif
+float ringAt(float c,float dens){float d=c*dens,fw=max(fwidth(d),1e-4);float e=min(fract(d),1.-fract(d));return 1.-smoothstep(.5*fw,1.6*fw,e);}
 void main(){
  vec3 n=normalize(vN),v=normalize(cameraPosition-vW);
  float fres=1.-abs(dot(n,v));
  // P2 floor reflection: the mirrored copy samples the pattern at the reflected point and fades with depth
  vec3 P=uMirror>.5?vec3(vW.x,2.*uFeet-vW.y,vW.z):vW;
  float mf=uMirror>.5?.22*exp(-(uFeet-vW.y)/.32):1.;
- float y=P.y-uFeet,d=y*uDensity,fw=max(fwidth(d),1e-4);
- float dist=min(fract(d),1.-fract(d));
- float ring=1.-smoothstep(.5*fw,1.6*fw,dist);
+ float y=P.y-uFeet;
+ // H3b: rings follow each limb's axis (bone coordinate from the rig); H3: world height
+ #ifdef USE_SLICE
+ float rc=vS;
+ #else
+ float rc=y;
+ #endif
+ // H3c: density doubles per halving of camera distance below uRefDist, cross-faded so new rings grow in between
+ float lv=uRefDist>0.?log2(max(1.,uRefDist/max(length(cameraPosition-vW),.05))):0.;
+ float lk=floor(lv),lf=fract(lv),d1=uDensity*exp2(lk);
+ float ring=mix(ringAt(rc,d1),max(ringAt(rc,d1),ringAt(rc,2.*d1)*smoothstep(0.,1.,lf)),step(.001,lf));
  ring*=.2+.7*fres*fres;
  float face=gl_FrontFacing?1.:.3;
  float rim=pow(fres,4.)*.1;                              // faint silhouette so gaps between rings still read as a body
@@ -69,14 +88,20 @@ void main(){
  // heart light: rings around the heart take its colour and brighten on each R (heart reads at full-body distance)
  float hl=exp(-dh*dh/.03);
  col=mix(col,vec3(1.,.36,.42),min(1.,hl*1.2));
- float a=(((ring*face*(1.+hl*(.8+2.2*uFlash))+rim)*(1.+uFlash*.4)+band*(.5+ring*2.))*reveal*uOpacity+scanLine*uOpacity)*mf;
+ // archive sun: rings inside a sunbeam (sun depth map of the room) glow warm, rings in shade stay cool and faint
+ float lit=0.;
+ if(uSunOn>.5){vec4 lp=uLightVP*vec4(vW,1.);vec3 l=lp.xyz/lp.w*.5+.5;
+  lit=(l.x>0.&&l.x<1.&&l.y>0.&&l.y<1.)?step(l.z-.003,texture2D(tLight,l.xy).x):0.;}
+ col=mix(col,uSunCol,lit*.7);
+ float a=(((ring*face*(1.+hl*(.8+2.2*uFlash))*(1.+1.6*lit)+rim)*(1.+uFlash*.4)+band*(.5+ring*2.))*reveal*uOpacity+scanLine*uOpacity)*mf;
  gl_FragColor=vec4(col*a,a);
  #include <tonemapping_fragment>
  #include <colorspace_fragment>
 }`;
-function contourMaterial(){
+function contourMaterial(slice=false){
  return new THREE.ShaderMaterial({vertexShader:rimVert,fragmentShader:contourFrag,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
-  uniforms:{uColor:{value:new THREE.Color('#b9d6ff')},uWarm:{value:new THREE.Color('#ffc58f')},uOpacity:{value:0},uFlash:{value:0},uFeet:{value:FEET_Y},
+  defines:slice?{USE_SLICE:''}:{},
+  uniforms:{uRefDist:{value:0},uSunOn:{value:0},uSunCol:{value:new THREE.Color('#ffd09a')},tLight:{value:null},uLightVP:{value:new THREE.Matrix4()},uColor:{value:new THREE.Color('#b9d6ff')},uWarm:{value:new THREE.Color('#ffc58f')},uOpacity:{value:0},uFlash:{value:0},uFeet:{value:FEET_Y},
    uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uMirror:{value:0},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},
    uA:{value:0},uV:{value:0},uMinY:{value:-1},uMaxY:{value:1},uDeform:{value:0}}});
 }
@@ -89,7 +114,8 @@ function rimMaterial(color:string,pow:number,fill:number,deform:boolean){
 
 export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometry,data:FigureData,look:'v1'|'v2'='v2'){
  const group=new THREE.Group();group.position.set(0,FEET_Y,0);
- const bodyMat=look==='v2'?contourMaterial():rimMaterial('#9fb4d8',2.8,0,false);
+ const slice=body.getAttribute('_slice');if(slice)body.setAttribute('aSlice',slice);   // seated body: bone-axis coordinate (H3b)
+ const bodyMat=look==='v2'?contourMaterial(!!slice):rimMaterial('#9fb4d8',2.8,0,false);
  const bodyMesh=new THREE.Mesh(body,bodyMat);group.add(bodyMesh);
  heart.computeBoundingBox();const bb=heart.boundingBox!;
  const heartMat=rimMaterial('#ff7482',2.4,look==='v2'?.09:.018,true);

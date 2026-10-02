@@ -144,7 +144,7 @@ def export(o, path, morphs=False):
     bpy.context.view_layer.objects.active = o
     bpy.ops.export_scene.gltf(filepath=path, use_selection=True, export_format='GLB', export_normals=True,
                               export_texcoords=False, export_materials='NONE', export_yup=True,
-                              export_apply=not morphs, export_morph=morphs, export_morph_normal=False)
+                              export_apply=not morphs, export_morph=morphs, export_morph_normal=False, export_attributes=True)
 
 
 def close_holes(o, step=.001, radius=6):
@@ -332,6 +332,25 @@ def build_seated(o, heart_b, preview_dir=None):
     bpy.ops.object.mode_set(mode='OBJECT')
     bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); ar.select_set(True); bpy.context.view_layer.objects.active = ar
     bpy.ops.object.parent_set(type='ARMATURE_AUTO')
+    # H3b (IDEA-R1-INTRO §11): per-vertex coordinate along the bone axes, blended by the skin weights. Each bone's
+    # coordinate continues from its parent (the child head projected on the parent axis), so rings flow across joints
+    # and the torso keeps world height. After posing, rings wrap each limb and finger instead of slicing by height.
+    Vr = verts(o); names = list(B)
+    hd = {n: np.array(B[n][0], float) for n in names}; tl = {n: np.array(B[n][1], float) for n in names}
+    dr = {n: (tl[n] - hd[n]) / np.linalg.norm(tl[n] - hd[n]) for n in names}
+    off = {}
+    for n in names:
+        par = B[n][2]
+        off[n] = .80 if par is None else off[par] + float((hd[n] - hd[par]) @ dr[par])
+    if 'pelvis' in names: dr['pelvis'] = np.array([0, 0, 1.])
+    gi = {g.index: g.name for g in o.vertex_groups}
+    acc = np.zeros(len(Vr)); wsum = np.zeros(len(Vr))
+    for i, v in enumerate(o.data.vertices):
+        for g in v.groups:
+            n = gi.get(g.group)
+            if n in hd and g.weight > 0:
+                acc[i] += g.weight * (off[n] + float((Vr[i] - hd[n]) @ dr[n])); wsum[i] += g.weight
+    SLICE = np.where(wsum > 0, acc / np.maximum(wsum, 1e-6), Vr[:, 2])
     bpy.context.view_layer.objects.active = ar; bpy.ops.object.mode_set(mode='POSE')
     order = list(B)
     for name in order:
@@ -376,6 +395,8 @@ def build_seated(o, heart_b, preview_dir=None):
     bpy.ops.object.shade_smooth()
     so.shape_key_add(name='Basis'); sk = so.shape_key_add(name='breath'); sk.data.foreach_set('co', P1.astype(np.float32).ravel())
     sg = so.shape_key_add(name='grip'); sg.data.foreach_set('co', PG.astype(np.float32).ravel())
+    at = so.data.attributes.new('_SLICE', 'FLOAT', 'POINT'); at.data.foreach_set('value', SLICE.astype(np.float32))
+    np.save(os.path.join(SRC, 'body_seated_slice.npy'), SLICE.astype(np.float32))   # Blender stills reuse it
     # seat: lowest point under the pelvis; the archive places this on the rung
     pel = (np.abs(P0[:, 0]) < .14) & (P0[:, 1] > -.12) & (P0[:, 1] < .12)
     seat = P0[pel][np.argmin(P0[pel][:, 2])]

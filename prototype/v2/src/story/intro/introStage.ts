@@ -13,6 +13,7 @@ import Lenis from 'lenis';
 import {createGlobe} from './globe';
 import {createFigure,type FigureData} from './figure';
 import {createSpace,createShafts,createGrade} from './space';
+import {createArchive} from './archive';
 import {createSweep,type SweepView} from './sweep';
 import {beatPhase,type Loop} from './beats';
 import {createGrid,createBeatMix,mvPerBoxFor,scrambled} from './waveUi';
@@ -21,7 +22,7 @@ export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Arra
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
  title:HTMLElement,noiseChars:HTMLElement[],sub:HTMLElement,hint:HTMLElement,labels:HTMLElement,labelIn:HTMLElement,labelOut:HTMLElement,outMono:HTMLElement,steps:HTMLElement[],
  scale:HTMLElement,grid:HTMLCanvasElement,ann:HTMLElement,sweepWrap:HTMLElement,end:HTMLElement,parallax:HTMLElement[]};
-export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'};
+export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'|'archive'};
 
 const clamp=(x:number,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const seg=(p:number,a:number,b:number)=>clamp((p-a)/(b-a));
@@ -41,7 +42,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const urls={body:new URL('./assets/body.glb',import.meta.url).href,heart:new URL('./assets/heart.glb',import.meta.url).href,
   fig:new URL('./assets/figure.json',import.meta.url).href,day:new URL('./assets/earth_day.jpg',import.meta.url).href,
   night:new URL('./assets/earth_night.jpg',import.meta.url).href,clouds:new URL('./assets/earth_clouds.jpg',import.meta.url).href,
-  floor:new URL('./assets/floor_light.png',import.meta.url).href};
+  floor:new URL('./assets/floor_light.png',import.meta.url).href,seated:new URL('./assets/body_seated.glb',import.meta.url).href};
  // --- renderer (REF-001: ACES, exposure 1.16, pixel ratio capped) ---
  const renderer=new THREE.WebGLRenderer({canvas:dom.gl,antialias:true,powerPreference:'high-performance'});
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x000000,1);
@@ -51,13 +52,27 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const geom=async(u:string)=>{const g=await gl.loadAsync(u);let out:THREE.BufferGeometry|null=null;g.scene.traverse(o=>{if((o as THREE.Mesh).isMesh&&!out)out=(o as THREE.Mesh).geometry;});if(!out)throw Error('no mesh in '+u);return out as THREE.BufferGeometry;};
  const [day,night,clouds,bodyGeo,heartGeo,fig,floorLm]=await Promise.all([tex(urls.day),tex(urls.night),tex(urls.clouds,false),geom(urls.body),geom(urls.heart),fetch(urls.fig).then(r=>r.json() as Promise<FigureData>),tex(urls.floor,false)]);
  const globe=createGlobe({day,night,clouds});scene.add(globe.group);
- const style=opt.look??'v2';
- const figure=createFigure(bodyGeo,heartGeo,fig,style);scene.add(figure.group,figure.line);
+ const style=opt.look??'v2';   // archive is opt-in (?look=archive) until it passes verification
+ // D-046: the ECG record archive (baked room + shafts + dust), figure seated on the ladder with bone-aligned rings (H3b/H3c)
+ const arch=style==='archive'?await createArchive(new URL('intro-archive/',document.baseURI).href):null;
+ const figure=createFigure(arch?await geom(urls.seated):bodyGeo,heartGeo,fig,style==='v1'?'v1':'v2');scene.add(figure.group,figure.line);
+ if(arch){
+  scene.add(arch.room,arch.dust);
+  figure.group.position.copy(arch.figureLocation);
+  figure.heartMesh.position.copy(arch.heart).sub(arch.figureLocation);figure.heartMesh.quaternion.copy(arch.heartQuat);
+  figure.heartWorld.copy(arch.heart);
+  const bu=figure.bodyMat.uniforms;bu.uHeart.value.copy(arch.heart);bu.uFeet.value=arch.figureLocation.y;
+  bu.uRefDist.value=2.6;bu.uSunOn.value=1;bu.tLight.value=arch.lightRT.depthTexture;bu.uLightVP.value=arch.lightVP;
+  figure.line.visible=false;
+ }
  const space=style==='v2'?createSpace(floorLm):null;if(space)scene.add(space.group);
  const reflection=style==='v2'?figure.mirror():null;if(reflection)scene.add(reflection.group);
  // --- post: bloom only on bright parts (threshold), never on the Canvas 2D data layer ---
  // P2: light shafts (scene-linear, before bloom) and grade/vignette/grain (after the output transform)
- const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
+ // archive: the composer's buffers carry depth so the shaft pass can ray-march to the scene surface
+ const composer=arch?new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)})):new EffectComposer(renderer);
+ composer.addPass(new RenderPass(scene,camera));
+ if(arch)composer.addPass(arch.vol);
  const shafts=space?createShafts(renderer,camera,[figure.group.children[0],figure.heartMesh]):null;if(shafts)composer.addPass(shafts.pass);
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.55,.35,.78);composer.addPass(bloom);composer.addPass(new OutputPass());
  const grade=createGrade();composer.addPass(grade);
@@ -81,7 +96,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  function resize(){
   W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio||1,1.25);
   renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);bloom.resolution.set(W*pr/2,H*pr/2);
-  shafts?.setSize(W*pr,H*pr);space?.setPx(H,pr);grade.uniforms.uAspect.value=W/H;
+  shafts?.setSize(W*pr,H*pr);space?.setPx(H,pr);arch?.setPx(H,pr);grade.uniforms.uAspect.value=W/H;
   camera.aspect=W/H;camera.updateProjectionMatrix();figure.setResolution(W*pr,H*pr);
   const b=box(),mv=mvPerBoxFor(b,2.5);sweep.resize(b,mv);grid.resize(b,2.5,mv);
   Object.assign(dom.labels.style,{left:b.l+'px',top:(H*.075)+'px'});
@@ -122,6 +137,33 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   }
   camera.lookAt(look);
  }
+ // archive camera: under the roof → below the beams → down the aisle → the figure on the ladder → into the chest
+ // (SPACE-R1-ARCHIVE §3). Catmull–Rom through the Blender shot list, constant speed per segment.
+ let archCam:((p:number)=>void)|null=null;
+ if(arch){
+  const K=['s1_top','s2_beams','s3_aisle','s4_person'].map(k=>arch.shot(k));
+  const yaw=.6,dEnd=.62,rightE=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
+  const endPos=arch.heart.clone().add(new THREE.Vector3(Math.sin(yaw)*dEnd,.05,Math.cos(yaw)*dEnd));
+  const posC=new THREE.CatmullRomCurve3([...K.map(k=>k.pos),endPos],false,'centripetal');
+  const lookPts=[...K.map(k=>k.look),arch.heart.clone()];
+  const lookC=new THREE.CatmullRomCurve3(lookPts,false,'centripetal');
+  const fovs=[...K.map(k=>k.fov),25],knots=[.25,.33,.45,.55,.72];
+  const lk=new THREE.Vector3();
+  archCam=(pp:number)=>{
+   if(pp<knots[0]){camera.position.copy(A_POS);lk.copy(A_LOOK);if(camera.fov!==25){camera.fov=25;camera.updateProjectionMatrix();}}
+   else{
+    let i=0;while(i<knots.length-2&&pp>knots[i+1])i++;
+    const f=clamp((pp-knots[i])/(knots[i+1]-knots[i])),u=(i+(i===knots.length-2?out2(f):f))/(knots.length-1);
+    camera.position.copy(posC.getPoint(u));lk.copy(lookC.getPoint(u));
+    // last segment: slide the look target right so the heart lands on the left third (wave stage on the right)
+    if(i===knots.length-2){const off=.42*dEnd*Math.tan(THREE.MathUtils.degToRad(12.5))*camera.aspect;lk.addScaledVector(rightE,off*out2(f));}
+    const fv=fovs[i]+(fovs[i+1]-fovs[i])*f;if(Math.abs(camera.fov-fv)>1e-3){camera.fov=fv;camera.updateProjectionMatrix();}
+   }
+   if(!opt.reduced){const rel=camera.position.clone().sub(lk);rel.applyAxisAngle(up,-pointer.sx*.03);
+    const side=new THREE.Vector3().crossVectors(up,rel).normalize();rel.applyAxisAngle(side,pointer.sy*.018);camera.position.copy(lk).add(rel);}
+   camera.lookAt(lk);
+  };
+ }
  const proj=new THREE.Vector3();
  const toScreen=(v:THREE.Vector3)=>{proj.copy(v).project(camera);return{x:(proj.x+1)/2*W,y:(1-proj.y)/2*H};};
 
@@ -134,7 +176,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  }
 
  const state={p:0,t:0,frame:0,headAbs:0,heart:{V:0,flash:0},wave:wave as Wave,get mix(){return mix.value;},get label(){return labelState.current;}};
- let raf=0,disposed=false,shaftA=0;
+ let raf=0,disposed=false,shaftA=0,archShaft=0;
  function frame(dt:number,draw=true){
   const t=clock();
   if(opt.frozenP===null)p+=(pRaw-p)*damp(dt,.33);else p=opt.frozenP;
@@ -152,13 +194,18 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   globe.uniforms.uCloudShift.value=t*.0006;
 
   // rim line → body outline morph (M2)
-  const rimA=seg(p,...MAP.rim)*(1-(style==='v2'?seg(p,.39,.46):seg(p,...MAP.lineOut)));   // v2: the outline hands over to the scan
+  const rimA=arch?0:seg(p,...MAP.rim)*(1-(style==='v2'?seg(p,.39,.46):seg(p,...MAP.lineOut)));   // v2: the outline hands over to the scan; archive: no morph line
   const circR=gScale*1.04*1.035;
   figure.setMorph(seg(p,...MAP.morph),{cx:0,cy:-1.32,r:circR},rimA);
   // body + heart
   const cam=seg(p,...MAP.cam);
   let bodyA:number;
-  if(style==='v2'){
+  if(arch){
+   // archive: scan once the figure is in view down the aisle; rings fade as the camera enters the chest
+   const sk=seg(p,.45,.54),bu=figure.bodyMat.uniforms,c2=seg(p,.55,.72);
+   bu.uScan.value=(1-inOut(sk))*(fig.height+.04)-.02;bu.uScanOn.value=sk>0&&sk<1?1:Math.max(0,1-(sk-1)*20);
+   bodyA=(sk>0?1:0)*(1-.85*THREE.MathUtils.smoothstep(c2,.15,.75))*(1-THREE.MathUtils.smoothstep(c2,.7,.95));
+  }else if(style==='v2'){
    // H3: the scan line runs head → feet over the body segment; rings stay, thinning out as the camera dives in
    const sk=seg(p,...MAP.body),bu=figure.bodyMat.uniforms;
    bu.uScan.value=(1-inOut(sk))*(fig.height+.04)-.02;bu.uScanOn.value=sk>0&&sk<1?1:Math.max(0,1-(sk-1)*20);
@@ -170,10 +217,14 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   if(reflection)reflection.group.visible=spaceA>.002;
   shaftA=spaceA*(1-THREE.MathUtils.smoothstep(cam,.15,.6));
   grade.uniforms.uSpace.value=spaceA;grade.uniforms.uTime.value=opt.frozenT!==null?0:(state.frame%97)*.13;
-  const heartA=seg(p,...MAP.heart);figure.heartMat.uniforms.uOpacity.value=heartA*1.6;figure.heartMesh.visible=heartA>.002;
+  const heartA=arch?seg(p,.48,.56):seg(p,...MAP.heart);figure.heartMat.uniforms.uOpacity.value=heartA*1.6;figure.heartMesh.visible=heartA>.002;
   figure.beat(ph,heartA>0?1:0);
   state.heart.V=figure.heartMat.uniforms.uV.value;state.heart.flash=figure.heartMat.uniforms.uFlash.value;
-  cameraAt(cam);
+  if(arch){
+   const aF=seg(p,.25,.31)*(1-.88*seg(p,.64,.73));arch.setFade(aF);archShaft=aF*(1-seg(p,.6,.7));
+   grade.uniforms.uSpace.value=aF;globe.group.visible=globe.group.visible&&p<.3;
+   archCam!(p);
+  }else cameraAt(cam);
 
   // W4: arm at the gate, fire a pulse on the next R, land it on the sweep head at the following R
   const waveA=seg(p,...MAP.waveFade);
@@ -229,7 +280,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const endA=seg(p,...MAP.end);dom.end.style.opacity=String(endA);dom.end.style.pointerEvents=endA>.5?'auto':'none';
   if(!opt.reduced)dom.parallax.forEach((el,i)=>{const d=i===0?6:3;el.style.translate=`${(-pointer.sx*d).toFixed(2)}px ${(-pointer.sy*d*.6).toFixed(2)}px`;});
 
-  if(draw){shafts?.render(shaftA);composer.render(dt);}   // occlusion buffer after the camera update
+  if(draw){shafts?.render(shaftA);arch?.update(t,state.frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,archShaft);composer.render(dt);}   // occlusion buffer after the camera update
  }
  let paused=false;
  const tick=(_time:number,deltaMs:number)=>{if(disposed||paused)return;lenis?.raf(performance.now());frame(Math.min(.1,deltaMs/1000||1/60));};
@@ -244,7 +295,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;mix.reset();},
   dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
-   globe.dispose();figure.dispose();space?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
+   globe.dispose();figure.dispose();space?.dispose();arch?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
  };
 }
 export type Intro=Awaited<ReturnType<typeof createIntro>>;

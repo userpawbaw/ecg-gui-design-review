@@ -21,6 +21,7 @@ ap.add_argument('--shots', default='')
 ap.add_argument('--res', default='1280x720')
 ap.add_argument('--seed', type=int, default=11)
 ap.add_argument('--save', default='')
+ap.add_argument('--look', default='h3', choices=['h3', 'h3b', 'h5'], help='figure look in stills: h3 world-height rings, h3b bone-aligned + distance-adaptive rings, h5 frosted glass + faint rings')
 ap.add_argument('--bake', default='', help='bake lightmaps + export the web scene into this dir')
 ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--bsamples', type=int, default=128)
@@ -345,18 +346,39 @@ if os.path.exists(fig_path):
     rz, ry = RUNGS[4]                                            # 5th rung, 1.45 m
     seat = Vector(fj['seat'])
     FIG.location = (LAD_X - 0.0 - (seat.x + 0.08), ry - 0.06 - seat.y, rz + 0.015 - seat.z)
-    rm = bpy.data.materials.new('rings'); rm.use_nodes = True; nt = rm.node_tree; nt.nodes.clear()
-    out = nt.nodes.new('ShaderNodeOutputMaterial'); mix = nt.nodes.new('ShaderNodeMixShader')
-    tr = nt.nodes.new('ShaderNodeBsdfTransparent'); em = nt.nodes.new('ShaderNodeEmission')
-    em.inputs['Color'].default_value = (1.0, .9, .78, 1); em.inputs['Strength'].default_value = 4.0
-    tc = nt.nodes.new('ShaderNodeTexCoord'); sep = nt.nodes.new('ShaderNodeSeparateXYZ')
-    mth = nt.nodes.new('ShaderNodeMath'); mth.operation = 'MULTIPLY'; mth.inputs[1].default_value = 42
-    fr = nt.nodes.new('ShaderNodeMath'); fr.operation = 'PINGPONG'; fr.inputs[1].default_value = .5
-    lt = nt.nodes.new('ShaderNodeMath'); lt.operation = 'LESS_THAN'; lt.inputs[1].default_value = .07
-    nt.links.new(tc.outputs['Object'], sep.inputs[0]); nt.links.new(sep.outputs['Z'], mth.inputs[0])
-    nt.links.new(mth.outputs[0], fr.inputs[0]); nt.links.new(fr.outputs[0], lt.inputs[0])
-    nt.links.new(lt.outputs[0], mix.inputs[0]); nt.links.new(tr.outputs[0], mix.inputs[1]); nt.links.new(em.outputs[0], mix.inputs[2])
-    nt.links.new(mix.outputs[0], out.inputs['Surface'])
+    def ring_material(look):
+        """Stills stand-in for the web shader. h3: object Z bands. h3b: bands on the bone-axis coordinate (_SLICE) whose
+        density is set per shot (H3c: closer → denser) + a soft rim. h5: frosted glass surface + faint bands."""
+        rm = bpy.data.materials.new('rings_' + look); rm.use_nodes = True; nt = rm.node_tree; nt.nodes.clear()
+        out = nt.nodes.new('ShaderNodeOutputMaterial')
+        if look == 'h3':
+            src = nt.nodes.new('ShaderNodeSeparateXYZ'); tc = nt.nodes.new('ShaderNodeTexCoord'); nt.links.new(tc.outputs['Object'], src.inputs[0]); coord = src.outputs['Z']
+        else:
+            at = nt.nodes.new('ShaderNodeAttribute'); at.attribute_name = '_SLICE'; coord = at.outputs['Fac']
+        dens = nt.nodes.new('ShaderNodeValue'); dens.name = 'density'; dens.outputs[0].default_value = 42
+        mth = nt.nodes.new('ShaderNodeMath'); mth.operation = 'MULTIPLY'; nt.links.new(coord, mth.inputs[0]); nt.links.new(dens.outputs[0], mth.inputs[1])
+        pp = nt.nodes.new('ShaderNodeMath'); pp.operation = 'PINGPONG'; pp.inputs[1].default_value = .5; nt.links.new(mth.outputs[0], pp.inputs[0])
+        band = nt.nodes.new('ShaderNodeMath'); band.operation = 'LESS_THAN'; band.inputs[1].default_value = .07; nt.links.new(pp.outputs[0], band.inputs[0])
+        em = nt.nodes.new('ShaderNodeEmission'); em.inputs['Color'].default_value = (1.0, .9, .78, 1)
+        lw = nt.nodes.new('ShaderNodeLayerWeight'); lw.inputs['Blend'].default_value = .25
+        if look == 'h5':
+            k = nt.nodes.new('ShaderNodeMath'); k.operation = 'MULTIPLY'; k.inputs[1].default_value = 1.2; nt.links.new(band.outputs[0], k.inputs[0]); nt.links.new(k.outputs[0], em.inputs['Strength'])
+            gl = nt.nodes.new('ShaderNodeBsdfPrincipled'); gl.inputs['Base Color'].default_value = (.92, .94, .97, 1)
+            gl.inputs['Transmission Weight'].default_value = 1; gl.inputs['Roughness'].default_value = .42; gl.inputs['IOR'].default_value = 1.25
+            add = nt.nodes.new('ShaderNodeAddShader'); nt.links.new(gl.outputs[0], add.inputs[0]); nt.links.new(em.outputs[0], add.inputs[1]); nt.links.new(add.outputs[0], out.inputs['Surface'])
+        else:
+            rim = nt.nodes.new('ShaderNodeMath'); rim.operation = 'MULTIPLY'; rim.inputs[1].default_value = .9 if look == 'h3b' else 0
+            nt.links.new(lw.outputs['Facing'], rim.inputs[0])
+            bs = nt.nodes.new('ShaderNodeMath'); bs.operation = 'MULTIPLY'; bs.inputs[1].default_value = 4.0; nt.links.new(band.outputs[0], bs.inputs[0])
+            st = nt.nodes.new('ShaderNodeMath'); st.operation = 'ADD'; nt.links.new(bs.outputs[0], st.inputs[0]); nt.links.new(rim.outputs[0], st.inputs[1])
+            nt.links.new(st.outputs[0], em.inputs['Strength'])
+            vis = nt.nodes.new('ShaderNodeMath'); vis.operation = 'MAXIMUM'; nt.links.new(band.outputs[0], vis.inputs[0])
+            rv = nt.nodes.new('ShaderNodeMath'); rv.operation = 'MULTIPLY'; rv.inputs[1].default_value = .35 if look == 'h3b' else 0
+            nt.links.new(lw.outputs['Facing'], rv.inputs[0]); nt.links.new(rv.outputs[0], vis.inputs[1])
+            mix = nt.nodes.new('ShaderNodeMixShader'); tr = nt.nodes.new('ShaderNodeBsdfTransparent')
+            nt.links.new(vis.outputs[0], mix.inputs[0]); nt.links.new(tr.outputs[0], mix.inputs[1]); nt.links.new(em.outputs[0], mix.inputs[2]); nt.links.new(mix.outputs[0], out.inputs['Surface'])
+        return rm
+    rm = ring_material(args.look)
     FIG.data.materials.clear(); FIG.data.materials.append(rm)
     before = set(bpy.data.objects); bpy.ops.import_scene.gltf(filepath=os.path.join(A, 'heart.glb'))
     HEART = [o for o in bpy.data.objects if o not in before and o.type == 'MESH'][0]
@@ -371,7 +393,7 @@ so = bpy.data.objects.new('sun', sun); scene.collection.objects.link(so)
 SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()   # across the gaps between stacks and over the nook onto the ladder and figure
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
-w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 0.7   # cool sky fill vs warm sun
+w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4   # cool sky fill vs warm sun
 for y in (-1.8, 1.3):
     L = bpy.data.lights.new('bulb', 'POINT'); L.energy = 60; L.color = srgb('#ffb36b'); L.shadow_soft_size = 0.05
     lo_ = bpy.data.objects.new('bulb', L); lo_.location = (0, y, H - 1.45); scene.collection.objects.link(lo_)
@@ -408,7 +430,12 @@ if args.preview:
         cd.sensor_fit = 'VERTICAL'; cd.angle = math.radians(fov)
         c = bpy.data.objects.new(name, cd); c.location = loc; scene.collection.objects.link(c)
         c.rotation_euler = (Vector(tgt) - Vector(loc)).to_track_quat('-Z', 'Y').to_euler()
-        scene.camera = c; scene.render.filepath = os.path.join(args.preview, name + '.png')
+        if FIG is not None and FIG.data.shape_keys and 'grip' in FIG.data.shape_keys.key_blocks:
+            FIG.data.shape_keys.key_blocks['grip'].value = 1.0 if name == 's6_grip' else 0.0     # the grip shot shows the clenched hand
+        if FIG is not None and args.look != 'h3':
+            dist = (Vector(loc) - (FIG.location + Vector((0, 0, 1.0)))).length
+            FIG.data.materials[0].node_tree.nodes['density'].outputs[0].default_value = float(np.clip(42 * 4.0 / max(dist, .5), 42, 170))   # H3c
+        scene.camera = c; scene.render.filepath = os.path.join(args.preview, f'{name}_{args.look}.png' if args.look != 'h3' else name + '.png')
         bpy.ops.render.render(write_still=True)
         print('rendered', name)
 
@@ -458,8 +485,8 @@ if args.bake:
     groups = {}
     for g, objs in buckets.items():
         if not objs: continue
-        if g == 'decor':
-            o = join('Archive_decor', objs, lm=False)
+        if g in ('decor', 'books'):          # small/dense meshes: per-corner light (books are tiny boxes — a shared lightmap leaves ~2 texels per face)
+            o = join('Archive_' + g, objs, lm=False)
             for a in list(o.data.color_attributes): o.data.color_attributes.remove(a)
             ca = o.data.color_attributes.new('Light', 'FLOAT_COLOR', 'CORNER'); o.data.color_attributes.active_color = ca
         else:
@@ -474,7 +501,7 @@ if args.bake:
     for g, o in groups.items():
         t0 = time.time()
         bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); bpy.context.view_layer.objects.active = o
-        if g == 'decor':
+        if g in ('decor', 'books'):
             bake.target = 'VERTEX_COLORS'; bpy.ops.object.bake(type='DIFFUSE', pass_filter={'DIRECT', 'INDIRECT'}); bake.target = 'IMAGE_TEXTURES'
             ca = o.data.color_attributes['Light']; n = len(ca.data); v = np.empty(n * 4, np.float32); ca.data.foreach_get('color', v); v = v.reshape(-1, 4)
             v[:, :3] = np.sqrt(np.clip(v[:, :3] / LM_SCALE, 0, 1)); v[:, 3] = 1; ca.data.foreach_set('color', v.ravel())

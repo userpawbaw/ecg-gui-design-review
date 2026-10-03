@@ -14,6 +14,7 @@ import {createGlobe} from './globe';
 import {createFigure,type FigureData} from './figure';
 import {createSpace,createShafts,createGrade} from './space';
 import {createArchive} from './archive';
+import {createSignalRig,SIGNAL_CLEAN,SIGNAL_NOISE,SIGNAL_OFF,type SignalState} from './signalRig';
 import {createSweep,type SweepView} from './sweep';
 import {beatPhase,type Loop} from './beats';
 import {createGrid,createBeatMix,mvPerBoxFor,scrambled} from './waveUi';
@@ -22,7 +23,7 @@ export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Arra
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
  title:HTMLElement,noiseChars:HTMLElement[],sub:HTMLElement,hint:HTMLElement,labels:HTMLElement,labelIn:HTMLElement,labelOut:HTMLElement,outMono:HTMLElement,steps:HTMLElement[],
  scale:HTMLElement,grid:HTMLCanvasElement,ann:HTMLElement,sweepWrap:HTMLElement,end:HTMLElement,parallax:HTMLElement[]};
-export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'|'archive',shot?:string|null};
+export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'|'archive',shot?:string|null,signal?:SignalState|null,grip?:number};
 
 const clamp=(x:number,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const seg=(p:number,a:number,b:number)=>clamp((p-a)/(b-a));
@@ -42,20 +43,25 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const urls={body:new URL('./assets/body.glb',import.meta.url).href,heart:new URL('./assets/heart.glb',import.meta.url).href,
   fig:new URL('./assets/figure.json',import.meta.url).href,day:new URL('./assets/earth_day.jpg',import.meta.url).href,
   night:new URL('./assets/earth_night.jpg',import.meta.url).href,clouds:new URL('./assets/earth_clouds.jpg',import.meta.url).href,
-  floor:new URL('./assets/floor_light.png',import.meta.url).href,seated:new URL('./assets/body_seated.glb',import.meta.url).href};
+  floor:new URL('./assets/floor_light.png',import.meta.url).href,seatedV3:new URL('./assets/body_seated_v3.glb',import.meta.url).href,
+  rig:new URL('./assets/rig_v3.glb',import.meta.url).href};
  // --- renderer (REF-001: ACES, exposure 1.16, pixel ratio capped) ---
  const renderer=new THREE.WebGLRenderer({canvas:dom.gl,antialias:true,powerPreference:'high-performance'});
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x000000,1);
  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(25,1,.02,60);
  const tl=new THREE.TextureLoader(),gl=new GLTFLoader();
  const tex=async(u:string,srgb=true)=>{const t=await tl.loadAsync(u);t.colorSpace=srgb?THREE.SRGBColorSpace:THREE.NoColorSpace;t.anisotropy=4;return t;};
- const geom=async(u:string)=>{const g=await gl.loadAsync(u);let out:THREE.BufferGeometry|null=null;g.scene.traverse(o=>{if((o as THREE.Mesh).isMesh&&!out)out=(o as THREE.Mesh).geometry;});if(!out)throw Error('no mesh in '+u);return out as THREE.BufferGeometry;};
+ const geomMorph=async(u:string)=>{const g=await gl.loadAsync(u);let out:THREE.Mesh|null=null;g.scene.traverse(o=>{if((o as THREE.Mesh).isMesh&&!out)out=o as THREE.Mesh;});if(!out)throw Error('no mesh in '+u);
+  const m=out as THREE.Mesh,d=m.morphTargetDictionary??{};return{geo:m.geometry,morph:Object.keys(d).sort((a,b)=>d[a]-d[b])};};
+ const geom=async(u:string)=>(await geomMorph(u)).geo;
  const [day,night,clouds,bodyGeo,heartGeo,fig,floorLm]=await Promise.all([tex(urls.day),tex(urls.night),tex(urls.clouds,false),geom(urls.body),geom(urls.heart),fetch(urls.fig).then(r=>r.json() as Promise<FigureData>),tex(urls.floor,false)]);
  const globe=createGlobe({day,night,clouds});scene.add(globe.group);
  const style=opt.look??'archive';   // D-046 archive is the default (brief 1 T9); ?look=v2 keeps the grid world
- // D-046: the ECG record archive (baked room + shafts + dust), figure seated on the ladder with bone-aligned rings (H3b/H3c)
+ // D-046: the ECG record archive (baked room + shafts + dust); D-048: figure v3 (3-lead) seated mid-ladder, H5 frosted body
  const arch=style==='archive'?await createArchive():null;
- const figure=createFigure(arch?await geom(urls.seated):bodyGeo,heartGeo,fig,style==='v1'?'v1':'v2');scene.add(figure.group,figure.line);
+ const seated=arch?await geomMorph(urls.seatedV3):null;
+ const figure=createFigure(seated?seated.geo:bodyGeo,heartGeo,fig,arch?'h5':style==='v1'?'v1':'v2',seated?.morph??[]);scene.add(figure.group,figure.line);
+ let scanTop=fig.height;
  if(arch){
   scene.add(arch.room,arch.dust);
   arch.renderSunDepth(renderer);   // static room: the sun depth map (shafts, dust, ring sun glow) is rendered once
@@ -63,9 +69,14 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   figure.heartMesh.position.copy(arch.heart).sub(arch.figureLocation);figure.heartMesh.quaternion.copy(arch.heartQuat);
   figure.heartWorld.copy(arch.heart);
   const bu=figure.bodyMat.uniforms;bu.uHeart.value.copy(arch.heart);bu.uFeet.value=arch.figureLocation.y;
-  bu.uRefDist.value=2.6;bu.uSunOn.value=1;bu.tLight.value=arch.lightRT.depthTexture;bu.uLightVP.value=arch.lightVP;
+  bu.uRefDist.value=2.6;bu.uSunOn.value=1;bu.tLight.value=arch.lightRT.depthTexture;bu.uLightVP.value=arch.lightVP;bu.uSunTo.value=arch.sunTo;
   figure.line.visible=false;
+  seated!.geo.computeBoundingBox();scanTop=seated!.geo.boundingBox!.max.y;
+  figure.setGrip(opt.grip??0);
  }
+ // electrodes, leads, trunk, comm cable, power line and the inside-body paths with the flowing dash shader (C4)
+ const rig=arch?await createSignalRig(urls.rig,arch,{uScan:figure.bodyMat.uniforms.uScan,uFeet:figure.bodyMat.uniforms.uFeet}):null;
+ if(rig){scene.add(rig.group);rig.setSignal(opt.signal==='noise'?SIGNAL_NOISE:opt.signal==='off'?SIGNAL_OFF:SIGNAL_CLEAN);}
  const space=style==='v2'?createSpace(floorLm):null;if(space)scene.add(space.group);
  const reflection=style==='v2'?figure.mirror():null;if(reflection)scene.add(reflection.group);
  // --- post: bloom only on bright parts (threshold), never on the Canvas 2D data layer ---
@@ -204,15 +215,19 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   if(arch){
    // archive: scan once the figure is in view down the aisle; rings fade as the camera enters the chest
    const sk=seg(p,.45,.54),bu=figure.bodyMat.uniforms,c2=seg(p,.55,.72);
-   bu.uScan.value=(1-inOut(sk))*(fig.height+.04)-.02;bu.uScanOn.value=sk>0&&sk<1?1:Math.max(0,1-(sk-1)*20);
+   bu.uScan.value=(1-inOut(sk))*(scanTop+.04)-.02;bu.uScanOn.value=sk>0&&sk<1?1:Math.max(0,1-(sk-1)*20);
    bodyA=(sk>0?1:0)*(1-.85*THREE.MathUtils.smoothstep(c2,.15,.75))*(1-THREE.MathUtils.smoothstep(c2,.7,.95));
+   // C3: breath only — a slow cycle (~4 s) unrelated to the beat, small amplitude; grip stays 0 in the intro (?grip=1 checks it)
+   figure.setBreath(opt.reduced?0:.35*(.5-.5*Math.cos(2*Math.PI*t/4)));
+   // C5: clean flow once the person is revealed (p ≥ .45), slow; the noise staging belongs to the Story (P5)
+   rig?.setPerson(Math.min(1,bodyA*1.4));rig?.setFlow(opt.signal?1:inOut(seg(p,.47,.56)),.6);rig?.update(t);
   }else if(style==='v2'){
    // H3: the scan line runs head → feet over the body segment; rings stay, thinning out as the camera dives in
    const sk=seg(p,...MAP.body),bu=figure.bodyMat.uniforms;
    bu.uScan.value=(1-inOut(sk))*(fig.height+.04)-.02;bu.uScanOn.value=sk>0&&sk<1?1:Math.max(0,1-(sk-1)*20);
    bodyA=(sk>0?1:0)*(1-.85*THREE.MathUtils.smoothstep(cam,.15,.75))*(1-THREE.MathUtils.smoothstep(cam,.7,.95));   // gone before the wave stage
   }else bodyA=seg(p,...MAP.body)*(1.7-.7*seg(p,.5,.6))*(1-.95*THREE.MathUtils.smoothstep(cam,.1,.8));   // brighter while it takes over from the neon line
-  figure.bodyMat.uniforms.uOpacity.value=bodyA;figure.group.children[0].visible=bodyA>.002;
+  figure.setBodyOpacity(bodyA);
   const spaceA=seg(p,.33,.42)*(1-THREE.MathUtils.smoothstep(cam,.3,.85));
   if(space)space.set(spaceA,ph,1,t,spaceA*(1-THREE.MathUtils.smoothstep(cam,.1,.4)));   // the lamp leaves before the orbit shows it beside the head
   if(reflection)reflection.group.visible=spaceA>.002;
@@ -222,11 +237,11 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   figure.beat(ph,heartA>0?1:0);
   state.heart.V=figure.heartMat.uniforms.uV.value;state.heart.flash=figure.heartMat.uniforms.uFlash.value;
   if(arch){
-   const aF=seg(p,.25,.31)*(1-.88*seg(p,.64,.73));arch.setFade(aF);archShaft=aF*(1-seg(p,.6,.7));
+   const aF=seg(p,.25,.31)*(1-.88*seg(p,.64,.73));arch.setFade(aF);rig?.setFade(aF);archShaft=aF*(1-seg(p,.6,.7));
    grade.uniforms.uSpace.value=aF;globe.group.visible=globe.group.visible&&p<.3;
    archCam!(p);
    // ?shot=<manifest shot>: verification only — the Blender still's camera, room fully faded in (stills vs web)
-   if(opt.shot&&arch.manifest.shots[opt.shot]){const k=arch.shot(opt.shot);arch.setFade(1);archShaft=1;
+   if(opt.shot&&arch.manifest.shots[opt.shot]){const k=arch.shot(opt.shot);arch.setFade(1);rig?.setFade(1);archShaft=1;
     camera.position.copy(k.pos);if(camera.fov!==k.fov){camera.fov=k.fov;camera.updateProjectionMatrix();}camera.lookAt(k.look);}
   }else cameraAt(cam);
 
@@ -291,7 +306,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  gsap.ticker.lagSmoothing(0);gsap.ticker.add(tick);
 
  return{
-  state,lenis,arch,
+  state,lenis,arch,rig,figure,
   renderOnce(draw=true){frame(1/60,draw);},
   pause(v:boolean){paused=v;},
   set(o:{p?:number,t?:number|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;},
@@ -299,7 +314,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;mix.reset();},
   dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
-   globe.dispose();figure.dispose();space?.dispose();arch?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
+   globe.dispose();figure.dispose();space?.dispose();arch?.dispose();rig?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
  };
 }
 export type Intro=Awaited<ReturnType<typeof createIntro>>;

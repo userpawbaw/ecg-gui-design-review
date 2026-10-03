@@ -25,6 +25,7 @@ ap.add_argument('--look', default='h3', choices=['h3', 'h3b', 'h5'], help='figur
 ap.add_argument('--fig', default='v2', choices=['v2', 'v3'], help='v3 = D-048 deformé figure with ECG electrodes and lead wires')
 ap.add_argument('--signal', default='off', choices=['off', 'clean', 'noise'], help='v3 stills: neon dash preview — clean (blue heart→electrode, purple to the computer) or noise (red on the power line and leads)')
 ap.add_argument('--bake', default='', help='bake lightmaps + export the web scene into this dir')
+ap.add_argument('--export-rig', default='', help='v3 only: write the electrodes, yoke, leads, trunk, comm cable, power line, inside-body signal paths and RA ring as one rig.glb into this dir (web dash shader; IMPL_BRIEF_FIGURE_V3_WEB B2)')
 ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--bsamples', type=int, default=128)
 args = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
@@ -505,7 +506,7 @@ if FIG is not None and args.fig == 'v3':
                     Vector((DESK.x + .45, DESK.y - .22, .775)), Vector((DESK.x + .3, DESK.y - .15, .775)), pc_in + Vector((.06, -.02, -.07)), pc_in], 10)
     tube('CommCable', comm, .0045, dash_mat('comm_dash', C_PURPLE, base=srgb('#2a2c30'), period=.07, strength=7) if sig != 'off' else M_WIRE, sides=10)
     # inside-body signal paths heart → electrode (blue, seen through the frosted H5 body)
-    if sig != 'off':
+    if sig != 'off' or args.export_rig:
         HB = Vector(HEART.location); M_SIG = dash_mat('signal_dash', C_BLUE, base=None, period=.03, duty=.5, strength=3.5)
         for k, (p, n) in E.items():
             q = p - n * .012
@@ -516,13 +517,28 @@ if FIG is not None and args.fig == 'v3':
             else: path = catmull([HB, J['spine'], J['thigh.R'], J['shin.R'], q], 8)
             tube(f'Sig_{k}', path, .0016, M_SIG, sides=6)
     # noise state: the power line from the outlet to the computer carries red dashes; RA (grip arm) site glows red
+    ra_ring = [E['RA'][0] + E['RA'][1] * .002 + (Matrix.Rotation(a, 3, E['RA'][1]) @ (E['RA'][1].orthogonal().normalized() * .024)) for a in np.linspace(0, 2 * math.pi, 33)]
     if sig == 'noise':
         pw = bpy.data.objects.get('PowerCable')
         if pw is not None:
             pw.hide_render = True
             tube('PowerNoise', catmull([tuple(p) for p in cpts], 10), .0062, dash_mat('power_dash', C_RED, base=srgb('#202020'), period=.05), sides=10)
-        ring = tube('RA_noise_ring', [E['RA'][0] + E['RA'][1] * .002 + (Matrix.Rotation(a, 3, E['RA'][1]) @ (E['RA'][1].orthogonal().normalized() * .024)) for a in np.linspace(0, 2 * math.pi, 33)],
-                    .0018, dash_mat('ra_ring', C_RED, base=None, period=.012, duty=.6, strength=6), sides=6)
+        ring = tube('RA_noise_ring', ra_ring, .0018, dash_mat('ra_ring', C_RED, base=None, period=.012, duty=.6, strength=6), sides=6)
+    if args.export_rig:
+        # B2: the same paths as the stills (power line = the PowerNoise sweep of the floor cable, ring = the RA ring), plain
+        # materials — the web replaces them by object name. UV u = metres from the path start, which is the signal source
+        # (heart → electrode → yoke → cart → computer; power strip → computer), so dashes flow toward increasing u.
+        tube('PowerLine', catmull([tuple(p) for p in cpts], 10), .0062, M_CABLE, sides=10)
+        if bpy.data.objects.get('RA_noise_ring') is None: tube('RA_noise_ring', ra_ring, .0018, M_WIRE, sides=6)
+        RIG_OUT = os.path.join(ROOT, args.export_rig); os.makedirs(RIG_OUT, exist_ok=True)
+        rig = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith(('El_', 'LeadYoke', 'Lead_', 'TrunkCable', 'CommCable', 'PowerLine', 'Sig_', 'RA_noise_ring'))]
+        for o in rig:
+            if 'length' not in o: o['length'] = 0.0
+        bpy.ops.object.select_all(action='DESELECT')
+        for o in rig: o.select_set(True)
+        bpy.ops.export_scene.gltf(filepath=os.path.join(RIG_OUT, 'rig.glb'), export_format='GLB', use_selection=True, export_extras=True,
+                                  export_cameras=False, export_lights=False, export_texcoords=True, export_normals=True, export_materials='NONE')
+        print('rig exported', len(rig), 'objects', sorted({o.name.split('_')[0] for o in rig}), flush=True)
 
 
 # ---------------- light: sun through the blinds + dim sky + warm lamp bulbs ----------------

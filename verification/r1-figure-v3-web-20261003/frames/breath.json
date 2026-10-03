@@ -1,0 +1,34 @@
+{
+ "label": "breath",
+ "extra": "&look=archive&shot=s7_chest&signal=off",
+ "loadMs": 1236,
+ "bytes": {
+  "archive.json": 8684587,
+  "manifest.json": 9,
+  "earth_night-BmwY3jaA.jpg": 191271,
+  "floor_light-DvZlFicE.png": 130613,
+  "earth_day-BwYaYthw.jpg": 234590,
+  "earth_clouds-Bj8rsds_.jpg": 650620,
+  "body-DPatXu2U.glb": 2063564,
+  "figure-BsF5ifj1.json": 10292,
+  "heart-wJ2kQIC4.glb": 525080,
+  "archive-ChYBDGM9.glb": 9838668,
+  "light_shell-JsMZ5HJj.webp": 537130,
+  "rig_v3-mqSMpK66.glb": 65916
+ },
+ "errors": [
+  "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "timing": [
+  {
+   "p": 0.6,
+   "t": 4,
+   "ms": 419.1
+  },
+  {
+   "p": 0.6,
+   "t": 6,
+   "ms": 426.3
+  }
+ ]
+}

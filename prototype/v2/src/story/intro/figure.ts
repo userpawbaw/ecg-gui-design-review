@@ -106,17 +106,85 @@ function contourMaterial(slice=false){
    uA:{value:0},uV:{value:0},uMinY:{value:-1},uMaxY:{value:1},uDeform:{value:0}}});
 }
 
+// H5 (D-048): frosted translucent body — milky surface lit by the room (sky fill + sun where the sun depth map says a
+// beam reaches it), faint bone-axis rings (H3b `aSlice`) with the H3c distance density, brighter silhouette, and the heart
+// glowing through the chest. Normal alpha blending after a depth pre-pass, so only the nearest surface shows (no ring
+// moiré from the back side). Refraction is faked with fresnel opacity: thin centre, denser edge. The vertex stage reads
+// the body's morph targets (breath, grip).
+const h5Vert=/* glsl */`
+#include <morphtarget_pars_vertex>
+attribute float aSlice;varying float vS;varying vec3 vN,vW;
+void main(){
+ #include <begin_vertex>
+ #include <morphtarget_vertex>
+ vS=aSlice;vec4 w=modelMatrix*vec4(transformed,1.);vW=w.xyz;vN=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*w;
+}`;
+const h5Frag=/* glsl */`
+uniform vec3 uSkin,uLine,uSunCol,uSunTo;uniform float uOpacity,uFlash,uFeet,uDensity,uScan,uScanOn,uRefDist,uSunOn,uExposure;
+uniform vec3 uHeart;uniform float uWaveT,uWaveAmp;
+uniform sampler2D tLight;uniform mat4 uLightVP;
+varying vec3 vN,vW;varying float vS;
+float ringAt(float c,float dens){float d=c*dens,fw=max(fwidth(d),1e-4);float e=min(fract(d),1.-fract(d));return 1.-smoothstep(.5*fw,1.6*fw,e);}
+void main(){
+ vec3 n=normalize(vN);if(!gl_FrontFacing)n=-n;
+ vec3 v=normalize(cameraPosition-vW);float fres=1.-abs(dot(n,v));
+ float y=vW.y-uFeet;
+ float lit=0.;
+ if(uSunOn>.5){vec4 lp=uLightVP*vec4(vW,1.);vec3 l=lp.xyz/lp.w*.5+.5;
+  lit=(l.x>0.&&l.x<1.&&l.y>0.&&l.y<1.)?step(l.z-.003,texture2D(tLight,l.xy).x):0.;}
+ // frosted surface: soft sky fill from above + wrapped sun inside a beam
+ float sky=.72+.28*(n.y*.5+.5),sun=clamp(dot(n,-uSunTo)*.6+.4,0.,1.)*lit;
+ vec3 col=uSkin*sky+uSunCol*sun*.4;
+ // H3b rings on the bone axis, H3c density (doubles per halving of distance below uRefDist), faint on the surface
+ float lv=uRefDist>0.?log2(max(1.,uRefDist/max(length(cameraPosition-vW),.05))):0.;
+ float lk=floor(lv),lf=fract(lv),d1=uDensity*exp2(lk);
+ float ring=mix(ringAt(vS,d1),max(ringAt(vS,d1),ringAt(vS,2.*d1)*smoothstep(0.,1.,lf)),step(.001,lf));
+ col+=uLine*ring*(.45+.5*fres)*(1.+.8*lit);
+ col+=uLine*pow(fres,3.)*.45;                                   // brighter silhouette
+ // heart light seen through the chest (glows on each R) + conduction band
+ float dh=distance(vW,uHeart),hl=exp(-dh*dh/.018);
+ float band=exp(-pow((dh-uWaveT*1.5)/.05,2.))*exp(-uWaveT/.32)*uWaveAmp;col+=uLine*band*.5;
+ float a=mix(.7,.95,pow(fres,1.4))*(1.-.5*hl);                    // thin centre, dense edge; thinner over the heart
+ float reveal=smoothstep(uScan-.004,uScan+.012,y);
+ float scanLine=exp(-pow((y-uScan)/.012,2.))*uScanOn*(.6+fres);
+ a=a*reveal*uOpacity;
+ // heart glow scattered by the frosted surface: emitted light, so it is divided by alpha to survive the blend (the stills'
+ // heart reads as a pink glow through the chest)
+ float hlg=exp(-dh*dh/.011);
+ vec3 glow=vec3(1.,.36,.42)*hlg*(1.1+.9*uFlash)*reveal*uOpacity;
+ col*=1.-.5*hlg;                                              // the surface's own white gives way to the heart's light
+ float ao=clamp(a+scanLine*uOpacity*.6,0.,1.);
+ gl_FragColor=vec4(col*uExposure+(uLine*scanLine*uOpacity*1.5+glow)/max(ao,.05),ao);
+}`;
+function h5Material(){
+ return new THREE.ShaderMaterial({vertexShader:h5Vert,fragmentShader:h5Frag,transparent:true,depthWrite:false,depthFunc:THREE.LessEqualDepth,side:THREE.DoubleSide,
+  uniforms:{uSkin:{value:new THREE.Color('#d9dde3')},uLine:{value:new THREE.Color('#f4f1ea')},uSunCol:{value:new THREE.Color('#ffd09a')},uSunTo:{value:new THREE.Vector3(0,-1,0)},
+   uExposure:{value:.42},uRefDist:{value:0},uSunOn:{value:0},tLight:{value:null},uLightVP:{value:new THREE.Matrix4()},uOpacity:{value:0},uFlash:{value:0},uFeet:{value:FEET_Y},
+   uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0}}});
+}
+
 function rimMaterial(color:string,pow:number,fill:number,deform:boolean){
  return new THREE.ShaderMaterial({vertexShader:rimVert,fragmentShader:rimFrag,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
   uniforms:{uColor:{value:new THREE.Color(color)},uOpacity:{value:0},uPow:{value:pow},uFill:{value:fill},uFlash:{value:0},
    uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},uA:{value:0},uV:{value:0},uMinY:{value:-1},uMaxY:{value:1},uDeform:{value:deform?1:0},uMirror:{value:0},uFeet:{value:FEET_Y}}});
 }
 
-export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometry,data:FigureData,look:'v1'|'v2'='v2'){
+export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometry,data:FigureData,look:'v1'|'v2'|'h5'='v2',morphNames:string[]=[]){
  const group=new THREE.Group();group.position.set(0,FEET_Y,0);
  const slice=body.getAttribute('_slice');if(slice)body.setAttribute('aSlice',slice);   // seated body: bone-axis coordinate (H3b)
- const bodyMat=look==='v2'?contourMaterial(!!slice):rimMaterial('#9fb4d8',2.8,0,false);
+ const bodyMat=look==='h5'?h5Material():look==='v2'?contourMaterial(!!slice):rimMaterial('#9fb4d8',2.8,0,false);
  const bodyMesh=new THREE.Mesh(body,bodyMat);group.add(bodyMesh);
+ // H5: depth pre-pass (same vertex stage incl. morph) so the frosted surface shows only its nearest layer; it runs after
+ // the heart and the inside-body signal paths (they stay visible through it) and before the leads on the skin
+ let bodyDepth:THREE.Mesh|null=null;
+ if(look==='h5'){
+  bodyDepth=new THREE.Mesh(body,new THREE.ShaderMaterial({vertexShader:h5Vert,fragmentShader:'void main(){gl_FragColor=vec4(0.);}',uniforms:{},colorWrite:false,side:THREE.DoubleSide,transparent:true}));
+  bodyDepth.renderOrder=3;bodyMesh.renderOrder=4;group.add(bodyDepth);
+ }
+ // morph targets (v3 body: breath, grip); the pre-pass shares the influences array
+ const morph=(name:string)=>{const i=morphNames.indexOf(name);return i>=0&&bodyMesh.morphTargetInfluences?i:-1;};
+ if(bodyDepth&&bodyMesh.morphTargetInfluences)bodyDepth.morphTargetInfluences=bodyMesh.morphTargetInfluences;
+ const setMorph=(name:string,x:number)=>{const i=morph(name);if(i>=0)bodyMesh.morphTargetInfluences![i]=Math.min(1,Math.max(0,x));};
  heart.computeBoundingBox();const bb=heart.boundingBox!;
  const heartMat=rimMaterial('#ff7482',2.4,look==='v2'?.09:.018,true);
  heartMat.uniforms.uMinY.value=bb.min.y;heartMat.uniforms.uMaxY.value=bb.max.y;
@@ -138,7 +206,7 @@ export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometr
  lineMat.color.setRGB(1.5,1.65,1.9);
  const line=new Line2(lineGeo,lineMat);line.renderOrder=3;line.frustumCulled=false;
  const ease=(t:number)=>t<.5?4*t*t*t:1-(-2*t+2)**3/2;
- function setMorph(m:number,circle:{cx:number,cy:number,r:number},alpha:number){
+ function setOutlineMorph(m:number,circle:{cx:number,cy:number,r:number},alpha:number){
   line.visible=alpha>.003;lineMat.opacity=alpha;if(!line.visible)return;
   for(let i=0;i<=N;i++){
    const j=i%N,u=Math.min(j,N-j)/(N/2),delay=u/3;               // head first, feet last (REF-006 1/3 delay)
@@ -156,7 +224,7 @@ export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometr
   const A=u<.22&&u>.04?Math.sin((.22-u)/.18*Math.PI):0;       // atria ~120 ms before R (decorative)
   const hu=heartMat.uniforms;hu.uV.value=V*amp;hu.uA.value=A*amp*.8;hu.uFlash.value=Math.exp(-s/.12)*1.3*amp;
   bodyMat.uniforms.uWaveT.value=s;bodyMat.uniforms.uWaveAmp.value=amp;
-  if(look==='v2')bodyMat.uniforms.uFlash.value=Math.exp(-s/.15)*amp;
+  if(look==='v2'||look==='h5')bodyMat.uniforms.uFlash.value=Math.exp(-s/.15)*amp;
  }
  // P2: floor reflection — the same meshes scaled −1 about the floor, sharing every uniform except uMirror
  function mirror(){
@@ -166,8 +234,11 @@ export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometr
   const h=new THREE.Mesh(heart,mm(heartMat));h.position.copy(heartMesh.position);h.renderOrder=2;
   g.add(b,h);return{group:g,body:b,heart:h,dispose(){(b.material as THREE.Material).dispose();(h.material as THREE.Material).dispose();}};
  }
- return{group,line,bodyMat,look,mirror,heartMat,heartMesh,heartWorld,setMorph,beat,
+ return{group,line,bodyMat,bodyMesh,bodyDepth,look,mirror,heartMat,heartMesh,heartWorld,setMorph:setOutlineMorph,beat,
+  // P5 hooks (D-048, F-030): breath and the right hand's grip on the stile, 0–1 each; no-ops on bodies without the keys
+  setBreath(x:number){setMorph('breath',x);},setGrip(x:number){setMorph('grip',x);},
+  setBodyOpacity(a:number){bodyMat.uniforms.uOpacity.value=a;bodyMesh.visible=a>.002;if(bodyDepth)bodyDepth.visible=a>.002;},
   setResolution(w:number,h:number){lineMat.resolution.set(w,h);},
-  dispose(){body.dispose();heart.dispose();bodyMat.dispose();heartMat.dispose();heartDepthMat.dispose();lineGeo.dispose();lineMat.dispose();}};
+  dispose(){body.dispose();heart.dispose();bodyMat.dispose();(bodyDepth?.material as THREE.Material|undefined)?.dispose();heartMat.dispose();heartDepthMat.dispose();lineGeo.dispose();lineMat.dispose();}};
 }
 export type Figure=ReturnType<typeof createFigure>;

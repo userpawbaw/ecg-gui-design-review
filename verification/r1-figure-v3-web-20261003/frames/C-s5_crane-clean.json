@@ -1,0 +1,26 @@
+{
+ "label": "C-s5_crane-clean",
+ "extra": "&look=archive&shot=s5_crane&signal=clean",
+ "loadMs": 4975,
+ "bytes": {
+  "manifest.json": 9,
+  "archive.json": 8684587,
+  "earth_day-BwYaYthw.jpg": 234590,
+  "earth_night-BmwY3jaA.jpg": 191271,
+  "earth_clouds-Bj8rsds_.jpg": 650620,
+  "figure-BsF5ifj1.json": 10292,
+  "floor_light-DvZlFicE.png": 130613,
+  "light_shell-JsMZ5HJj.webp": 537130,
+  "body_seated_v3-gcfS4Rii.glb": 2300792
+ },
+ "errors": [
+  "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "timing": [
+  {
+   "p": 0.6,
+   "t": 3,
+   "ms": 1899.6
+  }
+ ]
+}

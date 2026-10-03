@@ -27,7 +27,7 @@ export async function createArchive(){
  const groupOf=(o:THREE.Object3D)=>{let x:THREE.Object3D|null=o;while(x){for(const [g,i] of Object.entries(manifest.groups))if(x.name===i.object||x.name.startsWith(i.object+'_'))return g;x=x.parent;}return 'shell';};
  const room=gltf.scene;
  // baked material: albedo × decoded light (lightmap on UV1 or per-corner colour), × uFade for scene transitions
- const shared={lmScale:{value:manifest.lm_scale},uFade:{value:0},uExposure:{value:1.0}};
+ const shared={lmScale:{value:manifest.lm_scale},uFade:{value:0},uExposure:{value:1.3},uSat:{value:.72}};
  const mats:THREE.ShaderMaterial[]=[];
  room.traverse(o=>{
   const m=o as THREE.Mesh;if(!m.isMesh)return;
@@ -47,7 +47,7 @@ export async function createArchive(){
      vLight=color.rgb;
      #endif
      gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-   fragmentShader:`uniform sampler2D map,lm;uniform bool useMap;uniform vec3 color;uniform float lmScale,alphaTest,uFade,uExposure;varying vec2 vUv,vUv1;
+   fragmentShader:`uniform sampler2D map,lm;uniform bool useMap;uniform vec3 color;uniform float lmScale,alphaTest,uFade,uExposure,uSat;varying vec2 vUv,vUv1;
     #ifdef VC
     varying vec3 vLight;
     #endif
@@ -57,7 +57,8 @@ export async function createArchive(){
      #else
      vec3 e=texture2D(lm,vUv1).rgb;
      #endif
-     gl_FragColor=vec4(a.rgb*color*e*e*lmScale*uExposure*uFade,1.);
+     vec3 c=a.rgb*color*e*e*lmScale*uExposure*uFade;c=mix(vec3(dot(c,vec3(.2126,.7152,.0722))),c,uSat);   // T3: stills match
+     gl_FragColor=vec4(c,1.);
      #include <tonemapping_fragment>
      #include <colorspace_fragment>
     }`,
@@ -102,11 +103,12 @@ export async function createArchive(){
  const vol=new ShaderPass({
   uniforms:{tDiffuse:{value:null},tDepth:{value:null},tLight:{value:lightRT.depthTexture},
    uInvProj:{value:new THREE.Matrix4()},uInvView:{value:new THREE.Matrix4()},uLightVP:{value:lightVP},uCam:{value:new THREE.Vector3()},
-   uSun:{value:sunTo},uCol:{value:sunCol},uDensity:{value:.05},uIntensity:{value:2.4},uTime:{value:0},uFrame:{value:0},uOn:{value:0}},
+   uSun:{value:sunTo},uCol:{value:sunCol},uDensity:{value:.05},uIntensity:{value:1.8},uTime:{value:0},uFrame:{value:0},uOn:{value:0},
+   uHaze:{value:.018},uHazeCol:{value:new THREE.Color(.22,.17,.13)}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
   fragmentShader:`precision highp float;
    uniform sampler2D tDiffuse,tDepth,tLight;uniform mat4 uInvProj,uInvView,uLightVP;uniform vec3 uCam,uSun,uCol;
-   uniform float uDensity,uIntensity,uTime,uFrame,uOn;varying vec2 vUv;
+   uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze;uniform vec3 uHazeCol;varying vec2 vUv;
    float ign(vec2 p){return fract(52.9829189*fract(dot(p,vec2(.06711056,.00583715))));}
    float hash(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
    float noise(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);
@@ -128,7 +130,9 @@ export async function createArchive(){
      acc+=lit*dens*tr*dt;tr*=exp(-dens*.15*dt);
     }
     float ph=hg(dot(uSun,-rd),.55)*4.*3.14159*.25+.25;
-    gl_FragColor=vec4(col+uCol*acc*ph*uIntensity*uOn,1.);
+    // room air lit by the bounce light (the stills' uniform volume): lifts the shade and softens saturation with depth
+    float hz=(1.-exp(-uHaze*min(length(wp-uCam),14.)))*uOn;
+    gl_FragColor=vec4(mix(col,uHazeCol,hz)+uCol*acc*ph*uIntensity*uOn,1.);
    }`});
  vol.uniforms.tLight.value=lightRT.depthTexture;vol.uniforms.uLightVP.value=lightVP;vol.uniforms.uSun.value=sunTo;vol.uniforms.uCol.value=sunCol;
 

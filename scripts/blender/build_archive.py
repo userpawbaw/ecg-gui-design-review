@@ -601,6 +601,11 @@ if args.bake:
     FIG_LOC = FIG.location.copy() if FIG is not None else None
     for o in [x for x in (FIG, globals().get('HEART'), hz) if x is not None]:
         bpy.data.objects.remove(o, do_unlink=True)
+    # v3 rig (electrodes, leads, trunk, comm, signal paths) and the power line are web objects with their own dash
+    # shader (IMPL_BRIEF_FIGURE_V3_WEB B2), never baked into the room
+    RIG_PREFIX = ('El_', 'Lead_', 'LeadYoke', 'TrunkCable', 'CommCable', 'Sig_', 'RA_noise_ring', 'PowerNoise', 'PowerCable')
+    for o in [x for x in scene.objects if x.name.startswith(RIG_PREFIX)]:
+        bpy.data.objects.remove(o, do_unlink=True)
     for o in [x for x in scene.objects if x.type == 'CURVE']:          # cable → mesh
         bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); bpy.context.view_layer.objects.active = o
         bpy.ops.object.convert(target='MESH')

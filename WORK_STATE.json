@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "Resume from PLAN-R1-INTRO-STORY-V2.md §9 checklist (archive bake -> package -> look stills to user -> web verify -> default).",
+  "next_action": "R1: D-048 done in planning chat (H5, source A, 3-lead, fixes 1-3, stills verification/r1-figure-v3-20261002/). Delegate handoffs/IMPL_BRIEF_FIGURE_V3_WEB_2026-10-03.md (includes brief 1 if not started); review its return against PLAN-R1-INTRO-STORY-V2 §9 and D-048.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",

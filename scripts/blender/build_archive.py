@@ -305,14 +305,25 @@ box('CartTray', (0.46, 0.36, 0.02), (CART.x, CART.y, 0.8), M_STEEL)
 box('CartShelf', (0.46, 0.36, 0.02), (CART.x, CART.y, 0.25), M_STEEL)
 box('ECG_Device', (0.40, 0.30, 0.12), (CART.x, CART.y, 0.87), M_BEIGE)
 box('ECG_PaperOut', (0.2, 0.18, 0.002), (CART.x - 0.02, CART.y - 0.24, 0.88), M_PAPER, rot=(math.radians(-25), 0, 0))
-# wall outlet on the back-wall plinth below the desk, cable across the floor to the computer
-OUT = Vector((-1.95, BY + 0.27, 0.32))
-box('OutletPlate', (0.08, 0.012, 0.12), OUT, M_OUTLET)
-for dx in (-0.012, 0.012):
-    cyl('OutletHole', 0.004, 0.02, OUT + Vector((dx, -0.005, 0.02)), M_BLACK, rot=(math.radians(90), 0, 0), verts=8)
-box('Plug', (0.04, 0.035, 0.04), OUT + Vector((0, -0.03, 0.02)), M_BLACK)
-cpts = [OUT + Vector((0, -0.05, 0.02)), Vector((OUT.x, OUT.y - 0.15, 0.01)), Vector((OUT.x - 0.25, BY - 0.25, 0.01)),
-        Vector((DESK.x + 0.15, DESK.y + 0.2, 0.01)), Vector((DESK.x - 0.05, DESK.y + 0.3, 0.4)), Vector((DESK.x - 0.05, DESK.y + 0.27, mz + 0.06))]
+# power strip on the open floor right of the cart (D-048 fix: the wall outlet behind the desk was never in frame).
+# Its wall cord tucks under the back shelf; the computer's power cable runs across the floor beside the ECG trunk cable
+# (the coupling the Story's power-line scene is about) and up the desk leg to the PC.
+OUT = Vector((-0.95, 3.62, 0.0))
+box('PowerStrip', (0.30, 0.07, 0.045), OUT + Vector((0, 0, 0.0225)), M_OUTLET)
+for dx in (-0.09, -0.01, 0.07):
+    for hx in (-0.01, 0.01):
+        cyl('StripHole', 0.0035, 0.004, OUT + Vector((dx + hx, 0, 0.045)), M_BLACK, verts=8)
+box('StripSwitch', (0.025, 0.035, 0.012), OUT + Vector((0.125, 0, 0.05)), mat('strip_lamp', srgb('#ff3a2a'), .4, emit=4.0))
+box('Plug', (0.04, 0.035, 0.04), OUT + Vector((-0.09, 0, 0.065)), M_BLACK)
+wall = [OUT + Vector((0.15, 0, 0.02)), OUT + Vector((0.26, 0.05, 0.01)), Vector((OUT.x + 0.3, BY - 0.2, 0.01)), Vector((OUT.x + 0.32, BY + 0.05, 0.01))]
+wc = bpy.data.curves.new('wallcord', 'CURVE'); wc.dimensions = '3D'; wc.bevel_depth = 0.005; wc.bevel_resolution = 2
+ws = wc.splines.new('POLY'); ws.points.add(len(wall) - 1)
+for p_, v_ in zip(ws.points, wall): p_.co = (*v_, 1)
+ws.type = 'NURBS'; ws.order_u = 3; ws.use_endpoint_u = True
+wco = bpy.data.objects.new('WallCord', wc); scene.collection.objects.link(wco); wc.materials.append(M_CABLE)
+cpts = [OUT + Vector((-0.09, 0, 0.085)), OUT + Vector((-0.12, -0.04, 0.03)), Vector((OUT.x - 0.3, OUT.y - 0.08, 0.01)),
+        Vector((CART.x, CART.y - 0.42, 0.01)), Vector((DESK.x + 0.45, DESK.y - 0.35, 0.01)), Vector((DESK.x + 0.3, DESK.y - 0.1, 0.02)),
+        Vector((DESK.x + 0.25, DESK.y + 0.15, 0.4)), Vector((DESK.x + 0.2, DESK.y + 0.22, mz + 0.06))]
 cu = bpy.data.curves.new('cable', 'CURVE'); cu.dimensions = '3D'; cu.bevel_depth = 0.006; cu.bevel_resolution = 2
 sp = cu.splines.new('POLY'); sp.points.add(len(cpts) - 1)
 for p, v in zip(sp.points, cpts): p.co = (*v, 1)
@@ -458,9 +469,10 @@ if FIG is not None and args.fig == 'v3':
     lead_col = {'clean': C_BLUE, 'noise': C_RED}.get(sig)
     M_LEAD = dash_mat('lead_dash', lead_col, base=srgb('#2a2c30')) if lead_col else M_WIRE
     # yoke (lead-wire junction) resting on the lap, trunk cable from there to the cart
-    knee = (J['shin.L'] + J['shin.R']) / 2; hip = (J['thigh.L'] + J['thigh.R']) / 2
-    YOKE = hip.lerp(knee, .45) + Vector((0, 0, .095))
-    box('LeadYoke', (.06, .035, .018), YOKE, M_CLIP)
+    # yoke clipped at the right side of the waist (D-048 fix: on the lap the leads converged at the groin); the trunk
+    # leaves from there toward the cart side
+    YOKE = J['thigh.R'] + Vector((-.115, -.03, .11))
+    yk = box('LeadYoke', (.018, .06, .035), YOKE, M_CLIP)
     for k, (p, n) in E.items():
         rot = n.to_track_quat('Z', 'Y').to_euler()
         cyl(f'El_{k}_foam', .019, .0016, p + n * .0008, M_FOAM, rot=tuple(rot), verts=24)
@@ -471,26 +483,27 @@ if FIG is not None and args.fig == 'v3':
         clip.rotation_euler = Matrix((tdir, n.cross(tdir), n)).transposed().to_euler()
         a = p + n * .009 + tdir * .015
         if k.startswith('V'):            # chest leads: off the skin, down in front of the belly to the yoke
-            mid = Vector((p.x * .7 + YOKE.x * .3, min(p.y, YOKE.y) - .07, (p.z + YOKE.z) / 2))
-            pts = catmull([a, a + n * .02 + tdir * .02, mid, YOKE + Vector((0, -.01, .012))], 10)
+            mid = Vector((p.x * .45 + YOKE.x * .55, min(p.y, YOKE.y) - .06, (p.z + YOKE.z) / 2 + .02))
+            pts = catmull([a, a + n * .02 + tdir * .02, mid, YOKE + Vector((.0, -.025, .0))], 10)
         elif k in ('LL', 'RL'):          # ankle leads: up along the shin front
             mid = Vector((p.x * .6 + YOKE.x * .4, p.y - .05, (p.z + YOKE.z) / 2))
-            pts = catmull([a, a + n * .03, mid, YOKE + Vector((0, -.015, .01))], 10)
+            pts = catmull([a, a + n * .03, mid, YOKE + Vector((0, -.025, -.012))], 10)
         else:                            # wrist leads: a soft sag to the lap
-            mid = (a + YOKE) / 2 + n * .03 - Vector((0, .02, .05))
-            pts = catmull([a, a + n * .03, mid, YOKE + Vector((0, 0, .012))], 10)
+            mid = (a + YOKE) / 2 + n * .03 - Vector((0, .04, .06))
+            pts = catmull([a, a + n * .03, mid, YOKE + Vector((0, -.025, .012))], 10)
         tube(f'Lead_{k}', pts, .0013, M_LEAD, sides=6)
     # trunk: yoke → over the right thigh → hanging catenary to the ECG device on the cart
     dev_in = Vector((CART.x + .21, CART.y, .88))
-    t0 = YOKE + Vector((-.06, -.08, .0)); t1 = Vector((FL.x - .35, YOKE.y - .25, YOKE.z - .25))
+    t0 = YOKE + Vector((-.05, -.03, -.06)); t1 = Vector((FL.x - .4, YOKE.y - .2, YOKE.z - .3))
     trunk = catmull([YOKE, t0, t1], 8) + hang(t1, dev_in + Vector((.25, 0, .05)), .45, 30)[1:] + [dev_in + Vector((.06, 0, 0)), dev_in]
     tube('TrunkCable', trunk, .0032, dash_mat('trunk_dash', lead_col, base=srgb('#2a2c30'), period=.06) if lead_col else M_WIRE, sides=10)
     # communication cable: ECG device → floor → computer (purple in both states)
-    pc_in = Vector((DESK.x - .05 + .23, DESK.y + .2, .77 + .08))
-    dev_out = Vector((CART.x - .21, CART.y + .05, .88))
-    comm = catmull([dev_out, dev_out + Vector((-.06, 0, -.08)), Vector((CART.x - .3, CART.y + .1, .02)), Vector(((CART.x + DESK.x) / 2, CART.y + .15, .01)),
-                    Vector((pc_in.x + .1, pc_in.y + .05, .02)), pc_in + Vector((.06, 0, -.15)), pc_in], 10)
-    tube('CommCable', comm, .003, dash_mat('comm_dash', C_PURPLE, base=srgb('#2a2c30'), period=.06) if sig != 'off' else M_WIRE, sides=10)
+    # communication cable over the desk top (D-048 fix: it ran under the desk and never read): device → sag → desk → PC
+    pc_in = Vector((DESK.x - .05 + .225, DESK.y - .05, .77 + .08))
+    dev_out = Vector((CART.x - .21, CART.y - .05, .89))
+    comm = catmull([dev_out, dev_out + Vector((-.08, -.04, -.05)), Vector(((CART.x + DESK.x) / 2 + .2, DESK.y - .2, .70)),
+                    Vector((DESK.x + .45, DESK.y - .22, .775)), Vector((DESK.x + .3, DESK.y - .15, .775)), pc_in + Vector((.06, -.02, -.07)), pc_in], 10)
+    tube('CommCable', comm, .0045, dash_mat('comm_dash', C_PURPLE, base=srgb('#2a2c30'), period=.07, strength=7) if sig != 'off' else M_WIRE, sides=10)
     # inside-body signal paths heart → electrode (blue, seen through the frosted H5 body)
     if sig != 'off':
         HB = Vector(HEART.location); M_SIG = dash_mat('signal_dash', C_BLUE, base=None, period=.03, duty=.5, strength=3.5)

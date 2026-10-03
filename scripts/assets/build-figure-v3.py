@@ -1,8 +1,9 @@
 """R1 figure v3 (D-048): deformé body + egg head, seated on the archive ladder, right hand wrapped around the stile,
 10 ECG electrode sites (standard 12-lead) for the lead-wire / signal-path story.
 
-Source: Blender Studio "Human Base Meshes" v1.0.0 (CC0) — GEO-body_male_stylized (candidate B in
-verification/r1-figure-v3-20261002/lineup_sheet.jpg). Helpers come from build-intro-figure.py.
+Source: Blender Studio "Human Base Meshes" v1.0.0 (CC0). Default --source realistic (candidate A, user choice
+2026-10-03); --source stylized keeps candidate B (verification/r1-figure-v3-20261002/lineup_sheet.jpg).
+Helpers (and, for A, the egg head, arm relax and joint measurements) come from build-intro-figure.py.
 
 Outputs (prototype/v2/src/story/intro/assets/; the v2/archive web code still reads body_seated.glb until switched):
   body_seated_v3.glb   posed mesh, shape keys breath + grip, attribute _SLICE (H3b/H5 ring coordinate)
@@ -23,7 +24,8 @@ spec = importlib.util.spec_from_file_location('bif', os.path.join(HERE, 'build-i
 bif = importlib.util.module_from_spec(spec); spec.loader.exec_module(bif)
 ss, verts, set_verts, apply_mod, breath_key, export = bif.ss, bif.verts, bif.set_verts, bif.apply_mod, bif.breath_key, bif.export
 SRC, OUT, TARGET_H = bif.SRC, bif.OUT, bif.TARGET_H
-SRC_H = 1.794                                   # stylized male height in the bundle (metres)
+SOURCE = sys.argv[sys.argv.index('--source') + 1] if '--source' in sys.argv else 'realistic'
+SRC_H = 1.794 if SOURCE == 'stylized' else 1.80    # bundle heights (metres)
 K = TARGET_H / SRC_H
 
 # archive ladder (scripts/blender/build_archive.py): stiles ±0.24 m from the ladder centre, 14° lean, 45 × 70 mm
@@ -97,30 +99,33 @@ SITES = {
     'V1': ((-.035, -.6, 1.265), (-.035, 0, 1.265)), 'V2': ((.035, -.6, 1.265), (.035, 0, 1.265)),
     'V3': ((.075, -.6, 1.24), (.075, 0, 1.24)), 'V4': ((.112, -.6, 1.215), (.112, 0, 1.215)),
 }
-TORSO_X = .185   # source units: at 1.2 m the torso ends at x ≈ .166 and the (relaxed) arm starts at ≈ .20
 
 
 def build(preview_dir=None):
+    global K
+    STY = SOURCE == 'stylized'
     bpy.ops.wm.open_mainfile(filepath=os.path.join(SRC, 'blender-human-base-meshes', 'human_base_meshes_bundle.blend'))
-    o = bpy.data.objects['GEO-body_male_stylized']
+    o = bpy.data.objects['GEO-body_male_stylized' if STY else 'GEO-body_male_realistic']
     for x in list(bpy.data.objects):
         if x != o: bpy.data.objects.remove(x, do_unlink=True)
     o.animation_data_clear()
     o.location = (0, 0, 0)
-    for m in list(o.modifiers): apply_mod(o, m)
+    for m in list(o.modifiers): apply_mod(o, m)                 # stylized: Auto Smooth nodes; realistic: Multires
     o.vertex_groups.clear()
     if o.data.shape_keys: o.shape_key_clear()
-    sd = o.modifiers.new('sub', 'SUBSURF'); sd.levels = 1; apply_mod(o, sd)
-    V0 = verts(o)
-    set_verts(o, relax_arms(egg_head(V0)))
+    if STY:
+        sd = o.modifiers.new('sub', 'SUBSURF'); sd.levels = 1; apply_mod(o, sd)
+        set_verts(o, relax_arms(egg_head(verts(o))))
+    else:
+        set_verts(o, bif.relax_arms(bif.egg_head(verts(o))))     # same head/arms as v2 (P1)
     r = o.modifiers.new('vox', 'REMESH'); r.mode = 'VOXEL'; r.voxel_size = .0032; apply_mod(o, r)
-    vg = o.vertex_groups.new(name='seam')
+    vg = o.vertex_groups.new(name='seam'); zc, zw = (1.54, .08) if STY else (1.585, .075)
     for i, v in enumerate(o.data.vertices):
-        if 1.46 < v.co.z < 1.62: vg.add([i], float(1 - abs(v.co.z - 1.54) / .08), 'REPLACE')
+        if zc - zw < v.co.z < zc + zw: vg.add([i], float(1 - abs(v.co.z - zc) / zw), 'REPLACE')
     sm = o.modifiers.new('relax', 'SMOOTH'); sm.factor = .8; sm.iterations = 12; sm.vertex_group = 'seam'; apply_mod(o, sm)
     o.vertex_groups.clear()
-    dec = o.modifiers.new('dec', 'DECIMATE'); dec.ratio = .22; apply_mod(o, dec)
-    V = verts(o); V[:, 2] -= V[:, 2].min(); V *= K; set_verts(o, V)
+    dec = o.modifiers.new('dec', 'DECIMATE'); dec.ratio = .22 if STY else .2; apply_mod(o, dec)
+    V = verts(o); V[:, 2] -= V[:, 2].min(); K = TARGET_H / V[:, 2].max(); V *= K; set_verts(o, V)
     bpy.context.view_layer.objects.active = o; bpy.ops.object.shade_smooth()
     for name in ('sharp_edge', 'sharp_face'):
         if name in o.data.attributes: o.data.attributes.remove(o.data.attributes[name])
@@ -129,7 +134,7 @@ def build(preview_dir=None):
     o.name = 'body_v3'
     Vr = verts(o)
     # heart: behind the sternum at the 4th–5th rib, a little to the person's left (same rule as v2)
-    zh = 1.235 * K
+    zh = 1.235 * K if STY else .715 * TARGET_H
     ring = Vr[(np.abs(Vr[:, 2] - zh) < .01) & (np.abs(Vr[:, 0]) < .05)]
     heart = np.array([.025, ring[:, 1].min() + .075, zh])
     # electrode sites on the rest mesh → vertex indices (they ride the pose with the skin)
@@ -140,11 +145,13 @@ def build(preview_dir=None):
         a, b = Vector(a) * K, Vector(b) * K
         hit = bvh.ray_cast(a, (b - a).normalized())
         site_idx[nm] = int(np.argmin(np.linalg.norm(Vr - np.array(hit[0]), axis=1)))
-    zl = 1.215 * K; band = Vr[(np.abs(Vr[:, 2] - zl) < .008) & (np.abs(Vr[:, 0]) < TORSO_X * K) & (Vr[:, 0] > 0)]
-    v5 = band[(band[:, 0] > .125 * K) & (band[:, 0] < .145 * K)]; v5 = v5[np.argmin(v5[:, 1])]          # anterior axillary
+    zl = 1.215 * K; band = Vr[(np.abs(Vr[:, 2] - zl) < .008) & (Vr[:, 0] > 0)]
+    xs = np.sort(band[:, 0]); g = np.argmax(np.diff(xs)); torso_x = (xs[g] + xs[g + 1]) / 2   # torso ends at the widest gap
+    band = band[band[:, 0] < torso_x]; tx = band[:, 0].max()
+    xm = (Vr[site_idx['V4'], 0] + tx) / 2; v5 = band[np.abs(band[:, 0] - xm) < .008]; v5 = v5[np.argmin(v5[:, 1])]   # anterior axillary: halfway V4 → side
     v6 = band[np.abs(band[:, 1] - .0) < .03]; v6 = v6[np.argmax(v6[:, 0])]                              # mid-axillary
     for nm, p in (('V5', v5), ('V6', v6)): site_idx[nm] = int(np.argmin(np.linalg.norm(Vr - p, axis=1)))
-    B = bones()
+    B = bones() if STY else bif._bones()                       # realistic joints were measured on the 1.666 m mesh (P1)
     for s, n, tag in ((1, 'L', 'LA'), (-1, 'R', 'RA')):          # inner forearm, 4 cm above the wrist crease
         h, t = np.array(B[f'fore.{n}'][0]), np.array(B[f'fore.{n}'][1]); p = t + (h - t) * .2
         c = Vr[np.linalg.norm(Vr - p, axis=1) < .06]; d = c - p; d[:, 0] *= -s            # medial (toward the body) side
@@ -286,7 +293,7 @@ def build(preview_dir=None):
     out = {'seat': [round(float(x), 4) for x in seat], 'heart_b': [round(x, 4) for x in hb_], 'heart_q_wxyz': [round(x, 5) for x in q],
            'hand_r': [round(float(x), 4) for x in grip_pt], 'electrodes': electrodes, 'joints': joints,
            'stile': {'axis_point': [round(x, 4) for x in A0], 'axis_dir': [round(x, 4) for x in u], 'r': STILE_R, 'dx': STILE_DX},
-           'source': 'blender-human-base-meshes GEO-body_male_stylized (CC0)'}
+           'source': f"blender-human-base-meshes GEO-body_male_{SOURCE} (CC0)"}
     for nm in ('rig', 'body_v3', 'ik_t', 'ik_p'):
         if nm in bpy.data.objects: bpy.data.objects.remove(bpy.data.objects[nm], do_unlink=True)
     export(so, os.path.join(OUT, 'body_seated_v3.glb'), morphs=True)

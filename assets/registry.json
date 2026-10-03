@@ -1362,7 +1362,7 @@
     },
     {
       "id": "blender-human-base-meshes",
-      "title": "Blender Studio Human Base Meshes bundle v1.0.0 (GEO-body_male_realistic v2; GEO-body_male_stylized v3)",
+      "title": "Blender Studio Human Base Meshes bundle v1.0.0 (GEO-body_male_realistic: v2 and v3)",
       "kind": "model",
       "status": "active",
       "source": {
@@ -1383,7 +1383,7 @@
         "prototype/v2 R1 intro"
       ],
       "review": "Blender Studio release, CC0 (archive.org licenseurl publicdomain/zero/1.0). Featureless mannequin head by user request 2026-10-01.",
-      "processing_v3": "scripts/assets/build-figure-v3.py (bpy): GEO-body_male_stylized, modifiers applied, subsurf 1, egg head, arms relaxed 9°, voxel remesh 3.2 mm, decimate .22, 1.666 m, rig + seated on the archive ladder, right hand wrapped around the stile (geometric wrap), keys breath + grip, _SLICE → prototype/v2/src/story/intro/assets/body_seated_v3.glb (D-048)",
+      "processing_v3": "scripts/assets/build-figure-v3.py (bpy): GEO-body_male_realistic (user choice A 2026-10-03; --source stylized keeps candidate B), multires applied, egg head, arms relaxed 6°, voxel remesh 3.2 mm, decimate .2, 1.666 m, rig + seated on the archive ladder, right hand wrapped around the stile (geometric wrap), keys breath + grip, _SLICE → prototype/v2/src/story/intro/assets/body_seated_v3.glb (D-048)",
       "processed_v3": "prototype/v2/src/story/intro/assets/body_seated_v3.glb"
     },
     {

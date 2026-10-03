@@ -427,5 +427,16 @@
       "report": "docs/uiux_system/handoffs/R1_AUTOPILOT_REPORT_2026-09-27.md",
       "auto_decisions": "docs/uiux_system/rounds/R1/AUTOPILOT_DECISIONS.md"
     }
+  },
+  "scenario_feedback_2026_10_03": {
+    "id": "SCENARIO-ABC-20261003",
+    "status": "docs_complete_pending_user_review",
+    "scope": "A/B TUNE, B frames, scoped reference mining, new C, creative rules and evolving gates",
+    "index": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_ABC_feedback_plan_2026-10-03.md",
+    "next": "User reviews A/B/C -> revisions and production order -> final feedback -> mockups -> previs -> scene implementation loops",
+    "product_code_changed": false,
+    "mockups_generated": false,
+    "accepted_feedback_analysis": "closed",
+    "base_sha": "0783c45"
   }
 }

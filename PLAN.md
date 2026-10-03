@@ -231,3 +231,11 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-09-30 **파형 파트 구현(D-043)**: G3 심전도 용지 격자(정사각 칸, 번짐 마스크, 머리 뒤 격자 잔광), T2 R 피크마다 4분의 1 전환 + 라벨 인계 + 저장 수치(SNR 0 → 12.44 dB · cc 0.971, 기호만 뒤섞임), L1 두 층 라벨(Pretendard + IBM Plex Mono, OFL 번들), L2 R 주석, P1 층 시차(라벨 0.85 · 파형 1.45). 상시 규칙 D-044(글 요소는 항상 레퍼런스로 설계·제안). REF-008 EFX-008-03(격자 비교 기준). 보드 라운드 2(도입부 다른 글 요소) 제시. e2e 3+5 PASS. **다음: 사용자 로컬 확인 → T3 판단·라운드 2 반응 → 지구→사람→심장 피드백.**
 - 2026-09-30 파형 연출 탐색을 사용자 참여 별도 Claude Code 세션으로 분리: 브리프 `docs/uiux_system/handoffs/EXPLORE_BRIEF_WAVE_DISPLAY_2026-09-30.md`(REF-011–019 대역, EXPLORE-WAVE-DISPLAY.md, 기록은 초안만). 결과는 사용자 요청 시 이 세션이 병합.
 - 2026-09-28 Windows 로컬 실행 정비(O-005): `npm run doctor / story / story:check / spike -- <이름> / py -- … / py:setup / browsers / v2:prepare`, VS Code 작업(cmd.exe), `docs/LOCAL_WINDOWS.md`, `tests/portability.test.cjs`(npm test). `prepare-v2`가 `methods.json`을 더는 덮어쓰지 않음(R-a 해소). Windows 실기 확인은 사용자 대기.
+
+## 2026-10-03 별도 시나리오 피드백 작업
+
+- SCENARIO-ABC-20261003: 공통 규칙v3 / A-T1–7·B-T1–7 / B 상세판 / 신규 C 신호 입자 처리실 / 선택효과 마이닝 작성.
+- 사용자 검토 전. A/B=TUNE, C=신규초안. 도입부/Story 스펙터클 허용, 비교정확성필수(D-049).
+- 다음: A/B/C 검토·수정 → 사용자 제작순위 → 최종피드백 → 목업 → 예비영상 → 씬별구현/피드백/신규아이디어/검증.
+- 기존 R1-INTRO 구현 상태와 승인된 H5/3전극/서고 배치를 이 문서 작업으로 대체하지 않음. 제품 코드 변경 없음.
+- 색인: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_ABC_feedback_plan_2026-10-03.md.

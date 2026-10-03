@@ -28,3 +28,7 @@ CASE 문서는 F/D/O/R 운영 기록을 복사하는 파일이 아니라, 사용
 - [CASE-004 발췌](CASE-004_TRANSCRIPT_EXCERPTS.md) — primary handoff 발췌와 원문 부재 표시
 
 D/R은 CASE 연결 또는 `10_RECORD_KEEPING.md`에 따른 구체적 비연결 사유를 가진다. Dual Director 실행 시스템은 별도 승인 대기다.
+
+## 2026-10-03 시나리오 범위와 근거 보강
+
+- [CASE-007](CASE-007_SCENARIO_SCOPE_AND_REFERENCE_PROVENANCE.md): Intro/Story 자유도, B의 원본 귀속 정정, A/B TUNE와 C/시스템/마이닝의 분리. D-049/F-031/R-019.

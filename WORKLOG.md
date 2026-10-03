@@ -415,3 +415,9 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-10-02 D-047 hybrid work mode (user decision); first delegation brief handoffs/IMPL_BRIEF_ARCHIVE_WEB_2026-10-02.md (archive web verification T1-T9, return rule for story/scene changes). Archive assets move to tracked src/story/intro/assets/archive/ (prototype/v2/public is gitignored).
 - 2026-10-02 H3b+H3c vs H5 stills: H5 reads form better; grip unreadable in both (mesh/pose). D-048: user chose H5 + mesh remake + ECG electrodes/wires colour rule (red noise, blue heart→electrode, purple comm, moving neon dashes). Candidate lineup A–D (CC0/CC BY), v3 build script (egg head, stile grip by geometric wrap, rig keys), archive v3 electrodes/wires/dash stills.
 - 2026-10-03 user: source A confirmed; fixes 1–3 (floor power strip, comm cable over desk, yoke at right waist); 10 electrodes → 3-lead (RA/LA infraclavicular, LL left lower abdomen). Final stills verification/r1-figure-v3-20261002/v3_archive_sheet.jpg. Bake excludes rig objects. Brief 2 handoffs/IMPL_BRIEF_FIGURE_V3_WEB_2026-10-03.md (absorbs brief 1 if not started).
+
+## 2026-10-03 — A/B TUNE·시스템 보완·마이닝·C를 분리 기록
+
+최신 기준 c19af88(3전극갱신) 확인. 문서전용 codex/scenario-abc-feedback-20261003에서 A/B수정항목, B상세프레임, 신규C, 규칙v3, 실제캡처/공개소스/제작자근거별 마이닝을 기록. D-049/F-031/R-019/CASE-007와 REF-009심화·011–013. 외부원본코드/화면/에셋repo미포함. 이미지생성/제품구현/순위결정전. 기록검사와원격결과는아래체크포인트에서기록.
+
+검증 체크포인트: `npm run records:check` PASS(103 F/D/O/R 및 CASE/REF 구조), 사용자 문서 내부 링크20개 PASS. 저장 직전 원격 0783c45의 인체 v3/3전극 웹 브리프와 bake 수정까지 반영했고 최신 WORKLOG·WORK_STATE 내용 보존. A/B TUNE, C 검토 전; 생성 목업/제품 구현 없음. 이 체크는 시각 품질/모션/목표 PC 결과가 아니다.

@@ -1408,6 +1408,137 @@
         "prototype/v2 R1 intro"
       ],
       "review": "CC BY 4.0 (cdn.humanatlas.io metadata). Attribution must appear in the exhibit credits. Cite Ackerman 1998 / Spitzer et al. 1996 per NIH 3D entry."
+    },
+    {
+      "id": "model-ph-decorative-book-set-01-fbx-1k",
+      "title": "Poly Haven — Decorative Book Set 01 (FBX 1k, quality reference only)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "decorative_book_set_01",
+        "asset_type": "fbx",
+        "resolution": "1k",
+        "format": "fbx",
+        "page": "https://polyhaven.com/a/decorative_book_set_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/decorative_book_set_01/decorative_book_set_01_1k.fbx"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/model-ph-decorative-book-set-01-fbx-1k.fbx",
+        "sha256": "db588942f2bce2035223367c3b3b518953ebba89726259fb473ebdc9836a62d5",
+        "bytes": 16098076
+      },
+      "processing": "none (reference render only; closed single shell, not splittable into opening boards)",
+      "used_by": [
+        "prototype/practice/attic-fork (herobook) — side-by-side quality reference; mesh not shipped"
+      ],
+      "review": "2026-10-04 lookdev loop R1 asset research (hero book). Poly Haven/ambientCG CC0; md5/size checked at download."
+    },
+    {
+      "id": "tex-ph-book-hardcover-01-diff-2k",
+      "title": "Poly Haven — book_hardcover_01 atlas diffuse (2k jpg: page edges + kraft endpaper)",
+      "kind": "image",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "decorative_book_set_01",
+        "asset_type": "book_hardcover_01_diff",
+        "resolution": "2k",
+        "format": "jpg",
+        "page": "https://polyhaven.com/a/decorative_book_set_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/decorative_book_set_01/book_hardcover_01_diff_2k.jpg"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/tex-ph-book-hardcover-01-diff-2k.jpg",
+        "sha256": "7eb44b50e00da2236828c54edb58cd4b9983fa52abf86e9112ad9d8e66751819",
+        "bytes": 624422
+      },
+      "processing": "crop page-edge strip and endpaper panel; resize 1k",
+      "used_by": [
+        "prototype/practice/attic-fork (herobook) — page fore-edge + endpaper"
+      ],
+      "review": "2026-10-04 lookdev loop R1 asset research (hero book). Poly Haven/ambientCG CC0; md5/size checked at download."
+    },
+    {
+      "id": "tex-ph-book-hardcover-01-nor-gl-2k",
+      "title": "Poly Haven — book_hardcover_01 atlas normal GL (2k jpg)",
+      "kind": "image",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "decorative_book_set_01",
+        "asset_type": "book_hardcover_01_nor_gl",
+        "resolution": "2k",
+        "format": "jpg",
+        "page": "https://polyhaven.com/a/decorative_book_set_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/decorative_book_set_01/book_hardcover_01_nor_gl_2k.jpg"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/tex-ph-book-hardcover-01-nor-gl-2k.jpg",
+        "sha256": "2552fc7f4b33c9a2cd9cca080361b3296c1c10d0cd726274095d884339f99e14",
+        "bytes": 357360
+      },
+      "processing": "crop page-edge strip; resize 1k",
+      "used_by": [
+        "prototype/practice/attic-fork (herobook) — page fore-edge normal"
+      ],
+      "review": "2026-10-04 lookdev loop R1 asset research (hero book). Poly Haven/ambientCG CC0; md5/size checked at download."
+    },
+    {
+      "id": "mat-ambientcg-leather026-1k",
+      "title": "ambientCG — Leather026 (1K JPG PBR set, zip) — book cover leather",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "ambientcg",
+        "asset_id": "Leather026",
+        "attribute": "1K-JPG",
+        "page": "https://ambientcg.com/view?id=Leather026",
+        "resolved_url": "https://ambientcg.com/get?file=Leather026_1K-JPG.zip"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/mat-ambientcg-leather026-1k.zip",
+        "sha256": "6af2f446f9855c641da2a072f128d30965431ffae3306d22d75dbfff99c04646",
+        "bytes": 6841165
+      },
+      "processing": "unzip Color/NormalGL/Roughness; tint in shader; resize as needed",
+      "used_by": [
+        "prototype/practice/attic-fork (herobook) — cover"
+      ],
+      "review": "2026-10-04 lookdev loop R1 asset research (hero book). Poly Haven/ambientCG CC0; md5/size checked at download."
+    },
+    {
+      "id": "mat-ambientcg-paper003-1k",
+      "title": "ambientCG — Paper003 (1K JPG PBR set, zip) — page paper micro texture",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "ambientcg",
+        "asset_id": "Paper003",
+        "attribute": "1K-JPG",
+        "page": "https://ambientcg.com/view?id=Paper003",
+        "resolved_url": "https://ambientcg.com/get?file=Paper003_1K-JPG.zip"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/mat-ambientcg-paper003-1k.zip",
+        "sha256": "90b44da4c960ba044b37c26713c50ef1986687a522f1bbe847aeb9b471409040",
+        "bytes": 2545301
+      },
+      "processing": "unzip Color/NormalGL/Roughness",
+      "used_by": [
+        "prototype/practice/attic-fork (herobook) — pages"
+      ],
+      "review": "2026-10-04 lookdev loop R1 asset research (hero book). Poly Haven/ambientCG CC0; md5/size checked at download."
     }
   ],
   "rejected": [

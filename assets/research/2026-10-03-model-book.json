@@ -1,0 +1,189 @@
+{
+  "query": "book",
+  "kind": "model",
+  "date": "2026-10-03",
+  "sources": {
+    "polyhaven": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Shelf 01",
+          "page": "https://polyhaven.com/a/Shelf_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "Shelf_01"
+          }
+        },
+        {
+          "title": "Binder Notebook",
+          "page": "https://polyhaven.com/a/binder_notebook",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "binder_notebook"
+          }
+        },
+        {
+          "title": "Book Encyclopedia Set 01",
+          "page": "https://polyhaven.com/a/book_encyclopedia_set_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "book_encyclopedia_set_01"
+          }
+        },
+        {
+          "title": "Classic Laptop",
+          "page": "https://polyhaven.com/a/classic_laptop",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "classic_laptop"
+          }
+        },
+        {
+          "title": "Decorative Book Set 01",
+          "page": "https://polyhaven.com/a/decorative_book_set_01",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "decorative_book_set_01"
+          }
+        },
+        {
+          "title": "Painted Wooden Cabinet 02",
+          "page": "https://polyhaven.com/a/painted_wooden_cabinet_02",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "painted_wooden_cabinet_02"
+          }
+        }
+      ]
+    },
+    "ambientcg": {
+      "status": "no-match",
+      "access": "api-auto",
+      "candidates": []
+    },
+    "kenney": {
+      "status": "no-match",
+      "access": "scripted",
+      "candidates": []
+    },
+    "quaternius": {
+      "status": "no-match",
+      "access": "scripted",
+      "candidates": []
+    },
+    "threedscans": {
+      "status": "no-match",
+      "access": "scripted",
+      "candidates": []
+    },
+    "opengameart": {
+      "status": "ok",
+      "access": "scripted",
+      "candidates": [
+        {
+          "title": "fantasy-book",
+          "page": "https://opengameart.org/content/fantasy-book",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "book",
+          "page": "https://opengameart.org/content/book",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "book-0",
+          "page": "https://opengameart.org/content/book-0",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "book-cover",
+          "page": "https://opengameart.org/content/book-cover",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "book-animation",
+          "page": "https://opengameart.org/content/book-animation",
+          "licence": "per item — check page"
+        },
+        {
+          "title": "old-book",
+          "page": "https://opengameart.org/content/old-book",
+          "licence": "per item — check page"
+        }
+      ]
+    },
+    "sketchfab": {
+      "status": "candidates-need-login",
+      "access": "auth",
+      "candidates": [
+        {
+          "title": "Paladin's book",
+          "page": "https://sketchfab.com/3d-models/none-09544c73158c4947815ff6d4c57c6e2e",
+          "licence": "CC Attribution-NonCommercial",
+          "faces": 2166,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "09544c73158c4947815ff6d4c57c6e2e"
+          }
+        },
+        {
+          "title": "Magic Book [Stylized]",
+          "page": "https://sketchfab.com/3d-models/none-6aa861a786824ff0b9553b851422f09a",
+          "licence": "CC Attribution",
+          "faces": 6786,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "6aa861a786824ff0b9553b851422f09a"
+          }
+        },
+        {
+          "title": "Medieval Fantasy Book",
+          "page": "https://sketchfab.com/3d-models/none-06d5a80a04fc4c5ab552759e9a97d91a",
+          "licence": "CC Attribution",
+          "faces": 54788,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "06d5a80a04fc4c5ab552759e9a97d91a"
+          }
+        },
+        {
+          "title": "Ornate Book",
+          "page": "https://sketchfab.com/3d-models/none-f55f8ffd11ef48629962d0f178039849",
+          "licence": "CC Attribution",
+          "faces": 10971,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "f55f8ffd11ef48629962d0f178039849"
+          }
+        },
+        {
+          "title": "Chained (medieval) library book",
+          "page": "https://sketchfab.com/3d-models/none-8e4a74f2cb4c4101bb0cd843445ef23e",
+          "licence": "CC Attribution",
+          "faces": 220320,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "8e4a74f2cb4c4101bb0cd843445ef23e"
+          }
+        },
+        {
+          "title": "Magic Book of Eden",
+          "page": "https://sketchfab.com/3d-models/none-5115ffc67b8d4ab8abb807a959ceb603",
+          "licence": "CC Attribution",
+          "faces": 254,
+          "fetch": {
+            "type": "sketchfab",
+            "uid": "5115ffc67b8d4ab8abb807a959ceb603"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "query": "fabric",
+  "kind": "material",
+  "date": "2026-10-03",
+  "sources": {
+    "polyhaven": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Bi Stretch",
+          "page": "https://polyhaven.com/a/bi_stretch",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "bi_stretch"
+          }
+        },
+        {
+          "title": "Book Pattern",
+          "page": "https://polyhaven.com/a/book_pattern",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "book_pattern"
+          }
+        },
+        {
+          "title": "Brown Leather",
+          "page": "https://polyhaven.com/a/brown_leather",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "brown_leather"
+          }
+        },
+        {
+          "title": "Caban",
+          "page": "https://polyhaven.com/a/caban",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "caban"
+          }
+        },
+        {
+          "title": "Cotton Jersey",
+          "page": "https://polyhaven.com/a/cotton_jersey",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "cotton_jersey"
+          }
+        },
+        {
+          "title": "Crepe Georgette",
+          "page": "https://polyhaven.com/a/crepe_georgette",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "crepe_georgette"
+          }
+        }
+      ]
+    },
+    "ambientcg": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Carpet 016",
+          "page": "https://ambientcg.com/view?id=Carpet016",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Carpet016",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Fabric 081 C",
+          "page": "https://ambientcg.com/view?id=Fabric081C",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Fabric081C",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Fabric 061",
+          "page": "https://ambientcg.com/view?id=Fabric061",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Fabric061",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Fabric 066",
+          "page": "https://ambientcg.com/view?id=Fabric066",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Fabric066",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Fabric 083",
+          "page": "https://ambientcg.com/view?id=Fabric083",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Fabric083",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Fabric 030",
+          "page": "https://ambientcg.com/view?id=Fabric030",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Fabric030",
+            "attribute": "1K-JPG"
+          }
+        }
+      ]
+    }
+  }
+}

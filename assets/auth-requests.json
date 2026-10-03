@@ -70,6 +70,24 @@
         "Bookshelf — CC Attribution — https://sketchfab.com/3d-models/none-964ae9ee60394ca3bad68d5d4a4c6b04",
         "Victorian Bookshelf — CC Attribution-NonCommercial — https://sketchfab.com/3d-models/none-9f548046646f404782b8838ec14932f8"
       ]
+    },
+    {
+      "source": "sketchfab",
+      "env": "SKETCHFAB_API_TOKEN",
+      "query": "book",
+      "kind": "model",
+      "date": "2026-10-03",
+      "status": "not-needed",
+      "why": "Sketchfab: 6 downloadable candidates found; download needs a token — 2026-10-04: CC0 sources (Poly Haven/ambientCG) were sufficient; no token needed",
+      "how": "Search is public; download (/v3/models/{uid}/download) returns 401 without a token. Token: sketchfab.com → Settings → Password & API.",
+      "candidates": [
+        "Paladin's book — CC Attribution-NonCommercial — https://sketchfab.com/3d-models/none-09544c73158c4947815ff6d4c57c6e2e",
+        "Magic Book [Stylized] — CC Attribution — https://sketchfab.com/3d-models/none-6aa861a786824ff0b9553b851422f09a",
+        "Medieval Fantasy Book — CC Attribution — https://sketchfab.com/3d-models/none-06d5a80a04fc4c5ab552759e9a97d91a",
+        "Ornate Book — CC Attribution — https://sketchfab.com/3d-models/none-f55f8ffd11ef48629962d0f178039849",
+        "Chained (medieval) library book — CC Attribution — https://sketchfab.com/3d-models/none-8e4a74f2cb4c4101bb0cd843445ef23e",
+        "Magic Book of Eden — CC Attribution — https://sketchfab.com/3d-models/none-5115ffc67b8d4ab8abb807a959ceb603"
+      ]
     }
   ]
 }

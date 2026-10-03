@@ -1,0 +1,88 @@
+{
+  "query": "paper",
+  "kind": "material",
+  "date": "2026-10-03",
+  "sources": {
+    "polyhaven": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Decrepit Wallpaper",
+          "page": "https://polyhaven.com/a/decrepit_wallpaper",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "decrepit_wallpaper"
+          }
+        }
+      ]
+    },
+    "ambientcg": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Paper 006",
+          "page": "https://ambientcg.com/view?id=Paper006",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Paper006",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Paper 005",
+          "page": "https://ambientcg.com/view?id=Paper005",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Paper005",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Paper 001",
+          "page": "https://ambientcg.com/view?id=Paper001",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Paper001",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Paper 003",
+          "page": "https://ambientcg.com/view?id=Paper003",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Paper003",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Cardboard 002",
+          "page": "https://ambientcg.com/view?id=Cardboard002",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Cardboard002",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Paper 004",
+          "page": "https://ambientcg.com/view?id=Paper004",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Paper004",
+            "attribute": "1K-JPG"
+          }
+        }
+      ]
+    }
+  }
+}

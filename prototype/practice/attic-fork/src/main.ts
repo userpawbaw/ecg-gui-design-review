@@ -1,17 +1,23 @@
 // Practice build (D-047). The ORIGINAL REF-002 home scene loaded as-is (local-only public/_original), extended step by step:
-//   time of day (tod) · warm lamps + Ha room pulse · hero book on the original bookcase · book portal → page world (Hb).
+//   time of day (tod) · warm lamps + Ha room pulse · hero book (hand-built hardcover, book2.ts) on the original bookcase · the same scene
+//   becomes the stage: slit key light (rig.ts), page turn, ECG plate (trace.ts), anatomical heart (heartmesh.ts), pulse FX (pulsefx.ts).
+//   The separate page world is legacy (?pw=1) pending D-048 approval.
 // Structure ported from the original (EFX-002-01/02/03): bake-textured meshes matched by node name, glb camera,
 // 3-level camera hierarchy (model → pointer → scroll), exp-smoothed pointer look (±0.75° / ±0.2°), scroll descent.
 // URL: ?p=0..3 scroll phase (0–1 gallery · 1–1.5 descent to the bookcase · 1.5–2 book pulled out · 2–2.5 cover opens ·
-//      2.5–3 page world) · ?story=1 (night until the book opens, dawn arrives as the noise clears) · ?tod=0..1
+//      2.4–2.8 page turn · 2.5–3 camera looks down, book lies back: ECG plate + heart pop-up) · ?story=1 (night until the book opens, dawn arrives as the noise clears) · ?tod=0..1
 //      (day · dusk .25 · night .5 · dawn .75) · ?cycle=sec · ?clock=sec (freeze the beat clock) · ?ha=0..1.5 · ?lamps=0 · ?hud=0
 import * as THREE from 'three';
 import {makeLoaders,O} from './loaders';
 import {sample,apply,graded,type Tod} from './tod';
-import {makeLamps,setHA} from './lamps';
+import {makeLamps,setHA,HA} from './lamps';
 import {loadEcg,pulse,type Ecg} from './ecg';
-import {makeHeroBook,BOOK} from './herobook';
+import {makeHeroBook,BOOK,SPREAD,type HeroBook} from './book2';
+import {makePulseFx,type PulseFx} from './pulsefx';
+import {makeRig,type RigState} from './rig';
+import {createBeatMix,prevR} from './beatmix';
 import {makePageWorld,type PageWorld} from './pageworld';
+import {buildHeartGeometry,heartMaterial} from './heartmesh';
 
 const q=new URLSearchParams(location.search);
 const canvas=document.getElementById('c') as HTMLCanvasElement,pwCanvas=document.getElementById('pw') as HTMLCanvasElement,hud=document.getElementById('hud')!;
@@ -41,11 +47,11 @@ const sky={top:{value:todNow.top},bot:{value:todNow.bot}};
  const mesh=new THREE.Mesh(new THREE.SphereGeometry(1,16,16),m);mesh.position.set(-10,3,0);mesh.scale.set(16,4,16);scene.add(mesh);
 }
 setHA(q.has('ha')?Number(q.get('ha')):1);
-let ecg:Ecg|null=null,pw:PageWorld|null=null;
+let ecg:Ecg|null=null,pw:PageWorld|null=null;let fx:PulseFx|null=null,heartAO:THREE.Mesh|null=null;let heartMesh:THREE.Mesh|null=null,heartZ=.5;const heartRoot=new THREE.Group(),HEART_H=.2;
 const lamps=makeLamps();if(q.get('lamps')!=='0')scene.add(lamps.group);
 
 // hero book on the original bookcase: middle row, between the neighbouring books (measured by raycast: boards y −1.43/−1.87, back wall x 6.24)
-const book=makeHeroBook();scene.add(book.group);
+let book!:HeroBook;const bookPivot=new THREE.Group();scene.add(bookPivot);const rigPost=!q.has('nopost'),beatMix=createBeatMix(4);let rig!:ReturnType<typeof makeRig>;
 const SHELF={x:6.62,y:-1.87+BOOK.H/2+.004,z:-.05},PRESENT={x:7.62,y:-1.6,z:.2};
 
 // camera hierarchy: modelCamera (glb camera transform) → pointer → scroll → camera
@@ -57,7 +63,7 @@ const GLB_CAM=new THREE.Vector3();   // filled from the glb camera node (14.76, 
 const pMax=3,state={p:q.has('p')?Number(q.get('p')):0,pt:q.has('p')?Number(q.get('p')):0,mx:0,my:0};
 addEventListener('pointermove',e=>{state.mx=e.clientX/innerWidth*2-1;state.my=e.clientY/innerHeight*2-1;});
 addEventListener('wheel',e=>{if(q.has('p'))return;state.pt=Math.max(0,Math.min(pMax,state.pt+e.deltaY*.0006));},{passive:true});
-function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();pw?.resize();}
+function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();pw?.resize();rig?.resize(innerWidth,innerHeight,renderer.getPixelRatio());}
 addEventListener('resize',resize);resize();
 
 // baked beauty textures + grade (night curve, warm tint, exposure) injected before the opaque output
@@ -79,8 +85,12 @@ async function init(){
   camera.fov=c.fov||22.9; // three stores fov in degrees already (glb yfov 0.3996 rad = 22.9°)
   if(c.parent)c.parent.remove(c);}
  camera.updateProjectionMatrix();hud.textContent='';ecg=await loadEcg();
- book.attach(ecg);pw=await makePageWorld(pwCanvas,ecg);
- (window as any).__fork={beatTimes:()=>ecg?ecg.beats.map(b=>(b-ecg!.start)/ecg!.fs):[],THREE,scene,camera,modelCamera,pointer,scroll,root,lamps,book,state,sample,apply,get ecg(){return ecg;}};
+ book=await makeHeroBook();bookPivot.add(book.group);book.attach(ecg);if(q.has('pw'))pw=await makePageWorld(pwCanvas,ecg);
+ heartMesh=new THREE.Mesh(await buildHeartGeometry(),heartMaterial());heartMesh.castShadow=true;heartMesh.receiveShadow=true;{heartMesh.geometry.computeBoundingBox();const z=new THREE.Vector3();heartMesh.geometry.boundingBox!.getSize(z);heartZ=z.z;}heartRoot.add(heartMesh);{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d')!;const q=g.createRadialGradient(64,64,10,64,64,64);q.addColorStop(0,'rgba(20,6,6,.8)');q.addColorStop(1,'rgba(20,6,6,0)');g.fillStyle=q;g.fillRect(0,0,128,128);
+  heartAO=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false,toneMapped:false,opacity:0}));heartAO.renderOrder=6;heartRoot.add(heartAO);}heartRoot.visible=false;book.anchorL.add(heartRoot);
+ fx=makePulseFx({w:2*SPREAD.PWD+.012,h:SPREAD.PHT},new THREE.Vector2(-SPREAD.DP/2,-.02));fx.ring.position.set(SPREAD.DP/2,0,.0016);book.anchorL.add(fx.ring);heartRoot.add(fx.motes);
+ rig=makeRig(renderer,scene,camera,{post:rigPost,shadow:!q.has('noshadow')});resize();
+ (window as any).__fork={rigOf:()=>rig,bookPivot,beatTimes:()=>ecg?ecg.beats.map(b=>(b-ecg!.start)/ecg!.fs):[],THREE,scene,camera,modelCamera,pointer,scroll,root,lamps,book,state,sample,apply,get ecg(){return ecg;}};
  tick();
 }
 
@@ -97,17 +107,27 @@ function placeCamera(p:number){
   x=lerp(GLB_CAM.x-4,9.1,a);y=lerp(-1.64,-1.58,a);z=lerp(0,.05,a);fov=lerp(BASE_FOV,24,a);
   x=lerp(x,9.25,b);y=lerp(y,-1.56,b);z=lerp(z,.2,b);fov=lerp(fov,28,b);
  }
- scroll.position.set(-z,y-GLB_CAM.y,x-GLB_CAM.x);
+ // stage c (2.5–3): the camera rises and looks down while the book lies back — one continuous move in the same scene
+ const c=smooth((p-2.5)/.5);x=lerp(x,9.0,c);y=lerp(y,-1.04,c);z=lerp(z,.2,c);fov=lerp(fov,30,c);
+ scroll.position.set(-z,y-GLB_CAM.y,x-GLB_CAM.x);scroll.rotation.x=-lerp(0,.39,c);
  if(Math.abs(camera.fov-fov)>1e-3){camera.fov=fov;camera.updateProjectionMatrix();}
 }
+const SHELF_Y=-1.87;
+const bookInfo={pull:0,show:0,under:null as THREE.Object3D|null};
 function placeBook(p:number,beat:number,time:number,lampLevel:number){
- const pull=smooth((p-1.62)/.34),open=smooth((p-2.0)/.4);
- const move=smooth(pull/.5),turn=smooth((pull-.35)/.65);
- book.group.position.set(lerp(SHELF.x,PRESENT.x,move),lerp(SHELF.y,PRESENT.y,smooth((pull-.3)/.7)),lerp(SHELF.z,PRESENT.z,turn));
- book.group.rotation.y=lerp(Math.PI,Math.PI/2,turn);
- const s=lerp(1,1.3,smooth(pull));book.group.scale.setScalar(s);
- book.set(open,beat,time);if(open>.02)book.trace(time,smooth((p-2.7)/.3),Math.min(1,beat*.9));
+ const pull=smooth((p-1.62)/.34),open=smooth((p-2.0)/.4),turn=smooth((p-2.42)/.36);
+ const move=smooth(pull/.5),rot=smooth((pull-.35)/.65);
+ bookPivot.position.set(lerp(SHELF.x,PRESENT.x,move),lerp(SHELF.y,PRESENT.y,smooth((pull-.3)/.7)),lerp(SHELF.z,PRESENT.z,rot));
+ book.group.rotation.y=lerp(Math.PI,Math.PI/2,rot);
+ bookPivot.scale.setScalar(lerp(1,1.3,smooth(pull))*lerp(1,1.12,smooth((p-2.5)/.5)));bookPivot.rotation.z=lerp(0,.72,smooth((p-2.5)/.5));
+ book.set({open,turn,beat,time});
+ if(ecg){beatMix.update(smooth((p-2.78)/.2),prevR(ecg,time),time);
+  book.trace({t:time,mix:beatMix.value,glow:Math.min(1,beat*.9),flash:beatMix.flash,alpha:smooth((p-2.46)/.12)});}
  book.glow(Math.min(1,.2*beat*lampLevel*(1-pull)));
+ if(heartMesh){const u=Math.max(0,Math.min(1,(p-2.84)/.16)),up=u<=0?0:1+2.70158*Math.pow(u-1,3)+1.70158*Math.pow(u-1,2);   // easeOutBack: grows out of the page with a small overshoot
+  const sw=1+.07*HA*beat,sc=HEART_H*Math.max(up,1e-3);heartRoot.visible=u>0;heartMesh.scale.set(sc*sw,sc*(1-.03*HA*beat),sc*sw*(1+.04*HA*beat));heartRoot.position.set(0,-.02,heartZ*sc*.5+.002);if(heartAO){heartAO.position.set(.012,-.012,-heartZ*sc*.5-.0015);heartAO.scale.set(sc*1.05,sc*.85,1);(heartAO.material as THREE.MeshBasicMaterial).opacity=.75*Math.min(1,up);}
+  if(fx&&ecg)fx.update({age:time-prevR(ecg,time),time,mix:beatMix.value,show:smooth((u-.35)/.5),beat});}
+ bookInfo.pull=pull;bookInfo.show=smooth((pull-.35)/.5);
 }
 
 // ?perf=1: frame-time probe (CPU ms per phase, EMA) in window.__perf · flags to isolate costs: ?noecg ?noshadow ?nodust ?nopw
@@ -125,15 +145,15 @@ function frame(now:number,dt:number){
  // time of day: ?cycle loops it; story mode keeps the night until the book opens, then brings the dawn in with the cleaner trace
  let tod=q.has('cycle')?(now/1000/Number(q.get('cycle')||24))%1:todFixed;
  if(story&&!q.has('cycle'))tod=p<2.1?todFixed:lerp(todFixed,1,smooth((p-2.1)/.9));
- sample(tod,todNow);apply(todNow);sky.top.value.copy(todNow.top);sky.bot.value.copy(todNow.bot);
+ sample(tod,todNow);todNow.exposure*=1-.55*smooth((p-2.5)/.4);apply(todNow);sky.top.value.copy(todNow.top);sky.bot.value.copy(todNow.bot);
  const clk=q.has('clock')?Number(q.get('clock')):now/1000,beat=ecg?pulse(ecg,clk):0;
- lamps.set(todNow.lamp,clk,beat);placeBook(p,beat,clk,Math.max(todNow.lamp,.35));
+ placeBook(p,beat,clk,Math.max(todNow.lamp,.35));lamps.set(todNow.lamp*(1-.93*bookInfo.pull),clk,beat);   // the room falls dark as the book is pulled into the slit of light (chiaroscuro)
  // EFX-002-01 pointer look: target rot X = deg(y·0.2), rot Y = deg(−x·0.75); k = 1−exp(−2dt)
  const k=1-Math.exp(-2*dt),tx=THREE.MathUtils.degToRad(state.my*.2),ty=THREE.MathUtils.degToRad(-state.mx*.75);
  pointer.rotation.x+=(tx-pointer.rotation.x)*k;pointer.rotation.y+=(ty-pointer.rotation.y)*k;
  // overlay: page world cross-fades in over the open book
- const ov=smooth((p-2.5)/.22);pwCanvas.style.opacity=String(ov);
- const m0=performance.now();if(ov<.999&&!q.has('nomain')){renderer.render(scene,camera);finish('main');}ema('main',performance.now()-m0);
+ const ov=pw?smooth((p-2.5)/.22):0;pwCanvas.style.opacity=String(ov);
+ const m0=performance.now();if(ov<.999&&!q.has('nomain')){rig.render({night:todNow.night,warm:todNow.warm,lamp:todNow.lamp,beat,mix:beatMix.value,pull:bookInfo.pull,show:bookInfo.show,time:clk,book:bookPivot,under:book.under,shelfY:SHELF_Y});finish('main');}ema('main',performance.now()-m0);
  const w0=performance.now();if(pw&&ov>.002&&!q.has('nopw')){pw.render({t:clk,prog:smooth((p-2.52)/.42),mix:smooth((p-2.7)/.3),sun:smooth((p-2.78)/.22),px:state.mx,py:state.my});finish('pw');}ema('pw',performance.now()-w0);
  if(q.get('hud')!=='0'||q.has('perf'))hud.textContent=(q.has('perf')?`fps ${perf.fps.toFixed(0)} frame ${perf.frame.toFixed(1)}ms  main ${perf.main.toFixed(1)} book ${perf.book.toFixed(1)} pw ${perf.pw.toFixed(1)}
 `:'')+`p ${p.toFixed(2)}  tod ${tod.toFixed(2)} (night ${todNow.night.toFixed(2)} lamp ${todNow.lamp.toFixed(2)})  beat ${beat.toFixed(2)}`;

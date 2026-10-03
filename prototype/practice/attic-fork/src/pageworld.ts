@@ -31,7 +31,7 @@ function ecgPage(ecg:Ecg){const {c,g,t}=canvasTex(1200,1600);drawEcgPaperStatic(
 
 // anatomical point cloud (HRA, CC BY 4.0) → N depth layers of paper cut-outs. Layer k = silhouette of all points with z ≥ z_k
 // (back layers large, front layers small), mask closed by blur+threshold.
-async function paperHeart():Promise<{group:THREE.Group,layers:THREE.Mesh[],height:number}>{
+export async function paperHeart():Promise<{group:THREE.Group,layers:THREE.Mesh[],height:number}>{
  const g=await new GLTFLoader().loadAsync('./assets/heart.glb');let P:Float32Array|null=null;
  g.scene.traverse(o=>{const m=o as any;if(!P&&m.geometry?.attributes?.position)P=m.geometry.attributes.position.array;});
  if(!P)throw Error('heart points missing');const pts=P as Float32Array,n=pts.length/3;
@@ -135,7 +135,7 @@ export async function makePageWorld(canvas:HTMLCanvasElement,ecg:Ecg):Promise<Pa
   // camera: straight down on the spread → tilts back to show the table, the pop-up and the light
   const k=smooth(prog*1.15);tmpA.set(THREE.MathUtils.lerp(0,.25,k),THREE.MathUtils.lerp(3.15,2.3,k),THREE.MathUtils.lerp(.0001,2.45,k));
   if(!(window as any).__pw.override){tmpA.x+=px*.18;tmpA.z+=py*.12;camera.position.copy(tmpA);tmpB.set(0,THREE.MathUtils.lerp(0,.18,k),THREE.MathUtils.lerp(0,-.12,k));camera.lookAt(tmpB);}
-  trace.update({t,mix,glow:Math.min(1,beat*HA)});
+  trace.update({t,mix,glow:Math.min(1,beat*HA),flash:0});
   r.render(scene,camera);
  }};
 }

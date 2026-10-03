@@ -65,6 +65,7 @@
 - `.claude/skills/reference-mining/SKILL.md`
 - `.claude/skills/superdesign-routing/SKILL.md`
 - `.claude/skills/dual-creative-director/SKILL.md`
+- `.claude/skills/lookdev-loop/SKILL.md`
 
 ### reference-mining
 
@@ -116,3 +117,8 @@ Awwwards/Godly/SiteInspire/Land-book/Lapa Ninja/CSS Design Awards 같은 공개 
 - 현재 설치된 Superdesign plugin 0.6.0 SKILL.md를 읽어 shell preflight/auth, init/resume, generation/refinement 구분을 확인했다. 과거 upstream pin은 위 이력이며 최신 upstream SHA를 새로 검증했다는 뜻이 아니다.
 - skill 작성은 설치된 skill-creator 지침을 사용했다. docs/skill 오프라인 검증이며 유료 generation/login/서비스 실측은 하지 않았다.
 - Chat/Codex/Work는 project-local Claude skill의 자동 발견을 가정하지 않고 AGENTS/MASTER/16을 직접 읽는다. 계정 전체 설치/hook은 이번 산출물이 아니다.
+
+## 룩덱 루프 skill (2026-10-04)
+
+- project-local `lookdev-loop`: `.claude/skills/lookdev-loop/SKILL.md`. 자체 작성, source는 26번/D-049/F-035와 `rounds/R1/LOOKDEV-BOOK-STAGE.md`의 실제 3라운드. 분야별 표준 관행 시트는 BookPublish·iBookBinding·Hasier Goitia 책 튜토리얼·three.js 포럼(책 페이지 넘김)·bandinopla/quick_flipbook(BSD-2, 설계 참고만) 등 IDEA-R1-SPACE-FORK §6.4의 문서 수준 조사를 요약한 것이며 외부 코드를 vendoring하지 않았다.
+- 2026-10-04 claude.ai 플러그인 카탈로그 검색(3D 렌더·조명·셰이더·책 모델링)에서 이 작업에 맞는 항목은 없었다(Render, Simplio3D, Unity, biorender, Lightrun, SenderKit, Car Image API, Meshy, batocera, Templafy). Meshy는 생성형 3D로 API 키·라이선스·재현성 때문에 제외했다. 외부 skill은 자문이며 데이터 계약을 넘지 못한다.

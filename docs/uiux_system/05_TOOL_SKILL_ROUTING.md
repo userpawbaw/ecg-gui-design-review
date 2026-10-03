@@ -33,6 +33,7 @@
 - design-taste (`arez-xd/ux-ui-design-taste`)
 - UI UX Pro Max (`nextlevelbuilder/ui-ux-pro-max-skill`)
 - project-local `reference-mining` — 실제 reference의 특정 장면을 visual-intent proxy로 사용
+- project-local `lookdev-loop` — 3D·셰이더·조명·후처리의 디테일 품질을 자체 비평 루프(최대 3라운드)로 올림 (26번, D-049)
 - Motion AI Kit — 사용 가능한 Codex/Claude 환경에서 specialist tooling
 - Playwright — **이미 프로젝트에 설치됨** (`npm run qa`, `qa:headed`)
 - Storybook — 현재 미확정. capability gap이 실제로 있을 때만 도입

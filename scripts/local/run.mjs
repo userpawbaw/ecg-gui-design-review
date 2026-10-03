@@ -70,7 +70,8 @@ function storyCheck(){
  run('npx',['playwright','test','--reporter=list'],{cwd:v2});
 }
 function spike(name){
- const dir=join(root,'prototype/spikes',name||'');if(!name||!existsSync(join(dir,'package.json'))){bad('사용법: npm run spike -- <이름>   ('+readdirSync(join(root,'prototype/spikes')).join(', ')+')');process.exit(1);}
+ let dir=join(root,'prototype/spikes',name||'');if(name&&!existsSync(join(dir,'package.json')))dir=join(root,'prototype/practice',name); // practice builds (reference-fork studies, local-only originals)
+ if(!name||!existsSync(join(dir,'package.json'))){bad('사용법: npm run spike -- <이름>   ('+readdirSync(join(root,'prototype/spikes')).join(', ')+(existsSync(join(root,'prototype/practice'))?' | practice: '+readdirSync(join(root,'prototype/practice')).join(', '):'')+')');process.exit(1);}
  ensureDeps(dir);if(name==='video-scrub'&&!existsSync(join(dir,'public/clips')))run('npm',['run','clips'],{cwd:dir});
  run('npm',['run','dev','--','--open'],{cwd:dir});
 }

@@ -194,3 +194,5 @@ p ≥ 0.86(파형이 그려지는 구간)에서 `page.screenshot`이 30초 제�
 
 ### 재발 방지와 자동화 상태
 수동 규칙. 로컬 전용 폴더는 `.gitignore`(`prototype/practice/**/_original/`)로 커밋을 막는다. 반입 승인 자동화 없음.
+
+해소(2026-10-03): 사용자가 `/auto-mode-setup`으로 허용 규칙을 설정에 추가한 뒤 다운로드가 통과했다 `[런타임]`. 추가 교훈: 사이트 재배포로 번들 파일명이 바뀌어(`index-VT1qZXIh.js` → `index-B1uQITYR.js`) 저장해 둔 이름이 SPA 폴백(index.html)을 받았고, 에셋은 `www`가 `cdn.leoparpeix.com`으로 307 리다이렉트해 서빙한다. 반입은 항상 현재 `index.html`에서 번들명을 읽고 `curl -L`로 받는다.

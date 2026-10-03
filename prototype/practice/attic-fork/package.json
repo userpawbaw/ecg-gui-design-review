@@ -1,0 +1,20 @@
+{
+  "name": "ecg-practice-attic-fork",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Practice build (D-047): REF-002 original scene assets loaded as-is from the local-only public/_original folder, extended with library assets, a time-of-day cycle and the book portal. Never committed with originals, never shipped.",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4195",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4195"
+  },
+  "dependencies": {
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.186.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0"
+  }
+}

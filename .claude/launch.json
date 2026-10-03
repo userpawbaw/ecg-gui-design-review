@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "attic-fork",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "prototype/practice/attic-fork", "run", "dev"],
+      "port": 4195
+    }
+  ]
+}

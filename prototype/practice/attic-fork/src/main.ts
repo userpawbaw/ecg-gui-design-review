@@ -106,13 +106,20 @@ function placeBook(p:number,beat:number,time:number,lampLevel:number){
  book.group.position.set(lerp(SHELF.x,PRESENT.x,move),lerp(SHELF.y,PRESENT.y,smooth((pull-.3)/.7)),lerp(SHELF.z,PRESENT.z,turn));
  book.group.rotation.y=lerp(Math.PI,Math.PI/2,turn);
  const s=lerp(1,1.3,smooth(pull));book.group.scale.setScalar(s);
- book.set(open,beat,time);if(open>.02&&p<2.75)book.page(time,smooth((p-2.7)/.3));
+ book.set(open,beat,time);if(open>.02)book.trace(time,smooth((p-2.7)/.3),Math.min(1,beat*.9));
  book.glow(Math.min(1,.2*beat*lampLevel*(1-pull)));
 }
 
-let last=performance.now();
-function tick(){
- const now=performance.now(),dt=Math.min((now-last)/1000,.1);last=now;
+// ?perf=1: frame-time probe (CPU ms per phase, EMA) in window.__perf · flags to isolate costs: ?noecg ?noshadow ?nodust ?nopw
+const perf={frame:16,main:0,book:0,pw:0,fps:60,n:0};(window as any).__perf=perf;
+const ema=(k:'frame'|'main'|'book'|'pw',v:number)=>{perf[k]+=(v-perf[k])*.08;};
+let last=performance.now(),syncGpu=false;
+const px4=new Uint8Array(4);
+// readPixels of one pixel forces the GPU to complete the frame (finish() alone may return early under ANGLE)
+const sync=(gl:WebGLRenderingContext|WebGL2RenderingContext)=>gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,px4);
+const finish=(which:'main'|'pw')=>{if(!syncGpu)return;if(which==='main')sync(renderer.getContext());else pw?.finish();};
+function frame(now:number,dt:number){
+ ema('frame',dt*1000);perf.fps=1000/perf.frame;perf.n++;
  state.p+=(state.pt-state.p)*(1-Math.exp(-6*dt));const p=state.p;
  placeCamera(p);
  // time of day: ?cycle loops it; story mode keeps the night until the book opens, then brings the dawn in with the cleaner trace
@@ -126,9 +133,21 @@ function tick(){
  pointer.rotation.x+=(tx-pointer.rotation.x)*k;pointer.rotation.y+=(ty-pointer.rotation.y)*k;
  // overlay: page world cross-fades in over the open book
  const ov=smooth((p-2.5)/.22);pwCanvas.style.opacity=String(ov);
- if(ov<.999)renderer.render(scene,camera);
- if(pw&&ov>.002)pw.render({t:clk,prog:smooth((p-2.52)/.42),mix:smooth((p-2.7)/.3),sun:smooth((p-2.78)/.22),px:state.mx,py:state.my});
- if(q.get('hud')!=='0')hud.textContent=`p ${p.toFixed(2)}  tod ${tod.toFixed(2)} (night ${todNow.night.toFixed(2)} lamp ${todNow.lamp.toFixed(2)})  beat ${beat.toFixed(2)}`;
- requestAnimationFrame(tick);
+ const m0=performance.now();if(ov<.999&&!q.has('nomain')){renderer.render(scene,camera);finish('main');}ema('main',performance.now()-m0);
+ const w0=performance.now();if(pw&&ov>.002&&!q.has('nopw')){pw.render({t:clk,prog:smooth((p-2.52)/.42),mix:smooth((p-2.7)/.3),sun:smooth((p-2.78)/.22),px:state.mx,py:state.my});finish('pw');}ema('pw',performance.now()-w0);
+ if(q.get('hud')!=='0'||q.has('perf'))hud.textContent=(q.has('perf')?`fps ${perf.fps.toFixed(0)} frame ${perf.frame.toFixed(1)}ms  main ${perf.main.toFixed(1)} book ${perf.book.toFixed(1)} pw ${perf.pw.toFixed(1)}
+`:'')+`p ${p.toFixed(2)}  tod ${tod.toFixed(2)} (night ${todNow.night.toFixed(2)} lamp ${todNow.lamp.toFixed(2)})  beat ${beat.toFixed(2)}`;
 }
+function tick(){const now=performance.now(),dt=Math.min((now-last)/1000,.1);last=now;frame(now,dt);requestAnimationFrame(tick);}
+// benchmark without rAF (the background tab throttles it): runs n frames synchronously at scroll phase p with GPU sync; returns ms per phase
+(window as any).__bench=(p:number,n=60)=>{
+ // frames are issued back-to-back inside ONE task and synced once at the end → average real cost, no per-frame vsync quantisation
+ syncGpu=false;state.p=state.pt=p;
+ for(let w=0;w<6;w++)frame(1000+w*16.7,.0167);sync(renderer.getContext());pw?.finish();            // warm-up (shader compile, uploads)
+ const t0=performance.now();
+ for(let i=0;i<n;i++)frame(2000+i*16.7,.0167);
+ const cpu=(performance.now()-t0)/n;sync(renderer.getContext());pw?.finish();
+ const tot=(performance.now()-t0)/n;
+ return{p,cfg:location.search,cpuMsPerFrame:+cpu.toFixed(2),msPerFrame:+tot.toFixed(2),fps:+(1000/tot).toFixed(1)};
+};
 init().catch(e=>{hud.textContent='load failed: '+(e as Error).message;console.error(e);});

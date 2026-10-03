@@ -4,7 +4,8 @@
 // (front cover faces the camera, spine on the left). The front cover is a pivot group opened by rotation.y ∈ [0,−π].
 import * as THREE from 'three';
 import {graded} from './tod';
-import {drawLeftPage,drawEcgPaper} from './paper';
+import {drawLeftPage,drawEcgPaperStatic} from './paper';
+import {makeTrace,type Trace} from './trace';
 import type {Ecg} from './ecg';
 export const BOOK={H:.40,D:.27,T:.085};
 function cloth(label:boolean,bands:boolean){
@@ -22,7 +23,7 @@ function paperLines(){
  for(let y=0;y<256;y+=2){g.fillStyle=`rgba(120,100,70,${.10+.10*Math.random()})`;g.fillRect(0,y,64,1);}
  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;
 }
-export type HeroBook={group:THREE.Group,cover:THREE.Group,ribbon:THREE.Group,set:(open:number,beat:number,time:number)=>void,glow:(v:number)=>void,attach:(e:Ecg)=>void,page:(time:number,mix:number)=>void};
+export type HeroBook={group:THREE.Group,cover:THREE.Group,ribbon:THREE.Group,set:(open:number,beat:number,time:number)=>void,glow:(v:number)=>void,attach:(e:Ecg)=>void,trace:(time:number,mix:number,glow:number)=>void};
 export function makeHeroBook():HeroBook{
  const {H,D,T}=BOOK,group=new THREE.Group();
  const face=(map:THREE.Texture|null,color:number,shade:number)=>graded(new THREE.MeshBasicMaterial({map,color:new THREE.Color(color).multiplyScalar(shade),toneMapped:false}),.3);
@@ -51,16 +52,19 @@ export function makeHeroBook():HeroBook{
  const glowMat=new THREE.MeshBasicMaterial({color:0xffc88a,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false});
  const glowMesh=new THREE.Mesh(new THREE.PlaneGeometry(.14,H*1.15),glowMat);glowMesh.rotation.y=-Math.PI/2;glowMesh.position.set(-.02,0,0);group.add(glowMesh);
  // first spread: the cover's inner face (left) and the first page (right) carry the same paper as the page world
- let rightG:CanvasRenderingContext2D|null=null,rightT:THREE.CanvasTexture|null=null,eRef:Ecg|null=null;
- const attach=(e:Ecg)=>{eRef=e;
+ let traceObj:Trace|null=null;
+ const attach=(e:Ecg)=>{
   const lc=document.createElement('canvas');lc.width=1200;lc.height=1600;drawLeftPage(lc.getContext('2d')!);
   const lt=new THREE.CanvasTexture(lc);lt.colorSpace=THREE.SRGBColorSpace;lt.anisotropy=8;
   (cm.material as THREE.MeshBasicMaterial[])[5]=face(lt,0xffffff,.95);
-  const rc=document.createElement('canvas');rc.width=1200;rc.height=1600;rightG=rc.getContext('2d')!;rightT=new THREE.CanvasTexture(rc);rightT.colorSpace=THREE.SRGBColorSpace;rightT.anisotropy=8;
-  drawEcgPaper(rightG,e,0,0);rightT.needsUpdate=true;
-  const pg=new THREE.Mesh(new THREE.PlaneGeometry(D-.016,H-.02),face(rightT,0xffffff,1));pg.position.set(D/2,0,T/2-.0105);group.add(pg);};
+  // right page: STATIC paper (drawn once) + the stored trace on the GPU (no per-frame canvas, F-034)
+  const rc=document.createElement('canvas');rc.width=1200;rc.height=1600;drawEcgPaperStatic(rc.getContext('2d')!,e);
+  const rt=new THREE.CanvasTexture(rc);rt.colorSpace=THREE.SRGBColorSpace;rt.anisotropy=8;
+  const pw=D-.016,ph=H-.02;
+  const pg=new THREE.Mesh(new THREE.PlaneGeometry(pw,ph),face(rt,0xffffff,1));pg.position.set(D/2,0,T/2-.0105);group.add(pg);
+  traceObj=makeTrace(e,{lift:0,pageW:1200});traceObj.group.scale.set(pw/1200,-ph/1600,1);traceObj.group.position.set(D/2-pw/2,ph/2,T/2-.0085);group.add(traceObj.group);};
  return{group,cover,ribbon,attach,
-  page:(time,mix)=>{if(!rightG||!rightT||!eRef)return;drawEcgPaper(rightG,eRef,time,mix);rightT.needsUpdate=true;},
+  trace:(time,mix,glow)=>{traceObj?.update({t:time,mix,glow});},
   set:(open,beat,time)=>{cover.rotation.y=-Math.PI*open;ribbon.rotation.z=Math.sin(time*2.1)*.04+beat*.22*open;},
   glow:v=>{glowMat.opacity=v;}};
 }

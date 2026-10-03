@@ -12,3 +12,5 @@ URL: `?story=1`(밤에서 시작, 책이 열리면 새벽) · 휠로 p=0→3 · 
 원본 반입(로컬): `public/_original/assets/{models,textures,basis}` — 방법은 `docs/uiux_system/rounds/R1/IDEA-R1-SPACE-FORK.md` §6.
 
 에셋: `public/assets/heart.glb` = HuBMAP Human Reference Atlas 심장(남), CC BY 4.0, Visible Human Male 기반, 변형본(출처 표기 필요). `public/ecg-s038.json`은 `node scripts/extract-ecg.mjs`로 `prototype/v2/public/archive.json`에서 뽑은 저장값(D0 S038 `d0-awgn-0`).
+
+성능 확인: URL에 `?perf=1`(화면에 프레임 시간), 콘솔에서 `__bench(p,40)`(프레임을 연달아 그려 GPU 완료까지 잰 평균 ms). 비용 분리 플래그 `?noecg` `?noshadow` `?nopw` `?nomain`. 매 프레임 캔버스 재그리기는 금지(F-034) — 파형은 `src/trace.ts`의 GPU 선, 종이는 한 번만 그린 정적 텍스처.

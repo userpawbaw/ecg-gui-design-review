@@ -7,13 +7,14 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {type Ecg,pulse,idxAt} from './ecg';
 import {HA} from './lamps';
-import {PAGE_W,PAGE_H,drawLeftPage,drawEcgPaper} from './paper';
+import {PAGE_W,PAGE_H,drawLeftPage,drawEcgPaperStatic} from './paper';
+import {makeTrace} from './trace';
 
 const W=1.5,HP=2.0;                 // page width / height (scene units)
 const WIN=4;                        // seconds across the right page
 const FONT='"Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif',MONO='"IBM Plex Mono",ui-monospace,Consolas,monospace';
 export type PWState={t:number,prog:number,mix:number,sun:number,px:number,py:number};
-export type PageWorld={resize:()=>void,render:(s:PWState)=>void};
+export type PageWorld={resize:()=>void,render:(s:PWState)=>void,finish:()=>void};
 
 const smooth=(x:number)=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);};
 function canvasTex(w:number,h:number,srgb=true){const c=document.createElement('canvas');c.width=w;c.height=h;const t=new THREE.CanvasTexture(c);if(srgb)t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return{c,g:c.getContext('2d')!,t};}
@@ -26,7 +27,7 @@ function woodTexture(){
 }
 
 function leftPage(){const {c,g,t}=canvasTex(1200,1600);drawLeftPage(g);t.needsUpdate=true;return t;}
-function ecgPage(ecg:Ecg){const {c,g,t}=canvasTex(1200,1600);return{tex:t,draw:(time:number,mix:number)=>{drawEcgPaper(g,ecg,time,mix);t.needsUpdate=true;}};}
+function ecgPage(ecg:Ecg){const {c,g,t}=canvasTex(1200,1600);drawEcgPaperStatic(g,ecg);t.needsUpdate=true;return{tex:t};}
 
 // anatomical point cloud (HRA, CC BY 4.0) → N depth layers of paper cut-outs. Layer k = silhouette of all points with z ≥ z_k
 // (back layers large, front layers small), mask closed by blur+threshold.
@@ -72,7 +73,7 @@ function blindsCookie(){
 
 export async function makePageWorld(canvas:HTMLCanvasElement,ecg:Ecg):Promise<PageWorld>{
  const r=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
- r.setPixelRatio(Math.min(devicePixelRatio,2));r.shadowMap.enabled=true;r.shadowMap.type=THREE.PCFSoftShadowMap;
+ r.setPixelRatio(Math.min(devicePixelRatio,1.5));r.shadowMap.enabled=!new URLSearchParams(location.search).has('noshadow');r.shadowMap.type=THREE.PCFShadowMap;
  r.toneMapping=THREE.ACESFilmicToneMapping;r.toneMappingExposure=1.15;
  const scene=new THREE.Scene();scene.background=new THREE.Color(0x120e0a);scene.fog=new THREE.Fog(0x120e0a,5,12);
  const camera=new THREE.PerspectiveCamera(34,1,.05,40);
@@ -90,6 +91,8 @@ export async function makePageWorld(canvas:HTMLCanvasElement,ecg:Ecg):Promise<Pa
  const left=leftPage(),ecgp=ecgPage(ecg);
  const pl=new THREE.Mesh(pageGeo(-1),new THREE.MeshStandardMaterial({map:left,roughness:.95}));pl.receiveShadow=true;scene.add(pl);
  const pr=new THREE.Mesh(pageGeo(1),new THREE.MeshStandardMaterial({map:ecgp.tex,roughness:.95}));pr.receiveShadow=true;scene.add(pr);
+ // stored trace on the curved right page (GPU): canvas px → world scale s, lifted by the page curve (0.06 at the outer edge)
+ const trS=W/1200,trace=makeTrace(ecg,{lift:.06/trS,pageW:1200});trace.group.scale.setScalar(trS);trace.group.rotation.x=Math.PI/2;trace.group.position.set(0,.004,-HP/2);scene.add(trace.group);
  // heart: paper cut-outs hinged at the bottom edge of the left page centre
  const heart=await paperHeart();
  const hinge=new THREE.Group();hinge.position.set(-W/2,.035,.55);scene.add(hinge);
@@ -103,9 +106,10 @@ export async function makePageWorld(canvas:HTMLCanvasElement,ecg:Ecg):Promise<Pa
  // lights: warm lamp (pulses on R: Ha) + dawn sun through blinds (cookie) + soft fill
  scene.add(new THREE.HemisphereLight(0xb8c4e8,0x3b2a1c,.55));
  const lamp=new THREE.SpotLight(0xffc386,60,14,.95,.75,1.6);lamp.position.set(2.5,3.3,1.7);lamp.target.position.set(-.2,0,.1);
- lamp.castShadow=true;lamp.shadow.mapSize.set(2048,2048);lamp.shadow.bias=-.0004;lamp.shadow.radius=5;scene.add(lamp,lamp.target);
+ lamp.castShadow=false; // shadow budget: only the sun casts (F-034)
+ scene.add(lamp,lamp.target);
  const sunL=new THREE.SpotLight(0xffe0aa,0,16,.62,.18,1.2);sunL.position.set(-3.1,3.7,-1.6);sunL.target.position.set(-.1,0,.2);sunL.map=blindsCookie();
- sunL.castShadow=true;sunL.shadow.mapSize.set(2048,2048);sunL.shadow.bias=-.0004;scene.add(sunL,sunL.target);
+ sunL.castShadow=true;sunL.shadow.mapSize.set(1024,1024);sunL.shadow.bias=-.0006;scene.add(sunL,sunL.target);
  // dust motes in the light
  const N=520,pos=new Float32Array(N*3),seed=new Float32Array(N);for(let i=0;i<N;i++){seed[i]=Math.random()*100;pos[i*3]=(Math.random()-.5)*4.2;pos[i*3+1]=.1+Math.random()*2.0;pos[i*3+2]=(Math.random()-.5)*3.0;}
  const home=pos.slice(),dg=new THREE.BufferGeometry();dg.setAttribute('position',new THREE.BufferAttribute(pos,3));
@@ -115,7 +119,7 @@ export async function makePageWorld(canvas:HTMLCanvasElement,ecg:Ecg):Promise<Pa
  const resize=()=>{r.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();};resize();
  (window as any).__pw={scene,camera,hinge,heart,lamp,sunL,r,override:false};
  const tmpA=new THREE.Vector3(),tmpB=new THREE.Vector3();
- return{resize,render:({t,prog,mix,sun,px,py})=>{
+ return{resize,finish:()=>{const gl=r.getContext(),b=new Uint8Array(4);gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,b);},render:({t,prog,mix,sun,px,py})=>{
   const beat=pulse(ecg,t,.28);
   // Hb: pop up (flat → upright with a small overshoot), beat = layers separate and the whole heart swells on each R
   const u=Math.max(0,Math.min(1,(prog-.18)/.55)),up=1+2.70158*Math.pow(u-1,3)+1.70158*Math.pow(u-1,2); // easeOutBack: a small overshoot toward the camera, then settles
@@ -131,7 +135,7 @@ export async function makePageWorld(canvas:HTMLCanvasElement,ecg:Ecg):Promise<Pa
   // camera: straight down on the spread → tilts back to show the table, the pop-up and the light
   const k=smooth(prog*1.15);tmpA.set(THREE.MathUtils.lerp(0,.25,k),THREE.MathUtils.lerp(3.15,2.3,k),THREE.MathUtils.lerp(.0001,2.45,k));
   if(!(window as any).__pw.override){tmpA.x+=px*.18;tmpA.z+=py*.12;camera.position.copy(tmpA);tmpB.set(0,THREE.MathUtils.lerp(0,.18,k),THREE.MathUtils.lerp(0,-.12,k));camera.lookAt(tmpB);}
-  ecgp.draw(t,mix);
+  trace.update({t,mix,glow:Math.min(1,beat*HA)});
   r.render(scene,camera);
  }};
 }

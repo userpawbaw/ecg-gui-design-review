@@ -15,8 +15,12 @@ export async function loadEcg():Promise<Ecg>{
 }
 /** playback time (s) → sample index (float) inside the loop */
 export const idxAt=(e:Ecg,t:number)=>e.start+(((t%e.dur)+e.dur)%e.dur)*e.fs;
-/** beat envelope: sum of decaying pulses after each R, periodic over the loop; tau seconds */
+/** beat envelope: smooth attack then decay after each R, periodic over the loop; peak-normalised to ~1.
+ *  The first version decayed from an instant jump at R (discontinuous) — dust and light snapped, then relaxed (F-034). */
+const ATT=.07;
 export function pulse(e:Ecg,t:number,tau=.28):number{
  const tt=((t%e.dur)+e.dur)%e.dur;let v=0;
- for(const b of e.beats){const tr=(b-e.start)/e.fs;let d=tt-tr;if(d<0)d+=e.dur;v+=Math.exp(-d/tau);}return Math.min(1.2,v);
+ const peakD=ATT*Math.log(1+tau/ATT),peak=(1-Math.exp(-peakD/ATT))*Math.exp(-peakD/tau);
+ for(const b of e.beats){const tr=(b-e.start)/e.fs;let d=tt-tr;if(d<0)d+=e.dur;v+=(1-Math.exp(-d/ATT))*Math.exp(-d/tau)/peak;}
+ return Math.min(1.15,v);
 }

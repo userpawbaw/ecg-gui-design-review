@@ -22,7 +22,7 @@ export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Arra
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
  title:HTMLElement,noiseChars:HTMLElement[],sub:HTMLElement,hint:HTMLElement,labels:HTMLElement,labelIn:HTMLElement,labelOut:HTMLElement,outMono:HTMLElement,steps:HTMLElement[],
  scale:HTMLElement,grid:HTMLCanvasElement,ann:HTMLElement,sweepWrap:HTMLElement,end:HTMLElement,parallax:HTMLElement[]};
-export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'|'archive'};
+export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'|'archive',shot?:string|null};
 
 const clamp=(x:number,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const seg=(p:number,a:number,b:number)=>clamp((p-a)/(b-a));
@@ -52,12 +52,13 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const geom=async(u:string)=>{const g=await gl.loadAsync(u);let out:THREE.BufferGeometry|null=null;g.scene.traverse(o=>{if((o as THREE.Mesh).isMesh&&!out)out=(o as THREE.Mesh).geometry;});if(!out)throw Error('no mesh in '+u);return out as THREE.BufferGeometry;};
  const [day,night,clouds,bodyGeo,heartGeo,fig,floorLm]=await Promise.all([tex(urls.day),tex(urls.night),tex(urls.clouds,false),geom(urls.body),geom(urls.heart),fetch(urls.fig).then(r=>r.json() as Promise<FigureData>),tex(urls.floor,false)]);
  const globe=createGlobe({day,night,clouds});scene.add(globe.group);
- const style=opt.look??'v2';   // archive is opt-in (?look=archive) until it passes verification
+ const style=opt.look??'archive';   // D-046 archive is the default (brief 1 T9); ?look=v2 keeps the grid world
  // D-046: the ECG record archive (baked room + shafts + dust), figure seated on the ladder with bone-aligned rings (H3b/H3c)
  const arch=style==='archive'?await createArchive():null;
  const figure=createFigure(arch?await geom(urls.seated):bodyGeo,heartGeo,fig,style==='v1'?'v1':'v2');scene.add(figure.group,figure.line);
  if(arch){
   scene.add(arch.room,arch.dust);
+  arch.renderSunDepth(renderer);   // static room: the sun depth map (shafts, dust, ring sun glow) is rendered once
   figure.group.position.copy(arch.figureLocation);
   figure.heartMesh.position.copy(arch.heart).sub(arch.figureLocation);figure.heartMesh.quaternion.copy(arch.heartQuat);
   figure.heartWorld.copy(arch.heart);
@@ -224,6 +225,9 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
    const aF=seg(p,.25,.31)*(1-.88*seg(p,.64,.73));arch.setFade(aF);archShaft=aF*(1-seg(p,.6,.7));
    grade.uniforms.uSpace.value=aF;globe.group.visible=globe.group.visible&&p<.3;
    archCam!(p);
+   // ?shot=<manifest shot>: verification only — the Blender still's camera, room fully faded in (stills vs web)
+   if(opt.shot&&arch.manifest.shots[opt.shot]){const k=arch.shot(opt.shot);arch.setFade(1);archShaft=1;
+    camera.position.copy(k.pos);if(camera.fov!==k.fov){camera.fov=k.fov;camera.updateProjectionMatrix();}camera.lookAt(k.look);}
   }else cameraAt(cam);
 
   // W4: arm at the gate, fire a pulse on the next R, land it on the sweep head at the following R
@@ -287,7 +291,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  gsap.ticker.lagSmoothing(0);gsap.ticker.add(tick);
 
  return{
-  state,lenis,
+  state,lenis,arch,
   renderOnce(draw=true){frame(1/60,draw);},
   pause(v:boolean){paused=v;},
   set(o:{p?:number,t?:number|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;},

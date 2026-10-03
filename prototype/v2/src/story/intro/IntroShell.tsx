@@ -40,9 +40,9 @@ export function IntroShell({bank,onNext,onLab}:Props){
    noiseChars:[...r.noise.querySelectorAll('i')] as HTMLElement[],sub:r.sub,hint:r.hint,labels:r.labels,labelIn:r.labelIn,labelOut:r.labelOut,outMono:r.outMono,steps:[...r.steps.querySelectorAll('i')] as HTMLElement[],scale:r.scale,grid:r.grid as HTMLCanvasElement,ann:r.ann,sweepWrap:r.sweepWrap,end:r.end,
    parallax:[r.sweepWrap,r.title]},
    {fs:bank.fs,loop:scene.loop,input:scene.input,output:scene.output,metrics:scene.metrics},
-   {reduced,look:(['v1','archive'].includes(params.get('look')??'')?params.get('look'):'v2') as 'v1'|'v2'|'archive',frozenT:params.has('t')?Number(params.get('t')):null,frozenP:params.has('p')?Number(params.get('p')):null})
+   {reduced,look:(['v1','v2'].includes(params.get('look')??'')?params.get('look'):'archive') as 'v1'|'v2'|'archive',shot:params.get('shot'),frozenT:params.has('t')?Number(params.get('t')):null,frozenP:params.has('p')?Number(params.get('p')):null})
    .then(e=>{if(!alive){e.dispose();return;}engine.current=e;setReady(true);
-    (window as unknown as {__intro:unknown}).__intro={state:e.state,set:e.set,renderOnce:e.renderOnce,pause:e.pause,loop:scene.loop,fs:bank.fs,winner:scene.winner,
+    (window as unknown as {__intro:unknown}).__intro={state:e.state,arch:e.arch,set:e.set,renderOnce:e.renderOnce,pause:e.pause,loop:scene.loop,fs:bank.fs,winner:scene.winner,
      slotOf:(abs:number)=>((abs%625)+625)%625};})
    .catch(err=>{console.error(err);setFailed(String(err?.message||err));});
   return()=>{alive=false;engine.current?.dispose();engine.current=null;delete (window as unknown as {__intro?:unknown}).__intro;};

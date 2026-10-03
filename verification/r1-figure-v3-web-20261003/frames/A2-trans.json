@@ -1,0 +1,72 @@
+{
+ "label": "A2-trans",
+ "extra": "&look=archive",
+ "loadMs": 2160,
+ "bytes": {
+  "manifest.json": 9,
+  "archive.json": 8684587,
+  "earth_day-BwYaYthw.jpg": 234590,
+  "floor_light-DvZlFicE.png": 130613,
+  "earth_night-BmwY3jaA.jpg": 191271,
+  "earth_clouds-Bj8rsds_.jpg": 650620,
+  "figure-BsF5ifj1.json": 10292,
+  "heart-wJ2kQIC4.glb": 525080,
+  "body-DPatXu2U.glb": 2063564,
+  "light_shell-B1D1nmva.webp": 524934
+ },
+ "errors": [
+  "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "timing": [
+  {
+   "p": 0.255,
+   "t": 3,
+   "ms": 1637.8
+  },
+  {
+   "p": 0.265,
+   "t": 3,
+   "ms": 1565.4
+  },
+  {
+   "p": 0.275,
+   "t": 3,
+   "ms": 1834.9
+  },
+  {
+   "p": 0.285,
+   "t": 3,
+   "ms": 1792.6
+  },
+  {
+   "p": 0.3,
+   "t": 3,
+   "ms": 1578.5
+  },
+  {
+   "p": 0.64,
+   "t": 3,
+   "ms": 1667.2
+  },
+  {
+   "p": 0.68,
+   "t": 3,
+   "ms": 1689.1
+  },
+  {
+   "p": 0.76,
+   "t": 6,
+   "ms": 781.9
+  },
+  {
+   "p": 0.86,
+   "t": 6,
+   "ms": 713.4
+  },
+  {
+   "p": 0.99,
+   "t": 6,
+   "ms": 611.9
+  }
+ ]
+}

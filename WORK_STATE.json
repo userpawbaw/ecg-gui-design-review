@@ -438,5 +438,23 @@
     "mockups_generated": false,
     "accepted_feedback_analysis": "closed",
     "base_sha": "0783c45"
+  },
+  "scenario_lighting_review_2026_10_04": {
+    "status": "design_analysis_complete_visual_unverified",
+    "base_product_commit": "0b0ca33",
+    "records": [
+      "D-051",
+      "R-021",
+      "CASE-007"
+    ],
+    "separate_tracks": [
+      "LIGHT-01",
+      "SYS-LIGHT",
+      "A-LIGHT",
+      "B-LIGHT",
+      "C-LIGHT"
+    ],
+    "next": "Candidate scene feedback and production order; final scenario feedback before mockups; then clay/previs and scene-specific render review",
+    "scope": "Preserve approved D-049 lighting work. Pose alternatives and A/B/C selection remain proposals. No new mockups or product implementation."
   }
 }

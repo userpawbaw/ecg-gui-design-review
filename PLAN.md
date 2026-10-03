@@ -239,3 +239,7 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 다음: A/B/C 검토·수정 → 사용자 제작순위 → 최종피드백 → 목업 → 예비영상 → 씬별구현/피드백/신규아이디어/검증.
 - 기존 R1-INTRO 구현 상태와 승인된 H5/3전극/서고 배치를 이 문서 작업으로 대체하지 않음. 제품 코드 변경 없음.
 - 색인: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_ABC_feedback_plan_2026-10-03.md.
+
+## 2026-10-04 후보별 빛·모델링 설계 보완
+
+LIGHT-01 분석 완료; SYS-LIGHT 규칙 및 A-LIGHT/B-LIGHT/C-LIGHT 씬 명세 작성. D-051/R-021/CASE-007. 기존 D-049 서고 작업 보존. 다음: 후보별 장면 피드백/제작 순서 → 최종 피드백 → 목업 → clay/프리비즈 → 씬 구현·결과 피드백. 전체 후보 및 자세 선택 미확정.

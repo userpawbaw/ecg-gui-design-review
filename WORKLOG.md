@@ -415,6 +415,9 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-10-02 D-047 hybrid work mode (user decision); first delegation brief handoffs/IMPL_BRIEF_ARCHIVE_WEB_2026-10-02.md (archive web verification T1-T9, return rule for story/scene changes). Archive assets move to tracked src/story/intro/assets/archive/ (prototype/v2/public is gitignored).
 - 2026-10-02 H3b+H3c vs H5 stills: H5 reads form better; grip unreadable in both (mesh/pose). D-048: user chose H5 + mesh remake + ECG electrodes/wires colour rule (red noise, blue heart→electrode, purple comm, moving neon dashes). Candidate lineup A–D (CC0/CC BY), v3 build script (egg head, stile grip by geometric wrap, rig keys), archive v3 electrodes/wires/dash stills.
 - 2026-10-03 user: source A confirmed; fixes 1–3 (floor power strip, comm cable over desk, yoke at right waist); 10 electrodes → 3-lead (RA/LA infraclavicular, LL left lower abdomen). Final stills verification/r1-figure-v3-20261002/v3_archive_sheet.jpg. Bake excludes rig objects. Brief 2 handoffs/IMPL_BRIEF_FIGURE_V3_WEB_2026-10-03.md (absorbs brief 1 if not started).
+- 2026-10-03 brief 2 result reviewed (branch claude/r1-autopilot-impl-3d1b78): stages A/B/C approved (C2 conditional), merge recommended. Lighting reviewed against the user's occlusion-driven volumetric lighting manual (stored docs/uiux_system/lighting/): L1-L9, receiver does not prove the blind pattern (F-032). O-008 sun depth map never rendered, F-031 stills haze, R-019 effect on/off proof.
+- 2026-10-03 light-aware modeling guideline (user) classified against the brief-2 review: adopt / develop / reject (REVIEW_FIGURE_V3_WEB §5); stored under docs/uiux_system/lighting. Third upload was a duplicate of the lighting manual.
+
 
 ## 2026-10-03 — A/B TUNE·시스템 보완·마이닝·C를 분리 기록
 

@@ -482,7 +482,7 @@ if FIG is not None and args.fig == 'v3':
         clip = box(f'El_{k}_clip', (.016, .009, .007), p + n * .0085 + tdir * .006, M_CLIP)
         clip.rotation_euler = Matrix((tdir, n.cross(tdir), n)).transposed().to_euler()
         a = p + n * .009 + tdir * .015
-        if k.startswith('V'):            # chest leads: off the skin, down in front of the belly to the yoke
+        if fj['electrodes'][k].get('torso', k.startswith('V')):   # torso leads: off the skin, down in front of the belly to the yoke
             mid = Vector((p.x * .45 + YOKE.x * .55, min(p.y, YOKE.y) - .06, (p.z + YOKE.z) / 2 + .02))
             pts = catmull([a, a + n * .02 + tdir * .02, mid, YOKE + Vector((.0, -.025, .0))], 10)
         elif k in ('LL', 'RL'):          # ankle leads: up along the shin front
@@ -509,7 +509,7 @@ if FIG is not None and args.fig == 'v3':
         HB = Vector(HEART.location); M_SIG = dash_mat('signal_dash', C_BLUE, base=None, period=.03, duty=.5, strength=3.5)
         for k, (p, n) in E.items():
             q = p - n * .012
-            if k.startswith('V'): path = catmull([HB, HB.lerp(q, .5) + Vector((0, -.01, .01)), q], 8)
+            if fj['electrodes'][k].get('torso', k.startswith('V')): path = catmull([HB, HB.lerp(q, .5) + Vector((0, -.01, .01)), q], 8)
             elif k == 'LA': path = catmull([HB, J['upper.L'], J['fore.L'], J['hand.L'].lerp(J['fore.L'], .25), q], 8)
             elif k == 'RA': path = catmull([HB, J['upper.R'], J['fore.R'], q], 8)
             elif k == 'LL': path = catmull([HB, J['spine'], J['thigh.L'], J['shin.L'], q], 8)
@@ -555,7 +555,7 @@ if FIG is not None:
     SHOTS['s6_grip'] = (tuple(HR + Vector((-0.75, -0.95, -0.35))), tuple(HR + Vector((0.05, 0.1, 0.25))), 38)
     if args.fig == 'v3':   # hand + RA electrode fill the frame (the v2 framing left the hand at the edge)
         SHOTS['s6_grip'] = (tuple(HR + Vector((-0.42, -0.42, 0.08))), tuple(HR + Vector((0.0, 0.0, 0.07))), 30)
-        CH = FIG.location + Vector(fj['electrodes']['V3']['p'])
+        CH = FIG.location + sum((Vector(e['p']) for e in fj['electrodes'].values()), Vector()) / len(fj['electrodes'])
         SHOTS['s7_chest'] = (tuple(CH + Vector((0.35, -1.25, 0.18))), tuple(CH + Vector((-0.04, 0.05, -0.12))), 34)
 if args.save:
     bpy.ops.wm.save_as_mainfile(filepath=args.save)

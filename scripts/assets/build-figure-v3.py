@@ -1,5 +1,6 @@
 """R1 figure v3 (D-048): deformé body + egg head, seated on the archive ladder, right hand wrapped around the stile,
-10 ECG electrode sites (standard 12-lead) for the lead-wire / signal-path story.
+ECG electrode sites for the lead-wire / signal-path story: 3-lead monitoring set by default (RA, LA, LL on the torso),
+--leads 10 for the standard 12-lead set.
 
 Source: Blender Studio "Human Base Meshes" v1.0.0 (CC0). Default --source realistic (candidate A, user choice
 2026-10-03); --source stylized keeps candidate B (verification/r1-figure-v3-20261002/lineup_sheet.jpg).
@@ -95,6 +96,13 @@ SEATED = {   # armature-space target directions (front = −y); the right arm is
 }
 
 # electrode sites on the rest (standing) mesh, source units: ray origin → target (closest surface hit is the site)
+LEADS = int(sys.argv[sys.argv.index('--leads') + 1]) if '--leads' in sys.argv else 3
+# 3-lead monitoring placement (user 2026-10-03: "단순하게, 3전극"): RA / LA under the collarbones, LL on the left lower
+# abdomen — short leads on the torso only. --leads 10 keeps the standard 12-lead set (limb sites at wrists and ankles).
+SITES3 = {
+    'RA': ((-.115, -.6, 1.41), (-.115, 0, 1.41)), 'LA': ((.115, -.6, 1.41), (.115, 0, 1.41)),
+    'LL': ((.10, -.6, 1.06), (.10, 0, 1.06)),
+}
 SITES = {
     'V1': ((-.035, -.6, 1.265), (-.035, 0, 1.265)), 'V2': ((.035, -.6, 1.265), (.035, 0, 1.265)),
     'V3': ((.075, -.6, 1.24), (.075, 0, 1.24)), 'V4': ((.112, -.6, 1.215), (.112, 0, 1.215)),
@@ -141,25 +149,26 @@ def build(preview_dir=None):
     from mathutils.bvhtree import BVHTree
     bvh = BVHTree.FromObject(o, bpy.context.evaluated_depsgraph_get())
     site_idx = {}
-    for nm, (a, b) in SITES.items():
+    for nm, (a, b) in (SITES3 if LEADS == 3 else SITES).items():
         a, b = Vector(a) * K, Vector(b) * K
         hit = bvh.ray_cast(a, (b - a).normalized())
         site_idx[nm] = int(np.argmin(np.linalg.norm(Vr - np.array(hit[0]), axis=1)))
-    zl = 1.215 * K; band = Vr[(np.abs(Vr[:, 2] - zl) < .008) & (Vr[:, 0] > 0)]
-    xs = np.sort(band[:, 0]); g = np.argmax(np.diff(xs)); torso_x = (xs[g] + xs[g + 1]) / 2   # torso ends at the widest gap
-    band = band[band[:, 0] < torso_x]; tx = band[:, 0].max()
-    xm = (Vr[site_idx['V4'], 0] + tx) / 2; v5 = band[np.abs(band[:, 0] - xm) < .008]; v5 = v5[np.argmin(v5[:, 1])]   # anterior axillary: halfway V4 → side
-    v6 = band[np.abs(band[:, 1] - .0) < .03]; v6 = v6[np.argmax(v6[:, 0])]                              # mid-axillary
-    for nm, p in (('V5', v5), ('V6', v6)): site_idx[nm] = int(np.argmin(np.linalg.norm(Vr - p, axis=1)))
     B = bones() if STY else bif._bones()                       # realistic joints were measured on the 1.666 m mesh (P1)
-    for s, n, tag in ((1, 'L', 'LA'), (-1, 'R', 'RA')):          # inner forearm, 4 cm above the wrist crease
-        h, t = np.array(B[f'fore.{n}'][0]), np.array(B[f'fore.{n}'][1]); p = t + (h - t) * .2
-        c = Vr[np.linalg.norm(Vr - p, axis=1) < .06]; d = c - p; d[:, 0] *= -s            # medial (toward the body) side
-        site_idx[tag] = int(np.argmin(np.linalg.norm(Vr - c[np.argmax(d[:, 0] - .3 * np.abs(d[:, 1]))], axis=1)))
-    for s, n, tag in ((1, 'L', 'LL'), (-1, 'R', 'RL')):          # inner lower leg above the ankle
-        h, t = np.array(B[f'shin.{n}'][0]), np.array(B[f'shin.{n}'][1]); p = t + (h - t) * .18
-        c = Vr[np.linalg.norm(Vr - p, axis=1) < .07]; d = c - p
-        site_idx[tag] = int(np.argmin(np.linalg.norm(Vr - c[np.argmax(-s * d[:, 0])], axis=1)))
+    if LEADS == 10:                                              # standard 12-lead extras: V5/V6 on the torso side, limb sites
+        zl = 1.215 * K; band = Vr[(np.abs(Vr[:, 2] - zl) < .008) & (Vr[:, 0] > 0)]
+        xs = np.sort(band[:, 0]); g = np.argmax(np.diff(xs)); torso_x = (xs[g] + xs[g + 1]) / 2   # torso ends at the widest gap
+        band = band[band[:, 0] < torso_x]; tx = band[:, 0].max()
+        xm = (Vr[site_idx['V4'], 0] + tx) / 2; v5 = band[np.abs(band[:, 0] - xm) < .008]; v5 = v5[np.argmin(v5[:, 1])]   # anterior axillary
+        v6 = band[np.abs(band[:, 1] - .0) < .03]; v6 = v6[np.argmax(v6[:, 0])]                              # mid-axillary
+        for nm, p in (('V5', v5), ('V6', v6)): site_idx[nm] = int(np.argmin(np.linalg.norm(Vr - p, axis=1)))
+        for s, n, tag in ((1, 'L', 'LA'), (-1, 'R', 'RA')):          # inner forearm, 4 cm above the wrist crease
+            h, t = np.array(B[f'fore.{n}'][0]), np.array(B[f'fore.{n}'][1]); p = t + (h - t) * .2
+            c = Vr[np.linalg.norm(Vr - p, axis=1) < .06]; d = c - p; d[:, 0] *= -s
+            site_idx[tag] = int(np.argmin(np.linalg.norm(Vr - c[np.argmax(d[:, 0] - .3 * np.abs(d[:, 1]))], axis=1)))
+        for s, n, tag in ((1, 'L', 'LL'), (-1, 'R', 'RL')):          # inner lower leg above the ankle
+            h, t = np.array(B[f'shin.{n}'][0]), np.array(B[f'shin.{n}'][1]); p = t + (h - t) * .18
+            c = Vr[np.linalg.norm(Vr - p, axis=1) < .07]; d = c - p
+            site_idx[tag] = int(np.argmin(np.linalg.norm(Vr - c[np.argmax(-s * d[:, 0])], axis=1)))
     # ---- rig ----
     ad = bpy.data.armatures.new('rig'); ar = bpy.data.objects.new('rig', ad); bpy.context.scene.collection.objects.link(ar)
     bpy.context.view_layer.objects.active = ar; bpy.ops.object.mode_set(mode='EDIT')
@@ -282,7 +291,9 @@ def build(preview_dir=None):
     # posed electrode sites + outward normals (from the posed basis mesh)
     me.calc_normals_split() if hasattr(me, 'calc_normals_split') else None
     Nv = np.array([v.normal[:] for v in me.vertices])
-    electrodes = {k: {'p': [round(float(x), 4) for x in PB[i]], 'n': [round(float(x), 4) for x in Nv[i]], 'v': i} for k, i in site_idx.items()}
+    torso = LEADS == 3                                             # every 3-lead site is on the torso (signal path: heart → site directly)
+    electrodes = {k: {'p': [round(float(x), 4) for x in PB[i]], 'n': [round(float(x), 4) for x in Nv[i]], 'v': i,
+                      'torso': bool(torso or k.startswith('V'))} for k, i in site_idx.items()}
     # joints for the inside-body signal paths (heart → electrode), posed
     pb = ar.pose.bones['chest']; Dm = pb.matrix @ pb.bone.matrix_local.inverted()
     hb_ = Dm @ Vector(heart); q = Dm.to_quaternion()

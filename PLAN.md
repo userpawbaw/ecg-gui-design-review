@@ -235,7 +235,7 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 ## 2026-10-03 별도 시나리오 피드백 작업
 
 - SCENARIO-ABC-20261003: 공통 규칙v3 / A-T1–7·B-T1–7 / B 상세판 / 신규 C 신호 입자 처리실 / 선택효과 마이닝 작성.
-- 사용자 검토 전. A/B=TUNE, C=신규초안. 도입부/Story 스펙터클 허용, 비교정확성필수(D-049).
+- 사용자 검토 전. A/B=TUNE, C=신규초안. 도입부/Story 스펙터클 허용, 비교정확성필수(D-050).
 - 다음: A/B/C 검토·수정 → 사용자 제작순위 → 최종피드백 → 목업 → 예비영상 → 씬별구현/피드백/신규아이디어/검증.
 - 기존 R1-INTRO 구현 상태와 승인된 H5/3전극/서고 배치를 이 문서 작업으로 대체하지 않음. 제품 코드 변경 없음.
 - 색인: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_ABC_feedback_plan_2026-10-03.md.

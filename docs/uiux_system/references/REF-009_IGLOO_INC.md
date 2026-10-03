@@ -84,7 +84,7 @@ WebGL 판(원작): 글리프 atlas의 UV 오프셋만 바꿔 레이아웃 재계
 **근거**: https://www.igloo.inc/ [캡처][런타임], https://www.awwwards.com/igloo-inc-case-study.html [문헌].
 **재현 요구사항**: Three.js ringmesh/camera/light, 단일scroll; 난이도상.
 **수용 기준**: C에서 중앙목표·앞뒤깊이·ECG 연결을 읽음, 실제6–12프레임 필요.
-**ECG 번안**: C의 디지털 배열 접근. 얼음/극지는 옮기지 않음, D-049 Intro변형 허용.
+**ECG 번안**: C의 디지털 배열 접근. 얼음/극지는 옮기지 않음, D-050 Intro변형 허용.
 **재현 상태**: `none`.
 
 ### EFX-009-03 입자 목표 형상 전환 — 제작자 근거, 라이브 미관찰

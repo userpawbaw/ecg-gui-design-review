@@ -31,4 +31,4 @@ D/R은 CASE 연결 또는 `10_RECORD_KEEPING.md`에 따른 구체적 비연결 �
 
 ## 2026-10-03 시나리오 범위와 근거 보강
 
-- [CASE-007](CASE-007_SCENARIO_SCOPE_AND_REFERENCE_PROVENANCE.md): Intro/Story 자유도, B의 원본 귀속 정정, A/B TUNE와 C/시스템/마이닝의 분리. D-049/F-031/R-019.
+- [CASE-007](CASE-007_SCENARIO_SCOPE_AND_REFERENCE_PROVENANCE.md): Intro/Story 자유도, B의 원본 귀속 정정, A/B TUNE와 C/시스템/마이닝의 분리. D-050/F-033/R-020.

@@ -531,5 +531,26 @@
     "motion_verified": false,
     "winner_selected": false,
     "next": "A separate mockup, then comparable role frames for ABC; B/C corrections tracked separately"
+  },
+  "scenario_background_review_2026_10_04": {
+    "status": "analysis_recommendations_complete_not_adopted",
+    "records": [
+      "D-056",
+      "R-026",
+      "CASE-007"
+    ],
+    "product_remote_sha": "5d707776518b90a124673d8ecca93c8e3f2cea88",
+    "tracks": [
+      "BG-B",
+      "BG-C",
+      "BG-A",
+      "BG-SCAN",
+      "BG-RENDER"
+    ],
+    "attachment_composition_adopted": false,
+    "new_mockups": false,
+    "product_code_changed": false,
+    "performance_verified": false,
+    "next": "Review hybrid background direction; compare static background modes before separate scan motion; A mockup remains separate next task"
   }
 }

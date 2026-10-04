@@ -87,3 +87,7 @@ A 작업은 v4 §2/3/6, B 작업은 §2/4/6, C 작업은 §2/5/6을 먼저 읽�
 ## B3 배경 비교 결과 경로
 
 [B3 비교 검토](ECG_B3_background_comparison_review_2026-10-04.md) → 배경 보고서 §3/5/7 → B v4의 B3 구도. 원래16:9 카메라를 사용하며 생성 보드의 띠 크롭은 최종 프레임으로 채택하지 않는다. 03혼합은 추천안, 사용자 채택/실제 구조 검증 전이다.
+
+## B 배경 실제 공간 시험
+
+[ECG_B_background_previs_review_2026-10-04.md](ECG_B_background_previs_review_2026-10-04.md) → B3/B5/B6 통제 캡처/남은 TUNE/다음 순서. 실제 spike 실행은 `npm run spike -- background-space`. 스캔/A/C는 별도. 구조 검증을 H5·종이·빛 최종 품질로 확대하지 않는다.

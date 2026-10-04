@@ -1,0 +1,23 @@
+import http from 'node:http';
+import {readFile} from 'node:fs/promises';
+import {resolve, dirname, extname, sep} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawn} from 'node:child_process';
+const root=dirname(fileURLToPath(import.meta.url));
+const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css'};
+const server=http.createServer(async(req,res)=>{
+ try {
+  const url=new URL(req.url,'http://localhost');
+  const path=resolve(root,'.'+decodeURIComponent(url.pathname==='/'?'/index.html':url.pathname));
+  if(!path.startsWith(root+sep)){res.writeHead(403);res.end();return;}
+  const data=await readFile(path);res.writeHead(200,{'Content-Type':mime[extname(path)]||'application/octet-stream','Cache-Control':'no-store'});res.end(data);
+ }catch{res.writeHead(404);res.end('파일이 없습니다. 저장소 루트에서 npm run spike -- background-space 로 준비하세요.');}
+});
+server.listen(4196,'127.0.0.1',()=>{
+ console.log('ECG 배경 3D 프리비즈 http://127.0.0.1:4196');
+ if(process.argv.includes('--open')){
+  const url='http://127.0.0.1:4196';
+  const args=process.platform==='win32'?['/c','start','',url]:[url];
+  spawn(process.platform==='win32'?'cmd':process.platform==='darwin'?'open':'xdg-open',args,{stdio:'ignore'}).on('error',()=>{});
+ }
+});

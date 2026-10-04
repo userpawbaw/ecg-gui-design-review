@@ -12,3 +12,4 @@ assets/.npm-cache/
 # Python bytecode
 __pycache__/
 *.pyc
+.npm-cache-background/

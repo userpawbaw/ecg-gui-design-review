@@ -452,3 +452,7 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 ## 2026-10-04 — B3 배경3종 image_gen 비교
 
 내장 편집1회, 기존 B3 참조. 생성 보드·입력·해시 보존. 혼합의 깊이 개선 방향과 띠크롭/장비변화 통제오차 명시. 구조/모션/밝기측정/코드 미수행. D-057/R-027/CASE-007.
+
+## 2026-10-04 BG-B-02 — 사용자 추천안 진행
+
+기준 research4610358, product730921a 확인(최신 변경chair still만, merge안함). D-058 전에 독립geometry계약 작성. Three0.186.1 spike 배경off/edges/hybrid + B3/B5/B6 + p/t분리. 임시faceless clay/합성신호/근사수광 범위. 초기 JS문법/서버연결 실패 수정, 접힘뒤층/카메라 방향2회 조정. Edge33캡처1280x720, 새세션오류0, 선택/정지UI, p고정t진행 확인. 전체TUNE; targetFPS/H5/차폐광미검증. D-058/R-028/CASE-007 갱신. 실행 npm run spike -- background-space.

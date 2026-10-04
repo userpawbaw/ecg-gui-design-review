@@ -127,3 +127,7 @@ BG-REVIEW-01 [배경 검토 보고서](ECG_background_space_review_2026-10-04.md
 ## 13. B3 배경 비교 — 2026-10-04
 
 BG-B-01 기존/구조선/혼합 정지 비교 완료. [보드·자체 검토](ECG_B3_background_comparison_review_2026-10-04.md). 03혼합을 다음 시험 후보로 추천, 전체 TUNE. 생성 보드가 좁은 띠 형식/일부 장비 변화라 정확한 동일 구도/밝기 검증은 아님. 다음: 원래16:9 B3에서 실제 공간/가림 시험 → B5/6 번안. BG-SCAN/C/A는 별도 상태 유지. 코드/모션/성능 미수행.
+
+## BG-B-02 실제 geometry 체크포인트
+
+B3/B5/B6 구현·33캡처·새 브라우저 오류0 확인. 전체TUNE. [ECG_B_background_previs_review_2026-10-04.md](ECG_B_background_previs_review_2026-10-04.md). 다음 실제 H5/가슴 카메라·종이 이면·수광 보완, 스캔은 그 뒤 별도. A/C·최종 후보 순위는 유지.

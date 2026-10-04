@@ -566,5 +566,22 @@
     "product_code_changed": false,
     "motion_verified": false,
     "next": "Original 16:9 B3 geometry/occlusion test; B5/B6 adaptation separately; scan/C/A queued"
+  },
+  "scenario_background_previs_2026_10_04": {
+    "status": "B3_B5_B6_geometry_browser_verified_TUNE",
+    "records": [
+      "D-058",
+      "R-028",
+      "CASE-007"
+    ],
+    "product_remote_sha": "730921a653f5068fac28f9bc188bf6a936abc49c",
+    "spike": "background-space",
+    "captures": 33,
+    "fresh_browser_errors": 0,
+    "product_code_changed": false,
+    "H5_asset_quality_verified": false,
+    "physical_lighting_verified": false,
+    "target_performance_verified": false,
+    "next": "BG-B actual H5/chest framing, paper backside/curvature, receiver/contact light; BG-SCAN separate afterward; A/C remain separate"
   }
 }

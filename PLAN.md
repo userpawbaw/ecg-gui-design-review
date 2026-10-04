@@ -267,3 +267,10 @@ BG-REVIEW-01 완료: dark geometry+selected edges+receiver 추천, 스캔 별도
 ## 2026-10-04 B3 배경 비교
 
 BG-B-01 정지3종 완료/03혼합 추천/TUNE. 다음 원래16:9 B3 실제 공간/가림→B5/6 번안, 스캔 별도. A/C 작업 유지. D-057/R-027.
+
+## 2026-10-04 BG-B-02
+
+- [x] B3 실제16:9 배경3모드 geometry 시험 / B5/B6 번안 / 브라우저33캡처.
+- [ ] BG-B 후속: 실제 H5·가슴구도 / 종이 곡률·이면 / 국소 수광·접지. 현재TUNE.
+- [ ] BG-SCAN 별도 시험. BG-A/A 목업/BG-C 별도 계획 유지.
+- 증거: verification/b-background-20261004 / SCENARIO-ABC의 ECG_B_background_previs_review. 제품 통합/최종채택 아님.

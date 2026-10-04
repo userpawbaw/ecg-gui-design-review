@@ -1,0 +1,20 @@
+{
+  "scope": "BG-B-03 actual assets, not product adoption",
+  "body": {
+    "path": "prototype/v2/src/story/intro/assets/body.glb",
+    "license": "CC0-1.0",
+    "sha256": "af0a77ac099b6e8f7d65eda0acfefdaeaf339a8e592c78e2c11d02922fd790ce"
+  },
+  "heart": {
+    "path": "prototype/v2/src/story/intro/assets/heart.glb",
+    "license": "CC-BY-4.0",
+    "sha256": "7a1f9cfe3762582839182811f7e0512773b9032837056ca0775154b37efb04ac"
+  },
+  "shader": {
+    "path": "prototype/v2/src/story/intro/figure.ts",
+    "reuse": "h5Vert/h5Frag extracted; amber glow/radius/opacity adjusted only in spike",
+    "sha256": "092f47d29909dc1e0822069f4b8fc162d71582cc582222aba5663d52650363d8"
+  },
+  "paper": "deterministic CanvasTexture seed21 and curved meshes; authored in spike",
+  "cart": "authored geometric cart, not imported final equipment asset"
+}

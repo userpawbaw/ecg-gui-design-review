@@ -583,5 +583,20 @@
     "physical_lighting_verified": false,
     "target_performance_verified": false,
     "next": "BG-B actual H5/chest framing, paper backside/curvature, receiver/contact light; BG-SCAN separate afterward; A/C remain separate"
+  },
+  "scenario_actual_assets_2026_10_04": {
+    "status": "actual_GLB_H5_paper_shadow_trial_complete_TUNE",
+    "records": [
+      "D-059",
+      "F-034",
+      "CASE-007"
+    ],
+    "captures": 39,
+    "browser_errors": 0,
+    "missing_asset_claim": "withdrawn; source URL and registry confirm tracked files",
+    "product_remote_sha": "4b11abbcced81f473c662a7503e9bfd01b4b0ce7",
+    "H5_physical_room_lighting_verified": false,
+    "product_code_changed": false,
+    "next": "actual scene feedback: figure/paper/light; scan and A/C separate"
   }
 }

@@ -91,3 +91,7 @@ A 작업은 v4 §2/3/6, B 작업은 §2/4/6, C 작업은 §2/5/6을 먼저 읽�
 ## B 배경 실제 공간 시험
 
 [ECG_B_background_previs_review_2026-10-04.md](ECG_B_background_previs_review_2026-10-04.md) → B3/B5/B6 통제 캡처/남은 TUNE/다음 순서. 실제 spike 실행은 `npm run spike -- background-space`. 스캔/A/C는 별도. 구조 검증을 H5·종이·빛 최종 품질로 확대하지 않는다.
+
+## BG-B-03 실제 에셋
+
+[ECG_B_actual_assets_review_2026-10-04.md](ECG_B_actual_assets_review_2026-10-04.md)가 최신 B 실제 인체/심장/종이/빛 검토. 기존 부재 판단은F034 철회. H5 shader/원본registry/실제캡처를 참조. 박동스캔/A/C는 별도.

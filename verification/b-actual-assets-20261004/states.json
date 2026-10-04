@@ -1,0 +1,903 @@
+{
+  "source": "agent-browser 0.38.2 / installed Edge / 1280x1080 viewport / 1280x720 stage",
+  "errors": [],
+  "captures": [
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 52,
+        "camera": [
+          -0.12,
+          1.6,
+          6.1
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348662
+      },
+      "file": "B3-actual-p0.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 52,
+        "camera": [
+          -0.072,
+          1.6,
+          5.96
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.2,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348662
+      },
+      "file": "B3-actual-p0.2.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 52,
+        "camera": [
+          -0.023999999999999994,
+          1.6,
+          5.819999999999999
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.4,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348662
+      },
+      "file": "B3-actual-p0.4.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 52,
+        "camera": [
+          0.023999999999999994,
+          1.6,
+          5.68
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.6,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348662
+      },
+      "file": "B3-actual-p0.6.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 52,
+        "camera": [
+          0.07200000000000001,
+          1.6,
+          5.54
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.8,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348662
+      },
+      "file": "B3-actual-p0.8.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 51,
+        "camera": [
+          0.12,
+          1.6,
+          5.3999999999999995
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 1,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348342
+      },
+      "file": "B3-actual-p1.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 32,
+        "camera": [
+          0,
+          1.6,
+          5.75
+        ],
+        "depthTest": true,
+        "mode": "off",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348162
+      },
+      "file": "B3-off-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 45,
+        "camera": [
+          0,
+          1.6,
+          5.75
+        ],
+        "depthTest": true,
+        "mode": "edges",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348270
+      },
+      "file": "B3-edges-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 52,
+        "camera": [
+          0,
+          1.6,
+          5.75
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348662
+      },
+      "file": "B3-hybrid-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "clay",
+        "assetsReady": true,
+        "calls": 125,
+        "camera": [
+          0,
+          1.6,
+          5.75
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 19044
+      },
+      "file": "B3-clay-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 34,
+        "camera": [
+          0,
+          1.6,
+          5.75
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B3",
+        "shadows": false,
+        "t": 0.18,
+        "triangles": 241974
+      },
+      "file": "B3-shadow-off.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.06,
+          1.6,
+          6.2
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B5-actual-p0.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.14800000000000002,
+          1.6,
+          6.15
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.2,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B5-actual-p0.2.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.236,
+          1.6,
+          6.1000000000000005
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.4,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B5-actual-p0.4.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.324,
+          1.6,
+          6.05
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.6,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B5-actual-p0.6.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.412,
+          1.6,
+          6
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.8,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B5-actual-p0.8.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.5,
+          1.6,
+          5.95
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 1,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B5-actual-p1.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 95,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "off",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348354
+      },
+      "file": "B5-off-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 108,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "edges",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348462
+      },
+      "file": "B5-edges-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B5-hybrid-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "clay",
+        "assetsReady": true,
+        "calls": 185,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 15972
+      },
+      "file": "B5-clay-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 96,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": false,
+        "t": 0.18,
+        "triangles": 242154
+      },
+      "file": "B5-shadow-off.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 136,
+        "camera": [
+          0.65,
+          1.6,
+          6.2
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B6-actual-p0.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 136,
+        "camera": [
+          0.738,
+          1.6,
+          6.15
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.2,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B6-actual-p0.2.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 136,
+        "camera": [
+          0.8260000000000001,
+          1.6,
+          6.1000000000000005
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.4,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B6-actual-p0.4.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 136,
+        "camera": [
+          0.914,
+          1.6,
+          6.05
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.6,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B6-actual-p0.6.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 136,
+        "camera": [
+          1.002,
+          1.6,
+          6
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.8,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B6-actual-p0.8.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 136,
+        "camera": [
+          1.09,
+          1.6,
+          5.95
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 1,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B6-actual-p1.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 116,
+        "camera": [
+          0.87,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "off",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348354
+      },
+      "file": "B6-off-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 129,
+        "camera": [
+          0.87,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "edges",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 348462
+      },
+      "file": "B6-edges-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 136,
+        "camera": [
+          0.87,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 454094
+      },
+      "file": "B6-hybrid-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "clay",
+        "assetsReady": true,
+        "calls": 206,
+        "camera": [
+          0.87,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": true,
+        "t": 0.18,
+        "triangles": 15972
+      },
+      "file": "B6-clay-mid.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 117,
+        "camera": [
+          0.87,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B6",
+        "shadows": false,
+        "t": 0.18,
+        "triangles": 242154
+      },
+      "file": "B6-shadow-off.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0,
+        "triangles": 454094
+      },
+      "file": "B5-beat-0.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.2,
+        "triangles": 454094
+      },
+      "file": "B5-beat-0.2.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.4,
+        "triangles": 454094
+      },
+      "file": "B5-beat-0.4.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.6,
+        "triangles": 454094
+      },
+      "file": "B5-beat-0.6.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 0.8,
+        "triangles": 454094
+      },
+      "file": "B5-beat-0.8.png"
+    },
+    {
+      "state": {
+        "aspect": 1.7777777777777777,
+        "asset": "actual",
+        "assetsReady": true,
+        "calls": 115,
+        "camera": [
+          0.28,
+          1.6,
+          6.075
+        ],
+        "depthTest": true,
+        "mode": "hybrid",
+        "opaqueOccluders": true,
+        "p": 0.5,
+        "reducedMotion": false,
+        "scene": "B5",
+        "shadows": true,
+        "t": 1,
+        "triangles": 454094
+      },
+      "file": "B5-beat-1.png"
+    }
+  ]
+}

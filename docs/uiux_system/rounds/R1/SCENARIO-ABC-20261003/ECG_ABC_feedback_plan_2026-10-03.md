@@ -131,3 +131,7 @@ BG-B-01 기존/구조선/혼합 정지 비교 완료. [보드·자체 검토](EC
 ## BG-B-02 실제 geometry 체크포인트
 
 B3/B5/B6 구현·33캡처·새 브라우저 오류0 확인. 전체TUNE. [ECG_B_background_previs_review_2026-10-04.md](ECG_B_background_previs_review_2026-10-04.md). 다음 실제 H5/가슴 카메라·종이 이면·수광 보완, 스캔은 그 뒤 별도. A/C·최종 후보 순위는 유지.
+
+## BG-B-03 체크포인트
+
+실제GLB/H5+종이곡률/그림자 시험39장 완료, 전체TUNE. [ECG_B_actual_assets_review_2026-10-04.md](ECG_B_actual_assets_review_2026-10-04.md). 다음 actual 장면 피드백을 인체/종이/빛으로 나눠 적용. scan은 뒤 단계.

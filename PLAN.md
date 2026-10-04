@@ -274,3 +274,9 @@ BG-B-01 정지3종 완료/03혼합 추천/TUNE. 다음 원래16:9 B3 실제 공�
 - [ ] BG-B 후속: 실제 H5·가슴구도 / 종이 곡률·이면 / 국소 수광·접지. 현재TUNE.
 - [ ] BG-SCAN 별도 시험. BG-A/A 목업/BG-C 별도 계획 유지.
 - 증거: verification/b-background-20261004 / SCENARIO-ABC의 ECG_B_background_previs_review. 제품 통합/최종채택 아님.
+
+## 2026-10-04 BG-B-03
+
+- [x] 기존 actual body/heart + H5 shader 직접 사용, 종이 곡률/질감/실제 shadow off/on, 39캡처.
+- [ ] actual 장면 인체·종이·빛 피드백 적용, H5 방 sun-depth/완성 장비/전극 정렬 보완.
+- 기존 H5 부재 주장 철회(F034). 전체TUNE/제품통합아님. scan/A/C 별도 유지.

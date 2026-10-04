@@ -456,3 +456,7 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 ## 2026-10-04 BG-B-02 — 사용자 추천안 진행
 
 기준 research4610358, product730921a 확인(최신 변경chair still만, merge안함). D-058 전에 독립geometry계약 작성. Three0.186.1 spike 배경off/edges/hybrid + B3/B5/B6 + p/t분리. 임시faceless clay/합성신호/근사수광 범위. 초기 JS문법/서버연결 실패 수정, 접힘뒤층/카메라 방향2회 조정. Edge33캡처1280x720, 새세션오류0, 선택/정지UI, p고정t진행 확인. 전체TUNE; targetFPS/H5/차폐광미검증. D-058/R-028/CASE-007 갱신. 실행 npm run spike -- background-space.
+
+## 2026-10-04 BG-B-03 actual asset
+
+사용자 실제에셋 진행승인. registry/source URL 직접 확인으로 body/heart tracked 존재 발견(F034), 이전 부재 주장 철회. D059 후 기존GLB·H5원문 shader를 독립spike에서 직접사용. paper곡률/texture/spot shadow 추가,3차자기수정, Edge39캡처/errors0. H5 sun-depth미연결/최종장비아님/actual데이터아님/전체TUNE. product upstream4b11abb 확인, merge/제품코드변경없음. 다음actual장면 사용자피드백/scan/A/C는 별도.

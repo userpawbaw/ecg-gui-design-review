@@ -296,7 +296,7 @@ def build(preview_dir=None):
         # muscle-artifact scene: climbing the ladder (facing it; the archive turns the figure 180°), left hand reaching up to a
         # box, right hand gripping the right stile — the ladder pose returns with a reason
         'climb': dict(anchor='feet', curl_l=20, grip='climb', aim={
-            'spine': (0, -.18, 1), 'chest': (0, -.14, 1), 'neck': (0, -.10, 1), 'head': (0, .05, 1),
+            'spine': (0, -.34, 1), 'chest': (0, -.26, 1), 'neck': (0, -.16, 1), 'head': (0, .02, 1),
             'thigh.R': (-.06, .02, -1), 'shin.R': (-.02, .06, -1), 'foot.R': (-.04, -1, -.08),
             'thigh.L': (.07, -.72, -.70), 'shin.L': (.02, .30, -1), 'foot.L': (.04, -1, -.05),
             'upper.L': (.14, -.30, 1), 'fore.L': (.04, -.32, 1), 'hand.L': (0, -.30, 1)}),

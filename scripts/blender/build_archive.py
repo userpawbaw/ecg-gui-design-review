@@ -402,7 +402,7 @@ if os.path.exists(fig_path):
         else:
             spot, FYAW = SPOTS[args.pose]; FROT = Matrix.Rotation(FYAW, 3, 'Z')
             FIG.location = spot - FROT @ an
-        FIG.rotation_euler = (0, 0, FYAW)
+        FIG.rotation_mode = 'XYZ'; FIG.rotation_euler = (0, 0, FYAW)     # the glTF importer leaves QUATERNION mode — euler alone is ignored
     def ring_material(look):
         """Stills stand-in for the web shader. h3: object Z bands. h3b: bands on the bone-axis coordinate (_SLICE) whose
         density is set per shot (H3c: closer → denser) + a soft rim. h5: frosted glass surface + faint bands."""
@@ -646,9 +646,9 @@ if args.pose and FIG is not None:                                 # D-050 shots:
     SHOTS = {
         'floor': {'d1_floor_wide': ((-0.1, 0.9, 1.55), (1.0, 4.3, 0.85), 40), 'd2_floor_mid': ((0.25, 2.7, 0.85), (1.05, 4.3, 0.5), 38)},
         'chair': {'d3_chair': (tuple(AW + Vector((1.15, -1.55, .55))), tuple(AW + Vector((0, 0, .45))), 40)},
-        'desk': {'d4_desk': ((-0.55, 1.45, 1.65), (-2.3, 3.25, .85), 42)},
+        'desk': {'d4_desk': ((-1.2, 2.45, 1.6), (-2.35, 3.45, .95), 50)},
         'wall': {'d5_wall': ((-0.25, 1.0, 1.5), (-3.4, 1.0, 1.3), 40)},
-        'climb': {'d6_climb': ((2.05, 2.75, 1.25), (LAD_X, 3.95, 1.55), 44)},
+        'climb': {'d6_climb': ((2.45, 2.2, 1.7), (LAD_X, 3.85, 1.9), 52)},
     }[args.pose]
     if args.pose in ('chair', 'desk', 'wall', 'climb'): SHOTS = dict(SHOTS)
 if args.clay:                                                     # D-049 clay gate A: grey diffuse everywhere, no volume, no emission

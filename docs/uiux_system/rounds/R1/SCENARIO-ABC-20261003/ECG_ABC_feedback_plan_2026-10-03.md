@@ -1,3 +1,7 @@
+## 현행 A 수정 — D-062
+
+도입부=사다리 주변, Story=의자. Story 원인/유입/파형 구도 KEEP, 건축은 공통서고에 맞춤. [수정목업](ECG_A_ladder_gallery.html)/[명세와검토](ECG_A_ladder_revision_2026-10-04.md). 다음은 두 Intro pose 비교/피드백. 기존15장 의자도입부는 정정. B 후속보류 유지.
+
 ## 최신 단계 — A 상세 목업15 (D-061, 2026-10-04)
 [전이5+Story10 갤러리](ECG_A_detailed_15_gallery.html)와 [자체검토](ECG_A_detailed_15_review_2026-10-04.md)를 먼저 읽는다.
 최신 요구: 의자 seated / 검은 몸 / 심실형 심장. 기존사다리·줄무늬·아이콘심장보다 우선. 제품채택은 별도.

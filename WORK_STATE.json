@@ -627,6 +627,21 @@
     ],
     "product_code_changed": false,
     "runtime_verified": false,
-    "next": "A scene feedback and targeted revisions; ABC production order remains undecided; B implementation remains deferred"
+    "next": "Intro chair interpretation superseded by D-062; Story chair composition KEEP only."
+  },
+  "scenario_a_ladder_2026_10_04": {
+    "status": "5_revision_mockups_TUNE",
+    "edits": 3,
+    "intro_pose": "floor seated beside ladder OR climbing; undecided",
+    "story_pose": "chair; source-ingress-wave composition KEEP",
+    "environment": "common archive anchor contract; actual geometry verification pending",
+    "records": [
+      "D-062",
+      "F-036",
+      "R-031",
+      "CASE-007"
+    ],
+    "product_code_changed": false,
+    "next": "Review two Intro pose paths and fix archive descent/Story handoff"
   }
 }

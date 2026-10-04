@@ -552,5 +552,19 @@
     "product_code_changed": false,
     "performance_verified": false,
     "next": "Review hybrid background direction; compare static background modes before separate scan motion; A mockup remains separate next task"
+  },
+  "scenario_background_comparison_2026_10_04": {
+    "status": "B3_three_static_modes_complete_hybrid_recommended_TUNE",
+    "records": [
+      "D-057",
+      "R-027",
+      "CASE-007"
+    ],
+    "tool": "built-in image_gen",
+    "edit_calls": 1,
+    "controlled_camera_verified": false,
+    "product_code_changed": false,
+    "motion_verified": false,
+    "next": "Original 16:9 B3 geometry/occlusion test; B5/B6 adaptation separately; scan/C/A queued"
   }
 }

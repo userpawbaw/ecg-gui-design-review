@@ -492,5 +492,25 @@
     "user_final_feedback_complete": false,
     "mockups_generated": false,
     "product_code_changed": false
+  },
+  "scenario_b_mockup_2026_10_04": {
+    "status": "two_static_boards_reviewed_TUNE_user_visual_feedback_pending",
+    "records": [
+      "D-054",
+      "R-024",
+      "CASE-007"
+    ],
+    "user_request": "Continue after v4; interpreted as authorization for the next B mockup step, not blanket implementation/candidate adoption",
+    "tool": "built-in image_gen",
+    "generation_calls": 1,
+    "edit_calls": 1,
+    "new_ideas": [
+      "B-POST1",
+      "B-POST2"
+    ],
+    "mockups_generated": true,
+    "product_code_changed": false,
+    "motion_verified": false,
+    "next": "B mood/composition feedback and local corrections; separate C/A boards"
   }
 }

@@ -195,15 +195,18 @@ def build(preview_dir=None):
                 if n.startswith('finger') and n.endswith('.R'): fw[i] += g.weight
                 if n == 'thumb.R': tw[i] += g.weight
     SLICE = np.where(wsum > 0, acc / np.maximum(wsum, 1e-6), Vr[:, 2])
-    # ---- pose ----
-    bpy.context.view_layer.objects.active = ar; bpy.ops.object.mode_set(mode='POSE')
+    # ---- poses (D-050): every pose shares the rig, the ring coordinate and the electrode vertices ----
+    F = [list(p.vertices) for p in o.data.polygons]
+    def reset():
+        bpy.context.view_layer.objects.active = ar
+        if ar.mode != 'POSE': bpy.ops.object.mode_set(mode='POSE')
+        for pb in ar.pose.bones: pb.matrix_basis = Matrix.Identity(4)
+        bpy.context.view_layer.update()
     def aim(name, d):
         pb = ar.pose.bones[name]; bpy.context.view_layer.update()
         rest = pb.bone.matrix_local.to_3x3(); rd = rest @ Vector((0, 1, 0))
         rot = rd.rotation_difference(Vector(d).normalized()).to_matrix() @ rest
         pb.matrix = Matrix.Translation(pb.matrix.translation.copy()) @ rot.to_4x4(); bpy.context.view_layer.update()
-    for name in B:
-        if name in SEATED: aim(name, SEATED[name])
     def curl(side, s_, deg, thumb_deg):
         hp = ar.pose.bones[f'hand.{side}']; Mh = hp.matrix @ hp.bone.matrix_local.inverted(); C = Matrix.Identity(4)
         for k, share in ((1, .38), (2, .36), (3, .26)):
@@ -213,106 +216,152 @@ def build(preview_dir=None):
         pb = ar.pose.bones[f'thumb.{side}']; Kp = pb.bone.head_local
         pb.matrix = Mh @ Matrix.Translation(Kp) @ Matrix.Rotation(math.radians(-s_ * thumb_deg), 4, (0, 0, 1)) @ Matrix.Translation(-Kp) @ pb.bone.matrix_local
         bpy.context.view_layer.update()
-    curl('L', 1, 50, 12)
-    bpy.ops.object.mode_set(mode='OBJECT')
     def evaluated(breath=0.0):
+        if ar.mode == 'POSE': bpy.ops.object.mode_set(mode='OBJECT')
         o.data.shape_keys.key_blocks['breath'].value = breath; bpy.context.view_layer.update()
         ev = o.evaluated_get(bpy.context.evaluated_depsgraph_get()); me = ev.to_mesh()
         P = np.array([v.co[:] for v in me.vertices]); ev.to_mesh_clear(); return P
-    P = evaluated()
-    pel = (np.abs(P[:, 0]) < .13) & (np.abs(P[:, 1]) < .12)
-    seat = P[pel][np.argmin(P[pel][:, 2])]
-    # right stile in the figure frame (archive places the seat centred on the rung, 6 cm in front of its axis)
-    u = Vector((0, LAD_TAN, 1)).normalized()
-    def stile_at(z): return Vector((seat[0] - STILE_DX, seat[1] + .06 + (z - seat[2] + .015) * LAD_TAN, z))
-    zg = seat[2] + .17
-    A0 = stile_at(zg)
-    f = Vector((-.05, 1.0, -.62)).normalized()                     # hand axis: back and down, across the stile
-    fp = (f - f.dot(u) * u).normalized()
-    n = u.cross(fp).normalized()
-    if n.x < 0: n = -n                                                # palm faces the stile from outside (+x)
-    S = A0 - STILE_R * n                                              # palm-surface contact at the knuckle line
-    hb = ar.pose.bones['hand.R']; L = (Vector(B['hand.R'][1]) - Vector(B['hand.R'][0])).length
-    Kn = S - n * .014 * K / .93                                       # bone runs inside the palm (half thickness)
-    W = Kn - f * L
-    # two-bone IK for the right arm (upper + fore) to the wrist W, elbow out and back
-    bpy.context.view_layer.objects.active = ar; bpy.ops.object.mode_set(mode='POSE')
-    tg = bpy.data.objects.new('ik_t', None); bpy.context.scene.collection.objects.link(tg); tg.location = W
-    pl = bpy.data.objects.new('ik_p', None); bpy.context.scene.collection.objects.link(pl)
-    pl.location = Vector(B['upper.R'][1]) + Vector((-.35, .45, 0))
-    c = ar.pose.bones['fore.R'].constraints.new('IK'); c.target = tg; c.pole_target = pl; c.chain_count = 2; c.pole_angle = 0
-    bpy.context.view_layer.update()
-    mats = {k: ar.pose.bones[k].matrix.copy() for k in ('upper.R', 'fore.R')}
-    ar.pose.bones['fore.R'].constraints.remove(c)
-    for k in ('upper.R', 'fore.R'): ar.pose.bones[k].matrix = mats[k]; bpy.context.view_layer.update()
-    # hand frame: bone y → f, rest palm normal (+x for the right hand) → n
-    rest = hb.bone.matrix_local.to_3x3(); y0 = (rest @ Vector((0, 1, 0))).normalized()
-    n0 = Vector((1, 0, 0)); n0 = (n0 - n0.dot(y0) * y0).normalized()
-    nn = (n - n.dot(f) * f).normalized()
-    M0 = Matrix((y0, n0, y0.cross(n0))).transposed(); M1 = Matrix((f, nn, f.cross(nn))).transposed()
-    R = M1 @ M0.inverted()
-    hb.matrix = Matrix.Translation(hb.matrix.translation.copy()) @ (R @ rest).to_4x4(); bpy.context.view_layer.update()
-    print('wrist target', tuple(round(x, 3) for x in W), 'reached', tuple(round(x, 3) for x in hb.matrix.translation))
-    for k in (1, 2, 3):                                               # fingers straight in line with the hand, then wrapped
-        pb = ar.pose.bones[f'finger{k}.R']; pb.matrix_basis = Matrix.Identity(4)
-    pt = ar.pose.bones['thumb.R']; pt.matrix_basis = Matrix.Identity(4); bpy.context.view_layer.update()
-    bpy.ops.object.mode_set(mode='OBJECT')
-    P0, P1 = evaluated(0.0), evaluated(1.0)
-    hand_pos = np.array(hb.matrix.translation)
-    Sn, An, un, nn_, fn = (np.array(v) for v in (S, A0, u, n, fp))
 
-    def wrap(Pin, amount, rad):
-        """Wrap finger vertices around the stile axis: palm-surface arc length s past the knuckle line → angle s/rad."""
-        Pq = Pin.copy()
-        near = np.linalg.norm(Pin - hand_pos, axis=1) < .3
+    def grip_stile(A0, u, f, pole):
+        """Right hand around a stile with axis point A0 / direction u: arm IK to the wrist, hand frame (axis f, palm toward
+        the stile), fingers straight — the wrap below closes them geometrically."""
+        fp = (f - f.dot(u) * u).normalized(); n = u.cross(fp).normalized()
+        if n.x < 0: n = -n                                            # palm faces the stile from outside (+x)
+        S = A0 - STILE_R * n
+        hb = ar.pose.bones['hand.R']; L = (Vector(B['hand.R'][1]) - Vector(B['hand.R'][0])).length
+        W = (S - n * .014 * K / .93) - f * L
+        tg = bpy.data.objects.new('ik_t', None); bpy.context.scene.collection.objects.link(tg); tg.location = W
+        pl = bpy.data.objects.new('ik_p', None); bpy.context.scene.collection.objects.link(pl); pl.location = pole
+        c = ar.pose.bones['fore.R'].constraints.new('IK'); c.target = tg; c.pole_target = pl; c.chain_count = 2; c.pole_angle = 0
+        bpy.context.view_layer.update()
+        mats = {k: ar.pose.bones[k].matrix.copy() for k in ('upper.R', 'fore.R')}
+        ar.pose.bones['fore.R'].constraints.remove(c); bpy.data.objects.remove(tg); bpy.data.objects.remove(pl)
+        for k in ('upper.R', 'fore.R'): ar.pose.bones[k].matrix = mats[k]; bpy.context.view_layer.update()
+        rest = hb.bone.matrix_local.to_3x3(); y0 = (rest @ Vector((0, 1, 0))).normalized()
+        n0 = Vector((1, 0, 0)); n0 = (n0 - n0.dot(y0) * y0).normalized(); nn = (n - n.dot(f) * f).normalized()
+        R = Matrix((f, nn, f.cross(nn))).transposed() @ Matrix((y0, n0, y0.cross(n0))).transposed().inverted()
+        hb.matrix = Matrix.Translation(hb.matrix.translation.copy()) @ (R @ rest).to_4x4(); bpy.context.view_layer.update()
+        for k in (1, 2, 3): ar.pose.bones[f'finger{k}.R'].matrix_basis = Matrix.Identity(4)
+        ar.pose.bones['thumb.R'].matrix_basis = Matrix.Identity(4); bpy.context.view_layer.update()
+        print('  wrist target', tuple(round(x, 3) for x in W), 'reached', tuple(round(x, 3) for x in hb.matrix.translation))
+        return dict(S=np.array(S), A=np.array(A0), u=np.array(u), n=np.array(n), f=np.array(fp), hand=np.array(hb.matrix.translation))
+
+    def wrap(Pin, g, amount, rad):
+        """Wrap finger vertices around the stile axis: palm-surface arc length s past the knuckle line → bend of curvature
+        amount/rad (1 = closed around the stile; less = a gentler curl whose circle contains the stile, so fingers never
+        cut the wood and keep their length)."""
+        Pq = Pin.copy(); Sn, nn_, fn, un = g['S'], g['n'], g['f'], g['u']
+        near = np.linalg.norm(Pin - g['hand'], axis=1) < .3
         d_all = Pin - Sn
         idx = np.where(near & (tw < .6) & (d_all @ fn > -.01) & (np.abs(d_all @ un) < .08) & (np.abs(d_all @ nn_) < .06))[0]
-        d = d_all[idx]
-        s = d @ fn; h = -(d @ nn_); lat = d @ un
-        h = np.maximum(h, 0)
-        # bend of curvature amount/rad: amount 1 = closed around the stile, smaller = a gentler curl whose circle stays
-        # outside the stile (contains it, tangent at the palm contact), so fingers never cut the wood and keep their length
-        Re = rad / max(amount, 1e-3)
-        th = np.minimum(np.clip(s, 0, None) / Re, math.radians(250))
-        r = Re + h
+        d = d_all[idx]; s = d @ fn; h = np.maximum(-(d @ nn_), 0); lat = d @ un
+        Re = rad / max(amount, 1e-3); th = np.minimum(np.clip(s, 0, None) / Re, math.radians(250)); r = Re + h
         new = Sn + Re * nn_ + lat[:, None] * un + r[:, None] * (np.cos(th)[:, None] * -nn_ + np.sin(th)[:, None] * fn)
         blend = ss(-.006, .010, s) * (1 - np.clip(tw[idx], 0, 1))
         Pq[idx] = Pin[idx] * (1 - blend[:, None]) + new * blend[:, None]
         return Pq
-    WA = float(os.environ.get('WRAP', '1'))
-    PB, PB1, PG = wrap(P0, .38 * WA, STILE_R + .003), wrap(P1, .38 * WA, STILE_R + .003), wrap(P0, 1.0 * WA, STILE_R)   # rest: hand laid on the stile; grip: closed (F-030)
-    F = [list(p.vertices) for p in o.data.polygons]
-    me = bpy.data.meshes.new('body_seated_v3'); me.from_pydata([tuple(p) for p in PB], [], F); me.update()
-    so = bpy.data.objects.new('body_seated_v3', me); bpy.context.scene.collection.objects.link(so)
-    bpy.context.view_layer.objects.active = so; bpy.ops.object.select_all(action='DESELECT'); so.select_set(True); bpy.ops.object.shade_smooth()
-    so.shape_key_add(name='Basis'); so.shape_key_add(name='breath').data.foreach_set('co', PB1.astype(np.float32).ravel())
-    so.shape_key_add(name='grip').data.foreach_set('co', PG.astype(np.float32).ravel())
-    so.data.attributes.new('_SLICE', 'FLOAT', 'POINT').data.foreach_set('value', SLICE.astype(np.float32))
-    # posed electrode sites + outward normals (from the posed basis mesh)
-    me.calc_normals_split() if hasattr(me, 'calc_normals_split') else None
-    Nv = np.array([v.normal[:] for v in me.vertices])
-    torso = LEADS == 3                                             # every 3-lead site is on the torso (signal path: heart → site directly)
-    electrodes = {k: {'p': [round(float(x), 4) for x in PB[i]], 'n': [round(float(x), 4) for x in Nv[i]], 'v': i,
-                      'torso': bool(torso or k.startswith('V'))} for k, i in site_idx.items()}
-    # joints for the inside-body signal paths (heart → electrode), posed
-    pb = ar.pose.bones['chest']; Dm = pb.matrix @ pb.bone.matrix_local.inverted()
-    hb_ = Dm @ Vector(heart); q = Dm.to_quaternion()
-    joints = {}
-    for nm in ('upper.L', 'upper.R', 'fore.L', 'fore.R', 'hand.L', 'hand.R', 'thigh.L', 'thigh.R', 'shin.L', 'shin.R', 'foot.L', 'foot.R', 'chest', 'spine'):
-        joints[nm] = [round(float(x), 4) for x in ar.pose.bones[nm].head]
-    grip_pt = PG[np.where((fw > .5) & (np.linalg.norm(PG - hand_pos, axis=1) < .2))[0]].mean(0)
-    out = {'seat': [round(float(x), 4) for x in seat], 'heart_b': [round(x, 4) for x in hb_], 'heart_q_wxyz': [round(x, 5) for x in q],
-           'hand_r': [round(float(x), 4) for x in grip_pt], 'electrodes': electrodes, 'joints': joints,
-           'stile': {'axis_point': [round(x, 4) for x in A0], 'axis_dir': [round(x, 4) for x in u], 'r': STILE_R, 'dx': STILE_DX},
-           'source': f"blender-human-base-meshes GEO-body_male_{SOURCE} (CC0)"}
-    for nm in ('rig', 'body_v3', 'ik_t', 'ik_p'):
-        if nm in bpy.data.objects: bpy.data.objects.remove(bpy.data.objects[nm], do_unlink=True)
-    export(so, os.path.join(OUT, 'body_seated_v3.glb'), morphs=True)
+
+    UP = Vector((0, LAD_TAN, 1)).normalized()                         # ladder stile direction when the ladder leans toward +y
+    POSES = {
+        # D-046 ladder seat (kept for the current web build; superseded in the story by D-050)
+        'ladder_seat': dict(anchor='seat', aim=dict(SEATED, **{'upper.L': (.16, -.22, -1)}), curl_l=50, grip='seat'),
+        # D-050 first appearance: on the floor at the ladder foot, back to the shelf, knees up, forearms over the knees
+        'floor': dict(anchor='seat', curl_l=40, curl_r=40, aim={
+            'spine': (0, .48, 1), 'chest': (0, .30, 1), 'neck': (0, .02, 1), 'head': (0, -.30, 1),
+            'thigh.L': (.18, -.88, .46), 'shin.L': (.02, .12, -1), 'foot.L': (.06, -1, -.10),
+            'thigh.R': (-.18, -.88, .46), 'shin.R': (-.02, .12, -1), 'foot.R': (-.06, -1, -.10),
+            'upper.L': (.12, -.50, -.86), 'fore.L': (-.06, -.95, -.10), 'hand.L': (0, -.30, -1),
+            'upper.R': (-.12, -.50, -.86), 'fore.R': (.06, -.95, -.10), 'hand.R': (0, -.30, -1)}),
+        # measurement starts: armchair beside the ECG cart, hands resting on the thighs
+        'chair': dict(anchor='seat', curl_l=35, curl_r=35, aim={
+            'spine': (0, -.04, 1), 'chest': (0, -.06, 1), 'neck': (0, -.18, 1), 'head': (0, -.22, 1),
+            'thigh.L': (.10, -1, .04), 'shin.L': (.03, .06, -1), 'foot.L': (.04, -1, -.25),
+            'thigh.R': (-.10, -1, .04), 'shin.R': (-.03, .06, -1), 'foot.R': (-.04, -1, -.25),
+            'upper.L': (.15, -.08, -1), 'fore.L': (-.05, -.78, -.62), 'hand.L': (0, -.55, -.85),
+            'upper.R': (-.15, -.08, -1), 'fore.R': (.05, -.78, -.62), 'hand.R': (0, -.55, -.85)}),
+        # power-line scene: at the desk, forearms forward to the keyboard
+        'desk': dict(anchor='seat', curl_l=30, curl_r=30, aim={
+            'spine': (0, -.16, 1), 'chest': (0, -.20, 1), 'neck': (0, -.34, 1), 'head': (0, -.40, 1),
+            'thigh.L': (.09, -1, .02), 'shin.L': (.02, .02, -1), 'foot.L': (.04, -1, -.25),
+            'thigh.R': (-.09, -1, .02), 'shin.R': (-.02, .02, -1), 'foot.R': (-.04, -1, -.25),
+            'upper.L': (.12, -.55, -.85), 'fore.L': (-.10, -1, .02), 'hand.L': (0, -1, -.12),
+            'upper.R': (-.12, -.55, -.85), 'fore.R': (.10, -1, .02), 'hand.R': (0, -1, -.12)}),
+        # baseline-wander scene: standing, back against the wall under the window, chest lifted, face up to the light
+        'wall': dict(anchor='feet', curl_l=25, curl_r=25, aim={
+            'spine': (0, .07, 1), 'chest': (0, .12, 1), 'neck': (0, .02, 1), 'head': (0, .20, 1),
+            'thigh.L': (.07, -.14, -1), 'shin.L': (.02, .04, -1), 'foot.L': (.10, -1, -.15),
+            'thigh.R': (-.07, -.14, -1), 'shin.R': (-.02, .04, -1), 'foot.R': (-.10, -1, -.15),
+            'upper.L': (.16, .10, -1), 'fore.L': (.06, -.18, -1), 'hand.L': (.02, -.1, -1),
+            'upper.R': (-.16, .10, -1), 'fore.R': (-.06, -.18, -1), 'hand.R': (-.02, -.1, -1)}),
+        # muscle-artifact scene: climbing the ladder (facing it; the archive turns the figure 180°), left hand reaching up to a
+        # box, right hand gripping the right stile — the ladder pose returns with a reason
+        'climb': dict(anchor='feet', curl_l=20, grip='climb', aim={
+            'spine': (0, -.18, 1), 'chest': (0, -.14, 1), 'neck': (0, -.10, 1), 'head': (0, .05, 1),
+            'thigh.R': (-.06, .02, -1), 'shin.R': (-.02, .06, -1), 'foot.R': (-.04, -1, -.08),
+            'thigh.L': (.07, -.72, -.70), 'shin.L': (.02, .30, -1), 'foot.L': (.04, -1, -.05),
+            'upper.L': (.14, -.30, 1), 'fore.L': (.04, -.32, 1), 'hand.L': (0, -.30, 1)}),
+    }
+    REST_WRAP = .12                                                    # RETURN 3: rest = palm on the stile, fingers nearly straight
+    results = {}
+    for pname, spec in POSES.items():
+        print('pose', pname)
+        reset()
+        for name in B:
+            if name in spec['aim']: aim(name, spec['aim'][name])
+        if spec.get('curl_l'): curl('L', 1, spec['curl_l'], 12)
+        if spec.get('curl_r'): curl('R', -1, spec['curl_r'], 12)
+        P = evaluated(); bpy.context.view_layer.objects.active = ar; bpy.ops.object.mode_set(mode='POSE')
+        pel = (np.abs(P[:, 0]) < .13) & (np.abs(P[:, 1]) < .12)
+        seat = P[pel][np.argmin(P[pel][:, 2])]
+        g = None
+        if spec.get('grip') == 'seat':                                 # right stile beside the hip (archive centres the seat on the rung)
+            def stile_at(z): return Vector((seat[0] - STILE_DX, seat[1] + .06 + (z - seat[2] + .015) * LAD_TAN, z))
+            g = grip_stile(stile_at(seat[2] + .17), UP, Vector((-.05, 1.0, -.62)).normalized(), Vector(B['upper.R'][1]) + Vector((-.35, .45, 0)))
+        elif spec.get('grip') == 'climb':                              # ladder in front (−y), leaning away; climber 22 cm behind the rungs
+            feet_z = P[:, 2].min(); y0_ = P[np.argmin(P[:, 2])][1] - .22
+            def plane_y(z): return y0_ - (z - feet_z) * LAD_TAN
+            zg = feet_z + 1.18
+            g = grip_stile(Vector((-STILE_DX, plane_y(zg), zg)), Vector((0, -LAD_TAN, 1)).normalized(), Vector((-.08, -1, -.12)).normalized(),
+                           Vector(B['upper.R'][1]) + Vector((-.45, .25, -.3)))
+            g['plane_y0'], g['feet_z'] = float(y0_), float(feet_z)
+        P0, P1 = evaluated(0.0), evaluated(1.0)
+        if g is not None:
+            PB, PB1, PG = wrap(P0, g, REST_WRAP, STILE_R + .003), wrap(P1, g, REST_WRAP, STILE_R + .003), wrap(P0, g, 1.0, STILE_R)
+        else:
+            PB, PB1, PG = P0, P1, None
+        anchor = seat if spec['anchor'] == 'seat' else P0[np.argmin(P0[:, 2])]
+        me = bpy.data.meshes.new(f'body_v3_{pname}'); me.from_pydata([tuple(p) for p in PB], [], F); me.update()
+        so = bpy.data.objects.new(f'body_v3_{pname}', me); bpy.context.scene.collection.objects.link(so)
+        bpy.context.view_layer.objects.active = so; bpy.ops.object.select_all(action='DESELECT'); so.select_set(True); bpy.ops.object.shade_smooth()
+        so.shape_key_add(name='Basis'); so.shape_key_add(name='breath').data.foreach_set('co', PB1.astype(np.float32).ravel())
+        if PG is not None: so.shape_key_add(name='grip').data.foreach_set('co', PG.astype(np.float32).ravel())
+        so.data.attributes.new('_SLICE', 'FLOAT', 'POINT').data.foreach_set('value', SLICE.astype(np.float32))
+        Nv = np.array([v.normal[:] for v in me.vertices])
+        torso = LEADS == 3
+        electrodes = {k: {'p': [round(float(x), 4) for x in PB[i]], 'n': [round(float(x), 4) for x in Nv[i]], 'v': i,
+                          'torso': bool(torso or k.startswith('V'))} for k, i in site_idx.items()}
+        pb = ar.pose.bones['chest']; Dm = pb.matrix @ pb.bone.matrix_local.inverted()
+        hb_ = Dm @ Vector(heart); q = Dm.to_quaternion()
+        joints = {nm: [round(float(x), 4) for x in ar.pose.bones[nm].head] for nm in
+                  ('upper.L', 'upper.R', 'fore.L', 'fore.R', 'hand.L', 'hand.R', 'thigh.L', 'thigh.R', 'shin.L', 'shin.R', 'foot.L', 'foot.R', 'chest', 'spine')}
+        out = {'anchor': [round(float(x), 4) for x in anchor], 'anchor_kind': spec['anchor'], 'seat': [round(float(x), 4) for x in seat],
+               'heart_b': [round(x, 4) for x in hb_], 'heart_q_wxyz': [round(x, 5) for x in q], 'electrodes': electrodes, 'joints': joints,
+               'keys': ['breath'] + (['grip'] if PG is not None else []), 'source': f"blender-human-base-meshes GEO-body_male_{SOURCE} (CC0)"}
+        if g is not None:
+            out['hand_r'] = [round(float(x), 4) for x in PG[np.where((fw > .5) & (np.linalg.norm(PG - g['hand'], axis=1) < .2))[0]].mean(0)]
+            out['stile'] = {'axis_point': [round(float(x), 4) for x in g['A']], 'axis_dir': [round(float(x), 4) for x in g['u']], 'r': STILE_R, 'dx': STILE_DX}
+            for k_ in ('plane_y0', 'feet_z'):
+                if k_ in g: out['stile'][k_] = round(g[k_], 4)
+        fname = 'body_seated_v3.glb' if pname == 'ladder_seat' else f'body_v3_{pname}.glb'
+        export(so, os.path.join(OUT, fname), morphs=True)
+        bpy.data.objects.remove(so, do_unlink=True)
+        results[pname] = out
+        print('  ', fname, os.path.getsize(os.path.join(OUT, fname)), 'bytes; anchor', out['anchor'])
     fig_path = os.path.join(OUT, 'figure.json')
-    fig = json.load(open(fig_path, encoding='utf-8')); fig['seated_v3'] = out
+    fig = json.load(open(fig_path, encoding='utf-8'))
+    fig['seated_v3'] = results['ladder_seat']
+    fig['poses_v3'] = {k: v for k, v in results.items() if k != 'ladder_seat'}
     with open(fig_path, 'w', encoding='utf-8') as fh: json.dump(fig, fh)
-    print('body_seated_v3', len(PB), 'verts', os.path.getsize(os.path.join(OUT, 'body_seated_v3.glb')), 'bytes; seat', out['seat'])
-    print('electrodes', {k: v['p'] for k, v in electrodes.items()})
 
 
 if __name__ == '__main__':

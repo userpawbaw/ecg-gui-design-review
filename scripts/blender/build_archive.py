@@ -11,7 +11,7 @@ Blender frame: x right, y into the room (the camera enters at −y), z up. Units
 """
 import argparse, math, os, random, sys
 import bpy, bmesh, numpy as np
-from mathutils import Vector, Matrix, Euler
+from mathutils import Vector, Matrix, Euler, Quaternion
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 ap = argparse.ArgumentParser()
@@ -22,6 +22,9 @@ ap.add_argument('--res', default='1280x720')
 ap.add_argument('--seed', type=int, default=11)
 ap.add_argument('--save', default='')
 ap.add_argument('--look', default='h3', choices=['h3', 'h3b', 'h5'], help='figure look in stills: h3 world-height rings, h3b bone-aligned + distance-adaptive rings, h5 frosted glass + faint rings')
+ap.add_argument('--light', default='r1', choices=['r1', 'r2'], help='r2 = D-049 light round: hero/support/closed windows, window reveals, 0.55° sun, low global haze + hero corridor, practicals')
+ap.add_argument('--pose', default='', help='D-050 stage: floor|chair|desk|wall|climb — one v3 pose placed at its spot (implies --fig v3)')
+ap.add_argument('--clay', action='store_true', help='D-049 clay gate A: grey materials, no volume, no glow, key + blockers only')
 ap.add_argument('--fig', default='v2', choices=['v2', 'v3'], help='v3 = D-048 deformé figure with ECG electrodes and lead wires')
 ap.add_argument('--signal', default='off', choices=['off', 'clean', 'noise'], help='v3 stills: neon dash preview — clean (blue heart→electrode, purple to the computer) or noise (red on the power line and leads)')
 ap.add_argument('--bake', default='', help='bake lightmaps + export the web scene into this dir')
@@ -29,6 +32,7 @@ ap.add_argument('--export-rig', default='', help='v3 only: write the electrodes,
 ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--bsamples', type=int, default=128)
 args = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
+if args.pose: args.fig = 'v3'
 rng = random.Random(args.seed)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene = bpy.context.scene
@@ -131,14 +135,31 @@ box('WallL_top', (0.15, Y1 - Y0, H - WZ1), (-XW - 0.075, (Y0 + Y1) / 2, (WZ1 + H
 for a, b in zip(edges[0::2], edges[1::2]):
     box('WallL_pier', (0.15, b - a, WZ1 - WZ0), (-XW - 0.075, (a + b) / 2, (WZ0 + WZ1) / 2), M_WALL, tile=2.0)
 SLATS = 20
+# D-049 r2: hero window over the nook (wide, uneven slats, one missing), two support windows (uneven), the rest closed
+# (slats near vertical and overlapping = dark anchors). r1 keeps the original uniform 20-slat blinds.
+WIN_ROLE = {3.95: 'hero', 1.0: 'support', -2.2: 'support'} if args.light == 'r2' else {}
+def slat_layout(c, role):
+    if role == 'hero':
+        zs = [WZ0 + .07 + i * .105 + (.018 if i % 3 == 1 else 0) for i in range(12)]; zs.pop(5); return [(z, 38 + (14 if i == 7 else 0)) for i, z in enumerate(zs)]
+    if role == 'support':
+        r_ = random.Random(int(c * 10) + 7); zs, z = [], WZ0 + .06
+        while z < WZ1 - .06: zs.append(z); z += .062 * (0.75 + 0.5 * r_.random())
+        del zs[len(zs) // 2]; return [(z, 35) for z in zs]
+    if role == 'closed':
+        return [(WZ0 + .05 + i * (WZ1 - WZ0 - .08) / 34, 82) for i in range(34)]
+    return [(WZ0 + 0.06 + i * (WZ1 - WZ0 - 0.1) / SLATS, 35) for i in range(SLATS)]
 for c, w in WIN:
+    role = WIN_ROLE.get(c, 'closed' if args.light == 'r2' else '')
+    if args.light == 'r2':                                    # aperture depth: reveals + lintel give the beam a believable mouth
+        for dy in (-w / 2 - .03, w / 2 + .03):
+            box('APR_reveal', (0.28, 0.06, WZ1 - WZ0 + .1), (-XW + 0.1, c + dy, (WZ0 + WZ1) / 2), M_WALL)
+        box('APR_lintel', (0.28, w + .12, 0.12), (-XW + 0.1, c, WZ1 + .06), M_WALL)
     for dz in (WZ0, WZ1):
         box('WinSill', (0.22, w + 0.08, 0.05), (-XW + 0.03, c, dz), M_FRAME)
     for dy in (-w / 2, 0, w / 2):
         box('WinMullion', (0.08, 0.05, WZ1 - WZ0), (-XW + 0.0, c + dy, (WZ0 + WZ1) / 2), M_FRAME)
-    for i in range(SLATS):
-        z = WZ0 + 0.06 + i * (WZ1 - WZ0 - 0.1) / SLATS
-        box('BlindSlat', (0.055, w - 0.04, 0.003), (-XW + 0.12, c, z), M_SLAT, rot=(math.radians(-35) * 0, math.radians(35), 0))
+    for z, ang in slat_layout(c, role):
+        box('BLK_hero_slat' if role == 'hero' else 'BlindSlat', (0.055, w - 0.04, 0.003), (-XW + 0.12, c, z), M_SLAT, rot=(0, math.radians(ang), 0))
     box('BlindRail', (0.07, w, 0.04), (-XW + 0.12, c, WZ1 - 0.02), M_FRAME)
 # ceiling beams across the aisle (foreground parallax while the camera descends)
 for i, y in enumerate(np.linspace(-4.4, 4.0, 6)):
@@ -330,6 +351,10 @@ sp = cu.splines.new('POLY'); sp.points.add(len(cpts) - 1)
 for p, v in zip(sp.points, cpts): p.co = (*v, 1)
 sp.type = 'NURBS'; sp.order_u = 3; sp.use_endpoint_u = True
 co = bpy.data.objects.new('PowerCable', cu); scene.collection.objects.link(co); cu.materials.append(M_CABLE)
+# D-050 measurement chair beside the ECG cart, the power strip at its back-right (r2 only)
+MCHAIR = Vector((-0.75, 3.15, 0))
+if args.light == 'r2':
+    place('modern_arm_chair_01', MCHAIR.x, MCHAIR.y, 0, 0.82, rot=math.radians(200))
 # floor clutter that makes the aisle lived-in (kept off the camera path x ∈ [−0.6, 0.6])
 place('cardboard_box_01', -0.95, -2.2, 0, 0.32, rot=0.3)
 place('cardboard_box_01', -0.92, -2.15, 0.32, 0.26, rot=-0.2)
@@ -352,9 +377,11 @@ print('counts', counts, 'shelved faces', len(books.polygons), 'rolls faces', len
 FIG = None
 import json
 A = os.path.join(ROOT, 'prototype/v2/src/story/intro/assets')
-fig_path = os.path.join(A, 'body_seated_v3.glb' if args.fig == 'v3' else 'body_seated.glb')
+fig_path = os.path.join(A, f'body_v3_{args.pose}.glb' if args.pose else 'body_seated_v3.glb' if args.fig == 'v3' else 'body_seated.glb')
+FROT = Matrix.Identity(3); FYAW = 0.0                           # figure yaw (D-050 spots); the original paths keep 0
 if os.path.exists(fig_path):
-    fj = json.load(open(os.path.join(A, 'figure.json'), encoding='utf-8'))['seated_v3' if args.fig == 'v3' else 'seated']
+    _fig = json.load(open(os.path.join(A, 'figure.json'), encoding='utf-8'))
+    fj = _fig['poses_v3'][args.pose] if args.pose else _fig['seated_v3' if args.fig == 'v3' else 'seated']
     before = set(bpy.data.objects); bpy.ops.import_scene.gltf(filepath=fig_path)
     FIG = [o for o in bpy.data.objects if o not in before and o.type == 'MESH'][0]
     rz, ry = RUNGS[4]                                            # 5th rung, 1.45 m
@@ -362,6 +389,20 @@ if os.path.exists(fig_path):
     FIG.location = (LAD_X - 0.0 - (seat.x + 0.08), ry - 0.06 - seat.y, rz + 0.015 - seat.z)
     if args.fig == 'v3':                                         # v3 sits centred between the stiles (its right hand grips the right stile)
         FIG.location = (LAD_X - seat.x, ry - 0.06 - seat.y, rz + 0.015 - seat.z)
+    if args.pose:                                                # D-050 spots: (world point for the anchor, yaw). Seat anchors sit on the surface
+        an = Vector(fj['anchor'])
+        SPOTS = {'floor': (Vector((LAD_X + .95, BY - .36, 0)), 0.0),
+                 'chair': (Vector((MCHAIR.x, MCHAIR.y + .02, .44)), math.radians(20)),
+                 'desk': (Vector((DESK.x + .1, DESK.y - .75, .5)), math.pi),
+                 'wall': (Vector((-XW + .2, 1.0, 0)), math.pi / 2)}
+        if args.pose == 'climb':                                 # ladder plane at the foot rung = the rung; climber faces the ladder (+y)
+            rz2, ry2 = RUNGS[1]; FYAW = math.pi; FROT = Matrix.Rotation(FYAW, 3, 'Z')
+            ref = Vector((0, fj['stile']['plane_y0'], fj['stile']['feet_z']))
+            FIG.location = Vector((LAD_X, ry2, rz2 + .015)) - FROT @ ref
+        else:
+            spot, FYAW = SPOTS[args.pose]; FROT = Matrix.Rotation(FYAW, 3, 'Z')
+            FIG.location = spot - FROT @ an
+        FIG.rotation_euler = (0, 0, FYAW)
     def ring_material(look):
         """Stills stand-in for the web shader. h3: object Z bands. h3b: bands on the bone-axis coordinate (_SLICE) whose
         density is set per shot (H3c: closer → denser) + a soft rim. h5: frosted glass surface + faint bands."""
@@ -398,8 +439,9 @@ if os.path.exists(fig_path):
     FIG.data.materials.clear(); FIG.data.materials.append(rm)
     before = set(bpy.data.objects); bpy.ops.import_scene.gltf(filepath=os.path.join(A, 'heart.glb'))
     HEART = [o for o in bpy.data.objects if o not in before and o.type == 'MESH'][0]
-    HEART.rotation_mode = 'QUATERNION'; HEART.rotation_quaternion = fj['heart_q_wxyz']
-    HEART.location = FIG.location + Vector(fj['heart_b'])
+    HEART.rotation_mode = 'QUATERNION'
+    HEART.rotation_quaternion = FROT.to_quaternion() @ Quaternion(fj['heart_q_wxyz'])
+    HEART.location = FIG.location + FROT @ Vector(fj['heart_b'])
     hm2 = mat('heart_glow', srgb('#ff5a64'), .5, emit=6.0); HEART.data.materials.clear(); HEART.data.materials.append(hm2)
     print('figure seat at', tuple(round(v, 3) for v in FIG.location), 'heart', tuple(round(v, 3) for v in HEART.location))
 # ---------------- v3: ECG electrodes, lead wires, trunk to the cart, cable to the computer (D-048) ----------------
@@ -461,9 +503,12 @@ def dash_mat(name, col, base=None, period=.045, duty=.42, phase=0.0, strength=4.
 
 C_BLUE, C_RED, C_PURPLE = srgb('#3d8bff'), srgb('#ff3048'), srgb('#b24dff')
 M_WIRE = mat('lead_wire', srgb('#2a2c30'), .45)
-if FIG is not None and args.fig == 'v3':
-    FL = Vector(FIG.location); E = {k: (FL + Vector(v['p']), Vector(v['n']).normalized()) for k, v in fj['electrodes'].items()}
-    J = {k: FL + Vector(v) for k, v in fj['joints'].items()}
+if FIG is not None and args.fig == 'v3' and args.pose != 'floor':     # D-050: electrodes attach at the measurement spot, not on the floor
+    FL = Vector(FIG.location)
+    def Wp(v): return FL + FROT @ Vector(v)                       # figure frame → world (lead routing is computed in the figure frame)
+    Ef = {k: (Vector(v['p']), Vector(v['n']).normalized()) for k, v in fj['electrodes'].items()}
+    E = {k: (Wp(p), FROT @ n) for k, (p, n) in Ef.items()}
+    J = {k: Wp(v) for k, v in fj['joints'].items()}
     M_FOAM = mat('electrode_foam', srgb('#e9e6df'), .85); M_GEL = mat('electrode_gel', srgb('#9aa3ad'), .5)
     M_SNAP = mat('electrode_snap', srgb('#c9ccd1'), .25, metal=1.0); M_CLIP = mat('lead_clip', srgb('#33363b'), .5)
     sig = args.signal
@@ -472,9 +517,10 @@ if FIG is not None and args.fig == 'v3':
     # yoke (lead-wire junction) resting on the lap, trunk cable from there to the cart
     # yoke clipped at the right side of the waist (D-048 fix: on the lap the leads converged at the groin); the trunk
     # leaves from there toward the cart side
-    YOKE = J['thigh.R'] + Vector((-.115, -.03, .11))
-    yk = box('LeadYoke', (.018, .06, .035), YOKE, M_CLIP)
+    YOKE_f = Vector(fj['joints']['thigh.R']) + Vector((-.115, -.03, .11)); YOKE = Wp(YOKE_f)
+    yk = box('LeadYoke', (.018, .06, .035), YOKE, M_CLIP); yk.rotation_euler = (0, 0, FYAW)
     for k, (p, n) in E.items():
+        pf, nf = Ef[k]
         rot = n.to_track_quat('Z', 'Y').to_euler()
         cyl(f'El_{k}_foam', .019, .0016, p + n * .0008, M_FOAM, rot=tuple(rot), verts=24)
         cyl(f'El_{k}_gel', .011, .0008, p + n * .0020, M_GEL, rot=tuple(rot), verts=20)
@@ -482,21 +528,22 @@ if FIG is not None and args.fig == 'v3':
         to_y = (YOKE - p); tdir = (to_y - to_y.dot(n) * n).normalized()
         clip = box(f'El_{k}_clip', (.016, .009, .007), p + n * .0085 + tdir * .006, M_CLIP)
         clip.rotation_euler = Matrix((tdir, n.cross(tdir), n)).transposed().to_euler()
-        a = p + n * .009 + tdir * .015
+        tf = (YOKE_f - pf); tf = (tf - tf.dot(nf) * nf).normalized(); af = pf + nf * .009 + tf * .015
         if fj['electrodes'][k].get('torso', k.startswith('V')):   # torso leads: off the skin, down in front of the belly to the yoke
-            mid = Vector((p.x * .45 + YOKE.x * .55, min(p.y, YOKE.y) - .06, (p.z + YOKE.z) / 2 + .02))
-            pts = catmull([a, a + n * .02 + tdir * .02, mid, YOKE + Vector((.0, -.025, .0))], 10)
+            mid = Vector((pf.x * .45 + YOKE_f.x * .55, min(pf.y, YOKE_f.y) - .06, (pf.z + YOKE_f.z) / 2 + .02))
+            ptsf = [af, af + nf * .02 + tf * .02, mid, YOKE_f + Vector((.0, -.025, .0))]
         elif k in ('LL', 'RL'):          # ankle leads: up along the shin front
-            mid = Vector((p.x * .6 + YOKE.x * .4, p.y - .05, (p.z + YOKE.z) / 2))
-            pts = catmull([a, a + n * .03, mid, YOKE + Vector((0, -.025, -.012))], 10)
+            mid = Vector((pf.x * .6 + YOKE_f.x * .4, pf.y - .05, (pf.z + YOKE_f.z) / 2))
+            ptsf = [af, af + nf * .03, mid, YOKE_f + Vector((0, -.025, -.012))]
         else:                            # wrist leads: a soft sag to the lap
-            mid = (a + YOKE) / 2 + n * .03 - Vector((0, .04, .06))
-            pts = catmull([a, a + n * .03, mid, YOKE + Vector((0, -.025, .012))], 10)
-        tube(f'Lead_{k}', pts, .0013, M_LEAD, sides=6)
+            mid = (af + YOKE_f) / 2 + nf * .03 - Vector((0, .04, .06))
+            ptsf = [af, af + nf * .03, mid, YOKE_f + Vector((0, -.025, .012))]
+        tube(f'Lead_{k}', [Wp(q_) for q_ in catmull(ptsf, 10)], .0013, M_LEAD, sides=6)
     # trunk: yoke → over the right thigh → hanging catenary to the ECG device on the cart
     dev_in = Vector((CART.x + .21, CART.y, .88))
-    t0 = YOKE + Vector((-.05, -.03, -.06)); t1 = Vector((FL.x - .4, YOKE.y - .2, YOKE.z - .3))
-    trunk = catmull([YOKE, t0, t1], 8) + hang(t1, dev_in + Vector((.25, 0, .05)), .45, 30)[1:] + [dev_in + Vector((.06, 0, 0)), dev_in]
+    t0 = Wp(YOKE_f + Vector((-.05, -.03, -.06))); t1 = Wp(Vector((-.4, YOKE_f.y - .2, YOKE_f.z - .3)))
+    sag = .45 if (t1 - dev_in).length > 1.2 else .12
+    trunk = catmull([YOKE, t0, t1], 8) + hang(t1, dev_in + Vector((.25, 0, .05)), sag, 30)[1:] + [dev_in + Vector((.06, 0, 0)), dev_in]
     tube('TrunkCable', trunk, .0032, dash_mat('trunk_dash', lead_col, base=srgb('#2a2c30'), period=.06) if lead_col else M_WIRE, sides=10)
     # communication cable: ECG device → floor → computer (purple in both states)
     # communication cable over the desk top (D-048 fix: it ran under the desk and never read): device → sag → desk → PC
@@ -510,7 +557,7 @@ if FIG is not None and args.fig == 'v3':
         HB = Vector(HEART.location); M_SIG = dash_mat('signal_dash', C_BLUE, base=None, period=.03, duty=.5, strength=3.5)
         for k, (p, n) in E.items():
             q = p - n * .012
-            if fj['electrodes'][k].get('torso', k.startswith('V')): path = catmull([HB, HB.lerp(q, .5) + Vector((0, -.01, .01)), q], 8)
+            if fj['electrodes'][k].get('torso', k.startswith('V')): path = catmull([HB, HB.lerp(q, .5) + FROT @ Vector((0, -.01, .01)), q], 8)
             elif k == 'LA': path = catmull([HB, J['upper.L'], J['fore.L'], J['hand.L'].lerp(J['fore.L'], .25), q], 8)
             elif k == 'RA': path = catmull([HB, J['upper.R'], J['fore.R'], q], 8)
             elif k == 'LL': path = catmull([HB, J['spine'], J['thigh.L'], J['shin.L'], q], 8)
@@ -545,17 +592,38 @@ if FIG is not None and args.fig == 'v3':
 sun = bpy.data.lights.new('sun', 'SUN'); sun.energy = 11.0; sun.angle = math.radians(1.2); sun.color = srgb('#ffd9a8')
 so = bpy.data.objects.new('sun', sun); scene.collection.objects.link(so)
 SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()   # across the gaps between stacks and over the nook onto the ladder and figure
+if args.light == 'r2':                                 # steeper: the hero window's beam crosses the ladder and lands at its foot (D-050 floor spot)
+    SUN_TO = Vector((0.807, 0.07, -0.584)).normalized(); sun.angle = math.radians(0.55)
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
-w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4   # cool sky fill vs warm sun
+w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4 if args.light == 'r1' else 0.9   # cool sky fill vs warm sun (r2: less fill = dark anchors)
 for y in (-1.8, 1.3):
     L = bpy.data.lights.new('bulb', 'POINT'); L.energy = 60; L.color = srgb('#ffb36b'); L.shadow_soft_size = 0.05
     lo_ = bpy.data.objects.new('bulb', L); lo_.location = (0, y, H - 1.45); scene.collection.objects.link(lo_)
+if args.light == 'r2':
+    # practicals with a story role (D-050): pendant over the measurement chair, desk lamp over the keyboard (an electrical device
+    # itself — the power-line scene's light)
+    place('hanging_industrial_lamp', MCHAIR.x + .05, MCHAIR.y - .1, H - 2.25, 1.0)
+    L = bpy.data.lights.new('pendant', 'SPOT'); L.energy = 70; L.color = srgb('#ffc58a'); L.spot_size = math.radians(70); L.spot_blend = .6; L.shadow_soft_size = .06
+    lo_ = bpy.data.objects.new('pendant', L); lo_.location = (MCHAIR.x + .05, MCHAIR.y - .1, H - 2.3); lo_.rotation_euler = (0, 0, 0); scene.collection.objects.link(lo_)
+    L = bpy.data.lights.new('desklamp', 'SPOT'); L.energy = 18; L.color = srgb('#ffcf96'); L.spot_size = math.radians(60); L.spot_blend = .5; L.shadow_soft_size = .02
+    lo_ = bpy.data.objects.new('desklamp', L); lo_.location = (DESK.x + .3, DESK.y - .05, mz + .42)
+    lo_.rotation_euler = (Vector((DESK.x - .05, DESK.y - .3, mz)) - lo_.location).to_track_quat('-Z', 'Y').to_euler(); scene.collection.objects.link(lo_)
 # preview-only haze so the beams read in stills (the web uses ray-marched shafts instead)
 hz = box('Haze', (2 * XW - 0.1, Y1 - Y0 - 0.1, H - 0.1), (0, (Y0 + Y1) / 2, H / 2), mat('haze_dummy', (1, 1, 1)))
 hm = bpy.data.materials.new('haze'); hm.use_nodes = True; nt = hm.node_tree
-nt.nodes.remove(nt.nodes['Principled BSDF']); vol = nt.nodes.new('ShaderNodeVolumePrincipled'); vol.inputs['Density'].default_value = 0.022
+nt.nodes.remove(nt.nodes['Principled BSDF']); vol = nt.nodes.new('ShaderNodeVolumePrincipled'); vol.inputs['Density'].default_value = 0.022 if args.light == 'r1' else 0.006
 nt.links.new(vol.outputs[0], nt.nodes['Material Output'].inputs['Volume']); hz.data.materials.clear(); hz.data.materials.append(hm)
+if args.light == 'r2':                                 # local density on the hero corridor only (manual §7: low global, local where the beam is)
+    a_ = Vector((-XW + .1, 3.95, 4.05)); b_ = a_ + SUN_TO * 6.2
+    vc = box('VOL_hero_corridor', (6.2, 0.95, 0.9), (a_ + b_) / 2, mat('vol_dummy', (1, 1, 1)))
+    vc.rotation_euler = SUN_TO.to_track_quat('X', 'Z').to_euler()
+    vm = bpy.data.materials.new('vol_hero'); vm.use_nodes = True; vn = vm.node_tree; vn.nodes.remove(vn.nodes['Principled BSDF'])
+    vv = vn.nodes.new('ShaderNodeVolumePrincipled'); vv.inputs['Density'].default_value = 0.05
+    vn.links.new(vv.outputs[0], vn.nodes['Material Output'].inputs['Volume']); vc.data.materials.clear(); vc.data.materials.append(vm)
+    hz_extra = [vc]
+else:
+    hz_extra = []
 
 # ---------------- preview shots (SPACE-R1-ARCHIVE §3–4) ----------------
 SHOTS = {
@@ -566,13 +634,31 @@ SHOTS = {
     's5_crane':   ((0.9, 0.6, 3.5), (-1.0, 4.1, 0.8), 34),     # Story PLI: outlet, cable, desk, ladder + figure in one frame
     's6_grip':    ((-0.55, 2.75, 1.05), (0.25, 3.85, 1.55), 45),  # Story MA: low angle at the hand on the stile
 }
-if FIG is not None:
+if FIG is not None and 'hand_r' in fj and not args.pose:
     HR = FIG.location + Vector(fj['hand_r'])
     SHOTS['s6_grip'] = (tuple(HR + Vector((-0.75, -0.95, -0.35))), tuple(HR + Vector((0.05, 0.1, 0.25))), 38)
     if args.fig == 'v3':   # hand + RA electrode fill the frame (the v2 framing left the hand at the edge)
         SHOTS['s6_grip'] = (tuple(HR + Vector((-0.42, -0.42, 0.08))), tuple(HR + Vector((0.0, 0.0, 0.07))), 30)
         CH = FIG.location + sum((Vector(e['p']) for e in fj['electrodes'].values()), Vector()) / len(fj['electrodes'])
         SHOTS['s7_chest'] = (tuple(CH + Vector((0.35, -1.25, 0.18))), tuple(CH + Vector((-0.04, 0.05, -0.12))), 34)
+if args.pose and FIG is not None:                                 # D-050 shots: one per spot, each opening a new part of the archive
+    AW = FIG.location + FROT @ Vector(fj['anchor'])
+    SHOTS = {
+        'floor': {'d1_floor_wide': ((-0.1, 0.9, 1.55), (1.0, 4.3, 0.85), 40), 'd2_floor_mid': ((0.25, 2.7, 0.85), (1.05, 4.3, 0.5), 38)},
+        'chair': {'d3_chair': (tuple(AW + Vector((1.15, -1.55, .55))), tuple(AW + Vector((0, 0, .45))), 40)},
+        'desk': {'d4_desk': ((-1.15, 2.05, 1.45), (-2.3, 3.4, .85), 44)},
+        'wall': {'d5_wall': ((-1.55, -0.15, 1.45), (-3.3, 1.0, 1.25), 42)},
+        'climb': {'d6_climb': ((-0.55, 2.35, 0.95), (LAD_X, 4.15, 2.05), 46)},
+    }[args.pose]
+    if args.pose in ('chair', 'desk', 'wall', 'climb'): SHOTS = dict(SHOTS)
+if args.clay:                                                     # D-049 clay gate A: grey diffuse everywhere, no volume, no emission
+    CLAY = mat('clay_gate', (.5, .5, .5), .8)
+    for o in scene.objects:
+        if o.type == 'MESH':
+            if o.name.startswith(('Haze', 'VOL_')): o.hide_render = True; continue
+            o.data.materials.clear(); o.data.materials.append(CLAY)
+            for c_ in o.children_recursive:
+                if c_.type == 'MESH': c_.data.materials.clear(); c_.data.materials.append(CLAY)
 if args.save:
     bpy.ops.wm.save_as_mainfile(filepath=args.save)
 if args.preview:
@@ -582,7 +668,7 @@ if args.preview:
     scene.render.resolution_x, scene.render.resolution_y = rx, ry; scene.view_settings.view_transform = 'AgX'; scene.view_settings.exposure = 0.8
     scene.cycles.max_bounces = 4; scene.cycles.volume_bounces = 0
     want = set(args.shots.split(',')) if args.shots else set(SHOTS)
-    if args.signal != 'off':                                      # neon glow for the dash preview (the web uses its bloom pass)
+    if args.signal != 'off' and not args.clay:                    # neon glow for the dash preview (the web uses its bloom pass)
         scene.use_nodes = True; ct = scene.node_tree; rl = ct.nodes.get('Render Layers') or ct.nodes.new('CompositorNodeRLayers')
         cmp = ct.nodes.get('Composite') or ct.nodes.new('CompositorNodeComposite'); gl = ct.nodes.new('CompositorNodeGlare')
         try: gl.glare_type = 'BLOOM'
@@ -599,12 +685,13 @@ if args.preview:
         c = bpy.data.objects.new(name, cd); c.location = loc; scene.collection.objects.link(c)
         c.rotation_euler = (Vector(tgt) - Vector(loc)).to_track_quat('-Z', 'Y').to_euler()
         if FIG is not None and FIG.data.shape_keys and 'grip' in FIG.data.shape_keys.key_blocks:
-            FIG.data.shape_keys.key_blocks['grip'].value = 1.0 if name == 's6_grip' else 0.0     # the grip shot shows the clenched hand
-        if FIG is not None and args.look != 'h3':
+            FIG.data.shape_keys.key_blocks['grip'].value = 1.0 if name in ('s6_grip', 'd6_climb') else 0.0     # the grip shots show the clenched hand
+        if FIG is not None and args.look != 'h3' and not args.clay:
             dist = (Vector(loc) - (FIG.location + Vector((0, 0, 1.0)))).length
             FIG.data.materials[0].node_tree.nodes['density'].outputs[0].default_value = float(np.clip(42 * 4.0 / max(dist, .5), 42, 170))   # H3c
         scene.camera = c; tag = f'_{args.look}' if args.look != 'h3' else ''
         if args.fig == 'v3': tag += f'_v3_{args.signal}'
+        if args.pose: tag = f'_{args.light}' + ('_clay' if args.clay else f'_{args.signal}')
         scene.render.filepath = os.path.join(args.preview, name + tag + '.png')
         bpy.ops.render.render(write_still=True)
         print('rendered', name)
@@ -615,7 +702,7 @@ if args.bake:
     OUT = os.path.join(ROOT, args.bake); os.makedirs(OUT, exist_ok=True)
     # the figure, heart and preview haze are not part of the baked room (the figure is light, it casts no shadow)
     FIG_LOC = FIG.location.copy() if FIG is not None else None
-    for o in [x for x in (FIG, globals().get('HEART'), hz) if x is not None]:
+    for o in [x for x in (FIG, globals().get('HEART'), hz, *hz_extra) if x is not None]:
         bpy.data.objects.remove(o, do_unlink=True)
     # v3 rig (electrodes, leads, trunk, comm, signal paths) and the power line are web objects with their own dash
     # shader (IMPL_BRIEF_FIGURE_V3_WEB B2), never baked into the room

@@ -243,3 +243,7 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 ## 2026-10-04 후보별 빛·모델링 설계 보완
 
 LIGHT-01 분석 완료; SYS-LIGHT 규칙 및 A-LIGHT/B-LIGHT/C-LIGHT 씬 명세 작성. D-051/R-021/CASE-007. 기존 D-049 서고 작업 보존. 다음: 후보별 장면 피드백/제작 순서 → 최종 피드백 → 목업 → clay/프리비즈 → 씬 구현·결과 피드백. 전체 후보 및 자세 선택 미확정.
+
+## 2026-10-04 검토 단계의 파형·전환 발산과 문서 라우팅
+
+SYS-IDEA/DOC-ROUTE 완료. A-WAVE/B-WAVE/C-WAVE 각2개 독자 카드 제안. 현재: 안별 TUNE/신규 카드 검토·수정. 다음: 사용자 카드 선택·후보 비교/제작 순서 → 최종 피드백 → 목업 → 씬 구현/결과 피드백/추가 아이디어. 색인: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_WORK_INDEX.md. D-052/R-022/CASE-007.

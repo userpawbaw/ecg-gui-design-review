@@ -1,0 +1,18 @@
+[
+  {
+    "file": "images/A0_globe_v1.png",
+    "sha256": "98548b12ba77533b1136751d6737cb48ec26c67fb9ce30915f2f9591922e8fbb"
+  },
+  {
+    "file": "images/A34_archive_arrival_v1.png",
+    "sha256": "46f6e4200de09a22836f2a0a4835fb2bc4733326aa56abe0431fdc33c4a7f3f6"
+  },
+  {
+    "file": "images/A5_human_heart_v2.png",
+    "sha256": "a49320573b02bdf20229a4708c623c9813691e40d16229ea4b3a99a261dd33ef"
+  },
+  {
+    "file": "images/A8_processing_v2.png",
+    "sha256": "c46df85279789ec8c74322faf4e62435abded44a0598f7d07c8b308f997948ad"
+  }
+]

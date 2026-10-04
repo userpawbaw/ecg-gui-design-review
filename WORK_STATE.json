@@ -597,6 +597,21 @@
     "product_remote_sha": "4b11abbcced81f473c662a7503e9bfd01b4b0ce7",
     "H5_physical_room_lighting_verified": false,
     "product_code_changed": false,
-    "next": "actual scene feedback: figure/paper/light; scan and A/C separate"
+    "next": "User deferred B quality review and further implementation; preserve spike. Return to A mockup / ABC comparison per D-060."
+  },
+  "scenario_a_mockup_2026_10_04": {
+    "status": "four_final_stills_complete_TUNE",
+    "records": [
+      "D-060",
+      "F-035",
+      "R-029",
+      "CASE-007"
+    ],
+    "generated": 4,
+    "edits": 2,
+    "product_code_changed": false,
+    "runtime_verified": false,
+    "B_further_implementation": "deferred_by_user",
+    "next": "ABC comparable-frame review and production order; selected scene asset/material/light kit before user quality feedback"
   }
 }

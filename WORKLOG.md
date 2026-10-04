@@ -460,3 +460,6 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 ## 2026-10-04 BG-B-03 actual asset
 
 사용자 실제에셋 진행승인. registry/source URL 직접 확인으로 body/heart tracked 존재 발견(F034), 이전 부재 주장 철회. D059 후 기존GLB·H5원문 shader를 독립spike에서 직접사용. paper곡률/texture/spot shadow 추가,3차자기수정, Edge39캡처/errors0. H5 sun-depth미연결/최종장비아님/actual데이터아님/전체TUNE. product upstream4b11abb 확인, merge/제품코드변경없음. 다음actual장면 사용자피드백/scan/A/C는 별도.
+
+## 2026-10-04 — A 목업 단계 복귀
+사용자 미완 배경 평가 불가 지적 수용. D060 후 B 후속 구현 보류/보존. image_gen 생성4회+편집2회로 A0/A3–4/A5/A8. 얼굴/해부학/다중입력 이탈 수정, 4final+2history+정확 입력+해시+갤러리 보존. 목적지/장면 위치·재질 연속성 TUNE. F035/R029/CASE007 및 장면별 피드백 준비 규칙 반영. 실제 자산·물리광·모션·DSP 미검증. 제품 코드 변경 없음.

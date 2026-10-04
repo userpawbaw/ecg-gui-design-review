@@ -31,6 +31,7 @@ K = TARGET_H / SRC_H
 
 # archive ladder (scripts/blender/build_archive.py): stiles ±0.24 m from the ladder centre, 14° lean, 45 × 70 mm
 STILE_DX, LAD_TAN, STILE_R = 0.24, math.tan(math.radians(14)), 0.026
+RUNG_DZ, RUNG_R = 0.29, 0.019                     # r2 ladder: round rungs every 29 cm (D-050 climb holds the rungs)
 
 
 def egg_head(V):
@@ -187,6 +188,7 @@ def build(preview_dir=None):
     dr['pelvis'] = np.array([0, 0, 1.])
     gi = {g.index: g.name for g in o.vertex_groups}; acc = np.zeros(len(Vr)); wsum = np.zeros(len(Vr))
     fw = np.zeros(len(Vr)); tw = np.zeros(len(Vr))                   # right finger / thumb weights for the wrap
+    fwL = np.zeros(len(Vr)); twL = np.zeros(len(Vr))                 # left (climb: both hands on rungs)
     for i, v in enumerate(o.data.vertices):
         for g in v.groups:
             n = gi.get(g.group)
@@ -194,6 +196,8 @@ def build(preview_dir=None):
                 acc[i] += g.weight * (off[n] + float((Vr[i] - hd[n]) @ dr[n])); wsum[i] += g.weight
                 if n.startswith('finger') and n.endswith('.R'): fw[i] += g.weight
                 if n == 'thumb.R': tw[i] += g.weight
+                if n.startswith('finger') and n.endswith('.L'): fwL[i] += g.weight
+                if n == 'thumb.L': twL[i] += g.weight
     SLICE = np.where(wsum > 0, acc / np.maximum(wsum, 1e-6), Vr[:, 2])
     # ---- poses (D-050): every pose shares the rig, the ring coordinate and the electrode vertices ----
     F = [list(p.vertices) for p in o.data.polygons]
@@ -222,42 +226,47 @@ def build(preview_dir=None):
         ev = o.evaluated_get(bpy.context.evaluated_depsgraph_get()); me = ev.to_mesh()
         P = np.array([v.co[:] for v in me.vertices]); ev.to_mesh_clear(); return P
 
-    def grip_stile(A0, u, f, pole):
-        """Right hand around a stile with axis point A0 / direction u: arm IK to the wrist, hand frame (axis f, palm toward
-        the stile), fingers straight — the wrap below closes them geometrically."""
-        fp = (f - f.dot(u) * u).normalized(); n = u.cross(fp).normalized()
-        if n.x < 0: n = -n                                            # palm faces the stile from outside (+x)
-        S = A0 - STILE_R * n
-        hb = ar.pose.bones['hand.R']; L = (Vector(B['hand.R'][1]) - Vector(B['hand.R'][0])).length
-        W = (S - n * .014 * K / .93) - f * L
-        tg = bpy.data.objects.new('ik_t', None); bpy.context.scene.collection.objects.link(tg); tg.location = W
+    def ik(bone, target, pole):
+        tg = bpy.data.objects.new('ik_t', None); bpy.context.scene.collection.objects.link(tg); tg.location = target
         pl = bpy.data.objects.new('ik_p', None); bpy.context.scene.collection.objects.link(pl); pl.location = pole
-        c = ar.pose.bones['fore.R'].constraints.new('IK'); c.target = tg; c.pole_target = pl; c.chain_count = 2; c.pole_angle = 0
+        par = ar.pose.bones[bone].parent.name
+        c = ar.pose.bones[bone].constraints.new('IK'); c.target = tg; c.pole_target = pl; c.chain_count = 2; c.pole_angle = 0
         bpy.context.view_layer.update()
-        mats = {k: ar.pose.bones[k].matrix.copy() for k in ('upper.R', 'fore.R')}
-        ar.pose.bones['fore.R'].constraints.remove(c); bpy.data.objects.remove(tg); bpy.data.objects.remove(pl)
-        for k in ('upper.R', 'fore.R'): ar.pose.bones[k].matrix = mats[k]; bpy.context.view_layer.update()
+        mats = {k: ar.pose.bones[k].matrix.copy() for k in (par, bone)}
+        ar.pose.bones[bone].constraints.remove(c); bpy.data.objects.remove(tg); bpy.data.objects.remove(pl)
+        for k in (par, bone): ar.pose.bones[k].matrix = mats[k]; bpy.context.view_layer.update()
+
+    def grip_stile(A0, u, f, pole, side='R', n_hint=Vector((1, 0, 0))):
+        """Hand around a bar (stile or rung) with axis point A0 / direction u: arm IK to the wrist, hand frame (axis f, palm
+        toward the bar, sign chosen by n_hint), fingers straight — the wrap below closes them geometrically."""
+        fp = (f - f.dot(u) * u).normalized(); n = u.cross(fp).normalized()
+        if n.dot(n_hint) < 0: n = -n
+        S = A0 - STILE_R * n
+        hb = ar.pose.bones[f'hand.{side}']; L = (Vector(B[f'hand.{side}'][1]) - Vector(B[f'hand.{side}'][0])).length
+        W = (S - n * .014 * K / .93) - f * L
+        ik(f'fore.{side}', W, pole)
         rest = hb.bone.matrix_local.to_3x3(); y0 = (rest @ Vector((0, 1, 0))).normalized()
-        n0 = Vector((1, 0, 0)); n0 = (n0 - n0.dot(y0) * y0).normalized(); nn = (n - n.dot(f) * f).normalized()
+        n0 = Vector((1 if side == 'R' else -1, 0, 0)); n0 = (n0 - n0.dot(y0) * y0).normalized(); nn = (n - n.dot(f) * f).normalized()
         R = Matrix((f, nn, f.cross(nn))).transposed() @ Matrix((y0, n0, y0.cross(n0))).transposed().inverted()
         hb.matrix = Matrix.Translation(hb.matrix.translation.copy()) @ (R @ rest).to_4x4(); bpy.context.view_layer.update()
-        for k in (1, 2, 3): ar.pose.bones[f'finger{k}.R'].matrix_basis = Matrix.Identity(4)
-        ar.pose.bones['thumb.R'].matrix_basis = Matrix.Identity(4); bpy.context.view_layer.update()
-        print('  wrist target', tuple(round(x, 3) for x in W), 'reached', tuple(round(x, 3) for x in hb.matrix.translation))
-        return dict(S=np.array(S), A=np.array(A0), u=np.array(u), n=np.array(n), f=np.array(fp), hand=np.array(hb.matrix.translation))
+        for k in (1, 2, 3): ar.pose.bones[f'finger{k}.{side}'].matrix_basis = Matrix.Identity(4)
+        ar.pose.bones[f'thumb.{side}'].matrix_basis = Matrix.Identity(4); bpy.context.view_layer.update()
+        print('  wrist', side, 'target', tuple(round(x, 3) for x in W), 'reached', tuple(round(x, 3) for x in hb.matrix.translation))
+        return dict(S=np.array(S), A=np.array(A0), u=np.array(u), n=np.array(n), f=np.array(fp), hand=np.array(hb.matrix.translation),
+                    fw=fw if side == 'R' else fwL, tw=tw if side == 'R' else twL)
 
     def wrap(Pin, g, amount, rad):
         """Wrap finger vertices around the stile axis: palm-surface arc length s past the knuckle line → bend of curvature
         amount/rad (1 = closed around the stile; less = a gentler curl whose circle contains the stile, so fingers never
         cut the wood and keep their length)."""
-        Pq = Pin.copy(); Sn, nn_, fn, un = g['S'], g['n'], g['f'], g['u']
+        Pq = Pin.copy(); Sn, nn_, fn, un = g['S'], g['n'], g['f'], g['u']; fw_, tw_ = g['fw'], g['tw']
         near = np.linalg.norm(Pin - g['hand'], axis=1) < .3
         d_all = Pin - Sn
-        idx = np.where(near & (tw < .6) & (d_all @ fn > -.01) & (np.abs(d_all @ un) < .08) & (np.abs(d_all @ nn_) < .06))[0]
+        idx = np.where(near & (tw_ < .6) & (d_all @ fn > -.01) & (np.abs(d_all @ un) < .08) & (np.abs(d_all @ nn_) < .06))[0]
         d = d_all[idx]; s = d @ fn; h = np.maximum(-(d @ nn_), 0); lat = d @ un
         Re = rad / max(amount, 1e-3); th = np.minimum(np.clip(s, 0, None) / Re, math.radians(250)); r = Re + h
         new = Sn + Re * nn_ + lat[:, None] * un + r[:, None] * (np.cos(th)[:, None] * -nn_ + np.sin(th)[:, None] * fn)
-        blend = ss(-.006, .010, s) * (1 - np.clip(tw[idx], 0, 1))
+        blend = ss(-.006, .010, s) * (1 - np.clip(tw_[idx], 0, 1))
         Pq[idx] = Pin[idx] * (1 - blend[:, None]) + new * blend[:, None]
         return Pq
 
@@ -266,12 +275,12 @@ def build(preview_dir=None):
         # D-046 ladder seat (kept for the current web build; superseded in the story by D-050)
         'ladder_seat': dict(anchor='seat', aim=dict(SEATED, **{'upper.L': (.16, -.22, -1)}), curl_l=50, grip='seat'),
         # D-050 first appearance: on the floor at the ladder foot, back to the shelf, knees up, forearms over the knees
-        'floor': dict(anchor='seat', curl_l=40, curl_r=40, aim={
-            'spine': (0, .48, 1), 'chest': (0, .30, 1), 'neck': (0, .02, 1), 'head': (0, -.30, 1),
-            'thigh.L': (.18, -.88, .46), 'shin.L': (.02, .12, -1), 'foot.L': (.06, -1, -.10),
-            'thigh.R': (-.18, -.88, .46), 'shin.R': (-.02, .12, -1), 'foot.R': (-.06, -1, -.10),
-            'upper.L': (.12, -.50, -.86), 'fore.L': (-.06, -.95, -.10), 'hand.L': (0, -.30, -1),
-            'upper.R': (-.12, -.50, -.86), 'fore.R': (.06, -.95, -.10), 'hand.R': (0, -.30, -1)}),
+        'floor': dict(anchor='seat', curl_l=45, curl_r=35, aim={      # user reference 2026-10-04: right knee up, arm over it; left leg folded flat, hand on the ankle
+            'spine': (0, -.04, 1), 'chest': (0, -.08, 1), 'neck': (-.05, -.30, 1), 'head': (-.18, -.62, 1),
+            'thigh.R': (-.14, -.64, .76), 'shin.R': (-.02, .33, -1), 'foot.R': (-.06, -1, -.10),
+            'thigh.L': (.62, -.78, -.06), 'shin.L': (-.92, -.30, -.06), 'foot.L': (-.45, -.55, -.70),
+            'upper.R': (-.12, -.62, -.78), 'fore.R': (-.20, -.97, -.12), 'hand.R': (-.08, -.35, -1),
+            'upper.L': (.10, -.30, -1), 'fore.L': (-.32, -.78, -.55), 'hand.L': (-.15, -.55, -.85)}),
         # measurement starts: armchair beside the ECG cart, hands resting on the thighs
         'chair': dict(anchor='seat', curl_l=35, curl_r=35, aim={
             'spine': (0, -.04, 1), 'chest': (0, -.06, 1), 'neck': (0, -.18, 1), 'head': (0, -.22, 1),
@@ -295,11 +304,10 @@ def build(preview_dir=None):
             'upper.R': (-.16, .10, -1), 'fore.R': (-.06, -.18, -1), 'hand.R': (-.02, -.1, -1)}),
         # muscle-artifact scene: climbing the ladder (facing it; the archive turns the figure 180°), left hand reaching up to a
         # box, right hand gripping the right stile — the ladder pose returns with a reason
-        'climb': dict(anchor='feet', curl_l=20, grip='climb', aim={
-            'spine': (0, -.34, 1), 'chest': (0, -.26, 1), 'neck': (0, -.16, 1), 'head': (0, .02, 1),
-            'thigh.R': (-.06, .02, -1), 'shin.R': (-.02, .06, -1), 'foot.R': (-.04, -1, -.08),
-            'thigh.L': (.07, -.72, -.70), 'shin.L': (.02, .30, -1), 'foot.L': (.04, -1, -.05),
-            'upper.L': (.14, -.30, 1), 'fore.L': (.04, -.32, 1), 'hand.L': (0, -.30, 1)}),
+        'climb': dict(anchor='feet', grip='rungs', aim={            # user reference 2026-10-04: hand over hand on the rungs, left knee raised
+            'spine': (0, -.22, 1), 'chest': (0, -.16, 1), 'neck': (0, -.05, 1), 'head': (0, .35, 1),
+            'thigh.R': (-.06, -.04, -1), 'shin.R': (-.02, .10, -1), 'foot.R': (-.04, -1, -.10),
+            'thigh.L': (.07, -.95, .10), 'shin.L': (.02, .18, -1), 'foot.L': (.04, -1, -.05)}),
     }
     REST_WRAP = .12                                                    # RETURN 3: rest = palm on the stile, fingers nearly straight
     results = {}
@@ -308,6 +316,15 @@ def build(preview_dir=None):
         reset()
         for name in B:
             if name in spec['aim']: aim(name, spec['aim'][name])
+        if pname == 'floor':                                           # forearm across the raised knee, left hand on the folded ankle
+            knee = ar.pose.bones['shin.R'].head.copy(); ankle = ar.pose.bones['foot.L'].head.copy()
+            sh = ar.pose.bones['upper.R'].head.copy()
+            kt = knee + Vector((0, 0, .06))                                   # knee top
+            aim('upper.R', (kt + Vector((.03, .04, .05))) - sh)           # elbow on the inner side of the knee top
+            aim('fore.R', (-.85, -.48, -.12))                                 # forearm across the knee, pointing out
+            aim('hand.R', (-.35, -.15, -1))                                   # hand hangs past the knee
+            ik('fore.L', ankle + Vector((.04, .05, .08)), Vector(B['upper.L'][0]) + Vector((.5, .1, -.3)))
+            aim('hand.L', (-.25, -.25, -1))
         if spec.get('curl_l'): curl('L', 1, spec['curl_l'], 12)
         if spec.get('curl_r'): curl('R', -1, spec['curl_r'], 12)
         P = evaluated(); bpy.context.view_layer.objects.active = ar; bpy.ops.object.mode_set(mode='POSE')
@@ -317,15 +334,23 @@ def build(preview_dir=None):
         if spec.get('grip') == 'seat':                                 # right stile beside the hip (archive centres the seat on the rung)
             def stile_at(z): return Vector((seat[0] - STILE_DX, seat[1] + .06 + (z - seat[2] + .015) * LAD_TAN, z))
             g = grip_stile(stile_at(seat[2] + .17), UP, Vector((-.05, 1.0, -.62)).normalized(), Vector(B['upper.R'][1]) + Vector((-.35, .45, 0)))
-        elif spec.get('grip') == 'climb':                              # ladder in front (−y), leaning away; climber 22 cm behind the rungs
-            feet_z = P[:, 2].min(); y0_ = P[np.argmin(P[:, 2])][1] - .22
+        elif spec.get('grip') == 'rungs':                              # ladder in front (−y), leaning away; the right sole stands on rung 0
+            low = P[np.argmin(P[:, 2])]; feet_z = float(low[2]); y0_ = float(low[1]) - .06
             def plane_y(z): return y0_ - (z - feet_z) * LAD_TAN
-            zg = feet_z + 1.18
-            g = grip_stile(Vector((-STILE_DX, plane_y(zg), zg)), Vector((0, -LAD_TAN, 1)).normalized(), Vector((-.08, -1, -.12)).normalized(),
-                           Vector(B['upper.R'][1]) + Vector((-.45, .25, -.3)))
-            g['plane_y0'], g['feet_z'] = float(y0_), float(feet_z)
+            def rung(m, x): z = feet_z - .02 + m * RUNG_DZ; return Vector((x, plane_y(z), z))
+            ik('shin.L', rung(2, .10) + Vector((0, .07, .09)), Vector(B['thigh.L'][1]) + Vector((.1, -.6, .4)))   # left foot up on rung 2
+            aim('foot.L', (.04, -1, -.05))
+            sh_R, sh_L = Vector(B['upper.R'][0]), Vector(B['upper.L'][0])
+            f_up = Vector((0, -.35, 1)).normalized(); ux = Vector((1, 0, 0))
+            g = grip_stile(rung(6, -.17), ux, f_up, sh_R + Vector((-.45, .25, -.2)), 'R', Vector((0, -1, 0)))    # right hand overhead
+            g2 = grip_stile(rung(4, .17), ux, f_up, sh_L + Vector((.45, .3, -.4)), 'L', Vector((0, -1, 0)))     # left hand at the chest
+            g['plane_y0'], g['feet_z'] = y0_, feet_z; g['second'] = g2
         P0, P1 = evaluated(0.0), evaluated(1.0)
-        if g is not None:
+        if g is not None and 'second' in g:                           # climbing: both hands hold the rungs (rest .55), grip squeezes (1.0)
+            g2 = g['second']; RR = RUNG_R
+            two = lambda Pin, a, r: wrap(wrap(Pin, g, a, r), g2, a, r)
+            PB, PB1, PG = two(P0, .55, RR + .003), two(P1, .55, RR + .003), two(P0, 1.0, RR)
+        elif g is not None:
             PB, PB1, PG = wrap(P0, g, REST_WRAP, STILE_R + .003), wrap(P1, g, REST_WRAP, STILE_R + .003), wrap(P0, g, 1.0, STILE_R)
         else:
             PB, PB1, PG = P0, P1, None
@@ -349,7 +374,7 @@ def build(preview_dir=None):
                'keys': ['breath'] + (['grip'] if PG is not None else []), 'source': f"blender-human-base-meshes GEO-body_male_{SOURCE} (CC0)"}
         if g is not None:
             out['hand_r'] = [round(float(x), 4) for x in PG[np.where((fw > .5) & (np.linalg.norm(PG - g['hand'], axis=1) < .2))[0]].mean(0)]
-            out['stile'] = {'axis_point': [round(float(x), 4) for x in g['A']], 'axis_dir': [round(float(x), 4) for x in g['u']], 'r': STILE_R, 'dx': STILE_DX}
+            out['stile'] = {'axis_point': [round(float(x), 4) for x in g['A']], 'axis_dir': [round(float(x), 4) for x in g['u']], 'r': RUNG_R if 'second' in g else STILE_R, 'dx': STILE_DX}
             for k_ in ('plane_y0', 'feet_z'):
                 if k_ in g: out['stile'][k_] = round(g[k_], 4)
         fname = 'body_seated_v3.glb' if pname == 'ladder_seat' else f'body_v3_{pname}.glb'

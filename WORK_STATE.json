@@ -511,6 +511,25 @@
     "mockups_generated": true,
     "product_code_changed": false,
     "motion_verified": false,
-    "next": "B mood/composition feedback and local corrections; separate C/A boards"
+    "next": "B v3 corrections remain TUNE; see BC checkpoint; A board next"
+  },
+  "scenario_bc_mockup_2026_10_04": {
+    "status": "B_v3_C_v2_static_review_complete_TUNE",
+    "records": [
+      "D-055",
+      "R-025",
+      "CASE-007"
+    ],
+    "B_edit_calls": 1,
+    "C_generation_calls": 1,
+    "C_edit_calls": 1,
+    "new_C_ideas": [
+      "C-POST1",
+      "C-POST2"
+    ],
+    "product_code_changed": false,
+    "motion_verified": false,
+    "winner_selected": false,
+    "next": "A separate mockup, then comparable role frames for ABC; B/C corrections tracked separately"
   }
 }

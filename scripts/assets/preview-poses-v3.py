@@ -16,24 +16,27 @@ sc.render.resolution_x = sc.render.resolution_y = 600
 for name, d in fj.items():
     before = set(bpy.data.objects); bpy.ops.import_scene.gltf(filepath=os.path.join(A, f'body_v3_{name}.glb'))
     o = [x for x in bpy.data.objects if x not in before and x.type == 'MESH'][0]; o.data.materials.append(cl)
-    an = Vector(d['anchor']); seat_h = .45 if name in ('chair', 'desk') else 0.0
+    an = Vector(d['anchor']); seat_h = d.get('seat_h', .45 if name in ('chair', 'desk') else 0.0)
     o.location = Vector((0, 0, seat_h)) - an
     props = []
-    if name == 'climb':                                              # round-rung ladder matching the pose's ladder plane (feet on rung 0)
-        st = d['stile']; tan = math.tan(math.radians(14)); y0 = st['plane_y0'] - an.y; z0 = st['feet_z'] - an.z
-        for m in range(-2, 9):
-            z = z0 - .02 + m * .29; y = y0 - (z - z0) * tan
+    if name == 'climb':                                              # round-rung ladder matching the pose's ladder plane (rung 0 under the right foot)
+        st = d['stile']; tan = math.tan(math.radians(14)); r0 = Vector(st.get('rung0', (0, st['plane_y0'], st['feet_z']))) - an
+        for m in range(0, 9):
+            z = r0.z + m * st.get('rung_dz', .29); y = r0.y - (z - r0.z) * tan
             bpy.ops.mesh.primitive_cylinder_add(radius=.019, depth=.48, location=(0, y, z), rotation=(0, math.pi / 2, 0)); props.append(bpy.context.object)
         for sx in (-.24, .24):
             zc = 1.2; bpy.ops.mesh.primitive_cube_add(size=1); b = bpy.context.object; b.scale = (.045, .07, 3.6)
-            b.location = (sx, y0 - (zc - z0) * tan, zc); b.rotation_euler = (-math.radians(14), 0, 0); props.append(b)
+            b.location = (sx, r0.y - (zc - r0.z) * tan, zc); b.rotation_euler = (math.radians(14), 0, 0); props.append(b)
         for b in props: b.data.materials.append(fm)
     if seat_h:                                                       # seat block so the sitting reads
         bpy.ops.mesh.primitive_cube_add(size=1); b = bpy.context.object; b.scale = (.45, .42, seat_h); b.location = (0, .02, seat_h / 2); props.append(b)
-    views = (('34', Vector((-1.5, -2.0, .8)), 50), ('side', Vector((0.0, -2.5, .7)), 50)) if name == 'floor' else (('34', Vector((2.2, -3.0, 1.1)), 50), ('side', Vector((3.6, -.2, .9)), 50))
-    if name == 'climb': views = (('34', Vector((2.0, 1.9, .6)), 40), ('side', Vector((2.9, -.35, .5)), 40))   # from behind-side: the ladder is in front (−y)
+    views = (('34', Vector((-1.5, -2.0, .8)), 50), ('side', Vector((0.0, -2.5, .7)), 50), ('left', Vector((2.2, -1.0, .6)), 50)) if name == 'floor' else (('34', Vector((2.2, -3.0, 1.1)), 50), ('side', Vector((3.6, -.2, .9)), 50))
+    if name == 'climb': views = (('34', Vector((2.0, 1.9, .6)), 40), ('side', Vector((2.9, -.35, .5)), 40), ('hands', Vector((1.1, .9, .5)), 40))   # from behind-side: the ladder is in front (−y)
     for vname, off, lens in views:
-        tgt = Vector((0, -.2 if name == 'climb' else 0, 1.0 if name == 'climb' else .75 if name == 'wall' else .6)); co.location = tgt + off
+        tgt = Vector((0, -.2 if name == 'climb' else 0, 1.0 if name == 'climb' else .75 if name == 'wall' else .6))
+        if vname == 'hands': tgt = Vector((0, -.4, 1.45))
+        co.location = tgt + off
         co.rotation_euler = (tgt - co.location).to_track_quat('-Z', 'Y').to_euler(); cam.lens = lens
         sc.render.filepath = os.path.join(OUT, f'{name}_{vname}.png'); bpy.ops.render.render(write_still=True)
     for x in [o] + props: bpy.data.objects.remove(x, do_unlink=True)
+os._exit(0)

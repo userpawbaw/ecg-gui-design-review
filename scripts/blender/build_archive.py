@@ -281,7 +281,11 @@ def ladder():
         z = i * 0.29
         if z > LAD_TOP - 0.1: break
         y = LAD_FOOT_Y + z * math.tan(LAD_ANG)
-        o = box('LadderRung', (0.48, 0.09, 0.03), (LAD_X, y, z), M_DARK, grain=True); objs.append(o); rungs.append((z, y))
+        if args.light == 'r2':                                    # D-050 climb: round rungs (r 19 mm) the hands close around
+            o = cyl('LadderRung', 0.019, 0.48, (LAD_X, y, z), M_DARK, rot=(0, math.radians(90), 0), verts=20); world_uv(o, 1.2, True)
+        else:
+            o = box('LadderRung', (0.48, 0.09, 0.03), (LAD_X, y, z), M_DARK, grain=True)
+        objs.append(o); rungs.append((z, y))
     for dx in (-0.24, 0.24):
         cyl('LadderWheel', 0.04, 0.03, (LAD_X + dx, LAD_FOOT_Y - 0.02, 0.04), M_BLACK, rot=(0, math.radians(90), 0))
         box('LadderHook', (0.03, 0.1, 0.06), (LAD_X + dx, BY - 0.08, LAD_TOP), M_BRASS)
@@ -353,8 +357,38 @@ sp.type = 'NURBS'; sp.order_u = 3; sp.use_endpoint_u = True
 co = bpy.data.objects.new('PowerCable', cu); scene.collection.objects.link(co); cu.materials.append(M_CABLE)
 # D-050 measurement chair beside the ECG cart, the power strip at its back-right (r2 only)
 MCHAIR = Vector((-0.75, 3.15, 0))
+CHAIR_FIT = None
+def chair_fit(objs):
+    """Seat height, backrest direction and the anchor point for the sitting figure, by casting rays at the chair mesh
+    (the figure used to be placed at a guessed .44 m and sank through the cushion — user 2026-10-04)."""
+    from mathutils.bvhtree import BVHTree
+    dg = bpy.context.evaluated_depsgraph_get()
+    trees = [BVHTree.FromObject(o, dg) for o in objs if o.type == 'MESH']
+    tw = [o.matrix_world.copy() for o in objs if o.type == 'MESH']
+    def cast(a, d):
+        best = None
+        for t, M in zip(trees, tw):
+            Mi = M.inverted(); h = t.ray_cast(Mi @ a, (Mi.to_3x3() @ d).normalized())
+            if h[0] is not None:
+                w = M @ h[0]; dist = (w - a).length
+                if best is None or dist < best[1]: best = (w, dist)
+        return best
+    lo, hi = world_bbox(objs); c = (lo + hi) / 2
+    pts = []
+    for i in range(-12, 13):
+        for j in range(-12, 13):
+            a = Vector((c.x + i * .025, c.y + j * .025, hi.z + .2)); h = cast(a, Vector((0, 0, -1)))
+            if h: pts.append(h[0])
+    zs = sorted(p.z for p in pts if abs(p.x - c.x) < .12 and abs(p.y - c.y) < .12); seat_z = zs[len(zs) // 2]
+    back = [p for p in pts if p.z > seat_z + .25]
+    bc = sum(back, Vector()) / len(back); b = Vector((bc.x - c.x, bc.y - c.y, 0)).normalized()
+    hit = cast(Vector((c.x, c.y, seat_z + .22)), b); dback = hit[1] if hit else .25
+    yaw = math.atan2(-b.x, b.y)                                  # figure back (+y in the figure frame) toward the backrest
+    anchor = Vector((c.x, c.y, seat_z)) + b * (dback - .17)     # buttock contact ~17 cm in front of the backrest face
+    print(f'chair_fit: seat {seat_z:.3f} m, back dir ({b.x:.2f}, {b.y:.2f}), backrest face {dback:.3f} m, yaw {math.degrees(yaw):.1f}°')
+    return dict(seat_z=seat_z, yaw=yaw, anchor=anchor)
 if args.light == 'r2':
-    place('modern_arm_chair_01', MCHAIR.x, MCHAIR.y, 0, 0.82, rot=math.radians(200))
+    CHAIR_FIT = chair_fit(place('modern_arm_chair_01', MCHAIR.x, MCHAIR.y, 0, 0.82, rot=math.radians(200)))
 # floor clutter that makes the aisle lived-in (kept off the camera path x ∈ [−0.6, 0.6])
 place('cardboard_box_01', -0.95, -2.2, 0, 0.32, rot=0.3)
 place('cardboard_box_01', -0.92, -2.15, 0.32, 0.26, rot=-0.2)
@@ -392,13 +426,16 @@ if os.path.exists(fig_path):
     if args.pose:                                                # D-050 spots: (world point for the anchor, yaw). Seat anchors sit on the surface
         an = Vector(fj['anchor'])
         SPOTS = {'floor': (Vector((LAD_X + .95, BY - .36, 0)), 0.0),
-                 'chair': (Vector((MCHAIR.x, MCHAIR.y + .02, .44)), math.radians(20)),
+                 'chair': ((CHAIR_FIT['anchor'], CHAIR_FIT['yaw']) if CHAIR_FIT else (Vector((MCHAIR.x, MCHAIR.y + .02, .44)), math.radians(20))),
                  'desk': (Vector((DESK.x + .1, DESK.y - .75, .5)), math.pi),
                  'wall': (Vector((-XW + .2, 1.0, 0)), math.pi / 2)}
         if args.pose == 'climb':                                 # ladder plane at the foot rung = the rung; climber faces the ladder (+y)
-            rz2, ry2 = RUNGS[1]; FYAW = math.pi; FROT = Matrix.Rotation(FYAW, 3, 'Z')
-            ref = Vector((0, fj['stile']['plane_y0'], fj['stile']['feet_z']))
-            FIG.location = Vector((LAD_X, ry2, rz2 + .015)) - FROT @ ref
+            FYAW = math.pi; FROT = Matrix.Rotation(FYAW, 3, 'Z')
+            if 'rung0' in fj['stile']:                           # Rigify build: the figure's rung 0 centre = the ladder's first rung
+                rz2, ry2 = RUNGS[0]; FIG.location = Vector((LAD_X, ry2, rz2)) - FROT @ Vector(fj['stile']['rung0'])
+            else:
+                rz2, ry2 = RUNGS[1]; ref = Vector((0, fj['stile']['plane_y0'], fj['stile']['feet_z']))
+                FIG.location = Vector((LAD_X, ry2, rz2 + .015)) - FROT @ ref
         else:
             spot, FYAW = SPOTS[args.pose]; FROT = Matrix.Rotation(FYAW, 3, 'Z')
             FIG.location = spot - FROT @ an
@@ -646,11 +683,15 @@ if args.pose and FIG is not None:                                 # D-050 shots:
     SHOTS = {
         'floor': {'d1_floor_wide': ((-0.1, 0.9, 1.55), (1.0, 4.3, 0.85), 40), 'd2_floor_mid': ((0.25, 2.7, 0.85), (1.05, 4.3, 0.5), 38)},
         'chair': {'d3_chair': (tuple(AW + Vector((1.15, -1.55, .55))), tuple(AW + Vector((0, 0, .45))), 40)},
-        'desk': {'d4_desk': ((-1.2, 2.45, 1.6), (-2.35, 3.45, .95), 50)},
+        'desk': {'d4_desk': ((-0.15, 1.75, 1.55), (-1.75, 3.3, .55), 32)},      # second draft: the power strip + line in frame
         'wall': {'d5_wall': ((-0.25, 1.0, 1.5), (-3.4, 1.0, 1.3), 40)},
         'climb': {'d6_climb': ((2.45, 2.2, 1.7), (LAD_X, 3.85, 1.9), 52)},
     }[args.pose]
     if args.pose in ('chair', 'desk', 'wall', 'climb'): SHOTS = dict(SHOTS)
+    if args.pose == 'climb' and 'hand_r' in fj:                  # second draft: muscle-artifact close-up — the gripping hand and RA together
+        HR = FIG.location + FROT @ Vector(fj['hand_r']); RA = FIG.location + FROT @ Vector(fj['electrodes']['RA']['p'])
+        mid = (HR + RA) / 2
+        SHOTS['d7_climb_close'] = (tuple(mid + Vector((1.05, .30, -.05))), tuple(mid), 40)
 if args.clay:                                                     # D-049 clay gate A: grey diffuse everywhere, no volume, no emission
     CLAY = mat('clay_gate', (.5, .5, .5), .8)
     for o in scene.objects:

@@ -247,3 +247,7 @@ LIGHT-01 분석 완료; SYS-LIGHT 규칙 및 A-LIGHT/B-LIGHT/C-LIGHT 씬 명세 
 ## 2026-10-04 검토 단계의 파형·전환 발산과 문서 라우팅
 
 SYS-IDEA/DOC-ROUTE 완료. A-WAVE/B-WAVE/C-WAVE 각2개 독자 카드 제안. 현재: 안별 TUNE/신규 카드 검토·수정. 다음: 사용자 카드 선택·후보 비교/제작 순서 → 최종 피드백 → 목업 → 씬 구현/결과 피드백/추가 아이디어. 색인: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_WORK_INDEX.md. D-052/R-022/CASE-007.
+
+## 2026-10-04 A/B/C v4 검토·수정
+
+REVIEW-ABC-02 문서 수정 완료. A 표본 막/B 국소 압인·접힘 뒤 처리/C 셔터 초안 및 입자 대안 분리. SYS-STATE p/t/빠른 입력·출력 인계 정리. PRIORITY-01 첫 시험 B→C→A 추천(미선정). 다음: v4 최종 피드백/장면 수정·순서 결정 → 목업. D-053/R-023/CASE-007.

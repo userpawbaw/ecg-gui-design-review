@@ -430,10 +430,10 @@
   },
   "scenario_feedback_2026_10_03": {
     "id": "SCENARIO-ABC-20261003",
-    "status": "review_revision_with_preproduction_ideas",
+    "status": "v4_document_review_revisions_complete_final_feedback_pending",
     "scope": "A/B TUNE, B frames, scoped reference mining, new C, creative rules and evolving gates",
     "index": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_WORK_INDEX.md",
-    "next": "Review A/B/C TUNE with new waveform/transition cards, revise chosen scenes, compare candidates and production order; final feedback before mockups",
+    "next": "Final feedback on revised scenes and proposed first-test order; then mockups/previs/scene implementation",
     "product_code_changed": false,
     "mockups_generated": false,
     "accepted_feedback_analysis": "closed",
@@ -458,7 +458,7 @@
     "scope": "Preserve approved D-049 lighting work. Pose alternatives and A/B/C selection remain proposals. No new mockups or product implementation."
   },
   "scenario_ideas_2026_10_04": {
-    "status": "six_cards_proposed_user_selection_pending",
+    "status": "integrated_in_recommended_v4_revision_not_user_selected",
     "records": [
       "D-052",
       "R-022",
@@ -474,5 +474,23 @@
     "new_reference_observation": false,
     "mockups_generated": false,
     "product_implementation": false
+  },
+  "scenario_v4_review_2026_10_04": {
+    "status": "document_review_complete_visual_unverified",
+    "records": [
+      "D-053",
+      "R-023",
+      "CASE-007"
+    ],
+    "revision": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_ABC_review_revision_v4_2026-10-04.md",
+    "recommended_first_tests": [
+      "B",
+      "C",
+      "A"
+    ],
+    "order_approved": false,
+    "user_final_feedback_complete": false,
+    "mockups_generated": false,
+    "product_code_changed": false
   }
 }

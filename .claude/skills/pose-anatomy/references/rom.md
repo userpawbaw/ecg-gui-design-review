@@ -47,7 +47,7 @@ Validator use: `override={'hip.L rotation external': (82, 70, 'cross-legged norm
 - Body parts as capsules round the ORG bones (radius from the 1.666 m body): head .095, chest .13, pelvis .13, upper arm .045, forearm .037, hand .028, thigh .07, shin .05, foot .04.
 - Non-adjacent capsules may touch (a forearm resting on a knee, a foot under the other shin) but penetration deeper than 45 % of the summed radii is FAIL, 25 % WARN.
 - Floor: no vertex below −15 mm (FAIL below −25 mm). Seat: buttock contact within ±15 mm of the seat height.
-- Scene: body vertices inside scene objects (chair, stool, ladder, shelves, desk): WARN over 10 mm, FAIL over 25 mm.
+- Scene: body vertices inside scene objects (chair, stool, ladder, shelves, desk): WARN over 10 mm, FAIL over 25 mm. Upholstered seats (the leather armchair) FAIL over 60 mm — a seated thigh sinks 3–6 cm into a cushion; list such objects explicitly (`SOFT` in build_archive), never loosen hard objects.
 - Contacts named in the pose spec: distance from the body part to its target ≤ 30 mm (WARN to 60 mm, FAIL beyond).
 
 ## Sources

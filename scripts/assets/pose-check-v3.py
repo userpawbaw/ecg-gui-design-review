@@ -257,11 +257,14 @@ def scene_collisions(fig, objects, step=4, ignore=()):
         lo = Vector((min(p.x for p in bb), min(p.y for p in bb), min(p.z for p in bb))); hi = Vector((max(p.x for p in bb), max(p.y for p in bb), max(p.z for p in bb)))
         cand = [p for p in P if lo.x < p.x < hi.x and lo.y < p.y < hi.y and lo.z < p.z < hi.z]
         if not cand: continue
-        bvh = BVHTree.FromObject(o, dg); Mi = o.matrix_world.inverted(); Mw = o.matrix_world; worst = 0.0
+        bvh = BVHTree.FromObject(o, dg); Mi = o.matrix_world.inverted(); Mw = o.matrix_world; worst, where = 0.0, None
         for p in cand:
             loc, nrm, _, d = bvh.find_nearest(Mi @ p, .2)
             if loc is None: continue
             if (Mi @ p - loc).dot(nrm) < 0:
-                worst = max(worst, ((Mw @ loc) - p).length)
-        if worst > 0: out[o.name] = round(worst * 1000, 1)
+                dd = ((Mw @ loc) - p).length
+                if dd > worst: worst, where = dd, p
+        if worst > 0:
+            local = M.inverted() @ where                                  # figure frame: which body part
+            out[o.name] = (round(worst * 1000, 1), tuple(round(v, 2) for v in local))
     return out

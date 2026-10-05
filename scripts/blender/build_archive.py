@@ -384,7 +384,7 @@ def chair_fit(objs):
     bc = sum(back, Vector()) / len(back); b = Vector((bc.x - c.x, bc.y - c.y, 0)).normalized()
     hit = cast(Vector((c.x, c.y, seat_z + .22)), b); dback = hit[1] if hit else .25
     yaw = math.atan2(-b.x, b.y)                                  # figure back (+y in the figure frame) toward the backrest
-    anchor = Vector((c.x, c.y, seat_z)) + b * (dback - .17)     # buttock contact ~17 cm in front of the backrest face
+    anchor = Vector((c.x, c.y, seat_z)) + b * (dback - .12)     # buttock contact ~12 cm in front of the backrest face (seat front rises to 0.449)
     print(f'chair_fit: seat {seat_z:.3f} m, back dir ({b.x:.2f}, {b.y:.2f}), backrest face {dback:.3f} m, yaw {math.degrees(yaw):.1f}°')
     return dict(seat_z=seat_z, yaw=yaw, anchor=anchor)
 if args.light == 'r2':
@@ -684,8 +684,9 @@ if args.pose and FIG is not None:                                 # skill pose-a
     bpy.context.view_layer.update()
     _skip = ('El_', 'Lead_', 'LeadYoke', 'TrunkCable', 'CommCable', 'Sig_', 'RA_noise_ring', 'PowerNoise', 'Haze', 'VOL_', 'APR_', 'Floor', 'heart')
     _col = pc.scene_collisions(FIG, [o for o in scene.objects if o is not HEART], ignore=_skip)
-    _worst = max(_col.values()) if _col else 0.0
-    print('figure collisions (mm, max depth per object):', _col, '→', 'FAIL' if _worst > 25 else 'WARN' if _worst > 10 else 'OK')
+    SOFT = {'modern_arm_chair_01': 60}                           # upholstered (leather cushion): the thighs sink into it; hard objects keep 25 mm
+    _st = {k: ('FAIL' if v[0] > SOFT.get(k, 25) else 'WARN' if v[0] > 10 else 'OK') for k, v in _col.items()}
+    print('figure collisions (mm, figure-frame point):', _col, '→', _st, '→', 'FAIL' if 'FAIL' in _st.values() else 'WARN' if 'WARN' in _st.values() else 'OK')
 if args.pose and FIG is not None:                                 # D-050 shots: one per spot, each opening a new part of the archive
     AW = FIG.location + FROT @ Vector(fj['anchor'])
     SHOTS = {

@@ -241,8 +241,9 @@ def build():
         h = SEAT_H['chair']; sit(h, lean=-7, dy=.02)
         P.turn('neck', 6, X); P.turn('head', 4, X)
         for s, sg in (('L', 1), ('R', -1)):
-            P.leg(s, (sg * .12, -.47, .085), (sg * .05, -1, 0), (sg * .12, -1.5, h + .1))
-            P.arm_relaxed(s, (sg * .14, -.30, h + .17), None, (sg * .55, .45, h + .45), flex=5, pronation=72)   # hands flat on the thighs
+            P.leg(s, (sg * .12, -.43, .11), (sg * .05, -1, -.25), (sg * .12, -1.5, h + .2))       # heels up a little: thighs clear the raised seat front (0.449 m)
+            th = P.head(f'ORG-thigh.{s}').lerp(P.head(f'ORG-shin.{s}'), .62)       # hands rest on the thigh top, 62 % toward the knee
+            P.arm_relaxed(s, th + Vector((sg * .01, .05, .105)), None, (sg * .55, .45, h + .45), flex=-22, dev=-30, pronation=72)   # hand laid along the thigh
             P.curl(s, 40, thumb=10)
 
     def pose_desk():

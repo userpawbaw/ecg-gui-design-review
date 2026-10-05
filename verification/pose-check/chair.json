@@ -1,8 +1,8 @@
 {
  "title": "chair",
  "summary": {
-  "OK": 63,
-  "WARN": 3,
+  "OK": 58,
+  "WARN": 10,
   "FAIL": 0
  },
  "rows": [
@@ -63,7 +63,7 @@
   {
    "group": "ROM",
    "name": "hip.L flexion",
-   "value": 69.0,
+   "value": 74.1,
    "limit": 125,
    "comfort": 110,
    "status": "OK",
@@ -81,7 +81,7 @@
   {
    "group": "ROM",
    "name": "hip.L rotation internal",
-   "value": -2.3,
+   "value": -2.5,
    "limit": 40,
    "comfort": 30,
    "status": "OK",
@@ -90,7 +90,7 @@
   {
    "group": "ROM",
    "name": "knee.L flexion",
-   "value": 57.3,
+   "value": 69.6,
    "limit": 150,
    "comfort": 140,
    "status": "OK",
@@ -108,7 +108,7 @@
   {
    "group": "ROM",
    "name": "ankle.L plantarflexion",
-   "value": -20.5,
+   "value": -27.5,
    "limit": 50,
    "comfort": 40,
    "status": "OK",
@@ -117,7 +117,7 @@
   {
    "group": "ROM",
    "name": "ankle.L turn",
-   "value": 0.6,
+   "value": -0.3,
    "limit": 35,
    "comfort": 25,
    "status": "OK",
@@ -126,7 +126,7 @@
   {
    "group": "ROM",
    "name": "shoulder.L elevation",
-   "value": 35.7,
+   "value": 11.3,
    "limit": 180,
    "comfort": 120,
    "status": "OK",
@@ -134,21 +134,30 @@
   },
   {
    "group": "ROM",
-   "name": "shoulder.L adduction across body",
-   "value": 4.0,
-   "limit": 50,
-   "comfort": 35,
+   "name": "shoulder.L rotation internal",
+   "value": -43.2,
+   "limit": 70,
+   "comfort": 60,
    "status": "OK",
    "note": ""
   },
   {
    "group": "ROM",
    "name": "elbow.L flexion",
-   "value": 0.3,
+   "value": 43.4,
    "limit": 145,
    "comfort": 125,
    "status": "OK",
    "note": ""
+  },
+  {
+   "group": "hinge",
+   "name": "elbow.L bend direction",
+   "value": 19.6,
+   "limit": 90,
+   "comfort": 35,
+   "status": "OK",
+   "note": "0 = forearm folds forward onto the biceps"
   },
   {
    "group": "hinge",
@@ -162,7 +171,7 @@
   {
    "group": "ROM",
    "name": "forearm.L pronation",
-   "value": 70.5,
+   "value": 74.0,
    "limit": 80,
    "comfort": 60,
    "status": "WARN",
@@ -171,7 +180,7 @@
   {
    "group": "ROM",
    "name": "wrist.L extension",
-   "value": -2.3,
+   "value": -40.7,
    "limit": 70,
    "comfort": 45,
    "status": "OK",
@@ -180,10 +189,10 @@
   {
    "group": "ROM",
    "name": "wrist.L radial deviation",
-   "value": 2.4,
+   "value": 17.7,
    "limit": 20,
    "comfort": 15,
-   "status": "OK",
+   "status": "WARN",
    "note": ""
   },
   {
@@ -297,7 +306,7 @@
   {
    "group": "ROM",
    "name": "hip.R flexion",
-   "value": 69.0,
+   "value": 74.1,
    "limit": 125,
    "comfort": 110,
    "status": "OK",
@@ -315,7 +324,7 @@
   {
    "group": "ROM",
    "name": "hip.R rotation internal",
-   "value": -2.3,
+   "value": -2.5,
    "limit": 40,
    "comfort": 30,
    "status": "OK",
@@ -324,7 +333,7 @@
   {
    "group": "ROM",
    "name": "knee.R flexion",
-   "value": 57.3,
+   "value": 69.6,
    "limit": 150,
    "comfort": 140,
    "status": "OK",
@@ -342,7 +351,7 @@
   {
    "group": "ROM",
    "name": "ankle.R plantarflexion",
-   "value": -20.5,
+   "value": -27.5,
    "limit": 50,
    "comfort": 40,
    "status": "OK",
@@ -351,7 +360,7 @@
   {
    "group": "ROM",
    "name": "ankle.R turn",
-   "value": 0.6,
+   "value": -0.3,
    "limit": 35,
    "comfort": 25,
    "status": "OK",
@@ -360,7 +369,7 @@
   {
    "group": "ROM",
    "name": "shoulder.R elevation",
-   "value": 35.7,
+   "value": 11.3,
    "limit": 180,
    "comfort": 120,
    "status": "OK",
@@ -368,21 +377,30 @@
   },
   {
    "group": "ROM",
-   "name": "shoulder.R adduction across body",
-   "value": 4.0,
-   "limit": 50,
-   "comfort": 35,
+   "name": "shoulder.R rotation internal",
+   "value": -43.2,
+   "limit": 70,
+   "comfort": 60,
    "status": "OK",
    "note": ""
   },
   {
    "group": "ROM",
    "name": "elbow.R flexion",
-   "value": 0.3,
+   "value": 43.4,
    "limit": 145,
    "comfort": 125,
    "status": "OK",
    "note": ""
+  },
+  {
+   "group": "hinge",
+   "name": "elbow.R bend direction",
+   "value": 19.6,
+   "limit": 90,
+   "comfort": 35,
+   "status": "OK",
+   "note": "0 = forearm folds forward onto the biceps"
   },
   {
    "group": "hinge",
@@ -396,7 +414,7 @@
   {
    "group": "ROM",
    "name": "forearm.R pronation",
-   "value": 70.5,
+   "value": 74.0,
    "limit": 80,
    "comfort": 60,
    "status": "WARN",
@@ -405,7 +423,7 @@
   {
    "group": "ROM",
    "name": "wrist.R extension",
-   "value": -2.3,
+   "value": -40.7,
    "limit": 70,
    "comfort": 45,
    "status": "OK",
@@ -414,10 +432,10 @@
   {
    "group": "ROM",
    "name": "wrist.R radial deviation",
-   "value": 2.4,
+   "value": 17.7,
    "limit": 20,
    "comfort": 15,
-   "status": "OK",
+   "status": "WARN",
    "note": ""
   },
   {
@@ -531,73 +549,73 @@
   {
    "group": "collide",
    "name": "hand.L ↔ thigh.L penetration",
-   "value": 15.3,
+   "value": 44.3,
    "limit": 45,
    "comfort": 25,
-   "status": "OK",
+   "status": "WARN",
    "note": "% of summed radii"
   },
   {
    "group": "collide",
    "name": "hand.R ↔ thigh.R penetration",
-   "value": 15.3,
+   "value": 44.3,
    "limit": 45,
    "comfort": 25,
-   "status": "OK",
+   "status": "WARN",
    "note": "% of summed radii"
   },
   {
    "group": "ground",
    "name": "below floor",
-   "value": 0.0,
+   "value": 14.9,
    "limit": 25,
    "comfort": 15,
    "status": "OK",
-   "note": "mm, lowest at (0.17, -0.59)"
+   "note": "mm, lowest at (0.14, -0.59)"
   },
   {
    "group": "ground",
    "name": "into the seat",
-   "value": 21.4,
+   "value": 1.2,
    "limit": 25,
    "comfort": 15,
-   "status": "WARN",
-   "note": "mm, lowest at (-0.11, -0.19, 0.41)"
+   "status": "OK",
+   "note": "mm, lowest at (0.10, -0.19, 0.43)"
   },
   {
    "group": "contact",
    "name": "hand.L → thigh.L gap",
-   "value": -15.0,
+   "value": -43.4,
    "limit": 60.0,
    "comfort": 30.0,
-   "status": "OK",
+   "status": "WARN",
    "note": "mm (− = pressed in)"
   },
   {
    "group": "contact",
    "name": "hand.R → thigh.R gap",
-   "value": -15.0,
+   "value": -43.4,
    "limit": 60.0,
    "comfort": 30.0,
-   "status": "OK",
+   "status": "WARN",
    "note": "mm (− = pressed in)"
   },
   {
    "group": "contact",
    "name": "foot.L → floor gap",
-   "value": -20.0,
+   "value": -39.2,
    "limit": 60.0,
    "comfort": 30.0,
-   "status": "OK",
+   "status": "WARN",
    "note": "mm (− = pressed in)"
   },
   {
    "group": "contact",
    "name": "foot.R → floor gap",
-   "value": -20.0,
+   "value": -39.2,
    "limit": 60.0,
    "comfort": 30.0,
-   "status": "OK",
+   "status": "WARN",
    "note": "mm (− = pressed in)"
   }
  ]

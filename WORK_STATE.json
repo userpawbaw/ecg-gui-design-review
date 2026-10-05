@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "R1: D-051 figure rebuilt on Rigify + head B2 + five D-050 poses (verification/r1-rigify-20261004/). Await user review of clay + archive sheets; then brief 3 (web: r2 re-bake, five poses with hidden-cut relocation, practicals, rig per pose). Open: wall-spot trunk route, desk shot power strip occluded by the armchair, place() rotation bug (decide before brief 3).",
+  "next_action": "R1: pose feedback loop added (skill pose-anatomy, scripts/assets/pose-check-v3.py build gate + selftest + archive scene collisions; R-020). Five poses revalidated (0 FAIL), floor rebuilt to the user's reference images. Await user review of verification/r1-rigify-20261004/floor3_vs_ref.jpg + archive_validated_sheet.jpg; then brief 3 (web). Open: desk power strip occluded by the armchair, place() prop rotation bug, wall trunk route, floor head tilt shallower than the reference.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -127,7 +127,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-10-04",
+  "updated_at": "2026-10-05",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",

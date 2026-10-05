@@ -30,6 +30,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def _load(n, f):
     s = importlib.util.spec_from_file_location(n, os.path.join(HERE, f)); m = importlib.util.module_from_spec(s); s.loader.exec_module(m); return m
 bif = _load('bif', 'build-intro-figure.py'); hv = _load('hv', 'head-vol-v3.py'); rf = _load('rf', 'rigify-fit-v3.py')
+pc = _load('pc', 'pose-check-v3.py')          # pose validator (skill pose-anatomy)
 ss, verts, set_verts, apply_mod, breath_key, export = bif.ss, bif.verts, bif.set_verts, bif.apply_mod, bif.breath_key, bif.export
 SRC, OUT, TARGET_H = bif.SRC, bif.OUT, bif.TARGET_H
 CACHE = os.path.join(SRC, 'blender-human-base-meshes', 'head_sdf_A.npz')   # assets/source is not committed
@@ -175,43 +176,81 @@ def build():
         P.move('torso', (0, dy, h + .095 - hz))
         if lean: P.turn('torso', lean, X)
 
+    def reach(side, target, what):
+        """Skill pose-anatomy step 3: compare the shoulder → target distance with the arm length before solving."""
+        rb_ = rig.data.bones; L = rb_[f'ORG-upper_arm.{side}'].length + rb_[f'ORG-forearm.{side}'].length
+        d = (Vector(target) - P.head(f'ORG-upper_arm.{side}')).length
+        print(f'   reach {side} {what}: {d:.3f} m of {L:.3f} m arm ({d / L * 100:.0f} %)')
+        return d / L
+
     def pose_floor():
-        sit(0.0, lean=-12)                                                      # back against the shelf (D-050)
-        P.turn('chest', 10, X); P.turn('neck', 22, X); P.turn('head', 26, X); P.turn('head', -8, (0, 0, 1))
-        P.leg('R', (-.12, -.31, .09), (0, -1, 0), (-.18, -1.2, 1.2))                              # right knee up high, heel near the seat
-        P.leg('L', (-.02, -.36, .06), (-.85, -.45, 0), (1.4, -.35, .05), up=(.15, .25, 1))        # left leg folded flat, knee out
-        # right arm draped over the raised knee (user 2026-10-05: the first try wrapped the forearm round the knee): the
-        # elbow rests on the top front of the knee, the forearm reaches forward past it, the hand hangs
+        """User reference images 2026-10-05 (verification/r1-rigify-20261004/floor_ref_*): sitting on the floor, back to the
+        shelf; right knee up, foot flat in front; the right forearm lies across the knee top, the hand hangs past it;
+        left leg folded flat, its foot tucked in front; the left hand rests on the left shin by the ankle; head down-right."""
+        sit(0.0, lean=-28)                                                      # floor sitting rolls the pelvis back (posterior tilt)
+        P.turn('chest', 34, X); P.turn('chest', 7, (0, 1, 0))                    # chest brought forward again; left shoulder dropped to the left hand
+        P.turn('neck', 28, X); P.turn('head', 40, X); P.turn('head', -22, (0, 0, 1)); P.turn('head', 10, (0, 1, 0))   # head down, turned and tilted right
+        P.leg('R', (-.15, -.36, .085), (-.05, -1, 0), (-.2, -1.3, 1.3))                          # right knee up high, foot flat close in
+        # left leg folded flat (cross-legged half): solve the knee and ankle from the measured norm for cross-legged sitting —
+        # hip flexion 88°, abduction 29°, external rotation 62° (BMC Musculoskelet Disord 2021) — then hand them to the IK
+        Dp = P.pb['ORG-spine'].matrix.to_3x3().normalized() @ rig.data.bones['ORG-spine'].matrix_local.to_3x3().normalized().inverted()
+        hipL = P.head('ORG-thigh.L'); LT, LS = rig.data.bones['ORG-thigh.L'].length, rig.data.bones['ORG-shin.L'].length
+        def fold(fl_, ab_, er_, kf_=148):
+            fl, ab, er, kf = map(math.radians, (fl_, ab_, er_, kf_))
+            tl = Vector((math.sin(ab), -math.sin(fl) * math.cos(ab), -math.cos(fl) * math.cos(ab))).normalized()
+            nX = Vector((1, 0, 0)).cross(tl).normalized(); pl = nX * math.cos(er) - tl.cross(nX) * math.sin(er)   # left: sg = +1
+            sl = (tl * math.cos(kf) + pl * math.sin(kf)).normalized()
+            k_ = hipL + (Dp @ tl) * LT; return k_, k_ + (Dp @ sl) * LS, Dp @ sl
+        # inside the measured ranges, pick the fold nearest the means whose ankle and knee rest on the floor (z ≈ 0.07 / ≤ 0.14)
+        best = min(((abs(fl_ - 88) / 23 + abs(ab_ - 29) / 17 + abs(er_ - 62) / 20 + abs(fold(fl_, ab_, er_)[1].z - .085) / .01
+                     + max(0, fold(fl_, ab_, er_)[0].z - .14) / .01, fl_, ab_, er_)
+                    for fl_ in range(62, 106, 4) for ab_ in range(12, 46, 4) for er_ in range(40, 80, 4)))
+        print('   left fold (flex, abd, ext rot):', best[1:], 'score', round(best[0], 2))
+        kneeL, ankL, sdir = fold(*best[1:])
+        print('   left fold: knee', tuple(round(v, 3) for v in kneeL), 'ankle', tuple(round(v, 3) for v in ankL))
+        tdir = Vector((sdir.x, sdir.y, 0)).normalized() * .6 + Vector((0, -.8, 0))          # toes forward-in, sole near the floor
+        P.leg('L', ankL, Vector((tdir.x, tdir.y, 0)), kneeL + (kneeL - hipL) * .8, up=(.25, 0, 1))
         rb = rig.data.bones; L1 = rb['ORG-upper_arm.R'].length; L2 = rb['ORG-forearm.R'].length
-        S = P.head('ORG-upper_arm.R'); K = P.head('ORG-shin.R')
-        top = K + Vector((0, -.035, .05))                                        # knee cap top
-        d = (top - S); E = S + d.normalized() * min(L1 * .985, d.length + .03)  # elbow on the knee top (just past it)
-        if (E - S).length < L1 * .95:                                            # shoulder closer than the upper arm: elbow drops beside the knee
-            h = math.sqrt(max(L1 ** 2 - d.length ** 2, 0)) * .9; E = top + Vector((-.6, -.8, 0)).normalized() * h * .5 + Vector((0, 0, -h * .5))
-        W = E + Vector((-.30, -.85, -.42)).normalized() * L2 * .985
-        pole = E + (E - (S + W) / 2).normalized() * .5
-        P.arm('R', W, Vector((-.08, -.30, -1)), Vector((.15, 1, 0)), pole)
-        print('   floor R arm: shoulder', tuple(round(v, 3) for v in S), 'knee top', tuple(round(v, 3) for v in top),
-              '|S-top|', round((top - S).length, 3), 'L1', round(L1, 3), 'elbow target', tuple(round(v, 3) for v in E),
-              'got', tuple(round(v, 3) for v in P.head('ORG-forearm.R')))
-        ank = P.head('ORG-foot.L')
-        P.arm('L', ank + Vector((.02, -.02, .085)), Vector((-.35, -.55, -.75)), Vector((0, 0, -1)), P.head('ORG-upper_arm.L') + Vector((.9, .3, -.2)))
-        P.curl('R', 55, thumb=20); P.curl('L', 70, thumb=25)
+        K = P.head('ORG-shin.R'); top = K + Vector((0, -.02, .055))             # knee cap top surface
+        E = top + Vector((-.035, .07, .065))                                    # elbow just outside and behind the knee top (refs)
+        fd = (top + Vector((-.03, -.05, .02)) - E).normalized()                  # forearm passes over the knee top, forward and a little down
+        for _ in range(12):                                                     # skill rule: fit the torso to the contact, not the target
+            S = P.head('ORG-upper_arm.R'); dd = (E - S).length
+            if dd > L1 * .98: P.turn('chest', 2, X)                             # too far: lean in
+            elif dd < L1 * .93: P.turn('chest', -2, X)                          # too close: sit up
+            else: break
+        if (E - S).length > L1 * .98: E = S + (E - S).normalized() * L1 * .98
+        print('   floor R elbow on the knee: |S-E|', round((E - S).length, 3), 'of', round(L1, 3))
+        W = E + fd * L2 * .98
+        reach('R', W, 'wrist past the knee')
+        u_ = (W - S).normalized(); foot = S + u_ * (E - S).dot(u_)               # pole straight out from the S–W line through the wanted elbow
+        P.arm_relaxed('R', W, None, E + ((E - foot) + Vector((-.25, .3, -.5))).normalized() * .5, flex=55, dev=22, pronation=55)   # prior: elbow points down-back-out
+        fa_ = (P.tail('ORG-forearm.R') - P.head('ORG-forearm.R')).normalized(); hd_ = (P.tail('ORG-hand.R') - P.head('ORG-hand.R')).normalized()
+        print('   floor R hand: forearm', tuple(round(v, 2) for v in fa_), 'hand', tuple(round(v, 2) for v in hd_), 'palm', tuple(round(v, 2) for v in P.palm_normal('R')),
+              'finger tip', tuple(round(v, 2) for v in P.tail('ORG-f_middle.03.R')), 'wrist', tuple(round(v, 2) for v in P.head('ORG-hand.R')))
+        print('   floor R elbow: wanted', tuple(round(v, 3) for v in E), 'got', tuple(round(v, 3) for v in P.head('ORG-forearm.R')))
+        shin_L = P.head('ORG-foot.L').lerp(P.head('ORG-shin.L'), .22)            # left shin just above the ankle
+        WL = shin_L + Vector((.0, -.01, .10))
+        reach('L', WL, 'hand on the left shin')
+        P.arm_relaxed('L', WL, None, P.head('ORG-upper_arm.L') + Vector((.7, .25, -.3)), flex=10, pronation=50)
+        P.curl('R', 50, thumb=15); P.curl('L', 55, thumb=20)
+        hf = (P.pb['ORG-spine.006'].matrix.to_3x3().normalized() @ rig.data.bones['ORG-spine.006'].matrix_local.to_3x3().normalized().inverted()) @ Vector((0, -1, 0))
+        print('   floor face direction', tuple(round(v, 2) for v in hf), '(want down-right: x<0, z<0)')
 
     def pose_chair():
         h = SEAT_H['chair']; sit(h, lean=-7, dy=.02)
         P.turn('neck', 6, X); P.turn('head', 4, X)
         for s, sg in (('L', 1), ('R', -1)):
             P.leg(s, (sg * .12, -.47, .085), (sg * .05, -1, 0), (sg * .12, -1.5, h + .1))
-            P.arm(s, (sg * .14, -.30, h + .17), Vector((0, -1, -.45)), Vector((0, 0, -1)), (sg * .55, .45, h + .45))
-            P.curl(s, 45, thumb=10)
+            P.arm_relaxed(s, (sg * .14, -.30, h + .17), None, (sg * .55, .45, h + .45), flex=5, pronation=72)   # hands flat on the thighs
+            P.curl(s, 40, thumb=10)
 
     def pose_desk():
         h = SEAT_H['desk']; sit(h, lean=9)
         P.turn('neck', 8, X); P.turn('head', 6, X)
         for s, sg in (('L', 1), ('R', -1)):
-            P.leg(s, (sg * .13, -.40, .085), (sg * .08, -1, 0), (sg * .14, -1.5, h + .1))
-            P.arm(s, (sg * .12, -.40, .80), Vector((-sg * .15, -1, -.25)), Vector((0, 0, -1)), (sg * .7, .1, .45))
+            P.leg(s, (sg * .12, -.22, .27), (sg * .06, -1, -.5), (sg * .14, -1.5, h + .3))        # feet on the stool's foot rung (high stool): thighs level
+            P.arm_relaxed(s, (sg * .12, -.40, .80), None, (sg * .7, .1, .45), flex=-8, pronation=70)   # typing: palms down, wrists level
             P.curl(s, 35, thumb=8)
 
     def pose_wall():
@@ -225,7 +264,7 @@ def build():
     def rung(m, x):
         z = z0 + m * RUNG_DZ; return Vector((x, y0 - (z - z0) * LAD_TAN, z))
 
-    def grip_at(side, c, curl, thumb):
+    def grip_at(side, c, curl, thumb, out=.9):
         """Hand over a horizontal rung (centre c): fingers point up-forward over the top, palm toward the rung."""
         f = Vector((0, -.55, 1)).normalized(); n = Vector((0, -1, -.25)); n = (n - n.dot(f) * f).normalized()
         rb = rig.data.bones                                                  # wrist → middle knuckle (MCP) at rest
@@ -233,21 +272,41 @@ def build():
         mcp = c - n * (RUNG_R + .015)                                        # knuckle 15 mm off the rung surface
         wrist = mcp - f * Lp
         sh = P.head(f'ORG-upper_arm.{side}'); sg = 1 if side == 'L' else -1
-        P.arm(side, wrist, f, n, sh + Vector((sg * .6, .35, -.35)))
+        P.arm(side, wrist, f, n, sh + Vector((sg * out, .2, -.05)))
+        for _ in range(3):                                                   # hand half way between the forearm and 'over the top' (wrist in range)
+            fa = (P.tail(f'ORG-forearm.{side}') - P.head(f'ORG-forearm.{side}')).normalized()
+            f = (fa + Vector((0, -.55, 1)).normalized()).normalized(); n = Vector((0, -.75, -.65)); n = (n - n.dot(f) * f).normalized()
+            mcp = c - n * (RUNG_R + .015); wrist = mcp - f * Lp
+            P.arm(side, wrist, f, n, sh + Vector((sg * out, .25, -.2)))          # elbow out: the shoulder shares the overhand turn
         print('   wrist', side, 'target', tuple(round(v, 3) for v in wrist), 'got', tuple(round(v, 3) for v in P.head(f'ORG-hand.{side}')),
               'mcp target', tuple(round(v, 3) for v in mcp), 'got', tuple(round(v, 3) for v in P.head(f'ORG-f_middle.01.{side}')))
         b = RUNG_R + curl                                                    # finger axis ≈ r + 9 mm (squeeze r + 6 mm) at mid-phalanx
-        P.wrap_bar(side, c, (1, 0, 0), (b + .006, b + .004, b + .003))
+        P.wrap_bar(side, c, (1, 0, 0), (b + .006, b + .004, b + .003), fingers=('f_index', 'f_middle'))
+        P.curl(side, 150, fingers=('f_ring', 'f_pinky'), shares=(.265, .44, .295))   # ring and pinky follow the wrapped pair
         P.curl(side, 0, thumb=thumb)
 
     def pose_climb(squeeze=False):
         P.move('torso', (0, -.04, 0)); P.turn('chest', 4, X); P.turn('neck', -14, X); P.turn('head', -26, X)
         P.leg('R', (-.11, .0, .085), (-.05, -1, 0), (-.15, -1.5, .5))                            # right sole on rung 0
         c1 = rung(1, .11)
-        P.leg('L', c1 + Vector((0, .115, .105)), (.05, -1, 0), (.25, -1.4, 1.1))               # left foot up on rung 1
+        P.leg('L', c1 + Vector((0, .115, .105)), (.05, -1, -.3), (.25, -1.4, 1.1))             # left foot up on rung 1 (toes a little down)
         k = .006 if squeeze else .009
-        grip_at('R', rung(6, -.16), k, 22); grip_at('L', rung(4, .16), k, 22)
+        grip_at('R', rung(6, -.16), k, 22); grip_at('L', rung(5, .16), k, 22, out=.55)
 
+    # validator specs: floor / seat surfaces, intended contacts (part, part | 'floor' | point, tolerance m), accepted WARNs
+    def seat_rect(h, front=.19, back=.16, half=.2): return dict(h=h, rect=(-half, half, -front, back))   # seat footprint round the buttock contact (y ≈ 0)
+    CHECK = {
+        'floor': dict(floor_z=0.0, contacts=[('fore.R', 'shin.R', .03), ('hand.L', 'shin.L', .03), ('foot.R', 'floor', .03), ('shin.L', 'floor', .03)],
+                      override={'hip.L rotation external': (82, 70, 'cross-legged norm 62 (38–82)'), 'hip.L abduction': (46, 35, 'cross-legged norm 29 (10–46)')},
+                      allow_warn=('knee.L flexion', 'ankle.L')),
+        'chair': dict(floor_z=0.0, seat=seat_rect(SEAT_H['chair']), contacts=[('hand.L', 'thigh.L', .03), ('hand.R', 'thigh.R', .03), ('foot.L', 'floor', .03), ('foot.R', 'floor', .03)]),
+        'desk': dict(floor_z=0.0, seat=seat_rect(SEAT_H['desk'], .15, .15, .15), contacts=[]),       # feet on the stool rung (scene check)
+        'wall': dict(floor_z=0.0, balance=True, supports=[(0, .22, 1.0)], contacts=[('foot.L', 'floor', .03), ('foot.R', 'floor', .03)]),
+        'climb': dict(contacts=[]),
+    }
+    CHECK_DIR = os.path.normpath(os.path.join(HERE, '..', '..', 'verification', 'pose-check')); os.makedirs(CHECK_DIR, exist_ok=True)
+    fails = {}
+    P.reset(); pc.report(pc.check(rig, None, {}), 'rest (sanity: every row should be OK)')
     POSES = {'floor': ('seat', pose_floor), 'chair': ('seat', pose_chair), 'desk': ('seat', pose_desk),
              'wall': ('feet', pose_wall), 'climb': ('feet', pose_climb)}
     results = {}
@@ -259,6 +318,9 @@ def build():
             P.reset(); pose_climb(squeeze=True); PG = evaluated(0.0)
         P.reset(); fn()
         P0, P1 = evaluated(0.0), evaluated(1.0)
+        rows = pc.check(rig, P0, CHECK.get(pname, {}))
+        n = pc.report(rows, pname, os.path.join(CHECK_DIR, f'{pname}.json'))
+        if n['FAIL']: fails[pname] = [r['name'] for r in rows if r['status'] == 'FAIL']
         P0u, nr = untangle(P0); P1, _ = untangle(P1, ref=P0)
         if PG is not None: PG, _ = untangle(PG)
         P0 = P0u; print('   untangled', nr, 'vertices')
@@ -307,6 +369,8 @@ def build():
         bpy.data.objects.remove(so, do_unlink=True)
         results[pname] = out
         print('  ', fname, os.path.getsize(os.path.join(OUT, fname)), 'bytes; anchor', out['anchor'], flush=True)
+    if fails and not os.environ.get('POSE_ALLOW_FAIL'):
+        print('POSE CHECK FAILED — not writing figure.json:', fails); sys.stdout.flush(); os._exit(2)
     fig_path = os.path.join(OUT, 'figure.json')
     fig = json.load(open(fig_path, encoding='utf-8'))
     fig.setdefault('poses_v3', {}).update(results)

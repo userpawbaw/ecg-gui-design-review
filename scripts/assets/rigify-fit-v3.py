@@ -157,6 +157,26 @@ class Poser:
     def arm(self, side, wrist, f, n, pole):
         self.set_world(f'upper_arm_ik_target.{side}', pole)
         self.set_world(f'hand_ik.{side}', wrist, self.hand_frame(side, f, n))
+    def palm_for_pronation(self, side, deg):
+        """Palm normal for a forearm pronation of `deg` (0 = neutral, thumb up / palm facing the body) on the solved forearm."""
+        sg = 1 if side == 'L' else -1; fb = self.rig.data.bones[f'ORG-forearm.{side}']
+        D = self.pb[f'ORG-forearm.{side}'].matrix.to_3x3().normalized() @ fb.matrix_local.to_3x3().normalized().inverted()
+        fa = (self.tail(f'ORG-forearm.{side}') - self.head(f'ORG-forearm.{side}')).normalized()
+        n0 = D @ Vector((-sg, 0, 0)); n0 = (n0 - n0.dot(fa) * fa).normalized()
+        return Matrix.Rotation(math.radians(deg * sg), 3, fa) @ n0
+    def arm_relaxed(self, side, wrist, n, pole, flex=20.0, dev=0.0, pronation=None):
+        """IK arm whose hand follows the solved forearm: palm toward n (orthogonalised), wrist flexed `flex` degrees toward the
+        palm and deviated `dev` toward the thumb — keeps the wrist inside its range instead of forcing a hand direction."""
+        sg = 1 if side == 'L' else -1
+        n = Vector(n) if n is not None else Vector((sg * -1, 0, 0))
+        self.arm(side, wrist, Vector((0, 0, -1)) if abs(n.z) < .9 else Vector((0, -1, 0)), n, pole)
+        fa = (self.tail(f'ORG-forearm.{side}') - self.head(f'ORG-forearm.{side}')).normalized()
+        if pronation is not None: n = self.palm_for_pronation(side, pronation)
+        n_ = Vector(n); n_ = (n_ - n_.dot(fa) * fa).normalized(); r = (n_.cross(fa) * sg).normalized()
+        a = math.radians(flex); f = (fa * math.cos(a) + n_ * math.sin(a)).normalized()
+        f = (f + r * math.tan(math.radians(dev))).normalized()
+        n2 = (n_ - n_.dot(f) * f).normalized()
+        self.set_world(f'hand_ik.{side}', Vector(wrist), self.hand_frame(side, f, n2))
     def leg(self, side, ankle, toe_dir, pole, up=(0, 0, 1)):
         b = self.rig.data.bones[f'foot_ik.{side}']; R0 = b.matrix_local.to_3x3()
         org = self.rig.data.bones[f'ORG-foot.{side}']; t0 = org.tail_local - org.head_local; t0.z = 0
@@ -192,7 +212,7 @@ class Poser:
                 ctl, org = f'{f}.0{j}.{side}', f'ORG-{f}.0{j}.{side}'
                 n = self.palm_normal(side); y = (self.tail(org) - self.head(org)).normalized(); ax = y.cross(n)
                 if ax.length < 1e-4: continue
-                M0 = self.M(ctl); lo, hi = -20.0, 130.0; R = Rs[j - 1]
+                M0 = self.M(ctl); lo, hi = 0.0, (85.0, 100.0, 75.0)[j - 1]; R = Rs[j - 1]          # never bend a joint backwards
                 def at(a):
                     R_ = Matrix.Rotation(math.radians(a), 3, ax.normalized())
                     self.set_world(ctl, M0.translation, R_ @ M0.to_3x3()); return dist(self.tail(org))

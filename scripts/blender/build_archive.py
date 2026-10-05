@@ -678,6 +678,14 @@ if FIG is not None and 'hand_r' in fj and not args.pose:
         SHOTS['s6_grip'] = (tuple(HR + Vector((-0.42, -0.42, 0.08))), tuple(HR + Vector((0.0, 0.0, 0.07))), 30)
         CH = FIG.location + sum((Vector(e['p']) for e in fj['electrodes'].values()), Vector()) / len(fj['electrodes'])
         SHOTS['s7_chest'] = (tuple(CH + Vector((0.35, -1.25, 0.18))), tuple(CH + Vector((-0.04, 0.05, -0.12))), 34)
+if args.pose and FIG is not None:                                 # skill pose-anatomy step 7: figure vs scene objects (chair, stool, ladder, shelves, desk)
+    import importlib.util as _ilu
+    _s = _ilu.spec_from_file_location('pc', os.path.join(ROOT, 'scripts/assets/pose-check-v3.py')); pc = _ilu.module_from_spec(_s); _s.loader.exec_module(pc)
+    bpy.context.view_layer.update()
+    _skip = ('El_', 'Lead_', 'LeadYoke', 'TrunkCable', 'CommCable', 'Sig_', 'RA_noise_ring', 'PowerNoise', 'Haze', 'VOL_', 'APR_', 'Floor', 'heart')
+    _col = pc.scene_collisions(FIG, [o for o in scene.objects if o is not HEART], ignore=_skip)
+    _worst = max(_col.values()) if _col else 0.0
+    print('figure collisions (mm, max depth per object):', _col, '→', 'FAIL' if _worst > 25 else 'WARN' if _worst > 10 else 'OK')
 if args.pose and FIG is not None:                                 # D-050 shots: one per spot, each opening a new part of the archive
     AW = FIG.location + FROT @ Vector(fj['anchor'])
     SHOTS = {

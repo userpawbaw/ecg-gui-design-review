@@ -90,6 +90,28 @@ class Body:
 def _in_frame(R, v): return (R.inverted() @ v).normalized()
 
 
+def finger_axis(B, s, f, j, posed=True):
+    """Hinge axis of finger joint j (1 = MCP): the rest axis (parent bone × palm normal) carried by the parent bone.
+    Measuring about this axis stays defined in a fist (2026-10-06: the old palm-normal projection went singular once the
+    proximal phalanx pointed along the palm normal, ≈ 90° MCP, and reported PIP 'hyperextension −101°')."""
+    k = ('f_index', 'f_middle', 'f_ring', 'f_pinky').index(f) + 1
+    par = f'ORG-palm.0{k}.{s}' if j == 1 else f'ORG-{f}.0{j - 1}.{s}'
+    n0 = Vector((-1 if s == 'L' else 1, 0, 0))                          # rest palm normal (palms face the body)
+    a0 = B.rdir(par).cross(n0).normalized()
+    return ((B.D(par) @ a0).normalized() if posed else a0), par
+
+
+def finger_flexes(B, s, posed=True):
+    """Signed flexion (deg) of every long-finger joint about its hinge axis; + = toward the palm."""
+    out = {}
+    for f in ('f_index', 'f_middle', 'f_ring', 'f_pinky'):
+        for j in (1, 2, 3):
+            a, par = finger_axis(B, s, f, j, posed)
+            g = B.dir if posed else B.rdir; p, d = g(par), g(f'ORG-{f}.0{j}.{s}')
+            out[(f, j)] = _deg(math.atan2(p.cross(d).dot(a), p.dot(d)))
+    return out
+
+
 def check(rig, verts=None, spec=None):
     """Return a list of rows {group, name, value, limit, comfort, status, note}."""
     spec = spec or {}; B = Body(rig); rows = []
@@ -168,17 +190,11 @@ def check(rig, verts=None, spec=None):
         dv = _deg(math.atan2(hl.dot(r0), hl.dot(h0)))
         add('ROM', f'wrist.{s} radial deviation' if dv >= 0 else f'wrist.{s} ulnar deviation', dv, 'wrist_radial' if dv >= 0 else 'wrist_ulnar')
         # ---- fingers ----
-        def flexes(D_hand, getd):
-            npalm = (D_hand @ n0).normalized(); out_ = {}
-            for k, f in enumerate(('f_index', 'f_middle', 'f_ring', 'f_pinky')):
-                prev = getd(f'ORG-palm.0{k + 1}.{s}')
-                for j in (1, 2, 3):
-                    d = getd(f'ORG-{f}.0{j}.{s}'); npp = (npalm - npalm.dot(prev) * prev).normalized()
-                    out_[(f, j)] = _deg(math.atan2(d.dot(npp), d.dot(prev))); prev = d
-            return out_
-        cur = flexes(B.D(f'ORG-hand.{s}'), B.dir); rest = flexes(Matrix.Identity(3), B.rdir)
+        cur, rest = finger_flexes(B, s, True), finger_flexes(B, s, False)
         for (f, j), v in cur.items():
-            key = ('mcp', 'pip', 'dip')[j - 1]; fl = v - rest[(f, j)] + max(rest[(f, j)], 0)   # rest curl counts as flexion
+            # rest-relative: the base mesh's rest hand is flat (fingers straight); its raw rest angles (MCP 18–33°) are the
+            # metacarpal-vs-finger bone offset of the fit, not flexion (counting them made a real 60° fist read 90°, 2026-10-06)
+            key = ('mcp', 'pip', 'dip')[j - 1]; fl = v - rest[(f, j)]
             if fl >= 0: add('ROM', f'{f}.{s} {key.upper()}', fl, key)
             else: add('ROM', f'{f}.{s} {key.upper()} hyperextension', fl, 'finger_hyper')
     # ---- self-collision ----

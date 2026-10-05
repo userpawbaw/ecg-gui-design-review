@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "R1 (compaction checkpoint 2026-10-05): read docs/uiux_system/rounds/R1/PLAN-R1-INTRO-STORY-V2.md §9.6 first. Await user review of floor (vs refs), chair knee fix, climb/desk; decide F-033 place() rotation before brief 3. Promised: per-pose web reference images (2–4 each, Korean notes, same-angle comparison) for chair/desk/climb/wall; floor head tilt; desk power strip framing; wall trunk route; RA visibility in d7. Then brief 3 (web: r2 re-bake, five poses + hidden cuts, per-pose rig, practicals).",
+  "next_action": "R1 (2026-10-06): D-052 fist/breath first pass done — show user verification/r1-fist-20261006/fist_vs_video.jpg, fist_close_4views.jpg, climb_hands_before_after.jpg and r1-breath-20261006/side_overlay.png; ask brief timing (fist 0.12 s, breath 3 per 10 s vs deep breath) and which scene the fist belongs to. Read PLAN-R1-INTRO-STORY-V2 §9.7 then §9.6 (earlier pending reviews and promised items still open). Then brief 3.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",

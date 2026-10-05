@@ -18,6 +18,17 @@ Searched 2026-10-05: existing public skills cover rigging basics (joint types, h
 6. **Look at it from 4 sides** (front, back-3/4, both profiles) in clay before any lit render; compare side by side with the reference. The user judges from the 3/4 view — check that view especially.
 7. **Scene check.** In the archive, run the figure-vs-scene collision (`build_archive.py` prints `figure collisions`) — chair, stool, ladder, shelves, desk, floor.
 
+## Motions (fist, breath, any keyframed sequence) — added 2026-10-06 (D-052, R-021)
+
+1. **Measure a real one first.** Prefer the user's own video of the motion → MediaPipe landmarks (`scripts/assets/handcap/`)
+   over guessed curves; keep the raw video out of the repo. Use the view with the least self-occlusion (palm side for a fist).
+2. **Ends from anatomy, path from measurement.** End poses from `references/rom.md`; per-joint timing curves from the
+   measurement (joints do not move together).
+3. **Gate every frame** (≥ 21 per direction) with the validator plus part-vs-part capsules (radii from the mesh cross-section);
+   if a straight interpolation collides, search a detour offset, do not loosen the limit.
+4. **Self-test at the extremes**: the selftest must hold a valid end-range case (fist) and an invalid one just past it.
+   If a measured value jumps between neighbouring frames, suspect the measurement formula before the pose (R-021).
+
 ## Natural-pose heuristics (beyond the hard limits)
 
 - A relaxed joint sits at 30–60 % of its range, rarely at an end. Two joints at the end of range in one limb read as strain.

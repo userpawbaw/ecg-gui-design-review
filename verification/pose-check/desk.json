@@ -198,7 +198,7 @@
   {
    "group": "ROM",
    "name": "f_index.L MCP",
-   "value": 36.9,
+   "value": 14.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -207,7 +207,7 @@
   {
    "group": "ROM",
    "name": "f_index.L PIP",
-   "value": 20.6,
+   "value": 11.9,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -216,7 +216,7 @@
   {
    "group": "ROM",
    "name": "f_index.L DIP",
-   "value": 10.8,
+   "value": 9.1,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -225,7 +225,7 @@
   {
    "group": "ROM",
    "name": "f_middle.L MCP",
-   "value": 41.8,
+   "value": 14.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -234,7 +234,7 @@
   {
    "group": "ROM",
    "name": "f_middle.L PIP",
-   "value": 20.6,
+   "value": 12.5,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -243,7 +243,7 @@
   {
    "group": "ROM",
    "name": "f_middle.L DIP",
-   "value": 8.9,
+   "value": 9.1,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -252,7 +252,7 @@
   {
    "group": "ROM",
    "name": "f_ring.L MCP",
-   "value": 47.0,
+   "value": 14.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -261,7 +261,7 @@
   {
    "group": "ROM",
    "name": "f_ring.L PIP",
-   "value": 12.6,
+   "value": 11.9,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -270,7 +270,7 @@
   {
    "group": "ROM",
    "name": "f_ring.L DIP",
-   "value": 10.1,
+   "value": 9.1,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -279,7 +279,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.L MCP",
-   "value": 32.2,
+   "value": 14.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -288,7 +288,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.L PIP",
-   "value": 25.1,
+   "value": 11.9,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -441,7 +441,7 @@
   {
    "group": "ROM",
    "name": "f_index.R MCP",
-   "value": 36.9,
+   "value": 14.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -450,7 +450,7 @@
   {
    "group": "ROM",
    "name": "f_index.R PIP",
-   "value": 20.6,
+   "value": 11.9,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -459,7 +459,7 @@
   {
    "group": "ROM",
    "name": "f_index.R DIP",
-   "value": 10.8,
+   "value": 9.1,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -468,7 +468,7 @@
   {
    "group": "ROM",
    "name": "f_middle.R MCP",
-   "value": 41.8,
+   "value": 14.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -477,7 +477,7 @@
   {
    "group": "ROM",
    "name": "f_middle.R PIP",
-   "value": 20.6,
+   "value": 12.5,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -486,7 +486,7 @@
   {
    "group": "ROM",
    "name": "f_middle.R DIP",
-   "value": 8.9,
+   "value": 9.1,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -495,7 +495,7 @@
   {
    "group": "ROM",
    "name": "f_ring.R MCP",
-   "value": 47.0,
+   "value": 14.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -504,7 +504,7 @@
   {
    "group": "ROM",
    "name": "f_ring.R PIP",
-   "value": 12.6,
+   "value": 11.9,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -513,7 +513,7 @@
   {
    "group": "ROM",
    "name": "f_ring.R DIP",
-   "value": 10.1,
+   "value": 9.1,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -522,7 +522,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.R MCP",
-   "value": 32.2,
+   "value": 14.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -531,7 +531,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.R PIP",
-   "value": 25.1,
+   "value": 11.9,
    "limit": 110,
    "comfort": 95,
    "status": "OK",

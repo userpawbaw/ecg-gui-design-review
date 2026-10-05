@@ -198,7 +198,7 @@
   {
    "group": "ROM",
    "name": "f_index.L MCP",
-   "value": 45.0,
+   "value": 22.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -207,7 +207,7 @@
   {
    "group": "ROM",
    "name": "f_index.L PIP",
-   "value": 27.4,
+   "value": 18.6,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -216,7 +216,7 @@
   {
    "group": "ROM",
    "name": "f_index.L DIP",
-   "value": 14.7,
+   "value": 14.3,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -225,7 +225,7 @@
   {
    "group": "ROM",
    "name": "f_middle.L MCP",
-   "value": 49.9,
+   "value": 22.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -234,7 +234,7 @@
   {
    "group": "ROM",
    "name": "f_middle.L PIP",
-   "value": 27.1,
+   "value": 19.6,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -243,7 +243,7 @@
   {
    "group": "ROM",
    "name": "f_middle.L DIP",
-   "value": 13.9,
+   "value": 14.3,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -252,7 +252,7 @@
   {
    "group": "ROM",
    "name": "f_ring.L MCP",
-   "value": 55.0,
+   "value": 22.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -261,7 +261,7 @@
   {
    "group": "ROM",
    "name": "f_ring.L PIP",
-   "value": 19.4,
+   "value": 18.7,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -270,7 +270,7 @@
   {
    "group": "ROM",
    "name": "f_ring.L DIP",
-   "value": 15.2,
+   "value": 14.3,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -279,7 +279,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.L MCP",
-   "value": 40.2,
+   "value": 22.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -288,7 +288,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.L PIP",
-   "value": 31.9,
+   "value": 18.7,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -297,7 +297,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.L DIP",
-   "value": 14.2,
+   "value": 14.3,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -450,7 +450,7 @@
   {
    "group": "ROM",
    "name": "f_index.R MCP",
-   "value": 42.9,
+   "value": 20.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -459,7 +459,7 @@
   {
    "group": "ROM",
    "name": "f_index.R PIP",
-   "value": 25.7,
+   "value": 17.0,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -468,7 +468,7 @@
   {
    "group": "ROM",
    "name": "f_index.R DIP",
-   "value": 14.0,
+   "value": 13.0,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -477,7 +477,7 @@
   {
    "group": "ROM",
    "name": "f_middle.R MCP",
-   "value": 47.9,
+   "value": 20.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -486,7 +486,7 @@
   {
    "group": "ROM",
    "name": "f_middle.R PIP",
-   "value": 25.5,
+   "value": 17.8,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -495,7 +495,7 @@
   {
    "group": "ROM",
    "name": "f_middle.R DIP",
-   "value": 12.6,
+   "value": 13.0,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -504,7 +504,7 @@
   {
    "group": "ROM",
    "name": "f_ring.R MCP",
-   "value": 53.0,
+   "value": 20.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -513,7 +513,7 @@
   {
    "group": "ROM",
    "name": "f_ring.R PIP",
-   "value": 17.7,
+   "value": 17.0,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -522,7 +522,7 @@
   {
    "group": "ROM",
    "name": "f_ring.R DIP",
-   "value": 13.9,
+   "value": 13.0,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -531,7 +531,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.R MCP",
-   "value": 38.2,
+   "value": 20.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -540,7 +540,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.R PIP",
-   "value": 30.2,
+   "value": 17.0,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -549,7 +549,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.R DIP",
-   "value": 12.9,
+   "value": 13.0,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -612,7 +612,7 @@
   {
    "group": "contact",
    "name": "hand.L → shin.L gap",
-   "value": -7.8,
+   "value": -7.7,
    "limit": 60.0,
    "comfort": 30.0,
    "status": "OK",

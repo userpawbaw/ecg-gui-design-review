@@ -1,0 +1,34 @@
+{
+ "rows": [
+  {
+   "level": "upper chest",
+   "z_frac": 0.75,
+   "girth_exhale_cm": 101.3,
+   "quiet_key_cm": 1.47,
+   "deep_key_cm": 5.5,
+   "target_cm": 5.5
+  },
+  {
+   "level": "lower chest",
+   "z_frac": 0.69,
+   "girth_exhale_cm": 85.8,
+   "quiet_key_cm": 1.45,
+   "deep_key_cm": 6.4,
+   "target_cm": 6.4
+  },
+  {
+   "level": "abdomen",
+   "z_frac": 0.6,
+   "girth_exhale_cm": 76.7,
+   "quiet_key_cm": 0.52,
+   "deep_key_cm": 3.0,
+   "target_cm": 3.0
+  }
+ ],
+ "amps_m": [
+  0.019582188362255698,
+  0.016260907938703897,
+  0.007878735894337293
+ ],
+ "front_back_ratio": 0.35
+}

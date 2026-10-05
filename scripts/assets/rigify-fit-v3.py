@@ -187,19 +187,31 @@ class Poser:
         org = self.pb[f'ORG-hand.{side}']; b = org.bone; self.up()
         n0 = Vector((-1 if side == 'L' else 1, 0, 0))
         return ((org.matrix.to_3x3() @ b.matrix_local.to_3x3().inverted()) @ n0).normalized()
+    def hinge(self, side, f, j):
+        """Flexion axis of long-finger joint j (1 = MCP): rest axis (parent bone × rest palm normal) carried by the parent bone —
+        the same axis the validator measures about. The old axis (bone × current palm normal) flipped once a finger curled past
+        ≈ 90° and bent the ring/pinky DIP backwards in the climb grip (−43°, found 2026-10-06)."""
+        k = ('f_index', 'f_middle', 'f_ring', 'f_pinky').index(f) + 1
+        par = f'ORG-palm.0{k}.{side}' if j == 1 else f'ORG-{f}.0{j - 1}.{side}'
+        b = self.rig.data.bones[par]; n0 = Vector((-1 if side == 'L' else 1, 0, 0))
+        a0 = (b.tail_local - b.head_local).normalized().cross(n0).normalized(); self.up()
+        D = self.pb[par].matrix.to_3x3().normalized() @ b.matrix_local.to_3x3().normalized().inverted()
+        return (D @ a0).normalized()
+    def unscale(self, name):
+        """set_world writes pose_bone.matrix; under the Rigify finger chain that leaks a non-uniform scale into the control
+        (f_middle.03 reached scale (0.12, 10, 0.86) after a few turns, 2026-10-06). Finger controls keep scale 1."""
+        self.pb[name].scale = (1, 1, 1); self.up()
     def curl(self, side, deg, thumb=0.0, fingers=('f_index', 'f_middle', 'f_ring', 'f_pinky'), spread=None, shares=(.40, .34, .26)):
         """Bend each finger toward the palm: deg is the whole-finger bend, shared .40 / .34 / .26 over the joints."""
         for f in fingers:
             k = deg * (spread[f] if spread else 1.0)
             for j, share in zip((1, 2, 3), shares):
-                n = self.palm_normal(side); y = (self.tail(f'ORG-{f}.0{j}.{side}') - self.head(f'ORG-{f}.0{j}.{side}')).normalized()
-                ax = y.cross(n)
-                if ax.length > 1e-4: self.turn(f'{f}.0{j}.{side}', k * share, ax)
+                self.turn(f'{f}.0{j}.{side}', k * share, self.hinge(side, f, j)); self.unscale(f'{f}.0{j}.{side}')
         if thumb:
             for j in (2, 3):
                 n = self.palm_normal(side); y = (self.tail(f'ORG-thumb.0{j}.{side}') - self.head(f'ORG-thumb.0{j}.{side}')).normalized()
                 ax = y.cross(n)
-                if ax.length > 1e-4: self.turn(f'thumb.0{j}.{side}', thumb * .5, ax)
+                if ax.length > 1e-4: self.turn(f'thumb.0{j}.{side}', thumb * .5, ax); self.unscale(f'thumb.0{j}.{side}')
 
     def wrap_bar(self, side, c, u, Rs, fingers=('f_index', 'f_middle', 'f_ring', 'f_pinky')):
         """Close each finger round a bar (axis point c, direction u): joint by joint, the bend toward the palm is solved
@@ -210,12 +222,11 @@ class Poser:
         for f in fingers:
             for j in (1, 2, 3):
                 ctl, org = f'{f}.0{j}.{side}', f'ORG-{f}.0{j}.{side}'
-                n = self.palm_normal(side); y = (self.tail(org) - self.head(org)).normalized(); ax = y.cross(n)
-                if ax.length < 1e-4: continue
+                ax = self.hinge(side, f, j)
                 M0 = self.M(ctl); lo, hi = 0.0, (85.0, 100.0, 75.0)[j - 1]; R = Rs[j - 1]          # never bend a joint backwards
                 def at(a):
-                    R_ = Matrix.Rotation(math.radians(a), 3, ax.normalized())
-                    self.set_world(ctl, M0.translation, R_ @ M0.to_3x3()); return dist(self.tail(org))
+                    R_ = Matrix.Rotation(math.radians(a), 3, ax)
+                    self.set_world(ctl, M0.translation, R_ @ M0.to_3x3()); self.unscale(ctl); return dist(self.tail(org))
                 if at(lo) < R: at(lo); continue                         # already inside: leave straight-ish
                 for _ in range(14):
                     mid = (lo + hi) / 2

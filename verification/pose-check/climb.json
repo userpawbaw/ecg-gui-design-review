@@ -1,8 +1,8 @@
 {
  "title": "climb",
  "summary": {
-  "OK": 50,
-  "WARN": 7,
+  "OK": 51,
+  "WARN": 6,
   "FAIL": 0
  },
  "rows": [
@@ -198,7 +198,7 @@
   {
    "group": "ROM",
    "name": "f_index.L MCP",
-   "value": 22.8,
+   "value": 0.0,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -207,7 +207,7 @@
   {
    "group": "ROM",
    "name": "f_index.L PIP",
-   "value": 37.6,
+   "value": 29.0,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -216,7 +216,7 @@
   {
    "group": "ROM",
    "name": "f_index.L DIP",
-   "value": 68.6,
+   "value": 75.0,
    "limit": 80,
    "comfort": 65,
    "status": "WARN",
@@ -225,7 +225,7 @@
   {
    "group": "ROM",
    "name": "f_middle.L MCP",
-   "value": 29.8,
+   "value": 2.5,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -234,7 +234,7 @@
   {
    "group": "ROM",
    "name": "f_middle.L PIP",
-   "value": 52.2,
+   "value": 42.2,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -243,7 +243,7 @@
   {
    "group": "ROM",
    "name": "f_middle.L DIP",
-   "value": 52.2,
+   "value": 49.0,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -252,7 +252,7 @@
   {
    "group": "ROM",
    "name": "f_ring.L MCP",
-   "value": 72.8,
+   "value": 39.8,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -261,7 +261,7 @@
   {
    "group": "ROM",
    "name": "f_ring.L PIP",
-   "value": 66.7,
+   "value": 66.0,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -270,7 +270,7 @@
   {
    "group": "ROM",
    "name": "f_ring.L DIP",
-   "value": 43.1,
+   "value": 44.3,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -279,7 +279,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.L MCP",
-   "value": 58.0,
+   "value": 39.8,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -288,7 +288,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.L PIP",
-   "value": 79.2,
+   "value": 66.0,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -297,10 +297,10 @@
   {
    "group": "ROM",
    "name": "f_pinky.L DIP",
-   "value": 76.2,
+   "value": 44.2,
    "limit": 80,
    "comfort": 65,
-   "status": "WARN",
+   "status": "OK",
    "note": ""
   },
   {
@@ -414,7 +414,7 @@
   {
    "group": "ROM",
    "name": "f_index.R MCP",
-   "value": 33.0,
+   "value": 10.2,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -423,7 +423,7 @@
   {
    "group": "ROM",
    "name": "f_index.R PIP",
-   "value": 66.8,
+   "value": 58.1,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -432,16 +432,16 @@
   {
    "group": "ROM",
    "name": "f_index.R DIP",
-   "value": 16.5,
+   "value": 66.2,
    "limit": 80,
    "comfort": 65,
-   "status": "OK",
+   "status": "WARN",
    "note": ""
   },
   {
    "group": "ROM",
    "name": "f_middle.R MCP",
-   "value": 38.5,
+   "value": 11.1,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -450,7 +450,7 @@
   {
    "group": "ROM",
    "name": "f_middle.R PIP",
-   "value": 54.9,
+   "value": 47.7,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -459,7 +459,7 @@
   {
    "group": "ROM",
    "name": "f_middle.R DIP",
-   "value": 46.4,
+   "value": 47.8,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -468,7 +468,7 @@
   {
    "group": "ROM",
    "name": "f_ring.R MCP",
-   "value": 72.8,
+   "value": 39.8,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -477,7 +477,7 @@
   {
    "group": "ROM",
    "name": "f_ring.R PIP",
-   "value": 66.7,
+   "value": 66.0,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -486,7 +486,7 @@
   {
    "group": "ROM",
    "name": "f_ring.R DIP",
-   "value": 43.1,
+   "value": 44.3,
    "limit": 80,
    "comfort": 65,
    "status": "OK",
@@ -495,7 +495,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.R MCP",
-   "value": 58.0,
+   "value": 39.8,
    "limit": 90,
    "comfort": 75,
    "status": "OK",
@@ -504,7 +504,7 @@
   {
    "group": "ROM",
    "name": "f_pinky.R PIP",
-   "value": 79.2,
+   "value": 66.0,
    "limit": 110,
    "comfort": 95,
    "status": "OK",
@@ -513,10 +513,10 @@
   {
    "group": "ROM",
    "name": "f_pinky.R DIP",
-   "value": 76.2,
+   "value": 44.2,
    "limit": 80,
    "comfort": 65,
-   "status": "WARN",
+   "status": "OK",
    "note": ""
   }
  ]

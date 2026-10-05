@@ -40,7 +40,25 @@ Degrees, from neutral anatomical position (standing, arms at the sides, palms fa
 | cross-legged / folded floor leg | hip abduction | 28.9 | 9.9–45.7 | same |
 | cross-legged / folded floor leg | hip external rotation | 62.0 | 37.6–81.7 | same |
 
+| fist (power grip) | finger MCP / PIP / DIP at full fist | 85–90 / 100 / 70–80 | — | anatomical end pose; ring and pinky MCP slightly more |
+| fist | thumb MCP / IP | 40–55 / 40–70 | — | thumb over the index/middle middle phalanges, outside the fist |
+
 Validator use: `override={'hip.L rotation external': (82, 70, 'cross-legged norm'), 'hip.L abduction': (46, 35, …)}`.
+
+## Motion (sequences, not stills) — D-052, F-034
+
+- Fist close: PIP starts first, MCP lags 100–270 ms and completes the fist, DIP trails PIP; open: MCP/DIP first, PIP last.
+  Thumb: last in, first out. Comfortable close 0.5–1.0 s; rapid repeated grip ≈ 0.2–0.25 s (10 cycles in 5 s);
+  long-finger PIP peak ≈ 1400 °/s. Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC10296280/ + the user's own hand video
+  (`assets/processed/handcap/fist_profile_v1.json`, per-joint normalised curves).
+- Fingers adduct as they curl (spread → 0 at the fist).
+- Breathing (girth, tape): deep breath +5.5 cm upper chest (4th intercostal), +6.4 cm lower chest (xiphoid), range 4–7 cm;
+  quiet breathing ≈ 1–1.5 cm. Rate: quiet 12–20 /min, a deep breath ≈ 6 /min; inhale:exhale ≈ 1:1.5–2.
+  Sources: https://www.researchgate.net/publication/301712251 , https://ijop.net/index.php/mlu/article/download/2062/1822/3961
+- Check every sampled frame of a motion (≥ 21 per direction), not only the end poses: a straight interpolation of joint angles
+  can pass a limb through the body (the thumb went 7 mm through the curled index) — add a detour (lift) and re-check.
+- Finger flexion is measured about the joint's rest hinge axis (parent bone × rest palm normal, carried by the parent) and
+  relative to the flat rest hand. Never about "bone × current palm normal": that axis vanishes or flips past ≈ 90° (F-035).
 
 ## Collision and contact
 

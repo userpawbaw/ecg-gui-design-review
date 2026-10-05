@@ -425,7 +425,7 @@ if os.path.exists(fig_path):
         FIG.location = (LAD_X - seat.x, ry - 0.06 - seat.y, rz + 0.015 - seat.z)
     if args.pose:                                                # D-050 spots: (world point for the anchor, yaw). Seat anchors sit on the surface
         an = Vector(fj['anchor'])
-        SPOTS = {'floor': (Vector((LAD_X + .95, BY - .36, 0)), 0.0),
+        SPOTS = {'floor': (Vector((LAD_X + .95, BY - .19, 0)), 0.0),     # back against the shelf face (BY − .02); floor pose back reaches +.165
                  'chair': ((CHAIR_FIT['anchor'], CHAIR_FIT['yaw']) if CHAIR_FIT else (Vector((MCHAIR.x, MCHAIR.y + .02, .44)), math.radians(20))),
                  'desk': (Vector((DESK.x + .1, DESK.y - .75, .5)), math.pi),
                  'wall': (Vector((-XW + .2, 1.0, 0)), math.pi / 2)}

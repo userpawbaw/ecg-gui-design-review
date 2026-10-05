@@ -176,12 +176,24 @@ def build():
         if lean: P.turn('torso', lean, X)
 
     def pose_floor():
-        sit(0.0, lean=8)
-        P.turn('chest', 12, X); P.turn('neck', 16, X); P.turn('head', 24, X); P.turn('head', -8, (0, 0, 1))
-        P.leg('R', (-.13, -.42, .09), (0, -1, 0), (-.18, -1.4, .9))                               # right knee up
+        sit(0.0, lean=-12)                                                      # back against the shelf (D-050)
+        P.turn('chest', 10, X); P.turn('neck', 22, X); P.turn('head', 26, X); P.turn('head', -8, (0, 0, 1))
+        P.leg('R', (-.12, -.31, .09), (0, -1, 0), (-.18, -1.2, 1.2))                              # right knee up high, heel near the seat
         P.leg('L', (-.02, -.36, .06), (-.85, -.45, 0), (1.4, -.35, .05), up=(.15, .25, 1))        # left leg folded flat, knee out
-        knee = P.head('ORG-shin.R')
-        P.arm('R', knee + Vector((-.17, -.06, .01)), Vector((-.15, -.25, -1)), Vector((.35, .6, 0)), knee + Vector((.45, .1, .25)))
+        # right arm draped over the raised knee (user 2026-10-05: the first try wrapped the forearm round the knee): the
+        # elbow rests on the top front of the knee, the forearm reaches forward past it, the hand hangs
+        rb = rig.data.bones; L1 = rb['ORG-upper_arm.R'].length; L2 = rb['ORG-forearm.R'].length
+        S = P.head('ORG-upper_arm.R'); K = P.head('ORG-shin.R')
+        top = K + Vector((0, -.035, .05))                                        # knee cap top
+        d = (top - S); E = S + d.normalized() * min(L1 * .985, d.length + .03)  # elbow on the knee top (just past it)
+        if (E - S).length < L1 * .95:                                            # shoulder closer than the upper arm: elbow drops beside the knee
+            h = math.sqrt(max(L1 ** 2 - d.length ** 2, 0)) * .9; E = top + Vector((-.6, -.8, 0)).normalized() * h * .5 + Vector((0, 0, -h * .5))
+        W = E + Vector((-.30, -.85, -.42)).normalized() * L2 * .985
+        pole = E + (E - (S + W) / 2).normalized() * .5
+        P.arm('R', W, Vector((-.08, -.30, -1)), Vector((.15, 1, 0)), pole)
+        print('   floor R arm: shoulder', tuple(round(v, 3) for v in S), 'knee top', tuple(round(v, 3) for v in top),
+              '|S-top|', round((top - S).length, 3), 'L1', round(L1, 3), 'elbow target', tuple(round(v, 3) for v in E),
+              'got', tuple(round(v, 3) for v in P.head('ORG-forearm.R')))
         ank = P.head('ORG-foot.L')
         P.arm('L', ank + Vector((.02, -.02, .085)), Vector((-.35, -.55, -.75)), Vector((0, 0, -1)), P.head('ORG-upper_arm.L') + Vector((.9, .3, -.2)))
         P.curl('R', 55, thumb=20); P.curl('L', 70, thumb=25)

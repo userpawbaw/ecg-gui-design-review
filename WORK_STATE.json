@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "R1: pose feedback loop added (skill pose-anatomy, scripts/assets/pose-check-v3.py build gate + selftest + archive scene collisions; R-020). Five poses revalidated (0 FAIL), floor rebuilt to the user's reference images. Await user review of verification/r1-rigify-20261004/floor3_vs_ref.jpg + archive_validated_sheet.jpg; then brief 3 (web). Open: desk power strip occluded by the armchair, place() prop rotation bug, wall trunk route, floor head tilt shallower than the reference.",
+  "next_action": "R1 (compaction checkpoint 2026-10-05): read docs/uiux_system/rounds/R1/PLAN-R1-INTRO-STORY-V2.md §9.6 first. Await user review of floor (vs refs), chair knee fix, climb/desk; decide F-033 place() rotation before brief 3. Promised: per-pose web reference images (2–4 each, Korean notes, same-angle comparison) for chair/desk/climb/wall; floor head tilt; desk power strip framing; wall trunk route; RA visibility in d7. Then brief 3 (web: r2 re-bake, five poses + hidden cuts, per-pose rig, practicals).",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",

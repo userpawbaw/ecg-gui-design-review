@@ -1318,8 +1318,8 @@ F1 유지(첫 화면에 높이 전체 공개, "왜 사다리" 질문), F2(측정
 | | |
 |---|---|
 | 시점 | 2026-10-04 `[대화]` |
-| 상태 | **사용자 결정**(AI 추천안 그대로) — 다섯 자세 다시 만듦, 점토·서고 렌더 확인 대기 |
-| 연결 | D-048, D-050, F-030, `scripts/assets/rigify-fit-v3.py`, `scripts/assets/head-vol-v3.py`, `verification/r1-head-20261004/`, `verification/r1-rigify-20261004/` |
+| 상태 | **사용자 결정**(AI 추천안 그대로). 머리 B2 확정(2026-10-05 "얼굴은 괜찮아"), 의자 손 자연스러움 확인. 자세 검증기 도입(R-020) 후 다섯 자세 FAIL 0 — 바닥·사다리·책상 최종 확인 대기 |
+| 연결 | D-048, D-050, F-030, F-033, O-009, O-010, R-020, `scripts/assets/rigify-fit-v3.py`, `scripts/assets/head-vol-v3.py`, `scripts/assets/pose-check-v3.py`, `verification/r1-head-20261004/`, `verification/r1-rigify-20261004/` |
 | CASE | CASE-005 |
 
 ### 갈림길

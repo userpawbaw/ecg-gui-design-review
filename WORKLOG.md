@@ -503,3 +503,6 @@ D069 사전경로/자산결정. explore texture catalog결과부적합, NASA공�
 
 ### 2026-10-06 A-P2 조명 구현 — D-070/F-041
 따뜻한 solar light/night mask/roughness/polar relief/가림 flare/cloud 산란 보완. initial+자체3수정 캡처, 최종31+진단38+runtime17/정역영상24 decoded/오류0/3R/정지/native/reduced/build PASS. RTX3070 composer p50 8.02/p95 22.57ms로 비용 상승. 전체시각TUNE/서고KEEP. 다음 사용자 전이 피드백 후 A-P3; BC보류. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_lighting_review_2026-10-06.md
+
+### 2026-10-06 A-P2 입체감 재조사 — F-042/D-071
+사용자 구름/얼음 빛·입체감 부족과 유리막 지적. 코드 및 Bruneton/Takram/Heckel/Nubis/Three/REMA 공식자료, ice 후보 탐색 완료. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_planet_quality_research_2026-10-06.md。 다음 Q1 대기/유리막 원인 분리 시험, Q2 geometry+재질, Q3 density cloud, Q4 연속통합. 새 renderer/asset 다운로드/런타임QA 미실행; 서고KEEP/BC보류.

@@ -1,3 +1,5 @@
+2026-10-06 최신 A-P2 재조사(F-042/D-071): [구름·얼음·수평선 구현 연구](ECG_A_planet_quality_research_2026-10-06.md). 사용자 입체감/얼음 빛 반응 부족·유리막 지적 반영. 고해상도 색상 교체만으로 해결하지 않고 density cloud/Antarctic geometry·재질/대기 scattering을 분리해 재제작한다. 다음 Q1 원인off 비교·별도 atmosphere 경로 시험→Q2 얼음→Q3 cloud→통합품질피드백. 이번 연구만 완료/새 구현 미실행; 서고 KEEP/A-P3·BC보류.
+
 2026-10-06 A-P2 빛/후처리 실제 보완(D-070/F-041): [최종 검토](ECG_A_lighting_review_2026-10-06.md). 따뜻한 태양/가림 flare·PBR roughness·얼음 relief·구름 산란 구현, 기술 QA/build PASS, 시각 TUNE. 서고 KEEP 유지. 다음 해당 전이의 사용자 피드백(얼음/구름/specular·GPU 비용) 후 A-P3.
 
 2026-10-06 최신 A-P2 피드백(F-040/D-070): flare/얼음 relief/구름 디테일 보완에 동의, 빛이 없는 듯한 시각 품질 TUNE. [보완 계획](ECG_A_arrival_feedback_2026-10-06.md)을 먼저 읽는다. 다음 A-P2 광원·재질→역광/후처리→구름/고창 접합 완성→사용자 피드백, 이후 A-P3. D-068 서고 빛·소품 KEEP 유지. 이번은 문서 갱신이며 새 렌더/QA는 수행하지 않았다.

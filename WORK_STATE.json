@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "A_P2_lighting_implemented_runtime_PASS_visual_TUNE_A_P1_environment_KEEP",
+    "status": "A_P2_user_depth_glass_feedback_research_complete_new_rendering_trial_pending",
     "records": [
       "D-065",
       "D-066",
@@ -686,7 +686,7 @@
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "User review of A-P2 lighting, ice/cloud/specular and GPU cost; then A-P3 processing/output and chair handoff; archive KEEP; B/C deferred",
+    "next": "Q1 specular/atmosphere/cloud-shell isolation and separate atmosphere trial; Q2 Antarctic patch/PBR; Q3 density clouds; Q4 integration/user fidelity review before A-P3; archive KEEP; B/C deferred",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -709,7 +709,9 @@
       "F-039",
       "F-040",
       "D-070",
-      "F-041"
+      "F-041",
+      "F-042",
+      "D-071"
     ],
     "arrival_evidence": "verification/a-arrival-20261006",
     "arrival_runtime_verified": true,
@@ -741,6 +743,18 @@
       "composer_p95_ms": 22.56896,
       "valid_queries": 479,
       "scope": "RTX3070 Chromium 1920x1080 DPR1 unrecorded 8sec; not target-PC proof"
+    },
+    "arrival_quality_research": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_planet_quality_research_2026-10-06.md",
+    "arrival_quality_research_runtime_verified": false,
+    "arrival_user_depth_feedback_2026_10_06": {
+      "TUNE": [
+        "cloud depth",
+        "Antarctic light response",
+        "glass-like globe appearance",
+        "blue orbital horizon"
+      ],
+      "scope": "Reinvestigate assets and rendering; archive KEEP preserved",
+      "new_renderer_implemented": false
     }
   }
 }

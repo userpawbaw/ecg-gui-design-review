@@ -1189,3 +1189,27 @@ cloudopacity가1이라는이유만으로모든전환이숨겨졌다고주장하�
 
 ### 놓쳤다면
 따뜻하게 밝아졌다는 이유만으로 품질 PASS라 하거나, sea mask를 실제 지리 정보라고 주장하거나, RAF 간격을 target-PC 성능 증거로 확대했을 것이다.
+
+## F-042. 평면 구름과 Fresnel 대기는 고해상도 사진만으로 깊이를 회복하지 못한다
+
+| | |
+|---|---|
+| 발견 | 2026-10-06 [대화] [코드] [문헌] |
+| 상태 | 사용자 A-P2 TUNE / 렌더 경로 재조사 완료 |
+| 영향 | cloud volume, ice geometry/PBR, blue horizon |
+| 연결 | D-071, F-041, rounds/R1/SCENARIO-ABC-20261003/ECG_A_planet_quality_research_2026-10-06.md |
+
+### 발단
+사용자가 첨부 목업 대비 구름과 얼음 입체감/빛 부족 및 유리막 같은 외관을 지적하며 재조사를 요청했다.
+
+### 먼저 의심한 것과 배제 방법
+텍스처 해상도 또는 유리 재질 누락/추가 문제를 코드로 확인. 실제 transmission/clearcoat 없고 alpha 구름 구면/가산 Fresnel 대기/바다 specular가 있다. 원인 기여는 다음 분리 캡처가 필요하며 현재 확정하지 않았다.
+
+### 결정적 근거
+구름 진입 ro/ray는 camera matrix와 무관한 UV 좌표, 고정 lightDir이며 제한된 덩어리/height층이 없다. 대기는 광경로 적분 없음. 공식 Bruneton/Takram 문서 및 volume lightmarch/HG 자료는 다른 표현 구조를 제공한다. 읽은 코드는 사용자 새 캡처의 품질 개선 증거가 아니다.
+
+### 조치와 검토한 대안
+색상 source 유지와 국소 DEM/normal/roughness 보강, camera/대기 산란, world-space density cloud를 별도 시험→연속 통합하는 계획. 전 지구 유리 material/과한 bloom/8K 사진 일괄 교체를 해결책으로 삼지 않는다.
+
+### 놓쳤다면
+sample와 brightness만 늘리며 GPU비용을 키우고 입체 표현의 구조 문제를 계속 TUNE로 남겼을 것이다. 외부 라이브러리의 Lambertian/double lighting/ECEF 제약을 놓치면 얼음 반사 문제를 다시 만들 수 있다.

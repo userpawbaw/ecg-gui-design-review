@@ -1,0 +1,58 @@
+{
+  "query": "ice",
+  "kind": "material",
+  "date": "2026-10-05",
+  "sources": {
+    "polyhaven": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Rocks Ground 04",
+          "page": "https://polyhaven.com/a/rocks_ground_04",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "rocks_ground_04"
+          }
+        }
+      ]
+    },
+    "ambientcg": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Snow 014",
+          "page": "https://ambientcg.com/view?id=Snow014",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Snow014",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Snow 013",
+          "page": "https://ambientcg.com/view?id=Snow013",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Snow013",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Snow 006",
+          "page": "https://ambientcg.com/view?id=Snow006",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Snow006",
+            "attribute": "1K-JPG"
+          }
+        }
+      ]
+    }
+  }
+}

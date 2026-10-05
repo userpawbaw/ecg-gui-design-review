@@ -1,0 +1,43 @@
+{
+  "scope": "internal clay / source asset geometry",
+  "surface": {
+    "foot.R": {
+      "nearest_body_surface_m": 0.0021441024728119373,
+      "threshold_m": 0.018,
+      "status": "PASS_proximity_only"
+    },
+    "foot.L": {
+      "nearest_body_surface_m": 0.00214014551602304,
+      "threshold_m": 0.018,
+      "status": "PASS_proximity_only"
+    },
+    "hand.R": {
+      "nearest_body_surface_m": 0.005476365797221661,
+      "threshold_m": 0.018,
+      "status": "PASS_proximity_only"
+    },
+    "hand.L": {
+      "nearest_body_surface_m": 0.007287298329174519,
+      "threshold_m": 0.018,
+      "status": "PASS_proximity_only"
+    }
+  },
+  "frames": [
+    "orbit_00.png",
+    "orbit_01.png",
+    "orbit_02.png",
+    "orbit_03.png",
+    "orbit_04.png",
+    "orbit_05.png",
+    "foot_R.png",
+    "foot_L.png",
+    "hand_R.png",
+    "hand_R_side.png",
+    "hand_L.png",
+    "hand_L_side.png"
+  ],
+  "limits": [
+    "nearest distance does not prove grip or full support",
+    "no full archive lighting/runtime/target PC verification"
+  ]
+}

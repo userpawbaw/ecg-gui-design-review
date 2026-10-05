@@ -478,3 +478,6 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 
 ## 2026-10-05 A 우선 제작 확정
 사용자 A부터 결정(D065). BC 추가 국소편집 착수 전 A로 전환. archive/figure 소스와 GLB JSON 감사: rig_v3 skins 없음/전극배선, seated 모델은 climb 아님. bundled Python bpy import 실패; 구현 불가능/자산 부재로 확대하지 않음. A-P1~4 제작/검증/피드백 및 BC 보존 계획 작성/색인·상태 갱신. 새 목업/renderer/runtime 제작 완료 주장은 없음.
+
+## 2026-10-05 A 실제 자산 제작
+사용자 계획문서 표시/제작 진행 요청. open_in_codex queued, 실제body/3전극GLB 생성. Python3.12/bpy버전불일치와 venv ensurepip 실패 후 공식 embedded3.11.9+bpy4.5.3/numpy1.26.4를 프로젝트.tools에 분리. 새 measured rig/analytic chain/breath bake, 표면raycast전극·heart anchor. QA quaternion회전모드 수정/발offset 수정 후12clay캡처. surface proximity2.14–7.29mm; 근접은 grip/비관통 보증아님. npm model:a 재생성 동일GLB해시, records139/portability PASS. 손가락grip와전체A-P1 runtime/light미완TUNE, 기존자산/제품route변경없음.

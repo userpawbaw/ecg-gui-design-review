@@ -44,3 +44,6 @@ C: C04 작은 타일 규격, C08 사각 타일과 의자 자세 연속성 보완
 미완: 새 climb 모델, 실제 장면의 재질·빛·후처리, runtime와 목표 PC 품질 검증.
 이번 작업은 실행 완료나 사용자 품질 판정을 의미하지 않는다.
 
+### 제작 착수 후 갱신
+[오르기 자산 체크포인트](ECG_A_asset_checkpoint_2026-10-05.md): body_climb/electrodes_climb 실제 GLB, breath/heart anchor/skin site 생성. Blender4.5.3 실행 경로 준비 및 내부12렌더 완료. 모델은 손가락 grip·전체 비관통·runtime 가시성 TUNE이며 A-P1 완료는 아니다. 다음은 접촉 보완/심장·배선 통합/고정 서고 조명·후처리.
+

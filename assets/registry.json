@@ -1813,6 +1813,39 @@
       "processing": "none",
       "used_by": [],
       "review": "Anime-style low-poly base with hair; style mismatch, dropped from the lineup (D-048)."
+    },
+    {
+      "id": "a-climb-body-20261005",
+      "title": "A-P1 climbing pose derived from Blender Studio featureless body",
+      "kind": "model",
+      "status": "test-only",
+      "source": {"type": "derived", "asset_id": "blender-human-base-meshes"},
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "prototype/v2/src/story/intro/assets/body.glb",
+        "sha256": "af0a77ac099b6e8f7d65eda0acfefdaeaf339a8e592c78e2c11d02922fd790ce",
+        "bytes": 2063564
+      },
+      "processing": "scripts/assets/build-a-climb.py; Blender 4.5.3, measured skeleton, auto skin weights, analytic limb solve, pose + breath baked into GLB",
+      "processed": "prototype/v2/src/story/intro/assets/a-climb/body_climb.glb",
+      "processed_sha256": "1cc800878d5b773fd4054d63fe447960f3aba97576668c5a114a97ad2ea61e42",
+      "used_by": ["A-P1 internal asset validation"],
+      "review": "12 internal clay views, joint and surface proximity checked. TUNE: finger wrap, complete penetration/contact and runtime heart visibility. Not final production quality."
+    },
+    {
+      "id": "a-climb-electrodes-20261005",
+      "title": "Three electrodes fitted to climbing skin",
+      "kind": "model",
+      "status": "test-only",
+      "source": {"type": "procedural", "script": "scripts/assets/build-a-climb.py"},
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "processing": "Cylinder foam and metal snap, ray-cast attachment to posed body surface; same local frame as climb body",
+      "processed": "prototype/v2/src/story/intro/assets/a-climb/electrodes_climb.glb",
+      "processed_sha256": "ba06a49fde5aa4478bda5c6251aa0d7231fb860e7d8b992a3c879b4105c52fae",
+      "used_by": ["A-P1 internal asset validation"],
+      "review": "Geometry generated, surface anchors recorded. Short leads/cart connection and integrated visibility remain pending."
     }
   ],
   "rejected": [

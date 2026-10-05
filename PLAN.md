@@ -299,3 +299,6 @@ BC각12최종프레임(Intro6/Story6)완료, 자체12국소편집/프레임별TU
 
 ## 2026-10-05 최신 제작 순서 — D-065
 사용자 “제작 순서는 A부터.” 확정. BC 필수수정은 A 착수 선행 조건에서 제외/후속 보존. A-P1 사다리/오르기/등→측면/심장·mixed → A-P2 지구~고창 → A-P3 처리/의자 인계 → A-P4 Story. 자세한 제작·검증·피드백 단위는 ECG_A_production_plan_2026-10-05.md. 현재 자산 감사 완료, climb/실제장면 구현은 미완. rig_v3는 인체 rig 아닌 전극/배선이고 bundled bpy 미설치; 다음은 source/Blender 실행 경로 준비 및 climb pose 자산 제작.
+
+### A-P1 실제 자산 착수 체크포인트
+프로젝트 내부 Python3.11/bpy4.5.3 준비, 기존 body에서 새 climb/breath GLB와3전극 생성. 내부12렌더 및 손발 표면근접2–7mm 확인. registry test-only/전체TUNE. 다음 palm grip/비관통 보완→심장·lead→서고 depth/volume/재질/post→ECG/runtime 검증. 사용자 품질 평가용 장면은 미완. 재현 npm run model:a -- --verify.

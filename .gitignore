@@ -13,3 +13,4 @@ assets/.npm-cache/
 __pycache__/
 *.pyc
 .npm-cache-background/
+.tools/

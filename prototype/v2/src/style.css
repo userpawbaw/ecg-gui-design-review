@@ -46,3 +46,15 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .switch-copy strong{font-size:12px;color:#e5f0f2}
 .switch-copy small{font-size:10px;color:#9fb8c1}
 @media(max-width:780px){.display-tools{align-items:stretch}.display-tools>label,.display-tools>button,.gain-group{flex:1 1 130px}.gain-group>span{flex:1}.advanced-settings-grid{align-items:stretch}.switch-control{flex:1 1 220px}}
+
+/* D-016 실시간 측정 탭 — 원본 저장소 브리지의 live.html 을 iframe 으로 표시만 한다. */
+.live-route h1{margin-bottom:8px}.live-route>p{color:#536b61;max-width:980px}
+.live-route code{font-size:.92em;background:#e6eeea;padding:1px 5px;border-radius:5px}
+.bridge-bar{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin:14px 0 12px;padding:12px 14px;background:white;border:1px solid #d9e2df;border-radius:12px}
+.bridge-bar label{min-width:240px}.bridge-bar input{display:block;width:260px;margin-top:6px;padding:9px;border:1px solid #ccd9d3;border-radius:7px}
+.bridge-state{font-size:13px;padding:10px 4px;font-variant-numeric:tabular-nums;color:#7a695a}.bridge-state.ok{color:#067d72;font-weight:650}
+.bridge-bar a{margin-left:auto;font-size:13px;color:#067d72;padding:10px 4px}
+.live-frame{display:block;width:100%;height:max(1240px,94vh);border:0;background:transparent}
+.bridge-help{padding:26px 28px;background:#112b39;color:#c6d9df;border-radius:14px}.bridge-help h2{color:#e5f0f2}.bridge-help p{color:#acc2cd}
+.bridge-help pre{background:#0d2532;border:1px solid #304955;border-radius:10px;padding:14px;color:#e4f0ef;white-space:pre-wrap;font-size:13px}
+.bridge-help code{background:#183b4a;color:#e4f0ef}

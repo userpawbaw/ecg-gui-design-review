@@ -183,3 +183,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 원격 PR/CI 확인 후 보고. 실제 시안 생성·UI 수정·main merge는 수행하지 않는다.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-10-05 — 실시간 측정 탭 (D-016, A 방식 iframe)
+
+- 사용자 지시: 원본 저장소(`ecg_denoising_method_comparision`)의 실보드 실시간 화면을 v2.2.1 에 «A 방식(iframe 탭)» 으로 붙인다.
+- 범위: `prototype/v2` 에 `live` 경로(«실시간 측정»), 브리지 연결 확인 · 실행 안내, 출처 · 배지 · 바닥글 분기, 무인 운영(Attract 자동 전환)을 실험실로 한정. 원본 쪽은 `live.html?embed=1` 머리글 숨김.
+- 하지 않는 것: React 직접 통합(B), release ZIP 재생성, main 병합. 브랜치 `claude/live-tab-iframe` 에서만.
+- 완료 조건: D-016 · v2 build · 새 단위 테스트 · records:check PASS, 브리지 없음/있음 두 상태를 실제 브라우저로 띄워 확인.

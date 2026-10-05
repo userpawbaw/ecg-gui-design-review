@@ -61,7 +61,7 @@
     "2026-09-16 concurrency policy revision: docs/23 added at 2f39ff9, WORK_RESUME_POLICY v1.2 at 0d38797, AGENTS updated at aabfd19",
     "Existing ECG 6-hour automation prompt updated to policy v1.2; repository-wide lock removed and resource-scoped conflict checks retained"
   ],
-  "current_request": "Retire the repository-wide Work execution lock while preserving checkpoint/resume tracking and resource-scoped duplicate-job protection.",
+  "current_request": "Attach the live (real-board) waveform screen from ecg_denoising_method_comparision to v2.2.1 as an iframe tab (D-016, option A).",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
@@ -112,7 +112,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-16T23:20:00+09:00",
+  "updated_at": "2026-10-05",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -190,5 +190,26 @@
     "pr": "https://github.com/userpawbaw/ecg-gui-design-review/pull/10",
     "verified_implementation_commit": "f1da0d32113d6e7b166dc48e9e550f8701045f0a",
     "ci": "https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/35423470904"
+  },
+  "live_tab_stage": {
+    "decision": "D-016",
+    "branch": "claude/live-tab-iframe",
+    "base_main": "cfef430",
+    "pair": "userpawbaw/ecg_denoising_method_comparision@claude/adoring-cray-nv6pvq (scripts/serial_bridge.py --serve, demo/live.html D-41)",
+    "status": "implemented_conditional",
+    "verified": [
+      "records:check 37 records PASS",
+      "root npm test PASS (core, final-data, 26 DOM, records + 26 fixtures)",
+      "prototype/v2 build PASS",
+      "tests/live.test.ts 3 PASS",
+      "headless Chromium: no-bridge help, bridge reconnect within 5 s, embed header hidden, provenance LIVE_BRIDGE_EMBED, 0 page errors"
+    ],
+    "not_verified": [
+      "real board on target Windows PC",
+      "exhibition PC cross-origin/scaling",
+      "release ZIP packaging"
+    ],
+    "known_env_failure": "prototype/v2 tests/chunks.test.ts needs public/replay/manifest.json (600 s data outside Git); unrelated",
+    "next": "User reviews branch; merge decision; target-PC check with the real board"
   }
 }

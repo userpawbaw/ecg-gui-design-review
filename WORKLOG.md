@@ -343,3 +343,11 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Publish stacked PR and check head CI; no merge, no actual generation or UI modification.
 
 2026-09-19 closeout: PR #10 (stacked on #9), implementation f1da0d32113d6e7b166dc48e9e550f8701045f0a, CI run 35423470904 records-check and fixture steps success. Contract/skill implementation complete; no merge or live generation. Final checkpoint head CI is checked before the chat report.
+
+## 2026-10-05 — 실시간 측정 탭 (D-016)
+
+- 기준 main `cfef430`. 브랜치 `claude/live-tab-iframe`. 원본 저장소 브랜치 `claude/adoring-cray-nv6pvq`(브리지 · `live.html` D-41 표시 규약) 와 짝.
+- D-016 을 구현 전에 추가(CASE 불필요 사유 기재). records:check PASS (37 records).
+- `src/live.ts`(브리지 주소 정규화 · iframe 주소 · 닿는지 확인) + `tests/live.test.ts` 3 건 PASS. `main.tsx` 에 `live` 경로 · 연결 확인(5 s 재시도) · 실행 안내 · 출처 `LIVE_BRIDGE_EMBED` · 배지/바닥글 분기, 무인 운영 타이머에 `route!=='lab'` 가드.
+- PASS: 루트 `npm test`(core · final-data · DOM 26 · records 37 + fixture 26), `npm run build`(tsc + vite). `npm test` 16 건 중 15 PASS · 1 FAIL — `chunks.test.ts` 가 Git 밖의 600 s 자료(`public/replay/manifest.json`)를 요구하는 **기존 환경 조건**이며 이번 변경과 무관(변경 전에도 동일).
+- 실제 브라우저(헤드리스 Chromium · Vite 개발 서버 · 원본 브리지 `--replay synth`): 브리지 없음 → 실행 안내, 브리지 기동 → 5 s 안에 «● 연결됨» + iframe, iframe 안 머리글 숨김, 출처 대화상자 분기, 실험실 복귀 시 배지 원복, 페이지 오류 0. 실보드 · 전시 PC(교차 출처 · 배율) **NOT VERIFIED**.

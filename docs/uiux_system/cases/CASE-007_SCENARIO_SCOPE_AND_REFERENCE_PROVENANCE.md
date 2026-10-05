@@ -84,3 +84,6 @@ rounds/R1/SCENARIO-ABC-20261003/의 계획·규칙·A/B TUNE·B·C·마이닝 �
 ## 2026-10-04 Intro 사다리/Story 의자 정정
 Story 긍정은 원인·유입·파형 구도에 한정. 도입부까지 의자 확대는 AI 해석오류(F036).
 D062: 공통서고잠금/바닥앉기와오르기후보5장·편집3. Intro mixed waveform 후 chair bay 전환. R031. 최종pose선택/실제geometry검증은 미정.
+
+## 2026-10-05 A 오르기 확정
+사용자가 추천대로확정. D063/R032: Intro오르기·등→측면·heart/mixed·출력→같은서고chair bay. 바닥앉기보류보존. 실제geometry/모션/후처리품질은 미검증. 다음ABC비교/제작순서.

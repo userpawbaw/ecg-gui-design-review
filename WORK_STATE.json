@@ -632,7 +632,7 @@
   "scenario_a_ladder_2026_10_04": {
     "status": "5_revision_mockups_TUNE",
     "edits": 3,
-    "intro_pose": "floor seated beside ladder OR climbing; undecided",
+    "intro_pose": "climbing selected by user 2026-10-05, D-063",
     "story_pose": "chair; source-ingress-wave composition KEEP",
     "environment": "common archive anchor contract; actual geometry verification pending",
     "records": [
@@ -642,6 +642,22 @@
       "CASE-007"
     ],
     "product_code_changed": false,
-    "next": "Review two Intro pose paths and fix archive descent/Story handoff"
+    "next": "Locked sequence documented; ABC comparison and production order next"
+  },
+  "scenario_a_climb_confirmed_2026_10_05": {
+    "status": "user_confirmed_pose_and_camera_path",
+    "records": [
+      "D-063",
+      "R-032",
+      "CASE-007"
+    ],
+    "intro_pose": "climbing, rear-to-side camera",
+    "story_pose": "chair in same archive",
+    "floor_pose": "deferred alternative",
+    "sequence_spec": "ECG_A_climb_locked_sequence_2026-10-05.md",
+    "new_images": false,
+    "product_code_changed": false,
+    "runtime_verified": false,
+    "next": "ABC comparison and production order, then first A4-A6 complete visible asset/light/material/motion bundle"
   }
 }

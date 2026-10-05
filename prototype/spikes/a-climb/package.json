@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "node prepare.mjs && vite --host 127.0.0.1 --port 4198 --strictPort",
     "build": "node prepare.mjs && vite build",
-    "qa": "node capture.mjs"
+    "qa": "node capture.mjs",
+    "qa:aa": "node capture-aa.mjs",
+    "qa:aa:motion": "node capture-aa-motion.mjs"
   },
   "dependencies": {
     "lenis": "1.3.17",

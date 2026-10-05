@@ -1,0 +1,12 @@
+[
+  {
+    "mode": "none",
+    "height": 1080,
+    "width": 1920
+  },
+  {
+    "mode": "msaa",
+    "height": 1080,
+    "width": 1920
+  }
+]

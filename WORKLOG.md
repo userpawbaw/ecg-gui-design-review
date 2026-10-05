@@ -487,3 +487,6 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 
 ## 2026-10-05 A 시점 전환 AA 조사
 사용자 이동 중 계단 현상 지적. 실제 r186 main/archive/space와 공식 Three.js 문헌 대조. composer MSAA 미설정(samples0), 48step frame jitter, Output 뒤 grain 확인. MSAA4/SMAA 단독 비교·depth resolve·volume/texture 분리·동영상/ROI/GPU 측정 계획 기록. 렌더러 변경/새 runtime 검증 없음. A-P1 우선 작업으로 색인/계획/상태 갱신; A-P2 보류 유지.
+
+## 2026-10-06 A-P1 AA 구현·검증
+D067 사전 비교결정→none/MSAA/SMAA/hybrid 각12고정p+4jitter, 진단7/추가step8. captureStream VP9 4후보영상+최종영상, 브라우저decode36프레임. MSAA4/96step/grain35% 기본선택, fixedROI분산~45.9%감소(F038). RTX3070 GPU query최종p95~9.84ms/RAF16.8ms, 순차단일짧은실험. 최종17/R/native/stationary/reduced/errors0/build PASS. 전체A-P1 TUNE. 4198이미실행중이라 신규서버실행실패후 기존재사용, montage상대경로실패는 repo cwd에서수정. 신호/공유shader/productroute변경없음; A-P2/BC보류.

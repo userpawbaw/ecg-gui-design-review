@@ -1712,3 +1712,30 @@ BC 필수수정·ABC비교 뒤 제작 순서를 추천하려던 단계에서 사
 ### 되돌려야 하는 조건
 재사용 bake가 새 몸의 차광/접촉을 표현하지 못하면 해당 receiver/빛을 보완한다. 부분 장면을 사용자 품질 완료로 선언하지 않는다.
 
+
+## D-067. A-P1의 AA는 같은 장면의 단독 후보 비교 뒤 선택한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-05 [대화] |
+| 상태 | 사용자 조사 후 진행 요청 / 비교 구현 착수 |
+| 연결 | D-066, rounds/R1/SCENARIO-ABC-20261003/ECG_A_antialiasing_research_2026-10-05.md |
+| CASE | CASE-007 |
+
+### 갈림길
+시점 이동의 계단 현상에 renderer antialias만 켜거나, 실제 composer 경계/volume jitter를 분리해서 비교한다.
+
+### 검토한 선택지
+기본 canvas AA 유지, MSAA4 단독, SMAA 단독, 두 기법 조합. 기본 TAA는 재투영이 없어 움직임 검증 비용이 커 우선 제외.
+
+### 고른 것과 근거
+none/MSAA4/SMAA를 동일 자산/카메라/시각에서 비교하도록 a-climb에 시험 설정을 추가한다. volume/grain off와 jitter/step 진단도 별도로 제공한다. 기본 채택은 캡처/이동 결과 확인 뒤 기록한다. 신호와 DOM은 별도 레이어로 유지한다.
+
+### 버린 것과 이유
+blur/bloom으로 가리거나 처음부터 두 AA를 강제하는 것은 원인과 비용을 구분하기 어렵다. geometry/구도 변경은 이번 AA 범위에서 제외한다.
+
+### 되돌려야 하는 조건
+depth resolve/빛 가림/heart detail이 깨지거나 지원 sample/GPU 성능이 부족하면 SMAA 또는 지원 sample로 되돌린다. 정지 캡처만으로 이동 안정성 합격을 선언하지 않는다.
+
+### 2026-10-06 비교 후 선택
+MSAA4 기본 KEEP, volume96step/grain35%로 보완. SMAA는 지원 fallback, hybrid는 시각 추가이득 불명확해 기본 제외. F-038/ECG_A_antialiasing_review에 후보영상·GPU·최종runtime 증거. 전체A-P1 TUNE 유지.

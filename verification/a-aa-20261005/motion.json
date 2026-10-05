@@ -1,0 +1,718 @@
+[
+  {
+    "mode": "none",
+    "file": "none-motion.webm",
+    "bytes": 8224668,
+    "state": {
+      "aa": "none",
+      "actualSamples": 0,
+      "beatAge": 0.7632000000000261,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 1.7766666665983697,
+      "dpr": 1,
+      "drawCalls": 79,
+      "frame": 582,
+      "fs": 250,
+      "gpu": {
+        "available": true,
+        "count": 493,
+        "p50": 5.078016,
+        "p95": 7.503872
+      },
+      "grain": false,
+      "heartScale": 1.0000088235738964,
+      "heartScreen": [
+        -0.29485684629120557,
+        0.09381366419124208,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "jitter": true,
+      "p": 1,
+      "pixelRatio": 1,
+      "rAbs": 1880,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "raf": {
+        "count": 494,
+        "p50": 16.699999999999818,
+        "p95": 16.800000000000182
+      },
+      "ready": true,
+      "record": "S022",
+      "renderSize": [
+        1920,
+        1080
+      ],
+      "sample": 2070,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "smaa": false,
+      "sourceSample": 2127,
+      "steps": 48,
+      "supportedSamples": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "t": 8.283200000000026,
+      "triangles": 432191,
+      "volume": true,
+      "winner": "M08"
+    },
+    "errors": "",
+    "scope": "3D canvas only, 8s rear-to-side path, VP9 recording overhead included",
+    "unrecorded": {
+      "aa": "none",
+      "actualSamples": 0,
+      "beatAge": 0.051200000000031665,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 1.163333333314707,
+      "dpr": 1,
+      "drawCalls": 79,
+      "frame": 1104,
+      "fs": 250,
+      "gpu": {
+        "available": true,
+        "count": 503,
+        "p50": 5.669888,
+        "p95": 8.648704
+      },
+      "grain": false,
+      "heartScale": 1.0383265282825642,
+      "heartScreen": [
+        -0.29485684629120557,
+        0.09381366419124208,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "jitter": true,
+      "p": 1,
+      "pixelRatio": 1,
+      "rAbs": 2083,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "raf": {
+        "count": 503,
+        "p50": 16.69999999999891,
+        "p95": 16.799999999999272
+      },
+      "ready": true,
+      "record": "S022",
+      "renderSize": [
+        1920,
+        1080
+      ],
+      "sample": 2095,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "smaa": false,
+      "sourceSample": 2152,
+      "steps": 48,
+      "supportedSamples": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "t": 8.383200000000032,
+      "triangles": 432191,
+      "volume": true,
+      "winner": "M08"
+    }
+  },
+  {
+    "mode": "msaa",
+    "file": "msaa-motion.webm",
+    "bytes": 8600867,
+    "state": {
+      "aa": "msaa",
+      "actualSamples": 4,
+      "beatAge": 0.7799000000000316,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 1.9158333335692683,
+      "dpr": 1,
+      "drawCalls": 79,
+      "frame": 575,
+      "fs": 250,
+      "gpu": {
+        "available": true,
+        "count": 495,
+        "p50": 6.720512,
+        "p95": 8.607744
+      },
+      "grain": false,
+      "heartScale": 1.0000072496732826,
+      "heartScreen": [
+        -0.29485684629120557,
+        0.09381366419124208,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "jitter": true,
+      "p": 1,
+      "pixelRatio": 1,
+      "rAbs": 1880,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "raf": {
+        "count": 495,
+        "p50": 16.699999999999818,
+        "p95": 16.800000000000182
+      },
+      "ready": true,
+      "record": "S022",
+      "renderSize": [
+        1920,
+        1080
+      ],
+      "sample": 2074,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "smaa": false,
+      "sourceSample": 2131,
+      "steps": 48,
+      "supportedSamples": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "t": 8.299900000000031,
+      "triangles": 432191,
+      "volume": true,
+      "winner": "M08"
+    },
+    "errors": "",
+    "scope": "3D canvas only, 8s rear-to-side path, VP9 recording overhead included",
+    "unrecorded": {
+      "aa": "msaa",
+      "actualSamples": 4,
+      "beatAge": 0.051200000000036994,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 1.3558333332960804,
+      "dpr": 1,
+      "drawCalls": 79,
+      "frame": 1094,
+      "fs": 250,
+      "gpu": {
+        "available": true,
+        "count": 503,
+        "p50": 8.082432,
+        "p95": 9.535488
+      },
+      "grain": false,
+      "heartScale": 1.0383265282825618,
+      "heartScreen": [
+        -0.29485684629120557,
+        0.09381366419124208,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "jitter": true,
+      "p": 1,
+      "pixelRatio": 1,
+      "rAbs": 2083,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "raf": {
+        "count": 503,
+        "p50": 16.69999999999891,
+        "p95": 16.799999999999272
+      },
+      "ready": true,
+      "record": "S022",
+      "renderSize": [
+        1920,
+        1080
+      ],
+      "sample": 2095,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "smaa": false,
+      "sourceSample": 2152,
+      "steps": 48,
+      "supportedSamples": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "t": 8.383200000000038,
+      "triangles": 432191,
+      "volume": true,
+      "winner": "M08"
+    }
+  },
+  {
+    "mode": "smaa",
+    "file": "smaa-motion.webm",
+    "bytes": 8583090,
+    "state": {
+      "aa": "smaa",
+      "actualSamples": 0,
+      "beatAge": 0.7798000000000247,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 1.8008333334078392,
+      "dpr": 1,
+      "drawCalls": 82,
+      "frame": 580,
+      "fs": 250,
+      "gpu": {
+        "available": true,
+        "count": 496,
+        "p50": 6.172672,
+        "p95": 8.700928
+      },
+      "grain": false,
+      "heartScale": 1.000007258207329,
+      "heartScreen": [
+        -0.29485684629120557,
+        0.09381366419124208,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "jitter": true,
+      "p": 1,
+      "pixelRatio": 1,
+      "rAbs": 1880,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "raf": {
+        "count": 496,
+        "p50": 16.699999999999818,
+        "p95": 16.800000000000182
+      },
+      "ready": true,
+      "record": "S022",
+      "renderSize": [
+        1920,
+        1080
+      ],
+      "sample": 2074,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "smaa": true,
+      "sourceSample": 2131,
+      "steps": 48,
+      "supportedSamples": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "t": 8.299800000000024,
+      "triangles": 432194,
+      "volume": true,
+      "winner": "M08"
+    },
+    "errors": "",
+    "scope": "3D canvas only, 8s rear-to-side path, VP9 recording overhead included",
+    "unrecorded": {
+      "aa": "smaa",
+      "actualSamples": 0,
+      "beatAge": 0.05120000000003877,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 1.4483333334947626,
+      "dpr": 1,
+      "drawCalls": 82,
+      "frame": 1100,
+      "fs": 250,
+      "gpu": {
+        "available": true,
+        "count": 503,
+        "p50": 7.550976,
+        "p95": 9.70752
+      },
+      "grain": false,
+      "heartScale": 1.0383265282825611,
+      "heartScreen": [
+        -0.29485684629120557,
+        0.09381366419124208,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "jitter": true,
+      "p": 1,
+      "pixelRatio": 1,
+      "rAbs": 2083,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "raf": {
+        "count": 503,
+        "p50": 16.69999999999891,
+        "p95": 16.799999999999272
+      },
+      "ready": true,
+      "record": "S022",
+      "renderSize": [
+        1920,
+        1080
+      ],
+      "sample": 2095,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "smaa": true,
+      "sourceSample": 2152,
+      "steps": 48,
+      "supportedSamples": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "t": 8.38320000000004,
+      "triangles": 432194,
+      "volume": true,
+      "winner": "M08"
+    }
+  },
+  {
+    "mode": "hybrid",
+    "file": "hybrid-motion.webm",
+    "bytes": 8941220,
+    "state": {
+      "aa": "hybrid",
+      "actualSamples": 4,
+      "beatAge": 0.7633000000000312,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 1.5450000001428028,
+      "dpr": 1,
+      "drawCalls": 82,
+      "frame": 579,
+      "fs": 250,
+      "gpu": {
+        "available": true,
+        "count": 495,
+        "p50": 7.030784,
+        "p95": 8.495104
+      },
+      "grain": false,
+      "heartScale": 1.0000088131993252,
+      "heartScreen": [
+        -0.29485684629120557,
+        0.09381366419124208,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "jitter": true,
+      "p": 1,
+      "pixelRatio": 1,
+      "rAbs": 1880,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "raf": {
+        "count": 495,
+        "p50": 16.699999999999818,
+        "p95": 16.800000000000182
+      },
+      "ready": true,
+      "record": "S022",
+      "renderSize": [
+        1920,
+        1080
+      ],
+      "sample": 2070,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "smaa": true,
+      "sourceSample": 2127,
+      "steps": 48,
+      "supportedSamples": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "t": 8.28330000000003,
+      "triangles": 432194,
+      "volume": true,
+      "winner": "M08"
+    },
+    "errors": "",
+    "scope": "3D canvas only, 8s rear-to-side path, VP9 recording overhead included",
+    "unrecorded": {
+      "aa": "hybrid",
+      "actualSamples": 4,
+      "beatAge": 0.05110000000003545,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 1.1375000001862643,
+      "dpr": 1,
+      "drawCalls": 82,
+      "frame": 1099,
+      "fs": 250,
+      "gpu": {
+        "available": true,
+        "count": 503,
+        "p50": 8.50432,
+        "p95": 9.560064
+      },
+      "grain": false,
+      "heartScale": 1.0383716448497895,
+      "heartScreen": [
+        -0.29485684629120557,
+        0.09381366419124208,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "jitter": true,
+      "p": 1,
+      "pixelRatio": 1,
+      "rAbs": 2083,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "raf": {
+        "count": 503,
+        "p50": 16.69999999999891,
+        "p95": 16.700000000000728
+      },
+      "ready": true,
+      "record": "S022",
+      "renderSize": [
+        1920,
+        1080
+      ],
+      "sample": 2095,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "smaa": true,
+      "sourceSample": 2152,
+      "steps": 48,
+      "supportedSamples": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "t": 8.383100000000036,
+      "triangles": 432194,
+      "volume": true,
+      "winner": "M08"
+    }
+  }
+]

@@ -1,5 +1,5 @@
 import fs from 'node:fs';import path from 'node:path';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';import assert from 'node:assert/strict';
-const root=fileURLToPath(new URL('../../../',import.meta.url)),out=path.join(root,'verification/a-scene-20261005');
+const root=fileURLToPath(new URL('../../../',import.meta.url)),out=path.join(root,process.env.A_QA_DIR||'verification/a-scene-20261005');
 fs.mkdirSync(out,{recursive:true});
 function findCli(){if(process.env.A_BROWSER_BIN)return process.env.A_BROWSER_BIN;
  const cache=path.resolve(root,'../.npm-browser-cache/_npx');if(fs.existsSync(cache))for(const d of fs.readdirSync(cache)){const p=path.join(cache,d,'node_modules/agent-browser/bin',process.platform==='win32'?'agent-browser-win32-x64.exe':'agent-browser-linux-x64');if(fs.existsSync(p))return p;}

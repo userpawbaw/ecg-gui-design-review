@@ -1093,3 +1093,27 @@ B를 더 국소 수정하는 대신 보존/보류하고 A 네 프레임을 생�
 
 ### 놓쳤다면
 기술 PASS를 품질 합격으로 확대해 사용자가 원치 않은 미완 결과를 평가 요청했을 것이다.
+
+## F-038. Composer 경계와 volume 프레임 분산은 별도 AA 문제였다
+
+| | |
+|---|---|
+| 발견 | 2026-10-06 [코드] [캡처] |
+| 상태 | MSAA4/96step 내부 KEEP / 전체 A-P1 TUNE |
+| 영향 | A-P1 시점 전환과 선명도 |
+| 연결 | D-067, rounds/R1/SCENARIO-ABC-20261003/ECG_A_antialiasing_review_2026-10-06.md |
+
+### 발단
+사용자 시점 이동의 계단 현상 지적. renderer antialias:true는 있지만 composer samples는0이었다.
+
+### 먼저 의심한 것과 배제 방법
+AA4후보를 동일p/t/frame/48step/grainoff로 비교. volume/bloom/grain 분리와48/64/96step의 고정시간 프레임 분산을 검사했다.
+
+### 결정적 근거
+팔/사다리 확대에서 MSAA4는 경계를 완화, SMAA는 일부 톱니 잔존. 고정ROI의 RGB frame std는48 .00520454→96 .00281507(약45.9% 감소). GPU timer 지원 RTX3070에서 최종composer p95 약9.84ms, 짧은경로 RAF p95 16.8ms. 영상 및 최종runtime17캡처 검증.
+
+### 조치와 검토한 대안
+a-climb 기본MSAA4/volume96/grain35%, MSAA미지원 SMAA fallback. hybrid는 추가 시각 이득 불분명해 기본제외. 고정jitter/blur/TAA 채택 안함. 전체shader/productroute는 유지한다.
+
+### 놓쳤다면
+MSAA만으로 volume shimmer까지 해결됐다고 하거나 CPU 시간을 GPU 증거로 잘못 보고했을 것이다. ROI 수치를 이동영상 전체품질/목표PC 성능으로 확대하지 않는다.

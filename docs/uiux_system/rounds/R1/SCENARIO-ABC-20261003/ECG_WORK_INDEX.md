@@ -1,6 +1,6 @@
 ## 2026-10-05 현재 — A부터 실제 제작(D-065)
 
-최신 사용자 시점 전환 계단 현상 피드백: [AA 조사·비교 순서](ECG_A_antialiasing_research_2026-10-05.md). 코드/공식 문헌 조사 완료, 구현·이동영상 비교는 아직 미실시. A-P1의 다음 품질 작업은 baseline 원인 분리→MSAA4/SMAA 단독 비교→volume/texture 잔여 shimmer 보완이다.
+최신 사용자 시점 전환 계단 현상 피드백: [AA 적용·비교 결과](ECG_A_antialiasing_review_2026-10-06.md)(D-067/F-038). MSAA4/volume96step/grain35% 기본 적용, 4후보·5영상·최종runtime/build PASS. AA KEEP, 전체A-P1 TUNE. 다음 재질/cart/camera/receiver 및 잔여shimmer 보완. [이전 조사](ECG_A_antialiasing_research_2026-10-05.md)는 구현 전 계획이다.
 
 [A-P1 실제 장면 검토](ECG_A_scene_review_2026-10-05.md)(D-066/F-037/R-034): 손 grip/단 정점 비관통 보완, 고정 서고·심장·배선·mixed replay·빛/post 연결. 17 runtime 캡처/3R/정지/native-scroll/reduced PASS. 전체 TUNE, 다음 A-P1 서고 재질·카트·camera/receiver 품질 보완. A-P2는 아직 시작하지 않는다.
 

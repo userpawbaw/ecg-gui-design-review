@@ -7,6 +7,7 @@ import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
 import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {SMAAPass} from 'three/addons/postprocessing/SMAAPass.js';
 import {createArchive} from '../../v2/src/story/intro/archive';
 import {createSweep} from '../../v2/src/story/intro/sweep';
 import {createGrid,mvPerBoxFor} from '../../v2/src/story/intro/waveUi';
@@ -22,7 +23,17 @@ const URLs={body:new URL('../../v2/src/story/intro/assets/a-climb/body_climb.glb
  electrodes:new URL('../../v2/src/story/intro/assets/a-climb/electrodes_climb.glb',import.meta.url).href,
  manifest:new URL('../../v2/src/story/intro/assets/a-climb/manifest.json',import.meta.url).href};
 async function start(){
+const params=new URLSearchParams(location.search);
+const aa=params.get('aa')||'msaa';
+const initialSteps=[48,64,96].includes(Number(params.get('steps')))?Number(params.get('steps')):96;
+const grainStrength=THREE.MathUtils.clamp(Number(params.get('grain')??.35),0,1);
+const glSamples=(gl:WebGL2RenderingContext)=>Array.from(gl.getInternalformatParameter(gl.RENDERBUFFER,gl.RGBA16F,gl.SAMPLES) as Int32Array);
 const renderer=new THREE.WebGLRenderer({canvas:$('gl') as HTMLCanvasElement,antialias:true,powerPreference:'high-performance'});
+const gl=renderer.getContext(),supportedSamples=glSamples(gl);
+const actualSamples=['msaa','hybrid'].includes(aa)?Math.max(0,...supportedSamples.filter(n=>n<=4)):0;
+const timer=params.get('timing')==='1'?gl.getExtension('EXT_disjoint_timer_query_webgl2'):null;
+const gpuPending:WebGLQuery[]=[],gpuTimes:number[]=[],frameTimes:number[]=[];
+const pct=(a:number[],q:number)=>a.length?[...a].sort((x,y)=>x-y)[Math.min(a.length-1,Math.floor(a.length*q))]:null;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
 renderer.setClearColor(0x070605);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(40,1,.025,40);
@@ -58,30 +69,43 @@ const sun=new THREE.DirectionalLight(0xffd5a1,2);sun.position.copy(person.positi
 sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.camera.left=-2;sun.shadow.camera.right=2;sun.shadow.camera.top=3;sun.shadow.camera.bottom=-1;sun.shadow.bias=-.0003;
 const fill=new THREE.HemisphereLight(0x858c92,0x100c08,.18);scene.add(fill);
 const heartLight=new THREE.PointLight(0xffb677,.035,.7,2);person.add(heartLight);heartLight.position.copy(heart.position).add(new THREE.Vector3(.13,.06,-.18));
-const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
+const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:actualSamples,resolveDepthBuffer:true,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
 composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);
-const bloom=new UnrealBloomPass(new THREE.Vector2(512,512),.35,.4,.65);composer.addPass(bloom);composer.addPass(new OutputPass());const grade=createGrade();composer.addPass(grade);
+const bloom=new UnrealBloomPass(new THREE.Vector2(512,512),.35,.4,.65);composer.addPass(bloom);
+// r186 SMAA expects linear-sRGB, before OutputPass. Keep the ECG/DOM layers separate.
+const smaa=['smaa','hybrid'].includes(aa)||(['msaa','hybrid'].includes(aa)&&actualSamples===0)?new SMAAPass():null;
+if(smaa)composer.addPass(smaa);
+composer.addPass(new OutputPass());const grade=createGrade();composer.addPass(grade);
+// Local diagnostics only: existing product shaders/defaults remain unchanged.
+grade.uniforms.uGrain={value:1};
+grade.material.fragmentShader=grade.material.fragmentShader.replace('uniform float uTime,uAspect,uSpace;','uniform float uTime,uAspect,uSpace,uGrain;').replace('(.012+.014*uSpace);','(.012+.014*uSpace)*uGrain;');
+arch.vol.material.fragmentShader=arch.vol.material.fragmentShader.replace('const int N=48;','const int N='+initialSteps+';');
 const clean=decode(w.clean,w.scale,w.n),input=decode(w.input,w.scale,w.n),output=decode(w.output,w.scale,w.n);
 const loop=makeLoop(detectR(clean,w.fs),[clean,input,output],w.fs);
 const grid=createGrid($('grid') as HTMLCanvasElement);
 const sweep=createSweep($('sweep') as HTMLCanvasElement,{fs:w.fs,loop,input:{values:input,color:[255,188,121],glow:.45,core:.78,white:.35},output:{values:output,color:[103,231,195]},mvPerBox:3.6});
 let W=1,H=1;
-function resize(){W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio,1.5);renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);arch.setPx(H,pr);camera.aspect=W/H;
+const renderScale=THREE.MathUtils.clamp(Number(params.get('scale')||1),1,1.5);
+function resize(){W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio*renderScale,1.5);renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);arch.setPx(H,pr);camera.aspect=W/H;
  const box={l:W*.47,r:W*.95,t:H*.46,b:H*.77},mv=mvPerBoxFor(box,2.5);sweep.resize(box,mv);grid.resize(box,2.5,mv);camera.updateProjectionMatrix();}
 resize();addEventListener('resize',resize);
 const reduced=new URLSearchParams(location.search).get('reduced')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches;
 const lenis=new Lenis({wrapper:$('wrap'),content:$('content'),duration:reduced?.1:1.5,autoRaf:false});
 let targetP=0,p=0,t=0,prev=performance.now(),frame=0,playing=true,locked=false,volumeOn=true,bloomOn=true,clay=false,frozenTime:number|null=null;
+let grainOn=true,jitter=true,testFrame:number|null=null,steps=initialSteps,pathStart:number|null=null,pathDuration=8;
 lenis.on('scroll',ev=>{if(!locked)targetP=ev.progress;});
 const pointer={x:0,y:0,sx:0,sy:0};addEventListener('pointermove',ev=>{pointer.x=ev.clientX/W-.5;pointer.y=ev.clientY/H-.5;});
 const clayMat=new THREE.MeshStandardMaterial({color:0x777b7d,roughness:.9});
 function configure(pv:number,time:number,opts:any={}){
- locked=true;targetP=p=pv;frozenTime=time;
+ locked=true;pathStart=null;targetP=p=pv;frozenTime=time;
  if(opts.volume!==undefined)volumeOn=opts.volume;if(opts.bloom!==undefined)bloomOn=opts.bloom;if(opts.clay!==undefined)clay=opts.clay;
+ if(opts.grain!==undefined)grainOn=opts.grain;if(opts.jitter!==undefined)jitter=opts.jitter;
+ if(opts.frame!==undefined)testFrame=opts.frame;
+ if(opts.steps!==undefined&&[48,64,96].includes(opts.steps)&&steps!==opts.steps){arch.vol.material.fragmentShader=arch.vol.material.fragmentShader.replace('const int N='+steps+';','const int N='+opts.steps+';');steps=opts.steps;arch.vol.material.needsUpdate=true;}
  draw(0);return state();
 }
 const samples:number[]=[];
-function state(){const phase=beatPhase(loop,w.fs,t),sample=Math.floor(t*w.fs+1e-6);return{ready:true,p,t,scene:w.id,record:w.record,fs:w.fs,winner:w.winner,sample,sourceSample:loop.start+sample%(loop.end-loop.start),rAbs:Math.round(phase.prev*w.fs),rOffsets:loop.beats.map(i=>i-loop.start),beatAge:phase.sincePrev,heartScale:heart.scale.x,sharedClock:true,bodyVisible:person.visible,heartVisible:heart.visible&&person.visible,heartScreen:heart.position.clone().applyMatrix4(person.matrixWorld).project(camera).toArray(),camera:camera.position.toArray(),cameraTarget:lastTarget.toArray(),cartSocket:cartSocket.toArray(),volume:volumeOn,bloom:bloomOn,clay,cpuRenderMsMean:samples.reduce((a,b)=>a+b,0)/Math.max(1,samples.length),drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles};}
+function state(){const phase=beatPhase(loop,w.fs,t),sample=Math.floor(t*w.fs+1e-6);return{ready:true,p,t,scene:w.id,record:w.record,fs:w.fs,winner:w.winner,sample,sourceSample:loop.start+sample%(loop.end-loop.start),rAbs:Math.round(phase.prev*w.fs),rOffsets:loop.beats.map(i=>i-loop.start),beatAge:phase.sincePrev,heartScale:heart.scale.x,sharedClock:true,bodyVisible:person.visible,heartVisible:heart.visible&&person.visible,heartScreen:heart.position.clone().applyMatrix4(person.matrixWorld).project(camera).toArray(),camera:camera.position.toArray(),cameraTarget:lastTarget.toArray(),cartSocket:cartSocket.toArray(),volume:volumeOn,bloom:bloomOn,clay,aa,actualSamples,supportedSamples,smaa:!!smaa,dpr:devicePixelRatio,pixelRatio:renderer.getPixelRatio(),renderSize:renderer.getDrawingBufferSize(new THREE.Vector2()).toArray(),grain:grainOn,jitter,steps,frame:testFrame??frame,gpu:{available:!!timer,count:gpuTimes.length,p50:pct(gpuTimes,.5),p95:pct(gpuTimes,.95)},raf:{count:frameTimes.length,p50:pct(frameTimes,.5),p95:pct(frameTimes,.95)},cpuRenderMsMean:samples.reduce((a,b)=>a+b,0)/Math.max(1,samples.length),drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles};}
  let lastTarget=new THREE.Vector3(),lastPersonVisible=true;
 function draw(dt:number){
  t=frozenTime??t;
@@ -103,8 +127,12 @@ function draw(dt:number){
  if(bodyMesh?.morphTargetInfluences)bodyMesh.morphTargetInfluences[0]=reduced?0:.025*(.5+.5*Math.sin(t*1.5));
  normalMats.forEach((mat,m)=>m.material=clay?clayMat:mat);bloom.enabled=bloomOn;
  grade.uniforms.uAspect.value=W/H;grade.uniforms.uTime.value=t;grade.uniforms.uSpace.value=.65;
+ grade.uniforms.uGrain.value=grainOn?grainStrength:0;
  renderer.info.autoReset=false;renderer.info.reset();
- arch.update(t,frame,camera,composer.readBuffer.depthTexture,volumeOn?roomLevel:0);composer.render(dt);
+ arch.update(t,jitter?(testFrame??frame):0,camera,composer.readBuffer.depthTexture,volumeOn?roomLevel:0);
+ if(timer){const disjoint=gl.getParameter(timer.GPU_DISJOINT_EXT);while(gpuPending.length&&(disjoint||gl.getQueryParameter(gpuPending[0],gl.QUERY_RESULT_AVAILABLE))){const q=gpuPending.shift()!;if(!disjoint){gpuTimes.push(gl.getQueryParameter(q,gl.QUERY_RESULT)/1e6);if(gpuTimes.length>600)gpuTimes.shift();}gl.deleteQuery(q);}}
+ const query=timer&&gpuPending.length<8?gl.createQuery():null;
+ if(query)gl.beginQuery(timer.TIME_ELAPSED_EXT,query);composer.render(dt);if(query){gl.endQuery(timer.TIME_ELAPSED_EXT);gpuPending.push(query);}
  const blend=wave; $('wavebox').style.opacity=String(blend);$('labels').style.opacity=String(blend);
  $('title').style.opacity=String(1-ss(.25,.5,p));$('hint').style.opacity=String(1-ss(.2,.5,p));
  sweep.draw({t,startAbs:0,mix:0,alpha:blend,reduced,ring:null,comet:null,gridAlpha:.2});
@@ -116,9 +144,10 @@ $('bloom').onchange=ev=>bloomOn=(ev.target as HTMLInputElement).checked;
 $('clay').onchange=ev=>clay=(ev.target as HTMLInputElement).checked;
 $('play').onclick=()=>{playing=!playing;frozenTime=null;($('play') as HTMLButtonElement).textContent=playing?'재생 정지':'재생';};
 addEventListener('keydown',ev=>{if(ev.key.toLowerCase()==='d')$('qa').style.display=$('qa').style.display==='block'?'none':'block';});
-(window as any).aPreview={set:configure,state,live:(pv:number)=>{locked=true;targetP=p=pv;frozenTime=null;playing=true;return state();}};
+(window as any).aPreview={set:configure,state,live:(pv:number)=>{locked=true;targetP=p=pv;frozenTime=null;testFrame=null;playing=true;return state();},path:(seconds=8)=>{pathStart=performance.now();pathDuration=seconds;locked=true;frozenTime=null;testFrame=null;t=0;playing=true;gpuTimes.length=frameTimes.length=0;return state();}};
 $('loading').remove();
-function tick(now:number){const dt=Math.min((now-prev)/1000,.05);prev=now;lenis.raf(now);if(frozenTime===null&&playing)t+=dt;
+function tick(now:number){frameTimes.push(now-prev);if(frameTimes.length>600)frameTimes.shift();const dt=Math.min((now-prev)/1000,.05);prev=now;lenis.raf(now);if(frozenTime===null&&playing)t+=dt;
+ if(pathStart!==null){p=targetP=THREE.MathUtils.clamp((now-pathStart)/1000/pathDuration,0,1);if(p===1)pathStart=null;}
  p=reduced?targetP:p+(targetP-p)*(1-Math.exp(-dt/ .35));pointer.sx=reduced?0:pointer.sx+(pointer.x-pointer.sx)*(1-Math.exp(-dt/.4));pointer.sy=reduced?0:pointer.sy+(pointer.y-pointer.sy)*(1-Math.exp(-dt/.4));
  const before=performance.now();draw(dt);samples.push(performance.now()-before);if(samples.length>120)samples.shift();requestAnimationFrame(tick);}
 requestAnimationFrame(tick);

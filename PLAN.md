@@ -308,3 +308,6 @@ a-climb(4198) 별도 실제 장면. 손마디/단 보정 후 내부 정점침투
 
 ### A-P1 AA 조사 — 사용자 시점 이동 품질 피드백
 코드/공식자료 조사 완료. composer samples 기본0, frame-jitter volume/noise와 grade grain 분리 필요. 다음 우선순위: AA-0 baseline 동영상/효과off 원인분리 → MSAA4/SMAA 단독 비교 → texture/volume 잔여 보완 → 필요시 조합 채택. 구현/시각개선은 미검증, A-P2 보류 유지. 명세 ECG_A_antialiasing_research_2026-10-05.md.
+
+### 2026-10-06 A-P1 AA 적용 — D-067/F-038
+MSAA4/volume96step/grain35% 기본, 4후보12프레임/고정jitter진단/5영상 및 최종17runtime PASS. local RTX3070 GPU p95~9.84ms/RAF16.8ms, 전시PC미검증. AA KEEP/전체TUNE. 다음 archive/cart/camera/receiver 및 잔여shimmer, A-P2보류. 상세 ECG_A_antialiasing_review_2026-10-06.md.

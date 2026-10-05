@@ -302,3 +302,6 @@ BC각12최종프레임(Intro6/Story6)완료, 자체12국소편집/프레임별TU
 
 ### A-P1 실제 자산 착수 체크포인트
 프로젝트 내부 Python3.11/bpy4.5.3 준비, 기존 body에서 새 climb/breath GLB와3전극 생성. 내부12렌더 및 손발 표면근접2–7mm 확인. registry test-only/전체TUNE. 다음 palm grip/비관통 보완→심장·lead→서고 depth/volume/재질/post→ECG/runtime 검증. 사용자 품질 평가용 장면은 미완. 재현 npm run model:a -- --verify.
+
+### A-P1 실제 scene — D-066/F-037/R-034
+a-climb(4198) 별도 실제 장면. 손마디/단 보정 후 내부 정점침투0, 검정몸·심실형heart·전극·카트배선·고정archive volume/bloom/grade·저장mixed0dB sweep 연결. 17캡처/3R경계/정지·native-scroll/reduced/오류0·build PASS. 전체TUNE: 서고재질/카트상세/camera높은중간각/receiver·aliasing. 기존제품route 유지; A-P2 보류. 첫품질묶음완료주장안함. 명세 ECG_A_scene_review_2026-10-05.md.

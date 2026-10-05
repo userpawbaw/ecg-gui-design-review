@@ -1,0 +1,2 @@
+import {defineConfig} from 'vite';import {fileURLToPath} from 'node:url';
+export default defineConfig({resolve:{alias:[{find:'three/addons',replacement:fileURLToPath(new URL('./node_modules/three/examples/jsm',import.meta.url))},{find:/^three$/,replacement:fileURLToPath(new URL('./node_modules/three/build/three.module.js',import.meta.url))}]},server:{fs:{allow:[fileURLToPath(new URL('../../..',import.meta.url))]}}});

@@ -481,3 +481,6 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 
 ## 2026-10-05 A 실제 자산 제작
 사용자 계획문서 표시/제작 진행 요청. open_in_codex queued, 실제body/3전극GLB 생성. Python3.12/bpy버전불일치와 venv ensurepip 실패 후 공식 embedded3.11.9+bpy4.5.3/numpy1.26.4를 프로젝트.tools에 분리. 새 measured rig/analytic chain/breath bake, 표면raycast전극·heart anchor. QA quaternion회전모드 수정/발offset 수정 후12clay캡처. surface proximity2.14–7.29mm; 근접은 grip/비관통 보증아님. npm model:a 재생성 동일GLB해시, records139/portability PASS. 손가락grip와전체A-P1 runtime/light미완TUNE, 기존자산/제품route변경없음.
+
+## 2026-10-05 A 실제 scene 통합
+제작 계속 요청→D066. 손 palm/phalanges 재정렬, 근접 PASS에도단내부171/168/456/588정점 발견→표면보정 뒤0(F037). 별도 a-climb Vite/Three/Lenis/Pretendard, 기존archive depth에선택occluder 추가, heart/3전극/카트socket lead/sweep 결합. d0-mixed-0 S022250Hz0dB 저장입력/clean, M08output 로드만/미전시. 12연속+off3+reduced/native2=17PNG,3R경계/정지시간재생/native-scroll/reduced/오류0/build PASS. 초기/중간 서가내 camera와과한heart발광 직접발견·수정, Fresnelrim은연출. EdgeDevTools실패→Chromium1243검증. G4전역휘도비교 .0121/.0132는품질합격아님. R034/CASE007/체크리스트범위보완. 최종품질TUNE/서고재질·카트·높은중간camera·receiver/aliasing/목표PC미검증. A-P2와사용자품질평가아직진행안함.

@@ -64,12 +64,24 @@ for side,x,z in [("R",.68,.58),("L",.42,1.16)]:
     contacts["foot."+side]={"rung_height":z,"rung_world_blender":[x,rung(z),z],"ankle_target_local":list(ankle)}
 for side,x,z in [("R",.72,1.74),("L",.38,2.32)]:
     contact=Vector((x,rung(z),z))
-    wrist=local(contact+Vector((0,-.065,-.025)))
+    wrist=local(contact+Vector((0,-.055,-.060)))
     residual["wrist."+side]=solve("upper."+side,"fore."+side,wrist,Vector((wrist.x*2,.08,wrist.z-.2)))
-    aim("hand."+side,(0,-1,.2))
-    # Moderate bend across phalanges, preserving digit length.
-    for k in (1,2,3):
-        p=rig.pose.bones[f"finger{k}.{side}"]; p.rotation_mode="XYZ"; p.rotation_euler.x=math.radians(-32)
+    # Align the palm to the near face of the rung; fingers rise then curl over it.
+    hp=rig.pose.bones["hand."+side]; rest=hp.bone.matrix_local.to_3x3()
+    y0=(rest@Vector((0,1,0))).normalized(); s=1 if side=="L" else -1
+    n0=Vector((-s,0,0)); n0=(n0-n0.dot(y0)*y0).normalized()
+    f,n=Vector((0,0,1)),Vector((0,-1,0))
+    M0=Matrix((y0,n0,y0.cross(n0))).transposed(); M1=Matrix((f,n,f.cross(n))).transposed()
+    hp.matrix=Matrix.Translation(hp.matrix.translation.copy())@(M1@M0.inverted()@rest).to_4x4()
+    bpy.context.view_layer.update()
+    Mh=hp.matrix@hp.bone.matrix_local.inverted(); axis=Mh.to_3x3().inverted()@Vector((1,0,0))
+    C=Matrix.Identity(4)
+    for k,share in ((1,.40),(2,.35),(3,.25)):
+        p=rig.pose.bones[f"finger{k}.{side}"]; K=p.bone.head_local
+        C=C@Matrix.Translation(K)@Matrix.Rotation(math.radians(105*share),4,axis)@Matrix.Translation(-K)
+        p.matrix=Mh@C@p.bone.matrix_local; bpy.context.view_layer.update()
+    thumb=rig.pose.bones["thumb."+side]; K=thumb.bone.head_local
+    thumb.matrix=Mh@Matrix.Translation(K)@Matrix.Rotation(math.radians(28),4,axis)@Matrix.Translation(-K)@thumb.bone.matrix_local
     contacts["hand."+side]={"rung_height":z,"rung_world_blender":list(contact),"wrist_target_local":list(wrist)}
 bpy.context.view_layer.update()
 # Bake the pose with the existing breath morph. Keep source and rig workspace for reproducibility.
@@ -81,6 +93,28 @@ def evaluated(value):
     P=np.array([v.co[:] for v in me.vertices]); F=[list(p.vertices) for p in me.polygons]
     ev.to_mesh_clear(); return P,F
 P,F=evaluated(0); P1,_=evaluated(1)
+# Contact correction on the baked surface, against the exact rectangular rung.
+# Apply identically to basis and breath; no topology change and no new pose drift.
+contact_corrections={}
+def remove_rung_penetration(Pin):
+    W=Pin@np.array(ROT.to_3x3()).T+np.array(root)
+    stats={}
+    for name,c in contacts.items():
+        center=np.array(c["rung_world_blender"]); d=W-center
+        mask=(np.linalg.norm(d,axis=1)<.18)&(np.abs(W[:,0]-.55)<.24)&(np.abs(d[:,1])<.045)&(np.abs(d[:,2])<.015)
+        ids=np.where(mask)[0]; stats[name]=len(ids)
+        if name.startswith("foot"):
+            W[ids,2]=center[2]+.0158
+        else:
+            for i in ids:
+                distances=[.045+d[i,1],.045-d[i,1],.015+d[i,2],.015-d[i,2]]
+                face=int(np.argmin(distances))
+                if face==0: W[i,1]=center[1]-.0458
+                elif face==1: W[i,1]=center[1]+.0458
+                elif face==2: W[i,2]=center[2]-.0158
+                else: W[i,2]=center[2]+.0158
+    return (W-np.array(root))@np.array(ROT.to_3x3()),stats
+P,contact_corrections=remove_rung_penetration(P);P1,_=remove_rung_penetration(P1)
 mesh=bpy.data.meshes.new("AClimbBody"); mesh.from_pydata(P.tolist(),[],F); mesh.update()
 posed=bpy.data.objects.new("AClimbBody",mesh); bpy.context.scene.collection.objects.link(posed)
 bpy.context.view_layer.objects.active=posed
@@ -99,6 +133,7 @@ metadata={"status":"INTERNAL_TUNE_contact_surface_and_camera_review_pending","so
 "archive_root_blender":list(root),"archive_rotation_z":math.pi,"heart_local_blender":list(heart),
 "heart_local_web":[heart.x,heart.z,-heart.y],"chest_q_wxyz":list(chest_transform.to_quaternion()),
 "contacts":contacts,"joint_target_error_m":residual,"vertices":len(P),"polygons":len(F),
+"surface_contact_corrections":contact_corrections,
 "limitations":["joint endpoint match is not palm/sole mesh contact proof","finger wrap, surface penetration and electrodes require internal review","not a final runtime or lighting-quality result"]}
 # Attach sites to the posed skin, not to approximate chest rectangles.
 from mathutils.bvhtree import BVHTree

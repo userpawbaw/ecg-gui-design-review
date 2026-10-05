@@ -4,22 +4,30 @@
     "foot.R": {
       "nearest_body_surface_m": 0.0021441024728119373,
       "threshold_m": 0.018,
-      "status": "PASS_proximity_only"
+      "status": "PASS_proximity_only",
+      "rung_interior_vertex_count": 0,
+      "penetration_status": "PASS_vertices_only"
     },
     "foot.L": {
       "nearest_body_surface_m": 0.00214014551602304,
       "threshold_m": 0.018,
-      "status": "PASS_proximity_only"
+      "status": "PASS_proximity_only",
+      "rung_interior_vertex_count": 0,
+      "penetration_status": "PASS_vertices_only"
     },
     "hand.R": {
-      "nearest_body_surface_m": 0.005476365797221661,
+      "nearest_body_surface_m": 0.01218403596431017,
       "threshold_m": 0.018,
-      "status": "PASS_proximity_only"
+      "status": "PASS_proximity_only",
+      "rung_interior_vertex_count": 0,
+      "penetration_status": "PASS_vertices_only"
     },
     "hand.L": {
-      "nearest_body_surface_m": 0.007287298329174519,
+      "nearest_body_surface_m": 0.009230932220816612,
       "threshold_m": 0.018,
-      "status": "PASS_proximity_only"
+      "status": "PASS_proximity_only",
+      "rung_interior_vertex_count": 0,
+      "penetration_status": "PASS_vertices_only"
     }
   },
   "frames": [

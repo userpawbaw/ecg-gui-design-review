@@ -676,19 +676,24 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "A_first_actual_climb_assets_generated_internal_TUNE",
+    "status": "A_P1_actual_scene_internal_QA_PASS_visual_TUNE",
     "records": [
       "D-065",
+      "D-066",
+      "F-037",
+      "R-034",
       "CASE-007"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Refine palm grip and penetration; integrate heart/leads, archive depth-volume and post; then ECG/runtime internal verify before quality feedback",
+    "next": "Remain in A-P1: archive materials/cart detail, middle camera framing, receiver shadows and volume aliasing; then complete-scene quality feedback. A-P2 deferred",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
-    "product_code_changed": false,
-    "runtime_verified": false,
+    "product_code_changed": true,
+    "runtime_verified": true,
     "asset_checkpoint": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_asset_checkpoint_2026-10-05.md",
-    "internal_clay_frames": 12
+    "internal_clay_frames": 12,
+    "product_route_changed": false,
+    "scene_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_scene_review_2026-10-05.md"
   }
 }

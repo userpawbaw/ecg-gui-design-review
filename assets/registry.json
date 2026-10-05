@@ -1829,9 +1829,9 @@
       },
       "processing": "scripts/assets/build-a-climb.py; Blender 4.5.3, measured skeleton, auto skin weights, analytic limb solve, pose + breath baked into GLB",
       "processed": "prototype/v2/src/story/intro/assets/a-climb/body_climb.glb",
-      "processed_sha256": "1cc800878d5b773fd4054d63fe447960f3aba97576668c5a114a97ad2ea61e42",
+      "processed_sha256": "84906bcc8632deda7f4cfe4fbc1d663e42df8d1bed259b7410f118b069bcd88a",
       "used_by": ["A-P1 internal asset validation"],
-      "review": "12 internal clay views, joint and surface proximity checked. TUNE: finger wrap, complete penetration/contact and runtime heart visibility. Not final production quality."
+      "review": "D-066: palm orientation and phalanx curl revised, basis/breath contact surface corrected against rectangular rungs. 12 clay views; rung-interior vertices 0 at four contacts. Full triangle collision/support and final quality remain TUNE."
     },
     {
       "id": "a-climb-electrodes-20261005",
@@ -1843,9 +1843,9 @@
       "attribution_required": false,
       "processing": "Cylinder foam and metal snap, ray-cast attachment to posed body surface; same local frame as climb body",
       "processed": "prototype/v2/src/story/intro/assets/a-climb/electrodes_climb.glb",
-      "processed_sha256": "ba06a49fde5aa4478bda5c6251aa0d7231fb860e7d8b992a3c879b4105c52fae",
+      "processed_sha256": "8aab9f584e1064c22ac24a5c79bcaea69a43bd67ad0c355d91e53657c1dcb1e9",
       "used_by": ["A-P1 internal asset validation"],
-      "review": "Geometry generated, surface anchors recorded. Short leads/cart connection and integrated visibility remain pending."
+      "review": "D-066: surface sites regenerated after contact correction. Procedural leads connect to canonical cart socket in a-climb preview. Final support-detail quality remains TUNE."
     }
   ],
   "rejected": [

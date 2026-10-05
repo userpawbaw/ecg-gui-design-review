@@ -47,3 +47,5 @@ C: C04 작은 타일 규격, C08 사각 타일과 의자 자세 연속성 보완
 ### 제작 착수 후 갱신
 [오르기 자산 체크포인트](ECG_A_asset_checkpoint_2026-10-05.md): body_climb/electrodes_climb 실제 GLB, breath/heart anchor/skin site 생성. Blender4.5.3 실행 경로 준비 및 내부12렌더 완료. 모델은 손가락 grip·전체 비관통·runtime 가시성 TUNE이며 A-P1 완료는 아니다. 다음은 접촉 보완/심장·배선 통합/고정 서고 조명·후처리.
 
+[실제 scene 체크포인트](ECG_A_scene_review_2026-10-05.md): grip 방향/curl 및 단 표면 보정, 정점 침투0. 고정 서고와 anatomy heart/3전극/카트배선/volume/bloom/grade/저장 mixed 입력 연결. 내부17runtime 캡처/3R경계/정지·native-scroll/reduced 검증 PASS. **A-P1 전체 품질 TUNE**: 서고 재질/카트/중간 높은camera/receiver·aliasing 보완 뒤 품질 피드백. A-P2나 제품 경로 교체로 넘어가지 않는다.
+

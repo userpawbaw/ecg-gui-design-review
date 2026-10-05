@@ -1,0 +1,1637 @@
+{
+  "url": "http://127.0.0.1:4198/",
+  "scope": "A4-A6 internal runtime, not final visual quality or target PC",
+  "states": [
+    {
+      "file": "sequence-00.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0,
+          3.3,
+          4.6
+        ],
+        "cameraTarget": [
+          0.2,
+          1.2,
+          -3
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 33.43749999953434,
+        "drawCalls": 61,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.08589810396822826,
+          0.363454047414761,
+          0.9954197093855366
+        ],
+        "heartVisible": false,
+        "p": 0,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 220867,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-01.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          0.1652892561983471,
+          2.954395191585274,
+          3.0072126220886553
+        ],
+        "cameraTarget": [
+          0.3051840721262209,
+          1.335236664162284,
+          -3.2283996994740796
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 5.294736841987622,
+        "drawCalls": 82,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.05917371167175392,
+          0.26579835342511704,
+          0.9940596162535956
+        ],
+        "heartVisible": false,
+        "p": 0.09090909090909093,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 436067,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-02.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          0.44958677685950416,
+          2.359954921111946,
+          0.26761833208114183
+        ],
+        "cameraTarget": [
+          0.48610067618332087,
+          1.5678437265214125,
+          -3.621247182569496
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 3.4390476190263315,
+        "drawCalls": 80,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.01336821344948308,
+          0.11953801436622402,
+          0.989242202963188
+        ],
+        "heartVisible": false,
+        "p": 0.18181818181818185,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 429479,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-03.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          0.55,
+          2.155151665582432,
+          -0.7257583279121608
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.9441666667039196,
+        "drawCalls": 74,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.011027779151441446,
+          0.05778530462515044,
+          0.9853990466777276
+        ],
+        "heartVisible": false,
+        "p": 0.2727272727272727,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 393744,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-04.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          0.55,
+          2.2573976795008703,
+          -1.236988397504351
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.8166666667287549,
+        "drawCalls": 72,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.013036689525469816,
+          0.07343325866953361,
+          0.9825113650717768
+        ],
+        "heartVisible": false,
+        "p": 0.3636363636363637,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 349874,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-05.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          0.55,
+          2.4286520509886325,
+          -2.0932602549431616
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.7558333333271245,
+        "drawCalls": 67,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.018346912504878795,
+          0.12071828308077168,
+          0.9748782553923294
+        ],
+        "heartVisible": false,
+        "p": 0.4545454545454546,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 321524,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-06.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          0.55,
+          2.586761973415571,
+          -2.8838098670778542
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.725000000031044,
+        "drawCalls": 65,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.02674279908499524,
+          0.20399350517233225,
+          0.9628096994445414
+        ],
+        "heartVisible": false,
+        "p": 0.5454545454545454,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 320828,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-07.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          0.5527756860002565,
+          2.6490320684717052,
+          -3.20159424016425
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.7208333333333333,
+        "drawCalls": 68,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.03005348646523148,
+          0.23673675775618888,
+          0.9572523421348468
+        ],
+        "heartVisible": false,
+        "p": 0.6363636363636364,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 321452,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-08.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          1.0609976834588664,
+          2.4718059360246003,
+          -3.4934961053712463
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.7216666666480402,
+        "drawCalls": 76,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.09727957964699616,
+          0.2167112878481586,
+          0.9508141465322124
+        ],
+        "heartVisible": true,
+        "p": 0.7272727272727273,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 404147,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-09.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          1.9476649771196937,
+          2.1626091361839017,
+          -4.002761422755927
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.7224999999937912,
+        "drawCalls": 81,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.046150865545740896,
+          0.10055598994588252,
+          0.9678213975180135
+        ],
+        "heartVisible": true,
+        "p": 0.8181818181818182,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 432215,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-10.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.491929383740419,
+          1.9728143687469308,
+          -4.3153645691227025
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.8950000001428028,
+        "drawCalls": 80,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.22542695950425912,
+          0.08877336669047885,
+          0.9766653136997372
+        ],
+        "heartVisible": true,
+        "p": 0.9090909090909092,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 432203,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "sequence-11.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 1.084166666958481,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.29485684629120557,
+          0.09381366419124208,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "no-volume.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          0.55,
+          2.2356538854060357,
+          -1.1282694270301792
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 1.127500000192473,
+        "drawCalls": 72,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.012555281642382586,
+          0.06955790522903955,
+          0.9832033584563112
+        ],
+        "heartVisible": false,
+        "p": 0.35,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 349874,
+        "volume": false,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "no-bloom.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": false,
+        "bodyVisible": true,
+        "camera": [
+          0.55,
+          2.2356538854060357,
+          -1.1282694270301792
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.9433333332960804,
+        "drawCalls": 59,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.012555281642382586,
+          0.06955790522903955,
+          0.9832033584563112
+        ],
+        "heartVisible": false,
+        "p": 0.35,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 349861,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "clay.png",
+      "state": {
+        "beatAge": 0.452,
+        "bloom": false,
+        "bodyVisible": true,
+        "camera": [
+          0.55,
+          2.2356538854060357,
+          -1.1282694270301792
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": true,
+        "cpuRenderMsMean": 0.7449999999254941,
+        "drawCalls": 59,
+        "fs": 250,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.012555281642382586,
+          0.06955790522903955,
+          0.9832033584563112
+        ],
+        "heartVisible": false,
+        "p": 0.35,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 657,
+        "t": 2.4,
+        "triangles": 349861,
+        "volume": false,
+        "winner": "M08"
+      }
+    }
+  ],
+  "beats": [
+    {
+      "before": {
+        "beatAge": 0.8240000000000001,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.6491666665300727,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.0000043151533986,
+        "heartScreen": [
+          -0.29170498884690427,
+          0.09355325048441392,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 0.95,
+        "rAbs": 75,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 281,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 338,
+        "t": 1.124,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      },
+      "at": {
+        "beatAge": 0,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.6558333332029481,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.07,
+        "heartScreen": [
+          -0.29170498884690427,
+          0.09355325048441392,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 0.95,
+        "rAbs": 282,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 282,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 339,
+        "t": 1.128,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      },
+      "after": {
+        "beatAge": 0.08000000000000007,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.6649999999130766,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.0273117980396784,
+        "heartScreen": [
+          -0.29170498884690427,
+          0.09355325048441392,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 0.95,
+        "rAbs": 282,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 302,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 359,
+        "t": 1.208,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "before": {
+        "beatAge": 0.8160000000000001,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.6749999999068678,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.0000047410115545,
+        "heartScreen": [
+          -0.29170498884690427,
+          0.09355325048441392,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 0.95,
+        "rAbs": 282,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 486,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 543,
+        "t": 1.944,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      },
+      "at": {
+        "beatAge": 0,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.6816666666107873,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.07,
+        "heartScreen": [
+          -0.29170498884690427,
+          0.09355325048441392,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 0.95,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 487,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 544,
+        "t": 1.948,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      },
+      "after": {
+        "beatAge": 0.08000000000000007,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.686666666623205,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.0273117980396784,
+        "heartScreen": [
+          -0.29170498884690427,
+          0.09355325048441392,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 0.95,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 507,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 564,
+        "t": 2.028,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "before": {
+        "beatAge": 0.7600000000000002,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.698333333277454,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.000009162087543,
+        "heartScreen": [
+          -0.29170498884690427,
+          0.09355325048441392,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 0.95,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 677,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 734,
+        "t": 2.708,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      },
+      "at": {
+        "beatAge": 0,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.7108333332464098,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.07,
+        "heartScreen": [
+          -0.29170498884690427,
+          0.09355325048441392,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 0.95,
+        "rAbs": 678,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 678,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 735,
+        "t": 2.712,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      },
+      "after": {
+        "beatAge": 0.08000000000000007,
+        "bloom": true,
+        "bodyVisible": true,
+        "camera": [
+          2.5,
+          1.97,
+          -4.32
+        ],
+        "cameraTarget": [
+          0.55,
+          1.65,
+          -3.76
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.7199999999254942,
+        "drawCalls": 79,
+        "fs": 250,
+        "heartScale": 1.0273117980396784,
+        "heartScreen": [
+          -0.29170498884690427,
+          0.09355325048441392,
+          0.9767675686152076
+        ],
+        "heartVisible": true,
+        "p": 0.95,
+        "rAbs": 678,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "ready": true,
+        "record": "S022",
+        "sample": 698,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "sourceSample": 755,
+        "t": 2.7920000000000003,
+        "triangles": 432191,
+        "volume": true,
+        "winner": "M08"
+      }
+    }
+  ],
+  "stationaryReplay": {
+    "first": {
+      "beatAge": 0.08000000000000007,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 0.7299999999813735,
+      "drawCalls": 79,
+      "fs": 250,
+      "heartScale": 1.0273117980396784,
+      "heartScreen": [
+        -0.29170498884690427,
+        0.09355325048441392,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "p": 0.95,
+      "rAbs": 678,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "ready": true,
+      "record": "S022",
+      "sample": 698,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "sourceSample": 755,
+      "t": 2.7920000000000003,
+      "triangles": 432191,
+      "volume": true,
+      "winner": "M08"
+    },
+    "later": {
+      "beatAge": 0.7186000000000092,
+      "bloom": true,
+      "bodyVisible": true,
+      "camera": [
+        2.5,
+        1.97,
+        -4.32
+      ],
+      "cameraTarget": [
+        0.55,
+        1.65,
+        -3.76
+      ],
+      "cartSocket": [
+        -1.29,
+        0.88,
+        -3.9
+      ],
+      "clay": false,
+      "cpuRenderMsMean": 1.038333333376795,
+      "drawCalls": 79,
+      "fs": 250,
+      "heartScale": 1.0000149115021866,
+      "heartScreen": [
+        -0.29170498884690427,
+        0.09355325048441392,
+        0.9767675686152076
+      ],
+      "heartVisible": true,
+      "p": 0.95,
+      "rAbs": 1085,
+      "rOffsets": [
+        75,
+        282,
+        487,
+        678,
+        883,
+        1085,
+        1285,
+        1487,
+        1675,
+        1880,
+        2083
+      ],
+      "ready": true,
+      "record": "S022",
+      "sample": 1264,
+      "scene": "d0-mixed-0",
+      "sharedClock": true,
+      "sourceSample": 1321,
+      "t": 5.058600000000009,
+      "triangles": 432191,
+      "volume": true,
+      "winner": "M08"
+    }
+  },
+  "nativeScroll": {
+    "beatAge": 0.2732999999999999,
+    "bloom": true,
+    "bodyVisible": true,
+    "camera": [
+      0.55,
+      2.205681521967642,
+      -0.9784076098382092
+    ],
+    "cameraTarget": [
+      0.55,
+      1.65,
+      -3.76
+    ],
+    "cartSocket": [
+      -1.29,
+      0.88,
+      -3.9
+    ],
+    "clay": false,
+    "cpuRenderMsMean": 5.514634146059795,
+    "drawCalls": 73,
+    "fs": 250,
+    "heartScale": 1.0028100467617582,
+    "heartScreen": [
+      -0.011942987807532956,
+      0.0647416149731729,
+      0.9840834921184156
+    ],
+    "heartVisible": false,
+    "p": 0.32887412135195354,
+    "rAbs": 282,
+    "rOffsets": [
+      75,
+      282,
+      487,
+      678,
+      883,
+      1085,
+      1285,
+      1487,
+      1675,
+      1880,
+      2083
+    ],
+    "ready": true,
+    "record": "S022",
+    "sample": 350,
+    "scene": "d0-mixed-0",
+    "sharedClock": true,
+    "sourceSample": 407,
+    "t": 1.4012999999999998,
+    "triangles": 371146,
+    "volume": true,
+    "winner": "M08"
+  },
+  "reduced": {
+    "beatAge": 0.452,
+    "bloom": true,
+    "bodyVisible": true,
+    "camera": [
+      2.5,
+      1.97,
+      -4.32
+    ],
+    "cameraTarget": [
+      0.55,
+      1.65,
+      -3.76
+    ],
+    "cartSocket": [
+      -1.29,
+      0.88,
+      -3.9
+    ],
+    "clay": false,
+    "cpuRenderMsMean": 52.25999999940395,
+    "drawCalls": 79,
+    "fs": 250,
+    "heartScale": 1,
+    "heartScreen": [
+      -0.29485684629120557,
+      0.09381366419124208,
+      0.9767675686152076
+    ],
+    "heartVisible": true,
+    "p": 1,
+    "rAbs": 487,
+    "rOffsets": [
+      75,
+      282,
+      487,
+      678,
+      883,
+      1085,
+      1285,
+      1487,
+      1675,
+      1880,
+      2083
+    ],
+    "ready": true,
+    "record": "S022",
+    "sample": 600,
+    "scene": "d0-mixed-0",
+    "sharedClock": true,
+    "sourceSample": 657,
+    "t": 2.4,
+    "triangles": 432191,
+    "volume": true,
+    "winner": "M08"
+  },
+  "errors": "",
+  "reducedErrors": "",
+  "checks": "PASS render/load/R-onset/static-scroll replay/native scroll/reduced motion",
+  "limits": [
+    "CPU timing is not GPU timing",
+    "no 600-second/target-PC test",
+    "vertex contact is not complete triangle collision proof"
+  ]
+}

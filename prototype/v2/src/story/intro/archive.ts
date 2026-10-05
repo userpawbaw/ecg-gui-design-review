@@ -76,10 +76,12 @@ export async function createArchive(){
  const lightRT=new THREE.WebGLRenderTarget(2048,2048,{depthTexture:new THREE.DepthTexture(2048,2048,THREE.FloatType)});
  const lightVP=new THREE.Matrix4().multiplyMatrices(lightCam.projectionMatrix,lightCam.matrixWorldInverse);
  const depthOnly=new THREE.MeshBasicMaterial({colorWrite:false});
- function renderSunDepth(renderer:THREE.WebGLRenderer){
+ function renderSunDepth(renderer:THREE.WebGLRenderer,occluders:THREE.Object3D[]=[]){
   const sc=new THREE.Scene();const parent=room.parent;sc.add(room);sc.overrideMaterial=depthOnly;
+  const parents=occluders.map(o=>o.parent);occluders.forEach(o=>sc.add(o));
   renderer.setRenderTarget(lightRT);renderer.clear();renderer.render(sc,lightCam);renderer.setRenderTarget(null);
   sc.remove(room);if(parent)parent.add(room);
+  occluders.forEach((o,i)=>{sc.remove(o);parents[i]?.add(o);});
  }
 
  // dust: motes in the room's air, bright only inside a sunbeam (same depth map) and when scattering toward the camera

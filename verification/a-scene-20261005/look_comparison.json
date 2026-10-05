@@ -1,0 +1,23 @@
+{
+  "limits": "Different cameras and geometry; global image stats are descriptive, not perceptual or fidelity proof",
+  "images": {
+    "mock_L05": {
+      "mean_linear_luminance": 0.012065542620095147,
+      "p90_linear_luminance": 0.010647745085413971,
+      "mean_srgb": [
+        0.08940457984601351,
+        0.04953813608801047,
+        0.027078467364344844
+      ]
+    },
+    "runtime_A6": {
+      "mean_linear_luminance": 0.013232852132210236,
+      "p90_linear_luminance": 0.014297314637327174,
+      "mean_srgb": [
+        0.08648877579532145,
+        0.05506955035087704,
+        0.030409642792405572
+      ]
+    }
+  }
+}

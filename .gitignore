@@ -14,3 +14,4 @@ __pycache__/
 *.pyc
 .npm-cache-background/
 .tools/
+prototype/spikes/a-climb/public/

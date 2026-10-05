@@ -37,6 +37,16 @@ for name,c in meta["contacts"].items():
     hit=tree.find_nearest(p)
     surface[name]={"nearest_body_surface_m":hit[3],"threshold_m":.018,
                   "status":"PASS_proximity_only" if hit[3]<.018 else "TUNE_surface_contact"}
+    # Local rung AABB: 0.48 x 0.09 x 0.03 m, with 1 mm interior margin.
+    c=Vector(meta["contacts"][name]["rung_world_blender"])
+    intruding=[]
+    for v in body.data.vertices:
+        w=body.matrix_world@v.co
+        if (w-c).length>.18: continue
+        if abs(w.x-.55)<.239 and abs(w.y-c.y)<.044 and abs(w.z-c.z)<.014:
+            intruding.append(v.index)
+    surface[name]["rung_interior_vertex_count"]=len(intruding)
+    surface[name]["penetration_status"]="PASS_vertices_only" if not intruding else "TUNE_penetration"
 cam=bpy.data.cameras.new("QA"); co=bpy.data.objects.new("QA",cam); bpy.context.scene.collection.objects.link(co); bpy.context.scene.camera=co
 world=bpy.data.worlds.new("QA"); world.use_nodes=True; world.node_tree.nodes["Background"].inputs[0].default_value=(.35,.35,.35,1); bpy.context.scene.world=world
 l=bpy.data.lights.new("QA_key","AREA"); l.energy=600; l.size=4; lo=bpy.data.objects.new("QA_key",l); bpy.context.scene.collection.objects.link(lo); lo.location=(2,1,5); lo.rotation_euler=(Vector((.55,3.9,1.5))-lo.location).to_track_quat("-Z","Y").to_euler()

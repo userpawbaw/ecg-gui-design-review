@@ -490,3 +490,6 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 
 ## 2026-10-06 A-P1 AA 구현·검증
 D067 사전 비교결정→none/MSAA/SMAA/hybrid 각12고정p+4jitter, 진단7/추가step8. captureStream VP9 4후보영상+최종영상, 브라우저decode36프레임. MSAA4/96step/grain35% 기본선택, fixedROI분산~45.9%감소(F038). RTX3070 GPU query최종p95~9.84ms/RAF16.8ms, 순차단일짧은실험. 최종17/R/native/stationary/reduced/errors0/build PASS. 전체A-P1 TUNE. 4198이미실행중이라 신규서버실행실패후 기존재사용, montage상대경로실패는 repo cwd에서수정. 신호/공유shader/productroute변경없음; A-P2/BC보류.
+
+## 2026-10-06 사용자 환경 판정 반영
+사용자 AA 좋아졌음/전체빛렌더·내부소품 만족/현행진행 피드백. D068 환경KEEP와 전체승인 범위분리. 계획·색인·상태에서 서고/cart 반복TUNE 선행게이트 및 A-P2보류 갱신. 다음 A-P2(지구/궤도/구름/고정서고) 제작, 구도/접촉/receiver한계는 접합부점검. 이번작업은 다음단계정리와기록이며 새renderer/runtime제작아님.

@@ -311,3 +311,6 @@ a-climb(4198) 별도 실제 장면. 손마디/단 보정 후 내부 정점침투
 
 ### 2026-10-06 A-P1 AA 적용 — D-067/F-038
 MSAA4/volume96step/grain35% 기본, 4후보12프레임/고정jitter진단/5영상 및 최종17runtime PASS. local RTX3070 GPU p95~9.84ms/RAF16.8ms, 전시PC미검증. AA KEEP/전체TUNE. 다음 archive/cart/camera/receiver 및 잔여shimmer, A-P2보류. 상세 ECG_A_antialiasing_review_2026-10-06.md.
+
+### 2026-10-06 최신 사용자 KEEP — D-068
+AA 개선·서고 전체 빛 렌더·내부 소품 충실도 만족. 환경/소품 유지, 반복 보완 게이트 종료. 다음 A-P2 지구→궤도→구름→같은 서고 고창/사다리 진입. camera/contact/receiver 한계는 연결 경로 국소 검증에서 확인. A-P3 처리→출력/의자인계와 A-P4 Story는 이후, BC보류 유지.

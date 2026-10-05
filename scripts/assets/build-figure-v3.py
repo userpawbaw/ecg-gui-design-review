@@ -238,12 +238,12 @@ def build():
         print('   floor face direction', tuple(round(v, 2) for v in hf), '(want down-right: x<0, z<0)')
 
     def pose_chair():
-        h = SEAT_H['chair']; sit(h, lean=-7, dy=.02)
+        h = SEAT_H['chair']; sit(h, lean=-1, dy=.02)                       # upright, off the backrest: measurement is about to start
         P.turn('neck', 6, X); P.turn('head', 4, X)
         for s, sg in (('L', 1), ('R', -1)):
-            P.leg(s, (sg * .12, -.43, .11), (sg * .05, -1, -.25), (sg * .12, -1.5, h + .2))       # heels up a little: thighs clear the raised seat front (0.449 m)
+            P.leg(s, (sg * .12, -.45, .10), (sg * .05, -1, -.2), (sg * .12, -1.5, h + .2))        # feet nearly flat
             th = P.head(f'ORG-thigh.{s}').lerp(P.head(f'ORG-shin.{s}'), .62)       # hands rest on the thigh top, 62 % toward the knee
-            P.arm_relaxed(s, th + Vector((sg * .01, .05, .105)), None, (sg * .55, .45, h + .45), flex=-22, dev=-30, pronation=72)   # hand laid along the thigh
+            P.arm_relaxed(s, th + Vector((sg * .01, .05, .125)), None, (sg * .55, .45, h + .45), flex=-22, dev=-30, pronation=72)   # hand laid along the thigh
             P.curl(s, 40, thumb=10)
 
     def pose_desk():
@@ -321,7 +321,10 @@ def build():
         P0, P1 = evaluated(0.0), evaluated(1.0)
         rows = pc.check(rig, P0, CHECK.get(pname, {}))
         n = pc.report(rows, pname, os.path.join(CHECK_DIR, f'{pname}.json'))
-        if n['FAIL']: fails[pname] = [r['name'] for r in rows if r['status'] == 'FAIL']
+        if n['FAIL']:
+            fails[pname] = [r['name'] for r in rows if r['status'] == 'FAIL']
+            if not os.environ.get('POSE_ALLOW_FAIL'):
+                print('   FAIL — body_v3_%s.glb not written' % pname); continue          # the gate also keeps the old mesh
         P0u, nr = untangle(P0); P1, _ = untangle(P1, ref=P0)
         if PG is not None: PG, _ = untangle(PG)
         P0 = P0u; print('   untangled', nr, 'vertices')

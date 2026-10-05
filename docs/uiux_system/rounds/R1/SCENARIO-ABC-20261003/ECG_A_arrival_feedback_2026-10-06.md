@@ -39,3 +39,7 @@ A-P3에서는 처리막이 파형을 받아 표본으로 분리하고 깨끗한 
 A-P4는 각 노이즈원에 빛의 의미를 맞춘다: 전원 장비의 간섭 영역, 호흡의 움직임, 주먹 쥠의 긴장 부위를 강조한다. 기존 박동 배경 스캔은 여전히 별도 보류다. 세 단계의 피드백과 구현 기록을 섞지 않는다.
 
 참조: [현행 제작 계획](ECG_A_production_plan_2026-10-05.md), [실제 전이 검토](ECG_A_arrival_review_2026-10-06.md), [조명 씬 명세](ECG_ABC_lighting_scene_spec_2026-10-04.md).
+
+## 5. 구현 체크포인트
+
+2026-10-06 A-P2 빛/후처리 실제 보완(D-070/F-041): [최종 검토](ECG_A_lighting_review_2026-10-06.md). 따뜻한 태양/가림 flare·PBR roughness·얼음 relief·구름 산란 구현, 기술 QA/build PASS, 시각 TUNE. 서고 KEEP 유지. 다음 해당 전이의 사용자 피드백(얼음/구름/specular·GPU 비용) 후 A-P3.

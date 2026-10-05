@@ -1,0 +1,20 @@
+import fs from 'node:fs';import path from 'node:path';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../../../',import.meta.url)),out=path.join(root,'verification/a-arrival-20261006',process.env.A_LIGHT_ROUND||'lighting-final-diagnostics');fs.mkdirSync(out,{recursive:true});
+const cache=path.resolve(root,'../.npm-browser-cache/_npx');let cli=process.env.A_BROWSER_BIN;
+if(!cli)for(const d of fs.readdirSync(cache)){const f=path.join(cache,d,'node_modules/agent-browser/bin',process.platform==='win32'?'agent-browser-win32-x64.exe':'agent-browser-linux-x64');if(fs.existsSync(f)){cli=f;break;}}
+function run(args,json=false){const r=spawnSync(cli,['--session','a-climb',...args,...(json?['--json']:[])],{encoding:'utf8',cwd:root,maxBuffer:32*1024*1024,timeout:60000});if(r.error||r.status!==0)throw Error(r.error?.message||r.stderr||r.stdout);if(json){const x=JSON.parse(r.stdout);if(!x.success)throw Error(JSON.stringify(x));return x.data.result;}return r.stdout;}
+const js=s=>run(['eval',s],true);run(['open','http://127.0.0.1:4198/?timing=1']);run(['set','viewport','1920','1080']);run(['wait','--fn','!!window.aPreview']);const states=[];
+for(const p of [0,.12,.23,.30,.32,.336])for(const mode of ['base','no-bloom','no-flare','no-cloud']){
+ const opts={frame:12,grain:false,bloom:mode!=='no-bloom',flare:mode!=='no-flare',cloud:mode!=='no-cloud'};
+ const state=js(`window.aPreview.set(${p},2.4,${JSON.stringify(opts)})`),file=`${p}-${mode}.png`;run(['screenshot',path.join(out,file)]);states.push({file,state});
+}
+for(let i=0;i<12;i++){const state=js(`window.aPreview.set(.12,${i*.25},{frame:12,grain:false,bloom:true,flare:true,cloud:true})`),file=`idle-${i}.png`;run(['screenshot',path.join(out,file)]);states.push({file,state});}
+run(['open','http://127.0.0.1:4198/?reduced=1']);run(['wait','--fn','!!window.aPreview']);for(const p of [0,.30]){const state=js(`window.aPreview.set(${p},2.4)`),file=`reduced-${p}.png`;run(['screenshot',path.join(out,file)]);states.push({file,state});}
+const errors=run(['errors']).trim();if(errors)throw Error(errors);
+run(['open','http://127.0.0.1:4198/?timing=1']);run(['wait','--fn','!!window.aPreview']);
+const video=js(`(async()=>{const stream=document.getElementById('gl').captureStream(30),mime='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(mime))throw Error('VP9 unavailable');const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:12000000}),chunks=[];const done=new Promise(r=>rec.onstop=()=>{const blob=new Blob(chunks,{type:mime}),reader=new FileReader();reader.onload=()=>r({data:reader.result,state:window.aPreview.state()});reader.readAsDataURL(blob);});rec.ondataavailable=e=>chunks.push(e.data);rec.start();window.aPreview.path(8,true);await new Promise(r=>setTimeout(r,8300));rec.stop();const result=await done;stream.getTracks().forEach(t=>t.stop());return result;})()`);
+fs.writeFileSync(path.join(out,'reverse.webm'),Buffer.from(video.data.split(',')[1],'base64'));
+const src='http://127.0.0.1:4198/@fs/'+path.join(out,'reverse.webm').replaceAll('\\','/');js(`(async()=>{const v=document.createElement('video');v.src=${JSON.stringify(src)};v.muted=true;window.reverseVideo=v;await new Promise((r,j)=>{v.onloadeddata=r;v.onerror=j;});return true;})()`);
+for(let i=0;i<12;i++){const data=js(`(async()=>{const v=window.reverseVideo,done=new Promise(r=>v.onseeked=r);v.currentTime=${.4+i*.65};await done;const c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);return c.toDataURL('image/jpeg',.92);})()`);fs.writeFileSync(path.join(out,`reverse-${i}.jpg`),Buffer.from(data.split(',')[1],'base64'));}
+js('window.reverseVideo.remove()');const finalErrors=run(['errors']).trim();if(finalErrors)throw Error(finalErrors);
+fs.writeFileSync(path.join(out,'review.json'),JSON.stringify({states,errors,reverse:{state:video.state,scope:'8sec 3D canvas only, no DOM/ECG overlay',errors:finalErrors}},null,2));console.log('PASS 38 lighting/off/idle/reduced frames + reverse video/12 decoded frames; errors0');

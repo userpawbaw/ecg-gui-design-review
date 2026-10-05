@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "A_P2_user_feedback_TUNE_lighting_post_pending_A_P1_environment_KEEP",
+    "status": "A_P2_lighting_implemented_runtime_PASS_visual_TUNE_A_P1_environment_KEEP",
     "records": [
       "D-065",
       "D-066",
@@ -686,7 +686,7 @@
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "A-P2 lighting/materials, backlight/post, cloud/window join; complete visual review before A-P3; archive lighting/props KEEP; B/C deferred",
+    "next": "User review of A-P2 lighting, ice/cloud/specular and GPU cost; then A-P3 processing/output and chair handoff; archive KEEP; B/C deferred",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -708,7 +708,8 @@
       "D-069",
       "F-039",
       "F-040",
-      "D-070"
+      "D-070",
+      "F-041"
     ],
     "arrival_evidence": "verification/a-arrival-20261006",
     "arrival_runtime_verified": true,
@@ -730,6 +731,16 @@
       ],
       "scope": "A-P2 review; archive KEEP retained; not blanket camera/transition approval",
       "implementation_this_turn": false
+    },
+    "arrival_lighting_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_lighting_review_2026-10-06.md",
+    "arrival_lighting_evidence": "verification/a-arrival-20261006/lighting-final3",
+    "arrival_lighting_runtime_verified": true,
+    "arrival_lighting_target_PC_verified": false,
+    "arrival_lighting_gpu_local": {
+      "composer_p50_ms": 8.01792,
+      "composer_p95_ms": 22.56896,
+      "valid_queries": 479,
+      "scope": "RTX3070 Chromium 1920x1080 DPR1 unrecorded 8sec; not target-PC proof"
     }
   }
 }

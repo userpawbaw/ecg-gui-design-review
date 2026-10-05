@@ -33,3 +33,7 @@ Default MSAA4 (supported HDR sample count), volume96 steps, grain35%. SMAA fallb
 GPU timing is opt-in with &timing=1, valid timer query results only. Use npm run qa:aa / npm run qa:aa:motion after opening a working agent-browser a-climb session. Motion recordings contain only the 3D canvas, not ECG/DOM. A_AA_FINAL=1 records final settings; A_QA_DIR overrides runtime screenshot output so old evidence is preserved.
 See ECG_A_antialiasing_review_2026-10-06.md / verification/a-aa-20261005/fidelity.md. AA internal KEEP, whole scene still TUNE.
 
+
+## A-P2 lighting checkpoint (2026-10-06)
+Warm solar light/night mask, artistic NASA-derived roughness/polar relief, Earth-occluded solar flare, directional cloud scattering. Approved archive retained. Whole visual TUNE; close-up cloud/ice silhouette/specular and GPU cost remain gaps. See ECG_A_lighting_review_2026-10-06.md.
+Diagnostic URLs: flare=0, cloud=0, cloudShadow=0. Cloud-off reveals the hidden cut; it is not a low-spec production mode. aPreview.set accepts the same booleans; aPreview.path(8,true) runs a reverse camera path for QA. npm run qa:lighting captures effect-off/idle/reduced states and reverse video.

@@ -500,3 +500,6 @@ D069 사전경로/자산결정. explore texture catalog결과부적합, NASA공�
 ### 2026-10-06 A-P2 빛/후처리 피드백 — F-040/D-070
 사용자 기존 GAP 보완 동의 및 조명 존재감 부족 지적. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_arrival_feedback_2026-10-06.md. 다음 A-P2 광원/재질→역광/후처리→구름·고창 접합→완성 장면 피드백 후 A-P3. 승인 서고 유지, BC보류. 문서만 수정; 새 runtime/build/시각 개선 미검증.
 문서 검증: records:check 149항목 PASS. 렌더 코드 수정/신규 브라우저 QA 없음。
+
+### 2026-10-06 A-P2 조명 구현 — D-070/F-041
+따뜻한 solar light/night mask/roughness/polar relief/가림 flare/cloud 산란 보완. initial+자체3수정 캡처, 최종31+진단38+runtime17/정역영상24 decoded/오류0/3R/정지/native/reduced/build PASS. RTX3070 composer p50 8.02/p95 22.57ms로 비용 상승. 전체시각TUNE/서고KEEP. 다음 사용자 전이 피드백 후 A-P3; BC보류. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_lighting_review_2026-10-06.md

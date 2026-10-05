@@ -41,6 +41,7 @@ renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.
 renderer.setClearColor(0x070605);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(40,1,.025,40);
 const arrival=full?await createArrival():null;
+arrival?.setEffects({flare:params.get('flare')!=='0',cloud:params.get('cloud')!=='0',cloudShadow:params.get('cloudShadow')!=='0'});
 const loader=new GLTFLoader();
 const [arch,b,h,e,meta,w]=await Promise.all([createArchive(),loader.loadAsync(URLs.body),loader.loadAsync(URLs.heart),loader.loadAsync(URLs.electrodes),fetch(URLs.manifest).then(r=>r.json()),fetch('/wave.json').then(r=>r.json())]);
 scene.add(arch.room,arch.dust);arch.setFade(1);
@@ -76,6 +77,7 @@ const heartLight=new THREE.PointLight(0xffb677,.035,.7,2);person.add(heartLight)
 const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:actualSamples,resolveDepthBuffer:true,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
 const renderPass=new RenderPass(scene,camera);composer.addPass(renderPass);composer.addPass(arch.vol);
 if(arrival)composer.addPass(arrival.cloudPass);
+if(arrival)composer.addPass(arrival.flarePass);
 const bloom=new UnrealBloomPass(new THREE.Vector2(512,512),.35,.4,.65);composer.addPass(bloom);
 // r186 SMAA expects linear-sRGB, before OutputPass. Keep the ECG/DOM layers separate.
 const smaa=['smaa','hybrid'].includes(aa)||(['msaa','hybrid'].includes(aa)&&actualSamples===0)?new SMAAPass():null;
@@ -98,20 +100,21 @@ resize();addEventListener('resize',resize);
 const reduced=new URLSearchParams(location.search).get('reduced')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches;
 const lenis=new Lenis({wrapper:$('wrap'),content:$('content'),duration:reduced?.1:1.5,autoRaf:false});
 let targetP=0,p=0,t=0,prev=performance.now(),frame=0,playing=true,locked=false,volumeOn=true,bloomOn=true,clay=false,frozenTime:number|null=null;
-let grainOn=true,jitter=true,testFrame:number|null=null,steps=initialSteps,pathStart:number|null=null,pathDuration=8;
+let grainOn=true,jitter=true,testFrame:number|null=null,steps=initialSteps,pathStart:number|null=null,pathDuration=8,pathReverse=false;
 lenis.on('scroll',ev=>{if(!locked)targetP=ev.progress;});
 const pointer={x:0,y:0,sx:0,sy:0};addEventListener('pointermove',ev=>{pointer.x=ev.clientX/W-.5;pointer.y=ev.clientY/H-.5;});
 const clayMat=new THREE.MeshStandardMaterial({color:0x777b7d,roughness:.9});
 function configure(pv:number,time:number,opts:any={}){
  locked=true;pathStart=null;targetP=p=pv;frozenTime=time;
  if(opts.volume!==undefined)volumeOn=opts.volume;if(opts.bloom!==undefined)bloomOn=opts.bloom;if(opts.clay!==undefined)clay=opts.clay;
+ arrival?.setEffects(opts);
  if(opts.grain!==undefined)grainOn=opts.grain;if(opts.jitter!==undefined)jitter=opts.jitter;
  if(opts.frame!==undefined)testFrame=opts.frame;
  if(opts.steps!==undefined&&[48,64,96].includes(opts.steps)&&steps!==opts.steps){arch.vol.material.fragmentShader=arch.vol.material.fragmentShader.replace('const int N='+steps+';','const int N='+opts.steps+';');steps=opts.steps;arch.vol.material.needsUpdate=true;}
  draw(0);return state();
 }
 const samples:number[]=[];
-function state(){const phase=beatPhase(loop,w.fs,t),sample=Math.floor(t*w.fs+1e-6);return{ready:true,p,t,scene:w.id,record:w.record,fs:w.fs,winner:w.winner,sample,sourceSample:loop.start+sample%(loop.end-loop.start),rAbs:Math.round(phase.prev*w.fs),rOffsets:loop.beats.map(i=>i-loop.start),beatAge:phase.sincePrev,heartScale:heart.scale.x,sharedClock:true,bodyVisible:person.visible,heartVisible:heart.visible&&person.visible,heartScreen:heart.position.clone().applyMatrix4(person.matrixWorld).project(camera).toArray(),camera:camera.position.toArray(),cameraTarget:lastTarget.toArray(),cartSocket:cartSocket.toArray(),volume:volumeOn,bloom:bloomOn,clay,aa,actualSamples,supportedSamples,smaa:!!smaa,dpr:devicePixelRatio,pixelRatio:renderer.getPixelRatio(),renderSize:renderer.getDrawingBufferSize(new THREE.Vector2()).toArray(),grain:grainOn,jitter,steps,frame:testFrame??frame,gpu:{available:!!timer,count:gpuTimes.length,p50:pct(gpuTimes,.5),p95:pct(gpuTimes,.95)},raf:{count:frameTimes.length,p50:pct(frameTimes,.5),p95:pct(frameTimes,.95)},cpuRenderMsMean:samples.reduce((a,b)=>a+b,0)/Math.max(1,samples.length),drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles};}
+function state(){const phase=beatPhase(loop,w.fs,t),sample=Math.floor(t*w.fs+1e-6);return{ready:true,p,t,arrival:arrival?.state(),scene:w.id,record:w.record,fs:w.fs,winner:w.winner,sample,sourceSample:loop.start+sample%(loop.end-loop.start),rAbs:Math.round(phase.prev*w.fs),rOffsets:loop.beats.map(i=>i-loop.start),beatAge:phase.sincePrev,heartScale:heart.scale.x,sharedClock:true,bodyVisible:person.visible,heartVisible:heart.visible&&person.visible,heartScreen:heart.position.clone().applyMatrix4(person.matrixWorld).project(camera).toArray(),camera:camera.position.toArray(),cameraTarget:lastTarget.toArray(),cartSocket:cartSocket.toArray(),volume:volumeOn,bloom:bloomOn,clay,aa,actualSamples,supportedSamples,smaa:!!smaa,dpr:devicePixelRatio,pixelRatio:renderer.getPixelRatio(),renderSize:renderer.getDrawingBufferSize(new THREE.Vector2()).toArray(),grain:grainOn,jitter,steps,frame:testFrame??frame,gpu:{available:!!timer,count:gpuTimes.length,p50:pct(gpuTimes,.5),p95:pct(gpuTimes,.95)},raf:{count:frameTimes.length,p50:pct(frameTimes,.5),p95:pct(frameTimes,.95)},cpuRenderMsMean:samples.reduce((a,b)=>a+b,0)/Math.max(1,samples.length),drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles};}
  let lastTarget=new THREE.Vector3(),lastPersonVisible=true;
 function draw(dt:number){
  t=frozenTime??t;
@@ -134,6 +137,7 @@ function draw(dt:number){
  camera.position.copy(pos);camera.position.x+=pointer.sx*.03*(1-wave);camera.position.y-=pointer.sy*.03*(1-wave);
  camera.fov=roomP<.25?THREE.MathUtils.lerp(26,44,ss(0,.25,roomP)):THREE.MathUtils.lerp(44,34,wave);camera.setViewOffset(W,H,W*.19*wave,0,W,H);camera.lookAt(lastTarget);camera.updateProjectionMatrix();camera.updateMatrixWorld();
  if(arrival){arrival.cloudPass.uniforms.uCover.value=arrival.cover(p);arrival.cloudPass.uniforms.uProgress.value=ss(.24,.4,p);arrival.cloudPass.uniforms.uTime.value=reduced?0:t;if(inSpace)lastTarget.copy(arrival.update(p,t,reduced,camera));}
+ if(arrival&&!inSpace)arrival.flarePass.uniforms.uStrength.value=0;
  renderPass.scene=inSpace?arrival!.scene:scene;
  person.visible=roomP>.08;heart.visible=roomP>.7;heartMat.opacity=ss(.7,.8,roomP);
  if(person.visible!==lastPersonVisible){lastPersonVisible=person.visible;arch.renderSunDepth(renderer,person.visible?[person]:[]);}
@@ -162,10 +166,10 @@ $('bloom').onchange=ev=>bloomOn=(ev.target as HTMLInputElement).checked;
 $('clay').onchange=ev=>clay=(ev.target as HTMLInputElement).checked;
 $('play').onclick=()=>{playing=!playing;frozenTime=null;($('play') as HTMLButtonElement).textContent=playing?'재생 정지':'재생';};
 addEventListener('keydown',ev=>{if(ev.key.toLowerCase()==='d')$('qa').style.display=$('qa').style.display==='block'?'none':'block';});
-(window as any).aPreview={set:configure,state,live:(pv:number)=>{locked=true;targetP=p=pv;frozenTime=null;testFrame=null;playing=true;return state();},path:(seconds=8)=>{pathStart=performance.now();pathDuration=seconds;locked=true;frozenTime=null;testFrame=null;t=0;playing=true;gpuTimes.length=frameTimes.length=0;return state();}};
+(window as any).aPreview={set:configure,state,live:(pv:number)=>{locked=true;targetP=p=pv;frozenTime=null;testFrame=null;playing=true;return state();},path:(seconds=8,reverse=false)=>{pathStart=performance.now();pathDuration=seconds;pathReverse=reverse;locked=true;frozenTime=null;testFrame=null;t=0;playing=true;gpuTimes.length=frameTimes.length=0;return state();}};
 $('loading').remove();
 function tick(now:number){frameTimes.push(now-prev);if(frameTimes.length>600)frameTimes.shift();const dt=Math.min((now-prev)/1000,.05);prev=now;lenis.raf(now);if(frozenTime===null&&playing)t+=dt;
- if(pathStart!==null){p=targetP=THREE.MathUtils.clamp((now-pathStart)/1000/pathDuration,0,1);if(p===1)pathStart=null;}
+ if(pathStart!==null){const pathPhase=THREE.MathUtils.clamp((now-pathStart)/1000/pathDuration,0,1);p=targetP=pathReverse?1-pathPhase:pathPhase;if(pathPhase===1)pathStart=null;}
  p=reduced?targetP:p+(targetP-p)*(1-Math.exp(-dt/ .35));pointer.sx=reduced?0:pointer.sx+(pointer.x-pointer.sx)*(1-Math.exp(-dt/.4));pointer.sy=reduced?0:pointer.sy+(pointer.y-pointer.sy)*(1-Math.exp(-dt/.4));
  const before=performance.now();draw(dt);samples.push(performance.now()-before);if(samples.length>120)samples.shift();requestAnimationFrame(tick);}
 requestAnimationFrame(tick);

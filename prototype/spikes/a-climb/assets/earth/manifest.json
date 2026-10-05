@@ -30,5 +30,59 @@
       4096,
       2048
     ]
+  },
+  {
+    "id": "nasa-a-earth-roughness",
+    "source": "https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74092/world.200407.3x5400x2700.jpg",
+    "page": "https://visibleearth.nasa.gov/images/74092",
+    "credit": "NASA Earth Observatory / Jesse Allen; GEBCO elevation",
+    "licence": "public-domain",
+    "source_file": "assets/source/a-earth-day.jpg",
+    "source_sha256": "f55226d46d27e05511f2118dc6aa24f5dbf9b6b2cddc87cc6e0e7dd067c00b11",
+    "processed_file": "prototype/spikes/a-climb/assets/earth/roughness.webp",
+    "processed_sha256": "2ba860a09f29deb227b57764b90cc63012e355239f60f6d041680dac6c9154f2",
+    "bytes": 406752,
+    "size": [
+      4096,
+      2048
+    ],
+    "derived_from": [
+      {
+        "file": "assets/source/a-earth-day.jpg",
+        "sha256": "f55226d46d27e05511f2118dc6aa24f5dbf9b6b2cddc87cc6e0e7dd067c00b11"
+      },
+      {
+        "file": "assets/source/a-earth-height.jpg",
+        "sha256": "97828a87bcb6549a527232455e478c5f9e4556f761b37d620a46446da17593ab"
+      }
+    ],
+    "artistic_material_map": true
+  },
+  {
+    "id": "nasa-a-earth-relief",
+    "source": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/topography/gebco_08_rev_elev_5400x2700.jpg",
+    "page": "https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/topography-bathymetry-maps/",
+    "credit": "NASA Earth Observatory / Jesse Allen; GEBCO elevation",
+    "licence": "public-domain",
+    "source_file": "assets/source/a-earth-height.jpg",
+    "source_sha256": "97828a87bcb6549a527232455e478c5f9e4556f761b37d620a46446da17593ab",
+    "processed_file": "prototype/spikes/a-climb/assets/earth/relief.webp",
+    "processed_sha256": "702600e97f18bfab2a5feaf9093ffd5d81f4bd427ee4f94dceeada9a28273d54",
+    "bytes": 872410,
+    "size": [
+      4096,
+      2048
+    ],
+    "derived_from": [
+      {
+        "file": "assets/source/a-earth-day.jpg",
+        "sha256": "f55226d46d27e05511f2118dc6aa24f5dbf9b6b2cddc87cc6e0e7dd067c00b11"
+      },
+      {
+        "file": "assets/source/a-earth-height.jpg",
+        "sha256": "97828a87bcb6549a527232455e478c5f9e4556f761b37d620a46446da17593ab"
+      }
+    ],
+    "artistic_material_map": true
   }
 ]

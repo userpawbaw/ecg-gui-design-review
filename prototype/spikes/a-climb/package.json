@@ -8,7 +8,8 @@
     "qa": "node capture.mjs",
     "qa:aa": "node capture-aa.mjs",
     "qa:aa:motion": "node capture-aa-motion.mjs",
-    "qa:arrival": "node capture-arrival.mjs"
+    "qa:arrival": "node capture-arrival.mjs",
+    "qa:lighting": "node capture-lighting.mjs"
   },
   "dependencies": {
     "lenis": "1.3.17",

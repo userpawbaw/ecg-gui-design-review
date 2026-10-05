@@ -1,0 +1,303 @@
+{
+  "scope": "Descriptive full-frame statistics. Different camera/geometry; not fidelity PASS. Mockups are concepts, not runtime reference site captures.",
+  "looks": {
+    "outputs\\A_detailed_15\\T01.png": {
+      "mean": 0.16235625654061378,
+      "p5_p50_p95": [
+        0.0006313968311782918,
+        0.030288475829810976,
+        0.8571642117341465
+      ],
+      "saturation_mean": 0.49629407025806255,
+      "warm_fraction": 0.078681693607025
+    },
+    "outputs\\A_detailed_15\\T02.png": {
+      "mean": 0.20194064346867852,
+      "p5_p50_p95": [
+        0.005609930571712356,
+        0.08909035008554325,
+        0.7692224922430017
+      ],
+      "saturation_mean": 0.404928812228187,
+      "warm_fraction": 0.2145311411559524
+    },
+    "outputs\\A_detailed_15\\T03.png": {
+      "mean": 0.12772013888640424,
+      "p5_p50_p95": [
+        0.008102313989301675,
+        0.05696872857017959,
+        0.5171798520025352
+      ],
+      "saturation_mean": 0.3818594631946665,
+      "warm_fraction": 0.5572332192668901
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-00.png": {
+      "mean": 0.04697463975007002,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        0.0037249512653233854,
+        0.1950087626742953
+      ],
+      "saturation_mean": 0.6830026844551296,
+      "warm_fraction": 0.005497202932098765
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-01.png": {
+      "mean": 0.04697464353405566,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        0.0037249512653233854,
+        0.1950087626742953
+      ],
+      "saturation_mean": 0.6830026914039768,
+      "warm_fraction": 0.005497202932098765
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-02.png": {
+      "mean": 0.04214666639170874,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        0.0030994341200771126,
+        0.18160913324678635
+      ],
+      "saturation_mean": 0.6891750396454801,
+      "warm_fraction": 0.00478443287037037
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-03.png": {
+      "mean": 0.02349972584413148,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        6.57439446366782e-05,
+        0.12417974928568627
+      ],
+      "saturation_mean": 0.6935445516464357,
+      "warm_fraction": 0.003009741512345679
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-04.png": {
+      "mean": 0.014727511923035015,
+      "p5_p50_p95": [
+        0.0,
+        2.191464821222607e-05,
+        0.09330111264059034
+      ],
+      "saturation_mean": 0.7757087563868358,
+      "warm_fraction": 0.0007045717592592593
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-05.png": {
+      "mean": 0.007728179484673198,
+      "p5_p50_p95": [
+        0.0,
+        2.191464821222607e-05,
+        0.04553195700486683
+      ],
+      "saturation_mean": 0.48269474432447085,
+      "warm_fraction": 0.0031823881172839508
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-06.png": {
+      "mean": 0.734851614770121,
+      "p5_p50_p95": [
+        0.5728288106382006,
+        0.7053589206368056,
+        0.9282975925293615
+      ],
+      "saturation_mean": 0.02618008497464973,
+      "warm_fraction": 0.0002261766975308642
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-07.png": {
+      "mean": 0.7556362545588415,
+      "p5_p50_p95": [
+        0.5557196938294232,
+        0.7508445391746034,
+        0.9209693689135587
+      ],
+      "saturation_mean": 0.0162911819714472,
+      "warm_fraction": 5.8834876543209875e-05
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-08.png": {
+      "mean": 0.20365249816307512,
+      "p5_p50_p95": [
+        0.0006042615188490257,
+        0.07995089912341007,
+        0.5657530160158475
+      ],
+      "saturation_mean": 0.21966099580962414,
+      "warm_fraction": 0.4921831597222222
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-09.png": {
+      "mean": 0.04876303605531577,
+      "p5_p50_p95": [
+        0.0008006434772051236,
+        0.015207479423655582,
+        0.1737536396598854
+      ],
+      "saturation_mean": 0.4001508448418868,
+      "warm_fraction": 0.1451731288580247
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-10.png": {
+      "mean": 0.09680146392545398,
+      "p5_p50_p95": [
+        0.004541019003138988,
+        0.03528163408485042,
+        0.4091788005512161
+      ],
+      "saturation_mean": 0.5297609485366968,
+      "warm_fraction": 0.5481539351851852
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-before\\arrival-11.png": {
+      "mean": 0.10795949160998092,
+      "p5_p50_p95": [
+        0.012071491809775703,
+        0.07371521437800145,
+        0.2796949191905785
+      ],
+      "saturation_mean": 0.5362308615902238,
+      "warm_fraction": 0.8262962962962963
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-00.png": {
+      "mean": 0.05844461507881146,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        0.004980084225096637,
+        0.3429327005541589
+      ],
+      "saturation_mean": 0.6193514605928835,
+      "warm_fraction": 0.09190972222222223
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-01.png": {
+      "mean": 0.05844456607717162,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        0.004980084225096637,
+        0.3429327005541589
+      ],
+      "saturation_mean": 0.6193514656088981,
+      "warm_fraction": 0.09190634645061728
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-02.png": {
+      "mean": 0.05124360732610311,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        0.0036455821709330174,
+        0.2929187353806439
+      ],
+      "saturation_mean": 0.6399074519461103,
+      "warm_fraction": 0.08817467206790124
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-03.png": {
+      "mean": 0.043364126274885596,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        0.0021892187215443453,
+        0.23004633397774285
+      ],
+      "saturation_mean": 0.6513276989947941,
+      "warm_fraction": 0.07639033564814815
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-04.png": {
+      "mean": 0.06140177323925212,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        0.0026221696108784066,
+        0.3965948800138465
+      ],
+      "saturation_mean": 0.5551408612705356,
+      "warm_fraction": 0.09123505015432098
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-05.png": {
+      "mean": 0.05323156264494083,
+      "p5_p50_p95": [
+        2.191464821222607e-05,
+        0.0003680568202513204,
+        0.36978658182199364
+      ],
+      "saturation_mean": 0.6763938275291717,
+      "warm_fraction": 0.11617814429012345
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-06.png": {
+      "mean": 0.5036732069910911,
+      "p5_p50_p95": [
+        0.2597698802543525,
+        0.5018026283506867,
+        0.8039092633126781
+      ],
+      "saturation_mean": 0.199761550429274,
+      "warm_fraction": 0.9416864390432099
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-07.png": {
+      "mean": 0.49313890750197253,
+      "p5_p50_p95": [
+        0.2336061008077421,
+        0.4827370435472717,
+        0.8376423128529711
+      ],
+      "saturation_mean": 0.20101685549815293,
+      "warm_fraction": 0.9374860146604939
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-08.png": {
+      "mean": 0.20365249430089438,
+      "p5_p50_p95": [
+        0.0006042615188490257,
+        0.07995089912341007,
+        0.5657530160158475
+      ],
+      "saturation_mean": 0.21966097764459722,
+      "warm_fraction": 0.4921831597222222
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-09.png": {
+      "mean": 0.04876303605531577,
+      "p5_p50_p95": [
+        0.0008006434772051236,
+        0.015207479423655582,
+        0.1737536396598854
+      ],
+      "saturation_mean": 0.4001508448418868,
+      "warm_fraction": 0.1451731288580247
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-10.png": {
+      "mean": 0.09680146392545398,
+      "p5_p50_p95": [
+        0.004541019003138988,
+        0.03528163408485042,
+        0.4091788005512161
+      ],
+      "saturation_mean": 0.5297609485366968,
+      "warm_fraction": 0.5481539351851852
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\lighting-final3\\arrival-11.png": {
+      "mean": 0.10795949160998092,
+      "p5_p50_p95": [
+        0.012071491809775703,
+        0.07371521437800145,
+        0.2796949191905785
+      ],
+      "saturation_mean": 0.5362308615902238,
+      "warm_fraction": 0.8262962962962963
+    }
+  },
+  "kept_room_pixel_differences": {
+    "7": {
+      "max": 0,
+      "mean": 0.0
+    },
+    "8": {
+      "max": 0,
+      "mean": 0.0
+    },
+    "9": {
+      "max": 0,
+      "mean": 0.0
+    },
+    "10": {
+      "max": 0,
+      "mean": 0.0
+    },
+    "11": {
+      "max": 1,
+      "mean": 1.6075102880658437e-07
+    }
+  },
+  "hashes": {
+    "nasa-a-earth-day": true,
+    "nasa-a-earth-height": true,
+    "nasa-a-earth-roughness": true,
+    "nasa-a-earth-relief": true
+  }
+}

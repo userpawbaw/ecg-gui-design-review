@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "R1: brief 2 reviewed (handoffs/REVIEW_FIGURE_V3_WEB_2026-10-03.md). Await user: merge claude/r1-autopilot-impl-3d1b78 (recommended) and light round per user manual docs/uiux_system/lighting (F-032 L1-L9). Planning chat: RETURN 2 arm gap, RETURN 3 grip rest wrap.",
+  "next_action": "R1: D-051 figure rebuilt on Rigify + head B2 + five D-050 poses (verification/r1-rigify-20261004/). Await user review of clay + archive sheets; then brief 3 (web: r2 re-bake, five poses with hidden-cut relocation, practicals, rig per pose). Open: wall-spot trunk route, desk shot power strip occluded by the armchair, place() rotation bug (decide before brief 3).",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -127,7 +127,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-10-02",
+  "updated_at": "2026-10-04",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",

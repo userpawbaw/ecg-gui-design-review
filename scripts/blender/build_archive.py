@@ -690,8 +690,8 @@ if args.pose and FIG is not None:                                 # D-050 shots:
     if args.pose in ('chair', 'desk', 'wall', 'climb'): SHOTS = dict(SHOTS)
     if args.pose == 'climb' and 'hand_r' in fj:                  # second draft: muscle-artifact close-up — the gripping hand and RA together
         HR = FIG.location + FROT @ Vector(fj['hand_r']); RA = FIG.location + FROT @ Vector(fj['electrodes']['RA']['p'])
-        mid = (HR + RA) / 2
-        SHOTS['d7_climb_close'] = (tuple(mid + Vector((1.05, .30, -.05))), tuple(mid), 40)
+        mid = RA.lerp(HR, .5)                                    # behind-right and above the climber: gripping hand + chest (RA through the glass body)
+        SHOTS['d7_climb_close'] = (tuple(mid + Vector((.6, -.8, .35))), tuple(mid), 38)
 if args.clay:                                                     # D-049 clay gate A: grey diffuse everywhere, no volume, no emission
     CLAY = mat('clay_gate', (.5, .5, .5), .8)
     for o in scene.objects:

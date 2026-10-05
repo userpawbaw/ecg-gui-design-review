@@ -472,3 +472,6 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 
 ## 2026-10-05 오르기 확정
 사용자추천채택(D063/R032). 지구→구름→고정서고→등→측면→mixed→출력→Story의자 연속경로 문서. 좌표/각도/p초안과 정지t재생, 빛낮춤/기둥가림인계/첫자산묶음. 새이미지/코드/runtime변경없음. 같은geometry검증/전체후보선정은 이후.
+
+## 2026-10-05 BC 상세24
+사용자전이/Story보완요청에각Intro6+Story6분류(D064). 내장image_gen24생성+12프레임각1편집. B조기신호/배선/QRS/처리bay/팔/이완, C조기출처/room/head/입력color/큰screen수정. 24final/12history/정확prompt/해시/3갤러리/자체검토보존. 역할coverage충족, B회전/3면/접힘·C일부셔터/poseTUNE. R033/CASE007. 제품코드·data·실제renderer변경없음.

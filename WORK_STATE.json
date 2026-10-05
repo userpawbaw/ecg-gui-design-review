@@ -658,6 +658,21 @@
     "new_images": false,
     "product_code_changed": false,
     "runtime_verified": false,
-    "next": "ABC comparison and production order, then first A4-A6 complete visible asset/light/material/motion bundle"
+    "next": "BC detail coverage completed per D-064; review BC remaining TUNE and compare roles before production order"
+  },
+  "scenario_bc_detailed_2026_10_05": {
+    "status": "24_final_still_mockups_complete_TUNE",
+    "frames_per_candidate": 12,
+    "intro_frames_each": 6,
+    "story_frames_each": 6,
+    "targeted_edits": 12,
+    "records": [
+      "D-064",
+      "R-033",
+      "CASE-007"
+    ],
+    "product_code_changed": false,
+    "runtime_verified": false,
+    "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   }
 }

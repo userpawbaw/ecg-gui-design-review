@@ -87,3 +87,7 @@ D062: 공통서고잠금/바닥앉기와오르기후보5장·편집3. Intro mixe
 
 ## 2026-10-05 A 오르기 확정
 사용자가 추천대로확정. D063/R032: Intro오르기·등→측면·heart/mixed·출력→같은서고chair bay. 바닥앉기보류보존. 실제geometry/모션/후처리품질은 미검증. 다음ABC비교/제작순서.
+
+## 2026-10-05 B/C 비교재료보완
+사용자는ABC비교전에BC전이/Story상세화를요청. D064/R033.
+각Intro6/Story6분류→24생성/12국소편집→세계별역할coverage/TUNE. B배선/QRS등오류수정, C큰screen/초기출처/입력color수정. A오르기승인은유지, 전체winner미정/Bruntime보류.

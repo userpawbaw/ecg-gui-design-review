@@ -1,6 +1,6 @@
 import fs from 'node:fs';import path from 'node:path';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';
 const final=process.env.A_AA_FINAL==='1';
-const root=fileURLToPath(new URL('../../../',import.meta.url)),out=path.join(root,'verification/a-aa-20261005',final?'final':''),cache=path.resolve(root,'../.npm-browser-cache/_npx');let cli=process.env.A_BROWSER_BIN;
+const root=fileURLToPath(new URL('../../../',import.meta.url)),out=process.env.A_MOTION_DIR?path.join(root,process.env.A_MOTION_DIR):path.join(root,'verification/a-aa-20261005',final?'final':''),cache=path.resolve(root,'../.npm-browser-cache/_npx');let cli=process.env.A_BROWSER_BIN;
 if(!cli)for(const d of fs.readdirSync(cache)){const f=path.join(cache,d,'node_modules/agent-browser/bin',process.platform==='win32'?'agent-browser-win32-x64.exe':'agent-browser-linux-x64');if(fs.existsSync(f)){cli=f;break;}}
 function js(code){const r=spawnSync(cli,['--session','a-climb','eval',code,'--json'],{encoding:'utf8',cwd:root,maxBuffer:16*1024*1024});if(r.status!==0)throw Error(r.stderr||r.stdout);const x=JSON.parse(r.stdout);if(!x.success)throw Error(JSON.stringify(x));return x.data.result;}
 const metadata=[];

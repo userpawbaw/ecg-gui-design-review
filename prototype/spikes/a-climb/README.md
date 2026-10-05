@@ -28,6 +28,7 @@ Remaining gates: reference material/prop quality, middle camera framing, receive
 See docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_scene_review_2026-10-05.md.
 
 ## AA checkpoint (2026-10-06)
+Default now shows A-P2 Earth/orbit/clouds/actual clerestory then A-P1. Use ?stage=room for the previous room-only path. Full scroll content is760vh; room430vh. NASA credit appears during Earth. See ECG_A_arrival_review_2026-10-06.md. npm run qa:arrival captures the new transition. A_MOTION_DIR overrides motion evidence output without overwriting AA comparisons.
 Default MSAA4 (supported HDR sample count), volume96 steps, grain35%. SMAA fallback when no MSAA samples are available. Local diagnostics: ?aa=none|msaa|smaa|hybrid, &steps=48|64|96, &grain=0..1, &scale=1..1.5. r186 SMAA runs before OutputPass. Original baseline: ?aa=none&steps=48&grain=1.
 GPU timing is opt-in with &timing=1, valid timer query results only. Use npm run qa:aa / npm run qa:aa:motion after opening a working agent-browser a-climb session. Motion recordings contain only the 3D canvas, not ECG/DOM. A_AA_FINAL=1 records final settings; A_QA_DIR overrides runtime screenshot output so old evidence is preserved.
 See ECG_A_antialiasing_review_2026-10-06.md / verification/a-aa-20261005/fidelity.md. AA internal KEEP, whole scene still TUNE.

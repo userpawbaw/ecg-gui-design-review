@@ -314,3 +314,6 @@ MSAA4/volume96step/grain35% 기본, 4후보12프레임/고정jitter진단/5영�
 
 ### 2026-10-06 최신 사용자 KEEP — D-068
 AA 개선·서고 전체 빛 렌더·내부 소품 충실도 만족. 환경/소품 유지, 반복 보완 게이트 종료. 다음 A-P2 지구→궤도→구름→같은 서고 고창/사다리 진입. camera/contact/receiver 한계는 연결 경로 국소 검증에서 확인. A-P3 처리→출력/의자인계와 A-P4 Story는 이후, BC보류 유지.
+
+### 2026-10-06 A-P2 실제 전이 — D-069/F-039
+NASA4K color/height, 지형지구/구름shell/대기rim/역광approach→완전cloud가림컷→동일서고앞쪽고창→A-P1 연결. 기본4198 전체, stage=room 이전. 3자기보완묶음/31frame세트4개/17runtime/전체영상·GPU·build검증. 새전이TUNE(ice relief/flare/cloud세부), 서고KEEP유지. 다음 A-P2사용자시각피드백→A-P3처리출력/의자인계; BC보류.

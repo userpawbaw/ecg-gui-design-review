@@ -1,0 +1,34 @@
+[
+  {
+    "id": "nasa-a-earth-day",
+    "source": "https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74092/world.200407.3x5400x2700.jpg",
+    "page": "https://visibleearth.nasa.gov/images/74092",
+    "credit": "NASA Earth Observatory / Jesse Allen; GEBCO elevation",
+    "licence": "public-domain",
+    "source_file": "assets/source/a-earth-day.jpg",
+    "source_sha256": "f55226d46d27e05511f2118dc6aa24f5dbf9b6b2cddc87cc6e0e7dd067c00b11",
+    "processed_file": "prototype/spikes/a-climb/assets/earth/day.webp",
+    "processed_sha256": "5530bcfad9960592a10fdc5991de5ff378bf5ab4fa8154f60264880563bf5192",
+    "bytes": 1025958,
+    "size": [
+      4096,
+      2048
+    ]
+  },
+  {
+    "id": "nasa-a-earth-height",
+    "source": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/topography/gebco_08_rev_elev_5400x2700.jpg",
+    "page": "https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/topography-bathymetry-maps/",
+    "credit": "NASA Earth Observatory / Jesse Allen; GEBCO elevation",
+    "licence": "public-domain",
+    "source_file": "assets/source/a-earth-height.jpg",
+    "source_sha256": "97828a87bcb6549a527232455e478c5f9e4556f761b37d620a46446da17593ab",
+    "processed_file": "prototype/spikes/a-climb/assets/earth/height.webp",
+    "processed_sha256": "b9d913e1a514e368a0830259f0eacf5bc41f47ef5cc2ad4084e2cd7700dc901f",
+    "bytes": 890794,
+    "size": [
+      4096,
+      2048
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "query": "earth topography",
+  "kind": "texture",
+  "date": "2026-10-05",
+  "sources": {
+    "opengameart": {
+      "status": "ok",
+      "access": "scripted",
+      "candidates": [
+        {
+          "title": "16x16-africa",
+          "page": "https://opengameart.org/content/16x16-africa",
+          "licence": "per item — check page"
+        }
+      ]
+    }
+  }
+}

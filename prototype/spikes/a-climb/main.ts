@@ -14,6 +14,7 @@ import {createGrid,mvPerBoxFor} from '../../v2/src/story/intro/waveUi';
 import {detectR,makeLoop,beatPhase} from '../../v2/src/story/intro/beats';
 import {decode} from '../../v2/src/engine';
 import {createGrade} from '../../v2/src/story/intro/space';
+import {createArrival} from './arrival';
 const $=(id:string)=>document.getElementById(id)!;
 $('labels').querySelector('h2')!.textContent='잡음이 섞인 심전도';
 $('labels').querySelector('small')!.textContent='MIXED INPUT · 0 dB / 2.5 s';
@@ -24,6 +25,8 @@ const URLs={body:new URL('../../v2/src/story/intro/assets/a-climb/body_climb.glb
  manifest:new URL('../../v2/src/story/intro/assets/a-climb/manifest.json',import.meta.url).href};
 async function start(){
 const params=new URLSearchParams(location.search);
+const full=params.get('stage')!=='room';
+if(full)$('content').style.height='760vh';
 const aa=params.get('aa')||'msaa';
 const initialSteps=[48,64,96].includes(Number(params.get('steps')))?Number(params.get('steps')):96;
 const grainStrength=THREE.MathUtils.clamp(Number(params.get('grain')??.35),0,1);
@@ -37,6 +40,7 @@ const pct=(a:number[],q:number)=>a.length?[...a].sort((x,y)=>x-y)[Math.min(a.len
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
 renderer.setClearColor(0x070605);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(40,1,.025,40);
+const arrival=full?await createArrival():null;
 const loader=new GLTFLoader();
 const [arch,b,h,e,meta,w]=await Promise.all([createArchive(),loader.loadAsync(URLs.body),loader.loadAsync(URLs.heart),loader.loadAsync(URLs.electrodes),fetch(URLs.manifest).then(r=>r.json()),fetch('/wave.json').then(r=>r.json())]);
 scene.add(arch.room,arch.dust);arch.setFade(1);
@@ -70,7 +74,8 @@ sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.camera.left=-2;
 const fill=new THREE.HemisphereLight(0x858c92,0x100c08,.18);scene.add(fill);
 const heartLight=new THREE.PointLight(0xffb677,.035,.7,2);person.add(heartLight);heartLight.position.copy(heart.position).add(new THREE.Vector3(.13,.06,-.18));
 const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:actualSamples,resolveDepthBuffer:true,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
-composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);
+const renderPass=new RenderPass(scene,camera);composer.addPass(renderPass);composer.addPass(arch.vol);
+if(arrival)composer.addPass(arrival.cloudPass);
 const bloom=new UnrealBloomPass(new THREE.Vector2(512,512),.35,.4,.65);composer.addPass(bloom);
 // r186 SMAA expects linear-sRGB, before OutputPass. Keep the ECG/DOM layers separate.
 const smaa=['smaa','hybrid'].includes(aa)||(['msaa','hybrid'].includes(aa)&&actualSamples===0)?new SMAAPass():null;
@@ -87,6 +92,7 @@ const sweep=createSweep($('sweep') as HTMLCanvasElement,{fs:w.fs,loop,input:{val
 let W=1,H=1;
 const renderScale=THREE.MathUtils.clamp(Number(params.get('scale')||1),1,1.5);
 function resize(){W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio*renderScale,1.5);renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);arch.setPx(H,pr);camera.aspect=W/H;
+ if(arrival)arrival.cloudPass.uniforms.uAspect.value=W/H;
  const box={l:W*.47,r:W*.95,t:H*.46,b:H*.77},mv=mvPerBoxFor(box,2.5);sweep.resize(box,mv);grid.resize(box,2.5,mv);camera.updateProjectionMatrix();}
 resize();addEventListener('resize',resize);
 const reduced=new URLSearchParams(location.search).get('reduced')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -109,32 +115,44 @@ function state(){const phase=beatPhase(loop,w.fs,t),sample=Math.floor(t*w.fs+1e-
  let lastTarget=new THREE.Vector3(),lastPersonVisible=true;
 function draw(dt:number){
  t=frozenTime??t;
- const wave=ss(.78,.96,p),phase=beatPhase(loop,w.fs,t);
+ const roomP=full?THREE.MathUtils.clamp((p-.55)/.45,0,1):p;
+ const inSpace=full&&p<.32;
+ $('status').textContent=inSpace?'NASA EARTH OBSERVATORY · A 제작 중':'A · 제작 중';
+ const wave=ss(.78,.96,roomP),phase=beatPhase(loop,w.fs,t);
  const pulse=Math.exp(-phase.sincePrev/.085);
  const pos0=arch.shot('s2_beams').pos,pos1=new THREE.Vector3(.55,2.15,-.7),pos2=new THREE.Vector3(2.5,1.97,-4.32);
  // Stay in the central aisle until beyond the last stack; the side orbit lives in the back bay.
  const clearance=new THREE.Vector3(.55,2.65,-3.2);
- let pos=p<.25?pos0.clone().lerp(pos1,ss(0,.25,p)):p<.63?pos1.clone().lerp(clearance,ss(.25,.63,p)):clearance.clone().lerp(pos2,ss(.63,.92,p));
+ let pos=roomP<.25?pos0.clone().lerp(pos1,ss(0,.25,roomP)):roomP<.63?pos1.clone().lerp(clearance,ss(.25,.63,roomP)):clearance.clone().lerp(pos2,ss(.63,.92,roomP));
  lastTarget.set(.55,1.65,-3.76);
- if(p<.25)lastTarget.lerpVectors(arch.shot('s2_beams').look,new THREE.Vector3(.55,1.65,-3.76),ss(0,.25,p));
+ if(roomP<.25)lastTarget.lerpVectors(arch.shot('s2_beams').look,new THREE.Vector3(.55,1.65,-3.76),ss(0,.25,roomP));
+ if(full&&p>=.32&&p<.55){
+  const portal=new THREE.Vector3(-4.25,4.575,3.58),inside=new THREE.Vector3(-3.05,4.575,3.58),aisle=new THREE.Vector3(0,4.35,3.58);
+  pos=p<.42?new THREE.Vector3(-8,5,5.5).lerp(portal,ss(.32,.42,p)):p<.46?portal.clone().lerp(inside,ss(.42,.46,p)):p<.49?inside.clone().lerp(aisle,ss(.46,.49,p)):aisle.clone().lerp(pos0,ss(.49,.55,p));
+  lastTarget.set(-2.6,4.575,3.58);lastTarget.lerp(arch.shot('s2_beams').look,ss(.46,.55,p));
+ }
  camera.position.copy(pos);camera.position.x+=pointer.sx*.03*(1-wave);camera.position.y-=pointer.sy*.03*(1-wave);
- camera.fov=p<.25?THREE.MathUtils.lerp(26,44,ss(0,.25,p)):THREE.MathUtils.lerp(44,34,wave);camera.setViewOffset(W,H,W*.19*wave,0,W,H);camera.lookAt(lastTarget);camera.updateProjectionMatrix();camera.updateMatrixWorld();
- person.visible=p>.08;heart.visible=p>.7;heartMat.opacity=ss(.7,.8,p);
+ camera.fov=roomP<.25?THREE.MathUtils.lerp(26,44,ss(0,.25,roomP)):THREE.MathUtils.lerp(44,34,wave);camera.setViewOffset(W,H,W*.19*wave,0,W,H);camera.lookAt(lastTarget);camera.updateProjectionMatrix();camera.updateMatrixWorld();
+ if(arrival){arrival.cloudPass.uniforms.uCover.value=arrival.cover(p);arrival.cloudPass.uniforms.uProgress.value=ss(.24,.4,p);arrival.cloudPass.uniforms.uTime.value=reduced?0:t;if(inSpace)lastTarget.copy(arrival.update(p,t,reduced,camera));}
+ renderPass.scene=inSpace?arrival!.scene:scene;
+ person.visible=roomP>.08;heart.visible=roomP>.7;heartMat.opacity=ss(.7,.8,roomP);
  if(person.visible!==lastPersonVisible){lastPersonVisible=person.visible;arch.renderSunDepth(renderer,person.visible?[person]:[]);}
- heart.scale.setScalar(reduced?1:1+pulse*.07);heartMat.emissiveIntensity=.62+(reduced?0:pulse*.4);heartLight.intensity=(.035+(reduced?0:pulse*.01))*ss(.45,.7,p);
+ heart.scale.setScalar(reduced?1:1+pulse*.07);heartMat.emissiveIntensity=.62+(reduced?0:pulse*.4);heartLight.intensity=(.035+(reduced?0:pulse*.01))*ss(.45,.7,roomP);
  const roomLevel=1-wave*.78;arch.setFade(roomLevel);sun.intensity=1.8*roomLevel;fill.intensity=.16*roomLevel;
+ // Only the exterior approach is re-exposed; the user-kept interior grade/bake remains identical.
+ arch.shared.uExposure.value=full&&p<.46?THREE.MathUtils.lerp(.35,1.3,ss(.44,.46,p)):1.3;
  const bodyMesh=Array.from(normalMats.keys()).find(m=>m.morphTargetInfluences?.length);
  if(bodyMesh?.morphTargetInfluences)bodyMesh.morphTargetInfluences[0]=reduced?0:.025*(.5+.5*Math.sin(t*1.5));
  normalMats.forEach((mat,m)=>m.material=clay?clayMat:mat);bloom.enabled=bloomOn;
- grade.uniforms.uAspect.value=W/H;grade.uniforms.uTime.value=t;grade.uniforms.uSpace.value=.65;
+ grade.uniforms.uAspect.value=W/H;grade.uniforms.uTime.value=t;grade.uniforms.uSpace.value=full?.65*ss(.32,.48,p):.65;
  grade.uniforms.uGrain.value=grainOn?grainStrength:0;
  renderer.info.autoReset=false;renderer.info.reset();
- arch.update(t,jitter?(testFrame??frame):0,camera,composer.readBuffer.depthTexture,volumeOn?roomLevel:0);
+ arch.update(t,jitter?(testFrame??frame):0,camera,composer.readBuffer.depthTexture,volumeOn&&!inSpace&&(!full||p>=.46)?roomLevel:0);
  if(timer){const disjoint=gl.getParameter(timer.GPU_DISJOINT_EXT);while(gpuPending.length&&(disjoint||gl.getQueryParameter(gpuPending[0],gl.QUERY_RESULT_AVAILABLE))){const q=gpuPending.shift()!;if(!disjoint){gpuTimes.push(gl.getQueryParameter(q,gl.QUERY_RESULT)/1e6);if(gpuTimes.length>600)gpuTimes.shift();}gl.deleteQuery(q);}}
  const query=timer&&gpuPending.length<8?gl.createQuery():null;
  if(query)gl.beginQuery(timer.TIME_ELAPSED_EXT,query);composer.render(dt);if(query){gl.endQuery(timer.TIME_ELAPSED_EXT);gpuPending.push(query);}
  const blend=wave; $('wavebox').style.opacity=String(blend);$('labels').style.opacity=String(blend);
- $('title').style.opacity=String(1-ss(.25,.5,p));$('hint').style.opacity=String(1-ss(.2,.5,p));
+ $('title').style.opacity=String(full?1-ss(.12,.25,p):1-ss(.25,.5,p));$('hint').style.opacity=String(full?1-ss(.1,.2,p):1-ss(.2,.5,p));
  sweep.draw({t,startAbs:0,mix:0,alpha:blend,reduced,ring:null,comet:null,gridAlpha:.2});
  frame++;
 }

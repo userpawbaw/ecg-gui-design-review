@@ -1,0 +1,9 @@
+import fs from 'node:fs';import path from 'node:path';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../../../',import.meta.url)),out=path.join(root,'verification/a-arrival-20261006',process.env.A_ROUND||'round1');fs.mkdirSync(out,{recursive:true});
+const cache=path.resolve(root,'../.npm-browser-cache/_npx');let cli=process.env.A_BROWSER_BIN;if(!cli)for(const d of fs.readdirSync(cache)){const f=path.join(cache,d,'node_modules/agent-browser/bin',process.platform==='win32'?'agent-browser-win32-x64.exe':'agent-browser-linux-x64');if(fs.existsSync(f)){cli=f;break;}}
+function run(args,json=false){const r=spawnSync(cli,['--session','a-climb',...args,...(json?['--json']:[])],{encoding:'utf8',cwd:root,maxBuffer:32*1024*1024});if(r.error||r.status!==0)throw Error(r.error?.message||r.stderr||r.stdout);if(json){const x=JSON.parse(r.stdout);if(!x.success)throw Error(JSON.stringify(x));return x.data.result;}return r.stdout;}
+const js=s=>run(['eval',s],true);run(['open',process.env.A_PREVIEW_URL||'http://127.0.0.1:4198/?stage=full&timing=1']);run(['set','viewport','1920','1080']);run(['wait','--fn','!!window.aPreview']);
+const states=[];
+for(const [prefix,end] of [['arrival',.55],['whole',1]])for(let i=0;i<12;i++){const p=i/11*end,state=js('window.aPreview.set('+p+',2.4,{frame:12,grain:false})'),file=prefix+'-'+String(i).padStart(2,'0')+'.png';run(['screenshot',path.join(out,file)]);states.push({file,state});}
+for(const p of [.314,.32,.336,.42,.44,.46,.49]){const state=js('window.aPreview.set('+p+',2.4,{frame:12,grain:false})'),file='join-'+p+'.png';run(['screenshot',path.join(out,file)]);states.push({file,state});}
+const errors=run(['errors']).trim();fs.writeFileSync(path.join(out,'review.json'),JSON.stringify({states,errors},null,2));if(errors)throw Error(errors);console.log('31 arrival/whole/join captures; browser errors0');

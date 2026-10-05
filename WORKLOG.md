@@ -493,3 +493,6 @@ D067 사전 비교결정→none/MSAA/SMAA/hybrid 각12고정p+4jitter, 진단7/�
 
 ## 2026-10-06 사용자 환경 판정 반영
 사용자 AA 좋아졌음/전체빛렌더·내부소품 만족/현행진행 피드백. D068 환경KEEP와 전체승인 범위분리. 계획·색인·상태에서 서고/cart 반복TUNE 선행게이트 및 A-P2보류 갱신. 다음 A-P2(지구/궤도/구름/고정서고) 제작, 구도/접촉/receiver한계는 접합부점검. 이번작업은 다음단계정리와기록이며 새renderer/runtime제작아님.
+
+## 2026-10-06 A-P2 실제 제작
+D069 사전경로/자산결정. explore texture catalog결과부적합, NASA공식5400색상/GEBCO높이조회→4K변환/원본·결과hash/registry generated 등록. 지구PBR displacement/bump·cloud shell·대기림·orbit/역광, proceduralcloud완전가림편집, 동일archive 실제앞쪽창진입→A-P1. 초기외부과노출/뒤창반전/grade jump 수정(F039); 최종hero크기/남극방향과scroll760vh/credit. 모형/접합/최종룩3보완묶음의31캡처4세트 및최종17runtime,8초영상12decode/GPU p95~10.34ms/RAF16.8ms localRTX3070, build PASS. Pythoncp949/단일문자열newline검사실패는UTF8명시/재실행으로수정. T01/T02/L01 대조 ice·flare·cloud질감GAP, 전체TUNE. registry fetch의sourcecopy변환덮어쓰기피하려processednull/generated 사용. A-P3미착수/BC보류/서고KEEP.

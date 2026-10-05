@@ -1117,3 +1117,27 @@ a-climb 기본MSAA4/volume96/grain35%, MSAA미지원 SMAA fallback. hybrid는 �
 
 ### 놓쳤다면
 MSAA만으로 volume shimmer까지 해결됐다고 하거나 CPU 시간을 GPU 증거로 잘못 보고했을 것이다. ROI 수치를 이동영상 전체품질/목표PC 성능으로 확대하지 않는다.
+
+## F-039. 구름 가림은 카메라 경로와 색 처리까지 연속이어야 한다
+
+| | |
+|---|---|
+| 발견 | 2026-10-06 [코드] [캡처] |
+| 상태 | A-P2 접합 보완 / 새 전이 TUNE |
+| 영향 | 지구→구름→고창→A-P1 |
+| 연결 | D-069, rounds/R1/SCENARIO-ABC-20261003/ECG_A_arrival_review_2026-10-06.md |
+
+### 발단
+지구 scene에서 동일서고 scene으로 연결하며 초기 뒤쪽창 경로/외부volume/grade가 공간과밝기 discontinuity를 만들었다.
+
+### 먼저 의심한 것과 배제 방법
+31개 전중후/접합캡처로 cloud가림, 외부창, 안쪽camera를 분리. 사용자KEEP한 내부 bake/소품 결함으로 확대하지 않았다.
+
+### 결정적 근거
+초기외부가과노출되고창뒤에서바닥위로급하게방향반전. scene cut에서uSpace0→.65는완전cloud가림중에도cloud색이바뀌게했다.
+
+### 조치와 검토한 대안
+실제앞쪽고창 x=-3.6,y4.575,z3.58로진입, 외부exposure감소/volume안쪽부터, grade p.32~.48 연속. camera target을창뒤에두어창면을지나며180도뒤집히지않게함. 새서고나전체bake재생성은제외.
+
+### 놓쳤다면
+cloudopacity가1이라는이유만으로모든전환이숨겨졌다고주장하고사용자KEEP한환경을불필요하게재제작했을것이다. T01의flare/ice질감GAP와기술PASS는구별한다.

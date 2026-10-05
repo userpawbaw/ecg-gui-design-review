@@ -1,0 +1,11 @@
+{
+  "mockupT01": {
+    "linearLumaMean": 0.16235625654061378,
+    "linearLumaP95": 0.8571642117341465
+  },
+  "runtimeA0": {
+    "linearLumaMean": 0.04694668373844037,
+    "linearLumaP95": 0.1950087626742953
+  },
+  "limit": "different camera/geometry, descriptive only, not fidelity PASS"
+}

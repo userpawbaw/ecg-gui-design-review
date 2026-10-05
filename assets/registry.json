@@ -1819,7 +1819,10 @@
       "title": "A-P1 climbing pose derived from Blender Studio featureless body",
       "kind": "model",
       "status": "test-only",
-      "source": {"type": "derived", "asset_id": "blender-human-base-meshes"},
+      "source": {
+        "type": "derived",
+        "asset_id": "blender-human-base-meshes"
+      },
       "licence": "CC0-1.0",
       "attribution_required": false,
       "original": {
@@ -1830,7 +1833,9 @@
       "processing": "scripts/assets/build-a-climb.py; Blender 4.5.3, measured skeleton, auto skin weights, analytic limb solve, pose + breath baked into GLB",
       "processed": "prototype/v2/src/story/intro/assets/a-climb/body_climb.glb",
       "processed_sha256": "84906bcc8632deda7f4cfe4fbc1d663e42df8d1bed259b7410f118b069bcd88a",
-      "used_by": ["A-P1 internal asset validation"],
+      "used_by": [
+        "A-P1 internal asset validation"
+      ],
       "review": "D-066: palm orientation and phalanx curl revised, basis/breath contact surface corrected against rectangular rungs. 12 clay views; rung-interior vertices 0 at four contacts. Full triangle collision/support and final quality remain TUNE."
     },
     {
@@ -1838,14 +1843,77 @@
       "title": "Three electrodes fitted to climbing skin",
       "kind": "model",
       "status": "test-only",
-      "source": {"type": "procedural", "script": "scripts/assets/build-a-climb.py"},
+      "source": {
+        "type": "procedural",
+        "script": "scripts/assets/build-a-climb.py"
+      },
       "licence": "CC0-1.0",
       "attribution_required": false,
       "processing": "Cylinder foam and metal snap, ray-cast attachment to posed body surface; same local frame as climb body",
       "processed": "prototype/v2/src/story/intro/assets/a-climb/electrodes_climb.glb",
       "processed_sha256": "8aab9f584e1064c22ac24a5c79bcaea69a43bd67ad0c355d91e53657c1dcb1e9",
-      "used_by": ["A-P1 internal asset validation"],
+      "used_by": [
+        "A-P1 internal asset validation"
+      ],
       "review": "D-066: surface sites regenerated after contact correction. Procedural leads connect to canonical cart socket in a-climb preview. Final support-detail quality remains TUNE."
+    },
+    {
+      "id": "nasa-a-earth-day",
+      "title": "NASA A-P2 day 4096x2048",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74092/world.200407.3x5400x2700.jpg",
+        "page": "https://visibleearth.nasa.gov/images/74092"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/a-earth-day.jpg",
+        "sha256": "f55226d46d27e05511f2118dc6aa24f5dbf9b6b2cddc87cc6e0e7dd067c00b11",
+        "bytes": 1617810
+      },
+      "processing": "scripts/assets/prepare-a-earth.py; resize Lanczos, color quality95/height lossless WebP",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "A-P2 experimental; displacement exaggerated for visibility, not physical Earth scale",
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/earth/day.webp",
+        "sha256": "5530bcfad9960592a10fdc5991de5ff378bf5ab4fa8154f60264880563bf5192",
+        "bytes": 1025958
+      }
+    },
+    {
+      "id": "nasa-a-earth-height",
+      "title": "NASA A-P2 height 4096x2048",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/topography/gebco_08_rev_elev_5400x2700.jpg",
+        "page": "https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/topography-bathymetry-maps/"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/a-earth-height.jpg",
+        "sha256": "97828a87bcb6549a527232455e478c5f9e4556f761b37d620a46446da17593ab",
+        "bytes": 1244508
+      },
+      "processing": "scripts/assets/prepare-a-earth.py; resize Lanczos, color quality95/height lossless WebP",
+      "processed": null,
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "A-P2 experimental; displacement exaggerated for visibility, not physical Earth scale",
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/earth/height.webp",
+        "sha256": "b9d913e1a514e368a0830259f0eacf5bc41f47ef5cc2ad4084e2cd7700dc901f",
+        "bytes": 890794
+      }
     }
   ],
   "rejected": [

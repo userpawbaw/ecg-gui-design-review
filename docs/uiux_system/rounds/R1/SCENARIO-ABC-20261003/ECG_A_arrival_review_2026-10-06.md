@@ -59,3 +59,7 @@
 npm run spike -- a-climb
 ```
 기본4198은이제전체지구→서고장면. ?stage=room은이전A-P1만재현한다. ?stage=full은전체를명시. 기존aa/steps/grain/scale/reduced진단인자유지. npm run qa:arrival은31캡처, 기존npm run qa는기본전체장면runtime검증이다.
+
+## 7. 사용자 피드백 반영
+
+2026-10-06 최신 A-P2 피드백(F-040/D-070): flare/얼음 relief/구름 디테일 보완에 동의, 빛이 없는 듯한 시각 품질 TUNE. [보완 계획](ECG_A_arrival_feedback_2026-10-06.md)을 먼저 읽는다. 다음 A-P2 광원·재질→역광/후처리→구름/고창 접합 완성→사용자 피드백, 이후 A-P3. D-068 서고 빛·소품 KEEP 유지. 이번은 문서 갱신이며 새 렌더/QA는 수행하지 않았다.

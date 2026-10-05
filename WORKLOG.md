@@ -496,3 +496,7 @@ D067 사전 비교결정→none/MSAA/SMAA/hybrid 각12고정p+4jitter, 진단7/�
 
 ## 2026-10-06 A-P2 실제 제작
 D069 사전경로/자산결정. explore texture catalog결과부적합, NASA공식5400색상/GEBCO높이조회→4K변환/원본·결과hash/registry generated 등록. 지구PBR displacement/bump·cloud shell·대기림·orbit/역광, proceduralcloud완전가림편집, 동일archive 실제앞쪽창진입→A-P1. 초기외부과노출/뒤창반전/grade jump 수정(F039); 최종hero크기/남극방향과scroll760vh/credit. 모형/접합/최종룩3보완묶음의31캡처4세트 및최종17runtime,8초영상12decode/GPU p95~10.34ms/RAF16.8ms localRTX3070, build PASS. Pythoncp949/단일문자열newline검사실패는UTF8명시/재실행으로수정. T01/T02/L01 대조 ice·flare·cloud질감GAP, 전체TUNE. registry fetch의sourcecopy변환덮어쓰기피하려processednull/generated 사용. A-P3미착수/BC보류/서고KEEP.
+
+### 2026-10-06 A-P2 빛/후처리 피드백 — F-040/D-070
+사용자 기존 GAP 보완 동의 및 조명 존재감 부족 지적. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_arrival_feedback_2026-10-06.md. 다음 A-P2 광원/재질→역광/후처리→구름·고창 접합→완성 장면 피드백 후 A-P3. 승인 서고 유지, BC보류. 문서만 수정; 새 runtime/build/시각 개선 미검증.
+문서 검증: records:check 149항목 PASS. 렌더 코드 수정/신규 브라우저 QA 없음。

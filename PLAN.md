@@ -317,3 +317,6 @@ AA 개선·서고 전체 빛 렌더·내부 소품 충실도 만족. 환경/소�
 
 ### 2026-10-06 A-P2 실제 전이 — D-069/F-039
 NASA4K color/height, 지형지구/구름shell/대기rim/역광approach→완전cloud가림컷→동일서고앞쪽고창→A-P1 연결. 기본4198 전체, stage=room 이전. 3자기보완묶음/31frame세트4개/17runtime/전체영상·GPU·build검증. 새전이TUNE(ice relief/flare/cloud세부), 서고KEEP유지. 다음 A-P2사용자시각피드백→A-P3처리출력/의자인계; BC보류.
+
+### 2026-10-06 A-P2 빛/후처리 피드백 — F-040/D-070
+사용자 기존 GAP 보완 동의 및 조명 존재감 부족 지적. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_arrival_feedback_2026-10-06.md. 다음 A-P2 광원/재질→역광/후처리→구름·고창 접합→완성 장면 피드백 후 A-P3. 승인 서고 유지, BC보류. 문서만 수정; 새 runtime/build/시각 개선 미검증.

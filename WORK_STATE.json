@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "A_P2_actual_transition_runtime_PASS_visual_TUNE_A_P1_environment_KEEP",
+    "status": "A_P2_user_feedback_TUNE_lighting_post_pending_A_P1_environment_KEEP",
     "records": [
       "D-065",
       "D-066",
@@ -686,7 +686,7 @@
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "A-P2 transition user visual review (Earth impact/cloud-to-window tempo). Existing archive lighting/props KEEP. Then A-P3 processing/output and chair handoff; B/C deferred",
+    "next": "A-P2 lighting/materials, backlight/post, cloud/window join; complete visual review before A-P3; archive lighting/props KEEP; B/C deferred",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -698,17 +698,38 @@
     "aa_research": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_antialiasing_research_2026-10-05.md",
     "aa_status": "MSAA4_volume96_grain35_internal_KEEP_full_scene_TUNE",
     "aa_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_antialiasing_review_2026-10-06.md",
-    "aa_records": ["D-067", "F-038"],
+    "aa_records": [
+      "D-067",
+      "F-038"
+    ],
     "aa_final_runtime": "verification/a-aa-20261005/final/runtime_review.json",
     "arrival_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_arrival_review_2026-10-06.md",
-    "arrival_records": ["D-069", "F-039"],
+    "arrival_records": [
+      "D-069",
+      "F-039",
+      "F-040",
+      "D-070"
+    ],
     "arrival_evidence": "verification/a-arrival-20261006",
     "arrival_runtime_verified": true,
     "arrival_target_PC_verified": false,
     "user_feedback_2026_10_06": {
       "record": "D-068",
-      "KEEP": ["AA improvement", "archive overall lighting render", "interior prop fidelity"],
+      "KEEP": [
+        "AA improvement",
+        "archive overall lighting render",
+        "interior prop fidelity"
+      ],
       "scope": "Keep current environment and proceed; not blanket approval of all cameras/Story/target PC"
+    },
+    "arrival_feedback": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_arrival_feedback_2026-10-06.md",
+    "arrival_user_feedback_2026_10_06": {
+      "TUNE": [
+        "previous flare/ice relief/cloud detail GAP accepted",
+        "lighting presence and post-processing"
+      ],
+      "scope": "A-P2 review; archive KEEP retained; not blanket camera/transition approval",
+      "implementation_this_turn": false
     }
   }
 }

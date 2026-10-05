@@ -475,3 +475,6 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 
 ## 2026-10-05 BC 상세24
 사용자전이/Story보완요청에각Intro6+Story6분류(D064). 내장image_gen24생성+12프레임각1편집. B조기신호/배선/QRS/처리bay/팔/이완, C조기출처/room/head/입력color/큰screen수정. 24final/12history/정확prompt/해시/3갤러리/자체검토보존. 역할coverage충족, B회전/3면/접힘·C일부셔터/poseTUNE. R033/CASE007. 제품코드·data·실제renderer변경없음.
+
+## 2026-10-05 A 우선 제작 확정
+사용자 A부터 결정(D065). BC 추가 국소편집 착수 전 A로 전환. archive/figure 소스와 GLB JSON 감사: rig_v3 skins 없음/전극배선, seated 모델은 climb 아님. bundled Python bpy import 실패; 구현 불가능/자산 부재로 확대하지 않음. A-P1~4 제작/검증/피드백 및 BC 보존 계획 작성/색인·상태 갱신. 새 목업/renderer/runtime 제작 완료 주장은 없음.

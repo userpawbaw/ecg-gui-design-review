@@ -674,5 +674,19 @@
     "product_code_changed": false,
     "runtime_verified": false,
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
+  },
+  "scenario_a_production_2026_10_05": {
+    "status": "A_first_confirmed_asset_audit_complete_implementation_pending",
+    "records": [
+      "D-065",
+      "CASE-007"
+    ],
+    "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
+    "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
+    "next": "Prepare Blender/source and climbing pose; then complete visible assets/material/light/post for A-P1 before quality feedback",
+    "B_C_followup_order": "undecided",
+    "B_C_repairs": "preserved_deferred_after_A",
+    "product_code_changed": false,
+    "runtime_verified": false
   }
 }

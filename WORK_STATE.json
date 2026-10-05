@@ -686,7 +686,7 @@
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Remain in A-P1: archive materials/cart detail, middle camera framing, receiver shadows and volume aliasing; then complete-scene quality feedback. A-P2 deferred",
+    "next": "Remain in A-P1: prioritize AA-0 moving-camera baseline and volume/grain isolation, MSAA4 versus SMAA, then remaining volume/texture shimmer. Continue archive/cart/camera/receiver quality afterward. A-P2 deferred",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -694,6 +694,8 @@
     "asset_checkpoint": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_asset_checkpoint_2026-10-05.md",
     "internal_clay_frames": 12,
     "product_route_changed": false,
-    "scene_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_scene_review_2026-10-05.md"
+    "scene_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_scene_review_2026-10-05.md",
+    "aa_research": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_antialiasing_research_2026-10-05.md",
+    "aa_status": "source_and_official_docs_review_complete_no_runtime_AA_change"
   }
 }

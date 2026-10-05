@@ -484,3 +484,6 @@ built-in image_gen: B 편집1회, C 생성1회+편집1회. B 심장/이면 수�
 
 ## 2026-10-05 A 실제 scene 통합
 제작 계속 요청→D066. 손 palm/phalanges 재정렬, 근접 PASS에도단내부171/168/456/588정점 발견→표면보정 뒤0(F037). 별도 a-climb Vite/Three/Lenis/Pretendard, 기존archive depth에선택occluder 추가, heart/3전극/카트socket lead/sweep 결합. d0-mixed-0 S022250Hz0dB 저장입력/clean, M08output 로드만/미전시. 12연속+off3+reduced/native2=17PNG,3R경계/정지시간재생/native-scroll/reduced/오류0/build PASS. 초기/중간 서가내 camera와과한heart발광 직접발견·수정, Fresnelrim은연출. EdgeDevTools실패→Chromium1243검증. G4전역휘도비교 .0121/.0132는품질합격아님. R034/CASE007/체크리스트범위보완. 최종품질TUNE/서고재질·카트·높은중간camera·receiver/aliasing/목표PC미검증. A-P2와사용자품질평가아직진행안함.
+
+## 2026-10-05 A 시점 전환 AA 조사
+사용자 이동 중 계단 현상 지적. 실제 r186 main/archive/space와 공식 Three.js 문헌 대조. composer MSAA 미설정(samples0), 48step frame jitter, Output 뒤 grain 확인. MSAA4/SMAA 단독 비교·depth resolve·volume/texture 분리·동영상/ROI/GPU 측정 계획 기록. 렌더러 변경/새 runtime 검증 없음. A-P1 우선 작업으로 색인/계획/상태 갱신; A-P2 보류 유지.

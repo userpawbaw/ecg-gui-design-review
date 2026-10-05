@@ -305,3 +305,6 @@ BC각12최종프레임(Intro6/Story6)완료, 자체12국소편집/프레임별TU
 
 ### A-P1 실제 scene — D-066/F-037/R-034
 a-climb(4198) 별도 실제 장면. 손마디/단 보정 후 내부 정점침투0, 검정몸·심실형heart·전극·카트배선·고정archive volume/bloom/grade·저장mixed0dB sweep 연결. 17캡처/3R경계/정지·native-scroll/reduced/오류0·build PASS. 전체TUNE: 서고재질/카트상세/camera높은중간각/receiver·aliasing. 기존제품route 유지; A-P2 보류. 첫품질묶음완료주장안함. 명세 ECG_A_scene_review_2026-10-05.md.
+
+### A-P1 AA 조사 — 사용자 시점 이동 품질 피드백
+코드/공식자료 조사 완료. composer samples 기본0, frame-jitter volume/noise와 grade grain 분리 필요. 다음 우선순위: AA-0 baseline 동영상/효과off 원인분리 → MSAA4/SMAA 단독 비교 → texture/volume 잔여 보완 → 필요시 조합 채택. 구현/시각개선은 미검증, A-P2 보류 유지. 명세 ECG_A_antialiasing_research_2026-10-05.md.

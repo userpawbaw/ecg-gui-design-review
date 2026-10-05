@@ -1,5 +1,7 @@
 ## 2026-10-05 현재 — A부터 실제 제작(D-065)
 
+최신 사용자 시점 전환 계단 현상 피드백: [AA 조사·비교 순서](ECG_A_antialiasing_research_2026-10-05.md). 코드/공식 문헌 조사 완료, 구현·이동영상 비교는 아직 미실시. A-P1의 다음 품질 작업은 baseline 원인 분리→MSAA4/SMAA 단독 비교→volume/texture 잔여 shimmer 보완이다.
+
 [A-P1 실제 장면 검토](ECG_A_scene_review_2026-10-05.md)(D-066/F-037/R-034): 손 grip/단 정점 비관통 보완, 고정 서고·심장·배선·mixed replay·빛/post 연결. 17 runtime 캡처/3R/정지/native-scroll/reduced PASS. 전체 TUNE, 다음 A-P1 서고 재질·카트·camera/receiver 품질 보완. A-P2는 아직 시작하지 않는다.
 
 사용자 제작 순서 확정: **A 먼저**, B/C 후속 순서 미정. [A 제작·검증·피드백 계획](ECG_A_production_plan_2026-10-05.md)을 먼저 읽는다. 첫 묶음은 사다리 발견/등→측면→심장·혼합 ECG(A4–A6). 기존 “BC 필수수정→비교→순서결정”은 이제 선행 조건이 아니다. B/C TUNE는 보존. [실제 오르기 자산 체크포인트](ECG_A_asset_checkpoint_2026-10-05.md): body/3전극 GLB 생성, 내부12렌더/접촉근접검증 완료TUNE. 전체 A-P1 재질·빛·파형/runtime 미완.

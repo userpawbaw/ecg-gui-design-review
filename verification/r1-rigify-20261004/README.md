@@ -23,6 +23,8 @@ Blender Cycles 정지 렌더(웹 아님). 점토 시트: `poses_rigify_clay.jpg`
 | 손이 봉을 쥠 | PASS | `climb_lhand`: 손가락이 봉을 감고 뚫지 않음(수치 위 참고) |
 | 의자에 정확히 앉음 | PASS | `archive/d3_chair_r2_clean.png`: 좌면 위, 등받이 앞 |
 | 얼굴 이질감 | CONDITIONAL | 계란형보다 사람 머리로 읽힘. 사용자 확인 필요 |
+| 사다리 근접 컷 | PASS | `archive/d7_climb_close`: 오른손이 둥근 가로대를 감아 쥠, 가슴·심장과 한 화면(RA는 유리 몸 너머로 약하게) |
+| 책상 컷의 멀티탭 | CONDITIONAL | 카메라를 옮겼지만 멀티탭이 측정 의자 뒤에 가림 — 의자 위치나 카메라 높이 조정 필요 |
 | 피부 흔적 | CONDITIONAL | 깊게 굽힌 곳(손가락·무릎·팔꿈치)의 접힌 삼각형을 국소 완화 + Corrective Smooth. 근접 점토에서 작은 패임이 몇 개 남음(서고 거리·링 셰이더에서는 안 보임) |
 
 ## 남은 것 / 알려진 문제

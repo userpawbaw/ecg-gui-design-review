@@ -5,6 +5,7 @@
     "originals": "assets/source/ (gitignored, re-downloadable by scripts/assets/fetch.mjs, sha256-pinned)",
     "processed": "assets/processed/ (committed, web-ready)",
     "licence_allowlist": [
+      "MIT",
       "CC0-1.0",
       "CC-BY-4.0",
       "CC-BY-SA-4.0",
@@ -1992,6 +1993,169 @@
           "sha256": "97828a87bcb6549a527232455e478c5f9e4556f761b37d620a46446da17593ab"
         }
       ]
+    },
+    {
+      "id": "planet-v2-lut-transmittance",
+      "title": "Takram/Bruneton precomputed transmittance",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/eac103980f20c0956f2d3215833e73514be08462/packages/atmosphere/assets/transmittance.exr",
+        "page": "https://github.com/takram-design-engineering/three-geospatial"
+      },
+      "licence": "MIT",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/planet-v2/transmittance.exr",
+        "sha256": "aef6aba1a70ac159e92495feed1dfb62755f3acd918d954f28638c95f999af1b",
+        "bytes": 27977
+      },
+      "processed": {
+        "file": "prototype/spikes/a-climb/assets/atmosphere/transmittance.exr",
+        "sha256": "aef6aba1a70ac159e92495feed1dfb62755f3acd918d954f28638c95f999af1b",
+        "bytes": 27977
+      },
+      "review": "D-071 A-P2 trial; library asset immutable ref eac103980f20c0956f2d3215833e73514be08462"
+    },
+    {
+      "id": "planet-v2-lut-scattering",
+      "title": "Takram/Bruneton precomputed scattering",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/eac103980f20c0956f2d3215833e73514be08462/packages/atmosphere/assets/scattering.exr",
+        "page": "https://github.com/takram-design-engineering/three-geospatial"
+      },
+      "licence": "MIT",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/planet-v2/scattering.exr",
+        "sha256": "6e6331c196f3d6c524543062bfe9d5fcf52201ac3d62cd443dfedfe58a53b2ce",
+        "bytes": 4094331
+      },
+      "processed": {
+        "file": "prototype/spikes/a-climb/assets/atmosphere/scattering.exr",
+        "sha256": "6e6331c196f3d6c524543062bfe9d5fcf52201ac3d62cd443dfedfe58a53b2ce",
+        "bytes": 4094331
+      },
+      "review": "D-071 A-P2 trial; library asset immutable ref eac103980f20c0956f2d3215833e73514be08462"
+    },
+    {
+      "id": "planet-v2-lut-irradiance",
+      "title": "Takram/Bruneton precomputed irradiance",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/eac103980f20c0956f2d3215833e73514be08462/packages/atmosphere/assets/irradiance.exr",
+        "page": "https://github.com/takram-design-engineering/three-geospatial"
+      },
+      "licence": "MIT",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/planet-v2/irradiance.exr",
+        "sha256": "ca1cbc65648055b496389a08aa60fc7e529f59290dd36f4ee0a3aecda4085d87",
+        "bytes": 2253
+      },
+      "processed": {
+        "file": "prototype/spikes/a-climb/assets/atmosphere/irradiance.exr",
+        "sha256": "ca1cbc65648055b496389a08aa60fc7e529f59290dd36f4ee0a3aecda4085d87",
+        "bytes": 2253
+      },
+      "review": "D-071 A-P2 trial; library asset immutable ref eac103980f20c0956f2d3215833e73514be08462"
+    },
+    {
+      "id": "planet-v2-rema",
+      "title": "REMA mosaic v2 1km Antarctic DEM",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "url",
+        "url": "https://data.pgc.umn.edu/elev/dem/setsm/REMA/mosaic/v2.0/1km/rema_mosaic_1km_v2.0.tar.gz",
+        "page": "https://registry.opendata.aws/pgc-rema/"
+      },
+      "licence": "CC-BY-4.0",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/planet-v2/rema.tar.gz",
+        "sha256": "30fe3ee16d5930eef323c72c14e656961caf5a1e5de729f43f156d5f6f757f36",
+        "bytes": 87506317
+      },
+      "processed": null,
+      "review": "PGC/Howat et al. REMA mosaics v2; CC BY4 per AWS dataset registry. Offline downsample only; artistic displacement exaggeration separately marked."
+    },
+    {
+      "id": "planet-v2-snow",
+      "title": "ambientCG Snow014 1K PBR source",
+      "kind": "scene-source",
+      "status": "superseded",
+      "source": {
+        "type": "ambientcg",
+        "asset_id": "Snow014",
+        "attribute": "1K-JPG",
+        "page": "https://ambientcg.com/view?id=Snow014"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/planet-v2/snow.zip"
+      },
+      "processed": null,
+      "review": "Not acquired: 2 connect timeouts. Excluded from renderer. Candidate retained, retry only when needed."
+    },
+    {
+      "id": "planet-v2-antarctic-grid",
+      "title": "planet-v2-antarctic-grid",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-planet-v2.py"
+      },
+      "licence": "CC-BY-4.0",
+      "attribution_required": true,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/planet-v2/antarctic-height.f32.bin",
+        "sha256": "943311b4a60f7dca2502b594d9f6eb44a754cafaa4769a498da30b92235f4fb5",
+        "bytes": 2069044
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "REMA derived grid or explicitly synthetic cloud noise; experimental.",
+      "derived_from": [
+        {
+          "file": "assets/source/planet-v2/rema.tar.gz",
+          "sha256": "30fe3ee16d5930eef323c72c14e656961caf5a1e5de729f43f156d5f6f757f36"
+        }
+      ]
+    },
+    {
+      "id": "planet-v2-cloud-noise",
+      "title": "planet-v2-cloud-noise",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-planet-v2.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/planet-v2/cloud-noise.r8",
+        "sha256": "88683085a53ccd84a077ba26f465ddea713f4d25deb9d70de6ed154d7a6bfa9d",
+        "bytes": 262144
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "REMA derived grid or explicitly synthetic cloud noise; experimental."
     }
   ],
   "rejected": [

@@ -1,0 +1,306 @@
+{
+  "scope": "Concept mockups, different framing and geometry: statistics are descriptive, not objective fidelity PASS.",
+  "looks": {
+    "outputs\\A_detailed_15\\T01.png": {
+      "p5_p50_p95": [
+        0.0006313968311782918,
+        0.030288475829810976,
+        0.8571642117341465
+      ],
+      "mean": 0.16235625654061378,
+      "saturation_mean": 0.49629407025806255,
+      "warm_fraction": 0.078681693607025
+    },
+    "outputs\\A_detailed_15\\T02.png": {
+      "p5_p50_p95": [
+        0.005609930571712356,
+        0.08909035008554325,
+        0.7692224922430017
+      ],
+      "mean": 0.20194064346867852,
+      "saturation_mean": 0.404928812228187,
+      "warm_fraction": 0.2145311411559524
+    },
+    "outputs\\A_detailed_15\\T03.png": {
+      "p5_p50_p95": [
+        0.008102313989301675,
+        0.05696872857017959,
+        0.5171798520025352
+      ],
+      "mean": 0.12772013888640424,
+      "saturation_mean": 0.3818594631946665,
+      "warm_fraction": 0.5572332192668901
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-00.png": {
+      "p5_p50_p95": [
+        0.0,
+        0.0,
+        0.32434855484437675
+      ],
+      "mean": 0.07006744366647535,
+      "saturation_mean": 0.17499777445196663,
+      "warm_fraction": 0.01390625
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-01.png": {
+      "p5_p50_p95": [
+        0.0,
+        0.0,
+        0.32434855484437675
+      ],
+      "mean": 0.0700674177319822,
+      "saturation_mean": 0.17499709042557557,
+      "warm_fraction": 0.01390673225308642
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-02.png": {
+      "p5_p50_p95": [
+        0.0,
+        0.0,
+        0.32434855484437675
+      ],
+      "mean": 0.07006744366647535,
+      "saturation_mean": 0.17499777445196663,
+      "warm_fraction": 0.01390625
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-03.png": {
+      "p5_p50_p95": [
+        0.0,
+        0.0034401004368559175,
+        0.30653193067335344
+      ],
+      "mean": 0.06283894281275502,
+      "saturation_mean": 0.21155040153962168,
+      "warm_fraction": 0.01720582561728395
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-04.png": {
+      "p5_p50_p95": [
+        0.0,
+        0.012926036556958924,
+        0.3029667609690566
+      ],
+      "mean": 0.051570927517515124,
+      "saturation_mean": 0.23171022564928107,
+      "warm_fraction": 0.007710262345679012
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-05.png": {
+      "p5_p50_p95": [
+        0.0,
+        0.028605763350656836,
+        0.0792072168862171
+      ],
+      "mean": 0.029927724531815705,
+      "saturation_mean": 0.3250979976372337,
+      "warm_fraction": 0.0002261766975308642
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-06.png": {
+      "p5_p50_p95": [
+        0.15936907847326634,
+        0.17840333533056835,
+        0.1842853925674002
+      ],
+      "mean": 0.17591727448108457,
+      "saturation_mean": 0.37297408481045347,
+      "warm_fraction": 0.0002261766975308642
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-07.png": {
+      "p5_p50_p95": [
+        0.15646218139021192,
+        0.18132836193078625,
+        0.1878273604135552
+      ],
+      "mean": 0.17669262247607484,
+      "saturation_mean": 0.3681895361484276,
+      "warm_fraction": 5.8834876543209875e-05
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-08.png": {
+      "p5_p50_p95": [
+        0.0006042615188490257,
+        0.07995089912341007,
+        0.5657530160158475
+      ],
+      "mean": 0.20365249803789184,
+      "saturation_mean": 0.21966098481370627,
+      "warm_fraction": 0.4921831597222222
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-09.png": {
+      "p5_p50_p95": [
+        0.0008006434772051236,
+        0.015207479423655582,
+        0.1737536396598854
+      ],
+      "mean": 0.04876303605531577,
+      "saturation_mean": 0.4001508448418868,
+      "warm_fraction": 0.1451731288580247
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-10.png": {
+      "p5_p50_p95": [
+        0.004541019003138988,
+        0.03528163408485042,
+        0.4091788005512161
+      ],
+      "mean": 0.09680146392545398,
+      "saturation_mean": 0.5297609485366968,
+      "warm_fraction": 0.5481539351851852
+    },
+    "work\\repo\\verification\\a-arrival-20261006\\planet-verified\\arrival-11.png": {
+      "p5_p50_p95": [
+        0.012071491809775703,
+        0.07371521437800145,
+        0.2796949191905785
+      ],
+      "mean": 0.10795949160998092,
+      "saturation_mean": 0.5362308615902238,
+      "warm_fraction": 0.8262962962962963
+    }
+  },
+  "room_pixel_differences": {
+    "7": {
+      "max_rgb": 0.0,
+      "mean_rgb": 0.0
+    },
+    "8": {
+      "max_rgb": 0.0,
+      "mean_rgb": 0.0
+    },
+    "9": {
+      "max_rgb": 0.0,
+      "mean_rgb": 0.0
+    },
+    "10": {
+      "max_rgb": 1.0000000000000036,
+      "mean_rgb": 8.037551440329201e-07
+    },
+    "11": {
+      "max_rgb": 0.9999999999999964,
+      "mean_rgb": 1.607510288065838e-07
+    }
+  },
+  "effect_differences": {
+    "legacy/0/atmosphere": {
+      "mean_rgb": 1.7341947980967078,
+      "max_rgb": 196.0,
+      "fraction_pixels_gt_2rgb": 0.07040702160493827
+    },
+    "legacy/0/specular": {
+      "mean_rgb": 5.2531650270061725,
+      "max_rgb": 219.00000000000003,
+      "fraction_pixels_gt_2rgb": 0.28889515817901235
+    },
+    "legacy/0/cloud": {
+      "mean_rgb": 7.962911522633745,
+      "max_rgb": 117.00000000000001,
+      "fraction_pixels_gt_2rgb": 0.413764949845679
+    },
+    "legacy/0/bloom": {
+      "mean_rgb": 1.9824032278806585,
+      "max_rgb": 111.0,
+      "fraction_pixels_gt_2rgb": 0.2753684413580247
+    },
+    "legacy/0.23/atmosphere": {
+      "mean_rgb": 0.4615481931584362,
+      "max_rgb": 164.0,
+      "fraction_pixels_gt_2rgb": 0.03046826774691358
+    },
+    "legacy/0.23/specular": {
+      "mean_rgb": 23.63380529835391,
+      "max_rgb": 243.99999999999997,
+      "fraction_pixels_gt_2rgb": 0.44865065586419756
+    },
+    "legacy/0.23/cloud": {
+      "mean_rgb": 1.9594618055555555,
+      "max_rgb": 54.99999999999999,
+      "fraction_pixels_gt_2rgb": 0.4149537037037037
+    },
+    "legacy/0.23/bloom": {
+      "mean_rgb": 8.171573752572016,
+      "max_rgb": 160.0,
+      "fraction_pixels_gt_2rgb": 0.3786130401234568
+    },
+    "legacy/0.3/atmosphere": {
+      "mean_rgb": 4.983281893004098e-06,
+      "max_rgb": 0.9999999999999964,
+      "fraction_pixels_gt_2rgb": 0.0
+    },
+    "legacy/0.3/specular": {
+      "mean_rgb": 0.5348787937242798,
+      "max_rgb": 76.00000000000001,
+      "fraction_pixels_gt_2rgb": 0.04626446759259259
+    },
+    "legacy/0.3/cloud": {
+      "mean_rgb": 163.53386654449588,
+      "max_rgb": 249.0,
+      "fraction_pixels_gt_2rgb": 0.9997738233024691
+    },
+    "legacy/0.3/bloom": {
+      "mean_rgb": 8.936448849022634,
+      "max_rgb": 118.0,
+      "fraction_pixels_gt_2rgb": 0.9503346836419753
+    },
+    "new/0/atmosphere": {
+      "mean_rgb": 3.350067193930041,
+      "max_rgb": 220.0,
+      "fraction_pixels_gt_2rgb": 0.31014756944444444
+    },
+    "new/0/specular": {
+      "mean_rgb": 1.0151358346193415,
+      "max_rgb": 131.99999999999997,
+      "fraction_pixels_gt_2rgb": 0.09414689429012346
+    },
+    "new/0/cloud": {
+      "mean_rgb": 25.233106674382714,
+      "max_rgb": 206.0,
+      "fraction_pixels_gt_2rgb": 0.31203944830246916
+    },
+    "new/0/bloom": {
+      "mean_rgb": 0.003957368827160494,
+      "max_rgb": 24.000000000000007,
+      "fraction_pixels_gt_2rgb": 0.00027922453703703703
+    },
+    "new/0.23/atmosphere": {
+      "mean_rgb": 16.358270158179014,
+      "max_rgb": 220.0,
+      "fraction_pixels_gt_2rgb": 0.5682204861111111
+    },
+    "new/0.23/specular": {
+      "mean_rgb": 0.3007323816872428,
+      "max_rgb": 4.0,
+      "fraction_pixels_gt_2rgb": 0.03226707175925926
+    },
+    "new/0.23/cloud": {
+      "mean_rgb": 3.4662221900720165,
+      "max_rgb": 192.0,
+      "fraction_pixels_gt_2rgb": 0.06934944058641976
+    },
+    "new/0.23/bloom": {
+      "mean_rgb": 0.0004955954218106996,
+      "max_rgb": 1.0000000000000249,
+      "fraction_pixels_gt_2rgb": 0.0
+    },
+    "new/0.3/atmosphere": {
+      "mean_rgb": 0.0833416923868311,
+      "max_rgb": 2.9999999999999893,
+      "fraction_pixels_gt_2rgb": 0.00030912422839506174
+    },
+    "new/0.3/specular": {
+      "mean_rgb": 0.0004906121399176945,
+      "max_rgb": 1.0000000000000249,
+      "fraction_pixels_gt_2rgb": 0.0
+    },
+    "new/0.3/cloud": {
+      "mean_rgb": 83.1993090920782,
+      "max_rgb": 152.0,
+      "fraction_pixels_gt_2rgb": 0.9997738233024691
+    },
+    "new/0.3/bloom": {
+      "mean_rgb": 0.0,
+      "max_rgb": 0.0,
+      "fraction_pixels_gt_2rgb": 0.0
+    }
+  },
+  "asset_hashes": {
+    "planet-v2-lut-transmittance/processed": true,
+    "planet-v2-lut-scattering/processed": true,
+    "planet-v2-lut-irradiance/processed": true,
+    "planet-v2-antarctic-grid/generated": true,
+    "planet-v2-cloud-noise/generated": true
+  }
+}

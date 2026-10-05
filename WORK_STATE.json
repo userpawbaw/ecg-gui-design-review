@@ -127,7 +127,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-10-02",
+  "updated_at": "2026-10-06",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "A_P2_user_depth_glass_feedback_research_complete_new_rendering_trial_pending",
+    "status": "A_P2_new_planet_renderer_technical_verified_visual_GAP_TUNE",
     "records": [
       "D-065",
       "D-066",
@@ -686,7 +686,7 @@
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Q1 specular/atmosphere/cloud-shell isolation and separate atmosphere trial; Q2 Antarctic patch/PBR; Q3 density clouds; Q4 integration/user fidelity review before A-P3; archive KEEP; B/C deferred",
+    "next": "Review A-P2 near-cloud shape/light, Antarctic micro-reflection and orbit composition GAP; G6 initial+3 quality rounds exhausted, new local cloud asset/bake or renderer candidate after feedback. Preserve archive KEEP; A-P3/Story/B/C deferred.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -711,7 +711,10 @@
       "D-070",
       "F-041",
       "F-042",
-      "D-071"
+      "D-071",
+      "D-072",
+      "F-043",
+      "O-009"
     ],
     "arrival_evidence": "verification/a-arrival-20261006",
     "arrival_runtime_verified": true,
@@ -754,7 +757,21 @@
         "blue orbital horizon"
       ],
       "scope": "Reinvestigate assets and rendering; archive KEEP preserved",
-      "new_renderer_implemented": false
-    }
+      "new_renderer_implemented": true
+    },
+    "arrival_planet_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_planet_render_trial_2026-10-06.md",
+    "arrival_planet_visual_verdict": "TUNE: mockup fidelity NOT achieved",
+    "arrival_planet_evidence": "verification/a-arrival-20261006/planet-verified",
+    "arrival_planet_runtime_verified": true,
+    "arrival_planet_gpu_local": {
+      "available": true,
+      "count": 490,
+      "p50": 9.229312,
+      "p95": 18.491392,
+      "scope": "RTX3070 Chromium1920x1080 DPR1 8sec unrecorded final candidate; not target-PC/long-session proof"
+    },
+    "arrival_planet_runtime": "verification/a-arrival-20261006/planet-runtime-final/runtime_review.json",
+    "arrival_planet_final_states": "verification/a-arrival-20261006/planet-final-states/review.json",
+    "arrival_planet_fidelity": "verification/a-arrival-20261006/planet-fidelity.md"
   }
 }

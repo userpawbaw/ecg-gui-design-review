@@ -148,12 +148,17 @@ function checkOrPin(a, slot, buf) {
 const only = (process.argv.find(x => x.startsWith('--only=')) || '').slice(7);
 for (const a of reg.assets.filter(a => (a.status !== 'superseded' || process.argv.includes('--all')) && a.id.startsWith(only))) {
   if (!reg.policy.licence_allowlist.includes(a.licence)) throw Error(`${a.id}: licence ${a.licence} not allowed`);
+  if(a.source.type==='generated') {
+    const b=await readFile(path.join(root,a.generated.file));
+    if(sha(b)!==a.generated.sha256)throw Error(`${a.id}: generated sha256 mismatch; reproduce with ${a.source.script}`);
+    console.log(`${a.id}: generated file verified; reproduction ${a.source.script}`);continue;
+  }
   const buf = await acquire(a);
   checkOrPin(a, 'original', buf);
   const src = path.join(root, a.original.file);
   await mkdir(path.dirname(src), {recursive: true});
   await writeFile(src, buf);
-  if (!a.processed) { console.log(`${a.id}: source only (${buf.length} bytes) — consumed by a build script`); continue; }
+  if (!a.processed) { if(pin)await writeFile(regPath,JSON.stringify(reg,null,2)+'\n');console.log(`${a.id}: source only (${buf.length} bytes) — consumed by a build script`); continue; }
   const out = path.join(root, a.processed.file);
   await mkdir(path.dirname(out), {recursive: true});
   if (a.kind === 'model') {
@@ -174,5 +179,7 @@ for (const a of reg.assets.filter(a => (a.status !== 'superseded' || process.arg
     console.log(`${v.id}: ${a.original.bytes} → ${v.processed.bytes} bytes`);
   }
   console.log(`${a.id}: ${a.original.bytes} → ${a.processed.bytes} bytes`);
+  // Preserve successful pins even when a later candidate request fails.
+  if(pin)await writeFile(regPath,JSON.stringify(reg,null,2)+'\n');
 }
 if (pin) await writeFile(regPath, JSON.stringify(reg, null, 2) + '\n');

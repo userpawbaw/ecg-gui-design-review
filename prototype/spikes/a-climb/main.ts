@@ -15,6 +15,7 @@ import {detectR,makeLoop,beatPhase} from '../../v2/src/story/intro/beats';
 import {decode} from '../../v2/src/engine';
 import {createGrade} from '../../v2/src/story/intro/space';
 import {createArrival} from './arrival';
+import {createArrival as createLegacyArrival} from './arrival-legacy';
 const $=(id:string)=>document.getElementById(id)!;
 $('labels').querySelector('h2')!.textContent='잡음이 섞인 심전도';
 $('labels').querySelector('small')!.textContent='MIXED INPUT · 0 dB / 2.5 s';
@@ -40,8 +41,8 @@ const pct=(a:number[],q:number)=>a.length?[...a].sort((x,y)=>x-y)[Math.min(a.len
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
 renderer.setClearColor(0x070605);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(40,1,.025,40);
-const arrival=full?await createArrival():null;
-arrival?.setEffects({flare:params.get('flare')!=='0',cloud:params.get('cloud')!=='0',cloudShadow:params.get('cloudShadow')!=='0'});
+const arrival=full?(params.get('planet')==='legacy'?await createLegacyArrival():await createArrival(renderer,camera)):null;
+arrival?.setEffects({flare:params.get('flare')!=='0',cloud:params.get('cloud')!=='0',cloudShadow:params.get('cloudShadow')!=='0',atmosphere:params.get('atmosphere')!=='0',specular:params.get('specular')!=='0'});
 const loader=new GLTFLoader();
 const [arch,b,h,e,meta,w]=await Promise.all([createArchive(),loader.loadAsync(URLs.body),loader.loadAsync(URLs.heart),loader.loadAsync(URLs.electrodes),fetch(URLs.manifest).then(r=>r.json()),fetch('/wave.json').then(r=>r.json())]);
 scene.add(arch.room,arch.dust);arch.setFade(1);
@@ -75,7 +76,7 @@ sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.camera.left=-2;
 const fill=new THREE.HemisphereLight(0x858c92,0x100c08,.18);scene.add(fill);
 const heartLight=new THREE.PointLight(0xffb677,.035,.7,2);person.add(heartLight);heartLight.position.copy(heart.position).add(new THREE.Vector3(.13,.06,-.18));
 const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:actualSamples,resolveDepthBuffer:true,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
-const renderPass=new RenderPass(scene,camera);composer.addPass(renderPass);composer.addPass(arch.vol);
+const renderPass=new RenderPass(scene,camera);composer.addPass(renderPass);if(arrival&&'atmospherePass' in arrival)composer.addPass(arrival.atmospherePass);composer.addPass(arch.vol);
 if(arrival)composer.addPass(arrival.cloudPass);
 if(arrival)composer.addPass(arrival.flarePass);
 const bloom=new UnrealBloomPass(new THREE.Vector2(512,512),.35,.4,.65);composer.addPass(bloom);
@@ -135,10 +136,12 @@ function draw(dt:number){
   lastTarget.set(-2.6,4.575,3.58);lastTarget.lerp(arch.shot('s2_beams').look,ss(.46,.55,p));
  }
  camera.position.copy(pos);camera.position.x+=pointer.sx*.03*(1-wave);camera.position.y-=pointer.sy*.03*(1-wave);
- camera.fov=roomP<.25?THREE.MathUtils.lerp(26,44,ss(0,.25,roomP)):THREE.MathUtils.lerp(44,34,wave);camera.setViewOffset(W,H,W*.19*wave,0,W,H);camera.lookAt(lastTarget);camera.updateProjectionMatrix();camera.updateMatrixWorld();
+   camera.fov=roomP<.25?THREE.MathUtils.lerp(26,44,ss(0,.25,roomP)):THREE.MathUtils.lerp(44,34,wave);camera.up.set(0,1,0);camera.setViewOffset(W,H,W*.19*wave,0,W,H);camera.lookAt(lastTarget);camera.updateProjectionMatrix();camera.updateMatrixWorld();
  if(arrival){arrival.cloudPass.uniforms.uCover.value=arrival.cover(p);arrival.cloudPass.uniforms.uProgress.value=ss(.24,.4,p);arrival.cloudPass.uniforms.uTime.value=reduced?0:t;if(inSpace)lastTarget.copy(arrival.update(p,t,reduced,camera));}
  if(arrival&&!inSpace)arrival.flarePass.uniforms.uStrength.value=0;
  renderPass.scene=inSpace?arrival!.scene:scene;
+ if(arrival)arrival.cloudPass.enabled=inSpace||arrival.cover(p)>.001;
+ if(arrival&&'atmospherePass' in arrival)arrival.atmospherePass.enabled=inSpace&&arrival.state().atmosphere;
  person.visible=roomP>.08;heart.visible=roomP>.7;heartMat.opacity=ss(.7,.8,roomP);
  if(person.visible!==lastPersonVisible){lastPersonVisible=person.visible;arch.renderSunDepth(renderer,person.visible?[person]:[]);}
  heart.scale.setScalar(reduced?1:1+pulse*.07);heartMat.emissiveIntensity=.62+(reduced?0:pulse*.4);heartLight.intensity=(.035+(reduced?0:pulse*.01))*ss(.45,.7,roomP);

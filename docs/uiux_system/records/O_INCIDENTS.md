@@ -195,3 +195,23 @@ p ≥ 0.86(파형이 그려지는 구간)에서 `page.screenshot`이 30초 제�
 
 ### 재발 방지와 자동화 상태
 수동 규칙 R-019. 자동화 후보: 캡처 스크립트에 "세기 0 대 기본값" 비교 단계 추가(미착수).
+
+## O-009. A-P2 자산 전달·패스 호환·공유 QA 세션 문제로 시험 캡처를 다시 실행했다
+
+| | |
+|---|---|
+| 시점 | 2026-10-06 [코드] [런타임] |
+| 잃은 것 | 부분 다운로드 pin 복구, 로딩/검은 화면/오류 오염 캡처와 공유 browser 겹침으로 추가 조사·재실행. 정확한 소요분 기록 없음 |
+| 재발 방지 | 기존 resource-scoped 규칙과 실제 프레임 검증 적용; 신규 R 없음 |
+
+### 증상
+Snow 요청이 timeout 나며 앞서 받은 LUT/REMA의 trailing registry pin 저장도 빠졌다. `.gz` 응답은 browser가 이미 해제해 명시 decoder가 실패. Three r186 ShaderPass의 quad API와 UniformsUtils의 RT texture clone 때문에 검은 화면이 나왔다. 해결된 오류가 세션 로그에 남았다. 두 QA가 같은 a-climb browser를 겹쳐 사용해 증거 신뢰를 잃었다.
+
+### 원인
+성공 batch 마지막에만 pin을 쓰는 유틸리티, 압축 extension과 실제 전달 규약 불일치, 버전 API/texture identity 미검증, tool session 반환을 작업 완료로 취급한 resource scheduling 실수.
+
+### 조치
+받은 원본 hash만 고정하고 Snow를 제외했다. fetch 유틸리티는 성공 건마다 pin 및 generated hash 확인. gzip payload의 중립 `.bin` suffix와 명시 decoder, 공개 super.render 경로, RT 실제 texture 재연결. QA browser를 종료/재개하고 작업 완료 뒤 다음 검증을 실행. 중첩 결과 INVALID 표시 및 단독 authoritative 캡처 저장. 극점 no-data/재질 seam은 source 변경 없이 display mesh 결함으로 복구했다.
+
+### 재발 방지와 자동화 상태
+registry 성공 pin/생성hash 검증은 코드에 반영. 브라우저 직렬 실행과 깨끗한 로그 확인은 수동 규칙이며 자동 resource-lock 미구현. 불완전/실패 trial을 최종 PASS와 섞지 않는다.

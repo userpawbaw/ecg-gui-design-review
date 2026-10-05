@@ -1,3 +1,5 @@
+2026-10-06 최신 A-P2 실제 시험(D-072/F-043/O-009): [대기·남극 지형·밀도 구름 검토](ECG_A_planet_render_trial_2026-10-06.md). LUT/ECEF→blue horizon, REMA display mesh, world density/내부 lightmarch와 half-res 합성 적용. 기술 검증과 목업 충실도는 분리: **전체 TUNE, 근접 구름/얼음 미세 반사/역광 GAP**. 서고 유지(3장 RGB차0/2장 극미량1 RGB 차이)/KEEP. initial+3 품질 수정 종료; 다음 해당 GAP 사용자 검토→국소 cloud asset/bake 또는 renderer 새 후보 결정. A-P3/Story/BC는 보류. 아래 연구-only 상태는 과거 체크포인트다.
+
 2026-10-06 최신 A-P2 재조사(F-042/D-071): [구름·얼음·수평선 구현 연구](ECG_A_planet_quality_research_2026-10-06.md). 사용자 입체감/얼음 빛 반응 부족·유리막 지적 반영. 고해상도 색상 교체만으로 해결하지 않고 density cloud/Antarctic geometry·재질/대기 scattering을 분리해 재제작한다. 다음 Q1 원인off 비교·별도 atmosphere 경로 시험→Q2 얼음→Q3 cloud→통합품질피드백. 이번 연구만 완료/새 구현 미실행; 서고 KEEP/A-P3·BC보류.
 
 2026-10-06 A-P2 빛/후처리 실제 보완(D-070/F-041): [최종 검토](ECG_A_lighting_review_2026-10-06.md). 따뜻한 태양/가림 flare·PBR roughness·얼음 relief·구름 산란 구현, 기술 QA/build PASS, 시각 TUNE. 서고 KEEP 유지. 다음 해당 전이의 사용자 피드백(얼음/구름/specular·GPU 비용) 후 A-P3.

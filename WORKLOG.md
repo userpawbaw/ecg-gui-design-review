@@ -506,3 +506,10 @@ D069 사전경로/자산결정. explore texture catalog결과부적합, NASA공�
 
 ### 2026-10-06 A-P2 입체감 재조사 — F-042/D-071
 사용자 구름/얼음 빛·입체감 부족과 유리막 지적. 코드 및 Bruneton/Takram/Heckel/Nubis/Three/REMA 공식자료, ice 후보 탐색 완료. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_planet_quality_research_2026-10-06.md。 다음 Q1 대기/유리막 원인 분리 시험, Q2 geometry+재질, Q3 density cloud, Q4 연속통합. 새 renderer/asset 다운로드/런타임QA 미실행; 서고KEEP/BC보류.
+
+### 2026-10-06 A-P2 대기·REMA·world density 시험 — D-072/F-043/O-009
+D-071 연구 후 실제 설치/자산 획득/renderer 구현. 0.19.1 Takram+6.39.5 postprocessing, REMA1km 파생고도/표시5x와극점infill, world cloud56x5+half-res, orbital up/horizon, legacy 비교경로. initial+3 시각보완/기능·접합결함복구. 목업 충실도 FAIL/전체TUNE: 근접cloud 조형·ice micro reflection·warm orbit 구도 GAP. 승인서고3frame RGB동일/2frame 극미량1 RGB차. 로컬 GPU p50 9.22/p95 17.36ms(최종 cap복구전) / 목표PC·600sec 미검증. 다음 사용자 해당 GAP 피드백→국소cloud asset/bake/renderer 후보 새라운드, A-P3·Story·BC보류. 최종기술확정결과는 아래 추가checkpoint 참고.
+
+A-P2 최종 기술확정: fresh-session planet-verified31frame/planet-diagnostics-final30off/planet-runtime-final17frame·3R·stationary/native/reduced 오류0, build PASS. Final GPU p50 9.23/p95 18.49ms490queries, RAF p95 16.8ms; 이전 cap복구전9.22/17.36ms 보존. 승인서고3frame RGB차0/2frame 최대1 RGB(전체mean8.04e-7·1.61e-7) / 파생5hash PASS. 기술 PASS, 목업 충실도 FAIL/시각TUNE. 최종 states/records/diff 및 원격readback은 후속checkpoint.
+
+Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decoded, records155 PASS, git diff --check PASS. Final artifacts source/NOTICE and failure evidence preserved. Remote before commit: workbranch7ef90680 / maincfef4300 verified by ls-remote. This step remains visual TUNE, not mockup-quality completion; next part stays scoped to A-P2 GAP.

@@ -1,0 +1,40 @@
+{
+  "source_dem": "rema_mosaic_1km_v2.0_dem.tif",
+  "source_size": [
+    5452,
+    5844
+  ],
+  "epsg": 3031,
+  "pixel_m": 1000,
+  "grid": [
+    2048,
+    512
+  ],
+  "latitude_range": [
+    -60,
+    -90
+  ],
+  "valid_fraction": 0.5705480575561523,
+  "height_max_m": 4487.39453125,
+  "projection": "WGS84 Antarctic polar stereographic lat_ts=-71, bilinear; ocean/no-data=0",
+  "render_height_exaggeration": "set in Antarctic mesh code; not baked as scientific DEM",
+  "noise": {
+    "size": [
+      64,
+      64,
+      64
+    ],
+    "kind": "periodic value FBM; synthetic cloud material"
+  },
+  "files": {
+    "antarctic-height.f32.bin": {
+      "sha256": "943311b4a60f7dca2502b594d9f6eb44a754cafaa4769a498da30b92235f4fb5",
+      "bytes": 2069044
+    },
+    "cloud-noise.r8": {
+      "sha256": "88683085a53ccd84a077ba26f465ddea713f4d25deb9d70de6ed154d7a6bfa9d",
+      "bytes": 262144
+    }
+  },
+  "source_sha256": "30fe3ee16d5930eef323c72c14e656961caf5a1e5de729f43f156d5f6f757f36"
+}

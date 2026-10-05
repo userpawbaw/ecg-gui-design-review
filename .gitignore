@@ -13,5 +13,6 @@ assets/.npm-cache/
 __pycache__/
 *.pyc
 .npm-cache-background/
+.npm-cache/
 .tools/
 prototype/spikes/a-climb/public/

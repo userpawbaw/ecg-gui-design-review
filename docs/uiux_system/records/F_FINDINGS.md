@@ -1213,3 +1213,27 @@ cloudopacity가1이라는이유만으로모든전환이숨겨졌다고주장하�
 
 ### 놓쳤다면
 sample와 brightness만 늘리며 GPU비용을 키우고 입체 표현의 구조 문제를 계속 TUNE로 남겼을 것이다. 외부 라이브러리의 Lambertian/double lighting/ECEF 제약을 놓치면 얼음 반사 문제를 다시 만들 수 있다.
+
+## F-043. 밀도·고도 경로가 생겨도 cloud 조형·빛 구도 없이는 목업 품질에 도달하지 않는다
+
+| | |
+|---|---|
+| 발견 | 2026-10-06 [코드] [런타임] [문헌] |
+| 상태 | 기술 연결 검증 / 시각 TUNE·GAP |
+| 영향 | A-P2 입체감·유리막·blue horizon |
+| 연결 | D-072, F-042, O-009, rounds/R1/SCENARIO-ABC-20261003/ECG_A_planet_render_trial_2026-10-06.md |
+
+### 발단
+사용자의 구름/얼음/빛 부족 및 유리막 지적 후 D-071 시험을 진행했다.
+
+### 먼저 의심한 것과 배제 방법
+고해상도 color만의 문제가 아닌 alpha shell/광택/좌표 문제를 분리했다. legacy와 새 경로의 같은 model 안에서 atmosphere/specular/cloud/bloom을 끄는 캡처를 비교. model 간 camera가 달라 전체 픽셀 차이를 fidelity 증거로 쓰지 않는다.
+
+### 결정적 근거
+LUT 대기는 orbit 수평선에 blue radiance를 만든다. REMA 실제 고도 mesh는 cloud-off에서도 높이가 보이지만 미세 반사는 부족하다. world-space cloud가 camera에 반응해도 원거리 grain/림 반복과 근접 안개가 남았다. 반해상도 합성으로 GPU p95는22.57→18.49ms, p50은8.02→9.23ms. 승인 서고5 frame 중3장 RGB차0/2장 극미량1 RGB 차이. 단기 local GPU이며 전시PC proof가 아니다.
+
+### 조치와 검토한 대안
+NASA color 보존, REMA 표시5x와 polar no-data infill 분리, MIT LUT 고정SHA와CCBY DEM hash/notice, volume Beer/HG/내부 lightmarch 구현. Snow014 두 timeout은 미획득/제외. 다음 후보는 근접 cloud 조형/빈 공간/역광을 통제하는 국소 asset+bake 또는 검증된 renderer 비교다. 새 표현을 목표 완성품으로 채택하지 않는다.
+
+### 놓쳤다면
+특정 프레임의 대기광이나 라이브러리 설치 성공만으로 전체 wow 품질을 PASS 처리하고, 데이터 공백을 실제 지형이라 하거나 합성 noise를 측정 기상 데이터로 오해했을 것이다.

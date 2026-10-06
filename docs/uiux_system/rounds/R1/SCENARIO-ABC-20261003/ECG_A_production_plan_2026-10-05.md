@@ -1,3 +1,5 @@
+2026-10-07 현재 레퍼런스·경로 검토 — D087/F055: [Moto 자산과 북반구 경로](ECG_A_moto_earth_northern_route_review_2026-10-07.md). 북반구육지anchor우선추천/남미대안비교,아직경로교체없음. D086지역해상도인계와연결. 구름형태/서고KEEP·사용자피드백1/2 유지.
+
 2026-10-07 현재 피드백 — D086/F054: [지표 거리별 디테일 인계](ECG_A_earth_detail_distance_plan_2026-10-07.md). 외부VDB형태KEEP, 전체광학/인계TUNE. 다음 확대목적지/footprint와지역자료정합부터. 서고KEEP/제작피드백1/2 유지.
 
 2026-10-06 현재 실제 시험 — D085/F053: [외부 VDB 조달·광학 검토](ECG_A_cloud_vdb_optical_trial_2026-10-06.md) 및 verification/a-cloud-vdb-20261006/gallery.html. 자산 실제 확보/렌더PASS, 목업충실도TUNE. 다음 넓은 군집/권운·하강통로와 빛보정부터. 웹전이·서고 미변경, 사용자피드백1/2 유지.

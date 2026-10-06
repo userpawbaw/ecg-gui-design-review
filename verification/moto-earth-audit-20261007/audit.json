@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-07",
+  "page": "https://www.moto-card.com/",
+  "source_snapshot": {
+    "file": "assets/source/moto-reference-20261007/live-source.html",
+    "sha256": "895c00dd17072538efe39c5647204d67d046a028b450b6877b95f113526fca55"
+  },
+  "active_module_count": 1,
+  "note": "Ignore single-line commented Earth OLD7; verify active EarthScene against loaded window.__earth",
+  "assets": [
+    {
+      "role": "day",
+      "url": "https://cdn.prod.website-files.com/6a4002cce4ba0d72bb35a7fc/6a418ffc9ea227a7c2e11171_day_2.webp",
+      "loaded_dimensions": [
+        4096,
+        2048
+      ],
+      "evidence": "loaded Texture.image dimensions queried via window.__earth; files not downloaded/pinned separately"
+    },
+    {
+      "role": "night",
+      "url": "https://cdn.prod.website-files.com/6a4002cce4ba0d72bb35a7fc/6a418ffc55c6edeb67368418_night_2.webp",
+      "loaded_dimensions": [
+        4096,
+        2048
+      ],
+      "evidence": "loaded Texture.image dimensions queried via window.__earth; files not downloaded/pinned separately"
+    },
+    {
+      "role": "bump",
+      "url": "https://cdn.prod.website-files.com/6a4002cce4ba0d72bb35a7fc/6a418ffc495223e0854f7b13_clouds_2.webp",
+      "loaded_dimensions": [
+        4096,
+        2048
+      ],
+      "evidence": "loaded Texture.image dimensions queried via window.__earth; files not downloaded/pinned separately"
+    }
+  ],
+  "geometry": {
+    "radius": 1,
+    "widthSegments": 64,
+    "heightSegments": 64
+  },
+  "anisotropy": 8,
+  "nightIntensity": 0.95,
+  "current_ECG_night_dimensions": [
+    2048,
+    1024
+  ],
+  "current_ECG_night_scale": 0.12,
+  "screenshots": [
+    "live-earth.png",
+    "live-earth-next.png"
+  ],
+  "scope": "Source + live Edge frames at scrollY1150 and subsequent down380; no original authoring files, GLB, offline provenance or close-orbit quality proof."
+}

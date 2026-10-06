@@ -1474,3 +1474,23 @@ VDB 존재가 자연스러운질감·목업 조명을 보장하는지 같은 카
 
 ### 놓쳤다면
 확대하지않는남극에만고해상도타일을추가하고다른지역의저해상도globalmap 확대를그대로유지했을것이다.
+
+## F-055. Moto 지구의 품질은 고밀도 메시보다 낮밤/표면/역광 조합에 있음
+
+| | |
+|---|---|
+| 발견 | 2026-10-07 [코드] [런타임] [캡처] |
+| 상태 | 활성소스/로드image/실제화면확인,근접확대미검증 |
+| 연결 | D-087, REF-001, CASE-007 |
+
+### 발단
+사용자가Moto지구의극지/도시불빛을비교자료로지목.
+
+### 먼저 의심한 것과 배제 방법
+REF001과현재HTML의활성module구별,window.__earth의실제geometry/Texture.image/anisotropy대조,실제Edge두스크롤캡처. 주석OLD7를현재동작으로오인하지않음.
+
+### 결정적 근거
+Moto 64×64sphere/4Kday-night-bump3장,night*.95최종mix/roughness.25-.35/bumpnormal;A는2Knight/emissive*.12/기본sphere384×192. sourcehash/URL/캡처 verification/moto-earth-audit-20261007. 단순수치비율을실제밝기/성능비율로일반화하지않음. fullDCC/GLB·근접tile·출처는미확인.
+
+### 놓쳤다면
+잘보이는극지질감을고밀도빙하지형에셋으로오인하고이미많은mesh만늘려빛·nightmap조합을놓쳤을것이다.

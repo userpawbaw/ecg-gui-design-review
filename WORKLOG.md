@@ -569,3 +569,6 @@ JangaFX10종 원본 획득·hash/조건/metadata 고정, Cycles4.5.3/RTX3070Opti
 
 ### 2026-10-07 구름형태KEEP·지표거리별디테일계획 — D086/F054
 사용자VDB모양만족 기록; 전체광학/군집인계TUNE와분리. 현재global4K/REMA1km/고정mesh·default경로/남극자료불일치 감사와공식NASA/PGC/Cesium/3DTiles자료확인. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_earth_detail_distance_plan_2026-10-07.md. 다음camerafootprint/목적지정합→지역crop/DEM/재질대표비교→승인VDB와거리인계. 새지형다운로드/runtime변경없음, 사용자제작피드백1/2 유지.
+
+### 2026-10-07 Moto 실제 에셋/빛·북반구 경로 검토 — D087/F055
+활성source/liveEdge/텍스처4K3종·구체64²/낮밤mix/2스크롤캡처 재확인. 남반구제작비최적화의도근거없음. 북반구육지anchor우선·남미대안5구도비교추천. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_moto_earth_northern_route_review_2026-10-07.md. 현재runtime/경로/자산재사용미변경,서고·구름형태KEEP/제작피드백1/2 유지.

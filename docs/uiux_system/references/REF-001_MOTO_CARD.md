@@ -361,3 +361,7 @@ onTouchMove: spinVelocity += Δy × 6 × 0.004
 - 실제 GPU에서의 fps, GPU 메모리 사용량은 측정하지 않았다(소프트웨어 렌더 환경). → 로컬 세션이나 target PC에서 측정.
 - 히어로 영상의 제작 도구, 원통 사진의 출처는 확인하지 못했다.
 - 카드 GLSL의 Spline 노드 부분(`nodeU0`~`nodeU23`)의 의미는 해석하지 않았다. Spline 재질을 직접 만들어 export해 보면 대응 관계를 알 수 있다.
+
+## 2026-10-07 현재 지구 자산·활성 코드 재검토 — D087/F055
+
+현재활성EarthScene과실제Edge캡처2장/로드된텍스처확인. day/night/bump각4096×2048, Sphere64×64/bumpnormal,night*.95와낮PBR출력혼합. 소스에주석OLD7가있어활성module구별. verification/moto-earth-audit-20261007/audit.json. 상세 ../rounds/R1/SCENARIO-ABC-20261003/ECG_A_moto_earth_northern_route_review_2026-10-07.md. 고밀도지형/근접확대품질/원본제작툴·지도출처미확인. 원작은축소전환이므로우리확대지역patch와구분. 현재재현상태추가PASS없음.

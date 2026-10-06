@@ -28,8 +28,31 @@ def _up2():                                                         # Rigify fin
 P.up = _up2
 for _m in o.modifiers: _m.show_viewport = False                     # solving reads bones only: skip the 53k-vertex deform on every
                                                                      # update (the joint closure search timed out at 40 min with it on)
-P.reset(); _sh = P.head(f'ORG-upper_arm.{SIDE}')                     # hand study: elbow bent 90°, forearm forward, thumb up
-P.arm_relaxed(SIDE, _sh + Vector((0.0, -.28, -.30)), None, _sh + Vector((0.0, .3, -.35)), flex=0, dev=0, pronation=0)
+MODE = os.environ.get('FIST_POSE', 'study')                         # study: hand held up in front | chair: D-053 story pose
+CHAIR_H = .43                                                        # build-figure-v3 SEAT_H['chair']
+X_ = Vector((1, 0, 0))
+
+
+def pose_body():
+    P.reset()
+    if MODE == 'study':                                              # hand study: elbow bent 90°, forearm forward, thumb up
+        sh = P.head(f'ORG-upper_arm.{SIDE}')
+        P.arm_relaxed(SIDE, sh + Vector((0.0, -.28, -.30)), None, sh + Vector((0.0, .3, -.35)), flex=0, dev=0, pronation=0); return
+    # chair (D-053): build-figure-v3 pose_chair, except the right hand — the forearm lies along the thigh and the hand reaches
+    # past the knee cap so the fingers can close in the air (a palm laid on the thigh would curl its fingers into it)
+    h = CHAIR_H; hz = P.head('ORG-thigh.L').z
+    P.move('torso', (0, .02, h + .095 - hz)); P.turn('torso', -1, X_)
+    P.turn('neck', 6, X_); P.turn('head', 4, X_)
+    for s_, sg in (('L', 1), ('R', -1)):
+        P.leg(s_, (sg * .12, -.45, .10), (sg * .05, -1, -.2), (sg * .12, -1.5, h + .2))
+    th = P.head('ORG-thigh.L').lerp(P.head('ORG-shin.L'), .62)
+    P.arm_relaxed('L', th + Vector((.01, .05, .125)), None, (.55, .45, h + .45), flex=-22, dev=-30, pronation=72)
+    P.curl('L', 40, thumb=10)
+    knee = P.head('ORG-shin.R')
+    P.arm_relaxed('R', knee + Vector((.0, -.07, .07)), None, (-.55, .45, h + .45), flex=20, dev=0, pronation=35)   # wrist past the knee cap
+
+
+pose_body()
 FING = ('f_index', 'f_middle', 'f_ring', 'f_pinky'); VID = {'f_index': 'index', 'f_middle': 'middle', 'f_ring': 'ring', 'f_pinky': 'pinky'}
 CTL = [f'{f}.0{j}.{SIDE}' for f in FING for j in (1, 2, 3)] + [f'thumb.0{j}.{SIDE}' for j in (1, 2, 3)]
 
@@ -184,7 +207,7 @@ def tip_palm_gap(C, f):
     return min(gap(C[(f, j)], C[('palm', k)]) for j in (2, 3) for k in (1, 2, 3, 4))
 
 
-P.reset(); P.arm_relaxed(SIDE, _sh + Vector((0.0, -.28, -.30)), None, _sh + Vector((0.0, .3, -.35)), flex=0, dev=0, pronation=0)
+pose_body()
 
 CONTACT = -.0005                                                    # middle phalanges just touching (skin)
 
@@ -336,6 +359,7 @@ if not TESTS:
 
 
 SPEC = {'allow_warn': ['MCP', 'PIP', 'DIP']}                          # a fist is an end-range posture by definition (rom.md)
+CHAIR_SPEC = dict(SPEC, contacts=[('fore.R', 'thigh.R', .03), ('hand.L', 'thigh.L', .03)])
 def verts():
     P.up(); ev = o.evaluated_get(bpy.context.evaluated_depsgraph_get()); me = ev.to_mesh()
     A = np.array([v.co[:] for v in me.vertices]); ev.to_mesh_clear(); return A
@@ -353,16 +377,24 @@ fails = 0
 for direction in ('close', 'open'):
     for s in np.linspace(0, 1, 21):
         A, T = state(direction, s); apply(A, T)
-        rows = [r for r in pc.check(rig, None, SPEC) if r['name'].startswith(('f_', 'thumb'))]
+        if MODE == 'chair':                                           # whole body: arm ROM, forearm on the thigh, hand vs thigh/shin
+            rows = pc.check(rig, None, CHAIR_SPEC)
+        else:
+            rows = [r for r in pc.check(rig, None, SPEC) if r['name'].startswith(('f_', 'thumb'))]
         rows = thumb_rom(hand_collisions(rows), T)
         nf = sum(r['status'] == 'FAIL' for r in rows); nw = sum(r['status'] == 'WARN' for r in rows); fails += nf
         bad = [f"{r['status']} {r['name']} {r['value']}" for r in rows if r['status'] in ('FAIL', 'WARN')]
         report['frames'].append({'dir': direction, 's': round(float(s), 2), 'FAIL': nf, 'WARN': nw, 'issues': bad})
         if bad: print(f'   {direction} s={s:.2f}: ' + '; '.join(bad))
 print(f'   fist sequence frames {len(report["frames"])}: FAIL {fails}')
-json.dump(report, open(os.path.join(ROOT, 'verification', 'pose-check', 'fist.json'), 'w'), ensure_ascii=False, indent=1)
+json.dump(report, open(os.path.join(ROOT, 'verification', 'pose-check', 'fist.json' if MODE == 'study' else 'fist_chair.json'), 'w'), ensure_ascii=False, indent=1)
 if fails and not os.environ.get('POSE_ALLOW_FAIL'):
     print('   FIST GATE FAIL — no renders'); sys.stdout.flush(); os._exit(1)
+
+if MODE == 'chair':
+    import importlib.util as _iu
+    _sp = _iu.spec_from_file_location('chair_motion', os.path.join(HERE, 'chair-motion-v3.py')); _cm = _iu.module_from_spec(_sp)
+    _sp.loader.exec_module(_cm); _cm.render(globals()); sys.stdout.flush(); os._exit(0)
 
 # ---- clay renders: hand views at close s = 0, .25, .4, .55, .7, 1 ----
 sc = bpy.context.scene

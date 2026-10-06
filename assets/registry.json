@@ -1813,6 +1813,34 @@
       "processing": "none",
       "used_by": [],
       "review": "Anime-style low-poly base with hair; style mismatch, dropped from the lineup (D-048)."
+    },
+    {
+      "id": "ph-GreenChair_01",
+      "title": "Poly Haven — Green Chair 01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "GreenChair_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/GreenChair_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/GreenChair_01/GreenChair_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-GreenChair_01/GreenChair_01_1k.gltf",
+        "sha256": "d1e4946ac99ab9e64c82d802fe5cd49d962750e34b8d284762b3fe2b00ba8a45",
+        "bytes": 2695
+      },
+      "processing": "consumed by scripts/assets/chair-motion-v3.py (placed by ray casts under the R1 story figure; native scale)",
+      "processed": null,
+      "used_by": [
+        "verification/r1-chair-motion-20261006"
+      ],
+      "review": "CC0 open-frame wooden armchair: seat 0.464 m, armrests 0.21 m above the seat (seated elbow height) — replaces modern_arm_chair_01 for the D-053 story pose (its armrests sit 0.15 m over the seat, below the seated elbow). User 2026-10-06: '팔걸이 높은 의자로 바꿔서'."
     }
   ],
   "rejected": [

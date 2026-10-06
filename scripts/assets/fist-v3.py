@@ -40,30 +40,40 @@ def pose_body():
     if MODE == 'study':                                              # hand study: elbow bent 90°, forearm forward, thumb up
         sh = P.head(f'ORG-upper_arm.{SIDE}')
         P.arm_relaxed(SIDE, sh + Vector((0.0, -.28, -.30)), None, sh + Vector((0.0, .3, -.35)), flex=0, dev=0, pronation=0); return
-    # chair (D-053): build-figure-v3 pose_chair, except the right hand — the forearm lies along the thigh and the hand reaches
-    # past the knee cap so the fingers can close in the air (a palm laid on the thigh would curl its fingers into it)
-    h = CHAIR_H; hz = P.head('ORG-thigh.L').z
-    P.move('torso', (0, .02, h + .095 - hz)); P.turn('torso', -1, X_)
-    P.turn('neck', 6, X_); P.turn('head', 4, X_)
-    for s_, sg in (('L', 1), ('R', -1)):
-        P.leg(s_, (sg * .12, -.45, .10), (sg * .05, -1, -.2), (sg * .12, -1.5, h + .2))
-    th = P.head('ORG-thigh.L').lerp(P.head('ORG-shin.L'), .62)
-    P.arm_relaxed('L', th + Vector((.01, .05, .125)), None, (.55, .45, h + .45), flex=-22, dev=-30, pronation=72)
-    P.curl('L', 40, thumb=10)
-    # right forearm along the chair's right armrest, the fist at its front end (user reference 2026-10-06)
-    global CHAIR
+    # chair (D-053): build-figure-v3 pose_chair at the placed chair's seat height; right forearm along the armrest, fist at its
+    # front end (user reference 2026-10-06)
+    global CHAIR, CHAIR_H
     if CHAIR is None:
         import importlib.util as _iu
         _sp = _iu.spec_from_file_location('chair_motion', os.path.join(HERE, 'chair-motion-v3.py')); _cm = _iu.module_from_spec(_sp)
-        _sp.loader.exec_module(_cm); CHAIR = _cm.place_chair(bpy, Vector, ROOT)
-    ar = CHAIR['arms']['R']; zf = ar['z'] + .035                                  # forearm axis ≈ its radius above the armrest top
-    # the armrest is low (0.15 m over the seat): the seated elbow cannot reach it, so the distal forearm rests on the armrest's
-    # front end and the elbow floats behind and above it (first try asked for the whole forearm on it: gap 61 mm, FAIL)
-    wrist = Vector((ar['x'] + .01, ar['front'] + .02, zf + .005))
-    P.arm_relaxed('R', wrist, None, wrist + Vector((-.25, .45, .05)), flex=15, dev=0, pronation=30)
-    rest_pt = wrist + Vector((0, .06, -.035))
-    CHAIR_SPEC['contacts'] = [('fore.R', tuple(rest_pt), .03), ('hand.L', 'thigh.L', .03)]
-
+        _sp.loader.exec_module(_cm); CHAIR = _cm.place_chair(bpy, Vector, ROOT); CHAIR_H = CHAIR['h']
+    h = CHAIR_H - .015; hz = P.head('ORG-thigh.L').z                   # 15 mm into the cushion
+    P.move('torso', (0, .02, h + .095 - hz)); P.turn('torso', -1, X_)
+    P.turn('chest', -5, Vector((0, 1, 0)))                            # lean 5° onto the right armrest: the seated shoulder sits
+    P.turn('neck', 6, X_); P.turn('head', 4, X_); P.turn('neck', 3, Vector((0, 1, 0)))   # 3 cm too high for the elbow to reach it
+    for s_, sg in (('L', 1), ('R', -1)):
+        P.leg(s_, (sg * .15, -.50, .10), (sg * .08, -1, -.2), (sg * .15, -1.5, h + .2))   # feet 3 cm wider, 5 cm further out:
+    th = P.head('ORG-thigh.L').lerp(P.head('ORG-shin.L'), .62)                            # calves clear the chair's front legs
+    def l_gap(dz):                                                    # left hand resting on the thigh: solve its height
+        P.arm_relaxed('L', th + Vector((.01, .05, dz)), None, (.55, .45, h + .45), flex=-22, dev=-30, pronation=72)
+        C = pc.Body(rig).capsules()
+        return pc._seg_dist(np.array(C['hand.L'][0]), np.array(C['hand.L'][1]), np.array(C['thigh.L'][0]), np.array(C['thigh.L'][1])) \
+            - pc.RADIUS['hand'] - pc.RADIUS['thigh']
+    lo_, hi_ = .05, .25
+    for _ in range(14):
+        mid = (lo_ + hi_) / 2
+        if l_gap(mid) < .003: lo_ = mid
+        else: hi_ = mid
+    l_gap(hi_)
+    P.curl('L', 40, thumb=10)
+    ar = CHAIR['arms']['R']; zf = ar['z'] + .037                                  # forearm axis = its radius above the armrest top
+    Lf = rig.data.bones['ORG-forearm.R'].length
+    sh = P.head('ORG-upper_arm.R'); Lu = rig.data.bones['ORG-upper_arm.R'].length
+    elbow = Vector((ar['x'], sh.y + .03, zf + .01))                               # elbow on the armrest under the shoulder,
+    wrist = elbow + Vector((0, -Lf, -.01))                                        # forearm along it, fist past its front end
+    print(f'   reach R elbow: shoulder → elbow on the armrest {(elbow - sh).length:.3f} m of {Lu:.3f} m upper arm')
+    P.arm_relaxed('R', wrist, None, elbow + Vector((-.12, .30, -.08)), flex=10, dev=0, pronation=30)
+    CHAIR_SPEC['contacts'] = [('fore.R', tuple((wrist + elbow) / 2 - Vector((0, 0, .037))), .03), ('hand.L', 'thigh.L', .03)]
 
 pose_body()
 FING = ('f_index', 'f_middle', 'f_ring', 'f_pinky'); VID = {'f_index': 'index', 'f_middle': 'middle', 'f_ring': 'ring', 'f_pinky': 'pinky'}

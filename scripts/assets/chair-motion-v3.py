@@ -25,13 +25,16 @@ def breath_at(t, period=5.0, inhale=2.0):
 FIG_ANCHOR = (0.0, .0087, .4313)                                     # figure.json poses_v3.chair.anchor (rig frame): buttock contact
 
 
-def place_chair(bpy, Vector, root):
-    """The archive's measurement chair (Poly Haven modern_arm_chair_01, CC0, 0.82 m) in the figure frame: backrest toward +y,
-    the chair_fit anchor (build_archive.py) on the figure's buttock contact, armrests measured by casting rays."""
+def place_chair(bpy, Vector, root, slug='GreenChair_01', height=None):
+    """A Poly Haven chair (CC0) in the figure frame: backrest toward +y, standing on the floor, the chair_fit anchor
+    (build_archive.py) under the figure's buttock contact in x/y; seat and armrests measured by casting rays. Returns the seat
+    height the figure must sit at (h, figure.json convention: anchor = h + 1.3 mm).
+    GreenChair_01 (native scale): armrests 0.21 m over the seat — the seated elbow rests on them (user 2026-10-06: "팔걸이 높은
+    의자로 바꿔서"); modern_arm_chair_01 (the archive chair, scaled to 0.82 m) has them at 0.15 m, below the elbow."""
     import math as m
     from mathutils.bvhtree import BVHTree
     before = set(bpy.data.objects)
-    bpy.ops.import_scene.gltf(filepath=os.path.join(root, 'assets/source/ph-modern_arm_chair_01/modern_arm_chair_01_1k.gltf'))
+    bpy.ops.import_scene.gltf(filepath=os.path.join(root, f'assets/source/ph-{slug}/{slug}_1k.gltf'))
     new = [o for o in bpy.data.objects if o not in before]; roots = [o for o in new if o.parent is None]
     for o in new: o['chair'] = True
     def bbox():
@@ -48,8 +51,10 @@ def place_chair(bpy, Vector, root):
                     if best is None or (w - a).length < best[1]: best = (w, (w - a).length)
             return best
         return cast
-    lo, hi = bbox(); sc_ = .82 / (hi.z - lo.z)
+    lo, hi = bbox(); sc_ = height / (hi.z - lo.z) if height else 1.0
     for r in roots: r.rotation_mode = 'XYZ'; r.scale = tuple(v * sc_ for v in r.scale)   # glTF roots are QUATERNION (F-033)
+    lo, hi = bbox()
+    for r in roots: r.location.z -= lo.z                                # stand on the floor
     def grid(cast, lo, hi, step=.02):
         c = (lo + hi) / 2; pts = []
         for i in range(-30, 31):
@@ -65,17 +70,17 @@ def place_chair(bpy, Vector, root):
     lo, hi = bbox(); cast = cast_all(); c, pts = grid(cast, lo, hi)
     b = Vector((0, 1, 0)); hit = cast(Vector((c.x, c.y, seat_z + .22)), b); dback = hit[1] if hit else .25
     anchor = Vector((c.x, c.y, seat_z + .01)) + b * (dback - .21)
-    d = Vector(FIG_ANCHOR) - anchor
+    d = Vector((FIG_ANCHOR[0] - anchor.x, FIG_ANCHOR[1] - anchor.y, 0))  # x/y only: the figure sits at this chair's height
     for r in roots: r.location += d
     lo, hi = bbox(); cast = cast_all(); c, pts = grid(cast, lo, hi)
-    seat_z += d.z; arms = {}
+    h = anchor.z - .0013; arms = {}
     for side, sg in (('R', -1), ('L', 1)):
         A = [p for p in pts if sg * p.x > .19 and seat_z + .08 < p.z < seat_z + .45]
         if not A: continue
         zt = sorted(p.z for p in A)[len(A) // 2]; top = [p for p in A if abs(p.z - zt) < .03]
         arms[side] = dict(x=sorted(p.x for p in top)[len(top) // 2], z=zt, front=min(p.y for p in top), back=max(p.y for p in top))
-    print(f'   chair: seat {seat_z:.3f} m, armrests', {k: {kk: round(vv, 3) for kk, vv in v.items()} for k, v in arms.items()})
-    return dict(objects=new, seat_z=seat_z, arms=arms)
+    print(f'   chair {slug}: seat {seat_z:.3f} m, figure h {h:.3f} m, armrests', {k: {kk: round(vv, 3) for kk, vv in v.items()} for k, v in arms.items()})
+    return dict(objects=new, seat_z=seat_z, h=h, arms=arms)
 
 
 def render(g):
@@ -161,7 +166,7 @@ def render(g):
     pc = g['pc']
     for lab, st in (('open', state('close', 0.0)), ('fist', state('close', 1.0))):
         apply(*st); bpy.context.view_layer.update()
-        print(f'   body vs chair ({lab}):', pc.scene_collisions(o, chair_objs))
+        print(f'   body vs chair ({lab}):', pc.scene_collisions(o, chair_objs, reach=.06))
     if os.environ.get('STILLS_ONLY'):
         for lab, st in (('open', state('close', 0.0)), ('fist', state('close', 1.0))):
             apply(*st)

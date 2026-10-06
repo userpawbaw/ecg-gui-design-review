@@ -258,9 +258,11 @@ def report(rows, title='', path=None, show_ok=False):
     return n
 
 
-def scene_collisions(fig, objects, step=4, ignore=()):
+def scene_collisions(fig, objects, step=4, ignore=(), reach=.2):
     """Figure (evaluated mesh, world space) vs scene meshes: max penetration (mm) per object, by nearest-surface normal test
-    on every step-th figure vertex inside the object's bounding box."""
+    on every step-th figure vertex inside the object's bounding box. `reach` caps the search: for thin parts (chair arms, ~3 cm)
+    a vertex 15 cm from any surface cannot be inside, yet a single-sided face seen from behind reads as 'inside' (2026-10-06:
+    158 mm reported in the empty gap between the hip and the GreenChair_01 armrest). Use reach ≈ 2 × the part thickness."""
     import bpy
     from mathutils.bvhtree import BVHTree
     dg = bpy.context.evaluated_depsgraph_get()
@@ -275,7 +277,7 @@ def scene_collisions(fig, objects, step=4, ignore=()):
         if not cand: continue
         bvh = BVHTree.FromObject(o, dg); Mi = o.matrix_world.inverted(); Mw = o.matrix_world; worst, where = 0.0, None
         for p in cand:
-            loc, nrm, _, d = bvh.find_nearest(Mi @ p, .2)
+            loc, nrm, _, d = bvh.find_nearest(Mi @ p, reach)
             if loc is None: continue
             if (Mi @ p - loc).dot(nrm) < 0:
                 dd = ((Mw @ loc) - p).length

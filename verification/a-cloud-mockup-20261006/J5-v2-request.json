@@ -1,0 +1,8 @@
+{
+  "id": "J5-v2",
+  "intent": "targeted edit cloud material/microstructure, keep composition",
+  "referenced_image_paths": [
+    "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/J5-side-v1.png"
+  ],
+  "prompt": "Edit input image 1, the J5 cloud-side descent concept. Preserve the composition, upper-left sunlight, ocean/coast/horizon, H1 left foreground with unequal towers and central saddle, H2 right group, central gap and displaced ocean shadows. Change ONLY the cloud material and fine-scale morphology: the current clouds look like hard fractured Antarctic ice cliffs, crumpled paper or coral. Replace the sharp carved facets, hanging hard icicles and jagged rock-like sheets with naturally soft volumetric water-vapor clouds. Thick H1/H2 still have strong 3D mass and opaque illuminated cores: rounded irregular cauliflower billows with nested medium lobes, soft blue-gray occluded folds, and bright grazing upper-left faces. At their outer and lower boundaries add airy, delicate semi-transparent curling filaments, breaking billows and vapor wisps revealing ocean behind. Preserve deliberate large hollows/saddles and sidewall depth; avoid turning everything into featureless fog or uniformly blurring it. Distant cloud streets and sparse high cirrus should remain finer and directionally stretched. Carefully feather the cloud-ocean edges, no solid chunks floating like stone. High-end photoreal volumetric CGI, refined scattering, optical density hierarchy, warm-white highlights and cool undersides. ONE complete 16:9 frame, no text, labels, border or collage. The figure is a visual target, not weather data."
+}

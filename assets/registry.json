@@ -2363,6 +2363,151 @@
         "prototype/spikes/a-climb"
       ],
       "review": "D-075 native software static QA; fidelity FAIL/TUNE; GPU/motion verification pending; experimental only"
+    },
+    {
+      "id": "a-cloud-mockup-j5-v3",
+      "title": "J5-v3 concept target",
+      "kind": "concept-image",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "tool": "image_gen built-in",
+        "prompt_manifest": "verification/a-cloud-mockup-20261006/manifest.json",
+        "request": "verification/a-cloud-mockup-20261006/J5-v3-request.json"
+      },
+      "licence": "generated project concept; source provenance in manifest",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v3.png",
+        "bytes": 2167986,
+        "sha256": "70f4fd860524ddebfdeb5fc4bb4905161ca9702301262ededb0f1735487eff4b",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "used_by": [
+        "A-P2 review only; not renderer"
+      ],
+      "review": "D-077/F-048 TUNE, user review pending. Not runtime, accurate mesh blueprint, gold render or adoption."
+    },
+    {
+      "id": "a-cloud-mockup-j2",
+      "title": "J2 concept target",
+      "kind": "concept-image",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "tool": "image_gen built-in",
+        "prompt_manifest": "verification/a-cloud-mockup-20261006/manifest.json",
+        "request": "verification/a-cloud-mockup-20261006/J2-request.json"
+      },
+      "licence": "generated project concept; source provenance in manifest",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "verification/a-cloud-mockup-20261006/images/J2-orbit-v1.png",
+        "bytes": 2754410,
+        "sha256": "ff2a0884209508504fc342557fa0b706dcbc2552ac60d65880f1ae7361dc047f",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "used_by": [
+        "A-P2 review only; not renderer"
+      ],
+      "review": "D-077/F-048 TUNE, user review pending. Not runtime, accurate mesh blueprint, gold render or adoption."
+    },
+    {
+      "id": "a-cloud-mockup-j3",
+      "title": "J3 concept target",
+      "kind": "concept-image",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "tool": "image_gen built-in",
+        "prompt_manifest": "verification/a-cloud-mockup-20261006/manifest.json",
+        "request": "verification/a-cloud-mockup-20261006/J3-request.json"
+      },
+      "licence": "generated project concept; source provenance in manifest",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "verification/a-cloud-mockup-20261006/images/J3-descent-v1.png",
+        "bytes": 2818527,
+        "sha256": "c78123454a877adf434e12c729e030b012822fddad95923ff269478902fba278",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "used_by": [
+        "A-P2 review only; not renderer"
+      ],
+      "review": "D-077/F-048 TUNE, user review pending. Not runtime, accurate mesh blueprint, gold render or adoption."
+    },
+    {
+      "id": "a-cloud-mockup-c1-v2",
+      "title": "C1-v2 concept target",
+      "kind": "concept-image",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "tool": "image_gen built-in",
+        "prompt_manifest": "verification/a-cloud-mockup-20261006/manifest.json",
+        "request": "verification/a-cloud-mockup-20261006/C1-v2-request.json"
+      },
+      "licence": "generated project concept; source provenance in manifest",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "verification/a-cloud-mockup-20261006/images/C1-shape-v2.png",
+        "bytes": 2129154,
+        "sha256": "ea8c4ca1b1f567302a1855af6b0d9676df0b6b667a1ded4589ff790047a72487",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "used_by": [
+        "A-P2 review only; not renderer"
+      ],
+      "review": "D-077/F-048 TUNE, user review pending. Not runtime, accurate mesh blueprint, gold render or adoption."
+    },
+    {
+      "id": "a-cloud-mockup-c2",
+      "title": "C2 concept target",
+      "kind": "concept-image",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "tool": "image_gen built-in",
+        "prompt_manifest": "verification/a-cloud-mockup-20261006/manifest.json",
+        "request": "verification/a-cloud-mockup-20261006/C2-request.json"
+      },
+      "licence": "generated project concept; source provenance in manifest",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "verification/a-cloud-mockup-20261006/images/C2-overlap-v1.png",
+        "bytes": 2506530,
+        "sha256": "e88b734e63e877dc3dda980ff4a165b7f85c46e95bb8711dcc3ccad233f32017",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "used_by": [
+        "A-P2 review only; not renderer"
+      ],
+      "review": "D-077/F-048 TUNE, user review pending. Not runtime, accurate mesh blueprint, gold render or adoption."
     }
   ],
   "rejected": [

@@ -116,3 +116,6 @@ J0/J1의 cloud detail은 거리에 맞게 작아야 한다. globe전체에서 �
 추가목업은 **미정인목표를구체화**하고 gold render는 **실제로만들수있는빛/조형의기준**을준다. 둘을 함께 준비하는것이 이번목업Gap에대한 권장방식이다. 큰renderer코드확장/라이브러리교체/새날씨시뮬레이션은 이번연구에서착수하지않았다. A-P3/Story/B/C범위는유지한다.
 
 종료 검증: records165 PASS / 정적 분석 script 실행·pycompile PASS / diff-check PASS. 이번은 연구·제안 문서이며 Vite 새 build/실행 품질 향상 검증은 대상 아님. 원격은 commit/push 후 내용 readback으로 확인.
+
+## 제작 후 현재 경로
+사용자진행승인으로 [첫5종 목업](ECG_A_cloud_mockup_review_2026-10-06.md)을제작했다. 제안단계의미확정·미생성표시는과거연구상태로보존하며D077이후의현재상태는새검토를읽는다. 남은7목업/gold/runtime검증을첫5장생성만으로완료처리하지않는다.

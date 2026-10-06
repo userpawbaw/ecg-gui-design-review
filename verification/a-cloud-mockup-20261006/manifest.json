@@ -1,0 +1,222 @@
+{
+  "stage": "first five proposed target frames, not runtime or assets",
+  "scene": "A-P2",
+  "generations": [
+    {
+      "id": "J5",
+      "file": "J5-side-v1.png",
+      "selected": false,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-544fa260-e950-448f-8dc6-69592bc623ba.png",
+      "prompt": "Use case: cinematic 3D scene mockup / implementation visual target. Generate ONE finished 16:9 widescreen frame J5, cloud-side descent of ECG Signal Studio's approved Earth-to-archive journey. Input image 1 is ONLY the established mood/material/light reference: preserve its warm grazing upper-left sunlight, deep navy sea, restrained blue atmosphere and luxurious detailed CGI; remove all text and UI. Reframe at the altitude of the cloud bodies, a forward/down oblique three-quarter camera looking across a maritime cloud field near Antarctica. Frame coordinates: a large irregular H1 cloud in left foreground x8–57%, y27–91%, with THREE unequal branching lobes, tallest at x38%, lower protruding shelf at x19%, an eroded saddle near x49%; a smaller H2 group at x70–91%, y36–74%, separated by a readable central gap at x57–70%. Camera about 5–7km high, oblique enough to see upper surface AND a deep sidewall/underside. Fill space with distant lower cloud streets and broken fields receding over a dark blue ocean, with a subtle pale Antarctic coastal ice edge in far background; do not isolate two blobs in empty black sky. Earth curvature should be subtle at this low view, thin blue atmospheric horizon near upper fifth. H1 needs large/medium/fine shape hierarchy: asymmetric billows, rounded but non-spherical towers, fissures and overhangs, wispy broken edges, sparse detached fragments. Dense core opaque luminous ivory; sunlight strongest on upper-left faces, cool blue-gray occluded recesses and lower surfaces; fine translucent fibers near the silhouette, never a solid white plastic surface. Separate thin high cirrus T1 across upper-right background, wind-stretched feather filaments with gaps and partial transparency, distinctly different from thick billows. A real dark but soft cloud cast-shadow footprint should be visible on ocean through the gap, displaced away from the upper-left sun, distinct from cloud self-shadows. Photoreal cinematic light transport and restrained scattering, high detail, clean sharp output with some naturally soft vapor boundaries; no uniform blur, no giant spherical cotton balls, no polished object, no opaque fog filling the whole screen, no fantasy nebula, no neon outlines, no artificial floor, no text, no diagram, no collage. This is a concept target not measured meteorology. Produce one whole finished frame.",
+      "request": "J5-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v1.png",
+        "bytes": 2757574,
+        "sha256": "77ef5c3fb0a616fc84e6d9748c8f3fa4a5226160727aee852fe329dc601a9c64",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/outputs/images/A0_globe_v1.png",
+          "sha256": "98548b12ba77533b1136751d6737cb48ec26c67fb9ce30915f2f9591922e8fbb",
+          "portable_file": "verification/a-cloud-mockup-20261006/inputs/A0-mood-parent.png"
+        }
+      ]
+    },
+    {
+      "id": "J5-v2",
+      "file": "J5-side-v2.png",
+      "selected": false,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-eb0d9a09-3e7e-4f8f-ab3a-3b18981df36f.png",
+      "prompt": "Edit input image 1, the J5 cloud-side descent concept. Preserve the composition, upper-left sunlight, ocean/coast/horizon, H1 left foreground with unequal towers and central saddle, H2 right group, central gap and displaced ocean shadows. Change ONLY the cloud material and fine-scale morphology: the current clouds look like hard fractured Antarctic ice cliffs, crumpled paper or coral. Replace the sharp carved facets, hanging hard icicles and jagged rock-like sheets with naturally soft volumetric water-vapor clouds. Thick H1/H2 still have strong 3D mass and opaque illuminated cores: rounded irregular cauliflower billows with nested medium lobes, soft blue-gray occluded folds, and bright grazing upper-left faces. At their outer and lower boundaries add airy, delicate semi-transparent curling filaments, breaking billows and vapor wisps revealing ocean behind. Preserve deliberate large hollows/saddles and sidewall depth; avoid turning everything into featureless fog or uniformly blurring it. Distant cloud streets and sparse high cirrus should remain finer and directionally stretched. Carefully feather the cloud-ocean edges, no solid chunks floating like stone. High-end photoreal volumetric CGI, refined scattering, optical density hierarchy, warm-white highlights and cool undersides. ONE complete 16:9 frame, no text, labels, border or collage. The figure is a visual target, not weather data.",
+      "request": "J5-v2-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v2.png",
+        "bytes": 2488337,
+        "sha256": "8ef95508458accbeec26b2769a5cd3c4519bd40c25d59b027afc3881dc2911ce",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/J5-side-v1.png",
+          "sha256": "77ef5c3fb0a616fc84e6d9748c8f3fa4a5226160727aee852fe329dc601a9c64",
+          "portable_file": "verification/a-cloud-mockup-20261006/images/J5-side-v1.png"
+        }
+      ]
+    },
+    {
+      "id": "J5-v3",
+      "file": "J5-side-v3.png",
+      "selected": true,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-a21cea5a-5b20-4805-ad09-a8d4a5d3f0d6.png",
+      "prompt": "Edit input1 into a DISTINCT LOWER-CAMERA J5 side view, later in the descent than the existing image. Preserve the same H1 cloud identity (three unequal lobes, tallest back-middle tower, low left shelf, eroded right saddle), H2 separated on right, central gap/ocean, upper-left sunlight and water-vapor material. The existing view is still aerial from above; MOVE THE CAMERA DOWN to the middle/upper-side height of H1 and look almost horizontally forward across the central gap. Make the tall H1 tower rise to y15–25%, its left near sidewall fill x0–52%, y25–95%; H2 on right at x70–95%, y35–82%. The ocean should appear mostly BELOW the clouds through the gap in the bottom 35% and distant lower background, not as a broad planar backdrop behind the whole cloud. Viewer now sees a DEEP nearly vertical billowing cloud sidewall with cool occluded folds, lower overhang and soft wispy tendrils; upper surface visible only in a shallow sloping strip. Upper quarter is quiet pale-to-deep blue ATMOSPHERIC SKY, no black outer space, no strong curved Earth limb. Only subtle low distant coastal haze, not a visible giant spherical planet. Thick H1 opaque ivory core with nested rounded billows and warm grazing left rims; natural blue-gray recesses, refined vapor edge transparency, avoid carved ice or plastic. T1 thin feathered cirrus high in right sky, distant cloud decks low on horizon, clearly deeper and smaller. Retain one soft displaced dark cloud shadow visible far below through the gap, do not paint black clouds. This frame must read as passing BETWEEN cloud bodies, not the same overhead picture with lighting changed. High-end finished photoreal CGI, detailed airy edge erosion and strong scale/depth. ONE 16:9 frame, no text, labels, UI, borders or collage. Concept camera visual target, not calibrated meteorology.",
+      "request": "J5-v3-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v3.png",
+        "bytes": 2167986,
+        "sha256": "70f4fd860524ddebfdeb5fc4bb4905161ca9702301262ededb0f1735487eff4b",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/J5-side-v2.png",
+          "sha256": "8ef95508458accbeec26b2769a5cd3c4519bd40c25d59b027afc3881dc2911ce",
+          "portable_file": "verification/a-cloud-mockup-20261006/images/J5-side-v2.png"
+        }
+      ]
+    },
+    {
+      "id": "J2",
+      "file": "J2-orbit-v1.png",
+      "selected": true,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-47031d10-e3a9-46b0-b376-92ab4562e496.png",
+      "prompt": "Create ONE cinematic 16:9 frame J2 LOW ORBIT in the same ECG Signal Studio Earth-to-cloud sequence. Input1 is the approved whole-Earth art direction and geography/material reference, remove its typography. Input2 is the new H1/H2 cloud identity and vapor material reference, NOT the camera framing to copy. Camera is now much higher, plausible low orbit roughly 250–400km, much farther from those SAME cloud groups. The curved Earth horizon crosses y20–28%, broad deep navy ocean/Antarctic coastal sector fills lower 75%, black space occupies upper 20%, a THIN electric blue atmospheric limb along the horizon with smooth haze inward, not a glass sphere. Warm grazing Sun peeks at far upper-left horizon with restrained cinematic rays and warm reflected ocean light. Much smaller cloud groups distributed over a continuous wide-scale weather field: long cloud streets, broken cellular decks, stretched sparse high cirrus and irregular thick white patches. The distinctive unequal-towered H1 cluster should be discernible but small near x43%,y65%, and H2 smaller near x68%,y63%, with the same open ocean channel between them; do not magnify giant mountains of clouds at this height. Antarctica is a pale, textured coastal strip receding toward the distant right, consistent with the input region. Cloud height, slight blue-shadow depth, and displaced soft shadows on the ocean should show relief without strong 3D exaggeration. Preserve upper-left sun direction, warm ivory highlights/cool shadow family and realistic volumetric material from input2. This is the predecessor to descending toward the local cluster, with rich environment continuity rather than a lone cloud asset in empty sky. Finished photoreal cinematic CGI, fine atmospheric perspective and geographic texture, clear detail at appropriate distance. No text, marks, UI, legend, border, collage, patient coordinate, giant separated balls, plastic clouds, fantasy planet or full-globe glass shell.",
+      "request": "J2-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/J2-orbit-v1.png",
+        "bytes": 2754410,
+        "sha256": "ff2a0884209508504fc342557fa0b706dcbc2552ac60d65880f1ae7361dc047f",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/outputs/images/A0_globe_v1.png",
+          "sha256": "98548b12ba77533b1136751d6737cb48ec26c67fb9ce30915f2f9591922e8fbb",
+          "portable_file": "verification/a-cloud-mockup-20261006/inputs/A0-mood-parent.png"
+        },
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/J5-side-v2.png",
+          "sha256": "8ef95508458accbeec26b2769a5cd3c4519bd40c25d59b027afc3881dc2911ce",
+          "portable_file": "verification/a-cloud-mockup-20261006/images/J5-side-v2.png"
+        }
+      ]
+    },
+    {
+      "id": "J3",
+      "file": "J3-descent-v1.png",
+      "selected": true,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-ee0e202f-6174-4f4c-ae10-52aeb05e2906.png",
+      "prompt": "Generate ONE 16:9 cinematic keyframe J3, descending from orbit TOWARD the cloud cluster seen in input2. Input1 is geography/mood reference; input2 is the same H1/H2 cloud identity, vapor texture and upper-left sunlight. No text from input1. Camera is above the cloud tops and aimed diagonally downward, roughly 20–35km over the ocean, distinctly higher and farther than input2. Reframe in a more downward aerial view: ocean weather field fills entire frame, NO black outer-space strip, horizon at most a slight blue distant haze near the very top. H1 unequal branching billows are the approaching target near x46%,y64%, occupying around 28–38% frame width, not filling all lower half; H2 smaller cluster to right at x74%,y60%, central ocean gap clear. Preserve identifiable H1's tallest central-back tower, low left shelf and eroded right saddle, H2 separate, same coastline sector. Many smaller broken cloudy decks, linear cloud streets and thin stretched wisps surround both so there is no empty background or lone object. White thick vapor has nested billows, illuminated warm ivory tops and cool blue-gray hollows; semi-transparent feathered fringes. Upper-left low-angle Sun outside frame creates warm glints on exposed left ocean and offset soft dark shadow footprints visible through channels. A thin high cirrus veil crosses the upper/right area sparsely, readable as a different altitude with ocean/low cloud still visible beneath. Antarctic coastal ice edge appears only as a small distant pale sliver at far right, not foreground ground. The picture should clarify that orbit cloud coverage remains continuous while the hero group grows as we descend, no teleport to a different skybox. High-end photoreal cinematic volumetric CGI, sharply readable large shapes and vapor fine edges, restrained aerial perspective. No plastic spheres, carved ice-clouds, snowy rocks, uniform fog, artificial floor, stars, glass shell, labels, borders, collage, UI.",
+      "request": "J3-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/J3-descent-v1.png",
+        "bytes": 2818527,
+        "sha256": "c78123454a877adf434e12c729e030b012822fddad95923ff269478902fba278",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/outputs/images/A0_globe_v1.png",
+          "sha256": "98548b12ba77533b1136751d6737cb48ec26c67fb9ce30915f2f9591922e8fbb",
+          "portable_file": "verification/a-cloud-mockup-20261006/inputs/A0-mood-parent.png"
+        },
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/J5-side-v2.png",
+          "sha256": "8ef95508458accbeec26b2769a5cd3c4519bd40c25d59b027afc3881dc2911ce",
+          "portable_file": "verification/a-cloud-mockup-20261006/images/J5-side-v2.png"
+        }
+      ]
+    },
+    {
+      "id": "C1",
+      "file": "C1-shape-v1.png",
+      "selected": false,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-46921f6b-a49f-49b6-a739-ddf107b1d443.png",
+      "prompt": "Create a technical visual SHAPE REFERENCE SHEET C1 for the exact thick H1 cloud in input1. ONE 16:9 image divided into three clean equal-width panels, each showing the SAME entire H1 cloud group at the SAME scale, with ample framing so no lobe is cropped. Input1 is identity/morphology/material reference only, not a panel arrangement to copy. Panel1: near top-down view, reveal its asymmetrical footprint, winding cavities and three unequal branching lobes, tall back-middle tower, low left shelf, eroded saddle/right branch. Panel2: side three-quarter view nearly at cloud mid-height, emphasize irregular billowing silhouette, deep cool shaded sidewall, high unequal tower and lower shelf/overhang. Panel3: upward three-quarter underside view, reveal flatter but turbulent low base, scattered vapor tendrils, darker blue-gray occluded underside with warm rim on sun-facing edge. All three are conceptual views of one shared group, never three unrelated stock clouds. Same fixed physical upper-left sunlight, creamy white opaque core, cooler shaded recesses, extremely fine nested organic cauliflower lobes and semi-transparent airy fringe. No hard chiseled sheets, rock, snow, plastic spheres or uniform fog. Simple quiet deep blue-gray atmospheric background in all panels, no studio tabletop, ground pedestal, Earth sphere or distracting environment, no arrows, measurement marks, labels or text. Keep the cloud's large silhouette recognizably asymmetric, fine detail convincing as vapor, sharp structural visibility with naturally soft edges. Finished photoreal volumetric CGI material quality matching input1. This is an image-based conceptual shape study, not a claim of actual multi-view mesh reconstruction. Clean narrow neutral dividers only.",
+      "request": "C1-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/C1-shape-v1.png",
+        "bytes": 2079579,
+        "sha256": "32bf62243f16596a4e8480940a92b8c73ceadb74d419303ccb5fc8903b4e2aec",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/J5-side-v2.png",
+          "sha256": "8ef95508458accbeec26b2769a5cd3c4519bd40c25d59b027afc3881dc2911ce",
+          "portable_file": "verification/a-cloud-mockup-20261006/images/J5-side-v2.png"
+        }
+      ]
+    },
+    {
+      "id": "C1-v2",
+      "file": "C1-shape-v2.png",
+      "selected": true,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-53aafa89-655e-428e-bc3a-8b994538301d.png",
+      "prompt": "Edit this three-panel cloud reference sheet C1. Keep the SAME cloud group identity, photoreal water-vapor detail, core opacity, warm ivory light and cool blue-gray shadows. The three existing panels are too similar in viewpoint. Correct the CAMERA ORIENTATION, not merely lighting, so the result has unmistakably distinct views. LEFT panel: camera DIRECTLY ABOVE, looking STRAIGHT DOWN 90 degrees, top-plan view of the entire cloud footprint against a quiet blue-gray background. NO upright mountain/tower silhouette and NO horizon; we see rounded tops clustered into an asymmetrical elongated footprint, its open winding gaps, low left shelf, taller central group and right saddle. CENTER panel: true horizontal SIDE view, camera at the cloud's mid-height, entire cloud framed, clearly horizontal flatter base along lower third and towers rising above it, front/side overlap and high-to-low lobe silhouette. RIGHT panel: camera DIRECTLY BELOW looking UP, show a large darker relatively flat irregular UNDERSIDE/base occupying center, with loose fibrous tendrils underneath and bright billow rim around perimeter; tops mostly hidden by the opaque base, so it cannot look like another view from above. In ALL panels, fit entire group within borders without cropping. Scale should be comparable. Remove the three repeated visible sun flares/rays as distracting; use only directional grazing illumination, same world-space source conceptually, no glowing sun disc. Quiet plain blue-gray backgrounds, subtle vapor fringe contrast, narrow clean neutral dividers. No text, arrows, measurements, floor, pedestal, Earth, scene background or collage of different cloud groups. One 16:9 technical conceptual visual reference sheet, not a measured orthographic asset. Preserve large shape relationship while making plan/side/underside readable.",
+      "request": "C1-v2-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/C1-shape-v2.png",
+        "bytes": 2129154,
+        "sha256": "ea8c4ca1b1f567302a1855af6b0d9676df0b6b667a1ded4589ff790047a72487",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/C1-shape-v1.png",
+          "sha256": "32bf62243f16596a4e8480940a92b8c73ceadb74d419303ccb5fc8903b4e2aec",
+          "portable_file": "verification/a-cloud-mockup-20261006/images/C1-shape-v1.png"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "file": "C2-overlap-v1.png",
+      "selected": true,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-7229bde9-3114-46f9-ae2f-26ebcb0b73be.png",
+      "prompt": "Edit the J5 cinematic cloud scene in input1 to create C2, a finished optical-layer overlap reference, ONE 16:9 frame. Preserve H1 left foreground, H2 right, the central open ocean gap, upper-left warm Sun, camera composition, coastline and distant cloud field. Add a clearly visible but restrained thin cirrus layer T1 at a different altitude: wind-stretched feathered ribbons sweeping diagonally from upper-right across central gap toward lower-center, sparse filaments with large holes and soft translucent vapor. In the central gap, ocean texture and shadow must remain visibly readable THROUGH this veil. Some T1 filaments pass in FRONT of H1's right edge and softly veil a narrow portion of its bright billows; farther continuation goes BEHIND the opaque H1 tower and is occluded by it, giving unmistakable depth overlap. Do not draw opaque ropes, neon trails or smoky torn fabric. Keep the thick cloud's central mass opaque, intensely dimensional with nested ivory billows and cool shaded hollows; only its own wispy fringes transmit the ocean. The thin upper layer should be directionally stretched and smoother than the dense thick cauliflower cloud, with fine bright grazing accents and low-opacity blue-gray shadow. Keep separate ocean cast-shadow footprints displaced toward lower-right away from Sun. Rich but controlled lighting, high-end photoreal volumetric CGI matching the input, subtle aerial perspective and layered depth, detailed vapor edges without carved ice facets. No labels, text, legend, panel split, diagram, UI or border. This is an optical depth and morphology target; not scientific weather measurement or a raster texture to directly paste into the runtime.",
+      "request": "C2-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/C2-overlap-v1.png",
+        "bytes": 2506530,
+        "sha256": "e88b734e63e877dc3dda980ff4a165b7f85c46e95bb8711dcc3ccad233f32017",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "original_path": "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/J5-side-v2.png",
+          "sha256": "8ef95508458accbeec26b2769a5cd3c4519bd40c25d59b027afc3881dc2911ce",
+          "portable_file": "verification/a-cloud-mockup-20261006/images/J5-side-v2.png"
+        }
+      ]
+    }
+  ],
+  "selected_count": 5,
+  "generated_count": 8,
+  "quality_edits": 3,
+  "source_commit": "9873c687c3127528cb5546e3753ca34d32c23abd",
+  "runtime_verified": false,
+  "status": "first-five concept target TUNE; user review pending; geometry/light/camera calibration not verified"
+}

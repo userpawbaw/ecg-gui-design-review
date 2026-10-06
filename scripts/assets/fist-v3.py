@@ -26,6 +26,8 @@ o, rig = bpy.data.objects['body_v3'], bpy.data.objects['rig']; P = rf.Poser(rig)
 def _up2():                                                         # Rigify finger drivers (MCH-*_drv) lag one update
     bpy.context.view_layer.update(); bpy.context.view_layer.update()
 P.up = _up2
+for _m in o.modifiers: _m.show_viewport = False                     # solving reads bones only: skip the 53k-vertex deform on every
+                                                                     # update (the joint closure search timed out at 40 min with it on)
 P.reset(); _sh = P.head(f'ORG-upper_arm.{SIDE}')                     # hand study: elbow bent 90°, forearm forward, thumb up
 P.arm_relaxed(SIDE, _sh + Vector((0.0, -.28, -.30)), None, _sh + Vector((0.0, .3, -.35)), flex=0, dev=0, pronation=0)
 FING = ('f_index', 'f_middle', 'f_ring', 'f_pinky'); VID = {'f_index': 'index', 'f_middle': 'middle', 'f_ring': 'ring', 'f_pinky': 'pinky'}
@@ -66,16 +68,70 @@ def hand_frame():
 
 
 def apply(A, T):
-    """A[(f, j)] = flexion deg per finger joint; T = (a, b, e, c, d) thumb: CMC turns about the palm normal / the hand axis /
-    the across-palm axis, then MCP and IP flexion."""
+    """A[(f, j)] = flexion deg per finger joint (j = 1..3); A[(f, 0)] = closure 0..1 (fingers drawn together until they touch);
+    T = (a, b, e, c, d) thumb: CMC turns about the palm normal / the hand axis / the across-palm axis, then MCP and IP flexion."""
     zero_hand()
-    n_ = P.palm_normal(SIDE)
-    for f in FING:                                                     # fingers close together as they curl (video: spread → 0)
-        if A.get((f, 0)): P.turn(f'{f}.01.{SIDE}', A[(f, 0)], n_); unscale(f'{f}.01.{SIDE}')
     for _ in range(3):                                                 # fixed point: the drivers couple the joints
         for f in FING:
             for j in (1, 2, 3): set_joint(f, j, A[(f, j)])
+    close_gaps(A)
     thumb(T)
+
+
+NB = {'f_index': 'f_middle', 'f_ring': 'f_middle', 'f_pinky': 'f_ring'}   # who each finger closes onto (middle = anchor)
+
+
+def nb_gap(f, j=2):
+    """Side-by-side test: capsule gap between phalanx j of f and of its neighbour (the proximal capsules overlap at the knuckles
+    in the flat hand; the fitted ORG-f_index.03 is skewed ≈ 40° toward the middle finger, so the index pair uses the middle phalanx)."""
+    C = CAPS()
+    if j == 3 and 'f_index' in (f, NB[f]): j = 2                     # skewed fitted index tip: middle phalanx stands in
+    return gap(C[(f, j)], C[(NB[f], j)])
+
+
+def close_gaps(A):
+    """Move each curled finger sideways at its MCP (about proximal phalanx × flexion axis, toward or away from its neighbour)
+    until its middle phalanx just touches the neighbour's, then twist it about the proximal phalanx (≤ 20°) so the fingertips meet
+    too — side by side instead of fanning out with the metacarpals (the fitted knuckles are 27 mm apart for 16 mm-thick fingers, so 'keep the knuckle spacing' left them splayed) — by the closure
+    fraction A[(f, 0)]: gap = (1 − w)·gap₀ + w·contact. User 2026-10-06: "주먹을 쥘 때 중지, 약지, 소지가 … 벌어지지 말고 영상처럼
+    붙어 있어야 자연스러워." (First version: turning the straight fingers about the palm normal before curling — parallel in the
+    palm plane, still fanned once curled.)"""
+    for f in ('f_index', 'f_ring', 'f_pinky'):
+        w = A.get((f, 0), 0.0)
+        if w <= 0: continue
+        if f in CLOSE_END: turn_mcp(f, A, w * CLOSE_END[f][0], w * CLOSE_END[f][1])
+        else: solve_close(f, A, w)
+
+
+CLOSE_END = {}                                                       # (sideways, twist) solved once at the fist; mid-frames scale it
+
+
+def turn_mcp(f, A, th, ph, M0=None):
+    ctl = f'{f}.01.{SIDE}'; M0 = M0 or P.M(ctl)
+    a1 = P.hinge(SIDE, f, 1); d1 = (P.tail(f'ORG-{f}.01.{SIDE}') - P.head(f'ORG-{f}.01.{SIDE}')).normalized()
+    R_ = Matrix.Rotation(math.radians(ph), 3, d1) @ Matrix.Rotation(math.radians(th), 3, a1.cross(d1).normalized())
+    P.set_world(ctl, M0.translation, R_ @ M0.to_3x3()); unscale(ctl)
+    for k in (2, 3): set_joint(f, k, A[(f, k)])                     # keep the measured PIP/DIP flexion while turning
+
+
+def solve_close(f, A, w=1.0):
+    """Coordinate descent on (sideways ≤ 25°, twist ≤ 20°) so the middle phalanges and the fingertips both meet the neighbour."""
+    M0 = P.M(f'{f}.01.{SIDE}'); a1 = P.hinge(SIDE, f, 1)
+    g0 = (nb_gap(f, 2), nb_gap(f, 3)); tgt = tuple((1 - w) * g + w * CONTACT for g in g0)
+    def cost(x):
+        turn_mcp(f, A, x[0], x[1], M0)
+        e = [nb_gap(f, j) - t for j, t in zip((2, 3), tgt)]
+        return max(abs(e[0]), abs(e[1])) + 3 * sum(max(0.0, -x_ - .0015) for x_ in e)   # sinking past 1.5 mm costs more
+    x = [0.0, 0.0]; best = cost(x)
+    for step in (8.0, 4.0, 2.0, 1.0):
+        moved = True
+        while moved:
+            moved = False
+            for i, lim in ((0, 25.0), (1, 20.0)):
+                for sg in (-1, 1):
+                    y = list(x); y[i] = max(-lim, min(lim, y[i] + sg * step)); c = cost(y)
+                    if c < best - 1e-6: best, x, moved = c, y, True
+    turn_mcp(f, A, x[0], x[1], M0); return x
 
 
 def thumb(T):
@@ -128,17 +184,9 @@ def tip_palm_gap(C, f):
     return min(gap(C[(f, j)], C[('palm', k)]) for j in (2, 3) for k in (1, 2, 3, 4))
 
 
-# ---- rest spread: each finger's angle about the palm normal from the middle finger ----
 P.reset(); P.arm_relaxed(SIDE, _sh + Vector((0.0, -.28, -.30)), None, _sh + Vector((0.0, .3, -.35)), flex=0, dev=0, pronation=0)
-def _spread():
-    n_ = P.palm_normal(SIDE); proj = lambda v: (v - v.dot(n_) * n_).normalized()
-    m = proj(P.tail(f'ORG-f_middle.01.{SIDE}') - P.head(f'ORG-f_middle.01.{SIDE}')); out = {}
-    for f in FING:
-        d = proj(P.tail(f'ORG-{f}.01.{SIDE}') - P.head(f'ORG-{f}.01.{SIDE}'))
-        out[f] = math.degrees(math.atan2(m.cross(d).dot(n_), m.dot(d)))
-    return out
-SPREAD = _spread(); ADD_K = .85
-print('   rest spread from the middle finger (deg)', {f: round(v, 1) for f, v in SPREAD.items()})
+
+CONTACT = -.0005                                                    # middle phalanges just touching (skin)
 
 
 # ---- end pose: fingers ----
@@ -148,7 +196,7 @@ for f in FING:
     lo, hi = 0.0, 1.0
     def at(k):
         A = {(g, j): 0.0 for g in FING for j in (1, 2, 3)}
-        A[(f, 0)], A[(f, 1)], A[(f, 2)], A[(f, 3)] = -SPREAD[f] * ADD_K, MCP_END[f] * k, PIP_END * k, PIP_END * DIP_K * k
+        A[(f, 0)], A[(f, 1)], A[(f, 2)], A[(f, 3)] = 0.0, MCP_END[f] * k, PIP_END * k, PIP_END * DIP_K * k
         apply(A, (0, 0, 0, 0, 0)); return tip_palm_gap(CAPS(), f)
     if at(1.0) < -.002:                                             # tip sinks into the palm → scale the whole finger back
         for _ in range(12):
@@ -158,8 +206,18 @@ for f in FING:
         k = lo
     else: k = 1.0
     END[(f, 1)], END[(f, 2)], END[(f, 3)] = MCP_END[f] * k, PIP_END * k, PIP_END * DIP_K * k
-    END[(f, 0)] = -SPREAD[f] * ADD_K
+    END[(f, 0)] = 1.0                                              # closure: touching its neighbour
     print(f'   fist {f}: scale {k:.2f} → MCP {END[(f, 1)]:.0f} PIP {END[(f, 2)]:.0f} DIP {END[(f, 3)]:.0f}, tip→palm gap {at(k) * 1000:.1f} mm')
+
+zero_hand()
+for _ in range(3):
+    for f in FING:
+        for j in (1, 2, 3): set_joint(f, j, END[(f, j)])
+for f in ('f_index', 'f_ring', 'f_pinky'):
+    CLOSE_END[f] = solve_close(f, END)
+print('   finger closure at the fist (sideways°, twist°)', {f: [round(v, 1) for v in x] for f, x in CLOSE_END.items()},
+      ' gaps mid/tip mm', {f: (round(nb_gap(f) * 1000, 1), round(nb_gap(f, 3) * 1000, 1)) for f in NB})
+
 
 # ---- end pose: thumb (grid search) ----
 def thumb_cost(T):
@@ -203,12 +261,13 @@ if best is None: best = (0, tuple(TESTS[0]), (0.0, 0.0, 0.0))
 TEND = best[1]
 print(f'   thumb: CMC {TEND[0]:.1f}/{TEND[1]:.1f}/{TEND[2]:.1f}, MCP {TEND[3]:.1f}, IP {TEND[4]:.1f} → pad gap to index/middle (worse) {best[2][1] * 1000:.1f} mm, worst penetration {best[2][2] * 1000:.1f} mm')
 
-OPEN = {(f, j): (0, 4, 6, 3)[j] for f in FING for j in (0, 1, 2, 3)}  # open hand: rest spread, near straight, slight natural curl
+OPEN = {(f, j): (0, 4, 6, 3)[j] for f in FING for j in (0, 1, 2, 3)}  # open hand: rest spread (closure 0), near straight, slight curl
 TOPEN = (0.0, 0.0, 0.0, 4.0, 3.0)
 
 
 def prof(direction, f, j, s):
-    key = (f'{VID[f]}.' if f != 'thumb' else 'thumb.') + ('MCP', 'PIP', 'DIP')[max(j, 1) - 1]   # j = 0 (adduction) follows MCP
+    key = (f'{VID[f]}.' if f != 'thumb' else 'thumb.') + ('PIP', 'MCP', 'PIP', 'DIP')[j]   # j = 0 (closure) follows the leading PIP:
+    # in the video the fingers are together as soon as they hook (s ≈ .25), long before the MCP completes
     return float(np.interp(s, S, PROF['profile'][direction][key]))
 
 
@@ -234,7 +293,9 @@ def hand_collisions(rows):
         add(f'{f} tip ↔ palm', -tip_palm_gap(C, f) * 1000)
     for j in (2, 3):
         add(f'thumb.0{j} ↔ fingers', -min(gap(C[('thumb', j)], C[(f, k)]) for f in FING for k in (1, 2, 3)) * 1000)
-    for i, f in enumerate(FING):                                      # neighbours may touch side by side; skip-one pairs never
+    for f, g in NB.items():                                          # neighbours touch side by side, never sink in
+        add(f'{f} ↔ {g} (side by side)', -nb_gap(f) * 1000); add(f'{f} ↔ {g} tips', -nb_gap(f, 3) * 1000)
+    for i, f in enumerate(FING):                                      # skip-one pairs never touch
         for g in FING[i + 2:]:
             add(f'{f} ↔ {g}', -min(gap(C[(f, a)], C[(g, b)]) for a in (1, 2, 3) for b in (1, 2, 3)) * 1000)
     return rows
@@ -308,6 +369,7 @@ sc = bpy.context.scene
 for x in list(bpy.data.objects):                                     # rig widgets (WGT-*) would render as blades
     if x not in (o, rig): bpy.data.objects.remove(x, do_unlink=True)
 rig.hide_render = True
+for _m in o.modifiers: _m.show_viewport = True
 cs = o.modifiers.new('cs', 'CORRECTIVE_SMOOTH'); cs.smooth_type = 'SIMPLE'; cs.factor = .5; cs.iterations = 8   # as build-figure-v3
 sc.render.engine = 'BLENDER_WORKBENCH'; sc.display.shading.light = 'STUDIO'; sc.display.shading.color_type = 'SINGLE'
 sc.display.shading.single_color = (.62, .6, .57); sc.display.shading.show_cavity = True

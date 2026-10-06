@@ -1,29 +1,29 @@
 {
  "end": {
   "fingers": {
-   "f_index.1": 79.1,
-   "f_index.2": 93.1,
-   "f_index.3": 65.2,
-   "f_index.0": 8.8,
+   "f_index.1": 78.9,
+   "f_index.2": 92.8,
+   "f_index.3": 65.0,
+   "f_index.0": 1.0,
    "f_middle.1": 79.3,
    "f_middle.2": 90.1,
    "f_middle.3": 63.0,
-   "f_middle.0": -0.0,
-   "f_ring.1": 73.5,
-   "f_ring.2": 81.7,
-   "f_ring.3": 57.2,
-   "f_ring.0": 3.6,
-   "f_pinky.1": 72.5,
-   "f_pinky.2": 78.8,
+   "f_middle.0": 1.0,
+   "f_ring.1": 73.3,
+   "f_ring.2": 81.4,
+   "f_ring.3": 57.0,
+   "f_ring.0": 1.0,
+   "f_pinky.1": 72.4,
+   "f_pinky.2": 78.7,
    "f_pinky.3": 55.1,
-   "f_pinky.0": 3.0
+   "f_pinky.0": 1.0
   },
   "thumb": [
-   -36.3,
-   -46.7,
-   -43.7,
-   49.8,
-   70.3
+   -76.6,
+   -76.6,
+   -73.8,
+   31.7,
+   69.9
   ]
  },
  "frames": [
@@ -164,8 +164,10 @@
    "dir": "close",
    "s": 0.95,
    "FAIL": 0,
-   "WARN": 0,
-   "issues": []
+   "WARN": 1,
+   "issues": [
+    "WARN f_index ↔ f_ring 3.0"
+   ]
   },
   {
    "dir": "close",
@@ -173,7 +175,7 @@
    "FAIL": 0,
    "WARN": 1,
    "issues": [
-    "WARN thumb IP 70.3"
+    "WARN f_index ↔ f_ring 3.1"
    ]
   },
   {
@@ -182,7 +184,7 @@
    "FAIL": 0,
    "WARN": 1,
    "issues": [
-    "WARN thumb IP 70.3"
+    "WARN f_index ↔ f_ring 3.1"
    ]
   },
   {
@@ -191,7 +193,7 @@
    "FAIL": 0,
    "WARN": 1,
    "issues": [
-    "WARN thumb IP 70.3"
+    "WARN f_index ↔ f_ring 3.1"
    ]
   },
   {
@@ -200,22 +202,26 @@
    "FAIL": 0,
    "WARN": 1,
    "issues": [
-    "WARN thumb IP 70.3"
+    "WARN f_index ↔ f_ring 3.1"
    ]
   },
   {
    "dir": "open",
    "s": 0.15,
    "FAIL": 0,
-   "WARN": 0,
-   "issues": []
+   "WARN": 1,
+   "issues": [
+    "WARN f_index ↔ f_ring 3.1"
+   ]
   },
   {
    "dir": "open",
    "s": 0.2,
    "FAIL": 0,
-   "WARN": 0,
-   "issues": []
+   "WARN": 1,
+   "issues": [
+    "WARN f_index ↔ f_ring 3.2"
+   ]
   },
   {
    "dir": "open",

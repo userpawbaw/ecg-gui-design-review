@@ -3,13 +3,13 @@
   "state": {
     "ready": true,
     "scroll": {
-      "top": 0,
+      "top": 4420,
       "max": 5834,
       "locked": false,
-      "targetProgress": 0
+      "targetProgress": 0.7576276996914638
     },
-    "p": 0,
-    "t": -0.01655799999962744,
+    "p": 0.7576276996914627,
+    "t": 35.54969999999977,
     "arrival": {
       "model": "Bruneton LUT + REMA + world density",
       "cloudModel": {
@@ -31,23 +31,23 @@
       "cloud": true,
       "cloudShadow": 1,
       "sunUV": [
-        -0.34291694413106677,
-        1.5150653198435888
+        1.6387138028023196,
+        0.25730007501935837
       ],
-      "strength": 0.9,
+      "strength": 0,
       "sunDirection": [
-        -0.7291745568426314,
-        0.6293927753799555,
-        0.2686432577841274
+        -0.5801259524950803,
+        0.6693760990327849,
+        0.4641007619960642
       ]
     },
     "scene": "d0-mixed-0",
     "record": "S022",
     "fs": 250,
     "winner": "M08",
-    "sample": -5,
-    "sourceSample": 52,
-    "rAbs": -134,
+    "sample": 8887,
+    "sourceSample": 76,
+    "rAbs": 8734,
     "rOffsets": [
       75,
       282,
@@ -61,25 +61,25 @@
       1880,
       2083
     ],
-    "beatAge": 0.5194420000003726,
-    "heartScale": 1.0001552704085304,
+    "beatAge": 0.613699999999767,
+    "heartScale": 1.0000512261693217,
     "sharedClock": true,
-    "bodyVisible": false,
+    "bodyVisible": true,
     "heartVisible": false,
     "heartScreen": [
-      0.49431702995267596,
-      0.5563725042449718,
-      0.9940572470542214
+      -0.02650873939969063,
+      0.1261597916091302,
+      0.9740589208700752
     ],
     "camera": [
-      0,
-      -0.12,
-      3.1
+      0.5521415237610369,
+      2.440725225318043,
+      -2.1602413862926344
     ],
     "cameraTarget": [
-      -0.4,
-      0.14,
-      0
+      0.55,
+      1.65,
+      -3.76
     ],
     "cartSocket": [
       -1.29,
@@ -107,7 +107,7 @@
     "grain": true,
     "jitter": true,
     "steps": 96,
-    "frame": 2,
+    "frame": 2130,
     "gpu": {
       "available": false,
       "count": 0,
@@ -115,13 +115,13 @@
       "p95": null
     },
     "raf": {
-      "count": 1,
-      "p50": -16.55799999962744,
-      "p95": -16.55799999962744
+      "count": 600,
+      "p50": 16.69999999999709,
+      "p95": 16.799999999995634
     },
-    "cpuRenderMsMean": 664.9000000003725,
-    "drawCalls": 26,
-    "triangles": 342926
+    "cpuRenderMsMean": 1.036666666646488,
+    "drawCalls": 66,
+    "triangles": 320853
   },
   "url": "http://127.0.0.1:4198/?reviewCapture=1&reviewRound=feedback1-scroll&reviewShot=manual-room"
 }

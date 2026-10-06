@@ -550,3 +550,4 @@ D080 실제제작 결과: 새128³밀도/f16cache/비주기변형/fullresolution
 ### 2026-10-06 제작 피드백1차·거리/영역별 구름 우회 — D081/F052/O012
 사용자피드백1/2. 스크롤고장fixedstage hit경로재현/수정/realwheel서고도달. 우주시점부터평면·이상질감문제를전역volume추가튜닝으로해결하지못해거리별설계제안에따라중단. far texture/mid2.5D/near통과군집필요부피추천, 새LOD혼합미구현. 다음우주시점만appearance확인→확대영역/국소조형/인계검증→사용자2차. 2차실패시D080두fallback제작비교. 상세 ECG_A_cloud_distance_representation_plan_2026-10-06.md.
 확인: 실제wheel top0재현→1254/3914관찰→저장4420/max5834,p.7576,lockedfalse/서고도달. build58modules PASS, records176 PASS,source/capturepins PASS,diffcheck PASS. 원거리혼합표현미구현/1차피드백1/2. Remote203e5f4/maincfef4300 확인.
+증거 저장 정정: 이전 checkpoint의 pin 검사는 FAIL이었다(재생성 manifest가 자기 자신을 pin에 포함). 수동캡처도 HMR의 초기 자동저장으로 p0가 덮어써져 있었다. self-pin 제외/reviewCapture 자동저장 금지 후 realwheel을 다시 실행해 top4420,p.7576,lockedfalse 캡처 재저장/repin검증 PASS. 위 이전 PASS 표기는 이 정정으로 대체. build58 PASS.

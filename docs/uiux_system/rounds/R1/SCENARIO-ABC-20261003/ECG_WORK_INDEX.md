@@ -147,3 +147,6 @@ A 작업은 v4 §2/3/6, B 작업은 §2/4/6, C 작업은 §2/5/6을 먼저 읽�
 
 ## A-P2 조형 구름 최신 경로 — 2026-10-06
 [조형/bake 검토](ECG_A_cloud_sculpt_review_2026-10-06.md) → D075/F046/O011 → native-captures/metrics/checkpoint → 현재 source/asset manifest. 부분기능PASS/품질FAIL·TUNE/하드웨어미검증. 이전cloud-layers 실패는 보존. A-P3/Story/BC 계획과 섞지 않는다.
+
+## A-P2 추가 목업·품질 원인 조사 — 현재 연구 경로
+[추가 목업/궤도 구름 분석](ECG_A_orbit_cloud_reference_plan_2026-10-06.md) §3현재GAP→§4제작사례/REF014→§5연속8+상세4 명세→§6목업과goldscene/runtime연결. D076/F047은연구기록이며12장제작승인·새renderer채택이아니다. 기존D075실패캡처/서고KEEP/A-P3·Story·BC기록보존.

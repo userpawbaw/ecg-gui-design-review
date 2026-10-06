@@ -1,0 +1,56 @@
+{
+  "source_commit": "919a63d461b6f7a2ff20553745bc1d0143650606",
+  "source_hashes": {
+    "scripts/assets/prepare-cloud-sculpt.py": "3cea9566a3ace1cdbf48670580665f8a15853c5225f99e23675e03a7e9d8fec4",
+    "prototype/spikes/a-climb/planet-cloud-sculpt.ts": "6656a0d8330d95e4cfc3ec2a3b06c5f6df06a7aeab155a061251eab40252accf",
+    "prototype/spikes/a-climb/arrival.ts": "8c4168433a7e03eb818913f5c49aa80c5415c9ccc298db8b244ecb2143a335aa"
+  },
+  "handoff": [
+    {
+      "p": 0.26,
+      "far_weight": 0.9017568456648613,
+      "camera_height_km": 148.33066655650853
+    },
+    {
+      "p": 0.27,
+      "far_weight": 0.5239463581764441,
+      "camera_height_km": 52.35817636564915
+    },
+    {
+      "p": 0.28,
+      "far_weight": 0.05309971631386046,
+      "camera_height_km": 20.13302417484154
+    },
+    {
+      "p": 0.283,
+      "far_weight": 0.0004723186994399775,
+      "camera_height_km": 15.766990660871983
+    },
+    {
+      "p": 0.29,
+      "far_weight": 0,
+      "camera_height_km": 10.00797791610223
+    },
+    {
+      "p": 0.3,
+      "far_weight": 0,
+      "camera_height_km": 7.631999999999997
+    }
+  ],
+  "voxel_pitch_metres_approx": [
+    31.25,
+    15.625,
+    31.25
+  ],
+  "light_path_audit": {
+    "positions": 339,
+    "grid": "16^3 stratified voxel centres with density>0.02; final R8 density; same midpoint step .09km",
+    "short_path_km": 2.16,
+    "long_path_km": 7.2,
+    "extra_tau_max": 0.0,
+    "extra_tau_mean": 0.0,
+    "fraction_extra_tau_above_point1": 0.0,
+    "mean_transmittance_change": 0.0,
+    "scope": "CPU density-only integration; isolates truncation, not browser radiance, GPU or rendered shadow quality; bake uses prequantized float field"
+  }
+}

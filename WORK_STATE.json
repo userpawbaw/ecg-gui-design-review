@@ -688,11 +688,14 @@
       "O-010",
       "D-075",
       "F-046",
-      "O-011"
+      "O-011",
+      "D-076",
+      "F-047",
+      "REF-014"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Review remaining cloud sculpture/detail/camera GAP; matched camera/receiver reference quality needed; hardware GPU and forward/reverse motion QA pending. G6 complete, no default adoption. Archive KEEP; A-P3/Story/B/C deferred.",
+    "next": "Additional mockup continuity/detail pack proposed (8 scene + 4 detail, not approved/generated); same camera/receiver/sun gold render, then cloud handoff/detail/sky-occlusion isolation. Hardware GPU/motion pending. Archive KEEP; A-P3/Story/B/C deferred.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -810,6 +813,16 @@
       "motion_video": "unverified",
       "fidelity": "FAIL/TUNE",
       "build": "PASS56modules"
+    },
+    "arrival_cloud_reference_research": {
+      "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_orbit_cloud_reference_plan_2026-10-06.md",
+      "status": "research_complete_plan_proposed",
+      "recommended_scene_frames": 8,
+      "recommended_detail_frames": 4,
+      "new_images_generated": false,
+      "renderer_changed": false,
+      "runtime_verified_this_round": false,
+      "source_audit": "verification/a-cloud-reference-20261006/source-audit.json"
     }
   }
 }

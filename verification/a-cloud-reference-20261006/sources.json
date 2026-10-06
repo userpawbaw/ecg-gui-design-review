@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-06",
+  "project_sha": "919a63d461b6f7a2ff20553745bc1d0143650606",
+  "evidence": "primary documentation + PDF text and visual inspection; no external-engine native runtime",
+  "nubis_pdf": {
+    "url": "https://advances.realtimerendering.com/s2023/Nubis%20Cubed%20%28Advances%202023%29.pdf",
+    "bytes": 48948215,
+    "sha256": "fdeecca977a374674583062cf710356125d6950fe7d7eaaadc92cecc815a7bb8",
+    "visual_pages": [
+      70,
+      71,
+      144,
+      145
+    ],
+    "text_pages": [
+      70,
+      77,
+      85,
+      103,
+      106,
+      109,
+      112,
+      117,
+      144,
+      151,
+      163
+    ],
+    "local": "ignored .tools/cloud-reference-research/nubis-cubed-2023.pdf"
+  },
+  "urls": [
+    "https://www.guerrilla-games.com/read/nubis-cubed",
+    "https://dev.epicgames.com/documentation/en-us/unreal-engine/volumetric-cloud-component-in-unreal-engine",
+    "https://dev.epicgames.com/documentation/en-us/unreal-engine/sky-atmosphere-component-in-unreal-engine",
+    "https://github.com/takram-design-engineering/three-geospatial/blob/main/packages/clouds/README.md",
+    "https://spaceengine.org/manual/making-addons/creating-a-planet/",
+    "https://spaceengine.org/news/blog100327/",
+    "https://science.nasa.gov/earth/earth-observatory/cloud-streets-near-antarctica-92768/",
+    "https://science.nasa.gov/earth/earth-observatory/crepuscular-rays-and-cumulonimbus-clouds-153537/"
+  ]
+}

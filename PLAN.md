@@ -344,3 +344,6 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 
 ### 2026-10-06 A-P2 조형 구름/Cycles/bake — D-075/F-046/O-011
 171융기raw128³+packedblend/F16광학·grounddepth/고층thin/96view+1lightlookup 구현, G6 initial+3 종료. nativeIAB software16fixedframe ready/현재error0/서고p.55RGB동일/R883clock확인. 목업충실도FAIL/후보TUNE/기본채택보류, v1유지. GPUrequested CPUonly와CLIbareWebGLfail 보존; nativeBasicRenderDriver를RTX성능으로대체하지않음. GPU/정역영상/600초/장시간미검증. 최종build56modules/pycompile PASS. 다음정합camera/receiver고품질기준과솜털·군집구도판단/하드웨어QA재개. A-P3/Story/BC분리. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sculpt_review_2026-10-06.md
+
+### 2026-10-06 A-P2 추가 궤도 목업 타당성·GAP·제작 사례 — D-076/F-047/REF-014
+연구 완료. 추가목업은 same-cloud/worldsun 연속8+상세4 추천(미확정·미생성), gold render samecamera/receiver 선행. p.28/.283/.29 farweight5.31%/.047%/0과고도20.13/15.77/10.01km, 4km128³ detail제약/height ambient/기준불일치분석. 실제밀도339표본 lightpath2.16→7.2km추가τ0으로truncation주원인미확정. Epic ground-space/Nubis 가까운volume/Takramweb/SpaceEngine구면·2010historical/NASA morphology를역할별분리. 실제렌더/이미지생성/GPU/영상추가없음. 다음목업목표정합→same-scene gold→원인분리runtime→hardware/motion. 승인서고와A-P3/Story/BC 분리. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_orbit_cloud_reference_plan_2026-10-06.md

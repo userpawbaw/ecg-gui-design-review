@@ -109,3 +109,6 @@ AI가 BC 필수보완→ABC비교로 순서를 제안하려던 단계에서 사�
 
 ## 2026-10-06 조형 기준/bake 후보와 증거범위
 사용자 진행승인→D075 공유 procedural밀도/Blender volume bound/bakeddepth/새근접경로→G6 initial+3 후 융기·음영 개선이나 목업충실도FAIL/TUNE(F046). 기준자체의 솜털·구도완성도 부족과 Cycles/browser camera·수광체 불일치 공개. GPUrequested/CPUonly/CLI WebGLfail/IABsoftware성공을 분리(O011). native16정지frame과R883/서고RGB비교를GPU·연속영상PASS로확대하지 않는다. 기본v1과실패D074후보보존/A-P3·Story·BC별도. 새로운 사용자 최종 품질판정 없음.
+
+## 2026-10-06 추가 목업의 역할을 구현 기준으로 구체화
+사용자 추가 전경/궤도/하강 목업과 구름모양·양감·그림자/유사제작 조사 요청→AI가 단순 이미지증가보다 continuity·detail·광학 gold reference가 필요하다고 검토→F047에서 farfield 인계/4km128³/detail 고정/height ambient/기준camera차이를 source 수치로 구분→D076/REF014/8+4 명세로 연결. 빛 적분길이 가설은표본에서추가τ0이므로주원인확정철회. 외부producer기술과우리번안/새사용자승인을분리한다. 이번연구완료는목업생성/후보채택/renderer개선이아니다.

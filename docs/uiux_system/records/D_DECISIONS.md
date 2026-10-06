@@ -1937,3 +1937,27 @@ D-074 실제 시험 결과(2026-10-06): F-045/O-010 및 ECG_A_cloud_layers_revie
 D-075 구현 구체화: mesh→VDB를 내보낸 것으로 주장하지 않는다. 타원체 군집/경계 erosion을 raw128³density로 정의하고 Blender의 volume bound가 packed2D atlas로 동일 density를 읽게 했다. 새 모델링의 편집 source는 density 생성 script/manifest와 .blend 노드 장면이다. 별도 mesh-to-volume 변환은 하지 않았다. Cycles Principled Volume/AgX와 browser 산란근사/ACES 차이를 남긴다. 고정 orbit 태양에 맞춘 optical-depth cache는 광원 변경시 rebake한다.
 
 D-075 결과: F046/O011 및 ECG_A_cloud_sculpt_review_2026-10-06.md. 실제 rawdensity/packedblend/F16light-ground cache/별도얇은층 제작, G6 initial+3 종료. 부분 기능검증 PASS, 목업 충실도 FAIL/후보 TUNE, 기본채택 보류. nativesoftware16frame/서고.55RGB동일/R883공통clock, GPU와정역영상 미검증. Cycles와browser camera/receiver가다르므로 동일프레임기준 성공으로 주장하지 않는다. A-P3/Story/BC 독립보류.
+
+## D-076. 추가 목업을 연속 구도와 구름 상세·정합 렌더 기준으로 나눠 검토
+
+| | |
+|---|---|
+| 시점 | 2026-10-06 [대화] [코드] [문헌] |
+| 상태 | 연구 완료 / 8+4장 목업 제작 계획은 추천·미확정 |
+| 연결 | F-047, REF-014, CASE-007 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자가 지구전체/궤도/하강 목업 추가가 구현에 도움이 되는지와 실제 GAP·유사 결과물 제작 방식 분석을 요청. D075는 TUNE/G6 종료이며 미세디테일만 다시 고치는 것으로 충분한지 판단 필요.
+
+### 검토한 선택지
+1. 서로 독립인 완성 무드 이미지 추가. 2. 같은 구름·빛을 유지한 연속8장+상세4장과 same-camera gold render. 3. 추가 이미지 없이 renderer부터 확장.
+
+### 고른 것과 근거
+이번에는2의 타당성과 제작명세를 구체화해 추천. 사용자에게12장 제작이 승인된 것으로 처리하지 않는다. global/local 인계 간격·detail 저장방식·sky occlusion과 기준 조건 불일치를 코드로 분석했고 Epic/Nubis/Takram/SpaceEngine 제작자료와 대조했다. 상세 ECG_A_orbit_cloud_reference_plan_2026-10-06.md.
+
+### 버린 것과 이유
+1은 장면마다 지리/형태/태양이 바뀌어 구현 기준이 분산될 수 있음. 3은 목표 형상을 미정인 상태로 기술튜닝을 반복할 위험. 기존 만족 목업을 모두 다시 만드는 방안은 불필요.
+
+### 되돌려야 하는 조건
+추가목업이 same-cloud continuity를 유지하지 못하면 원본 anchor/실제 block scene을 기준으로 정합하고 단순 장수증가를 중단. gold render가 목표미달이면 runtime이식으로 품질성공을 주장하지 않는다. 이번은 연구/계획이고 생성·renderer수정·성능검증은 미실행.

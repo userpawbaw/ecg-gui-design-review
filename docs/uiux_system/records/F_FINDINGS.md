@@ -1308,3 +1308,26 @@ cloudModel=sculpt에 격리, 기본v1 유지. 목표 camera/receiver를 맞춘 �
 
 ### 놓쳤다면
 .blend 파일/볼륨/빛cache 확보를 목업수준 완성으로, software frame을 RTX 성능 증거로 제시했을 것이다.
+
+## F-047. 구름 GAP은 미세 질감 외에도 인계·표현 규모·주변광·기준 조건에서 발생
+
+| | |
+|---|---|
+| 발견 | 2026-10-06 [코드] [문헌] [테스트] |
+| 상태 | 정적 분석 완료 / 시각 기여율·새 renderer 미검증 |
+| 연결 | D-076, REF-014, CASE-007 |
+
+### 발단
+사용자 “목업을 더 만들어보는 계획이 실제 구현에 도움을 줄 지”와 “gap이 어디서 나오는지” 요청. 이전에는 뭉툭한면/솜털 미달을 요약했으나 camera·cloud distribution·reference조건을 더 구체적으로 분리할 필요.
+
+### 먼저 의심한 것과 배제 방법
+HEAD919a63d의 원본목업/실제캡처와 source 직접 대조. global weight와altitude 수치화, voxel worldscale, offline camera/receiver/sampling 조건 확인. light bake2.16km truncation 가설은 현재density339표본을7.2km 적분하여 반례점검. 외부제작자자료는 실행증거와분리.
+
+### 결정적 근거
+p.28 farweight5.31%/고도20.13km, p.283 .047%/15.77km, p.29 0/10.01km에4km폭local만남음. thick runtime은미세detail를별도보강하지않고raw128³를읽음; cell31.25/15.625m근사. sky는height RGB이며 주변밀도차폐없음. Cycles/browser camera/receiver/filter 불일치. 339점에서는2.16→7.2km 추가τ0으로적분길이를주원인으로확정하지않음. optical/blur의실제품질기여율은미측정.
+
+### 조치와 검토한 대안
+같은군집·태양의연속8+형태/투과/그림자/edge상세4 제안. large envelope+runtime detail/sky occlusion/같은coverage인계/goldscene 기준으로다음품질라운드설계. D075와이번연구를새실행PASS로합치지않음.
+
+### 놓쳤다면
+추가 이미지에서만구름을풍부하게그린후 실제구현은같은작은blob/사라지는farfield/height ambient로남겨 GAP원인을반복했을것이다.

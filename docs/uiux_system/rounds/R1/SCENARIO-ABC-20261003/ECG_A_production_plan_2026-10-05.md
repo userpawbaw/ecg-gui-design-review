@@ -69,3 +69,6 @@ C: C04 작은 타일 규격, C08 사각 타일과 의자 자세 연속성 보완
 
 ### A-P2 현재 체크포인트 — 조형/bake
 [최신 검토](ECG_A_cloud_sculpt_review_2026-10-06.md). G6 종료/부분기능PASS/목업품질FAIL·TUNE. 사용자승인새후보 제작 완료이나 품질채택/GPU·영상 검증은 미완. 다음 camera/receiver정합 고품질 조형기준과 하드웨어QA. A-P3·Story·BC보류.
+
+### 추가 목업 계획 타당성 검토
+[구체 명세/구현 GAP](ECG_A_orbit_cloud_reference_plan_2026-10-06.md): 연속8+상세4 추천,samecloud/태양/camera단위 정합. 이미지생성이나새후보를착수한것은아니다. 먼저기존목업의부족한중간/측면/아랫면을채우고goldscene으로기준을만든뒤실행원인분리. D075/G6종료와미검증GPU/영상은그대로남는다.

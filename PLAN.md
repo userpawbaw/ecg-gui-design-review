@@ -333,3 +333,6 @@ D-071 연구 후 실제 설치/자산 획득/renderer 구현. 0.19.1 Takram+6.39
 A-P2 최종 기술확정: fresh-session planet-verified31frame/planet-diagnostics-final30off/planet-runtime-final17frame·3R·stationary/native/reduced 오류0, build PASS. Final GPU p50 9.23/p95 18.49ms490queries, RAF p95 16.8ms; 이전 cap복구전9.22/17.36ms 보존. 승인서고3frame RGB차0/2frame 최대1 RGB(전체mean8.04e-7·1.61e-7) / 파생5hash PASS. 기술 PASS, 목업 충실도 FAIL/시각TUNE. 최종 states/records/diff 및 원격readback은 후속checkpoint.
 
 Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decoded, records155 PASS, git diff --check PASS. Final artifacts source/NOTICE and failure evidence preserved. Remote before commit: workbranch7ef90680 / maincfef4300 verified by ls-remote. This step remains visual TUNE, not mockup-quality completion; next part stays scoped to A-P2 GAP.
+
+### 2026-10-06 thick/thin 구름 제작·후처리 조사 — D-073/F-044
+사용자 다층구름 질감 피드백을 구체화. 현재code의35km층/509kmbank·최소밀도·평준화와그림자/시간축재구성 한계확인. Nubis제작자/Epic/Blender/NVIDIA/immutableTakramREADME b012ad06(primary자료) 비교. Takramspace예정/composer비호환/ghosting 제약을 신규winner선택시 반영. 광역coverage+국소조형density, thick/thin다른profile, optical/shadow·다중산란/LOD/reconstruction/volume export 설계. 연구문서 ECG_A_cloud_layers_research_2026-10-06.md. 새runtime/asset설치/시각QA 미실행; 이전PASS/TUNE 보존. 다음 L0–L4 scoped시험, 승인서고 유지/A-P3·Story·BC분리.

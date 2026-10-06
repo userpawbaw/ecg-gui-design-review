@@ -1237,3 +1237,27 @@ NASA color 보존, REMA 표시5x와 polar no-data infill 분리, MIT LUT 고정S
 
 ### 놓쳤다면
 특정 프레임의 대기광이나 라이브러리 설치 성공만으로 전체 wow 품질을 PASS 처리하고, 데이터 공백을 실제 지형이라 하거나 합성 noise를 측정 기상 데이터로 오해했을 것이다.
+
+## F-044. 현재 구름의 안개·층감 부족에는 단위·밀도 바닥·형태 분리·그림자 경로 문제가 있다
+
+| | |
+|---|---|
+| 발견 | 2026-10-06 [대화] [코드] [문헌] |
+| 상태 | 원인 후보/제약 조사 완료, 새 렌더 품질 미검증 |
+| 영향 | A-P2 cloud modeling/lighting/post and renderer selection |
+| 연결 | D-073, F-043, rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_layers_research_2026-10-06.md |
+
+### 발단
+사용자는 두꺼운 구름의 불투명한 양감/아래 그림자, 얇은 구름의 투과/솜털을 나누어 여러층으로 표현하자며 제작·후처리 재조사를 요청했다.
+
+### 먼저 의심한 것과 배제 방법
+텍스처 해상도/층 수만 부족한지 현 코드를 읽고 제작자·공식 shader/volume 자료를 비교했다. 기존64³value FBM 한장을 주파수만 달리 쓰며 bank내부 .4+noise*.6 최소밀도, coverage.86평준화, max합성/강제seal이 있다. radius1→6360km에서35km층/509km bank, camera near.025=159km라 근접 지형 clipping 위험도 있다. 독립 새 실험이 없으므로 단독 지각원인 확정은 아니다.
+
+### 결정적 근거
+local shadow lightmarch는 있으나 지표그림자는coverage offset근사이고 fixed ambient/단일phase, cloud 자체 대기·temporal reconstruction이 부족하다. 공식Takram README b012ad06은 space/global coverage를 planned, examples composer비호환, sparse cloudghosting 제약을 명시. 이전 atmosphere 도입을 cloud 전체경로 준비완료로 확대할 수 없다. Nubis제작자자료는 근접voxel/modeling·empty-space/light sampling의 별도 문제를 설명한다.
+
+### 조치와 검토한 대안
+shape/core/edge density 분리, thick/thin optical두께/그림자 구분, 같은광역-국소 앵커와LOD, Blender shape→density export와WebGL전용raymarch, sky/groundbounce·다중산란근사, STBN+reprojection/history rejection/edge-awareupscale를 후속시험으로 기록. 얼음표시5x최대22.4km와 새구름고도 교차도 조정대상. 단순opacity복제·bloom/blur·근접GLBopaque cloud는 해법으로 채택하지 않는다.
+
+### 놓쳤다면
+높은alpha의whitefog를여러층으로겹치며비용만증가시키거나, 특정라이브러리 문서의 제한·단위를 놓친채 행성전경이 해결됐다고 주장했을 것이다. 이번은 연구/계획이며 개선된frame·성능 proof는 없다.

@@ -162,3 +162,6 @@ ECG_A_cloud_photo_production_review_2026-10-06.md → verification/a-cloud-photo
 
 ### 거리별 구름 우회·스크롤 문제 작업시
 ECG_A_cloud_distance_representation_plan_2026-10-06.md → D081/F052/O012 → WORK_STATE.arrival_cloud_photo. 사용자1/2와추가아이디어를같은1차피드백으로처리. far/mid/near미구현상태,중단trial과구분.
+
+### 외부 구름 에셋/목업 빛 처리 검토시
+ECG_A_cloud_asset_lighting_audit_2026-10-06.md → D082 → 현재cloud-photo NOTICE/generator/shader. 무료VDB와offline 볼륨조명 기준을 먼저 검증한 뒤 거리별 웹표현. 후보페이지 확인은 다운로드/실제렌더 증거가 아님. 사용자피드백1/2 유지.

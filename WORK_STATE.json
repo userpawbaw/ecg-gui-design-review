@@ -881,6 +881,8 @@
       "gpu_timing_verified": false,
       "distance_plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_distance_representation_plan_2026-10-06.md",
       "distance_representation_implemented": false,
+      "asset_lighting_research": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_asset_lighting_audit_2026-10-06.md",
+      "asset_lighting_next": "external free VDB acquisition and offline volume lighting reference first; no asset download or new render completed in research",
       "scroll_fixed": true,
       "scroll_evidence": "verification/a-cloud-distance-20261006/feedback1-scroll/manual-room.json",
       "global_feedback1_trial": "unadopted, stopped after initial+1; flat patches/grid texture remain; user requested alternate distance-based ideas"

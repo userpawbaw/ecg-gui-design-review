@@ -364,3 +364,6 @@ D080 체크포인트: photo 후보 실제제작/57module build/native정적검�
 
 ### 2026-10-06 제작 피드백1차·거리/영역별 구름 우회 — D081/F052/O012
 사용자피드백1/2. 스크롤고장fixedstage hit경로재현/수정/realwheel서고도달. 우주시점부터평면·이상질감문제를전역volume추가튜닝으로해결하지못해거리별설계제안에따라중단. far texture/mid2.5D/near통과군집필요부피추천, 새LOD혼합미구현. 다음우주시점만appearance확인→확대영역/국소조형/인계검증→사용자2차. 2차실패시D080두fallback제작비교. 상세 ECG_A_cloud_distance_representation_plan_2026-10-06.md.
+
+### 2026-10-06 구름 에셋/빛 처리 우선 감사 — D082
+외부 JangaFX 무료 VDB10/104MB, Disney density·해상도별VDB/Hyperion·Mitsuba 기준, Bproduction 제작자 문서 확인. 로컬 근접synthetic/VDB미보유와photo 근사 산란 확인. 외부VDB offline 조명기준→웹변환/거리연결 추천. ECG_A_cloud_asset_lighting_audit_2026-10-06.md. 다운로드/구매/새렌더 미실행; 사용자피드백1/2 유지. 다음 무료에셋 실제조명/형태부터 검증.

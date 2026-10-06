@@ -2083,3 +2083,26 @@ D-080 초기 결과: F051/photo production review. 128³새에셋/광학/인계�
 
 ### 되돌려야 하는 조건
 원거리질감→국소입체인계에서footprint/빛/통로drift·중복밝기·종이옆면이보이면거리/영역표현을다시검토. 2차사용자실패판정뒤D080두fallback비교. 근접양감과원거리질감은독립검토. 스크롤복구는구름완성도PASS가아님.
+
+## D-082. 외부 구름 에셋과 볼륨 조명 기준을 먼저 검증
+
+| | |
+|---|---|
+| 시점 | 2026-10-06 [대화] [코드] [문헌] |
+| 상태 | 연구 완료 / 외부 VDB 기준 렌더 추천 / 미구현 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자가 낮은 구름 품질에 대해 실제 에셋 존재와 목업 수준 빛 처리 경로를 우선 확인 요청.
+
+### 검토한 선택지
+자체 밀도 추가튜닝, 외부 VDB+오프라인 볼륨 기준→웹 변환, 경로별 사전 렌더, 즉시 조건부 AI 영상 fallback.
+
+### 고른 것과 근거
+JangaFX 무료 Cloud Pack과 Disney cloud dataset/공식 rendered image·scene, Bproduction 판매자 문서 확인. 현재 근접 데이터는 자체 synthetic이고 photo shader는 고정 태양 깊이/근사 multiple scattering이다. 외부 VDB의 조형과 offline volume 조명 기준을 먼저 비교하고 웹 표현을 맞추는 순서 추천. 자세한 후보·원문·제약·순서는 ECG_A_cloud_asset_lighting_audit_2026-10-06.md.
+
+### 버린 것과 이유
+에셋만 바꾸거나 bloom만 올리면 목표 조형과 빛을 보장하지 않는다. 게임 performance를 웹 보증으로 사용하지 않는다. 실제 다운로드/렌더/결제 없음; 사용자 제작 피드백1/2 유지, AI 영상 fallback 조건 미성립.
+
+### 되돌려야 하는 조건
+외부 에셋 offline도 목표에 미달하면 다른 asset/조명 검토. offline만 충분하고 웹 fidelity/cost가 미달이면 경로 제한 사전 렌더 방식 검토. 새 후보 사용자2차 실패 후 기존 두 fallback 비교.

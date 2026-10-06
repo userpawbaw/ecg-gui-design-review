@@ -551,3 +551,7 @@ D080 실제제작 결과: 새128³밀도/f16cache/비주기변형/fullresolution
 사용자피드백1/2. 스크롤고장fixedstage hit경로재현/수정/realwheel서고도달. 우주시점부터평면·이상질감문제를전역volume추가튜닝으로해결하지못해거리별설계제안에따라중단. far texture/mid2.5D/near통과군집필요부피추천, 새LOD혼합미구현. 다음우주시점만appearance확인→확대영역/국소조형/인계검증→사용자2차. 2차실패시D080두fallback제작비교. 상세 ECG_A_cloud_distance_representation_plan_2026-10-06.md.
 확인: 실제wheel top0재현→1254/3914관찰→저장4420/max5834,p.7576,lockedfalse/서고도달. build58modules PASS, records176 PASS,source/capturepins PASS,diffcheck PASS. 원거리혼합표현미구현/1차피드백1/2. Remote203e5f4/maincfef4300 확인.
 증거 저장 정정: 이전 checkpoint의 pin 검사는 FAIL이었다(재생성 manifest가 자기 자신을 pin에 포함). 수동캡처도 HMR의 초기 자동저장으로 p0가 덮어써져 있었다. self-pin 제외/reviewCapture 자동저장 금지 후 realwheel을 다시 실행해 top4420,p.7576,lockedfalse 캡처 재저장/repin검증 PASS. 위 이전 PASS 표기는 이 정정으로 대체. build58 PASS.
+
+### 2026-10-06 구름 에셋과 빛 처리 조사 — D082
+사용자 에셋우선확인→로컬NOTICE/generator/shader 감사→JangaFX/Disney/Autodesk/Guerrilla/Bproduction 공식자료 조사. 외부VDB 존재 확인과 실제품질검증 구분; 근사multiple은 존재하므로 다중산란없음이라는 오해 방지. offline volume 기준→웹비교 추천; 다운로드/렌더/결제 없음. Blender 공식문서 web접근실패, Cycles 특정수치 미확정. 서고KEEP/1차피드백1/2/fallback조건 보존. 연구문서·D082·목차·상태 갱신.
+검증: records177 PASS, git diff --check PASS. 연구자료만 변경; runtime/visual/GPU PASS 추가 주장 없음.

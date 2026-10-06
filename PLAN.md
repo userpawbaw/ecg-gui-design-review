@@ -350,3 +350,6 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 
 ### 2026-10-06 A-P2 궤도 구름 목업 첫5종 — D-077/F-048
 사용자진행승인후built-inimagegen J2/J3/J5v3/C1v2/C2v1 제작. 생성8회/자체보완3회/8PNG1672×941 모두프로젝트보존, prompt/parent/outputpins와gallery/review완료. 표면ice감/같은view/sidecamera자체보완, 목표방향KEEP후보·기하정합TUNE/사용자검토전. C2는J5v2부모,최종v3동일camera아님; 정확3D멀티뷰/gold/runtime/GPU미검증. 첫5피드백후남은J0/J1/J4/J6/J7/C3/C4보완(기존만족목업재사용)→sameworld/camera/receivergold→browser원인분리. 승인서고/Story/BC독립. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_mockup_review_2026-10-06.md
+
+### 2026-10-06 사용자 질감 피드백 — D-078/F-049
+구도·양감 사용자 KEEP. 레퍼런스 자료 참고해 대표 J5 질감v4→v5 제작, 새 라운드2회/자체수정1. 질감 TUNE, 기존v3 비교/정확prompt/pin보존. 다음 대표 질감 검토→다른4종 전파→남은7→동일조건gold. renderer/서고/A-P3/Story/BC 별도. 상세 ECG_A_cloud_texture_review_2026-10-06.md.

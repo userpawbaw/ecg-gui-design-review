@@ -532,3 +532,7 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 
 ### 2026-10-06 A-P2 궤도 구름 목업 첫5종 — D-077/F-048
 사용자진행승인후built-inimagegen J2/J3/J5v3/C1v2/C2v1 제작. 생성8회/자체보완3회/8PNG1672×941 모두프로젝트보존, prompt/parent/outputpins와gallery/review완료. 표면ice감/같은view/sidecamera자체보완, 목표방향KEEP후보·기하정합TUNE/사용자검토전. C2는J5v2부모,최종v3동일camera아님; 정확3D멀티뷰/gold/runtime/GPU미검증. 첫5피드백후남은J0/J1/J4/J6/J7/C3/C4보완(기존만족목업재사용)→sameworld/camera/receivergold→browser원인분리. 승인서고/Story/BC독립. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_mockup_review_2026-10-06.md
+
+### 2026-10-06 A 구름 목업 질감 수정
+사용자 구도/양감 만족과 질감 수정 요청 분리. NASA 사진자료/Nubis 제작자 소개 참고; 입력은 기존J5PNG뿐. v4 잔여섬유 확인 후v5 추가수정. 총2회/자체수정1, 원본8+신규2/prompt/parents/hash/1672×941 보존, gallery 전후 비교. 실제runtime/gold/GPU 미검증. D078/F049/CASE007 및 texture review 참조.
+검증: records:check 169 PASS, 10 PNG hash pin/선택5 PASS, git diff --check PASS. Remote branch f12f7205/main cfef4300 재확인. 정적 이미지 검토이며 runtime/GPU/모션 검사 없음.

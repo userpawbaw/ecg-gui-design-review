@@ -2508,6 +2508,64 @@
         "A-P2 review only; not renderer"
       ],
       "review": "D-077/F-048 TUNE, user review pending. Not runtime, accurate mesh blueprint, gold render or adoption."
+    },
+    {
+      "id": "a-cloud-mockup-j5-v4",
+      "title": "J5 texture concept v4",
+      "kind": "concept-image",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "tool": "image_gen built-in",
+        "prompt_manifest": "verification/a-cloud-mockup-20261006/manifest.json",
+        "request": "verification/a-cloud-mockup-20261006/J5-v4-request.json"
+      },
+      "licence": "generated project concept; source provenance in manifest",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v4.png",
+        "bytes": 1954448,
+        "sha256": "71cfee18d3ec424011962ef234176b99febc238427b2114f3926e148536312f6",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "used_by": [
+        "A-P2 review only; not renderer"
+      ],
+      "review": "D-078/F-049. v5 texture candidate TUNE, user review pending. No runtime or adoption."
+    },
+    {
+      "id": "a-cloud-mockup-j5-v5",
+      "title": "J5 texture concept v5",
+      "kind": "concept-image",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "tool": "image_gen built-in",
+        "prompt_manifest": "verification/a-cloud-mockup-20261006/manifest.json",
+        "request": "verification/a-cloud-mockup-20261006/J5-v5-request.json"
+      },
+      "licence": "generated project concept; source provenance in manifest",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v5.png",
+        "bytes": 1951865,
+        "sha256": "1ee2bd8f200be70878e6e52d82bd183a364a4a12087d3e9a330da9fd088ba5b6",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "used_by": [
+        "A-P2 review only; not renderer"
+      ],
+      "review": "D-078/F-049. v5 texture candidate TUNE, user review pending. No runtime or adoption."
     }
   ],
   "rejected": [

@@ -153,3 +153,6 @@ A 작업은 v4 §2/3/6, B 작업은 §2/4/6, C 작업은 §2/5/6을 먼저 읽�
 
 ## A-P2 추가 목업 현재 결과 — 첫5종
 [목업 검토](ECG_A_cloud_mockup_review_2026-10-06.md) → J2/J3/J5v3/C1v2/C2v1/갤러리 → manifest의정확입력·출력pins. conceptTUNE/사용자검토전/기하정합미검증. 전체12장계획의첫단위이며남은7/gold/runtime는별도후속.
+
+### 구름 질감 피드백 작업시
+ECG_A_cloud_texture_review_2026-10-06.md → verification/a-cloud-mockup-20261006/gallery.html의 J5v5/v3 → manifest.json. 구도/양감KEEP와질감TUNE 구분, 대표검토 후 다른프레임에전파.

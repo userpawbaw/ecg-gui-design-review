@@ -818,7 +818,7 @@
     },
     "arrival_cloud_reference_research": {
       "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_orbit_cloud_reference_plan_2026-10-06.md",
-      "status": "first_five_mockups_created_reviewed_TUNE_user_review_pending",
+      "status": "user_KEEP_composition_volume_texture_revision_J5v5_TUNE",
       "recommended_scene_frames": 8,
       "recommended_detail_frames": 4,
       "new_images_generated": true,
@@ -840,7 +840,16 @@
         "C3",
         "C4"
       ],
-      "gold_render_verified": false
+      "gold_render_verified": false,
+      "texture_round": {
+        "generation_calls": 2,
+        "quality_edits": 1,
+        "parent": "J5-v3",
+        "candidate": "J5-v5",
+        "user_approved_candidate": false,
+        "source_commit": "f12f720598736a596cc4729723b0c8c97986c513"
+      },
+      "texture_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_texture_review_2026-10-06.md"
     }
   }
 }

@@ -1,0 +1,7 @@
+{
+  "prompt": "Edit input1 ONLY to finish correcting the cloud material, preserving camera, the entire large-scale silhouette, volumes, ocean gap, sky, sunlight and cool shadow placement. The bottom-left and bottom-center cloud fringe STILL has conspicuous connected spiderweb strings. ERASE this network COMPLETELY and replace it with short disconnected diffuse vapor tufts, soft dissipating vapor with no sharp connecting filaments. The foreground cloud faces should have smooth continuous light scattering between irregular broad billows, fewer repeated small bubbles and much less foam-like mottling. Preserve strong macro depth and warm rim contrast. A photographic water droplet volume, not a furry solid object. Thin cirrus in the upper-right sky may remain faint and feathered. No long white ropes, webbing, fibrous roots, gauze, tangled cotton. Do not blur the entire image, remove volume, change camera or introduce new objects. ONE complete same widescreen frame, no text or collage.",
+  "referenced_image_paths": [
+    "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/J5-side-v4.png"
+  ],
+  "transparent_background": false
+}

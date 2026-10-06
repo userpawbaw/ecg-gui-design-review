@@ -1261,3 +1261,27 @@ shape/core/edge density 분리, thick/thin optical두께/그림자 구분, 같�
 
 ### 놓쳤다면
 높은alpha의whitefog를여러층으로겹치며비용만증가시키거나, 특정라이브러리 문서의 제한·단위를 놓친채 행성전경이 해결됐다고 주장했을 것이다. 이번은 연구/계획이며 개선된frame·성능 proof는 없다.
+
+## F-045. 다층 density 구현과 그림자 기여가 근접 구름의 양감·완성도를 보장하지 않는다
+
+| | |
+|---|---|
+| 발견 | 2026-10-06 [코드] [런타임] [시각검토] |
+| 상태 | 기술PASS / 목표품질FAIL / 기본채택REJECT |
+| 영향 | A-P2 cloud shape/camera/optical cost, archive KEEP |
+| 연결 | D-074, O-010, rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_layers_review_2026-10-06.md |
+
+### 발단
+사용자의 thick 양감·불투명·아래그림자, thin 투과·솜털 목표에 따라 실제 합성128³군집+64³역할분리noise와 72×6sample광학/8tap지표그림자를 만들었다.
+
+### 먼저 의심한 것과 배제 방법
+깊이정밀도와 RT연결을 복구하고 coverage/top/침식/광학, log하강·국소앵커/시야, 내부빛대비를 initial+3회 비교. thick/thin·shadow/bloomoff를22frame으로분리. 새density존재나render오류0을 시각PASS로확대하지 않았다.
+
+### 결정적 근거
+근접군집은매끈한큰면이남고 thin기여는.295에서mean0.02065RGB로희박. p0 shadowoff차3.94RGB는코드기여만확인. GPU83query p50 33.01/p95 40.03ms는기존9.23/18.49보다무겁다. 승인서고5frame중3동일/2최대1RGB(mean<1e-6), ECG3R/정지재생유지. 목업같은형태·하부그림자·섬유질감미달.
+
+### 조치와 검토한 대안
+실험을cloudModel=layers에격리하고기본v1/camera를유지. G6세수정종료, 신규조형·Cycles기준렌더→rawdensity/lightbake→Beer shadow/적응sampling후보를제안. STBN/reprojection/물리cloud대기통합은미구현으로명시. A-P3/Story/BC는별도보류.
+
+### 놓쳤다면
+풍부한shader기능목록이나별도opacity층을 사용자요청의완성도라고설명하며흰안개와GPU회귀를기본에채택했을것이다.

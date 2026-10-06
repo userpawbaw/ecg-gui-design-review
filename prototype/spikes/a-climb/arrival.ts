@@ -4,7 +4,8 @@ import * as THREE from 'three';
 import {ShaderPass} from 'three/addons/postprocessing/ShaderPass.js';
 import {createPlanetAtmosphere} from './planet-atmosphere';
 import {createAntarcticTerrain} from './planet-terrain';
-import {createPlanetClouds} from './planet-clouds';
+import {createPlanetClouds} from './planet-cloud-layers';
+import {createPlanetClouds as createCloudsV1} from './planet-clouds-v1';
 const smooth=(a:number,b:number,x:number)=>{const v=THREE.MathUtils.clamp((x-a)/(b-a),0,1);return v*v*(3-2*v);};
 export async function createArrival(renderer:THREE.WebGLRenderer,camera:THREE.PerspectiveCamera){
  const loader=new THREE.TextureLoader();
@@ -29,7 +30,8 @@ export async function createArrival(renderer:THREE.WebGLRenderer,camera:THREE.Pe
  };
  const earth=new THREE.Mesh(geo,mat);planet.add(earth);
  const terrain=await createAntarcticTerrain(day,roughness,cloud,localSun,shadowOn,specularOn);planet.add(terrain.mesh);
- const volume=await createPlanetClouds(cloud);const cloudPass=volume.pass;
+ const layersTrial=new URLSearchParams(location.search).get('cloudModel')==='layers';const volume=layersTrial?await createPlanetClouds(cloud,terrain.heightTexture):await createCloudsV1(cloud);const cloudPass=volume.pass;
+ if('attachGround' in volume){const baseCompile=mat.onBeforeCompile;mat.onBeforeCompile=(s,r)=>{baseCompile.call(mat,s,r);s.fragmentShader=s.fragmentShader.replace('diffuseColor.rgb*=1.-cloudShade*.3*uCloudShadow;','');};volume.attachGround(mat);const capMat=terrain.mesh.material as THREE.MeshStandardMaterial,capCompile=capMat.onBeforeCompile;capMat.onBeforeCompile=(s,r)=>{capCompile.call(capMat,s,r);s.fragmentShader=s.fragmentShader.replace(/diffuseColor.rgb\s*\*=\s*1\.-[^;]*uCloudShadow;/g,'');};volume.attachGround(capMat);}
  const atmos=await createPlanetAtmosphere(renderer,camera);scene.add(atmos.sky);
  const sun=new THREE.DirectionalLight(0xffebd0,5.6);sun.position.set(-2.6,2.2,3);scene.add(sun);scene.add(new THREE.AmbientLight(0x91bbff,.18));
  const starsGeo=new THREE.BufferGeometry(),pts=[];let seed=821;const random=()=>((seed=seed*16807%2147483647)/2147483647);
@@ -54,13 +56,14 @@ export async function createArrival(renderer:THREE.WebGLRenderer,camera:THREE.Pe
  let flareOn=true,cloudOn=true;
  function cover(p:number){return cloudOn?smooth(.25,.315,p)*(1-smooth(.335,.40,p)):0;}
  let atmosphereOn=true;
- function setEffects(opts:{flare?:boolean;cloud?:boolean;cloudShadow?:boolean;atmosphere?:boolean;specular?:boolean}){if(opts.flare!==undefined)flareOn=opts.flare;if(opts.cloud!==undefined)cloudOn=opts.cloud;if(opts.cloudShadow!==undefined)shadowOn.value=opts.cloudShadow?1:0;if(opts.atmosphere!==undefined)atmosphereOn=opts.atmosphere;if(opts.specular!==undefined)specularOn.value=opts.specular?1:0;cloudPass.uniforms.uOn.value=cloudOn?1:0;cloudPass.uniforms.uLightShadow.value=shadowOn.value;}
+ function setEffects(opts:{flare?:boolean;cloud?:boolean;cloudShadow?:boolean;atmosphere?:boolean;specular?:boolean;thick?:boolean;thin?:boolean}){if(opts.flare!==undefined)flareOn=opts.flare;if(opts.cloud!==undefined)cloudOn=opts.cloud;if(opts.cloudShadow!==undefined)shadowOn.value=opts.cloudShadow?1:0;if(opts.atmosphere!==undefined)atmosphereOn=opts.atmosphere;if(opts.specular!==undefined)specularOn.value=opts.specular?1:0;if('setEffects' in volume)volume.setEffects(opts);cloudPass.uniforms.uOn.value=cloudOn?1:0;cloudPass.uniforms.uLightShadow.value=shadowOn.value;}
  function update(p:number,t:number,reduced:boolean,camera:THREE.PerspectiveCamera){
   const q=smooth(.10,.245,p);planet.rotation.set(-1.15+q*1.15,-.5+q*.45+(reduced?0:t*.003),.14+q*.3);
   const radial=new THREE.Vector3(.3,.45,.842).normalize(),tangent=new THREE.Vector3(.82,.3,-.5).addScaledVector(radial,-new THREE.Vector3(.82,.3,-.5).dot(radial)).normalize();
-  const alt=THREE.MathUtils.lerp(.16,.0025,smooth(.23,.315,p));
-  const end=radial.clone().multiplyScalar(1+alt),pitch=THREE.MathUtils.lerp(.65,.13,smooth(.23,.315,p));
-  camera.position.lerpVectors(new THREE.Vector3(0,-.12,3.1),end,q);
+  const alt=!layersTrial?THREE.MathUtils.lerp(.16,.0025,smooth(.23,.315,p)):p<.30?Math.exp(THREE.MathUtils.lerp(Math.log(.16),Math.log(.0012),smooth(.23,.30,p))):THREE.MathUtils.lerp(.0012,.00065,smooth(.30,.315,p));
+  const end=radial.clone().multiplyScalar(1+alt),pitch=layersTrial?THREE.MathUtils.lerp(.65,.22,smooth(.23,.303,p)):THREE.MathUtils.lerp(.65,.13,smooth(.23,.315,p));
+  camera.far=layersTrial?12:40;
+  camera.position.lerpVectors(new THREE.Vector3(0,-.12,3.1),end,q);camera.near=layersTrial?THREE.MathUtils.clamp((camera.position.length()-1)*.01,.000003,.02):.025;
   const orbitLook=end.clone().addScaledVector(tangent,Math.cos(pitch)).addScaledVector(radial,-Math.sin(pitch));
   const target=new THREE.Vector3(-.4,.14,0).lerp(orbitLook,q);camera.up.set(0,1,0).lerp(radial,smooth(.10,.245,p)).normalize();camera.lookAt(target);camera.fov=36+q*16;camera.clearViewOffset();camera.updateProjectionMatrix();camera.updateMatrixWorld();
   const solarWorld=new THREE.Vector3(-.95,.82,.35).lerp(new THREE.Vector3(-.65,.75,.52),smooth(.10,.24,p)).normalize();
@@ -73,5 +76,5 @@ export async function createArrival(renderer:THREE.WebGLRenderer,camera:THREE.Pe
   cloudPass.uniforms.uCover.value=cover(p);cloudPass.uniforms.uProgress.value=smooth(.24,.4,p);cloudPass.uniforms.uTime.value=reduced?0:t;
   return target;
  }
- return {scene,planet,cloudPass,flarePass,atmospherePass:atmos.pass,cover,update,setEffects,state:()=>({model:'Bruneton LUT + REMA + world density',terrain:terrain.info,specular:specularOn.value,atmosphere:atmosphereOn,flare:flareOn,cloud:cloudOn,cloudShadow:shadowOn.value,sunUV:flarePass.uniforms.uSunUV.value.toArray(),strength:flarePass.uniforms.uStrength.value,sunDirection:sunDir.value.toArray()}),source:'NASA Earth Observatory',dispose(){geo.dispose();mat.dispose();terrain.dispose();volume.dispose();atmos.dispose();starsGeo.dispose();(stars.material as THREE.Material).dispose();marker.children.forEach(o=>(o as THREE.Mesh).geometry.dispose());markerMat.dispose();[day,height,roughness,night,cloud].forEach(x=>x.dispose());cloudPass.dispose();flarePass.dispose();}};
+ return {scene,planet,cloudPass,flarePass,atmospherePass:atmos.pass,cover,update,setEffects,state:()=>({model:'Bruneton LUT + REMA + world density',cloudModel:'state' in volume?volume.state():{model:'v1'},cloudLayersTrial:layersTrial,terrain:terrain.info,specular:specularOn.value,atmosphere:atmosphereOn,flare:flareOn,cloud:cloudOn,cloudShadow:shadowOn.value,sunUV:flarePass.uniforms.uSunUV.value.toArray(),strength:flarePass.uniforms.uStrength.value,sunDirection:sunDir.value.toArray()}),source:'NASA Earth Observatory',dispose(){geo.dispose();mat.dispose();terrain.dispose();volume.dispose();atmos.dispose();starsGeo.dispose();(stars.material as THREE.Material).dispose();marker.children.forEach(o=>(o as THREE.Mesh).geometry.dispose());markerMat.dispose();[day,height,roughness,night,cloud].forEach(x=>x.dispose());cloudPass.dispose();flarePass.dispose();}};
 }

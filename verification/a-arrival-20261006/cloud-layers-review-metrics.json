@@ -1,0 +1,87 @@
+{
+  "scope": "Different mockup/camera/geometry: descriptive only; visual fidelity FAIL",
+  "room_pixel_differences": {
+    "7": {
+      "max_rgb": 0.0,
+      "mean_rgb": 0.0
+    },
+    "8": {
+      "max_rgb": 0.0,
+      "mean_rgb": 0.0
+    },
+    "9": {
+      "max_rgb": 0.0,
+      "mean_rgb": 0.0
+    },
+    "10": {
+      "max_rgb": 1.0,
+      "mean_rgb": 9.645061728395062e-07
+    },
+    "11": {
+      "max_rgb": 1.0,
+      "mean_rgb": 4.822530864197531e-07
+    }
+  },
+  "effect_differences": {
+    "0/no-cloud": {
+      "mean_rgb": 24.093034657921812,
+      "max_rgb": 203.0,
+      "fraction_pixels_gt_2rgb": 0.3511033950617284
+    },
+    "0/no-shadow": {
+      "mean_rgb": 3.9379036458333334,
+      "max_rgb": 111.0,
+      "fraction_pixels_gt_2rgb": 0.21364101080246914
+    },
+    "0/thick-only": {
+      "mean_rgb": 1.5983204732510288,
+      "max_rgb": 179.0,
+      "fraction_pixels_gt_2rgb": 0.15957465277777777
+    },
+    "0/thin-only": {
+      "mean_rgb": 21.656966145833334,
+      "max_rgb": 202.0,
+      "fraction_pixels_gt_2rgb": 0.24904128086419752
+    },
+    "0/no-bloom": {
+      "mean_rgb": 0.001561696244855967,
+      "max_rgb": 11.0,
+      "fraction_pixels_gt_2rgb": 8.777006172839507e-05
+    },
+    "0.295/no-cloud": {
+      "mean_rgb": 95.66589988425926,
+      "max_rgb": 184.0,
+      "fraction_pixels_gt_2rgb": 0.9997738233024691
+    },
+    "0.295/no-shadow": {
+      "mean_rgb": 31.337647087191357,
+      "max_rgb": 111.0,
+      "fraction_pixels_gt_2rgb": 0.9997738233024691
+    },
+    "0.295/thick-only": {
+      "mean_rgb": 0.020652488425925927,
+      "max_rgb": 16.0,
+      "fraction_pixels_gt_2rgb": 0.002103105709876543
+    },
+    "0.295/thin-only": {
+      "mean_rgb": 95.56017232510288,
+      "max_rgb": 184.0,
+      "fraction_pixels_gt_2rgb": 0.9997738233024691
+    },
+    "0.295/no-bloom": {
+      "mean_rgb": 4.1126630015432095,
+      "max_rgb": 84.0,
+      "fraction_pixels_gt_2rgb": 0.35701581790123454
+    }
+  },
+  "asset_hashes": {
+    "cloud-layers-billow-density": true,
+    "cloud-layers-shape-erosion": true
+  },
+  "sources": {
+    "prototype\\spikes\\a-climb\\planet-cloud-layers.ts": "9becdcc619ddf57754fc4361f0f52e0d0a272d14b04844c56c1faa37cc9e7804",
+    "prototype\\spikes\\a-climb\\arrival.ts": "4f8f4a20dbe73463d40c722a573edc1bb737147b0c9195fbf5544fd7509968e2",
+    "prototype\\spikes\\a-climb\\planet-terrain.ts": "0cacf90a8455d052e1a690a21c2112798ad8464d58c109fe1ad711cd9bb9e956",
+    "prototype\\spikes\\a-climb\\main.ts": "964d41505d7f12a311050da3f7329a23ccda4a5f96c06a574a4545df80e14730"
+  }
+}

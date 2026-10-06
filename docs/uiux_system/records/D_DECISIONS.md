@@ -1883,3 +1883,29 @@ A-P2 연결에서 고창 진입점/외부와 내부 구조/사다리 발견이 �
 
 ### 되돌려야 하는 조건
 같은 대표 형상·조명에서 실시간 품질/비용이 미달하면 국소 density/조명 bake·2D 원거리 대안을 비교한다. 얇은층의 ghosting이나 층간탁함이 심하면 층수·재구성보다 형태/광학을 다시 조정한다. 서고KEEP/A-P3·Story·BC독립은 유지.
+
+## D-074. 새 구름 시험은 조형 density 자산과 역할별 광학을 기존 Three 경로에 연결한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-06 [대화] [코드] |
+| 상태 | 사용자 진행 승인 / 구현 전 시험 경로 선택 |
+| 연결 | D-073, F-044, rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_layers_research_2026-10-06.md |
+| CASE | CASE-007 |
+
+### 갈림길
+Takram의 제한된space 지원을 전체경로에 도입하거나 기존경로를 조형자산·광학·깊이 계약으로 보강한다.
+
+### 검토한 선택지
+1. 새패키지행성전체교체. 2. 합성3Ddensity군집+Perlin/Worley역할분리·thick/thin/scene-depth·자가/지표그림자·재구성시험. 3. 근접2Dflipbook.
+
+### 고른 것과 근거
+2를 scoped시험으로 선택한다. 새128³조형density와독립macro/detailnoise를 source/script/hash로 보존하며 Blender나측정기상자료라 주장하지 않는다. 작은근접대표군집을만든뒤동일worldanchor로광역층과연결한다. Earth near/far는서고와분리하고승인서고는유지. 품질winner는실제frame검토후결정한다.
+
+### 버린 것과 이유
+1은composer/global지원제약으로첫대표시험의불확실성을늘린다. 3은camera회전/진입빛/역스크롤대응이제한적이므로원거리fallback으로남긴다.
+
+### 되돌려야 하는 조건
+조형·광학완성도또는GPU비용미달이면별도renderer/Blenderdensity+bake후보로전환비교한다. initial+3품질수정뒤남은GAP는기록한다. A-P3·Story는이번구름시험에서구현하지않는다.
+
+D-074 실제 시험 결과(2026-10-06): F-045/O-010 및 ECG_A_cloud_layers_review_2026-10-06.md. initial+3보완종료, 기술PASS/시각FAIL/GPU회귀. 기본채택REJECT, cloudModel=layers로보존하고v1기본유지. 새조형/Cycles·bake와shadow sampling비용후보는사용자판단대기. 승인서고KEEP/A-P3·Story·BC독립유지.

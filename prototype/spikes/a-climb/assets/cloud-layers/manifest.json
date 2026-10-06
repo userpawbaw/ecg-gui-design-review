@@ -1,0 +1,103 @@
+{
+  "author": "project procedural cloud trial",
+  "licence": "CC0-1.0",
+  "noise_size": [
+    64,
+    64,
+    64
+  ],
+  "noise_channels": [
+    "Perlin-like value/Worley macro",
+    "fine Worley erosion",
+    "medium Worley",
+    "flow value"
+  ],
+  "density_size": [
+    128,
+    128,
+    128
+  ],
+  "density_lobes": [
+    [
+      -0.25,
+      -0.17,
+      -0.38,
+      0.7,
+      0.52,
+      0.78
+    ],
+    [
+      0.32,
+      -0.1,
+      -0.25,
+      0.56,
+      0.48,
+      0.65
+    ],
+    [
+      -0.4,
+      0.32,
+      -0.18,
+      0.43,
+      0.55,
+      0.42
+    ],
+    [
+      0.13,
+      0.38,
+      -0.1,
+      0.48,
+      0.54,
+      0.52
+    ],
+    [
+      0.45,
+      0.24,
+      0.14,
+      0.34,
+      0.43,
+      0.39
+    ],
+    [
+      -0.25,
+      0.25,
+      0.45,
+      0.48,
+      0.48,
+      0.4
+    ],
+    [
+      0.55,
+      -0.25,
+      0.66,
+      0.3,
+      0.32,
+      0.32
+    ],
+    [
+      -0.72,
+      -0.12,
+      0.74,
+      0.25,
+      0.28,
+      0.27
+    ]
+  ],
+  "axis_order": "z,y,x interleaved channels; local x side/y height/z forward",
+  "world_km_extent": [
+    50.88,
+    10.176,
+    50.88
+  ],
+  "scientific_weather": false,
+  "files": {
+    "billow-density.r8": {
+      "bytes": 2097152,
+      "sha256": "460619ecddf9b6343a77b06b9a28f98ab2452d406a34d8cbfecf102ddff28916"
+    },
+    "shape-erosion.rgba8": {
+      "bytes": 1048576,
+      "sha256": "d81c9fb6a61ddc9b718ce9bf7e6b7fb323853b4e344737eda680420d56c5cb95"
+    }
+  }
+}

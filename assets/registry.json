@@ -2156,6 +2156,52 @@
         "prototype/spikes/a-climb"
       ],
       "review": "REMA derived grid or explicitly synthetic cloud noise; experimental."
+    },
+    {
+      "id": "cloud-layers-billow-density",
+      "title": "cloud-layers-billow-density",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-layers.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-layers/billow-density.r8",
+        "bytes": 2097152,
+        "sha256": "460619ecddf9b6343a77b06b9a28f98ab2452d406a34d8cbfecf102ddff28916"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-074 synthetic sculpted density / noise; no Blender or measured weather claim."
+    },
+    {
+      "id": "cloud-layers-shape-erosion",
+      "title": "cloud-layers-shape-erosion",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-layers.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-layers/shape-erosion.rgba8",
+        "bytes": 1048576,
+        "sha256": "d81c9fb6a61ddc9b718ce9bf7e6b7fb323853b4e344737eda680420d56c5cb95"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-074 synthetic sculpted density / noise; no Blender or measured weather claim."
     }
   ],
   "rejected": [

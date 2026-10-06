@@ -1,0 +1,2712 @@
+{
+  "states": [
+    {
+      "file": "base-0.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0.9,
+          "sunDirection": [
+            -0.7291745568426314,
+            0.6293927753799555,
+            0.2686432577841274
+          ],
+          "sunUV": [
+            -0.0985759181880964,
+            1.5150653198435886
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0,
+          -0.12,
+          3.1
+        ],
+        "cameraTarget": [
+          -0.4,
+          0.14,
+          0
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 153.97499999939464,
+        "dpr": 1,
+        "drawCalls": 28,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 4,
+          "p50": 10.479616,
+          "p95": 158.628864
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.3510266013040637,
+          0.5563725042449718,
+          0.9975780657961772
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 4,
+          "p50": 100.90000000000008,
+          "p95": 617.4
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 685710,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.23.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0.9,
+          "sunDirection": [
+            -0.582946972817063,
+            0.6690449552135238,
+            0.4610332686333565
+          ],
+          "sunUV": [
+            1.5612572131835023,
+            0.919727368348743
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.33735124670473393,
+          0.5024400071270916,
+          1.0394931247765302
+        ],
+        "cameraTarget": [
+          0.7884825833146788,
+          0.49046274110002974,
+          0.09461638575888912
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 48.438461538260945,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 13,
+          "p50": 9.767936,
+          "p95": 158.628864
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.5641016856064248,
+          -0.3693890855171561,
+          0.9994325084329856
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.23,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 13,
+          "p50": 100.5,
+          "p95": 617.4
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.27.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.10476154503502004,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0.09360000000000009,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.2881213691527056,
+            0.4759657832689866
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.30224856027094416,
+          0.45337284040641634,
+          0.8483109591604499
+        ],
+        "cameraTarget": [
+          0.9848983521115788,
+          0.6039241095555208,
+          0.13324202747796365
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 30.476190476101777,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 22,
+          "p50": 9.674752,
+          "p95": 95.977472
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.6999984946451794,
+          -1.2339301996131244,
+          0.9999692408439148
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.27,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 21,
+          "p50": 100.5,
+          "p95": 101.19999999999982
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.285.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.4700578438436365,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.2995671513023028,
+            0.314666040245576
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.3004216860595436,
+          0.4506325290893155,
+          0.8431835322071191
+        ],
+        "cameraTarget": [
+          1.059205394911673,
+          0.6793763499064491,
+          0.23332818245720804
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 22.37241379300068,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 32,
+          "p50": 10.479616,
+          "p95": 95.977472
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.7801698279397478,
+          -1.7011646068101824,
+          0.9999906870609174
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.285,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 29,
+          "p50": 100.5,
+          "p95": 101.19999999999982
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.295.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.7883757267520736,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.3108393255890456,
+            0.2438776283979815
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.3001669727653049,
+          0.4502504591479574,
+          0.8424686368946226
+        ],
+        "cameraTarget": [
+          1.0864996122800883,
+          0.7112048492648648,
+          0.2824831135885045
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 17.729729729679388,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 41,
+          "p50": 11.736064,
+          "p95": 90.148864
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8268418158916456,
+          -1.940659756040854,
+          0.999993923225086
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.295,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 37,
+          "p50": 100.40000000000008,
+          "p95": 101.19999999999982
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.3.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.9174097436282204,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.3141188972046618,
+            0.2266967534109134
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.3001403775960014,
+          0.45021056639400214,
+          0.842393993119444
+        ],
+        "cameraTarget": [
+          1.09256767887031,
+          0.7187091755831573,
+          0.2947011329700665
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 15.0499999999619,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 49,
+          "p50": 12.754944,
+          "p95": 90.148864
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8393869508763292,
+          -2.0023935416694605,
+          0.9999942253552274
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.3,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 44,
+          "p50": 100.40000000000008,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.305.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.9919566533596008,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.3147028262905158,
+            0.22362423354103875
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.30009763109721677,
+          0.45014644664582526,
+          0.8422740179461887
+        ],
+        "cameraTarget": [
+          1.09356018947368,
+          0.7199442721976178,
+          0.2967226438463674
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 13.094117647018647,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 57,
+          "p50": 15.259648,
+          "p95": 90.148864
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8416216595724462,
+          -2.0131943870890665,
+          0.9999948933014984
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.305,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 51,
+          "p50": 100.40000000000008,
+          "p95": 101.10000000000036
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.31.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 1,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.3146884556892835,
+            0.22344888443456873
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.30001824474233113,
+          0.4500273671134968,
+          0.8420512069101425
+        ],
+        "cameraTarget": [
+          1.093480803118794,
+          0.7198251926652893,
+          0.29649983281032155
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 11.427118644007813,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 66,
+          "p50": 19.936256,
+          "p95": 69.573632
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8416288866468571,
+          -2.013036200540242,
+          0.9999961721686133
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.31,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 59,
+          "p50": 100.5,
+          "p95": 101.10000000000036
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.314.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 1,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.314681098137684,
+            0.22335910808645987
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.29997759892862963,
+          0.4499663983929446,
+          0.8419371276596874
+        ],
+        "cameraTarget": [
+          1.0934401573050927,
+          0.7197642239447372,
+          0.2963857535598662
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 10.301515151478464,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 74,
+          "p50": 21.164032,
+          "p95": 69.573632
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8416325869569974,
+          -2.0129552079756694,
+          0.9999968269597928
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.314,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 66,
+          "p50": 100.5,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.32.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 1,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.314681098137684,
+            0.22335910808645987
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          -8,
+          5,
+          5.5
+        ],
+        "cameraTarget": [
+          -2.6,
+          4.575,
+          3.58
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 9.39863013696844,
+        "dpr": 1,
+        "drawCalls": 53,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 82,
+          "p50": 20.594688,
+          "p95": 35.854336
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -1.275176502113546,
+          -0.9348971557447484,
+          0.9968535468104744
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.32,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 73,
+          "p50": 100.40000000000008,
+          "p95": 101.10000000000036
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 298581,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.336.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 1,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.314681098137684,
+            0.22335910808645987
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          -7.742719999999999,
+          4.9708416,
+          5.36827264
+        ],
+        "cameraTarget": [
+          -2.6,
+          4.575,
+          3.58
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 8.581481481476882,
+        "dpr": 1,
+        "drawCalls": 53,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 91,
+          "p50": 19.457024,
+          "p95": 59.997184
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -1.3219203896672551,
+          -0.967446524260008,
+          0.9967210390634668
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.336,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 81,
+          "p50": 100.40000000000008,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 298581,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "base-0.42.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 1,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.314681098137684,
+            0.22335910808645987
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          -4.25,
+          4.575,
+          3.58
+        ],
+        "cameraTarget": [
+          -2.6,
+          4.575,
+          3.58
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 7.979545454558155,
+        "dpr": 1,
+        "drawCalls": 45,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 99,
+          "p50": 19.457024,
+          "p95": 65.190912
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -3.791792565428217,
+          -2.5993241937787035,
+          0.9907730289799556
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.42,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 88,
+          "p50": 100.5,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 115679,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "no-cloud-0.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": false,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 0,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0.9,
+          "sunDirection": [
+            -0.7291745568426314,
+            0.6293927753799555,
+            0.2686432577841274
+          ],
+          "sunUV": [
+            -0.0985759181880964,
+            1.5150653198435886
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0,
+          -0.12,
+          3.1
+        ],
+        "cameraTarget": [
+          -0.4,
+          0.14,
+          0
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 7.389583333317812,
+        "dpr": 1,
+        "drawCalls": 28,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 108,
+          "p50": 15.259648,
+          "p95": 59.997184
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.3510266013040637,
+          0.5563725042449718,
+          0.9975780657961772
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 96,
+          "p50": 100.5,
+          "p95": 101.10000000000036
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 685710,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "no-cloud-0.295.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": false,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.7883757267520736,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 0,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.3108393255890456,
+            0.2438776283979815
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.3001669727653049,
+          0.4502504591479574,
+          0.8424686368946226
+        ],
+        "cameraTarget": [
+          1.0864996122800883,
+          0.7112048492648648,
+          0.2824831135885045
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 6.888461538447211,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 117,
+          "p50": 19.457024,
+          "p95": 59.997184
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8268418158916456,
+          -1.940659756040854,
+          0.999993923225086
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.295,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 104,
+          "p50": 100.5,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "no-shadow-0.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 0,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0.9,
+          "sunDirection": [
+            -0.7291745568426314,
+            0.6293927753799555,
+            0.2686432577841274
+          ],
+          "sunUV": [
+            -0.0985759181880964,
+            1.5150653198435886
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0,
+          -0.12,
+          3.1
+        ],
+        "cameraTarget": [
+          -0.4,
+          0.14,
+          0
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 6.45803571426742,
+        "dpr": 1,
+        "drawCalls": 28,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 125,
+          "p50": 19.457024,
+          "p95": 42.738688
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.3510266013040637,
+          0.5563725042449718,
+          0.9975780657961772
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 112,
+          "p50": 100.5,
+          "p95": 101.10000000000036
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 685710,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "no-shadow-0.295.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.7883757267520736,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 0,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.3108393255890456,
+            0.2438776283979815
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.3001669727653049,
+          0.4502504591479574,
+          0.8424686368946226
+        ],
+        "cameraTarget": [
+          1.0864996122800883,
+          0.7112048492648648,
+          0.2824831135885045
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 6.08333333331005,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 135,
+          "p50": 20.61312,
+          "p95": 59.997184
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8268418158916456,
+          -1.940659756040854,
+          0.999993923225086
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.295,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 120,
+          "p50": 100.5,
+          "p95": 101.10000000000036
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "thick-only-0.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 0,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0.9,
+          "sunDirection": [
+            -0.7291745568426314,
+            0.6293927753799555,
+            0.2686432577841274
+          ],
+          "sunUV": [
+            -0.0985759181880964,
+            1.5150653198435886
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0,
+          -0.12,
+          3.1
+        ],
+        "cameraTarget": [
+          -0.4,
+          0.14,
+          0
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.9541666666666668,
+        "dpr": 1,
+        "drawCalls": 28,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 144,
+          "p50": 20.795392,
+          "p95": 42.738688
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.3510266013040637,
+          0.5563725042449718,
+          0.9975780657961772
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 128,
+          "p50": 100.5,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 685710,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "thick-only-0.295.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.7883757267520736,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 0,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.3108393255890456,
+            0.2438776283979815
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.3001669727653049,
+          0.4502504591479574,
+          0.8424686368946226
+        ],
+        "cameraTarget": [
+          1.0864996122800883,
+          0.7112048492648648,
+          0.2824831135885045
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.9100000000093132,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 153,
+          "p50": 21.239808,
+          "p95": 59.997184
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8268418158916456,
+          -1.940659756040854,
+          0.999993923225086
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.295,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 136,
+          "p50": 100.5,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "thin-only-0.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 0,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0.9,
+          "sunDirection": [
+            -0.7291745568426314,
+            0.6293927753799555,
+            0.2686432577841274
+          ],
+          "sunUV": [
+            -0.0985759181880964,
+            1.5150653198435886
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0,
+          -0.12,
+          3.1
+        ],
+        "cameraTarget": [
+          -0.4,
+          0.14,
+          0
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.8925000000201787,
+        "dpr": 1,
+        "drawCalls": 28,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 162,
+          "p50": 21.917696,
+          "p95": 42.738688
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.3510266013040637,
+          0.5563725042449718,
+          0.9975780657961772
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 144,
+          "p50": 100.40000000000146,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 685710,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "thin-only-0.295.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.7883757267520736,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 0,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.3108393255890456,
+            0.2438776283979815
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": true,
+        "bodyVisible": false,
+        "camera": [
+          0.3001669727653049,
+          0.4502504591479574,
+          0.8424686368946226
+        ],
+        "cameraTarget": [
+          1.0864996122800883,
+          0.7112048492648648,
+          0.2824831135885045
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.8800000000124176,
+        "dpr": 1,
+        "drawCalls": 24,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 171,
+          "p50": 21.902336,
+          "p95": 42.738688
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8268418158916456,
+          -1.940659756040854,
+          0.999993923225086
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.295,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 152,
+          "p50": 100.5,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293398,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "no-bloom-0.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0.9,
+          "sunDirection": [
+            -0.7291745568426314,
+            0.6293927753799555,
+            0.2686432577841274
+          ],
+          "sunUV": [
+            -0.0985759181880964,
+            1.5150653198435886
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": false,
+        "bodyVisible": false,
+        "camera": [
+          0,
+          -0.12,
+          3.1
+        ],
+        "cameraTarget": [
+          -0.4,
+          0.14,
+          0
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.8766666666759799,
+        "dpr": 1,
+        "drawCalls": 15,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 180,
+          "p50": 21.239808,
+          "p95": 42.738688
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          0.3510266013040637,
+          0.5563725042449718,
+          0.9975780657961772
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 160,
+          "p50": 100.5,
+          "p95": 101.10000000000036
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 685697,
+        "volume": true,
+        "winner": "M08"
+      }
+    },
+    {
+      "file": "no-bloom-0.295.png",
+      "state": {
+        "aa": "msaa",
+        "actualSamples": 4,
+        "arrival": {
+          "atmosphere": true,
+          "cloud": true,
+          "cloudModel": {
+            "groundShadowSamples": 8,
+            "lightSamples": 6,
+            "localMix": 0.7883757267520736,
+            "model": "sculpted128 + thick/thin",
+            "temporalAccumulation": false,
+            "thick": 1,
+            "thin": 1,
+            "viewSamples": 72
+          },
+          "cloudShadow": 1,
+          "flare": true,
+          "model": "Bruneton LUT + REMA + world density",
+          "specular": 1,
+          "strength": 0,
+          "sunDirection": [
+            -0.5801259524950803,
+            0.6693760990327849,
+            0.4641007619960642
+          ],
+          "sunUV": [
+            1.3108393255890456,
+            0.2438776283979815
+          ],
+          "terrain": {
+            "heightExaggeration": 5,
+            "polarDisplayInfillMetres": 2666.6238050085353,
+            "source": "REMA v2 1km EPSG3031",
+            "vertices": 99009
+          }
+        },
+        "beatAge": 0.452,
+        "bloom": false,
+        "bodyVisible": false,
+        "camera": [
+          0.3001669727653049,
+          0.4502504591479574,
+          0.8424686368946226
+        ],
+        "cameraTarget": [
+          1.0864996122800883,
+          0.7112048492648648,
+          0.2824831135885045
+        ],
+        "cartSocket": [
+          -1.29,
+          0.88,
+          -3.9
+        ],
+        "clay": false,
+        "cpuRenderMsMean": 0.8725000000093133,
+        "dpr": 1,
+        "drawCalls": 11,
+        "frame": 12,
+        "fs": 250,
+        "gpu": {
+          "available": true,
+          "count": 189,
+          "p50": 21.164032,
+          "p95": 42.6496
+        },
+        "grain": false,
+        "heartScale": 1.000343299574907,
+        "heartScreen": [
+          -0.8268418158916456,
+          -1.940659756040854,
+          0.999993923225086
+        ],
+        "heartVisible": false,
+        "jitter": true,
+        "p": 0.295,
+        "pixelRatio": 1,
+        "rAbs": 487,
+        "rOffsets": [
+          75,
+          282,
+          487,
+          678,
+          883,
+          1085,
+          1285,
+          1487,
+          1675,
+          1880,
+          2083
+        ],
+        "raf": {
+          "count": 169,
+          "p50": 100.5,
+          "p95": 101.09999999999992
+        },
+        "ready": true,
+        "record": "S022",
+        "renderSize": [
+          1920,
+          1080
+        ],
+        "sample": 600,
+        "scene": "d0-mixed-0",
+        "sharedClock": true,
+        "smaa": false,
+        "sourceSample": 657,
+        "steps": 96,
+        "supportedSamples": [
+          8,
+          4,
+          2,
+          1
+        ],
+        "t": 2.4,
+        "triangles": 293385,
+        "volume": true,
+        "winner": "M08"
+      }
+    }
+  ],
+  "errors": "",
+  "consoleLog": "[debug] [vite] connecting...\n[debug] [vite] connected.\n[warning] THREE.UniformsUtils: Textures of render targets cannot be cloned via cloneUniforms() or mergeUniforms().\n[debug] [vite] connecting...\n[debug] [vite] connected.\n[warning] THREE.UniformsUtils: Textures of render targets cannot be cloned via cloneUniforms() or mergeUniforms().\n[debug] [vite] connecting...\n[debug] [vite] connected.\n[warning] THREE.UniformsUtils: Textures of render targets cannot be cloned via cloneUniforms() or mergeUniforms().\n[warning] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.\n[debug] [vite] connecting...\n[debug] [vite] connected.\n[debug] [vite] connecting...\n[debug] [vite] connected.\n[warning] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.\n[debug] [vite] connecting...\n[debug] [vite] connected.\n[debug] [vite] connecting...\n[debug] [vite] connected.\n[warning] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.\n[debug] [vite] connecting...\n[debug] [vite] connected.\n[debug] [vite] connecting...\n[debug] [vite] connected.\n[warning] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.\n"
+}

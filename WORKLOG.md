@@ -518,3 +518,8 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 사용자 다층구름 질감 피드백을 구체화. 현재code의35km층/509kmbank·최소밀도·평준화와그림자/시간축재구성 한계확인. Nubis제작자/Epic/Blender/NVIDIA/immutableTakramREADME b012ad06(primary자료) 비교. Takramspace예정/composer비호환/ghosting 제약을 신규winner선택시 반영. 광역coverage+국소조형density, thick/thin다른profile, optical/shadow·다중산란/LOD/reconstruction/volume export 설계. 연구문서 ECG_A_cloud_layers_research_2026-10-06.md. 새runtime/asset설치/시각QA 미실행; 이전PASS/TUNE 보존. 다음 L0–L4 scoped시험, 승인서고 유지/A-P3·Story·BC분리.
 
 추가 코드 점검: main camera near.025=Earth159km로 근접surface clipping 위험을 확인해 L0에 Earth/room near-far분리와실제depth가림검증추가. 지각원인비율 미측정. 이번renderer코드변경없음. records157/diff check PASS.
+
+### 2026-10-06 cloud layers 실제 시험 — D-074/F-045/O-010
+사용자 진행 요청에 따라 synthetic128³군집/64³macro·erosion과 별도thick/thin·동일밀도광학/지표그림자/scene-depth/공간재구성/adaptiveEarthcamera 구현. initial+3품질보완/깊이·가림 기능복구. 기술PASS/목업시각FAIL/후보TUNE, GPU33.01/40.03ms83queries 비용회귀로 기본채택REJECT. 기본v1유지, ?cloudModel=layers 별도시험. final31+22diagnostic+17runtime/3R·정지/native/reduced+38states·정역영상24decoded/errors0/buildPASS; freshRTX3070확인. 서고3frameRGB동일/2frame최대1RGB(mean<1e-6)KEEP. 새조형·Cycles기준+bake/Beer shadow/적응sampling 후보 제안, G6 이후 사용자판단. A-P3·Story·BC보류. 상세 ECG_A_cloud_layers_review_2026-10-06.md.
+
+종료 검증: records160 PASS / 최종build55modules PASS / git diff --check PASS. 커밋 전 원격 작업 branch08468ef8 및 maincfef4300 확인, 관련 원격 변경 없음. 단계는 실행검증 완료·목표품질 미달/기본채택REJECT이며 전체프로젝트완료가 아니다. commit/push 뒤 원격HEAD와review 내용 readback으로 저장을 확인한다.

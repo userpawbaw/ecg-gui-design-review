@@ -676,17 +676,20 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "A_P2_thick_thin_cloud_research_complete_new_scoped_trial_pending",
+    "status": "A_P2_cloud_layers_trial_verified_visual_FAIL_candidate_TUNE_default_REJECT_G6_complete",
     "records": [
       "D-065",
       "D-066",
       "F-037",
       "R-034",
-      "CASE-007"
+      "CASE-007",
+      "D-074",
+      "F-045",
+      "O-010"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "L0 representative cloud shape/world units, Earth adaptive near/far/depth occlusion, and ice intersection; L1 thick/thin optical-depth and self/interlayer/ground shadows; L2 shared-anchor global-local LOD/renderer candidate comparison; L3 reconstruction/post; L4 kept archive transition. Complete scene before user quality feedback; A-P3/Story/B/C deferred.",
+    "next": "User decision on a new sculpted cloud/Cycles reference + density/light bake and Beer-shadow/adaptive sampling candidate. Current candidate isolated at cloudModel=layers; stable v1 retained; approved archive KEEP; A-P3/Story/B/C deferred.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -776,11 +779,22 @@
     "arrival_planet_final_states": "verification/a-arrival-20261006/planet-final-states/review.json",
     "arrival_planet_fidelity": "verification/a-arrival-20261006/planet-fidelity.md",
     "arrival_cloud_layers_research": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_layers_research_2026-10-06.md",
-    "arrival_cloud_layers_new_renderer_implemented": false,
+    "arrival_cloud_layers_new_renderer_implemented": true,
     "arrival_cloud_user_requirements": {
       "thick": "opaque core, billowy volume, shadow below",
       "thin": "underlying surface visible, wispy edge/detail",
-      "scope": "research/modeling/render/post; no new implementation this turn"
-    }
+      "scope": "scoped implementation/QA complete; target quality not achieved; candidate isolated"
+    },
+    "arrival_cloud_layers_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_layers_review_2026-10-06.md",
+    "arrival_cloud_layers_verdict": "technical PASS / visual fidelity FAIL / candidate TUNE / default adoption REJECT",
+    "arrival_cloud_layers_route": "?cloudModel=layers; default v1 unchanged",
+    "arrival_cloud_layers_gpu_local": {
+      "gpu": "RTX3070 ANGLE D3D11",
+      "count": 83,
+      "p50": 33.00864,
+      "p95": 40.032256,
+      "scope": "8sec unrecorded local Chromium DPR1 1920x1080; target-PC/600sec unverified"
+    },
+    "arrival_cloud_layers_next": "G6 initial+3 exhausted: user decision on a new sculpted/Cycles/bake+Beer-shadow candidate; A-P3/Story/BC remain deferred"
   }
 }

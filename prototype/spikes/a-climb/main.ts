@@ -136,8 +136,8 @@ function draw(dt:number){
   lastTarget.set(-2.6,4.575,3.58);lastTarget.lerp(arch.shot('s2_beams').look,ss(.46,.55,p));
  }
  camera.position.copy(pos);camera.position.x+=pointer.sx*.03*(1-wave);camera.position.y-=pointer.sy*.03*(1-wave);
-   camera.fov=roomP<.25?THREE.MathUtils.lerp(26,44,ss(0,.25,roomP)):THREE.MathUtils.lerp(44,34,wave);camera.up.set(0,1,0);camera.setViewOffset(W,H,W*.19*wave,0,W,H);camera.lookAt(lastTarget);camera.updateProjectionMatrix();camera.updateMatrixWorld();
- if(arrival){arrival.cloudPass.uniforms.uCover.value=arrival.cover(p);arrival.cloudPass.uniforms.uProgress.value=ss(.24,.4,p);arrival.cloudPass.uniforms.uTime.value=reduced?0:t;if(inSpace)lastTarget.copy(arrival.update(p,t,reduced,camera));}
+   camera.near=.025;camera.far=40;camera.fov=roomP<.25?THREE.MathUtils.lerp(26,44,ss(0,.25,roomP)):THREE.MathUtils.lerp(44,34,wave);camera.up.set(0,1,0);camera.setViewOffset(W,H,W*.19*wave,0,W,H);camera.lookAt(lastTarget);camera.updateProjectionMatrix();camera.updateMatrixWorld();
+ if(arrival){arrival.cloudPass.uniforms.uCover.value=arrival.cover(p);arrival.cloudPass.uniforms.uProgress.value=ss(.24,.4,p);arrival.cloudPass.uniforms.uTime.value=reduced?0:t;if(arrival.cloudPass.uniforms.uExit)arrival.cloudPass.uniforms.uExit.value=1-ss(.335,.4,p);if(inSpace)lastTarget.copy(arrival.update(p,t,reduced,camera));}
  if(arrival&&!inSpace)arrival.flarePass.uniforms.uStrength.value=0;
  renderPass.scene=inSpace?arrival!.scene:scene;
  if(arrival)arrival.cloudPass.enabled=inSpace||arrival.cover(p)>.001;

@@ -215,3 +215,23 @@ Snow 요청이 timeout 나며 앞서 받은 LUT/REMA의 trailing registry pin �
 
 ### 재발 방지와 자동화 상태
 registry 성공 pin/생성hash 검증은 코드에 반영. 브라우저 직렬 실행과 깨끗한 로그 확인은 수동 규칙이며 자동 resource-lock 미구현. 불완전/실패 trial을 최종 PASS와 섞지 않는다.
+
+## O-010. 새 구름 시험의 깊이 정밀도·RT texture 연결과 검증 재개 비용
+
+| | |
+|---|---|
+| 시점 | 2026-10-06 [코드] [런타임] |
+| 잃은 것 | 초기alias/RT경고분리·카메라복구 및 Windows빌드/Chromium재개 재실행; 정확한 소요분 기록 없음 |
+| 재발 방지 | O-009의버전/texture identity와 실제프레임·resource직렬검증 규칙 적용; 새R 없음 |
+
+### 증상
+Earth far12/near.000025고정에서전경깊이정밀도가낮아동심패턴, RT texture복제로경고. Vite기본권한realpath EPERM과freshChromium연결실패/대기중단이있었다. 일회capture script cwd를root로잘못실행하여MODULE_NOT_FOUND, 경로수정뒤실행.
+
+### 원인
+행성전경/근접을같은작은near로처리했고 ShaderPassuniform복제후실제RTtexture재연결이빠졌다. 새프로세스와같은browser세션재시작경계를즉시연속실행한것도진단에시간을썼다. 품질미달의단독원인으로확정하지않는다.
+
+### 조치
+adaptiveEarthnear/별도ground-depth/실제RTtexture/groundprogramkey복구. archivecamera범위복구. 권한승인된로컬buildPASS, 설치Chromium명시별도open후fresh3frame/errors0/RTX3070확인. 누적console경고와fresh로그를구분. 브라우저jobs는완료후직렬로실행했다.
+
+### 재발 방지와 자동화 상태
+소스에near/textureidentity복구와실험opt-in반영. source/asset hash와frame/state/오류로그를보존. 자동resource-lock/nearprecisionassert는미구현. fresh검증실패를완료로기록하지않는다.

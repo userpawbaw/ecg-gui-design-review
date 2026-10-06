@@ -241,7 +241,7 @@
     {
       "id": "J5-v5",
       "file": "J5-side-v5.png",
-      "selected": true,
+      "selected": false,
       "tool": "image_gen built-in",
       "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-a52528a2-f1db-4dfd-8c80-b48e1d43dfb6.png",
       "prompt": "Edit input1 ONLY to finish correcting the cloud material, preserving camera, the entire large-scale silhouette, volumes, ocean gap, sky, sunlight and cool shadow placement. The bottom-left and bottom-center cloud fringe STILL has conspicuous connected spiderweb strings. ERASE this network COMPLETELY and replace it with short disconnected diffuse vapor tufts, soft dissipating vapor with no sharp connecting filaments. The foreground cloud faces should have smooth continuous light scattering between irregular broad billows, fewer repeated small bubbles and much less foam-like mottling. Preserve strong macro depth and warm rim contrast. A photographic water droplet volume, not a furry solid object. Thin cirrus in the upper-right sky may remain faint and feathered. No long white ropes, webbing, fibrous roots, gauze, tangled cotton. Do not blur the entire image, remove volume, change camera or introduce new objects. ONE complete same widescreen frame, no text or collage.",
@@ -263,14 +263,96 @@
         }
       ],
       "round": "D-078 user texture feedback"
+    },
+    {
+      "id": "J5-v6",
+      "file": "J5-side-v6.png",
+      "selected": false,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-bcfe5967-6b19-4e40-b784-980bd6ebe995.png",
+      "prompt": "Precise cloud material edit. Input1 is the existing J5 widescreen scene EDIT TARGET; input2 is a REAL PHOTO supplied by the user, MATERIAL / DENSITY / CLOUD TEXTURE REFERENCE ONLY. Preserve input1's camera, major left cloud tower and shelf silhouettes, smaller right bank, central ocean gap, sunlight upper left, overall macro volumes and depth. Change cloud texture substantially to resemble the natural water-vapor appearance in input2: broad softly merging cloud swells, continuous airy density rather than a surface covered in tiny repeated bubbles, soft irregular blue-gray shadow masses, luminous milky-white body with delicate dissolving boundaries. Study input2 LOWER HALF for thick clouds: many irregular larger soft masses, low-contrast fine detail, smooth scattering between billows; they are neither sharply granular nor uniformly blurred. Use input2 UPPER HALF for thin layers: broad translucent wind-stretched veils with diffuse edges, sky visible through them, not long individual ropes or connected webs. Adapt the reference material to input1's warm sunlight while retaining cool soft self-shadows and sidewall volume. Significantly reduce exaggerated hard micro-bump contrast and bright edging around every little bead. No foam, popcorn texture, furry cotton fibers, spiderwebs, tangled strings, carved snow, cliff or plastic surface. Preserve strong large-scale volume and deep spatial gap; do not flatten clouds into fog. Keep water and horizon, no camera change, no layout replacement by the portrait reference, no text or UI. One finished same widescreen landscape scene. The real photo is the controlling reference for natural texture, not a literal background insert.",
+      "request": "J5-v6-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v6.png",
+        "bytes": 1953633,
+        "sha256": "75e0e068e2988cb8137ce22b2d853969cef44318d36b3bd3f1889ec5c112698d",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "file": "verification/a-cloud-mockup-20261006/images/J5-side-v5.png",
+          "bytes": 1951865,
+          "sha256": "1ee2bd8f200be70878e6e52d82bd183a364a4a12087d3e9a330da9fd088ba5b6",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "role": "edit-target"
+        },
+        {
+          "file": "verification/a-cloud-mockup-20261006/inputs/taylor-van-riper-yQorCngxzwI-unsplash.jpg",
+          "bytes": 609381,
+          "sha256": "9e718894b4173abf2a4d8cd69e3b3674125aa36646a38800533c2bf54553aee3",
+          "dimensions": [
+            2848,
+            4272
+          ],
+          "role": "user-supplied texture reference"
+        }
+      ],
+      "round": "D-079 user supplied real photo"
+    },
+    {
+      "id": "J5-v7",
+      "file": "J5-side-v7.png",
+      "selected": true,
+      "tool": "image_gen built-in",
+      "source": "C:\\Users\\J1\\.codex\\generated_images\\01a10541-5bc0-7a11-b2de-53322b29deb2\\exec-7073e4b2-0274-49b4-8887-650ec26d9f76.png",
+      "prompt": "Input1 EDIT TARGET; input2 controlling real-photograph cloud-material reference. The first edit still looks like a wall of tightly packed foam beads. Make a clearly perceptible material correction, not a subtle retouch. Preserve input1's low camera, overall left tower silhouette, right bank, ocean gap and sun direction. Replace the TEXTURE INSIDE these macro silhouettes with the MUCH SOFTER larger merged vapor patches from the LOWER HALF of input2. Eliminate about 80 percent of the small hard individual lobule edges and bright tiny rims. Use wide soft continuous ivory/blue-gray scattering gradients across medium cloud masses; extremely subtle irregular fine detail, not many small individually lit spheres. Some soft irregular contours remain at the outer silhouette to preserve natural cumulus shape. All foreground threads, tendrils, cobwebs must vanish into diffuse nonconnected vapor edges. No surface should look furry or porous. The thin cloud in upper sky must now resemble input2's broad soft translucent streaks and diffuse veils; remove crisp interwoven wisps. Keep macro depth, layered self-shadow and warm sunlight, without making the entire scene foggy or blurred. Aim for a natural photograph from an aircraft between clouds, not maximal CGI sculpting detail. SAME landscape composition; no text, no collage.",
+      "request": "J5-v7-request.json",
+      "output": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v7.png",
+        "bytes": 1842317,
+        "sha256": "f74c01346dd519e6fc133c7c85e8fc5e8935ac0662a23c450220ce683403c1ef",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "inputs": [
+        {
+          "file": "verification/a-cloud-mockup-20261006/images/J5-side-v6.png",
+          "bytes": 1953633,
+          "sha256": "75e0e068e2988cb8137ce22b2d853969cef44318d36b3bd3f1889ec5c112698d",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "role": "edit-target"
+        },
+        {
+          "file": "verification/a-cloud-mockup-20261006/inputs/taylor-van-riper-yQorCngxzwI-unsplash.jpg",
+          "bytes": 609381,
+          "sha256": "9e718894b4173abf2a4d8cd69e3b3674125aa36646a38800533c2bf54553aee3",
+          "dimensions": [
+            2848,
+            4272
+          ],
+          "role": "user-supplied texture reference"
+        }
+      ],
+      "round": "D-079 user supplied real photo"
     }
   ],
   "selected_count": 5,
-  "generated_count": 10,
+  "generated_count": 12,
   "quality_edits": 3,
   "source_commit": "9873c687c3127528cb5546e3753ca34d32c23abd",
   "runtime_verified": false,
-  "status": "User KEEP composition/volume; texture candidate J5v5 TUNE awaiting feedback; other four textures not reworked",
+  "status": "J5v7 photo guided texture candidate TUNE awaiting user mockup approval",
   "texture_round": {
     "generation_calls": 2,
     "quality_edits": 1,
@@ -288,5 +370,15 @@
       "url": "https://www.guerrilla-games.com/read/nubis-evolved",
       "role": "Creator publication, not renderer execution evidence"
     }
-  ]
+  ],
+  "photo_texture_round": {
+    "generation_calls": 2,
+    "quality_edits": 1,
+    "reference": "inputs/taylor-van-riper-yQorCngxzwI-unsplash.jpg",
+    "candidate": "J5-v7",
+    "mockup_approved": false,
+    "implementation_started": false,
+    "implementation_feedback_rounds_planned": 2,
+    "implementation_feedback_rounds_completed": 0
+  }
 }

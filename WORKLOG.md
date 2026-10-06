@@ -536,3 +536,7 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 ### 2026-10-06 A 구름 목업 질감 수정
 사용자 구도/양감 만족과 질감 수정 요청 분리. NASA 사진자료/Nubis 제작자 소개 참고; 입력은 기존J5PNG뿐. v4 잔여섬유 확인 후v5 추가수정. 총2회/자체수정1, 원본8+신규2/prompt/parents/hash/1672×941 보존, gallery 전후 비교. 실제runtime/gold/GPU 미검증. D078/F049/CASE007 및 texture review 참조.
 검증: records:check 169 PASS, 10 PNG hash pin/선택5 PASS, git diff --check PASS. Remote branch f12f7205/main cfef4300 재확인. 정적 이미지 검토이며 runtime/GPU/모션 검사 없음.
+
+### 2026-10-06 첨부 실사진 기준 목업 질감 재수정 — D-079/F-050
+실사진을 직접 texture reference 입력으로 사용, J5v6→v7(초기1+자체수정1) 보존. v7 넓은음영/부드러운면/얇은띠 개선, 잔여패턴TUNE/사용자확정대기. 순서: 목업확정→실제제작→사용자제작피드백1차→수정→사용자제작피드백2차. 현재제작0/피드백0, 이번목업/AI자체수정과별도계수. 갤러리사진/v5/v7비교, 정확요청manifest보존. renderer/서고/Story/BC미변경.
+검증: records171 PASS, 12 output/사진input hash pin PASS, 선택5 PASS, diff check PASS. runtime/GPU검사 없음. Remote branch a5d21f2/main cfef4300 재확인.

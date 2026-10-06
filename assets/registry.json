@@ -2566,6 +2566,64 @@
         "A-P2 review only; not renderer"
       ],
       "review": "D-078/F-049. v5 texture candidate TUNE, user review pending. No runtime or adoption."
+    },
+    {
+      "id": "a-cloud-mockup-j5-v6",
+      "title": "J5 photo guided texture v6",
+      "kind": "concept-image",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "tool": "image_gen built-in",
+        "prompt_manifest": "verification/a-cloud-mockup-20261006/manifest.json",
+        "request": "verification/a-cloud-mockup-20261006/J5-v6-request.json"
+      },
+      "licence": "generated project concept; source provenance in manifest",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v6.png",
+        "bytes": 1953633,
+        "sha256": "75e0e068e2988cb8137ce22b2d853969cef44318d36b3bd3f1889ec5c112698d",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "used_by": [
+        "A-P2 review only; not renderer"
+      ],
+      "review": "D-079/F-050. Photo guided mockup TUNE; user approval pending, no implementation."
+    },
+    {
+      "id": "a-cloud-mockup-j5-v7",
+      "title": "J5 photo guided texture v7",
+      "kind": "concept-image",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "tool": "image_gen built-in",
+        "prompt_manifest": "verification/a-cloud-mockup-20261006/manifest.json",
+        "request": "verification/a-cloud-mockup-20261006/J5-v7-request.json"
+      },
+      "licence": "generated project concept; source provenance in manifest",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "verification/a-cloud-mockup-20261006/images/J5-side-v7.png",
+        "bytes": 1842317,
+        "sha256": "f74c01346dd519e6fc133c7c85e8fc5e8935ac0662a23c450220ce683403c1ef",
+        "dimensions": [
+          1672,
+          941
+        ]
+      },
+      "used_by": [
+        "A-P2 review only; not renderer"
+      ],
+      "review": "D-079/F-050. Photo guided mockup TUNE; user approval pending, no implementation."
     }
   ],
   "rejected": [

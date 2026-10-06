@@ -353,3 +353,6 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 
 ### 2026-10-06 사용자 질감 피드백 — D-078/F-049
 구도·양감 사용자 KEEP. 레퍼런스 자료 참고해 대표 J5 질감v4→v5 제작, 새 라운드2회/자체수정1. 질감 TUNE, 기존v3 비교/정확prompt/pin보존. 다음 대표 질감 검토→다른4종 전파→남은7→동일조건gold. renderer/서고/A-P3/Story/BC 별도. 상세 ECG_A_cloud_texture_review_2026-10-06.md.
+
+### 2026-10-06 첨부 실사진 기준 목업 질감 재수정 — D-079/F-050
+실사진을 직접 texture reference 입력으로 사용, J5v6→v7(초기1+자체수정1) 보존. v7 넓은음영/부드러운면/얇은띠 개선, 잔여패턴TUNE/사용자확정대기. 순서: 목업확정→실제제작→사용자제작피드백1차→수정→사용자제작피드백2차. 현재제작0/피드백0, 이번목업/AI자체수정과별도계수. 갤러리사진/v5/v7비교, 정확요청manifest보존. renderer/서고/Story/BC미변경.

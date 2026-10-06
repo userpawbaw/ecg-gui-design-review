@@ -1,0 +1,8 @@
+{
+  "prompt": "Input1 EDIT TARGET; input2 controlling real-photograph cloud-material reference. The first edit still looks like a wall of tightly packed foam beads. Make a clearly perceptible material correction, not a subtle retouch. Preserve input1's low camera, overall left tower silhouette, right bank, ocean gap and sun direction. Replace the TEXTURE INSIDE these macro silhouettes with the MUCH SOFTER larger merged vapor patches from the LOWER HALF of input2. Eliminate about 80 percent of the small hard individual lobule edges and bright tiny rims. Use wide soft continuous ivory/blue-gray scattering gradients across medium cloud masses; extremely subtle irregular fine detail, not many small individually lit spheres. Some soft irregular contours remain at the outer silhouette to preserve natural cumulus shape. All foreground threads, tendrils, cobwebs must vanish into diffuse nonconnected vapor edges. No surface should look furry or porous. The thin cloud in upper sky must now resemble input2's broad soft translucent streaks and diffuse veils; remove crisp interwoven wisps. Keep macro depth, layered self-shadow and warm sunlight, without making the entire scene foggy or blurred. Aim for a natural photograph from an aircraft between clouds, not maximal CGI sculpting detail. SAME landscape composition; no text, no collage.",
+  "referenced_image_paths": [
+    "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/images/J5-side-v6.png",
+    "C:/Users/J1/Documents/Codex/2026-10-03/ui-ux-1-2-wow-x20/work/repo/verification/a-cloud-mockup-20261006/inputs/taylor-van-riper-yQorCngxzwI-unsplash.jpg"
+  ],
+  "transparent_background": false
+}

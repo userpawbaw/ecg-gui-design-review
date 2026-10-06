@@ -167,3 +167,6 @@ ECG_A_cloud_distance_representation_plan_2026-10-06.md → D081/F052/O012 → WO
 
 ### 외부 구름 에셋/목업 빛 처리 검토시
 ECG_A_cloud_asset_lighting_audit_2026-10-06.md → D082 → 현재cloud-photo NOTICE/generator/shader. 무료VDB와offline 볼륨조명 기준을 먼저 검증한 뒤 거리별 웹표현. 후보페이지 확인은 다운로드/실제렌더 증거가 아님. 사용자피드백1/2 유지.
+
+### 이용 범위 — D084
+현재는 내부 검토용 시안. 새 탐색 시 24번의 현재 이용 단계 정책을 참조하고 접근 가능한 모든 품질 후보를 조사한다. 에셋별 반복 확인 없이 출처/조건/출품 전 확인·대체 목록을 유지한다.

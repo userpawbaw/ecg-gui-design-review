@@ -697,7 +697,8 @@
       "D-081",
       "D-082",
       "D-083",
-      "R-035"
+      "R-035",
+      "D-084"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
@@ -900,7 +901,15 @@
       "ready_candidate_groups": 12,
       "status": "research_ready_actual_asset_effect_trials_pending",
       "rule_entry": "25 §9 / 24 §6 / 23 §6",
-      "feedback": "user production 1/2 retained"
+      "feedback": "user production 1/2 retained",
+      "use_stage": {
+        "decision": "D-084",
+        "purpose": "internal concept review fixed by user",
+        "candidate_scope": "all accessible materials; no copyright prefilter during discovery",
+        "repeat_copyright_questions": false,
+        "provenance_required": true,
+        "exhibition_transition": "review acquisition, rights, attribution or replacement at actual exhibition transition"
+      }
     }
   }
 }

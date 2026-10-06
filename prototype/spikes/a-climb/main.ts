@@ -103,6 +103,11 @@ const lenis=new Lenis({wrapper:$('wrap'),content:$('content'),duration:reduced?.
 let targetP=0,p=0,t=0,prev=performance.now(),frame=0,playing=true,locked=false,volumeOn=true,bloomOn=true,clay=false,frozenTime:number|null=null;
 let grainOn=true,jitter=true,testFrame:number|null=null,steps=initialSteps,pathStart:number|null=null,pathDuration=8,pathReverse=false;
 lenis.on('scroll',ev=>{if(!locked)targetP=ev.progress;});
+// Return from the QA slider/path to user scrolling on real input.
+const resumeScroll=()=>{if(params.has('reviewP')||params.has('reviewPath'))return;locked=false;pathStart=null;frozenTime=null;testFrame=null;};
+addEventListener('wheel',resumeScroll,{passive:true});
+addEventListener('touchstart',resumeScroll,{passive:true});
+addEventListener('keydown',ev=>{if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(ev.key))resumeScroll();});
 const pointer={x:0,y:0,sx:0,sy:0};addEventListener('pointermove',ev=>{pointer.x=ev.clientX/W-.5;pointer.y=ev.clientY/H-.5;});
 const clayMat=new THREE.MeshStandardMaterial({color:0x777b7d,roughness:.9});
 function configure(pv:number,time:number,opts:any={}){
@@ -115,7 +120,7 @@ function configure(pv:number,time:number,opts:any={}){
  draw(0);return state();
 }
 const samples:number[]=[];
-function state(){const phase=beatPhase(loop,w.fs,t),sample=Math.floor(t*w.fs+1e-6);return{ready:true,p,t,arrival:arrival?.state(),scene:w.id,record:w.record,fs:w.fs,winner:w.winner,sample,sourceSample:loop.start+sample%(loop.end-loop.start),rAbs:Math.round(phase.prev*w.fs),rOffsets:loop.beats.map(i=>i-loop.start),beatAge:phase.sincePrev,heartScale:heart.scale.x,sharedClock:true,bodyVisible:person.visible,heartVisible:heart.visible&&person.visible,heartScreen:heart.position.clone().applyMatrix4(person.matrixWorld).project(camera).toArray(),camera:camera.position.toArray(),cameraTarget:lastTarget.toArray(),cartSocket:cartSocket.toArray(),volume:volumeOn,bloom:bloomOn,clay,aa,actualSamples,supportedSamples,smaa:!!smaa,dpr:devicePixelRatio,pixelRatio:renderer.getPixelRatio(),renderSize:renderer.getDrawingBufferSize(new THREE.Vector2()).toArray(),grain:grainOn,jitter,steps,frame:testFrame??frame,gpu:{available:!!timer,count:gpuTimes.length,p50:pct(gpuTimes,.5),p95:pct(gpuTimes,.95)},raf:{count:frameTimes.length,p50:pct(frameTimes,.5),p95:pct(frameTimes,.95)},cpuRenderMsMean:samples.reduce((a,b)=>a+b,0)/Math.max(1,samples.length),drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles};}
+function state(){const phase=beatPhase(loop,w.fs,t),sample=Math.floor(t*w.fs+1e-6);return{ready:true,scroll:{top:$('wrap').scrollTop,max:$('wrap').scrollHeight-$('wrap').clientHeight,locked,targetProgress:targetP},p,t,arrival:arrival?.state(),scene:w.id,record:w.record,fs:w.fs,winner:w.winner,sample,sourceSample:loop.start+sample%(loop.end-loop.start),rAbs:Math.round(phase.prev*w.fs),rOffsets:loop.beats.map(i=>i-loop.start),beatAge:phase.sincePrev,heartScale:heart.scale.x,sharedClock:true,bodyVisible:person.visible,heartVisible:heart.visible&&person.visible,heartScreen:heart.position.clone().applyMatrix4(person.matrixWorld).project(camera).toArray(),camera:camera.position.toArray(),cameraTarget:lastTarget.toArray(),cartSocket:cartSocket.toArray(),volume:volumeOn,bloom:bloomOn,clay,aa,actualSamples,supportedSamples,smaa:!!smaa,dpr:devicePixelRatio,pixelRatio:renderer.getPixelRatio(),renderSize:renderer.getDrawingBufferSize(new THREE.Vector2()).toArray(),grain:grainOn,jitter,steps,frame:testFrame??frame,gpu:{available:!!timer,count:gpuTimes.length,p50:pct(gpuTimes,.5),p95:pct(gpuTimes,.95)},raf:{count:frameTimes.length,p50:pct(frameTimes,.5),p95:pct(frameTimes,.95)},cpuRenderMsMean:samples.reduce((a,b)=>a+b,0)/Math.max(1,samples.length),drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles};}
  let lastTarget=new THREE.Vector3(),lastPersonVisible=true;
 function draw(dt:number){
  t=frozenTime??t;
@@ -172,9 +177,9 @@ addEventListener('keydown',ev=>{if(ev.key.toLowerCase()==='d')$('qa').style.disp
 (window as any).aPreview={set:configure,state,live:(pv:number)=>{locked=true;targetP=p=pv;frozenTime=null;testFrame=null;playing=true;return state();},path:(seconds=8,reverse=false)=>{pathStart=performance.now();pathDuration=seconds;pathReverse=reverse;locked=true;frozenTime=null;testFrame=null;t=0;playing=true;gpuTimes.length=frameTimes.length=0;return state();}};
 $('loading').remove();
 // Review-only URL harness: deterministic native-browser frames and same-engine timing.
-if(params.has('reviewP')||params.has('reviewPath')){
+if(params.has('reviewP')||params.has('reviewPath')||params.has('reviewCapture')){
  const fixed=Number(params.get('reviewP')??0),fixedTime=Number(params.get('reviewTime')??2.4);
- configure(THREE.MathUtils.clamp(Number.isFinite(fixed)?fixed:0,0,1),Number.isFinite(fixedTime)?fixedTime:2.4,{frame:12,grain:false,bloom:params.get('bloom')!=='0',cloudShadow:params.get('cloudShadow')!=='0',thick:params.get('thick')!=='0',thin:params.get('thin')!=='0'});
+ if(!params.has('reviewCapture'))configure(THREE.MathUtils.clamp(Number.isFinite(fixed)?fixed:0,0,1),Number.isFinite(fixedTime)?fixedTime:2.4,{frame:12,grain:false,bloom:params.get('bloom')!=='0',cloudShadow:params.get('cloudShadow')!=='0',thick:params.get('thick')!=='0',thin:params.get('thin')!=='0'});
  const save=document.createElement('button');save.textContent='프레임 저장';save.id='review-save';save.style.cssText='position:fixed;right:16px;top:16px;z-index:99;padding:8px 14px;background:#121a20;color:white;border:1px solid #46515a';
  const saveFrame=async()=>{draw(0);const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'manual',shot:params.get('reviewShot')||('frame-'+Math.round(p*1000)),image:renderer.domElement.toDataURL('image/png'),meta:{renderer:(()=>{const e=gl.getExtension('WEBGL_debug_renderer_info');return e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null;})(),state:state(),url:location.href}})});if(!response.ok)throw Error(await response.text());save.textContent='프레임 저장 완료';console.info('CLOUD_REVIEW_SAVED '+await response.text());};
  save.onclick=()=>void saveFrame().catch(console.error);document.body.append(save);if(params.has('reviewShot'))requestAnimationFrame(()=>requestAnimationFrame(()=>void saveFrame().catch(console.error)));

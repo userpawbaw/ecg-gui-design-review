@@ -1,0 +1,127 @@
+{
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "scroll": {
+      "top": 0,
+      "max": 5834,
+      "locked": false,
+      "targetProgress": 0
+    },
+    "p": 0,
+    "t": -0.01655799999962744,
+    "arrival": {
+      "model": "Bruneton LUT + REMA + world density",
+      "cloudModel": {
+        "model": "v1"
+      },
+      "cloudLayersTrial": false,
+      "cloudSculptTrial": false,
+      "cloudPhotoTrial": false,
+      "cloudFeedbackTrial": false,
+      "terrain": {
+        "source": "REMA v2 1km EPSG3031",
+        "heightExaggeration": 5,
+        "polarDisplayInfillMetres": 2666.6238050085353,
+        "vertices": 99009
+      },
+      "specular": 1,
+      "atmosphere": true,
+      "flare": true,
+      "cloud": true,
+      "cloudShadow": 1,
+      "sunUV": [
+        -0.34291694413106677,
+        1.5150653198435888
+      ],
+      "strength": 0.9,
+      "sunDirection": [
+        -0.7291745568426314,
+        0.6293927753799555,
+        0.2686432577841274
+      ]
+    },
+    "scene": "d0-mixed-0",
+    "record": "S022",
+    "fs": 250,
+    "winner": "M08",
+    "sample": -5,
+    "sourceSample": 52,
+    "rAbs": -134,
+    "rOffsets": [
+      75,
+      282,
+      487,
+      678,
+      883,
+      1085,
+      1285,
+      1487,
+      1675,
+      1880,
+      2083
+    ],
+    "beatAge": 0.5194420000003726,
+    "heartScale": 1.0001552704085304,
+    "sharedClock": true,
+    "bodyVisible": false,
+    "heartVisible": false,
+    "heartScreen": [
+      0.49431702995267596,
+      0.5563725042449718,
+      0.9940572470542214
+    ],
+    "camera": [
+      0,
+      -0.12,
+      3.1
+    ],
+    "cameraTarget": [
+      -0.4,
+      0.14,
+      0
+    ],
+    "cartSocket": [
+      -1.29,
+      0.88,
+      -3.9
+    ],
+    "volume": true,
+    "bloom": true,
+    "clay": false,
+    "aa": "msaa",
+    "actualSamples": 4,
+    "supportedSamples": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "smaa": false,
+    "dpr": 1,
+    "pixelRatio": 1,
+    "renderSize": [
+      1116,
+      884
+    ],
+    "grain": true,
+    "jitter": true,
+    "steps": 96,
+    "frame": 2,
+    "gpu": {
+      "available": false,
+      "count": 0,
+      "p50": null,
+      "p95": null
+    },
+    "raf": {
+      "count": 1,
+      "p50": -16.55799999962744,
+      "p95": -16.55799999962744
+    },
+    "cpuRenderMsMean": 664.9000000003725,
+    "drawCalls": 26,
+    "triangles": 342926
+  },
+  "url": "http://127.0.0.1:4198/?reviewCapture=1&reviewRound=feedback1-scroll&reviewShot=manual-room"
+}

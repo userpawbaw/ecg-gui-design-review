@@ -858,17 +858,17 @@
         "mockup_approved": false,
         "implementation_started": true,
         "implementation_feedback_rounds_planned": 2,
-        "implementation_feedback_rounds_completed": 0
+        "implementation_feedback_rounds_completed": 1
       },
-      "next": "implementation user feedback 1, revise, feedback 2; failure triggers two fallback productions"
+      "next": "far appearance design first; proposed far texture / selected mid 2.5D / near required volume, then revised candidate and user feedback2; failure triggers two fallback productions"
     },
     "arrival_cloud_photo": {
-      "status": "initial_implemented_visual_FAIL_TUNE_user_feedback1_pending",
+      "status": "feedback1_received_quality_REJECT_distance_representation_plan_recommended",
       "route": "?cloudModel=photo",
       "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_photo_production_review_2026-10-06.md",
       "evidence": "verification/a-cloud-photo-20261006",
       "internal_quality_edits": 3,
-      "user_feedback_rounds_completed": 0,
+      "user_feedback_rounds_completed": 1,
       "user_feedback_rounds_planned": 2,
       "fallback_trigger": "failure after second user implementation feedback",
       "fallbacks": [
@@ -878,7 +878,12 @@
       "default_adopted": false,
       "runtime_verified": true,
       "visual_fidelity": "FAIL/TUNE",
-      "gpu_timing_verified": false
+      "gpu_timing_verified": false,
+      "distance_plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_distance_representation_plan_2026-10-06.md",
+      "distance_representation_implemented": false,
+      "scroll_fixed": true,
+      "scroll_evidence": "verification/a-cloud-distance-20261006/feedback1-scroll/manual-room.json",
+      "global_feedback1_trial": "unadopted, stopped after initial+1; flat patches/grid texture remain; user requested alternate distance-based ideas"
     }
   }
 }

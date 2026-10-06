@@ -255,3 +255,27 @@ Cycles 장치실제목록 검사/CPU fallback명시. 사용자앱/driver reset �
 
 ### 재발 방지와 자동화 상태
 GPUflag/device목록/renderer/vendor/실측query를 분리. source/asset pin과 scope 포함 metrics를 자동 생성. hardware timing/정역영상 재개는 미완. 일반 renderer 성공을 목표장치 성능으로 확대하지 않는다. 기존 R034 증거범위 규칙 적용, 새 R 없음.
+
+## O-012. 고정 canvas stage가 스크롤 wrapper의 입력을 가로막음
+
+| | |
+|---|---|
+| 시점 | 2026-10-06 |
+| 상태 | 해결 / 실제 휠 경로 확인 |
+| 연결 | F-052, D-081 |
+| 원인 | #wrap의형제인fixed #stage/gl이휠hit대상,wrapper이벤트경로밖 |
+
+### 증상
+첫화면위에서휠을움직여도wrapperTop0이며다음장면확인불가.
+
+### 원인
+ [코드][캡처] fixed #stage/gl이 #wrap의 형제이므로 wrapper에 바인딩된 스크롤 입력을 받지 못했다.
+
+### 조치
+#stage pointer-events:none,QA/loading auto. 실제입력에서QA lock해제. reviewCapture로고정progress없이실제움직임증거저장.
+
+### 검증과 한계
+native wheel: content hit/scrollTop1254→3914/서고및심장파형도달. fixedset/path결과와분리. 구름질감/연출완성도성공은아님.
+
+### 재발 방지와 자동화 상태
+고정프레임/harness검증외에실제휠로첫화면→서고왕복경로를검증한다.

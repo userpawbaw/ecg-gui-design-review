@@ -546,3 +546,7 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 
 D080 실제제작 결과: 새128³밀도/f16cache/비주기변형/fullresolution144sample/photo opt-in. initial+3자체보완종료. build57modules/nativeRTX3070 1280×720 기능확인, archive.55RGB0/R883공통clock, 시각FAIL/TUNE. GPUtimer unavailable/영상미녹화/targetPC미검증. 사용자피드백0/2, 다음1차. 초기EPERM과임시GLSL7.5.오류복구,최종새탭error없음.
 최종검증: records173 PASS, source/capture/asset pins PASS, diff check PASS. 최종19 native프레임, 8초정역unrecorded endpoint 확인. Remote branch efa024b/main cfef4300 재확인. Vite4198 session63553 유지. 사용자피드백0/2.
+
+### 2026-10-06 제작 피드백1차·거리/영역별 구름 우회 — D081/F052/O012
+사용자피드백1/2. 스크롤고장fixedstage hit경로재현/수정/realwheel서고도달. 우주시점부터평면·이상질감문제를전역volume추가튜닝으로해결하지못해거리별설계제안에따라중단. far texture/mid2.5D/near통과군집필요부피추천, 새LOD혼합미구현. 다음우주시점만appearance확인→확대영역/국소조형/인계검증→사용자2차. 2차실패시D080두fallback제작비교. 상세 ECG_A_cloud_distance_representation_plan_2026-10-06.md.
+확인: 실제wheel top0재현→1254/3914관찰→저장4420/max5834,p.7576,lockedfalse/서고도달. build58modules PASS, records176 PASS,source/capturepins PASS,diffcheck PASS. 원거리혼합표현미구현/1차피드백1/2. Remote203e5f4/maincfef4300 확인.

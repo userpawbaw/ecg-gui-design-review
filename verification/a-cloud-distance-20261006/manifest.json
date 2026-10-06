@@ -1,0 +1,60 @@
+{
+  "stage": "scroll fixed; distance proposal only; global volume trial stopped/not adopted",
+  "user_feedback_count": 1,
+  "feedback_total": 2,
+  "distance_representation_implemented": false,
+  "pins": {
+    "verification/a-cloud-distance-20261006/feedback1-initial/globe.png": {
+      "bytes": 1312425,
+      "sha256": "6729fe9deff8397c68b6d7f7314966cbe3c3b927e5097392906e8a934548982c"
+    },
+    "verification/a-cloud-distance-20261006/feedback1-scroll/manual-room.png": {
+      "bytes": 1351268,
+      "sha256": "259aca172265dfb47b2397d8fd40a2112c731450c262f9b0a4c7c891e6e5bad4"
+    },
+    "verification/a-cloud-distance-20261006/feedback1-tune1/globe-no-cloud.png": {
+      "bytes": 467947,
+      "sha256": "80fa21e3cf989101cc5733a6e5893d3a1644c45e6359e4f09ef2b741678535d0"
+    },
+    "verification/a-cloud-distance-20261006/feedback1-tune1/globe.png": {
+      "bytes": 1312425,
+      "sha256": "6729fe9deff8397c68b6d7f7314966cbe3c3b927e5097392906e8a934548982c"
+    },
+    "verification/a-cloud-distance-20261006/manifest.json": {
+      "bytes": 2432,
+      "sha256": "7f4152e22e6587577d6d1b8aa2be3324d9934c2443cddcf13525ec545ceafb7b"
+    },
+    "verification/a-cloud-distance-20261006/feedback1-initial/globe.json": {
+      "bytes": 2555,
+      "sha256": "42b2b08afcfdd04c4c7bf96ecbdf3ec5ab0da2f23192aa67009880a18f55d678"
+    },
+    "verification/a-cloud-distance-20261006/feedback1-scroll/manual-room.json": {
+      "bytes": 2543,
+      "sha256": "a1d875dcba2af0390c5928c0437b8144607894473b17dcb2bf75609d1d952b58"
+    },
+    "verification/a-cloud-distance-20261006/feedback1-tune1/globe-no-cloud.json": {
+      "bytes": 2678,
+      "sha256": "490d7fff9ab1118b91fa6f63776df969ee6335d41260d9ed762bcd20facd152a"
+    },
+    "verification/a-cloud-distance-20261006/feedback1-tune1/globe.json": {
+      "bytes": 2554,
+      "sha256": "73819a1b5a2571e676462fce0a3e9cb29335dea83bd0b3acb4cde40980816d6f"
+    },
+    "prototype/spikes/a-climb/main.ts": {
+      "bytes": 21785,
+      "sha256": "44293d3d2f776cd8905fabd945809e3d213e1b226a680af30c0de6bd26048c96"
+    },
+    "prototype/spikes/a-climb/style.css": {
+      "bytes": 683,
+      "sha256": "4bcbd72e6d3551590975978d687f01982ad07f98393838f6d9b160117bed4904"
+    },
+    "prototype/spikes/a-climb/arrival.ts": {
+      "bytes": 13059,
+      "sha256": "0b4d845dff607413940bbb53e14c0b9010170b04fa5c88a3f628f4061b61169a"
+    },
+    "prototype/spikes/a-climb/planet-cloud-feedback.ts": {
+      "bytes": 6521,
+      "sha256": "f8846c4fd776d037996c3485ffe8d4137bb99c10b743a3f6bbfe626fb6e4a1ef"
+    }
+  }
+}

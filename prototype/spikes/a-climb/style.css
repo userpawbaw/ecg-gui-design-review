@@ -1,4 +1,8 @@
 body{font-family:'Pretendard Variable',Pretendard,'Malgun Gothic',sans-serif}
+/* The fixed visual layer must not intercept wheel input intended for #wrap. */
+#stage{pointer-events:none}
+#qa,#loading{pointer-events:auto}
+#wrap{overscroll-behavior:none;touch-action:pan-y}
 #labels h2{color:#eac08a;font-weight:450;font-size:clamp(25px,2.8vw,54px);letter-spacing:-1.8px;margin-top:15px}
 #labels{padding-bottom:20px;border-bottom:1px solid #b57b4050;width:47%;text-shadow:0 0 26px #ed982024}
 #labels small{color:#baa991;font:11px Consolas,monospace;letter-spacing:2.6px}

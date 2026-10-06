@@ -159,3 +159,6 @@ ECG_A_cloud_texture_review_2026-10-06.md → verification/a-cloud-mockup-2026100
 
 ### 실제 구름 제작·두 차례 피드백 진행시
 ECG_A_cloud_photo_production_review_2026-10-06.md → verification/a-cloud-photo-20261006/gallery.html/metrics.json → D080/F051 → WORK_STATE.arrival_cloud_photo. 내부수정3과사용자피드백0/2를별도계수. 두차례후실패에서만구름제거/AI영상두대안비교발동.
+
+### 거리별 구름 우회·스크롤 문제 작업시
+ECG_A_cloud_distance_representation_plan_2026-10-06.md → D081/F052/O012 → WORK_STATE.arrival_cloud_photo. 사용자1/2와추가아이디어를같은1차피드백으로처리. far/mid/near미구현상태,중단trial과구분.

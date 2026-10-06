@@ -361,3 +361,6 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 사용자 제작 승인. J5v7/첨부사진 기준 cloudModel=photo 후보제작, 새128³density/fixed-sun cache/광역인계/광학 검증. 사용자피드백0/2(내부수정별도). 제작→피드백1차→수정→2차. 2차후실패면①구름제거전이②AI생성구름영상전이를모두제작하고동일조건퀄리티비교후높은퀄리티로변경. 실패판정은현재미발생;대안조건부,AI영상생성도구/결과미확보. 서고KEEP/A-P3/Story/BC별도.
 
 D080 체크포인트: photo 후보 실제제작/57module build/native정적검증 완료. 시각FAIL·TUNE, 사용자제작피드백1차대기0/2. 상세 ECG_A_cloud_photo_production_review_2026-10-06.md 및 verification/a-cloud-photo-20261006/gallery.html. 다음 사용자1차반영→2차→실패면두대안제작비교.
+
+### 2026-10-06 제작 피드백1차·거리/영역별 구름 우회 — D081/F052/O012
+사용자피드백1/2. 스크롤고장fixedstage hit경로재현/수정/realwheel서고도달. 우주시점부터평면·이상질감문제를전역volume추가튜닝으로해결하지못해거리별설계제안에따라중단. far texture/mid2.5D/near통과군집필요부피추천, 새LOD혼합미구현. 다음우주시점만appearance확인→확대영역/국소조형/인계검증→사용자2차. 2차실패시D080두fallback제작비교. 상세 ECG_A_cloud_distance_representation_plan_2026-10-06.md.

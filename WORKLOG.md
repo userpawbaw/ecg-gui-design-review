@@ -572,3 +572,6 @@ JangaFX10종 원본 획득·hash/조건/metadata 고정, Cycles4.5.3/RTX3070Opti
 
 ### 2026-10-07 Moto 실제 에셋/빛·북반구 경로 검토 — D087/F055
 활성source/liveEdge/텍스처4K3종·구체64²/낮밤mix/2스크롤캡처 재확인. 남반구제작비최적화의도근거없음. 북반구육지anchor우선·남미대안5구도비교추천. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_moto_earth_northern_route_review_2026-10-07.md. 현재runtime/경로/자산재사용미변경,서고·구름형태KEEP/제작피드백1/2 유지.
+
+### 2026-10-07 Moto 자산 실제 확보·반구 경로 렌더 — D088/F056
+4K 공개 텍스처3종 pin/registry test-only. 북유럽·남미 각5구도+기존map2장 Cycles/OptiX 실제12PNG. 초기 topdown와 target 이탈 수정/보존. center-ray/hash/dimension검증PASS, 가까운4K지표 REJECT/지역자료 필요, VDB배치·빛TUNE. 갤러리 verification/a-earth-routes-20261007/gallery.html. 원작pixel재현/웹성능/지역DEM/서고전체접합미검증. 기본runtime·서고KEEP/피드백1/2 유지.

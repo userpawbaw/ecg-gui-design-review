@@ -708,7 +708,7 @@
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Compare Moto day/night/bump/light appearance and northern land-anchored route versus southern South-America route in five key views; then regional detail assets and accepted VDB handoff. Default runtime unchanged; user feedback1/2.",
+    "next": "Acquire northern regional imagery/DEM for Norway anchor; refine camera-up, night-to-day lighting and distance handoff; then accepted VDB cloud scale/optics plus archive integration. Runtime unchanged; user feedback1/2.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -932,9 +932,11 @@
       "moto_earth": {
         "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_moto_earth_northern_route_review_2026-10-07.md",
         "evidence": "verification/moto-earth-audit-20261007",
-        "status": "active_source_loaded_assets_and_live_two_frames_verified",
-        "route": "northern land anchor recommended, northern/southern five-frame comparison pending, no hemisphere adopted",
-        "asset_reused": false
+        "status": "public maps acquired/pinned; 12 isolated rendered frame comparisons verified; close-up quality insufficient",
+        "route": "North appearance prioritized for next production trial; final hemisphere not adopted, regional data pending",
+        "asset_reused": true,
+        "trial": "verification/a-earth-routes-20261007/gallery.html",
+        "trial_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_earth_routes_trial_2026-10-07.md"
       }
     }
   }

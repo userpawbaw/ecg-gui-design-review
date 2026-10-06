@@ -2786,6 +2786,75 @@
         "scripts/assets/render-cloud-vdb.py"
       ],
       "review": "D-085 isolated external-asset optical trial; no runtime adoption; actual user production feedback1/2 retained"
+    },
+    {
+      "id": "moto-earth-day-20261007",
+      "title": "Moto public Earth day texture",
+      "kind": "texture",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://www.moto-card.com/",
+        "url": "https://cdn.prod.website-files.com/6a4002cce4ba0d72bb35a7fc/6a418ffc9ea227a7c2e11171_day_2.webp"
+      },
+      "licence": "unknown",
+      "attribution_required": null,
+      "original": {
+        "file": "assets/source/moto-reference-20261007/day.webp",
+        "bytes": 314824,
+        "sha256": "d934e6257b5cc2cd9c4cf9c80bc571209ce08884f2a3b5aac52df2dbb9685b9a"
+      },
+      "processed": null,
+      "used_by": [
+        "scripts/assets/render-earth-routes.py"
+      ],
+      "review": "D-084 internal concept use; D-088 independent frame trial. No exhibition rights clearance or authorship inferred."
+    },
+    {
+      "id": "moto-earth-night-20261007",
+      "title": "Moto public Earth night texture",
+      "kind": "texture",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://www.moto-card.com/",
+        "url": "https://cdn.prod.website-files.com/6a4002cce4ba0d72bb35a7fc/6a418ffc55c6edeb67368418_night_2.webp"
+      },
+      "licence": "unknown",
+      "attribution_required": null,
+      "original": {
+        "file": "assets/source/moto-reference-20261007/night.webp",
+        "bytes": 185610,
+        "sha256": "5e453b1bf8abc83e3139e26adf9f9b1ff64587fa3008e847504ce576e2b5ad6b"
+      },
+      "processed": null,
+      "used_by": [
+        "scripts/assets/render-earth-routes.py"
+      ],
+      "review": "D-084 internal concept use; D-088 independent frame trial. No exhibition rights clearance or authorship inferred."
+    },
+    {
+      "id": "moto-earth-bump-20261007",
+      "title": "Moto public Earth bump texture",
+      "kind": "texture",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://www.moto-card.com/",
+        "url": "https://cdn.prod.website-files.com/6a4002cce4ba0d72bb35a7fc/6a418ffc495223e0854f7b13_clouds_2.webp"
+      },
+      "licence": "unknown",
+      "attribution_required": null,
+      "original": {
+        "file": "assets/source/moto-reference-20261007/bump.webp",
+        "bytes": 565976,
+        "sha256": "b77e3cbcf86eedf2026ddf796cd8012f77a53173d6f19141621b3e6741378297"
+      },
+      "processed": null,
+      "used_by": [
+        "scripts/assets/render-earth-routes.py"
+      ],
+      "review": "D-084 internal concept use; D-088 independent frame trial. No exhibition rights clearance or authorship inferred."
     }
   ],
   "rejected": [

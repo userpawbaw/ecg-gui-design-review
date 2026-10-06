@@ -1494,3 +1494,23 @@ Moto 64×64sphere/4Kday-night-bump3장,night*.95최종mix/roughness.25-.35/bumpn
 
 ### 놓쳤다면
 잘보이는극지질감을고밀도빙하지형에셋으로오인하고이미많은mesh만늘려빛·nightmap조합을놓쳤을것이다.
+
+## F-056. 원작 4K 자산도 궤도 확대에서는 지역 지표 자료를 대체하지 못함
+
+| | |
+|---|---|
+| 발견 | 2026-10-07 [렌더] [코드] |
+| 상태 | 실제 자산/12프레임 확인, 확대 품질 REJECT |
+| 연결 | D-088, CASE-007 |
+
+### 발단
+사용자가 Moto 참고와 반구 경로 비교의 실제 진행을 승인했다.
+
+### 먼저 의심한 것과 배제 방법
+Moto 공개 maps3종 실제 pin, 기존 maps와 같은 Blender 번역 재질/빛 비교. 원작 자체 shader와 비교하지 않음. 북유럽/남미5시점. 수직 camera 및 target 이동의 바다 이탈을 실제 렌더로 확인하고 camera 위치 이동/target 고정으로 수정했다.
+
+### 결정적 근거
+verification/a-earth-routes-20261007의12PNG/manifest/hash/dimension/center-ray. 원형 북반구 극지/도시 구성이 읽히나 근접4K색상·city는 큰 texel로 뭉개진다. 구름 군집도 지역 scale/빛 TUNE. 이전 실패 frame 보존. 실제 연속 애니메이션과 regionalDEM은 미제작.
+
+### 놓쳤다면
+원작 에셋 교체와 북반구 선택만으로 근접 품질이 해결되었다고 판단하고 지역 imagery/DEM·빛/거리 인계를 놓쳤을 것이다.

@@ -1,0 +1,75 @@
+{
+  "use_stage": "internal concept D084",
+  "sources": [
+    {
+      "role": "day",
+      "url": "https://cdn.prod.website-files.com/6a4002cce4ba0d72bb35a7fc/6a418ffc9ea227a7c2e11171_day_2.webp",
+      "file": "assets/source/moto-reference-20261007/day.webp",
+      "bytes": 314824,
+      "sha256": "d934e6257b5cc2cd9c4cf9c80bc571209ce08884f2a3b5aac52df2dbb9685b9a",
+      "dimensions": [
+        4096,
+        2048
+      ]
+    },
+    {
+      "role": "night",
+      "url": "https://cdn.prod.website-files.com/6a4002cce4ba0d72bb35a7fc/6a418ffc55c6edeb67368418_night_2.webp",
+      "file": "assets/source/moto-reference-20261007/night.webp",
+      "bytes": 185610,
+      "sha256": "5e453b1bf8abc83e3139e26adf9f9b1ff64587fa3008e847504ce576e2b5ad6b",
+      "dimensions": [
+        4096,
+        2048
+      ]
+    },
+    {
+      "role": "bump",
+      "url": "https://cdn.prod.website-files.com/6a4002cce4ba0d72bb35a7fc/6a418ffc495223e0854f7b13_clouds_2.webp",
+      "file": "assets/source/moto-reference-20261007/bump.webp",
+      "bytes": 565976,
+      "sha256": "b77e3cbcf86eedf2026ddf796cd8012f77a53173d6f19141621b3e6741378297",
+      "dimensions": [
+        4096,
+        2048
+      ]
+    }
+  ],
+  "rejected_originals": "assets/source/earth-route-rejected-{topdown-v1,horizon-v2}",
+  "method": "Same translated Blender material/lighting for both map sets; not old-runtime versus new-runtime. Moto blue channel not blended into base white cloud color: partial material translation. No new DEM or regional imagery yet.",
+  "other_inputs": [
+    {
+      "file": "prototype/spikes/a-climb/assets/earth/day.webp",
+      "bytes": 1025958,
+      "sha256": "5530bcfad9960592a10fdc5991de5ff378bf5ab4fa8154f60264880563bf5192"
+    },
+    {
+      "file": "prototype/spikes/a-climb/assets/earth/relief.webp",
+      "bytes": 872410,
+      "sha256": "702600e97f18bfab2a5feaf9093ffd5d81f4bd427ee4f94dceeada9a28273d54"
+    },
+    {
+      "file": "prototype/v2/src/story/intro/assets/earth_night.jpg",
+      "bytes": 191271,
+      "sha256": "df180aa86e8efe552a018444ae9d2acdb2dd3e36bb6d79cdf49a50e8386b09d8"
+    },
+    {
+      "file": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_01_variant_0000.vdb",
+      "bytes": 17468785,
+      "sha256": "c91381781adc353f26a25d6cb6c9e254f47b89db04d2e99d289ae0e7d545945c"
+    },
+    {
+      "file": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "bytes": 18832787,
+      "sha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee"
+    }
+  ],
+  "cloud_optics": {
+    "density": 400,
+    "max_extent_earth_radii": 0.005,
+    "sun_energy": 4,
+    "sky_fill_strength": 0.35,
+    "anisotropy": 0.45,
+    "note": "diagnostic parameters, not continuity-approved physical sky"
+  }
+}

@@ -377,3 +377,6 @@ D080 체크포인트: photo 후보 실제제작/57module build/native정적검�
 
 ### 2026-10-06 외부 VDB 실제 조달·광학 시험 — D085/F053
 JangaFX10종 원본 획득·hash/조건/metadata 고정, Cycles4.5.3/RTX3070OptiX survey10장+선별3종3구도+광학기여 분리. 조달/렌더PASS·시각TUNE. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_vdb_optical_trial_2026-10-06.md. 다음06기반 넓은층/01통로/10국소옆면+권운→빛보정→웹 국소변환 또는 경로베이크 비교→전체전이 후보 사용자2차. 현재runtime미채택/서고KEEP/피드백1/2 유지.
+
+### 2026-10-07 구름형태KEEP·지표거리별디테일계획 — D086/F054
+사용자VDB모양만족 기록; 전체광학/군집인계TUNE와분리. 현재global4K/REMA1km/고정mesh·default경로/남극자료불일치 감사와공식NASA/PGC/Cesium/3DTiles자료확인. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_earth_detail_distance_plan_2026-10-07.md. 다음camerafootprint/목적지정합→지역crop/DEM/재질대표비교→승인VDB와거리인계. 새지형다운로드/runtime변경없음, 사용자제작피드백1/2 유지.

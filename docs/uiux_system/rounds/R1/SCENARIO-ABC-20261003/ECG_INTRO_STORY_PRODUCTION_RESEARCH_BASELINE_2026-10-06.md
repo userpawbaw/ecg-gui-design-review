@@ -197,3 +197,7 @@ God Rays는 실제 volume 산란의 대체품으로 자동 분류하지 않는�
 ## 실제 시험 후속 — D085
 
 Q01/JangaFX: 다운로드·VDB 불러오기·10종/3종3시점 Cycles 실제 렌더 완료. 원본 metadata/hash/조건 보존. [광학 시험 검토](ECG_A_cloud_vdb_optical_trial_2026-10-06.md). 조사표의 취득 전 상태는 과거 조사 시점이며 이 후속으로 갱신한다. 시각TUNE, 전체 지구/구름층·웹미채택.
+
+## 지구 확대 후속 — D086
+
+[지역 지형·거리별 인계](ECG_A_earth_detail_distance_plan_2026-10-07.md). 사용자VDB형태KEEP, 근거리/먼거리구름과지표해상도조화요구. 확대지역/REMA패치정합과지역색상·고도·재질자료를먼저검토한다.

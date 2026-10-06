@@ -1,0 +1,69 @@
+{
+  "scope": "default route, t=0, unit sphere analytical center-ray only; no sculpt/photo route, displacement or viewport footprint evaluation",
+  "frames": [
+    {
+      "p": 0.245,
+      "altitude_km": 935.0255037655202,
+      "subcamera_latitude_deg": 15.153164089488195,
+      "center_hit_latitude_deg": 13.745466711180896,
+      "near_plane_km": 159
+    },
+    {
+      "p": 0.28,
+      "altitude_km": 385.548300427437,
+      "subcamera_latitude_deg": 15.153164089488195,
+      "center_hit_latitude_deg": null,
+      "near_plane_km": 159
+    },
+    {
+      "p": 0.3,
+      "altitude_km": 98.4744962344801,
+      "subcamera_latitude_deg": 15.153164089488195,
+      "center_hit_latitude_deg": null,
+      "near_plane_km": 159
+    },
+    {
+      "p": 0.315,
+      "altitude_km": 15.9,
+      "subcamera_latitude_deg": 15.153164089488198,
+      "center_hit_latitude_deg": 15.080759106656176,
+      "near_plane_km": 159
+    }
+  ],
+  "global_color_size": [
+    4096,
+    2048
+  ],
+  "equatorial_km_per_texel": 9.756117810952677,
+  "antarctic_height_source_spacing_m": 1000,
+  "antarctic_grid": [
+    2048,
+    512
+  ],
+  "antarctic_mesh_segments": [
+    512,
+    192
+  ],
+  "antarctic_coverage_latitude_deg": [
+    -90,
+    -60
+  ],
+  "sources": [
+    {
+      "file": "prototype/spikes/a-climb/arrival.ts",
+      "sha256": "0b4d845dff607413940bbb53e14c0b9010170b04fa5c88a3f628f4061b61169a"
+    },
+    {
+      "file": "prototype/spikes/a-climb/planet-terrain.ts",
+      "sha256": "0cacf90a8455d052e1a690a21c2112798ad8464d58c109fe1ad711cd9bb9e956"
+    },
+    {
+      "file": "prototype/spikes/a-climb/assets/earth/manifest.json",
+      "sha256": "9afb7ccac0a90e7295ccfa1b8466fb48a87fd0e68961c3cfb207f38aafbef037"
+    },
+    {
+      "file": "prototype/spikes/a-climb/assets/planet-v2/manifest.json",
+      "sha256": "1c319d2e2c1a002d2d7d25ecfba58ec65712ac7b4b8e7850afadbede40b9ceb8"
+    }
+  ]
+}

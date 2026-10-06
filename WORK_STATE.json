@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "external_VDB_acquired_Cycles_optical_trial_complete_visual_TUNE_runtime_unadopted",
+    "status": "VDB_shape_user_KEEP_earth_regional_detail_plan_ready_runtime_pending",
     "records": [
       "D-065",
       "D-066",
@@ -700,11 +700,13 @@
       "R-035",
       "D-084",
       "D-085",
-      "F-053"
+      "F-053",
+      "D-086",
+      "F-054"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Build broad cloud groups and thin layer/entry gap with selected external VDB, tune optical reference then compare local web conversion versus path bake; no far-globe volume inflation. User feedback1/2, archive KEEP, A-P3/Story/BC deferred.",
+    "next": "Lock zoom-region/camera footprint and regional data alignment; same-view global map vs regional imagery/DEM/material trial, then distance cloud/terrain handoff with accepted VDB shape. Production feedback1/2 retained.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -917,7 +919,13 @@
         "evidence": "verification/a-cloud-vdb-20261006",
         "asset": "jangafx-cloud-pack-vdb-20261006",
         "status": "acquisition_import_offline_render_PASS_visual_TUNE",
-        "runtime_adopted": false
+        "runtime_adopted": false,
+        "shape_user_verdict": "KEEP: user satisfied with cloud shape 2026-10-07; lighting/grouping/handoff not blanket approved"
+      },
+      "terrain_detail": {
+        "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_earth_detail_distance_plan_2026-10-07.md",
+        "evidence": "verification/a-earth-detail-20261007/source-audit.json",
+        "status": "source_analytical_audit_and_regional_asset_plan_complete_runtime_unmodified"
       }
     }
   }

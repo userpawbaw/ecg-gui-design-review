@@ -1454,3 +1454,23 @@ VDB 존재가 자연스러운질감·목업 조명을 보장하는지 같은 카
 
 ### 놓쳤다면
 외부 에셋 이름과 render 성공을 곧바로 원거리/근접 품질 PASS로 기록하고 같은 원거리 배치 실패를 반복했을 것이다.
+
+## F-054. 확대 지역과 남극 고도 패치가 현재 기본 경로에서 일치하지 않음
+
+| | |
+|---|---|
+| 발견 | 2026-10-07 [코드] [테스트] |
+| 상태 | source/이상구면계산 확인 / 실제viewport·시각 원인 미검증 |
+| 연결 | D-086, CASE-007 |
+
+### 발단
+사용자 지구확대시지표뭉개짐과지역에셋 필요성 질문.
+
+### 먼저 의심한 것과 배제 방법
+실제이미지크기/manifest/geometry/REMA source와camera변환 감사. t0/defaultunit-sphere center-ray계산을별도저장하여인상만으로소스문제단정하지않음.
+
+### 결정적 근거
+4개earthmap4096×2048; REMA1km→2048×512/남위60–90cap. default p.245/.315 centerhit북위13.75/15.08, subcamera북위15.15. p.28/.30 center미교차; near159km/종점고도15.9km clipping검토필요. sourcehash/조건 verification/a-earth-detail-20261007/source-audit.json. sculpt/photo별도경로·실제viewport·height는계산범위밖.
+
+### 놓쳤다면
+확대하지않는남극에만고해상도타일을추가하고다른지역의저해상도globalmap 확대를그대로유지했을것이다.

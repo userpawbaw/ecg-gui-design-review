@@ -1,0 +1,26 @@
+{
+  "frames": 19,
+  "ready": true,
+  "renderers": [
+    "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  ],
+  "archive_meanRGB": 0.0,
+  "ablation_meanRGB": {
+    "shadow-off": 10.102717013888888,
+    "thin-off": 4.640673828125,
+    "bloom-off": 0.0
+  },
+  "heart_r883": {
+    "sample": 883,
+    "rAbs": 883,
+    "sharedClock": true,
+    "heartScale": 1.07,
+    "beatAge": 0
+  },
+  "visual_fidelity": "FAIL/TUNE; broad solid lobes, insufficient natural vapor detail/field depth and grazing light; .275 gray veil",
+  "gpu_timing": "UNVERIFIED; GPU renderer identified, timer unavailable",
+  "motion_video": "not recorded",
+  "internal_quality_edits": 3,
+  "user_feedback_completed": 0,
+  "user_feedback_planned": 2
+}

@@ -818,7 +818,7 @@
     },
     "arrival_cloud_reference_research": {
       "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_orbit_cloud_reference_plan_2026-10-06.md",
-      "status": "photo_guided_J5v7_mockup_TUNE_awaiting_user_approval",
+      "status": "user_authorized_photo_target_implementation_initial_TUNE",
       "recommended_scene_frames": 8,
       "recommended_detail_frames": 4,
       "new_images_generated": true,
@@ -856,11 +856,29 @@
         "reference": "inputs/taylor-van-riper-yQorCngxzwI-unsplash.jpg",
         "candidate": "J5-v7",
         "mockup_approved": false,
-        "implementation_started": false,
+        "implementation_started": true,
         "implementation_feedback_rounds_planned": 2,
         "implementation_feedback_rounds_completed": 0
       },
-      "next": "User approves mockup texture, then implementation and two user feedback rounds; preserve archive KEEP"
+      "next": "implementation user feedback 1, revise, feedback 2; failure triggers two fallback productions"
+    },
+    "arrival_cloud_photo": {
+      "status": "initial_implemented_visual_FAIL_TUNE_user_feedback1_pending",
+      "route": "?cloudModel=photo",
+      "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_photo_production_review_2026-10-06.md",
+      "evidence": "verification/a-cloud-photo-20261006",
+      "internal_quality_edits": 3,
+      "user_feedback_rounds_completed": 0,
+      "user_feedback_rounds_planned": 2,
+      "fallback_trigger": "failure after second user implementation feedback",
+      "fallbacks": [
+        "no cloud Earth/orbit to archive introduction",
+        "AI generated cloud introduction video; no video artifact or generation capability confirmed yet"
+      ],
+      "default_adopted": false,
+      "runtime_verified": true,
+      "visual_fidelity": "FAIL/TUNE",
+      "gpu_timing_verified": false
     }
   }
 }

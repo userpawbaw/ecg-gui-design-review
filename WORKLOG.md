@@ -540,3 +540,9 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 ### 2026-10-06 첨부 실사진 기준 목업 질감 재수정 — D-079/F-050
 실사진을 직접 texture reference 입력으로 사용, J5v6→v7(초기1+자체수정1) 보존. v7 넓은음영/부드러운면/얇은띠 개선, 잔여패턴TUNE/사용자확정대기. 순서: 목업확정→실제제작→사용자제작피드백1차→수정→사용자제작피드백2차. 현재제작0/피드백0, 이번목업/AI자체수정과별도계수. 갤러리사진/v5/v7비교, 정확요청manifest보존. renderer/서고/Story/BC미변경.
 검증: records171 PASS, 12 output/사진input hash pin PASS, 선택5 PASS, diff check PASS. runtime/GPU검사 없음. Remote branch a5d21f2/main cfef4300 재확인.
+
+### 2026-10-06 실제 구름 제작 및 실패 대안 — D-080
+사용자 제작 승인. J5v7/첨부사진 기준 cloudModel=photo 후보제작, 새128³density/fixed-sun cache/광역인계/광학 검증. 사용자피드백0/2(내부수정별도). 제작→피드백1차→수정→2차. 2차후실패면①구름제거전이②AI생성구름영상전이를모두제작하고동일조건퀄리티비교후높은퀄리티로변경. 실패판정은현재미발생;대안조건부,AI영상생성도구/결과미확보. 서고KEEP/A-P3/Story/BC별도.
+
+D080 실제제작 결과: 새128³밀도/f16cache/비주기변형/fullresolution144sample/photo opt-in. initial+3자체보완종료. build57modules/nativeRTX3070 1280×720 기능확인, archive.55RGB0/R883공통clock, 시각FAIL/TUNE. GPUtimer unavailable/영상미녹화/targetPC미검증. 사용자피드백0/2, 다음1차. 초기EPERM과임시GLSL7.5.오류복구,최종새탭error없음.
+최종검증: records173 PASS, source/capture/asset pins PASS, diff check PASS. 최종19 native프레임, 8초정역unrecorded endpoint 확인. Remote branch efa024b/main cfef4300 재확인. Vite4198 session63553 유지. 사용자피드백0/2.

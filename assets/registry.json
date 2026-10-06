@@ -2624,6 +2624,144 @@
         "A-P2 review only; not renderer"
       ],
       "review": "D-079/F-050. Photo guided mockup TUNE; user approval pending, no implementation."
+    },
+    {
+      "id": "cloud-photo-density-atlas-png",
+      "title": "cloud-photo-density-atlas-png",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-photo.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-photo/density-atlas.png",
+        "bytes": 171491,
+        "sha256": "2d00615103fb758e17822536f0c2d2b0a22a703bdd321843038078f0b4a64b41"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-080 photo-guided broad density, fixed-sun optical depth; synthetic not measured weather; user feedback 0/2."
+    },
+    {
+      "id": "cloud-photo-density-r8",
+      "title": "cloud-photo-density-r8",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-photo.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-photo/density.r8",
+        "bytes": 2097152,
+        "sha256": "db2e5c2116340652b804ae5bdc65b797598bdde6d4d978ef4c443e8980ff8403"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-080 photo-guided broad density, fixed-sun optical depth; synthetic not measured weather; user feedback 0/2."
+    },
+    {
+      "id": "cloud-photo-ground-depth-f16",
+      "title": "cloud-photo-ground-depth-f16",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-photo.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-photo/ground-depth.f16",
+        "bytes": 32768,
+        "sha256": "e544ec46d5e302ff8d77463c97ce0600b039b10aa1c9917a53b6ef0c63667b90"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-080 photo-guided broad density, fixed-sun optical depth; synthetic not measured weather; user feedback 0/2."
+    },
+    {
+      "id": "cloud-photo-ground-depth-r8",
+      "title": "cloud-photo-ground-depth-r8",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-photo.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-photo/ground-depth.r8",
+        "bytes": 16384,
+        "sha256": "22b22928054575a4cb76e3ab9e5ef3be12110f1b9972bdb913fe1d73a3ea09c4"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-080 photo-guided broad density, fixed-sun optical depth; synthetic not measured weather; user feedback 0/2."
+    },
+    {
+      "id": "cloud-photo-light-depth-f16",
+      "title": "cloud-photo-light-depth-f16",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-photo.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-photo/light-depth.f16",
+        "bytes": 4194304,
+        "sha256": "f704477d4dbaf1bacc268fd3e07d80bc906ff904addb13ddae99223296d3164d"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-080 photo-guided broad density, fixed-sun optical depth; synthetic not measured weather; user feedback 0/2."
+    },
+    {
+      "id": "cloud-photo-light-depth-r8",
+      "title": "cloud-photo-light-depth-r8",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-photo.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-photo/light-depth.r8",
+        "bytes": 2097152,
+        "sha256": "5a08b0002f7e3068103756cde602e5182b11ba7041c038eadf02ce91286984ce"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-080 photo-guided broad density, fixed-sun optical depth; synthetic not measured weather; user feedback 0/2."
     }
   ],
   "rejected": [

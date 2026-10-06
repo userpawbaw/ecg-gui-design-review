@@ -1,0 +1,1 @@
+Photo-guided synthetic density authored for the project. The user photo and J5v7 are visual references, not voxel measurements. No Blender gold render is claimed. Optical depth uses a fixed world sun and requires rebake if the sun changes.

@@ -1,0 +1,8 @@
+{
+  "source": "native IAB CLOUD_REVIEW_TIMING console observations, 2026-10-06",
+  "forward": {"end_p": 1, "time": 8.461299999999289, "raf_count": 497, "raf_p50_ms": 16.699999999999818, "raf_p95_ms": 16.799999999999272},
+  "reverse": {"end_p": 0, "time": 8.422271999999845, "raf_count": 503, "raf_p50_ms": 16.699999999999818, "raf_p95_ms": 16.800000000000182},
+  "gpu_timer_available": false,
+  "video_recorded": false,
+  "scope": "8-second unrecorded local path smoke checks, 1280x720 DPR1 RTX3070. Endpoints/RAF only; not continuous visual fidelity, GPU cost or target PC proof."
+}

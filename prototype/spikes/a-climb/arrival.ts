@@ -6,6 +6,7 @@ import {createPlanetAtmosphere} from './planet-atmosphere';
 import {createAntarcticTerrain} from './planet-terrain';
 import {createPlanetClouds} from './planet-cloud-layers';
 import {createPlanetClouds as createSculptClouds} from './planet-cloud-sculpt';
+import {createPlanetClouds as createPhotoClouds} from './planet-cloud-photo';
 import {createPlanetClouds as createCloudsV1} from './planet-clouds-v1';
 const smooth=(a:number,b:number,x:number)=>{const v=THREE.MathUtils.clamp((x-a)/(b-a),0,1);return v*v*(3-2*v);};
 export async function createArrival(renderer:THREE.WebGLRenderer,camera:THREE.PerspectiveCamera){
@@ -31,7 +32,7 @@ export async function createArrival(renderer:THREE.WebGLRenderer,camera:THREE.Pe
  };
  const earth=new THREE.Mesh(geo,mat);planet.add(earth);
  const terrain=await createAntarcticTerrain(day,roughness,cloud,localSun,shadowOn,specularOn);planet.add(terrain.mesh);
- const sculptTrial=new URLSearchParams(location.search).get('cloudModel')==='sculpt';const layersTrial=sculptTrial||new URLSearchParams(location.search).get('cloudModel')==='layers';const volume=sculptTrial?await createSculptClouds(cloud,terrain.heightTexture):layersTrial?await createPlanetClouds(cloud,terrain.heightTexture):await createCloudsV1(cloud);const cloudPass=volume.pass;
+ const photoTrial=new URLSearchParams(location.search).get('cloudModel')==='photo';const sculptTrial=photoTrial||new URLSearchParams(location.search).get('cloudModel')==='sculpt';const layersTrial=sculptTrial||new URLSearchParams(location.search).get('cloudModel')==='layers';const volume=photoTrial?await createPhotoClouds(cloud,terrain.heightTexture):sculptTrial?await createSculptClouds(cloud,terrain.heightTexture):layersTrial?await createPlanetClouds(cloud,terrain.heightTexture):await createCloudsV1(cloud);const cloudPass=volume.pass;
  if('attachGround' in volume){const baseCompile=mat.onBeforeCompile;mat.onBeforeCompile=(s,r)=>{baseCompile.call(mat,s,r);s.fragmentShader=s.fragmentShader.replace('diffuseColor.rgb*=1.-cloudShade*.3*uCloudShadow;','');};volume.attachGround(mat);const capMat=terrain.mesh.material as THREE.MeshStandardMaterial,capCompile=capMat.onBeforeCompile;capMat.onBeforeCompile=(s,r)=>{capCompile.call(capMat,s,r);s.fragmentShader=s.fragmentShader.replace(/diffuseColor.rgb\s*\*=\s*1\.-[^;]*uCloudShadow;/g,'');};volume.attachGround(capMat);}
  const atmos=await createPlanetAtmosphere(renderer,camera);scene.add(atmos.sky);
  const sun=new THREE.DirectionalLight(0xffebd0,5.6);sun.position.set(-2.6,2.2,3);scene.add(sun);scene.add(new THREE.AmbientLight(0x91bbff,.18));
@@ -65,6 +66,9 @@ export async function createArrival(renderer:THREE.WebGLRenderer,camera:THREE.Pe
   const end=radial.clone().multiplyScalar(1+alt),pitch=layersTrial?THREE.MathUtils.lerp(.65,.22,smooth(.23,.303,p)):THREE.MathUtils.lerp(.65,.13,smooth(.23,.315,p));
   camera.far=layersTrial?12:40;
   camera.position.lerpVectors(new THREE.Vector3(0,-.12,3.1),end,q);camera.near=layersTrial?THREE.MathUtils.clamp((camera.position.length()-1)*.01,.000003,.02):.025;
+  // D-080: stay outside the bank for an establishing side view before entry.
+  // The former origin was already inside its front half and hid scale/sky cues.
+  if(photoTrial)camera.position.addScaledVector(tangent,-.0004*smooth(.265,.289,p)*(1-smooth(.306,.323,p)));
   const orbitLook=end.clone().addScaledVector(tangent,Math.cos(pitch)).addScaledVector(radial,-Math.sin(pitch));
   const target=new THREE.Vector3(-.4,.14,0).lerp(orbitLook,q);if(sculptTrial){const bankTarget=radial.clone().multiplyScalar(1.00072).addScaledVector(tangent,.0004);const ray=target.clone().sub(camera.position).normalize(),bankRay=bankTarget.sub(camera.position).normalize();target.copy(camera.position).add(ray.lerp(bankRay,smooth(.265,.292,p)).normalize());}camera.up.set(0,1,0).lerp(radial,smooth(.10,.245,p)).normalize();camera.lookAt(target);camera.fov=36+q*16;camera.clearViewOffset();camera.updateProjectionMatrix();camera.updateMatrixWorld();
   const solarWorld=new THREE.Vector3(-.95,.82,.35).lerp(new THREE.Vector3(-.65,.75,.52),smooth(.10,.24,p)).normalize();
@@ -78,5 +82,5 @@ export async function createArrival(renderer:THREE.WebGLRenderer,camera:THREE.Pe
   return target;
  }
  function prepareCover(p:number,t:number,reduced:boolean,camera:THREE.PerspectiveCamera){const roomCamera=camera.clone();cloudPass.uniforms.uProgress.value=smooth(.24,.4,.319);cloudPass.uniforms.uTime.value=reduced?0:t;update(.319,t,reduced,camera);camera.copy(roomCamera);camera.updateMatrixWorld();cloudPass.uniforms.uCover.value=cover(p);cloudPass.uniforms.uProgress.value=smooth(.24,.4,p);}
- return {scene,planet,cloudPass,flarePass,atmospherePass:atmos.pass,cover,update,prepareCover,setEffects,state:()=>({model:'Bruneton LUT + REMA + world density',cloudModel:'state' in volume?volume.state():{model:'v1'},cloudLayersTrial:layersTrial,cloudSculptTrial:sculptTrial,terrain:terrain.info,specular:specularOn.value,atmosphere:atmosphereOn,flare:flareOn,cloud:cloudOn,cloudShadow:shadowOn.value,sunUV:flarePass.uniforms.uSunUV.value.toArray(),strength:flarePass.uniforms.uStrength.value,sunDirection:sunDir.value.toArray()}),source:'NASA Earth Observatory',dispose(){geo.dispose();mat.dispose();terrain.dispose();volume.dispose();atmos.dispose();starsGeo.dispose();(stars.material as THREE.Material).dispose();marker.children.forEach(o=>(o as THREE.Mesh).geometry.dispose());markerMat.dispose();[day,height,roughness,night,cloud].forEach(x=>x.dispose());cloudPass.dispose();flarePass.dispose();}};
+ return {scene,planet,cloudPass,flarePass,atmospherePass:atmos.pass,cover,update,prepareCover,setEffects,state:()=>({model:'Bruneton LUT + REMA + world density',cloudModel:'state' in volume?volume.state():{model:'v1'},cloudLayersTrial:layersTrial,cloudSculptTrial:sculptTrial,cloudPhotoTrial:photoTrial,terrain:terrain.info,specular:specularOn.value,atmosphere:atmosphereOn,flare:flareOn,cloud:cloudOn,cloudShadow:shadowOn.value,sunUV:flarePass.uniforms.uSunUV.value.toArray(),strength:flarePass.uniforms.uStrength.value,sunDirection:sunDir.value.toArray()}),source:'NASA Earth Observatory',dispose(){geo.dispose();mat.dispose();terrain.dispose();volume.dispose();atmos.dispose();starsGeo.dispose();(stars.material as THREE.Material).dispose();marker.children.forEach(o=>(o as THREE.Mesh).geometry.dispose());markerMat.dispose();[day,height,roughness,night,cloud].forEach(x=>x.dispose());cloudPass.dispose();flarePass.dispose();}};
 }

@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-06",
+  "producer": "JangaFX",
+  "page": "https://jangafx.com/software/embergen/download/free-vdb-animations",
+  "download_page": "https://www.mediafire.com/file/879onggscuon7ew/CloudPackVDB.zip/file",
+  "original": {
+    "file": "assets/source/jangafx-cloud-pack/CloudPackVDB.zip",
+    "bytes": 109761538,
+    "sha256": "3676ba4c7ac431446731f956f98e925ad3db31354b8b4adcb137dc0250595f73"
+  },
+  "use_stage": "internal concept review",
+  "content_manifest": "survey-manifest.json",
+  "license_evidence": "source-LICENSE.txt",
+  "readme": "source-README.txt"
+}

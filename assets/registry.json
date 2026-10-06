@@ -2762,6 +2762,30 @@
         "prototype/spikes/a-climb"
       ],
       "review": "D-080 photo-guided broad density, fixed-sun optical depth; synthetic not measured weather; user feedback 0/2."
+    },
+    {
+      "id": "jangafx-cloud-pack-vdb-20261006",
+      "title": "JangaFX Cloud Pack: 10 density VDB variants",
+      "kind": "volume",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://jangafx.com/software/embergen/download/free-vdb-animations",
+        "download_page": "https://www.mediafire.com/file/879onggscuon7ew/CloudPackVDB.zip/file"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/jangafx-cloud-pack/CloudPackVDB.zip",
+        "bytes": 109761538,
+        "sha256": "3676ba4c7ac431446731f956f98e925ad3db31354b8b4adcb137dc0250595f73"
+      },
+      "processing": "unpack unchanged VDBs; normalize maximum bound extent to 8 for isolated Cycles optical trial",
+      "processed": null,
+      "used_by": [
+        "scripts/assets/render-cloud-vdb.py"
+      ],
+      "review": "D-085 isolated external-asset optical trial; no runtime adoption; actual user production feedback1/2 retained"
     }
   ],
   "rejected": [

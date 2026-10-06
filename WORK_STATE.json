@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "preproduction_industry_and_ready_asset_effect_research_baseline_complete_trials_pending",
+    "status": "external_VDB_acquired_Cycles_optical_trial_complete_visual_TUNE_runtime_unadopted",
     "records": [
       "D-065",
       "D-066",
@@ -698,11 +698,13 @@
       "D-082",
       "D-083",
       "R-035",
-      "D-084"
+      "D-084",
+      "D-085",
+      "F-053"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Read D083 baseline scene/element/candidate sections; acquire/pin free VDB, same camera/sun offline optical trial, then far/orbit/near representation candidate and user production feedback2. Archive KEEP, A first, feedback1/2; A-P3/Story/B/C deferred. No new asset or runtime adoption.",
+    "next": "Build broad cloud groups and thin layer/entry gap with selected external VDB, tune optical reference then compare local web conversion versus path bake; no far-globe volume inflation. User feedback1/2, archive KEEP, A-P3/Story/BC deferred.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -909,6 +911,13 @@
         "repeat_copyright_questions": false,
         "provenance_required": true,
         "exhibition_transition": "review acquisition, rights, attribution or replacement at actual exhibition transition"
+      },
+      "vdb_trial": {
+        "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_vdb_optical_trial_2026-10-06.md",
+        "evidence": "verification/a-cloud-vdb-20261006",
+        "asset": "jangafx-cloud-pack-vdb-20261006",
+        "status": "acquisition_import_offline_render_PASS_visual_TUNE",
+        "runtime_adopted": false
       }
     }
   }

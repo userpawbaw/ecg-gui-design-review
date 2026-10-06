@@ -1,0 +1,325 @@
+{
+  "status": "isolated optical trial; not runtime adoption or user feedback",
+  "mode": "detail",
+  "bpy": "4.5.3 LTS",
+  "engine": "Cycles",
+  "samples": 96,
+  "volume_bounces": 6,
+  "volume_step_rate": 0.5,
+  "sun_direction": [
+    0.7058331370353699,
+    -0.4836477041244507,
+    0.5175755620002747
+  ],
+  "density_multiplier": 1,
+  "anisotropy": 0.45,
+  "bloom": false,
+  "sky_strength": 0.3499999940395355,
+  "devices": [
+    {
+      "name": "NVIDIA GeForce RTX 3070",
+      "type": "CUDA",
+      "enabled": false
+    },
+    {
+      "name": "AMD Ryzen 5 3600 6-Core Processor",
+      "type": "CPU",
+      "enabled": false
+    },
+    {
+      "name": "NVIDIA GeForce RTX 3070",
+      "type": "OPTIX",
+      "enabled": true
+    }
+  ],
+  "assets": [
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_01_variant_0000.vdb",
+      "bytes": 17468785,
+      "sha256": "c91381781adc353f26a25d6cb6c9e254f47b89db04d2e99d289ae0e7d545945c",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -159.5,
+          -231.5,
+          -103.5
+        ],
+        [
+          111.5,
+          295.5,
+          71.5
+        ]
+      ],
+      "normalized_scale": 0.015180265654648957
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_06_variant_0000.vdb",
+      "bytes": 18832787,
+      "sha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -167.5,
+          -207.5,
+          -103.5
+        ],
+        [
+          151.5,
+          255.5,
+          55.5
+        ]
+      ],
+      "normalized_scale": 0.017278617710583154
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_10_variant_0000.vdb",
+      "bytes": 17204740,
+      "sha256": "05bdc59f23d4888cb0d1d06f7d087e91b3312d91ac2259181b165289dc692d96",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -175.5,
+          -239.5,
+          -103.5
+        ],
+        [
+          119.5,
+          279.5,
+          55.5
+        ]
+      ],
+      "normalized_scale": 0.015414258188824663
+    }
+  ],
+  "frames": [
+    {
+      "file": "cloud_01-far-diagnostic.png",
+      "asset": "cloud_01_variant_0000.vdb",
+      "camera": [
+        26,
+        -34,
+        23
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 6.6663498878479
+    },
+    {
+      "file": "cloud_01-orbit-top.png",
+      "asset": "cloud_01_variant_0000.vdb",
+      "camera": [
+        7,
+        -9,
+        7
+      ],
+      "target": [
+        0,
+        0,
+        1.4
+      ],
+      "seconds": 24.20857286453247
+    },
+    {
+      "file": "cloud_01-descent-side.png",
+      "asset": "cloud_01_variant_0000.vdb",
+      "camera": [
+        7,
+        -10,
+        2.6
+      ],
+      "target": [
+        0,
+        0,
+        1.5
+      ],
+      "seconds": 23.123706340789795
+    },
+    {
+      "file": "cloud_06-far-diagnostic.png",
+      "asset": "cloud_06_variant_0000.vdb",
+      "camera": [
+        26,
+        -34,
+        23
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 6.180056095123291
+    },
+    {
+      "file": "cloud_06-orbit-top.png",
+      "asset": "cloud_06_variant_0000.vdb",
+      "camera": [
+        7,
+        -9,
+        7
+      ],
+      "target": [
+        0,
+        0,
+        1.4
+      ],
+      "seconds": 32.1753306388855
+    },
+    {
+      "file": "cloud_06-descent-side.png",
+      "asset": "cloud_06_variant_0000.vdb",
+      "camera": [
+        7,
+        -10,
+        2.6
+      ],
+      "target": [
+        0,
+        0,
+        1.5
+      ],
+      "seconds": 31.572991609573364
+    },
+    {
+      "file": "cloud_10-far-diagnostic.png",
+      "asset": "cloud_10_variant_0000.vdb",
+      "camera": [
+        26,
+        -34,
+        23
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 5.181832790374756
+    },
+    {
+      "file": "cloud_10-orbit-top.png",
+      "asset": "cloud_10_variant_0000.vdb",
+      "camera": [
+        7,
+        -9,
+        7
+      ],
+      "target": [
+        0,
+        0,
+        1.4
+      ],
+      "seconds": 23.698270320892334
+    },
+    {
+      "file": "cloud_10-descent-side.png",
+      "asset": "cloud_10_variant_0000.vdb",
+      "camera": [
+        7,
+        -10,
+        2.6
+      ],
+      "target": [
+        0,
+        0,
+        1.5
+      ],
+      "seconds": 21.82171392440796
+    }
+  ],
+  "limitations": "Normalized isolated clouds and flat receiver; far view is not a whole Earth render. No thin cirrus, globe coverage or live camera handoff proof."
+}

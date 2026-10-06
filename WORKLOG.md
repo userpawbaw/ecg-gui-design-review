@@ -562,3 +562,7 @@ D080 실제제작 결과: 새128³밀도/f16cache/비주기변형/fullresolution
 
 ### 2026-10-06 내부 시안 이용 목적 고정 — D084
 사용자 결정 반영: 현재 접근 가능한 모든 자료를 품질/적합성으로 탐색, 저작권 조건으로 사전 제외/반복 질문하지 않음. 24 상단/23/25/AGENTS/장면 기준 문서와 상태 연결. 출처·조건·시안 사용·출품 전 확인/대체 목록 유지. 실제 출품 전환 때 재검토. 다운로드·runtime 변경 없음, 다음 D083 무료 VDB 기준 시험/사용자 피드백1/2 유지.
+
+### 2026-10-06 외부 VDB 실제 조달·광학 시험 — D085/F053
+JangaFX10종 원본 획득·hash/조건/metadata 고정, Cycles4.5.3/RTX3070OptiX survey10장+선별3종3구도+광학기여 분리. 조달/렌더PASS·시각TUNE. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_vdb_optical_trial_2026-10-06.md. 다음06기반 넓은층/01통로/10국소옆면+권운→빛보정→웹 국소변환 또는 경로베이크 비교→전체전이 후보 사용자2차. 현재runtime미채택/서고KEEP/피드백1/2 유지.
+검증: 실제 VDB 10종·PNG21장/manifest 확인, survey/detail/광학 contact 직접 검토. 기록 근거 태그 누락1건 수정 후 records 재검증. git diff --check PASS. 전체 지구/웹 통합·targetPC는 미검증.

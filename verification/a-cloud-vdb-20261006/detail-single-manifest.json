@@ -1,0 +1,105 @@
+{
+  "status": "isolated optical trial; not runtime adoption or user feedback",
+  "mode": "detail",
+  "bpy": "4.5.3 LTS",
+  "engine": "Cycles",
+  "samples": 96,
+  "volume_bounces": 0,
+  "volume_step_rate": 0.5,
+  "sun_direction": [
+    0.7058331370353699,
+    -0.4836477041244507,
+    0.5175755620002747
+  ],
+  "density_multiplier": 1,
+  "anisotropy": 0.45,
+  "bloom": false,
+  "sky_strength": 0.3499999940395355,
+  "devices": [
+    {
+      "name": "NVIDIA GeForce RTX 3070",
+      "type": "CUDA",
+      "enabled": false
+    },
+    {
+      "name": "AMD Ryzen 5 3600 6-Core Processor",
+      "type": "CPU",
+      "enabled": false
+    },
+    {
+      "name": "NVIDIA GeForce RTX 3070",
+      "type": "OPTIX",
+      "enabled": true
+    }
+  ],
+  "assets": [
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_06_variant_0000.vdb",
+      "bytes": 18832787,
+      "sha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -167.5,
+          -207.5,
+          -103.5
+        ],
+        [
+          151.5,
+          255.5,
+          55.5
+        ]
+      ],
+      "normalized_scale": 0.017278617710583154
+    }
+  ],
+  "frames": [
+    {
+      "file": "cloud_06-descent-side-single.png",
+      "asset": "cloud_06_variant_0000.vdb",
+      "camera": [
+        7,
+        -10,
+        2.6
+      ],
+      "target": [
+        0,
+        0,
+        1.5
+      ],
+      "seconds": 15.648140668869019
+    }
+  ],
+  "limitations": "Normalized isolated clouds and flat receiver; far view is not a whole Earth render. No thin cirrus, globe coverage or live camera handoff proof."
+}

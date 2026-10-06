@@ -1,0 +1,689 @@
+{
+  "status": "isolated optical trial; not runtime adoption or user feedback",
+  "mode": "survey",
+  "bpy": "4.5.3 LTS",
+  "engine": "Cycles",
+  "samples": 24,
+  "volume_bounces": 6,
+  "volume_step_rate": 0.5,
+  "sun_direction": [
+    0.7058331370353699,
+    -0.4836477041244507,
+    0.5175755620002747
+  ],
+  "density_multiplier": 1,
+  "anisotropy": 0.45,
+  "bloom": false,
+  "devices": [
+    {
+      "name": "NVIDIA GeForce RTX 3070",
+      "type": "CUDA",
+      "enabled": false
+    },
+    {
+      "name": "AMD Ryzen 5 3600 6-Core Processor",
+      "type": "CPU",
+      "enabled": false
+    },
+    {
+      "name": "NVIDIA GeForce RTX 3070",
+      "type": "OPTIX",
+      "enabled": true
+    }
+  ],
+  "assets": [
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_01_variant_0000.vdb",
+      "bytes": 17468785,
+      "sha256": "c91381781adc353f26a25d6cb6c9e254f47b89db04d2e99d289ae0e7d545945c",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -159.5,
+          -231.5,
+          -103.5
+        ],
+        [
+          111.5,
+          295.5,
+          71.5
+        ]
+      ],
+      "normalized_scale": 0.015180265654648957
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_02_variant_0000.vdb",
+      "bytes": 20159892,
+      "sha256": "219e9afa0396388da334bf47f25f323ba21b06cfa98d2d5490a483a1a140318e",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -191.5,
+          -223.5,
+          -103.5
+        ],
+        [
+          143.5,
+          263.5,
+          71.5
+        ]
+      ],
+      "normalized_scale": 0.01642710472279261
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_03_variant_0000.vdb",
+      "bytes": 17727036,
+      "sha256": "33e789b91dc050801e32f9c8cabe8392434dbe992db009bcb34d2c0df78b51be",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -191.5,
+          -231.5,
+          -103.5
+        ],
+        [
+          143.5,
+          255.5,
+          71.5
+        ]
+      ],
+      "normalized_scale": 0.01642710472279261
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_04_variant_0000.vdb",
+      "bytes": 16198165,
+      "sha256": "c7ae50d9be4537284f9ada2e700ce8b54aa08aadb2719a54368c37032a3b3e26",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -167.5,
+          -223.5,
+          -103.5
+        ],
+        [
+          151.5,
+          247.5,
+          47.5
+        ]
+      ],
+      "normalized_scale": 0.016985138004246284
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_05_variant_0000.vdb",
+      "bytes": 21389004,
+      "sha256": "00800bd41f090702352c99de8f079aa70cefd6f8ea76f4fd7624059ee5b193bb",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -175.5,
+          -231.5,
+          -103.5
+        ],
+        [
+          159.5,
+          231.5,
+          63.5
+        ]
+      ],
+      "normalized_scale": 0.017278617710583154
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_06_variant_0000.vdb",
+      "bytes": 18832787,
+      "sha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -167.5,
+          -207.5,
+          -103.5
+        ],
+        [
+          151.5,
+          255.5,
+          55.5
+        ]
+      ],
+      "normalized_scale": 0.017278617710583154
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_07_variant_0000.vdb",
+      "bytes": 21606926,
+      "sha256": "400fd5fd53208e45041dfa22b4d9701fb8aa27c09fdf51b051d2c0098ea0d40b",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -151.5,
+          -207.5,
+          -103.5
+        ],
+        [
+          159.5,
+          271.5,
+          79.5
+        ]
+      ],
+      "normalized_scale": 0.016701461377870562
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_08_variant_0000.vdb",
+      "bytes": 16358457,
+      "sha256": "991826cf4c7515d15b49299b6e9e878a0f92f817adacd3ef2df05ec6dd2c7ce9",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -111.5,
+          -199.5,
+          -103.5
+        ],
+        [
+          127.5,
+          247.5,
+          63.5
+        ]
+      ],
+      "normalized_scale": 0.017897091722595078
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_09_variant_0000.vdb",
+      "bytes": 17151725,
+      "sha256": "5bb542eb0d7d863ce1aae894f47a095559d9cccb996b3ef231f65a4960201b5e",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -135.5,
+          -215.5,
+          -103.5
+        ],
+        [
+          143.5,
+          247.5,
+          79.5
+        ]
+      ],
+      "normalized_scale": 0.017278617710583154
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_10_variant_0000.vdb",
+      "bytes": 17204740,
+      "sha256": "05bdc59f23d4888cb0d1d06f7d087e91b3312d91ac2259181b165289dc692d96",
+      "grids": [
+        {
+          "name": "density",
+          "type": "FLOAT",
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -207.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -319.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -111.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "original_bounds": [
+        [
+          -175.5,
+          -239.5,
+          -103.5
+        ],
+        [
+          119.5,
+          279.5,
+          55.5
+        ]
+      ],
+      "normalized_scale": 0.015414258188824663
+    }
+  ],
+  "frames": [
+    {
+      "file": "cloud_01-survey.png",
+      "asset": "cloud_01_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 4.564293384552002
+    },
+    {
+      "file": "cloud_02-survey.png",
+      "asset": "cloud_02_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 2.3401386737823486
+    },
+    {
+      "file": "cloud_03-survey.png",
+      "asset": "cloud_03_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 2.292268991470337
+    },
+    {
+      "file": "cloud_04-survey.png",
+      "asset": "cloud_04_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 2.13413405418396
+    },
+    {
+      "file": "cloud_05-survey.png",
+      "asset": "cloud_05_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 2.2917277812957764
+    },
+    {
+      "file": "cloud_06-survey.png",
+      "asset": "cloud_06_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 2.4665160179138184
+    },
+    {
+      "file": "cloud_07-survey.png",
+      "asset": "cloud_07_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 2.4561901092529297
+    },
+    {
+      "file": "cloud_08-survey.png",
+      "asset": "cloud_08_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 2.219168186187744
+    },
+    {
+      "file": "cloud_09-survey.png",
+      "asset": "cloud_09_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 2.2740159034729004
+    },
+    {
+      "file": "cloud_10-survey.png",
+      "asset": "cloud_10_variant_0000.vdb",
+      "camera": [
+        10,
+        -13,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        1.3
+      ],
+      "seconds": 2.088191270828247
+    }
+  ],
+  "limitations": "Normalized isolated clouds and flat receiver; far view is not a whole Earth render. No thin cirrus, globe coverage or live camera handoff proof."
+}

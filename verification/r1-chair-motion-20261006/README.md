@@ -42,3 +42,11 @@ Blender Workbench 점토 렌더(웹 아님). 만들기: `FIST_POSE=chair python 
 - 몸–의자: 최대 34.7 mm = 허벅지 아랫면이 좌면 앞 모서리 쿠션에 눌림(쿠션 한계 35 mm). 검사 탐색 거리를 6 cm로 제한(`scene_collisions(reach=)`) — 엉덩이와 팔걸이 사이 빈 공간이 한쪽 면 법선 때문에 133–158 mm '안쪽'으로 잘못 나왔음.
 - 관문: 쥠·폄 42프레임 전신 FAIL 0.
 
+## 갱신 2026-10-06 (4) — 서고 배경
+사용자: "서고 배경 넣어서 다시 렌더해줘"
+- 서고를 사람 없이 r2 조명으로 빌드해 저장했습니다: `python scripts/blender/build_archive.py --light r2 --nofig --save <파일>`. 새 옵션 `--nofig`를 추가했고, 측정 의자에 `mchair` 표시를 달고, 장면에 `chair_fit`(기준점·방향·좌면)을 저장합니다.
+- 미리보기는 `ARCHIVE_BLEND=<파일> FIST_POSE=chair python scripts/assets/fist-v3.py`로 만듭니다. 서고를 불러와 측정 의자 자리가 사람의 의자 기준점에 오도록 서고 전체를 옮기고, 서고 의자는 빼고 GreenChair_01을 둡니다.
+- 렌더: Cycles(CPU) 24 샘플, 노이즈 제거, AgX, 노출 0.8(서고 정지 렌더와 같음). 12 fps × 10초. EEVEE는 서고 r2 빛(햇빛·빛줄기)을 살리지 못해 쓰지 않았습니다.
+- 사람 재질: 무광 점토(밝은 회갈색). 웹에서는 H5 반투명 몸·고리(D-048)로 바뀝니다.
+- 작업 중 결함: 불러온 직후 `matrix_world`가 아직 계산 전이라, 조명 5개가 모두 한 점(바닥 아래)으로 옮겨져 화면이 어두웠습니다. `matrix_basis`로 옮기도록 고쳤습니다.
+

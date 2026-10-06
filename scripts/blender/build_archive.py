@@ -28,6 +28,7 @@ ap.add_argument('--clay', action='store_true', help='D-049 clay gate A: grey mat
 ap.add_argument('--fig', default='v2', choices=['v2', 'v3'], help='v3 = D-048 deformé figure with ECG electrodes and lead wires')
 ap.add_argument('--signal', default='off', choices=['off', 'clean', 'noise'], help='v3 stills: neon dash preview — clean (blue heart→electrode, purple to the computer) or noise (red on the power line and leads)')
 ap.add_argument('--bake', default='', help='bake lightmaps + export the web scene into this dir')
+ap.add_argument('--nofig', action='store_true', help='no figure (and no electrodes/leads): an empty room to compose a separately posed figure into (chair-motion-v3)')
 ap.add_argument('--export-rig', default='', help='v3 only: write the electrodes, yoke, leads, trunk, comm cable, power line, inside-body signal paths and RA ring as one rig.glb into this dir (web dash shader; IMPL_BRIEF_FIGURE_V3_WEB B2)')
 ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--bsamples', type=int, default=128)
@@ -388,7 +389,9 @@ def chair_fit(objs):
     print(f'chair_fit: seat {seat_z:.3f} m, back dir ({b.x:.2f}, {b.y:.2f}), backrest face {dback:.3f} m, yaw {math.degrees(yaw):.1f}°')
     return dict(seat_z=seat_z, yaw=yaw, anchor=anchor)
 if args.light == 'r2':
-    CHAIR_FIT = chair_fit(place('modern_arm_chair_01', MCHAIR.x, MCHAIR.y, 0, 0.82, rot=math.radians(200)))
+    _mch = place('modern_arm_chair_01', MCHAIR.x, MCHAIR.y, 0, 0.82, rot=math.radians(200)); CHAIR_FIT = chair_fit(_mch)
+    for _o in _mch: _o['mchair'] = True                          # chair-motion-v3 swaps this chair for its own
+    scene['chair_fit'] = list(CHAIR_FIT['anchor']) + [CHAIR_FIT['yaw'], CHAIR_FIT['seat_z']]
 # floor clutter that makes the aisle lived-in (kept off the camera path x ∈ [−0.6, 0.6])
 place('cardboard_box_01', -0.95, -2.2, 0, 0.32, rot=0.3)
 place('cardboard_box_01', -0.92, -2.15, 0.32, 0.26, rot=-0.2)
@@ -413,7 +416,7 @@ import json
 A = os.path.join(ROOT, 'prototype/v2/src/story/intro/assets')
 fig_path = os.path.join(A, f'body_v3_{args.pose}.glb' if args.pose else 'body_seated_v3.glb' if args.fig == 'v3' else 'body_seated.glb')
 FROT = Matrix.Identity(3); FYAW = 0.0                           # figure yaw (D-050 spots); the original paths keep 0
-if os.path.exists(fig_path):
+if os.path.exists(fig_path) and not args.nofig:
     _fig = json.load(open(os.path.join(A, 'figure.json'), encoding='utf-8'))
     fj = _fig['poses_v3'][args.pose] if args.pose else _fig['seated_v3' if args.fig == 'v3' else 'seated']
     before = set(bpy.data.objects); bpy.ops.import_scene.gltf(filepath=fig_path)

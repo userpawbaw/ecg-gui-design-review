@@ -83,6 +83,30 @@ def place_chair(bpy, Vector, root, slug='GreenChair_01', height=None):
     return dict(objects=new, seat_z=seat_z, h=h, arms=arms)
 
 
+def load_archive(bpy, path, sc):
+    """Append the empty archive (build_archive.py --light r2 --nofig --save) and move it so its measurement-chair spot
+    (scene['chair_fit'] = anchor xyz, yaw, seat z) lands on the figure's seat anchor; the archive's own chair is dropped
+    (GreenChair_01 stands in for it, D-053). World = archive frame → figure frame: p_fig = an + R(−yaw)(p − spot)."""
+    from mathutils import Matrix, Vector
+    with bpy.data.libraries.load(path, link=False) as (src, dst):
+        dst.objects = list(src.objects); dst.worlds = list(src.worlds); dst.scenes = list(src.scenes)
+    cf = dst.scenes[0].get('chair_fit'); spot, yaw = Vector(cf[:3]), cf[3]
+    for s_ in dst.scenes: bpy.data.scenes.remove(s_)
+    M = Matrix.Translation(Vector(FIG_ANCHOR)) @ Matrix.Rotation(-yaw, 4, 'Z') @ Matrix.Translation(-spot)
+    kept, drop = [], []
+    for ob in dst.objects:
+        if ob is None: continue
+        (drop if ob.type == 'CAMERA' or ob.get('mchair') else kept).append(ob)
+    for ob in kept: sc.collection.objects.link(ob)
+    for ob in drop: bpy.data.objects.remove(ob, do_unlink=True)
+    for ob in kept:
+        if ob.parent is None: ob.matrix_basis = M @ ob.matrix_basis   # matrix_world is stale right after linking (all lights
+                                                                         # landed on one point under the floor)
+    keep = len(kept)
+    if dst.worlds: sc.world = dst.worlds[0]
+    print(f'   archive: {keep} objects, chair spot {tuple(round(v, 3) for v in spot)} yaw {yaw:.3f}')
+
+
 def render(g):
     bpy, o, rig, P, state, apply = g['bpy'], g['o'], g['rig'], g['P'], g['state'], g['apply']
     Vector, ROOT, PROF = g['Vector'], g['ROOT'], g['PROF']
@@ -111,16 +135,29 @@ def render(g):
     sk = o.shape_key_add(name='breath_deep'); sk.data.foreach_set('co', (B + D).astype(np.float32).ravel())
     for k in kb:
         if k.name != 'Basis': k.value = 0.0
-    dark = bpy.data.materials.new('dark'); dark.diffuse_color = (.16, .15, .14, 1)
-    bpy.ops.mesh.primitive_plane_add(size=8); fl = bpy.context.object; fl.data.materials.append(dark)
-    for x in bpy.data.objects:                                       # clay read: leather brown chair, no textures in Workbench
-        if x.get('chair') and x.type == 'MESH':
-            for ms in x.material_slots:
-                if ms.material: ms.material.diffuse_color = (.24, .14, .09, 1)
-    sc.render.engine = 'BLENDER_WORKBENCH'; sc.display.shading.light = 'STUDIO'; sc.display.shading.color_type = 'MATERIAL'
-    sc.display.shading.show_cavity = True
-    clay = bpy.data.materials.new('clay'); clay.diffuse_color = (.66, .64, .61, 1); o.data.materials.clear(); o.data.materials.append(clay)
-    sc.world = sc.world or bpy.data.worlds.new('w'); sc.world.color = (.30, .32, .36)
+    ARCH = os.environ.get('ARCHIVE_BLEND')                           # the r2 archive built with build_archive.py --nofig --save
+    if ARCH:
+        load_archive(bpy, ARCH, sc)
+        if os.environ.get('ENGINE', 'CYCLES') == 'CYCLES':          # the archive light (r2) is tuned for Cycles (build_archive --preview)
+            sc.render.engine = 'CYCLES'; sc.cycles.device = 'CPU'; sc.cycles.samples = int(os.environ.get('SAMPLES', 32))
+            sc.cycles.use_denoising = True; sc.cycles.max_bounces = 4; sc.cycles.volume_bounces = 0
+        else:
+            sc.render.engine = 'BLENDER_EEVEE_NEXT'; sc.eevee.taa_render_samples = int(os.environ.get('EEVEE_SAMPLES', 48))
+        sc.view_settings.view_transform = 'AgX'; sc.view_settings.exposure = float(os.environ.get('EXPOSURE', .8))
+        clay = bpy.data.materials.new('clay'); clay.use_nodes = True
+        bsdf = clay.node_tree.nodes['Principled BSDF']; bsdf.inputs['Base Color'].default_value = (.42, .40, .38, 1); bsdf.inputs['Roughness'].default_value = .7
+        o.data.materials.clear(); o.data.materials.append(clay)
+    else:
+        dark = bpy.data.materials.new('dark'); dark.diffuse_color = (.16, .15, .14, 1)
+        bpy.ops.mesh.primitive_plane_add(size=8); fl = bpy.context.object; fl.data.materials.append(dark)
+        for x in bpy.data.objects:                                   # clay read: leather brown chair, no textures in Workbench
+            if x.get('chair') and x.type == 'MESH':
+                for ms in x.material_slots:
+                    if ms.material: ms.material.diffuse_color = (.24, .14, .09, 1)
+        sc.render.engine = 'BLENDER_WORKBENCH'; sc.display.shading.light = 'STUDIO'; sc.display.shading.color_type = 'MATERIAL'
+        sc.display.shading.show_cavity = True
+        clay = bpy.data.materials.new('clay'); clay.diffuse_color = (.66, .64, .61, 1); o.data.materials.clear(); o.data.materials.append(clay)
+        sc.world = sc.world or bpy.data.worlds.new('w'); sc.world.color = (.30, .32, .36)
 
     # ---- cameras (placed on the open-hand pose) ----
     A0, T0 = state('close', 0.0); apply(A0, T0)
@@ -160,7 +197,7 @@ def render(g):
         err(x); print('   auto camera', [round(v, 3) for v in x], 'residual', round(best, 5),
                       {k: tuple(round(c, 2) for c in w2c(sc, o1, pt)[:2]) for k, (pt, _) in KP.items()})
     c2 = bpy.data.cameras.new('side'); o2 = bpy.data.objects.new('side', c2); sc.collection.objects.link(o2)
-    c2.type = 'ORTHO'; c2.ortho_scale = 1.9; o2.location = Vector((-3.0, chest.y - .05, chest.z - .2))
+    c2.type = 'ORTHO'; c2.ortho_scale = 1.9; o2.location = Vector((-1.2, chest.y - .05, chest.z - .2))   # inside the archive walls
     o2.rotation_euler = (math.radians(90), 0, math.radians(-90)); cams['side'] = o2
     chair_objs = [x for x in bpy.data.objects if x.get('chair')]
     pc = g['pc']
@@ -175,7 +212,8 @@ def render(g):
         print('   stills →', OUT); return
 
     # ---- frames ----
-    FPS, DUR = 15, 10.0; n = int(FPS * DUR)
+    FPS, DUR = int(os.environ.get('FPS', 15)), 10.0; n = int(FPS * DUR)
+    if os.environ.get('NO_SIDE'): cams = {'ma': cams['ma']}              # archive (Cycles) runs: the reference view only
     for i in range(n):
         t = i / FPS; A, T = fist_at(t); apply(A, T)
         o.data.shape_keys.key_blocks['breath_deep'].value = .8 * breath_at(t)
@@ -199,11 +237,12 @@ def render(g):
     # key-frame sheet: open, mid-close, fist, inhale peak, exhale trough
     from PIL import ImageDraw
     keys = [(0.0, 'open, exhaled'), (1.0 + cl * .5, 'closing'), (1.0 + cl + .2, 'fist, inhaling'), (2.0, 'inhale peak'), (4.95, 'exhale end')]
-    W, Hh = 384, 216; sheet = Image.new('RGB', (W * len(keys), Hh * 2 + 22), 'white'); dr = ImageDraw.Draw(sheet)
+    rows_ = ('ov', 'side') if 'side' in cams else ('ov',)
+    W, Hh = 384, 216; sheet = Image.new('RGB', (W * len(keys), Hh * len(rows_) + 22), 'white'); dr = ImageDraw.Draw(sheet)
     for c, (t, lab) in enumerate(keys):
         i = min(n - 1, int(round(t * FPS)))
         dr.text((c * W + 4, 5), f't={i / FPS:.2f}s {lab}  breath {breath_at(i / FPS):.2f}', fill='black')
-        for r, name in enumerate(('ov', 'side')):
+        for r, name in enumerate(rows_):
             sheet.paste(Image.open(os.path.join(FR, f'{name}_{i:04d}.png')).convert('RGB').resize((W, Hh)), (c * W, 22 + r * Hh))
     sheet.save(os.path.join(OUT, 'chair_motion_keys.jpg'), quality=85)
     print('   video →', mp4)

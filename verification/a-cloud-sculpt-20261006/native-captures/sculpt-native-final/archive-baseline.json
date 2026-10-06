@@ -1,0 +1,120 @@
+{
+  "renderer": "ANGLE (Microsoft, Microsoft Basic Render Driver (0x0000008C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "p": 0.55,
+    "t": 2.4,
+    "arrival": {
+      "model": "Bruneton LUT + REMA + world density",
+      "cloudModel": {
+        "model": "v1"
+      },
+      "cloudLayersTrial": false,
+      "cloudSculptTrial": false,
+      "terrain": {
+        "source": "REMA v2 1km EPSG3031",
+        "heightExaggeration": 5,
+        "polarDisplayInfillMetres": 2666.6238050085353,
+        "vertices": 99009
+      },
+      "specular": 1,
+      "atmosphere": true,
+      "flare": true,
+      "cloud": true,
+      "cloudShadow": 1,
+      "sunUV": [
+        0,
+        0
+      ],
+      "strength": 0,
+      "sunDirection": [
+        -0.5728484440110012,
+        0.4847179141631549,
+        0.6609789738588475
+      ]
+    },
+    "scene": "d0-mixed-0",
+    "record": "S022",
+    "fs": 250,
+    "winner": "M08",
+    "sample": 600,
+    "sourceSample": 657,
+    "rAbs": 487,
+    "rOffsets": [
+      75,
+      282,
+      487,
+      678,
+      883,
+      1085,
+      1285,
+      1487,
+      1675,
+      1880,
+      2083
+    ],
+    "beatAge": 0.45199999999999996,
+    "heartScale": 1.000343299574907,
+    "sharedClock": true,
+    "bodyVisible": false,
+    "heartVisible": false,
+    "heartScreen": [
+      0.08589810396822826,
+      0.363454047414761,
+      0.9954197093855366
+    ],
+    "camera": [
+      0,
+      3.3,
+      4.6
+    ],
+    "cameraTarget": [
+      0.2,
+      1.2,
+      -3
+    ],
+    "cartSocket": [
+      -1.29,
+      0.88,
+      -3.9
+    ],
+    "volume": true,
+    "bloom": true,
+    "clay": false,
+    "aa": "msaa",
+    "actualSamples": 4,
+    "supportedSamples": [
+      16,
+      8,
+      4,
+      2,
+      1
+    ],
+    "smaa": false,
+    "dpr": 1,
+    "pixelRatio": 1,
+    "renderSize": [
+      1920,
+      1080
+    ],
+    "grain": false,
+    "jitter": true,
+    "steps": 96,
+    "frame": 12,
+    "gpu": {
+      "available": false,
+      "count": 0,
+      "p50": null,
+      "p95": null
+    },
+    "raf": {
+      "count": 1,
+      "p50": -20.20000000149014,
+      "p95": -20.20000000149014
+    },
+    "cpuRenderMsMean": 3.800000000745058,
+    "drawCalls": 62,
+    "triangles": 220868
+  },
+  "url": "http://127.0.0.1:4198/?reviewP=0.55&reviewRound=sculpt-native-final&reviewShot=archive-baseline"
+}

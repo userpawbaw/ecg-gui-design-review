@@ -1285,3 +1285,26 @@ shape/core/edge density 분리, thick/thin optical두께/그림자 구분, 같�
 
 ### 놓쳤다면
 풍부한shader기능목록이나별도opacity층을 사용자요청의완성도라고설명하며흰안개와GPU회귀를기본에채택했을것이다.
+
+## F-046. 공유 밀도와 bake는 조형 기준의 완성도를 대신하지 않는다
+
+| | |
+|---|---|
+| 발견 | 2026-10-06 [코드] [캡처] [런타임] |
+| 상태 | 부분 기능 PASS / 목업 충실도 FAIL / 후보 TUNE / GPU 미검증 |
+| 연결 | D-075, O-011, CASE-007 |
+
+### 발단
+사용자 “진행해줘”로 D075 신규 조형/Cycles/bake 후보 승인. 두꺼운 양감·하부그림자/얇은 투과·솜털 요구를 같은 시나리오에 제작.
+
+### 먼저 의심한 것과 배제 방법
+밀도 정의를 Blender atlas와 browser raw에 공유하고 σ/작은융기/erosion/얇은반복을 initial+3 보완. F16깊이·거리무관 시선·fresh가림 준비는 기능 복구로 분리. Cycles와 browser camera/receiver/transport 차이를 인정하며 동일구도 비교 성공으로 포장하지 않았다.
+
+### 결정적 근거
+native software 16프레임 ready, 현재 콘솔 error0. 융기·하부음영은 읽히지만 큰 매끈한 면과 흐린외곽/솜털 부족. .295 shadowoff mean33.135RGB/thinoff5.204RGB는 출력기여이며 물리정확도 증거가 아니다. bloomoff RGB차0, p.55 기존서고 RGB차0. sample883=rAbs883/beatAge0/heartScale1.07/sharedClock 확인. GPU/정역영상/장시간 미검증. Cycles GPUrequested와 실제 CPUonly device를 분리한다.
+
+### 조치와 검토한 대안
+cloudModel=sculpt에 격리, 기본v1 유지. 목표 camera/receiver를 맞춘 고품질 조형 기준 자체가 먼저 필요하다. light secondary march를 lookup으로 바꾼 것은 구현 사실이며 GPU 비용 개선은 아직 증명되지 않았다. 상세 ECG_A_cloud_sculpt_review_2026-10-06.md, metrics/checkpoint/실패회차 보존.
+
+### 놓쳤다면
+.blend 파일/볼륨/빛cache 확보를 목업수준 완성으로, software frame을 RTX 성능 증거로 제시했을 것이다.

@@ -1,0 +1,22 @@
+{
+  "bpy": "4.5.3 LTS",
+  "engine": "Cycles",
+  "samples": 96,
+  "device": "GPU",
+  "density": "same R8 atlas; Principled Volume differs from realtime approximation",
+  "shots": [
+    {
+      "file": "03-side.png",
+      "camera_km": [
+        3,
+        -5,
+        0.7
+      ],
+      "look_km": [
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

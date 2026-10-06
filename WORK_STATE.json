@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "A_P2_cloud_layers_trial_verified_visual_FAIL_candidate_TUNE_default_REJECT_G6_complete",
+    "status": "A_P2_cloud_sculpt_partial_static_software_QA_visual_FAIL_TUNE_GPU_motion_pending_G6_complete",
     "records": [
       "D-065",
       "D-066",
@@ -685,11 +685,14 @@
       "CASE-007",
       "D-074",
       "F-045",
-      "O-010"
+      "O-010",
+      "D-075",
+      "F-046",
+      "O-011"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "User decision on a new sculpted cloud/Cycles reference + density/light bake and Beer-shadow/adaptive sampling candidate. Current candidate isolated at cloudModel=layers; stable v1 retained; approved archive KEEP; A-P3/Story/B/C deferred.",
+    "next": "Review remaining cloud sculpture/detail/camera GAP; matched camera/receiver reference quality needed; hardware GPU and forward/reverse motion QA pending. G6 complete, no default adoption. Archive KEEP; A-P3/Story/B/C deferred.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -795,6 +798,18 @@
       "p95": 40.032256,
       "scope": "8sec unrecorded local Chromium DPR1 1920x1080; target-PC/600sec unverified"
     },
-    "arrival_cloud_layers_next": "G6 initial+3 exhausted: user decision on a new sculpted/Cycles/bake+Beer-shadow candidate; A-P3/Story/BC remain deferred"
+    "arrival_cloud_layers_next": "G6 initial+3 exhausted: user decision on a new sculpted/Cycles/bake+Beer-shadow candidate; A-P3/Story/BC remain deferred",
+    "arrival_cloud_sculpt_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sculpt_review_2026-10-06.md",
+    "arrival_cloud_sculpt_route": "?cloudModel=sculpt, experimental; default v1 retained",
+    "arrival_cloud_sculpt_verification": {
+      "static_frames": 16,
+      "renderer": "Microsoft Basic Render Driver software",
+      "archive_p55_meanRGB": 0,
+      "R883_shared_clock": true,
+      "GPU": "unverified",
+      "motion_video": "unverified",
+      "fidelity": "FAIL/TUNE",
+      "build": "PASS56modules"
+    }
   }
 }

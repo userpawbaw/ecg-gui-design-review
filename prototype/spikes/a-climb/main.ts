@@ -137,7 +137,7 @@ function draw(dt:number){
  }
  camera.position.copy(pos);camera.position.x+=pointer.sx*.03*(1-wave);camera.position.y-=pointer.sy*.03*(1-wave);
    camera.near=.025;camera.far=40;camera.fov=roomP<.25?THREE.MathUtils.lerp(26,44,ss(0,.25,roomP)):THREE.MathUtils.lerp(44,34,wave);camera.up.set(0,1,0);camera.setViewOffset(W,H,W*.19*wave,0,W,H);camera.lookAt(lastTarget);camera.updateProjectionMatrix();camera.updateMatrixWorld();
- if(arrival){arrival.cloudPass.uniforms.uCover.value=arrival.cover(p);arrival.cloudPass.uniforms.uProgress.value=ss(.24,.4,p);arrival.cloudPass.uniforms.uTime.value=reduced?0:t;if(arrival.cloudPass.uniforms.uExit)arrival.cloudPass.uniforms.uExit.value=1-ss(.335,.4,p);if(inSpace)lastTarget.copy(arrival.update(p,t,reduced,camera));}
+ if(arrival){arrival.cloudPass.uniforms.uCover.value=arrival.cover(p);arrival.cloudPass.uniforms.uProgress.value=ss(.24,.4,p);arrival.cloudPass.uniforms.uTime.value=reduced?0:t;if(arrival.cloudPass.uniforms.uExit)arrival.cloudPass.uniforms.uExit.value=1-ss(.335,.4,p);if(inSpace)lastTarget.copy(arrival.update(p,t,reduced,camera));else if(arrival.cover(p)>.001&&'prepareCover' in arrival)arrival.prepareCover(p,t,reduced,camera);}
  if(arrival&&!inSpace)arrival.flarePass.uniforms.uStrength.value=0;
  renderPass.scene=inSpace?arrival!.scene:scene;
  if(arrival)arrival.cloudPass.enabled=inSpace||arrival.cover(p)>.001;
@@ -171,10 +171,21 @@ $('play').onclick=()=>{playing=!playing;frozenTime=null;($('play') as HTMLButton
 addEventListener('keydown',ev=>{if(ev.key.toLowerCase()==='d')$('qa').style.display=$('qa').style.display==='block'?'none':'block';});
 (window as any).aPreview={set:configure,state,live:(pv:number)=>{locked=true;targetP=p=pv;frozenTime=null;testFrame=null;playing=true;return state();},path:(seconds=8,reverse=false)=>{pathStart=performance.now();pathDuration=seconds;pathReverse=reverse;locked=true;frozenTime=null;testFrame=null;t=0;playing=true;gpuTimes.length=frameTimes.length=0;return state();}};
 $('loading').remove();
+// Review-only URL harness: deterministic native-browser frames and same-engine timing.
+if(params.has('reviewP')||params.has('reviewPath')){
+ const fixed=Number(params.get('reviewP')??0),fixedTime=Number(params.get('reviewTime')??2.4);
+ configure(THREE.MathUtils.clamp(Number.isFinite(fixed)?fixed:0,0,1),Number.isFinite(fixedTime)?fixedTime:2.4,{frame:12,grain:false,bloom:params.get('bloom')!=='0',cloudShadow:params.get('cloudShadow')!=='0',thick:params.get('thick')!=='0',thin:params.get('thin')!=='0'});
+ const save=document.createElement('button');save.textContent='프레임 저장';save.id='review-save';save.style.cssText='position:fixed;right:16px;top:16px;z-index:99;padding:8px 14px;background:#121a20;color:white;border:1px solid #46515a';
+ const saveFrame=async()=>{draw(0);const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'manual',shot:params.get('reviewShot')||('frame-'+Math.round(p*1000)),image:renderer.domElement.toDataURL('image/png'),meta:{renderer:(()=>{const e=gl.getExtension('WEBGL_debug_renderer_info');return e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null;})(),state:state(),url:location.href}})});if(!response.ok)throw Error(await response.text());save.textContent='프레임 저장 완료';console.info('CLOUD_REVIEW_SAVED '+await response.text());};
+ save.onclick=()=>void saveFrame().catch(console.error);document.body.append(save);if(params.has('reviewShot'))requestAnimationFrame(()=>requestAnimationFrame(()=>void saveFrame().catch(console.error)));
+ const info=gl.getExtension('WEBGL_debug_renderer_info');console.info('CLOUD_REVIEW_META '+JSON.stringify({renderer:info?gl.getParameter(info.UNMASKED_RENDERER_WEBGL):null,userAgent:navigator.userAgent,state:state(),url:location.href}));
+ if(['forward','reverse'].includes(params.get('reviewPath')||'')){(window as any).aPreview.path(8,params.get('reviewPath')==='reverse');setTimeout(()=>{console.info('CLOUD_REVIEW_TIMING '+JSON.stringify(state()));},8600);}
+}
+
 function tick(now:number){frameTimes.push(now-prev);if(frameTimes.length>600)frameTimes.shift();const dt=Math.min((now-prev)/1000,.05);prev=now;lenis.raf(now);if(frozenTime===null&&playing)t+=dt;
  if(pathStart!==null){const pathPhase=THREE.MathUtils.clamp((now-pathStart)/1000/pathDuration,0,1);p=targetP=pathReverse?1-pathPhase:pathPhase;if(pathPhase===1)pathStart=null;}
  p=reduced?targetP:p+(targetP-p)*(1-Math.exp(-dt/ .35));pointer.sx=reduced?0:pointer.sx+(pointer.x-pointer.sx)*(1-Math.exp(-dt/.4));pointer.sy=reduced?0:pointer.sy+(pointer.y-pointer.sy)*(1-Math.exp(-dt/.4));
- const before=performance.now();draw(dt);samples.push(performance.now()-before);if(samples.length>120)samples.shift();requestAnimationFrame(tick);}
+ const before=performance.now();draw(dt);samples.push(performance.now()-before);if(samples.length>120)samples.shift();if(!(params.has('reviewP')&&!params.has('reviewPath')))requestAnimationFrame(tick);}
 requestAnimationFrame(tick);
 }
 start().catch(err=>{console.error(err);$('loading').textContent='장면을 준비하지 못했습니다: '+err.message;});

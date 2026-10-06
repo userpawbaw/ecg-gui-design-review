@@ -1909,3 +1909,31 @@ Takram의 제한된space 지원을 전체경로에 도입하거나 기존경로�
 조형·광학완성도또는GPU비용미달이면별도renderer/Blenderdensity+bake후보로전환비교한다. initial+3품질수정뒤남은GAP는기록한다. A-P3·Story는이번구름시험에서구현하지않는다.
 
 D-074 실제 시험 결과(2026-10-06): F-045/O-010 및 ECG_A_cloud_layers_review_2026-10-06.md. initial+3보완종료, 기술PASS/시각FAIL/GPU회귀. 기본채택REJECT, cloudModel=layers로보존하고v1기본유지. 새조형/Cycles·bake와shadow sampling비용후보는사용자판단대기. 승인서고KEEP/A-P3·Story·BC독립유지.
+
+## D-075. 사용자 승인한 구름 조형·Cycles 기준과 light-depth bake 후보
+
+| | |
+|---|---|
+| 시점 | 2026-10-06 [대화] [코드] |
+| 상태 | 새 후보 제작 승인 / 구현 전 |
+| 연결 | D-074, F-045, ECG_A_cloud_layers_review_2026-10-06.md |
+| CASE | CASE-007 |
+
+### 갈림길
+기존 넓은 shelf/매끈한 볼륨을 반복 보정하거나 작은 분리 군집의 측면과 광학 기준을 먼저 만든다.
+
+### 검토한 선택지
+1. 기존 임계값 재튜닝. 2. Blender 분리된 billow mesh/volume 기준 + 동일 조형 정의의 raw density + light-depth bake, 근접 전용 bank/shadow cache. 3. 2D flipbook만 사용.
+
+### 고른 것과 근거
+사용자 진행 승인에 따라 2. 단일 군집 범위를 수km로 줄이고 전중후6장/빛off를 내부 점검. Blender 기준 렌더와 browser의 밀도/光학은 근사 차이를 기록한다. 광역은 저비용 표현을 유지하고 근접에 새 자산을 사용한다. 실험 opt-in, 기준 PASS 후 기본 채택 검토.
+
+### 버린 것과 이유
+1은 이미3회 품질 수정 종료/비용회귀. 3은 회전/진입의 공간성 검증이 제한되므로 fallback만 보존.
+
+### 되돌려야 하는 조건
+기준 렌더도 양감 부족하면 browser 이식보다 조형/빛을 먼저 수정. Cycles와 browser 일치 미달은 완료로 처리하지 않는다. G6 initial+3, archive KEEP/ECG clock/Story 분리 유지.
+
+D-075 구현 구체화: mesh→VDB를 내보낸 것으로 주장하지 않는다. 타원체 군집/경계 erosion을 raw128³density로 정의하고 Blender의 volume bound가 packed2D atlas로 동일 density를 읽게 했다. 새 모델링의 편집 source는 density 생성 script/manifest와 .blend 노드 장면이다. 별도 mesh-to-volume 변환은 하지 않았다. Cycles Principled Volume/AgX와 browser 산란근사/ACES 차이를 남긴다. 고정 orbit 태양에 맞춘 optical-depth cache는 광원 변경시 rebake한다.
+
+D-075 결과: F046/O011 및 ECG_A_cloud_sculpt_review_2026-10-06.md. 실제 rawdensity/packedblend/F16light-ground cache/별도얇은층 제작, G6 initial+3 종료. 부분 기능검증 PASS, 목업 충실도 FAIL/후보 TUNE, 기본채택 보류. nativesoftware16frame/서고.55RGB동일/R883공통clock, GPU와정역영상 미검증. Cycles와browser camera/receiver가다르므로 동일프레임기준 성공으로 주장하지 않는다. A-P3/Story/BC 독립보류.

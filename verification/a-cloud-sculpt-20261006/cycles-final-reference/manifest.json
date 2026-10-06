@@ -1,0 +1,94 @@
+{
+  "bpy": "4.5.3 LTS",
+  "engine": "Cycles",
+  "samples": 16,
+  "device_requested": "GPU",
+  "devices_available": [
+    {
+      "name": "AMD Ryzen 5 3600 6-Core Processor",
+      "type": "CPU",
+      "enabled": false
+    }
+  ],
+  "density": "same R8 atlas; Principled Volume differs from realtime approximation",
+  "shots": [
+    {
+      "file": "01-wide.png",
+      "camera_km": [
+        6,
+        -8,
+        4
+      ],
+      "look_km": [
+        0,
+        0,
+        -0.1
+      ]
+    },
+    {
+      "file": "02-above.png",
+      "camera_km": [
+        3,
+        -4,
+        3
+      ],
+      "look_km": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "03-side.png",
+      "camera_km": [
+        3,
+        -5,
+        0.7
+      ],
+      "look_km": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "04-gap.png",
+      "camera_km": [
+        0.8,
+        -2.8,
+        0.1
+      ],
+      "look_km": [
+        0,
+        0.1,
+        0
+      ]
+    },
+    {
+      "file": "05-core.png",
+      "camera_km": [
+        0.1,
+        -1,
+        0.0
+      ],
+      "look_km": [
+        0,
+        0.5,
+        0
+      ]
+    },
+    {
+      "file": "06-cut.png",
+      "camera_km": [
+        -0.15,
+        -0.1,
+        -0.2
+      ],
+      "look_km": [
+        0,
+        0.4,
+        0
+      ]
+    }
+  ]
+}

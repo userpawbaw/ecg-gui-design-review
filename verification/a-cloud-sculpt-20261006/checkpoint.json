@@ -1,0 +1,34 @@
+{
+  "stage": "candidate implemented; native software static-frame QA verified; fidelity FAIL/TUNE; GPU and motion QA pending",
+  "environment": {
+    "Win32_VideoController": "RTX3070 StatusOK ConfigManagerErrorCode0 driver32.0.15.9186",
+    "CUDA_probe": "cuInit Invalid value; Cycles enumerates only CPU",
+    "browser": "CLI minimal WebGL fails; native IAB renders using Microsoft Basic Render Driver software",
+    "minimal_canvas": {
+      "webgl": false,
+      "webgl2": false
+    },
+    "cause": "environment failure established; precise driver/permission root cause not proven"
+  },
+  "initial_runtime": "verification/a-arrival-20261006/cloud-sculpt-initial/review.json:22 frames errors0 BEFORE erosion/F16/normalized camera fix",
+  "final_cycles": "cycles-final-reference: 6 frames 640x360/16samples denoised; GPU requested but devices enumerate only CPU, CPU fallback inference",
+  "quality": "billows/under-shadow more readable; cotton detail and mockup lighting FAIL; not adopted as default",
+  "asset_hashes": {
+    "density-atlas.png": true,
+    "density.r8": true,
+    "ground-depth.f16": true,
+    "ground-depth.r8": true,
+    "light-depth.f16": true,
+    "light-depth.r8": true,
+    "cloud-sculpt.blend": true
+  },
+  "sources": {
+    "prototype\\spikes\\a-climb\\planet-cloud-sculpt.ts": "6656a0d8330d95e4cfc3ec2a3b06c5f6df06a7aeab155a061251eab40252accf",
+    "prototype\\spikes\\a-climb\\arrival.ts": "8c4168433a7e03eb818913f5c49aa80c5415c9ccc298db8b244ecb2143a335aa",
+    "prototype\\spikes\\a-climb\\main.ts": "022b1aae8b6ad0b586dfec771b2bdfbcd1105ac40c0ae169fd44a8eb37aa3e42",
+    "prototype\\spikes\\a-climb\\vite.config.mjs": "52842f5d17df1de9c7ae0b0405f1fb8a73c930c1252e38b48a31c028bacdac5b",
+    "scripts\\assets\\prepare-cloud-sculpt.py": "3cea9566a3ace1cdbf48670580665f8a15853c5225f99e23675e03a7e9d8fec4",
+    "scripts\\assets\\render-cloud-sculpt.py": "b14181a585d0c6b621ac1c254a398bb548d7821453951702d891c3e41e43f051"
+  },
+  "final_runtime": "native-captures/sculpt-native-final + metrics.json; 3D canvas PNG only, DOM waveform excluded"
+}

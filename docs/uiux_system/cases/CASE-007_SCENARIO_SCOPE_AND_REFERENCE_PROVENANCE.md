@@ -106,3 +106,6 @@ AI가 BC 필수보완→ABC비교로 순서를 제안하려던 단계에서 사�
 
 ## 2026-10-06 층별 실제 제작 뒤의 판단 변경
 사용자 “진행해줘” → AI가 scoped 조형density/thick-thin/동일field그림자·깊이와새근접camera를구현(D074) → 내부initial+3품질보완에도매끈한큰면/부족한thin·자가음영·GPU40ms확인 → F045에서기술동작과목표양감을분리하고기본채택REJECT → opt-in후보보존/승인서고KEEP와ECGclock검증/신규조형·기준렌더+bake후보제안. 사용자최종시각판정은아직기록없음. G6이실제품질을보장한것이아니라미달을숨기지않고다음판단으로넘기는한도로기능했다. 새gate규칙을발명하지않는다.
+
+## 2026-10-06 조형 기준/bake 후보와 증거범위
+사용자 진행승인→D075 공유 procedural밀도/Blender volume bound/bakeddepth/새근접경로→G6 initial+3 후 융기·음영 개선이나 목업충실도FAIL/TUNE(F046). 기준자체의 솜털·구도완성도 부족과 Cycles/browser camera·수광체 불일치 공개. GPUrequested/CPUonly/CLI WebGLfail/IABsoftware성공을 분리(O011). native16정지frame과R883/서고RGB비교를GPU·연속영상PASS로확대하지 않는다. 기본v1과실패D074후보보존/A-P3·Story·BC별도. 새로운 사용자 최종 품질판정 없음.

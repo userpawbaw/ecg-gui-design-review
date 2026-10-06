@@ -2202,6 +2202,167 @@
         "prototype/spikes/a-climb"
       ],
       "review": "D-074 synthetic sculpted density / noise; no Blender or measured weather claim."
+    },
+    {
+      "id": "cloud-sculpt-density-atlas-png",
+      "title": "cloud-sculpt-density-atlas-png",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-sculpt.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-sculpt/density-atlas.png",
+        "bytes": 178696,
+        "sha256": "13789b4fb8387ffcaaea46ce3016e3cd5cdd56cd5d0acbbfbb887ba542daf1ec"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-075 native software static QA; fidelity FAIL/TUNE; GPU/motion verification pending; experimental only"
+    },
+    {
+      "id": "cloud-sculpt-density-r8",
+      "title": "cloud-sculpt-density-r8",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-sculpt.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-sculpt/density.r8",
+        "bytes": 2097152,
+        "sha256": "ff808fe6da7a5101eb49e006ae9b6decc5a8335e6d84766947e20b77a15949fa"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-075 native software static QA; fidelity FAIL/TUNE; GPU/motion verification pending; experimental only"
+    },
+    {
+      "id": "cloud-sculpt-ground-depth-f16",
+      "title": "cloud-sculpt-ground-depth-f16",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-sculpt.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-sculpt/ground-depth.f16",
+        "bytes": 32768,
+        "sha256": "02ff7d046981e633784514c5d82213050759bb985304579fe7dfebf9ed79144c"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-075 native software static QA; fidelity FAIL/TUNE; GPU/motion verification pending; experimental only"
+    },
+    {
+      "id": "cloud-sculpt-ground-depth-r8",
+      "title": "cloud-sculpt-ground-depth-r8",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-sculpt.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-sculpt/ground-depth.r8",
+        "bytes": 16384,
+        "sha256": "ea9ee6e7e803965b8ed3d7bafce34c43893d4e0aa81fccdec221c165ddf6fa2b"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-075 native software static QA; fidelity FAIL/TUNE; GPU/motion verification pending; experimental only"
+    },
+    {
+      "id": "cloud-sculpt-light-depth-f16",
+      "title": "cloud-sculpt-light-depth-f16",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-sculpt.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-sculpt/light-depth.f16",
+        "bytes": 4194304,
+        "sha256": "23d8700fb7608ade7c42b1ae77c3f8023a8b156ab49ffd26c7a23f2272af3edf"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-075 native software static QA; fidelity FAIL/TUNE; GPU/motion verification pending; experimental only"
+    },
+    {
+      "id": "cloud-sculpt-light-depth-r8",
+      "title": "cloud-sculpt-light-depth-r8",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/prepare-cloud-sculpt.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-sculpt/light-depth.r8",
+        "bytes": 2097152,
+        "sha256": "9bf14c31b2527b0415d12e9588f650320aa59e8ec912e43906b157a78f2ed2b0"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-075 native software static QA; fidelity FAIL/TUNE; GPU/motion verification pending; experimental only"
+    },
+    {
+      "id": "cloud-sculpt-editable-scene",
+      "title": "Packed shared-density Cycles volume scene",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "generated",
+        "script": "scripts/assets/render-cloud-sculpt.py"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": null,
+      "processed": null,
+      "generated": {
+        "file": "prototype/spikes/a-climb/assets/cloud-sculpt/cloud-sculpt.blend",
+        "bytes": 786562,
+        "sha256": "3b711f55360e553221ea28b9a44d0efdfc258f43042e56320a9032ce00492f85"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb"
+      ],
+      "review": "D-075 native software static QA; fidelity FAIL/TUNE; GPU/motion verification pending; experimental only"
     }
   ],
   "rejected": [

@@ -341,3 +341,6 @@ Final states38(off/idle12/reduced2)/8sec reverse+12decoded, final forward12decod
 사용자 진행 요청에 따라 synthetic128³군집/64³macro·erosion과 별도thick/thin·동일밀도광학/지표그림자/scene-depth/공간재구성/adaptiveEarthcamera 구현. initial+3품질보완/깊이·가림 기능복구. 기술PASS/목업시각FAIL/후보TUNE, GPU33.01/40.03ms83queries 비용회귀로 기본채택REJECT. 기본v1유지, ?cloudModel=layers 별도시험. final31+22diagnostic+17runtime/3R·정지/native/reduced+38states·정역영상24decoded/errors0/buildPASS; freshRTX3070확인. 서고3frameRGB동일/2frame최대1RGB(mean<1e-6)KEEP. 새조형·Cycles기준+bake/Beer shadow/적응sampling 후보 제안, G6 이후 사용자판단. A-P3·Story·BC보류. 상세 ECG_A_cloud_layers_review_2026-10-06.md.
 
 종료 검증: records160 PASS / 최종build55modules PASS / git diff --check PASS. 커밋 전 원격 작업 branch08468ef8 및 maincfef4300 확인, 관련 원격 변경 없음. 단계는 실행검증 완료·목표품질 미달/기본채택REJECT이며 전체프로젝트완료가 아니다. commit/push 뒤 원격HEAD와review 내용 readback으로 저장을 확인한다.
+
+### 2026-10-06 A-P2 조형 구름/Cycles/bake — D-075/F-046/O-011
+171융기raw128³+packedblend/F16광학·grounddepth/고층thin/96view+1lightlookup 구현, G6 initial+3 종료. nativeIAB software16fixedframe ready/현재error0/서고p.55RGB동일/R883clock확인. 목업충실도FAIL/후보TUNE/기본채택보류, v1유지. GPUrequested CPUonly와CLIbareWebGLfail 보존; nativeBasicRenderDriver를RTX성능으로대체하지않음. GPU/정역영상/600초/장시간미검증. 최종build56modules/pycompile PASS. 다음정합camera/receiver고품질기준과솜털·군집구도판단/하드웨어QA재개. A-P3/Story/BC분리. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sculpt_review_2026-10-06.md

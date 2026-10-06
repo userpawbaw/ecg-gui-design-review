@@ -235,3 +235,23 @@ adaptiveEarthnear/별도ground-depth/실제RTtexture/groundprogramkey복구. arc
 
 ### 재발 방지와 자동화 상태
 소스에near/textureidentity복구와실험opt-in반영. source/asset hash와frame/state/오류로그를보존. 자동resource-lock/nearprecisionassert는미구현. fresh검증실패를완료로기록하지않는다.
+
+## O-011. Cycles GPU 요청과 browser 렌더 성공의 실제 장치 불일치
+
+| | |
+|---|---|
+| 시점 | 2026-10-06 [런타임] [코드] |
+| 잃은 것 | CUDA queue 실패/느린 CPU fallback/CLI WebGL context 실패 진단과 대체 QA; 정확한 소요분 미기록 |
+| 연결 | D-075, F-046 |
+
+### 증상
+cuInit Invalid value와 Cycles queue 오류. 새 CLI Chromium의 빈 canvas WebGL/WebGL2도 false, BindToCurrentSequence 실패. IAB에서는 렌더되지만 Microsoft Basic Render Driver software. CUDA/OPTIX/isolated 중단 자료와 final-reference 완료 자료 분리.
+
+### 원인
+렌더 환경에서 GPU 장치가 열거되지 않았고 CLI context 생성이 실패한 것은 확인. 구체적인 driver/권한 원인과 두 증상 사이 인과는 미확정. scene.cycles.device=GPU 표시는 실제 장치 확인이 아니다. 초기 모든 browser 불가 판단은 IAB software 성공 후 정정.
+
+### 조치
+Cycles 장치실제목록 검사/CPU fallback명시. 사용자앱/driver reset 없이 IAB read-only UI검증과 query-only fixedframe harness/loopback save 사용. software 렌더부하가 CDP3sec timeout을 일으켜 즉시 DOMwait 대신 저장된 artifact 완료를 확인했다. Python 리뷰를 bpy용별도runtime에서 잘못실행해 PIL누락; bundled Python으로 복구. build/pycompile PASS.
+
+### 재발 방지와 자동화 상태
+GPUflag/device목록/renderer/vendor/실측query를 분리. source/asset pin과 scope 포함 metrics를 자동 생성. hardware timing/정역영상 재개는 미완. 일반 renderer 성공을 목표장치 성능으로 확대하지 않는다. 기존 R034 증거범위 규칙 적용, 새 R 없음.

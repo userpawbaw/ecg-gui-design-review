@@ -1,0 +1,127 @@
+{
+  "renderer": "ANGLE (Microsoft, Microsoft Basic Render Driver (0x0000008C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "p": 1,
+    "t": 3.532,
+    "arrival": {
+      "model": "Bruneton LUT + REMA + world density",
+      "cloudModel": {
+        "model": "shared Cycles density + pre-baked light/ground depth",
+        "thick": 1,
+        "thin": 1,
+        "localMix": 0,
+        "viewSamples": 96,
+        "lightSamples": 1,
+        "groundShadowSamples": 1,
+        "temporalAccumulation": false
+      },
+      "cloudLayersTrial": true,
+      "cloudSculptTrial": true,
+      "terrain": {
+        "source": "REMA v2 1km EPSG3031",
+        "heightExaggeration": 5,
+        "polarDisplayInfillMetres": 2666.6238050085353,
+        "vertices": 99009
+      },
+      "specular": 1,
+      "atmosphere": true,
+      "flare": true,
+      "cloud": true,
+      "cloudShadow": 1,
+      "sunUV": [
+        0,
+        0
+      ],
+      "strength": 0,
+      "sunDirection": [
+        -0.5728484440110012,
+        0.4847179141631549,
+        0.6609789738588475
+      ]
+    },
+    "scene": "d0-mixed-0",
+    "record": "S022",
+    "fs": 250,
+    "winner": "M08",
+    "sample": 883,
+    "sourceSample": 940,
+    "rAbs": 883,
+    "rOffsets": [
+      75,
+      282,
+      487,
+      678,
+      883,
+      1085,
+      1285,
+      1487,
+      1675,
+      1880,
+      2083
+    ],
+    "beatAge": 0,
+    "heartScale": 1.07,
+    "sharedClock": true,
+    "bodyVisible": true,
+    "heartVisible": true,
+    "heartScreen": [
+      -0.29485684629120557,
+      0.09381366419124208,
+      0.9767675686152077
+    ],
+    "camera": [
+      2.5,
+      1.97,
+      -4.32
+    ],
+    "cameraTarget": [
+      0.55,
+      1.65,
+      -3.76
+    ],
+    "cartSocket": [
+      -1.29,
+      0.88,
+      -3.9
+    ],
+    "volume": true,
+    "bloom": true,
+    "clay": false,
+    "aa": "msaa",
+    "actualSamples": 4,
+    "supportedSamples": [
+      16,
+      8,
+      4,
+      2,
+      1
+    ],
+    "smaa": false,
+    "dpr": 1,
+    "pixelRatio": 1,
+    "renderSize": [
+      1920,
+      1080
+    ],
+    "grain": false,
+    "jitter": true,
+    "steps": 96,
+    "frame": 12,
+    "gpu": {
+      "available": false,
+      "count": 0,
+      "p50": null,
+      "p95": null
+    },
+    "raf": {
+      "count": 1,
+      "p50": -22.699999997019745,
+      "p95": -22.699999997019745
+    },
+    "cpuRenderMsMean": 14.600000001490116,
+    "drawCalls": 80,
+    "triangles": 432192
+  },
+  "url": "http://127.0.0.1:4198/?cloudModel=sculpt&reviewP=1&reviewTime=3.532&reviewRound=sculpt-native-final&reviewShot=heart-r883"
+}

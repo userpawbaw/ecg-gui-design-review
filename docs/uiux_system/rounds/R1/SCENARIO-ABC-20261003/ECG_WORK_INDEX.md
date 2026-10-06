@@ -144,3 +144,6 @@ A 작업은 v4 §2/3/6, B 작업은 §2/4/6, C 작업은 §2/5/6을 먼저 읽�
 ## BG-B-03 실제 에셋
 
 [ECG_B_actual_assets_review_2026-10-04.md](ECG_B_actual_assets_review_2026-10-04.md)가 최신 B 실제 인체/심장/종이/빛 검토. 기존 부재 판단은F034 철회. H5 shader/원본registry/실제캡처를 참조. 박동스캔/A/C는 별도.
+
+## A-P2 조형 구름 최신 경로 — 2026-10-06
+[조형/bake 검토](ECG_A_cloud_sculpt_review_2026-10-06.md) → D075/F046/O011 → native-captures/metrics/checkpoint → 현재 source/asset manifest. 부분기능PASS/품질FAIL·TUNE/하드웨어미검증. 이전cloud-layers 실패는 보존. A-P3/Story/BC 계획과 섞지 않는다.

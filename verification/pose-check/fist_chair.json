@@ -31,220 +31,200 @@
    "dir": "close",
    "s": 0.0,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.05,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.1,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.15,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.2,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.25,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.3,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.35,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.4,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.45,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.5,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.55,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.6,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.65,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.7,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.75,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.8,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.85,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.9,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "close",
    "s": 0.95,
    "FAIL": 0,
-   "WARN": 4,
+   "WARN": 3,
    "issues": [
     "WARN forearm.L pronation 74.0",
     "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5",
     "WARN f_index ↔ f_ring 3.0"
    ]
   },
@@ -252,11 +232,10 @@
    "dir": "close",
    "s": 1.0,
    "FAIL": 0,
-   "WARN": 4,
+   "WARN": 3,
    "issues": [
     "WARN forearm.L pronation 74.0",
     "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5",
     "WARN f_index ↔ f_ring 3.1"
    ]
   },
@@ -264,11 +243,10 @@
    "dir": "open",
    "s": 0.0,
    "FAIL": 0,
-   "WARN": 4,
+   "WARN": 3,
    "issues": [
     "WARN forearm.L pronation 74.0",
     "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5",
     "WARN f_index ↔ f_ring 3.1"
    ]
   },
@@ -276,11 +254,10 @@
    "dir": "open",
    "s": 0.05,
    "FAIL": 0,
-   "WARN": 4,
+   "WARN": 3,
    "issues": [
     "WARN forearm.L pronation 74.0",
     "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5",
     "WARN f_index ↔ f_ring 3.1"
    ]
   },
@@ -288,11 +265,10 @@
    "dir": "open",
    "s": 0.1,
    "FAIL": 0,
-   "WARN": 4,
+   "WARN": 3,
    "issues": [
     "WARN forearm.L pronation 74.0",
     "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5",
     "WARN f_index ↔ f_ring 3.1"
    ]
   },
@@ -300,11 +276,10 @@
    "dir": "open",
    "s": 0.15,
    "FAIL": 0,
-   "WARN": 4,
+   "WARN": 3,
    "issues": [
     "WARN forearm.L pronation 74.0",
     "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5",
     "WARN f_index ↔ f_ring 3.1"
    ]
   },
@@ -312,11 +287,10 @@
    "dir": "open",
    "s": 0.2,
    "FAIL": 0,
-   "WARN": 4,
+   "WARN": 3,
    "issues": [
     "WARN forearm.L pronation 74.0",
     "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5",
     "WARN f_index ↔ f_ring 3.2"
    ]
   },
@@ -324,176 +298,160 @@
    "dir": "open",
    "s": 0.25,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.3,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.35,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.4,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.45,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.5,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.55,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.6,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.65,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.7,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.75,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.8,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.85,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.9,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 0.95,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   },
   {
    "dir": "open",
    "s": 1.0,
    "FAIL": 0,
-   "WARN": 3,
+   "WARN": 2,
    "issues": [
     "WARN forearm.L pronation 74.0",
-    "WARN wrist.L radial deviation 17.7",
-    "WARN fore.R → thigh.R gap 49.5"
+    "WARN wrist.L radial deviation 17.7"
    ]
   }
  ]

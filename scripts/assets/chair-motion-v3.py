@@ -22,6 +22,62 @@ def breath_at(t, period=5.0, inhale=2.0):
     return smooth(u / inhale) if u < inhale else 1.0 - smooth((u - inhale) / (period - inhale))
 
 
+FIG_ANCHOR = (0.0, .0087, .4313)                                     # figure.json poses_v3.chair.anchor (rig frame): buttock contact
+
+
+def place_chair(bpy, Vector, root):
+    """The archive's measurement chair (Poly Haven modern_arm_chair_01, CC0, 0.82 m) in the figure frame: backrest toward +y,
+    the chair_fit anchor (build_archive.py) on the figure's buttock contact, armrests measured by casting rays."""
+    import math as m
+    from mathutils.bvhtree import BVHTree
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=os.path.join(root, 'assets/source/ph-modern_arm_chair_01/modern_arm_chair_01_1k.gltf'))
+    new = [o for o in bpy.data.objects if o not in before]; roots = [o for o in new if o.parent is None]
+    for o in new: o['chair'] = True
+    def bbox():
+        bpy.context.view_layer.update(); P = [o.matrix_world @ Vector(c) for o in new if o.type == 'MESH' for c in o.bound_box]
+        return Vector([min(p[i] for p in P) for i in range(3)]), Vector([max(p[i] for p in P) for i in range(3)])
+    def cast_all():
+        dg = bpy.context.evaluated_depsgraph_get(); T = [(BVHTree.FromObject(o, dg), o.matrix_world.copy()) for o in new if o.type == 'MESH']
+        def cast(a, d):
+            best = None
+            for t, M in T:
+                Mi = M.inverted(); h = t.ray_cast(Mi @ a, (Mi.to_3x3() @ d).normalized())
+                if h[0] is not None:
+                    w = M @ h[0]
+                    if best is None or (w - a).length < best[1]: best = (w, (w - a).length)
+            return best
+        return cast
+    lo, hi = bbox(); sc_ = .82 / (hi.z - lo.z)
+    for r in roots: r.rotation_mode = 'XYZ'; r.scale = tuple(v * sc_ for v in r.scale)   # glTF roots are QUATERNION (F-033)
+    def grid(cast, lo, hi, step=.02):
+        c = (lo + hi) / 2; pts = []
+        for i in range(-30, 31):
+            for j in range(-30, 31):
+                h = cast(Vector((c.x + i * step, c.y + j * step, hi.z + .2)), Vector((0, 0, -1)))
+                if h: pts.append(h[0])
+        return c, pts
+    lo, hi = bbox(); cast = cast_all(); c, pts = grid(cast, lo, hi)
+    zs = sorted(p.z for p in pts if abs(p.x - c.x) < .12 and abs(p.y - c.y) < .12); seat_z = zs[len(zs) // 2]
+    back = [p for p in pts if p.z > seat_z + .25]; bc = sum(back, Vector()) / len(back)
+    b = Vector((bc.x - c.x, bc.y - c.y, 0)).normalized(); yaw = m.atan2(b.x, b.y)       # turn the backrest toward +y
+    for r in roots: r.rotation_euler.z += yaw
+    lo, hi = bbox(); cast = cast_all(); c, pts = grid(cast, lo, hi)
+    b = Vector((0, 1, 0)); hit = cast(Vector((c.x, c.y, seat_z + .22)), b); dback = hit[1] if hit else .25
+    anchor = Vector((c.x, c.y, seat_z + .01)) + b * (dback - .21)
+    d = Vector(FIG_ANCHOR) - anchor
+    for r in roots: r.location += d
+    lo, hi = bbox(); cast = cast_all(); c, pts = grid(cast, lo, hi)
+    seat_z += d.z; arms = {}
+    for side, sg in (('R', -1), ('L', 1)):
+        A = [p for p in pts if sg * p.x > .19 and seat_z + .08 < p.z < seat_z + .45]
+        if not A: continue
+        zt = sorted(p.z for p in A)[len(A) // 2]; top = [p for p in A if abs(p.z - zt) < .03]
+        arms[side] = dict(x=sorted(p.x for p in top)[len(top) // 2], z=zt, front=min(p.y for p in top), back=max(p.y for p in top))
+    print(f'   chair: seat {seat_z:.3f} m, armrests', {k: {kk: round(vv, 3) for kk, vv in v.items()} for k, v in arms.items()})
+    return dict(objects=new, seat_z=seat_z, arms=arms)
+
+
 def render(g):
     bpy, o, rig, P, state, apply = g['bpy'], g['o'], g['rig'], g['P'], g['state'], g['apply']
     Vector, ROOT, PROF = g['Vector'], g['ROOT'], g['PROF']
@@ -41,7 +97,7 @@ def render(g):
     # ---- scene ----
     sc = bpy.context.scene
     for x in list(bpy.data.objects):
-        if x not in (o, rig): bpy.data.objects.remove(x, do_unlink=True)
+        if x not in (o, rig) and not x.get('chair'): bpy.data.objects.remove(x, do_unlink=True)
     rig.hide_render = True
     for m in o.modifiers: m.show_viewport = True
     cs = o.modifiers.new('cs', 'CORRECTIVE_SMOOTH'); cs.smooth_type = 'SIMPLE'; cs.factor = .5; cs.iterations = 8
@@ -52,11 +108,12 @@ def render(g):
         if k.name != 'Basis': k.value = 0.0
     dark = bpy.data.materials.new('dark'); dark.diffuse_color = (.16, .15, .14, 1)
     bpy.ops.mesh.primitive_plane_add(size=8); fl = bpy.context.object; fl.data.materials.append(dark)
-    seat_y = P.head('ORG-spine').y + .02
-    bpy.ops.mesh.primitive_cube_add(size=1); seat = bpy.context.object
-    seat.scale = (.46, .44, g['CHAIR_H']); seat.location = (0, seat_y + .02, g['CHAIR_H'] / 2); seat.data.materials.append(dark)
+    for x in bpy.data.objects:                                       # clay read: leather brown chair, no textures in Workbench
+        if x.get('chair') and x.type == 'MESH':
+            for ms in x.material_slots:
+                if ms.material: ms.material.diffuse_color = (.24, .14, .09, 1)
     sc.render.engine = 'BLENDER_WORKBENCH'; sc.display.shading.light = 'STUDIO'; sc.display.shading.color_type = 'MATERIAL'
-    sc.display.shading.show_cavity = True; sc.render.resolution_x = sc.render.resolution_y = 520
+    sc.display.shading.show_cavity = True
     clay = bpy.data.materials.new('clay'); clay.diffuse_color = (.66, .64, .61, 1); o.data.materials.clear(); o.data.materials.append(clay)
     sc.world = sc.world or bpy.data.worlds.new('w'); sc.world.color = (.30, .32, .36)
 
@@ -64,12 +121,53 @@ def render(g):
     A0, T0 = state('close', 0.0); apply(A0, T0)
     hand = P.head('ORG-hand.R'); chest = P.head('ORG-spine.003')
     cams = {}
-    c1 = bpy.data.cameras.new('ma'); o1 = bpy.data.objects.new('ma', c1); sc.collection.objects.link(o1); c1.lens = 24
-    o1.location = hand + Vector((-.16, -.34, -.10)); tgt = hand.lerp(chest, .62) + Vector((.06, 0, 0))   # fist low-left, chest behind
-    o1.rotation_euler = (tgt - o1.location).to_track_quat('-Z', 'Y').to_euler(); cams['ma'] = o1
+    sc.render.resolution_x, sc.render.resolution_y = 960, 540                  # 16:9 like the reference stills
+    c1 = bpy.data.cameras.new('ma'); o1 = bpy.data.objects.new('ma', c1); sc.collection.objects.link(o1)
+    c1.lens = float(os.environ.get('CAM_LENS', 22)); c1.sensor_width = 36
+    cl_ = [float(v) for v in os.environ.get('CAM_LOC', '-0.28,-1.25,0.86').split(',')]
+    ct_ = [float(v) for v in os.environ.get('CAM_TGT', '0.14,0.0,0.97').split(',')]
+    o1.location = Vector(cl_); tgt = Vector(ct_)   # user reference 2026-10-06: front, a little to the figure's right, belly height,
+    o1.rotation_euler = (tgt - o1.location).to_track_quat('-Z', 'Y').to_euler(); cams['ma'] = o1   # wide, head top cropped, fist low-left
+    if not os.environ.get('CAM_LOC'):                                 # auto-frame: put key points where the reference has them
+        from bpy_extras.object_utils import world_to_camera_view as w2c
+        A1, T1 = state('close', 1.0); apply(A1, T1)
+        KP = {'fist': (P.head('ORG-f_middle.02.R'), (.20, .30)),               # fist low-left, large
+              'head': (P.tail('ORG-spine.006') + Vector((0, 0, .02)), (.34, 1.02)),   # head top just cropped
+              'lhand': (P.head('ORG-hand.L'), (.56, .14))}                     # left hand on the knee; right ~40 % kept for the waveform
+        def err(x):
+            o1.location = Vector(x[:3]); o1.rotation_euler = (Vector(x[3:]) - o1.location).to_track_quat('-Z', 'Y').to_euler()
+            bpy.context.view_layer.update()
+            df = (Vector(x[:3]) - KP['fist'][0]).length                   # front, the figure's right, belly height, fist close
+            e = 1000 * (max(0.0, x[1] + .60) + max(0.0, .60 - x[2]) + max(0.0, x[2] - 1.0) + max(0.0, x[0])
+                        + max(0.0, df - .80) + max(0.0, .55 - df)) ** 2
+            for pt, (u, v) in KP.values():
+                q = w2c(sc, o1, pt); e += (q.x - u) ** 2 + (q.y - v) ** 2 + (0 if q.z > .2 else 10)
+            return e
+        x = cl_ + ct_; best = err(x)
+        for step in (.2, .1, .05, .02, .01, .005):
+            moved = True
+            while moved:
+                moved = False
+                for i in range(6):
+                    for sg in (-1, 1):
+                        y = list(x); y[i] += sg * step; e = err(y)
+                        if e < best - 1e-7: best, x, moved = e, y, True
+        err(x); print('   auto camera', [round(v, 3) for v in x], 'residual', round(best, 5),
+                      {k: tuple(round(c, 2) for c in w2c(sc, o1, pt)[:2]) for k, (pt, _) in KP.items()})
     c2 = bpy.data.cameras.new('side'); o2 = bpy.data.objects.new('side', c2); sc.collection.objects.link(o2)
-    c2.type = 'ORTHO'; c2.ortho_scale = 1.05; o2.location = Vector((-3.0, chest.y - .12, chest.z - .05))
+    c2.type = 'ORTHO'; c2.ortho_scale = 1.9; o2.location = Vector((-3.0, chest.y - .05, chest.z - .2))
     o2.rotation_euler = (math.radians(90), 0, math.radians(-90)); cams['side'] = o2
+    chair_objs = [x for x in bpy.data.objects if x.get('chair')]
+    pc = g['pc']
+    for lab, st in (('open', state('close', 0.0)), ('fist', state('close', 1.0))):
+        apply(*st); bpy.context.view_layer.update()
+        print(f'   body vs chair ({lab}):', pc.scene_collisions(o, chair_objs))
+    if os.environ.get('STILLS_ONLY'):
+        for lab, st in (('open', state('close', 0.0)), ('fist', state('close', 1.0))):
+            apply(*st)
+            for name, cam in cams.items():
+                sc.camera = cam; sc.render.filepath = os.path.join(OUT, f'still_{name}_{lab}.png'); bpy.ops.render.render(write_still=True)
+        print('   stills →', OUT); return
 
     # ---- frames ----
     FPS, DUR = 15, 10.0; n = int(FPS * DUR)
@@ -80,18 +178,27 @@ def render(g):
             sc.camera = cam; sc.render.filepath = os.path.join(FR, f'{name}_{i:04d}.png')
             bpy.ops.render.render(write_still=True)
         if i % 15 == 0: print(f'   frame {i}/{n}', flush=True)
+    # right ~40 % darkened to 70 % (user 2026-10-06: no monitor — the waveform is drawn there as in the intro, in the web layer)
+    from PIL import Image
+    Wd, Hd = sc.render.resolution_x, sc.render.resolution_y
+    x0, feather = int(.58 * Wd), int(.08 * Wd)
+    ramp = np.clip((np.arange(Wd) - x0) / feather, 0, 1) * .70
+    alpha = Image.fromarray((np.tile(ramp, (Hd, 1)) * 255).astype(np.uint8))
+    black = Image.new('RGB', (Wd, Hd), (0, 0, 0))
+    for i in range(n):
+        im = Image.open(os.path.join(FR, f'ma_{i:04d}.png')).convert('RGB')
+        Image.composite(black, im, alpha).save(os.path.join(FR, f'ov_{i:04d}.png'))
     mp4 = os.path.join(OUT, 'chair_motion.mp4')
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', os.path.join(FR, 'ma_%04d.png'),
-                    '-framerate', str(FPS), '-i', os.path.join(FR, 'side_%04d.png'),
-                    '-filter_complex', 'hstack=inputs=2,format=yuv420p', '-c:v', 'libx264', '-crf', '20', mp4], check=True)
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', os.path.join(FR, 'ov_%04d.png'),
+                    '-vf', 'format=yuv420p', '-c:v', 'libx264', '-crf', '20', mp4], check=True)
     # key-frame sheet: open, mid-close, fist, inhale peak, exhale trough
-    from PIL import Image, ImageDraw
+    from PIL import ImageDraw
     keys = [(0.0, 'open, exhaled'), (1.0 + cl * .5, 'closing'), (1.0 + cl + .2, 'fist, inhaling'), (2.0, 'inhale peak'), (4.95, 'exhale end')]
-    W = 300; sheet = Image.new('RGB', (W * len(keys), W * 2 + 22), 'white'); dr = ImageDraw.Draw(sheet)
+    W, Hh = 384, 216; sheet = Image.new('RGB', (W * len(keys), Hh * 2 + 22), 'white'); dr = ImageDraw.Draw(sheet)
     for c, (t, lab) in enumerate(keys):
         i = min(n - 1, int(round(t * FPS)))
         dr.text((c * W + 4, 5), f't={i / FPS:.2f}s {lab}  breath {breath_at(i / FPS):.2f}', fill='black')
-        for r, name in enumerate(('ma', 'side')):
-            sheet.paste(Image.open(os.path.join(FR, f'{name}_{i:04d}.png')).convert('RGB').resize((W, W)), (c * W, 22 + r * W))
+        for r, name in enumerate(('ov', 'side')):
+            sheet.paste(Image.open(os.path.join(FR, f'{name}_{i:04d}.png')).convert('RGB').resize((W, Hh)), (c * W, 22 + r * Hh))
     sheet.save(os.path.join(OUT, 'chair_motion_keys.jpg'), quality=85)
     print('   video →', mp4)

@@ -28,6 +28,8 @@ def _up2():                                                         # Rigify fin
 P.up = _up2
 for _m in o.modifiers: _m.show_viewport = False                     # solving reads bones only: skip the 53k-vertex deform on every
                                                                      # update (the joint closure search timed out at 40 min with it on)
+CHAIR = None
+CHAIR_SPEC = {'allow_warn': ['MCP', 'PIP', 'DIP'], 'contacts': []}   # contacts set when the chair is placed
 MODE = os.environ.get('FIST_POSE', 'study')                         # study: hand held up in front | chair: D-053 story pose
 CHAIR_H = .43                                                        # build-figure-v3 SEAT_H['chair']
 X_ = Vector((1, 0, 0))
@@ -48,8 +50,19 @@ def pose_body():
     th = P.head('ORG-thigh.L').lerp(P.head('ORG-shin.L'), .62)
     P.arm_relaxed('L', th + Vector((.01, .05, .125)), None, (.55, .45, h + .45), flex=-22, dev=-30, pronation=72)
     P.curl('L', 40, thumb=10)
-    knee = P.head('ORG-shin.R')
-    P.arm_relaxed('R', knee + Vector((.0, -.07, .07)), None, (-.55, .45, h + .45), flex=20, dev=0, pronation=35)   # wrist past the knee cap
+    # right forearm along the chair's right armrest, the fist at its front end (user reference 2026-10-06)
+    global CHAIR
+    if CHAIR is None:
+        import importlib.util as _iu
+        _sp = _iu.spec_from_file_location('chair_motion', os.path.join(HERE, 'chair-motion-v3.py')); _cm = _iu.module_from_spec(_sp)
+        _sp.loader.exec_module(_cm); CHAIR = _cm.place_chair(bpy, Vector, ROOT)
+    ar = CHAIR['arms']['R']; zf = ar['z'] + .035                                  # forearm axis ≈ its radius above the armrest top
+    # the armrest is low (0.15 m over the seat): the seated elbow cannot reach it, so the distal forearm rests on the armrest's
+    # front end and the elbow floats behind and above it (first try asked for the whole forearm on it: gap 61 mm, FAIL)
+    wrist = Vector((ar['x'] + .01, ar['front'] + .02, zf + .005))
+    P.arm_relaxed('R', wrist, None, wrist + Vector((-.25, .45, .05)), flex=15, dev=0, pronation=30)
+    rest_pt = wrist + Vector((0, .06, -.035))
+    CHAIR_SPEC['contacts'] = [('fore.R', tuple(rest_pt), .03), ('hand.L', 'thigh.L', .03)]
 
 
 pose_body()
@@ -359,7 +372,7 @@ if not TESTS:
 
 
 SPEC = {'allow_warn': ['MCP', 'PIP', 'DIP']}                          # a fist is an end-range posture by definition (rom.md)
-CHAIR_SPEC = dict(SPEC, contacts=[('fore.R', 'thigh.R', .03), ('hand.L', 'thigh.L', .03)])
+
 def verts():
     P.up(); ev = o.evaluated_get(bpy.context.evaluated_depsgraph_get()); me = ev.to_mesh()
     A = np.array([v.co[:] for v in me.vertices]); ev.to_mesh_clear(); return A

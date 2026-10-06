@@ -1,3 +1,5 @@
+2026-10-06 현재 진입점 — D-083/R-035: [전 장면 제작 조사 기준](ECG_INTRO_STORY_PRODUCTION_RESEARCH_BASELINE_2026-10-06.md)을 먼저 읽는다. 모든 새 요소는 25 §9 → 기준 문서 §5 해당 장면/§6 요소 묶음/§9 완성 에셋·효과 후보 → 현행 명세 순서. 공식·업계 자료와 완성 후보를 함께 비교한 뒤 작은 동일 구도 시험부터 진행한다. 다음은 무료 VDB 기준 조명 시험 → A-P2 거리별 표현 → 사용자 제작 피드백2. 서고 KEEP/A 우선/피드백1/2/Story·B/C 보류 유지. 아래는 과거 체크포인트.
+
 2026-10-06 최신 구름 다층 조사(D-073/F-044): [구름 제작·빛·후처리 연구](ECG_A_cloud_layers_research_2026-10-06.md). 사용자 thick 양감/불투명/하부그림자 + thin 투과/솜털 목표 반영. 단위·bank 최소밀도/평준화 문제, 광역↔국소 shape/optics/LOD와 temporal/shadow 설계. Takram cloud의 space planned/composer비호환을 확인해 전체경로 자동채택 제외. 조사 완료/새자산·runtime 미변경. 다음 L0대표군집/단위→L1광학/그림자→L2orbit·후보비교→L3후처리→L4동일서고접합. A-P2TUNE/서고KEEP/후속독립 유지.
 
 2026-10-06 최신 A-P2 실제 시험(D-072/F-043/O-009): [대기·남극 지형·밀도 구름 검토](ECG_A_planet_render_trial_2026-10-06.md). LUT/ECEF→blue horizon, REMA display mesh, world density/내부 lightmarch와 half-res 합성 적용. 기술 검증과 목업 충실도는 분리: **전체 TUNE, 근접 구름/얼음 미세 반사/역광 GAP**. 서고 유지(3장 RGB차0/2장 극미량1 RGB 차이)/KEEP. initial+3 품질 수정 종료; 다음 해당 GAP 사용자 검토→국소 cloud asset/bake 또는 renderer 새 후보 결정. A-P3/Story/BC는 보류. 아래 연구-only 상태는 과거 체크포인트다.

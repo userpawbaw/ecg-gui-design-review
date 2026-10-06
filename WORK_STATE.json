@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "A_P2_cloud_sculpt_partial_static_software_QA_visual_FAIL_TUNE_GPU_motion_pending_G6_complete",
+    "status": "preproduction_industry_and_ready_asset_effect_research_baseline_complete_trials_pending",
     "records": [
       "D-065",
       "D-066",
@@ -693,11 +693,15 @@
       "F-047",
       "REF-014",
       "D-077",
-      "F-048"
+      "F-048",
+      "D-081",
+      "D-082",
+      "D-083",
+      "R-035"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Review first5 target mockups (shape/light/camera); then remaining7 keyframe targets using chosen anchor/reusing accepted originals; same-world camera/receiver gold render afterward. No runtime adoption/GPU verification. Archive/Story/B/C separate.",
+    "next": "Read D083 baseline scene/element/candidate sections; acquire/pin free VDB, same camera/sun offline optical trial, then far/orbit/near representation candidate and user production feedback2. Archive KEEP, A first, feedback1/2; A-P3/Story/B/C deferred. No new asset or runtime adoption.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -882,10 +886,21 @@
       "distance_plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_distance_representation_plan_2026-10-06.md",
       "distance_representation_implemented": false,
       "asset_lighting_research": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_asset_lighting_audit_2026-10-06.md",
-      "asset_lighting_next": "external free VDB acquisition and offline volume lighting reference first; no asset download or new render completed in research",
+      "asset_lighting_next": "Use D083 scene and ready-asset/effect baseline, acquire/pin free VDB and render same camera/sun optical reference before distance representation candidate; user feedback1/2 retained.",
       "scroll_fixed": true,
       "scroll_evidence": "verification/a-cloud-distance-20261006/feedback1-scroll/manual-room.json",
-      "global_feedback1_trial": "unadopted, stopped after initial+1; flat patches/grid texture remain; user requested alternate distance-based ideas"
+      "global_feedback1_trial": "unadopted, stopped after initial+1; flat patches/grid texture remain; user requested alternate distance-based ideas",
+      "production_research_baseline": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_INTRO_STORY_PRODUCTION_RESEARCH_BASELINE_2026-10-06.md"
+    },
+    "production_research": {
+      "decision": "D-083",
+      "collaboration": "R-035",
+      "baseline": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_INTRO_STORY_PRODUCTION_RESEARCH_BASELINE_2026-10-06.md",
+      "scene_units": 19,
+      "ready_candidate_groups": 12,
+      "status": "research_ready_actual_asset_effect_trials_pending",
+      "rule_entry": "25 §9 / 24 §6 / 23 §6",
+      "feedback": "user production 1/2 retained"
     }
   }
 }

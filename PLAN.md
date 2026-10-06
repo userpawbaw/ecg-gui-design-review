@@ -367,3 +367,7 @@ D080 체크포인트: photo 후보 실제제작/57module build/native정적검�
 
 ### 2026-10-06 구름 에셋/빛 처리 우선 감사 — D082
 외부 JangaFX 무료 VDB10/104MB, Disney density·해상도별VDB/Hyperion·Mitsuba 기준, Bproduction 제작자 문서 확인. 로컬 근접synthetic/VDB미보유와photo 근사 산란 확인. 외부VDB offline 조명기준→웹변환/거리연결 추천. ECG_A_cloud_asset_lighting_audit_2026-10-06.md. 다운로드/구매/새렌더 미실행; 사용자피드백1/2 유지. 다음 무료에셋 실제조명/형태부터 검증.
+
+### 2026-10-06 전 장면 제작 조사·완성 에셋/효과 우선 비교 — D083/R035
+완료: 25 §9/24 §6/23 §6 규칙 확장, 19개 장면 요소·공식/제작자/포럼 근거·12개 완성 후보군·시험 기준 문서, master/AGENTS/checklist/색인/상태 연결. 기준: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_INTRO_STORY_PRODUCTION_RESEARCH_BASELINE_2026-10-06.md.
+다음: 무료 VDB 획득·핀 → 같은 태양/카메라의 offline 조형/빛 기준 → 원거리/궤도/근접 표현 비교 → A-P2 수정 및 사용자 제작 피드백2. 이후 A-P3/PLI/BW/EMG 순서이며 각 장면 안에서 자산·효과·파형/전환 아이디어를 검토한다. 기존 KEEP와 피드백1/2 유지. 다운로드/구매/새 구현 미실행.

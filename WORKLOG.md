@@ -555,3 +555,7 @@ D080 실제제작 결과: 새128³밀도/f16cache/비주기변형/fullresolution
 ### 2026-10-06 구름 에셋과 빛 처리 조사 — D082
 사용자 에셋우선확인→로컬NOTICE/generator/shader 감사→JangaFX/Disney/Autodesk/Guerrilla/Bproduction 공식자료 조사. 외부VDB 존재 확인과 실제품질검증 구분; 근사multiple은 존재하므로 다중산란없음이라는 오해 방지. offline volume 기준→웹비교 추천; 다운로드/렌더/결제 없음. Blender 공식문서 web접근실패, Cycles 특정수치 미확정. 서고KEEP/1차피드백1/2/fallback조건 보존. 연구문서·D082·목차·상태 갱신.
 검증: records177 PASS, git diff --check PASS. 연구자료만 변경; runtime/visual/GPU PASS 추가 주장 없음.
+
+### 2026-10-06 산업 자료·완성 자산/효과 조사 제작 규칙 승격 — D083/R035
+사용자 전 장면 조사·규칙화 및 기존 고품질 에셋/후처리/효과 탐색 요청 반영. 19개 현행 장면 단위의 근거·필요 요소·후속 시험과 12개 완성 후보군 작성. 25 §9/24 §6/23 §6, AGENTS/master/checklist/작업색인·상태·CASE 연결. 공식/제작자/포럼/검색만/번안, 조사 준비/실제 품질 검증 구분. 파일 조달·구매·새 렌더·runtime 미변경, 서고KEEP/사용자 제작 피드백1/2 보존.
+검증: records179 PASS, git diff --check PASS, WORK_STATE JSON parse PASS. 실제 에셋/효과 통합·렌더/GPU 품질은 미검증.

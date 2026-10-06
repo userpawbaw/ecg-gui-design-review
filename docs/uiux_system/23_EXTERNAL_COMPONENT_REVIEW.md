@@ -66,3 +66,11 @@
 ## 5. 다음 시험 계획
 
 다음 레퍼런스 재현에서 범용 UI 하나 이상(예: REF-004의 All/Commercial/Defense 필터 버튼, hover 사진 카드)을 골라 C1–C4를 처음부터 끝까지 수행한다. 후보: HyperUI 또는 Flowbite(vanilla, MIT) 1개, shadcn/ui(React, MIT) 1개, 직접 제작 1개. coss ui(AGPL)는 사용자 확인 전에는 코드를 복사하지 않고 구조만 참고한다.
+
+## 6. 3D·후처리·효과 구현체까지 검토 범위 확장 — D-083
+
+C1–C4는 DOM UI뿐 아니라 구름 렌더러, God Rays/Bloom/DOF, 입자·파형 shader, 조명·렌더 프리셋에도 적용한다. 완성 효과 / 기술 조각 / 프로젝트 연결 로직을 구별한다. 기존 composer·색공간·depth/mask·AA·camera 범위·정지 clock·성능과 맞는지 확인한다.
+
+외부 패키지를 사용하려고 React 엔진이나 전체 renderer를 무조건 바꾸지 않는다. 선택 효과를 독립 시험하고 직접 제작/수정 사용과 같은 데이터·구도·빛으로 비교한다. 버전별 기능/제약과 제작자 사례의 재현 여부를 기록한다. 실제 효과 재현을 주장할 때는 21번 카드/캡처도 필요하다.
+
+현재 후보와 미확인: [제작 조사 기준](rounds/R1/SCENARIO-ABC-20261003/ECG_INTRO_STORY_PRODUCTION_RESEARCH_BASELINE_2026-10-06.md) §9. 자료만으로 KEEP나 성능 PASS를 부여하지 않는다.

@@ -92,3 +92,9 @@ User-approved workflow: source-project analysis → independent design/prototype
 - AI self-correction before asking the user is limited to 3 rounds; reference comparison uses at least 6 (recommended 12) frames per effect segment. Fixed-path scroll video follows `22_AI_VIDEO_SCROLL_PIPELINE.md` (D-023, confirmed).
 - Performance budget values in `25` §5 are provisional until the target exhibit PC (P2) is known.
 
+
+## Scene production research first — 2026-10-06 / D-083
+
+- Before new Intro/Story scene production, follow 25 §9: extract scene elements, research official industry documentation, creator methods and relevant forum cases, and search finished assets, materials/HDRIs/VDBs, rigs/clips, lighting/render presets, postprocessing and effect implementations (24 §6 / 23 §6).
+- Compare reuse/adapt/custom build before coding. Record source evidence level, version/format/conditions, camera/lighting applicability, current-stack compatibility, failure conditions and a small same-view trial. Research-ready is not visual approval. Preserve KEEP areas and user feedback counters.
+- Read the current scene baseline through ECG_WORK_INDEX.md. Generate waveform/transition improvements within each scene's review/production stage; Intro/Story spectacle permission does not relax comparison-panel accuracy.

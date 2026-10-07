@@ -89,3 +89,4 @@ Blender Workbench 점토 렌더(웹 아님). 만들기: `FIST_POSE=chair python 
 - `chair_motion_breath_clay.mp4`, `_keys.jpg`: 점토 확인판(정면 + 옆).
 - `chair_motion_breath_clay_side_overlay.png`: 옆 실루엣, 빨강 = 들숨에만, 청록 = 날숨에만. 등이 뒤로 펴지고 어깨·가슴이 올라가는 것이 보입니다. 오른손 색 차이는 주먹 시점 차이입니다.
 - 키 시트의 칸 순서를 시간순으로 고쳤습니다('fist held' 2.08 s가 들숨 최고 2.00 s 뒤).
+- H5 서고 클립(`chair_motion.mp4`, `chair_motion_keys.jpg`)을 숨 뼈 움직임을 넣어 다시 렌더했습니다. 첫 실행은 2시간 작업 제한에 119/120 프레임에서 끊겨, `RESUME=1`로 남은 프레임만 이어 그렸습니다. 렌더 전 관문 FAIL 0.

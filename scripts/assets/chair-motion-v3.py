@@ -297,6 +297,7 @@ def render(g):
             sc.camera = cams['ma']; sc.render.filepath = os.path.join(clip, f'c_{i:04d}.png'); bpy.ops.render.render(write_still=True)
         print('   clip frames →', clip, m); return
     for i in range(n):
+        if os.environ.get('RESUME') and all(os.path.exists(os.path.join(FR, f'{nm}_{i:04d}.png')) for nm in cams): continue   # a run cut at the 2 h job limit keeps its frames
         t = i / FPS; breath_bones(P, Vector, base, .8 * breath_at(t)); A, T = fist_at(t); apply(A, T)
         o.data.shape_keys.key_blocks['breath_deep'].value = .8 * breath_at(t)
         for name, cam in cams.items():

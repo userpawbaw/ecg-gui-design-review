@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "VDB_shape_user_KEEP_earth_regional_detail_plan_ready_runtime_pending",
+    "status": "northern_regional_assets_acquired_diagnostic_frames_verified_runtime_handoff_pending",
     "records": [
       "D-065",
       "D-066",
@@ -708,7 +708,7 @@
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Acquire northern regional imagery/DEM for Norway anchor; refine camera-up, night-to-day lighting and distance handoff; then accepted VDB cloud scale/optics plus archive integration. Runtime unchanged; user feedback1/2.",
+    "next": "Integrate northern regional color/terrain into isolated A web distance handoff; tune land/sea/ice material, night-to-day light and accepted VDB scale/optics; then same archive integration before user production feedback2. Default runtime unchanged; feedback1/2.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -937,6 +937,13 @@
         "asset_reused": true,
         "trial": "verification/a-earth-routes-20261007/gallery.html",
         "trial_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_earth_routes_trial_2026-10-07.md"
+      },
+      "northern_region": {
+        "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_norway_regional_trial_2026-10-07.md",
+        "gallery": "verification/a-norway-region-20261007/gallery.html",
+        "metadata": "assets/processed/a-norway-region-20261007/metadata.json",
+        "status": "NASA500m source crop plus ArcticDEM32m native bounded range read; 9 diagnostic frames verified; regional color useful, DEM contribution small; optical/runtime TUNE",
+        "user_production_feedback": "1/2 retained"
       }
     }
   }

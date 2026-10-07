@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-07",
+  "imagery": {
+    "page": "https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-topography-bathymetry/",
+    "url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/bmng-topography-bathymetry/july/world.topo.bathy.200407.3x21600x21600.C1.jpg",
+    "source": {
+      "file": "assets/source/a-norway-region-20261007/bmng-july-C1.jpg",
+      "bytes": 87763762,
+      "sha256": "ee8490ab1eb35d620d8d1ad8e69b3234c0b050e4eddb80e7232a2d165e475aa0"
+    },
+    "source_size": [
+      21600,
+      21600
+    ],
+    "crop_pixels": [
+      0,
+      3600,
+      10800,
+      10800
+    ],
+    "bounds": [
+      0,
+      45,
+      45,
+      75
+    ],
+    "nominal_resolution_m": 500,
+    "output": {
+      "file": "assets/processed/a-norway-region-20261007/bmng-region.jpg",
+      "bytes": 17736186,
+      "sha256": "016af1ab81c33a0e941e3c9132e28ed3e01c7c021e1e06a7068701c2bb14323e"
+    },
+    "note": "July 2004 monthly composite, baked topography shading; not current Sentinel imagery"
+  },
+  "dem": {
+    "page": "https://www.pgc.umn.edu/data/arcticdem/",
+    "vrt_url": "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m_dem_tiles.vrt",
+    "vrt": {
+      "file": "assets/source/a-norway-region-20261007/arcticdem32.vrt",
+      "bytes": 1224003,
+      "sha256": "73fd2f1edf4d74b90b85a81d27638699e0d6b66b8a122e895fd337bd0eaeea51"
+    },
+    "selected_vrt": {
+      "file": "assets/source/a-norway-region-20261007/arcticdem32-selected.vrt",
+      "bytes": 7004,
+      "sha256": "3bbc4f5057c356bc82d3f4273820044bad84f064f55d186ee03ce4206a7460dc"
+    },
+    "native_resolution_m": 32,
+    "native_crs": "EPSG:3413",
+    "height_datum": "WGS84 ellipsoidal DSM, not geoid sea-level corrected",
+    "bounds": [
+      10.0,
+      63.5,
+      14.8,
+      64.7
+    ],
+    "output_size": [
+      513,
+      513
+    ],
+    "resampling": "average to geographic grid; approx 455m east-west and 260m north-south at center; native32m detail intentionally reduced for orbit trial",
+    "valid_fraction": 0.9977352955705269,
+    "height_min_m": 35.90715026855469,
+    "height_max_m": 1369.0025634765625,
+    "height_median_m": 434.540771484375,
+    "tiles_read_by_range": [
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/24_64/24_64_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/24_65/24_65_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/24_66/24_66_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/25_63/25_63_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/25_64/25_64_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/25_65/25_65_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/25_66/25_66_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/26_63/26_63_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/26_64/26_64_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/26_65/26_65_32m_v4.1_dem.tif",
+      "https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/arcticdem/mosaics/v4.1/32m/26_66/26_66_32m_v4.1_dem.tif"
+    ],
+    "source_pin_limit": "VRT and extracted output hashes pinned; remote COG full-file bytes/hash not acquired",
+    "output": {
+      "file": "assets/processed/a-norway-region-20261007/height-metres.npy",
+      "bytes": 1052804,
+      "sha256": "91357140245b20da78bef7e52c8c75b5339e05c87147c28cb193bd3edad1ed81"
+    },
+    "nodata": -9999
+  },
+  "use_stage": "internal concept D084; credit NASA BMNG and PGC ArcticDEM on exhibition transition"
+}

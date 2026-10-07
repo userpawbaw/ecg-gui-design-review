@@ -1,3 +1,7 @@
+# Current A checkpoint — 2026-10-07 D089/F057
+
+Northern regional BMNG500m color + bounded ArcticDEM32m read acquired. 9 actual diagnostic frames verified. Regional color improves close-up boundaries; DEM contribution small at current altitudes. Next web distance handoff, land/sea lighting and accepted VDB/archive integration. Default runtime preserved; user feedback1/2. Review: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_norway_regional_trial_2026-10-07.md
+
 # Current A checkpoint — 2026-10-07 D088/F056
 
 Moto public maps pinned; two routes × five views + two map comparisons rendered. See docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_earth_routes_trial_2026-10-07.md. North globe appearance recommended TUNE; close terrain needs regional imagery/DEM; local VDB lighting/scale TUNE. Next northern regional patch and camera/lighting handoff. Existing runtime/archive preserved; user production feedback1/2.

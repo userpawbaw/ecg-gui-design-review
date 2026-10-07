@@ -575,3 +575,6 @@ JangaFX10종 원본 획득·hash/조건/metadata 고정, Cycles4.5.3/RTX3070Opti
 
 ### 2026-10-07 Moto 자산 실제 확보·반구 경로 렌더 — D088/F056
 4K 공개 텍스처3종 pin/registry test-only. 북유럽·남미 각5구도+기존map2장 Cycles/OptiX 실제12PNG. 초기 topdown와 target 이탈 수정/보존. center-ray/hash/dimension검증PASS, 가까운4K지표 REJECT/지역자료 필요, VDB배치·빛TUNE. 갤러리 verification/a-earth-routes-20261007/gallery.html. 원작pixel재현/웹성능/지역DEM/서고전체접합미검증. 기본runtime·서고KEEP/피드백1/2 유지.
+
+### 2026-10-07 사용량 중단 재개·북유럽 실제 지표 확보 — D089/F057
+D088 remote b6471d0 완료상태에서재개. NASA500m C1원본/crop, ArcticDEM32m VRT11COGboundedread99.77%coverage→513² 평균grid·257²지역mesh. 동일daylight3시점×3variant9장/피처기여/pin 검증PASS. rim surface덮임확인후off진단,이전9원본preserved. DEM높이1×기여작음,datum·물mask·최종광학/runtimeTUNE. 기본웹미변경/서고KEEP/피드백1/2 유지. 초기pip 임시폴더권한문제는workspace TEMP로해결,렌더/처리job종료.

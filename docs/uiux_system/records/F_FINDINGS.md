@@ -1514,3 +1514,23 @@ verification/a-earth-routes-20261007의12PNG/manifest/hash/dimension/center-ray.
 
 ### 놓쳤다면
 원작 에셋 교체와 북반구 선택만으로 근접 품질이 해결되었다고 판단하고 지역 imagery/DEM·빛/거리 인계를 놓쳤을 것이다.
+
+## F-057. 북유럽 확대 시 지역 색상 기여가 먼저 크고 실제 고도의 윤곽 기여는 작음
+
+| | |
+|---|---|
+| 발견 | 2026-10-07 [렌더] [코드] [자료] |
+| 상태 | 지역자료 확보/진단9장PASS,최종룩TUNE |
+| 연결 | D-089, CASE-007 |
+
+### 발단
+D088 원격저장후 사용량 중단에서 계속 진행요청. 실제 지역자료 확보로이어갔다.
+
+### 먼저 의심한 것과 배제 방법
+NASA500m원본crop과ArcticDEM32m11COG선택read. region513²평균·mesh257²로범위한정. 같은camera/daylight에서 global4K→regioncolor→DEM높이1× 비교. 대기rim이surface를덮는걸확인해off진단,이전원본보존.
+
+### 결정적 근거
+assets/processed/a-norway-region-20261007/metadata.json과verification/a-norway-region-20261007/9PNG/manifest/difference-metrics. 지역valid99.77%,DSM36–1369m. color→DEM pixel평균변화 .00266/.01870/.05297,품질점수아님. 해안색상선명도개선에비해윤곽기여작음. 원본native32m 전체가renderer에보존된것아님.
+
+### 놓쳤다면
+매우먼camera에불필요하게산높이를과장하거나meshdensity만늘리고지역색상·재질/빛을놓쳤을것이다. 더가까운하강/다른산지에서는다시검토한다.

@@ -1,3 +1,5 @@
+2026-10-07 지역 지표 실제 시험 — D089/F057: [노르웨이 고해상도 색상·ArcticDEM 비교](ECG_A_norway_regional_trial_2026-10-07.md). NASA500m원본/PGC32m지역read 확보,3시점×3variant9장. 가까운색상기여확인,실제고도윤곽기여는작음. 다음 웹거리인계+land/sea재질·빛+승인VDB광학/서고접합. 기본웹미교체/피드백1/2 유지.
+
 # 도입부·Story 장면별 제작 조사 기준 v1
 
 2026-10-06 · D-083 / R-035 / CASE-007 · RESEARCH

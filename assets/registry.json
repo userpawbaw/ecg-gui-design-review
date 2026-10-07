@@ -2855,6 +2855,60 @@
         "scripts/assets/render-earth-routes.py"
       ],
       "review": "D-084 internal concept use; D-088 independent frame trial. No exhibition rights clearance or authorship inferred."
+    },
+    {
+      "id": "norway-regional-color-20261007",
+      "title": "NASA BMNG July crop",
+      "kind": "texture",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-topography-bathymetry/"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "NASA Blue Marble Next Generation / PGC ArcticDEM acknowledgement",
+      "original": {
+        "file": "assets/source/a-norway-region-20261007/bmng-july-C1.jpg",
+        "bytes": 87763762,
+        "sha256": "ee8490ab1eb35d620d8d1ad8e69b3234c0b050e4eddb80e7232a2d165e475aa0"
+      },
+      "processed": {
+        "file": "assets/processed/a-norway-region-20261007/bmng-region.jpg",
+        "bytes": 17736186,
+        "sha256": "016af1ab81c33a0e941e3c9132e28ed3e01c7c021e1e06a7068701c2bb14323e"
+      },
+      "used_by": [
+        "scripts/assets/render-norway-region.py"
+      ],
+      "review": "D-089 internal concept trial, metadata records source resolution, resampling, datum and remote full-file hash limit; exhibition review pending"
+    },
+    {
+      "id": "norway-regional-dem-20261007",
+      "title": "PGC ArcticDEM bounded 32m-source sample",
+      "kind": "terrain",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://www.pgc.umn.edu/data/arcticdem/"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "NASA Blue Marble Next Generation / PGC ArcticDEM acknowledgement",
+      "original": {
+        "file": "assets/source/a-norway-region-20261007/arcticdem32.vrt",
+        "bytes": 1224003,
+        "sha256": "73fd2f1edf4d74b90b85a81d27638699e0d6b66b8a122e895fd337bd0eaeea51"
+      },
+      "processed": {
+        "file": "assets/processed/a-norway-region-20261007/height-metres.npy",
+        "bytes": 1052804,
+        "sha256": "91357140245b20da78bef7e52c8c75b5339e05c87147c28cb193bd3edad1ed81"
+      },
+      "used_by": [
+        "scripts/assets/render-norway-region.py"
+      ],
+      "review": "D-089 internal concept trial, metadata records source resolution, resampling, datum and remote full-file hash limit; exhibition review pending"
     }
   ],
   "rejected": [

@@ -1,3 +1,5 @@
+2026-10-07 지역 지표 실제 시험 — D089/F057: [노르웨이 고해상도 색상·ArcticDEM 비교](ECG_A_norway_regional_trial_2026-10-07.md). NASA500m원본/PGC32m지역read 확보,3시점×3variant9장. 가까운색상기여확인,실제고도윤곽기여는작음. 다음 웹거리인계+land/sea재질·빛+승인VDB광학/서고접합. 기본웹미교체/피드백1/2 유지.
+
 2026-10-07 실제 지구 경로 시험 — D088/F056: [Moto 자산·반구 12장 렌더](ECG_A_earth_routes_trial_2026-10-07.md). 실제 source 확보/독립 렌더 완료. 북반구 외관 우선 TUNE, 근접 4K 지표 REJECT·지역자료 필요. VDB형태KEEP/빛·배치TUNE. 다음 북유럽 지역 imagery/DEM+거리 인계, 웹 미교체/피드백1/2 유지.
 
 2026-10-07 현재 레퍼런스·경로 검토 — D087/F055: [Moto 자산과 북반구 경로](ECG_A_moto_earth_northern_route_review_2026-10-07.md). 북반구육지anchor우선추천/남미대안비교,아직경로교체없음. D086지역해상도인계와연결. 구름형태/서고KEEP·사용자피드백1/2 유지.

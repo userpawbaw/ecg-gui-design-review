@@ -107,6 +107,36 @@ def load_archive(bpy, path, sc):
     print(f'   archive: {keep} objects, chair spot {tuple(round(v, 3) for v in spot)} yaw {yaw:.3f}')
 
 
+def ring_material(bpy, look, density=42.0, attr='_SLICE_rest'):
+    """Same node graph as build_archive.py ring_material (the stills stand-in for the web ring shader): bands on the bone-axis
+    coordinate stored per vertex at rest, so the rings ride with the skin through the fist. h5 = frosted glass + faint bands
+    (D-048 choice), h3b = bands + soft rim on a transparent body."""
+    rm = bpy.data.materials.new('rings_' + look); rm.use_nodes = True; nt = rm.node_tree; nt.nodes.clear()
+    out = nt.nodes.new('ShaderNodeOutputMaterial')
+    at = nt.nodes.new('ShaderNodeAttribute'); at.attribute_name = attr; coord = at.outputs['Fac']
+    mth = nt.nodes.new('ShaderNodeMath'); mth.operation = 'MULTIPLY'; mth.inputs[1].default_value = density; nt.links.new(coord, mth.inputs[0])
+    pp = nt.nodes.new('ShaderNodeMath'); pp.operation = 'PINGPONG'; pp.inputs[1].default_value = .5; nt.links.new(mth.outputs[0], pp.inputs[0])
+    band = nt.nodes.new('ShaderNodeMath'); band.operation = 'LESS_THAN'; band.inputs[1].default_value = .07; nt.links.new(pp.outputs[0], band.inputs[0])
+    em = nt.nodes.new('ShaderNodeEmission'); em.inputs['Color'].default_value = (1.0, .9, .78, 1)
+    lw = nt.nodes.new('ShaderNodeLayerWeight'); lw.inputs['Blend'].default_value = .25
+    if look == 'h5':
+        k = nt.nodes.new('ShaderNodeMath'); k.operation = 'MULTIPLY'; k.inputs[1].default_value = 1.2; nt.links.new(band.outputs[0], k.inputs[0]); nt.links.new(k.outputs[0], em.inputs['Strength'])
+        gl = nt.nodes.new('ShaderNodeBsdfPrincipled'); gl.inputs['Base Color'].default_value = (.92, .94, .97, 1)
+        gl.inputs['Transmission Weight'].default_value = 1; gl.inputs['Roughness'].default_value = .42; gl.inputs['IOR'].default_value = 1.25
+        add = nt.nodes.new('ShaderNodeAddShader'); nt.links.new(gl.outputs[0], add.inputs[0]); nt.links.new(em.outputs[0], add.inputs[1]); nt.links.new(add.outputs[0], out.inputs['Surface'])
+    else:
+        rim = nt.nodes.new('ShaderNodeMath'); rim.operation = 'MULTIPLY'; rim.inputs[1].default_value = .9; nt.links.new(lw.outputs['Facing'], rim.inputs[0])
+        bs = nt.nodes.new('ShaderNodeMath'); bs.operation = 'MULTIPLY'; bs.inputs[1].default_value = 4.0; nt.links.new(band.outputs[0], bs.inputs[0])
+        st = nt.nodes.new('ShaderNodeMath'); st.operation = 'ADD'; nt.links.new(bs.outputs[0], st.inputs[0]); nt.links.new(rim.outputs[0], st.inputs[1])
+        nt.links.new(st.outputs[0], em.inputs['Strength'])
+        vis = nt.nodes.new('ShaderNodeMath'); vis.operation = 'MAXIMUM'; nt.links.new(band.outputs[0], vis.inputs[0])
+        rv = nt.nodes.new('ShaderNodeMath'); rv.operation = 'MULTIPLY'; rv.inputs[1].default_value = .35
+        nt.links.new(lw.outputs['Facing'], rv.inputs[0]); nt.links.new(rv.outputs[0], vis.inputs[1])
+        mix = nt.nodes.new('ShaderNodeMixShader'); tr = nt.nodes.new('ShaderNodeBsdfTransparent')
+        nt.links.new(vis.outputs[0], mix.inputs[0]); nt.links.new(tr.outputs[0], mix.inputs[1]); nt.links.new(em.outputs[0], mix.inputs[2]); nt.links.new(mix.outputs[0], out.inputs['Surface'])
+    return rm
+
+
 def render(g):
     bpy, o, rig, P, state, apply = g['bpy'], g['o'], g['rig'], g['P'], g['state'], g['apply']
     Vector, ROOT, PROF = g['Vector'], g['ROOT'], g['PROF']
@@ -147,6 +177,10 @@ def render(g):
         clay = bpy.data.materials.new('clay'); clay.use_nodes = True
         bsdf = clay.node_tree.nodes['Principled BSDF']; bsdf.inputs['Base Color'].default_value = (.42, .40, .38, 1); bsdf.inputs['Roughness'].default_value = .7
         o.data.materials.clear(); o.data.materials.append(clay)
+        LOOK = os.environ.get('LOOK', 'clay')
+        if LOOK in ('h5', 'h3b'):                                      # the ring looks (user 2026-10-07: does the fist read in rings?)
+            o.data.materials.clear(); o.data.materials.append(ring_material(bpy, LOOK, float(os.environ.get('DENS', 42))))
+            sc.cycles.transparent_max_bounces = 16
     else:
         dark = bpy.data.materials.new('dark'); dark.diffuse_color = (.16, .15, .14, 1)
         bpy.ops.mesh.primitive_plane_add(size=8); fl = bpy.context.object; fl.data.materials.append(dark)
@@ -205,15 +239,27 @@ def render(g):
         apply(*st); bpy.context.view_layer.update()
         print(f'   body vs chair ({lab}):', pc.scene_collisions(o, chair_objs, reach=.06))
     if os.environ.get('STILLS_ONLY'):
-        for lab, st in (('open', state('close', 0.0)), ('fist', state('close', 1.0))):
+        tag = os.environ.get('STILL_TAG', '')
+        for lab, st in (('open', state('close', 0.0)), ('mid', state('close', .55)), ('fist', state('close', 1.0))):
             apply(*st)
             for name, cam in cams.items():
-                sc.camera = cam; sc.render.filepath = os.path.join(OUT, f'still_{name}_{lab}.png'); bpy.ops.render.render(write_still=True)
+                if name != 'ma': continue
+                sc.camera = cam; sc.render.filepath = os.path.join(OUT, f'still_{name}_{lab}{tag}.png'); bpy.ops.render.render(write_still=True)
         print('   stills →', OUT); return
 
     # ---- frames ----
     FPS, DUR = int(os.environ.get('FPS', 15)), 10.0; n = int(FPS * DUR)
     if os.environ.get('NO_SIDE'): cams = {'ma': cams['ma']}              # archive (Cycles) runs: the reference view only
+    if os.environ.get('CLIP'):                                        # one clench, hand region only (ring-look readability test)
+        t0, t1 = 0.9, 2.6; m = int((t1 - t0) * FPS); W_, H_ = sc.render.resolution_x, sc.render.resolution_y
+        sc.render.use_border = True; sc.render.use_crop_to_border = True
+        sc.render.border_min_x, sc.render.border_max_x = .03, .36; sc.render.border_min_y, sc.render.border_max_y = .06, .52
+        clip = os.path.join(FR, os.environ['CLIP']); os.makedirs(clip, exist_ok=True)
+        for i in range(m):
+            t = t0 + i / FPS; A, T = fist_at(t); apply(A, T)
+            o.data.shape_keys.key_blocks['breath_deep'].value = .8 * breath_at(t)
+            sc.camera = cams['ma']; sc.render.filepath = os.path.join(clip, f'c_{i:04d}.png'); bpy.ops.render.render(write_still=True)
+        print('   clip frames →', clip, m); return
     for i in range(n):
         t = i / FPS; A, T = fist_at(t); apply(A, T)
         o.data.shape_keys.key_blocks['breath_deep'].value = .8 * breath_at(t)

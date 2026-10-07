@@ -1,3 +1,5 @@
+2026-10-07 지형 품질 피드백·재조사 — D090/F058: [상세지형·완성asset·고궤도광학](ECG_A_terrain_assets_and_optics_research_2026-10-07.md). cloud목표645km/low1490km·평균grid/거친mesh감사. low부터고해상도map/native상세/아트용terrain허용,high극지edge+night+대기룩별도. 다음원본/완성asset조달→새camera·조형/빛완성대표frame→웹인계. 서고·구름shapeKEEP/피드백1/2 유지.
+
 2026-10-07 지역 지표 실제 시험 — D089/F057: [노르웨이 고해상도 색상·ArcticDEM 비교](ECG_A_norway_regional_trial_2026-10-07.md). NASA500m원본/PGC32m지역read 확보,3시점×3variant9장. 가까운색상기여확인,실제고도윤곽기여는작음. 다음 웹거리인계+land/sea재질·빛+승인VDB광학/서고접합. 기본웹미교체/피드백1/2 유지.
 
 # 도입부·Story 장면별 제작 조사 기준 v1

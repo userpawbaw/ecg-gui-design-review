@@ -580,3 +580,6 @@ JangaFX10종 원본 획득·hash/조건/metadata 고정, Cycles4.5.3/RTX3070Opti
 D088 remote b6471d0 완료상태에서재개. NASA500m C1원본/crop, ArcticDEM32m VRT11COGboundedread99.77%coverage→513² 평균grid·257²지역mesh. 동일daylight3시점×3variant9장/피처기여/pin 검증PASS. rim surface덮임확인후off진단,이전9원본preserved. DEM높이1×기여작음,datum·물mask·최종광학/runtimeTUNE. 기본웹미변경/서고KEEP/피드백1/2 유지. 초기pip 임시폴더권한문제는workspace TEMP로해결,렌더/처리job종료.
 
 미리보기 전달 점검: 중단 후 기존4198 연결거부 확인. 서버를 재시작해 Vite ready를 확인했으나, 앱 Browser Use가 URL 정책으로 갤러리 접근을 차단했다. 같은 접근을 다른 브라우저로 우회하지 않았다. 갤러리의 실제 앱 브라우저 표시/console 검증은 NOT VERIFIED이며 직접 검토한 로컬 PNG/contact를 전달한다. 별도 데이터/API/env가 없는 정적 갤러리다.
+
+### 2026-10-07 지형smooth피드백교정·산업/완성asset조사 — D090/F058
+camera고도와target거리구별: low382/1490km,cloud76/645km; native32m을평균/약1kmmesh로축소. 능선표현필요없다는식의해석철회,실측과다른asset·gain허용반영. Cesium/Frostbite/SideFX/WorldCreator,EOX/Kartverket,무료photoscan/valley·Fab8KLOD와대기구현조사. EOXcaps실제accessPASS. 새지도tile/assetdownload/renderer미실행. 다음완성hero지형+high광학frame부터,기본웹/서고·구름KEEP/피드백1/2 유지.

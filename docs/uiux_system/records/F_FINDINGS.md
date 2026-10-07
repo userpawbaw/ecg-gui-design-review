@@ -1517,6 +1517,8 @@ verification/a-earth-routes-20261007의12PNG/manifest/hash/dimension/center-ray.
 
 ## F-057. 북유럽 확대 시 지역 색상 기여가 먼저 크고 실제 고도의 윤곽 기여는 작음
 
+후속 교정(2026-10-07 F058/D090): 위 관측은 해당시험조건에한정한다. 사선거리645/1490km·평균처리/거친mesh가능선기여를억제했다. 이를지형표현불필요/아트용gain금지로확대하지않는다. 사용자상세지형/실측과다른3Dasset허용을다음packet에반영한다.
+
 | | |
 |---|---|
 | 발견 | 2026-10-07 [렌더] [코드] [자료] |
@@ -1534,3 +1536,23 @@ assets/processed/a-norway-region-20261007/metadata.json과verification/a-norway-
 
 ### 놓쳤다면
 매우먼camera에불필요하게산높이를과장하거나meshdensity만늘리고지역색상·재질/빛을놓쳤을것이다. 더가까운하강/다른산지에서는다시검토한다.
+
+## F-058. 고도보다목표까지거리·표면정보·빛조건이지형가독성을제한했음
+
+| | |
+|---|---|
+| 발견 | 2026-10-07 [대화] [코드] [계산] [자료] |
+| 상태 | 근접제작조건교정/산업자료·asset조사완료,새품질미검증 |
+| 연결 | D-090, CASE-007, F-057 |
+
+### 발단
+사용자가low/cloud산맥·높이차미달,상세지도/국소3D형상과high극지·광학룩보완요청.
+
+### 먼저 의심한 것과 배제 방법
+단순방사고도대신camera-target사선거리/높이projectedpixel계산. existing32m자료→455×260mgrid→약1kmmesh·높이1×/max1369m조건확인. 산업LOD/verticalgain/heightfieldmaterials,완성지형과고해상도지도접근을조사.
+
+### 결정적 근거
+camera-detail-audit.json: high/low/cloud목표3868/1490/645km,높이screenmax .44/1.19/2.98px. native32m정보를보존한렌더아님. EOXWMTS실제caps67,911bytes조회. 무료3kmterrain/산photoscan/8K7LOD산악package등공개명세. 신규원본획득/렌더/10mfinalsample은미실행.
+
+### 놓쳤다면
+날것DEM이조용한이유를현재고도의필연적인상태로설명하고카메라·원본·아트용asset·normal/빛품질개선을막았을것이다.

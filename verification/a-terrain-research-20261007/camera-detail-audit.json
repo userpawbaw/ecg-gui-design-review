@@ -1,0 +1,29 @@
+[
+  {
+    "shot": "high-orbit-regional-dem",
+    "camera_to_anchor_km": 3867.6937405870435,
+    "radial_altitude_km": 1592.7503543322734,
+    "max_projected_height_shift_px": 0.44233548134908673,
+    "p95_projected_shift_px": 0.2613224479220815,
+    "mean_projected_shift_px": 0.1182082565770977,
+    "scope": "native extracted grid vertices with edge fade; ideal sphere projection, no exact raster/shadow/occlusion quality inference"
+  },
+  {
+    "shot": "low-orbit-regional-dem",
+    "camera_to_anchor_km": 1490.016065978343,
+    "radial_altitude_km": 382.2593137773027,
+    "max_projected_height_shift_px": 1.1876010178853216,
+    "p95_projected_shift_px": 0.6944607949430981,
+    "mean_projected_shift_px": 0.31066131407520436,
+    "scope": "native extracted grid vertices with edge fade; ideal sphere projection, no exact raster/shadow/occlusion quality inference"
+  },
+  {
+    "shot": "cloud-height-regional-dem",
+    "camera_to_anchor_km": 645.1897140851396,
+    "radial_altitude_km": 76.45199999409392,
+    "max_projected_height_shift_px": 2.982223976570912,
+    "p95_projected_shift_px": 1.708094658365602,
+    "mean_projected_shift_px": 0.7439263064500156,
+    "scope": "native extracted grid vertices with edge fade; ideal sphere projection, no exact raster/shadow/occlusion quality inference"
+  }
+]

@@ -2267,3 +2267,26 @@ nodata 비중/지도정합/확대 품질이 부족하면 해당 지역의 Sentin
 
 ### 되돌려야 하는 조건
 북반구5대표구도에서polar/night/land/구름하강조화가미달이면남미대안과비교. geoanchor/idle/역스크롤drift/LOD·서고접합검증. 구름형태KEEP/서고KEEP/사용자피드백1/2 유지.
+
+## D-090. 낮은궤도·구름진입의상세지형과고궤도의극지·야간·대기룩분리
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [코드] [자료] |
+| 상태 | 조사/새제작packet준비,새asset/최종룩미채택 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자가low/cloud too smooth·low부터높은해상도지도요청. 실측과달라도국소3D지형사용가능. high에서도Moto같은극지edge/역광/도시night/대기두께와광량요청.
+
+### 검토한 선택지
+기존1×거친DEM/500mmap을즉시웹에통합,높이만임의증폭,완성asset/상세map/고도+camera·재질·빛을거리에맞춰비교.
+
+### 고른 것과 근거
+세번째. 기존cloud높이76km인데target까지645km/low1490km,고도평균과mesh1km감소로능선기여억제. F058과ECG_A_terrain_assets_and_optics_research_2026-10-07.md. 10mSentinel모자이크/Kartverket/ArcticDEMnative상세+무료Blendkitphotoscan·완성3Dterrain/8KLODasset 조사. 가까운지형은아트용gain/asset혼합허용,high는특징적인Greenlandicegeometry와day-night/물리대기로별도룩. 기본runtime즉시교체보다완성대표frame확인먼저.
+
+### 버린 것과 이유
+높이숫자가작게표현된다는이유로능선표현필요없다고하지않음. 32m원본을1kmmesh로줄이고native품질을주장하지않음. singleuniformroughness/rimveil로저해상도근접을덮지않음. paidasset임의구매/대규모plugin설치없음.
+
+### 되돌려야 하는 조건
+정지low/entry에서도능선·골짜기읽힘/광학·시차/metadata획득/실제assetfootprint확인. geography정확성은Introvisual의필수아님,comparisonECG계약은유지. userfeedback1/2,서고·구름shapeKEEP유지.

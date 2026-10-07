@@ -1,0 +1,561 @@
+{
+  "url": "https://tiles.maps.eox.at/wmts/1.0.0/WMTSCapabilities.xml",
+  "bytes": 67911,
+  "sentinel_layers": [
+    {
+      "id": "s2cloudless-2021_3857",
+      "title": "Sentinel-2 cloudless layer for 2021 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2023_3857",
+      "title": "Sentinel-2 cloudless layer for 2023 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2025_3857",
+      "title": "Sentinel-2 cloudless layer for 2025 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2017_3857",
+      "title": "Sentinel-2 cloudless layer for 2017 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2017_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2019_3857",
+      "title": "Sentinel-2 cloudless layer for 2019 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2019_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2020",
+      "title": "Sentinel-2 cloudless layer for 2020 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    },
+    {
+      "id": "s2cloudless-2021",
+      "title": "Sentinel-2 cloudless layer for 2021 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    },
+    {
+      "id": "s2cloudless-2022",
+      "title": "Sentinel-2 cloudless layer for 2022 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2022/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    },
+    {
+      "id": "s2cloudless-2023",
+      "title": "Sentinel-2 cloudless layer for 2023 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    },
+    {
+      "id": "s2cloudless-2024",
+      "title": "Sentinel-2 cloudless layer for 2024 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    },
+    {
+      "id": "s2cloudless_3857",
+      "title": "Sentinel-2 cloudless layer for 2016 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2025",
+      "title": "Sentinel-2 cloudless layer for 2025 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2025/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    },
+    {
+      "id": "s2cloudless",
+      "title": "Sentinel-2 cloudless layer for 2016 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    },
+    {
+      "id": "s2cloudless-2020_3857",
+      "title": "Sentinel-2 cloudless layer for 2020 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2022_3857",
+      "title": "Sentinel-2 cloudless layer for 2022 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2022_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2024_3857",
+      "title": "Sentinel-2 cloudless layer for 2024 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2018_3857",
+      "title": "Sentinel-2 cloudless layer for 2018 by EOX - 3857",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2018_3857/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "g",
+        "GoogleMapsCompatible"
+      ]
+    },
+    {
+      "id": "s2cloudless-2017",
+      "title": "Sentinel-2 cloudless layer for 2017 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2017/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    },
+    {
+      "id": "s2cloudless-2018",
+      "title": "Sentinel-2 cloudless layer for 2018 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2018/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    },
+    {
+      "id": "s2cloudless-2019",
+      "title": "Sentinel-2 cloudless layer for 2019 by EOX - 4326",
+      "resources": [
+        {
+          "format": "image/jpeg",
+          "resourceType": "tile",
+          "template": "http://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2019/default/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg"
+        }
+      ],
+      "matrixsets": [
+        "WGS84"
+      ]
+    }
+  ],
+  "tile_matrix_sets": [
+    {
+      "id": "g",
+      "levels": [
+        {
+          "id": "0",
+          "scale": "559082264.02871787548065185547"
+        },
+        {
+          "id": "1",
+          "scale": "279541132.01435887813568115234"
+        },
+        {
+          "id": "2",
+          "scale": "139770566.00717940926551818848"
+        },
+        {
+          "id": "3",
+          "scale": "69885283.00358971953392028809"
+        },
+        {
+          "id": "4",
+          "scale": "34942641.50179485976696014404"
+        },
+        {
+          "id": "5",
+          "scale": "17471320.75089742988348007202"
+        },
+        {
+          "id": "6",
+          "scale": "8735660.37544871494174003601"
+        },
+        {
+          "id": "7",
+          "scale": "4367830.18772435747087001801"
+        },
+        {
+          "id": "8",
+          "scale": "2183915.09386217873543500900"
+        },
+        {
+          "id": "9",
+          "scale": "1091957.54693108866922557354"
+        },
+        {
+          "id": "10",
+          "scale": "545978.77346554468385875225"
+        },
+        {
+          "id": "11",
+          "scale": "272989.38673277228372171521"
+        },
+        {
+          "id": "12",
+          "scale": "136494.69336638617096468806"
+        },
+        {
+          "id": "13",
+          "scale": "68247.34668319307093042880"
+        },
+        {
+          "id": "14",
+          "scale": "34123.67334159654274117202"
+        },
+        {
+          "id": "15",
+          "scale": "17061.83667079827137058601"
+        },
+        {
+          "id": "16",
+          "scale": "8530.91833539913568529300"
+        },
+        {
+          "id": "17",
+          "scale": "4265.45916769956784264650"
+        },
+        {
+          "id": "18",
+          "scale": "2132.72958384978392132325"
+        },
+        {
+          "id": "19",
+          "scale": "1066.36479192489173328795"
+        },
+        {
+          "id": "20",
+          "scale": "533.18239596244609401765"
+        },
+        {
+          "id": "21",
+          "scale": "266.59119798122287647857"
+        }
+      ]
+    },
+    {
+      "id": "WGS84",
+      "levels": [
+        {
+          "id": "0",
+          "scale": "279541132.01435887813568115234"
+        },
+        {
+          "id": "1",
+          "scale": "139770566.00717943906784057617"
+        },
+        {
+          "id": "2",
+          "scale": "69885283.00358971953392028809"
+        },
+        {
+          "id": "3",
+          "scale": "34942641.50179485976696014404"
+        },
+        {
+          "id": "4",
+          "scale": "17471320.75089742988348007202"
+        },
+        {
+          "id": "5",
+          "scale": "8735660.37544871494174003601"
+        },
+        {
+          "id": "6",
+          "scale": "4367830.18772435747087001801"
+        },
+        {
+          "id": "7",
+          "scale": "2183915.09386217873543500900"
+        },
+        {
+          "id": "8",
+          "scale": "1091957.54693108936771750450"
+        },
+        {
+          "id": "9",
+          "scale": "545978.77346554468385875225"
+        },
+        {
+          "id": "10",
+          "scale": "272989.38673277234192937613"
+        },
+        {
+          "id": "11",
+          "scale": "136494.69336638617096468806"
+        },
+        {
+          "id": "12",
+          "scale": "68247.34668319308548234403"
+        },
+        {
+          "id": "13",
+          "scale": "34123.67334159654274117202"
+        },
+        {
+          "id": "14",
+          "scale": "17061.83667079825318069197"
+        },
+        {
+          "id": "15",
+          "scale": "8530.91833539912659034599"
+        },
+        {
+          "id": "16",
+          "scale": "4265.45916769956329517299"
+        },
+        {
+          "id": "17",
+          "scale": "2132.72958384978574031265"
+        }
+      ]
+    },
+    {
+      "id": "GoogleMapsCompatible",
+      "levels": [
+        {
+          "id": "0",
+          "scale": "559082264.02871787548065185547"
+        },
+        {
+          "id": "1",
+          "scale": "279541132.01435887813568115234"
+        },
+        {
+          "id": "2",
+          "scale": "139770566.00717940926551818848"
+        },
+        {
+          "id": "3",
+          "scale": "69885283.00358971953392028809"
+        },
+        {
+          "id": "4",
+          "scale": "34942641.50179485976696014404"
+        },
+        {
+          "id": "5",
+          "scale": "17471320.75089742988348007202"
+        },
+        {
+          "id": "6",
+          "scale": "8735660.37544871494174003601"
+        },
+        {
+          "id": "7",
+          "scale": "4367830.18772435747087001801"
+        },
+        {
+          "id": "8",
+          "scale": "2183915.09386217873543500900"
+        },
+        {
+          "id": "9",
+          "scale": "1091957.54693108866922557354"
+        },
+        {
+          "id": "10",
+          "scale": "545978.77346554468385875225"
+        },
+        {
+          "id": "11",
+          "scale": "272989.38673277228372171521"
+        },
+        {
+          "id": "12",
+          "scale": "136494.69336638617096468806"
+        },
+        {
+          "id": "13",
+          "scale": "68247.34668319307093042880"
+        },
+        {
+          "id": "14",
+          "scale": "34123.67334159654274117202"
+        },
+        {
+          "id": "15",
+          "scale": "17061.83667079827137058601"
+        },
+        {
+          "id": "16",
+          "scale": "8530.91833539913568529300"
+        },
+        {
+          "id": "17",
+          "scale": "4265.45916769956784264650"
+        },
+        {
+          "id": "18",
+          "scale": "2132.72958384978392132325"
+        },
+        {
+          "id": "19",
+          "scale": "1066.36479192489173328795"
+        },
+        {
+          "id": "20",
+          "scale": "533.18239596244609401765"
+        },
+        {
+          "id": "21",
+          "scale": "266.59119798122287647857"
+        }
+      ]
+    }
+  ]
+}

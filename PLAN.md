@@ -1,3 +1,7 @@
+# Current A checkpoint — 2026-10-07 D090/F058
+
+User rejects smooth low/cloud terrain and asks detailed regional map/3D asset; high needs polar edge/night/scattering quality. Audited slant distances and detail loss; researched official tools/data plus ready terrain models. Next acquire detailed local map/terrain/ready asset and compare fully lit high/low/entry hero frames before web handoff. Geography may be artistic in Intro; ECG comparison remains strict. Runtime unchanged, feedback1/2.
+
 # Current A checkpoint — 2026-10-07 D089/F057
 
 Northern regional BMNG500m color + bounded ArcticDEM32m read acquired. 9 actual diagnostic frames verified. Regional color improves close-up boundaries; DEM contribution small at current altitudes. Next web distance handoff, land/sea lighting and accepted VDB/archive integration. Default runtime preserved; user feedback1/2. Review: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_norway_regional_trial_2026-10-07.md

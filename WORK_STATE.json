@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "northern_regional_assets_acquired_diagnostic_frames_verified_runtime_handoff_pending",
+    "status": "terrain_quality_feedback_research_ready_detailed_asset_and_camera_trial_pending",
     "records": [
       "D-065",
       "D-066",
@@ -708,7 +708,7 @@
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Integrate northern regional color/terrain into isolated A web distance handoff; tune land/sea/ice material, night-to-day light and accepted VDB scale/optics; then same archive integration before user production feedback2. Default runtime unchanged; feedback1/2.",
+    "next": "Acquire detailed local Sentinel/terrain or ready mountainous asset; revise camera slant range/hero ridge and fully lit high/low/cloud-entry frames, then distance handoff plus accepted VDB/same archive. Artistic terrain allowed; comparison ECG strict. Runtime unchanged; feedback1/2.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -944,6 +944,13 @@
         "metadata": "assets/processed/a-norway-region-20261007/metadata.json",
         "status": "NASA500m source crop plus ArcticDEM32m native bounded range read; 9 diagnostic frames verified; regional color useful, DEM contribution small; optical/runtime TUNE",
         "user_production_feedback": "1/2 retained"
+      },
+      "terrain_quality_revision": {
+        "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_terrain_assets_and_optics_research_2026-10-07.md",
+        "audit": "verification/a-terrain-research-20261007/camera-detail-audit.json",
+        "map_access": "verification/a-terrain-research-20261007/eox-access-audit.json",
+        "status": "industry/data/ready-asset research complete; no new asset files or revised render yet",
+        "feedback": "low/entry should visibly show mountains and height variation; detailed maps start at low; high uses selective polar geometry, night lights and atmosphere; geography need not be exact"
       }
     }
   }

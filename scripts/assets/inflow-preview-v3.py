@@ -184,7 +184,7 @@ def run(L):
     cand = np.where((np.abs(V[:, 0]) < .015) & (np.abs(V[:, 2] - (ra[2] - .06)) < .015))[0]
     sternum = int(cand[np.argmin(V[cand, 1])])                                       # most frontal (−y) point mid-chest
     print(f'   sternum vertex {sternum} at {np.round(V[sternum], 3)} (RA {np.round(ra, 3)})')
-    cs = cams['side']; cs.data.ortho_scale = 1.6
+    cs = cams['side']; cs.data.ortho_scale = 1.75; cs.location.z += .12   # head inside the frame (1.6 cropped it, first run)
     cs.data.clip_start = max(.05, abs(cs.location.x) - .45)     # ortho: skip the archive desk between the camera and the figure
     with_electrodes(0.0, 0.0); fr = []
     lo_, hi_ = float(np.percentile(x, 1)), float(np.percentile(x, 99))
@@ -201,14 +201,16 @@ def run(L):
         px0, px1, py0, py1 = int(.64 * W), int(.97 * W), int(.25 * H), int(.75 * H)
         n = int(t * fs) if t > 0 else 1; win = int(4 * fs)                           # sweep: the last 4 s up to t
         i0 = max(0, n - win); seg = x[i0:n]
-        def Y(v): return py1 - (v - lo_) / (hi_ - lo_) * (py1 - py0)
+        if i == 0: y0 = cy                                        # panel layout only: 0 mV sits at the chest point's height,
+        k_px = .5 * H / (hi_ - lo_)                              # so the thread is ~horizontal; values and mV scale untouched
+        def Y(v): return y0 - v * k_px
         def X(j): return px0 + (j - (n - win)) / win * (px1 - px0)
         if len(seg) > 1: d.line([(X(i0 + j), Y(v)) for j, v in enumerate(seg)], fill=(235, 238, 245), width=2)
         hx, hy = X(n - 1), Y(base_lp[n - 1])
         for wd, col in ((7, (90, 60, 30)), (3, (255, 196, 120)), (1, (255, 240, 210))):   # warm thread with a soft glow
             d.line([(cx, cy), (hx, hy)], fill=col, width=wd)
         d.ellipse([hx - 4, hy - 4, hx + 4, hy + 4], outline=(255, 210, 150), width=2)
-        d.text((px0, py0 - 22), 'stored input  d0-bw_synth −5 dB  (synthetic noise · illustrative)', fill=(200, 200, 205))
+        d.text((px0, int(.06 * H)), 'stored input  d0-bw_synth −5 dB  (synthetic noise · illustrative)', fill=(200, 200, 205))
         fr.append((f'B-b {i}  t={t:.1f} s  breath {bb:.2f}  baseline {base_lp[n - 1]:+.2f} mV', im))
     sheet(fr, os.path.join(OUT, 'inflow_bw.jpg'))
     print('   inflow stills →', OUT)

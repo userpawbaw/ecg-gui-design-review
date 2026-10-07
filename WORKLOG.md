@@ -632,3 +632,7 @@ D098 최종검사: records210 PASS / build66 PASS. 실제wheel 정방향서고·
 
 ### 2026-10-07 D100/F067 실제 밀도·동일 장면 구름
 사용자 진행 승인. JS reader topology0/1 미채택→native OpenVDB13 copyToArray scalar 확인/half3D+fixedsun cache3,538,944bytes. 같은 northern terrain/camera에 단독cloud06 live광학·receiver그림자·서고가림. terrain shadowmap 삼각음영 OFF대조 개선→trial기본OFF/기존서고KEEP. 최종13fixed+6actualwheel·shader error0, source/native/code/capturehash·환경lock. GPU/전체연속영상/광학동등성/최종채택미검증. report ECG_A_cloud_live_same_scene_review_2026-10-07.md; 다음 사용자같은공간/질감/가림피드백, A-P3/Story/BC별도, 기존2/2실패·D080두fallback미실행보존.
+
+
+### 2026-10-07 D101 구름 field resource 검토
+첨부항공사진·현재shader/3.375MiB scalar감사·Epic/Guerrilla원자료대조. near3–6/mid12–24/far40–80군집 art시작범위, source공유3개10.125MiB/cloudGPU45–80MiB잠정산술예산, pixel/step/coverage/overlap·depth반복병목·fixedsun회전cache검토. GPU추가2–4ms는도전목표/FPS예시는산술이며미측정. 검토완료/새runtime·군집미구현/D100TUNE유지. 다음shareddepth/occupancy+80군집hybrid동일camera시험제안. 상세 ECG_A_cloud_field_resource_review_2026-10-07.md.

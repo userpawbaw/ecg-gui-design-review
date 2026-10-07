@@ -1,3 +1,5 @@
+2026-10-07 最新 D101: [구름 광역 분포·리소스 검토](ECG_A_cloud_field_resource_review_2026-10-07.md). 사진 기반 군집/LOD 시작범위, GPU45–80MiB 잠정 계산 / GPU ms·FPS 미측정, 군집 구현 없음.
+
 2026-10-07 최신 D100/F067: [실제 VDB·동일 WebGL 지형 구름 후보](ECG_A_cloud_live_same_scene_review_2026-10-07.md). 실제 native scalar 변환 / 13구도·정역휠 / TUNE. 전체 RGB plate 제거, 기존 실패 이력·D080 fallback 미실행 보존.
 
 2026-10-07 최신 D094/F062: [지역 인계·광역 DEM·연속 morph 검토](ECG_A_regional_morph_review_2026-10-07.md). 실제60parent타일/13구도/키보드재진입; patch점경계제거,능선KEEP·수평선/연속motionTUNE. 북반구 후보 피드백 진입점이며 cloud전체1/2유지.

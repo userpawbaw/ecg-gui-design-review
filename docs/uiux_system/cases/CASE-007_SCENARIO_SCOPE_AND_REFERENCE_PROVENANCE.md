@@ -181,3 +181,6 @@ AI는같은terrain source/camera로nativeRGBplate를제작→사용자 “이전
 
 ### 2026-10-07 D100/F067 — 실제 밀도 검증 후 같은 장면 제작
 사용자 “진행해줘”, 이어 “계속 진행하자” → AI가 D099단독packet제작. JS파일parse성공을scalar성공으로판단하려던초기경로에서 unique0/.5/1 및 readBuffers비구현을확인→REJECT/nativecopyToArray실제연속density로교체. 같은terrain livevolume·광학cache/그림자→13fixed+6wheel확인. 기존전체RGBplate실패는보존, 새로운경로를자동KEEP하지않음. source/native/runtime증거분리·작은같은구도시험이라는기존D083규약적용이며 신규방법론확정아님. report ECG_A_cloud_live_same_scene_review_2026-10-07.md.
+
+### 2026-10-07 D101 — 광역 분포 질문을 실제 비용 구조로 변환
+사용자 "레퍼런스만큼 구름이 떠다니게 … 리소스 … 성능 제한폭"→AI가첨부사진의군집/빈공간/거리/그림자를구분, 현재texture3.375MiB 및depth재그리기를감사하고Epic/Guerrilla원자료대조. 약80군집hybrid를시작범위로제안하되메모리산술/GPUwork상한/실측FPS를분리. 회전된fixedsun cache의유효성도검토. 기존source→smalltrial규약의적용이며새benchmark나user채택없음. 상세 ECG_A_cloud_field_resource_review_2026-10-07.md.

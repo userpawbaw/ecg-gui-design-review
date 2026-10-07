@@ -1129,5 +1129,40 @@
     ],
     "gpuTimingVerified": false,
     "continuousVideoVerified": false
+  },
+  "north_cloud_field_resource_2026_10_07": {
+    "status": "RESEARCH_COMPLETE_proposed_hybrid_not_implemented",
+    "decision": "D101",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_resource_review_2026-10-07.md",
+    "nearGroups": [
+      3,
+      6
+    ],
+    "midGroups": [
+      12,
+      24
+    ],
+    "farGroups": [
+      40,
+      80
+    ],
+    "gpuCloudBudgetMiB": [
+      45,
+      80
+    ],
+    "gpuAddedMsTarget": [
+      2,
+      4
+    ],
+    "gpuTimeMeasured": false,
+    "memoryCalculationOnly": true,
+    "next": "shared-depth/occupancy + 80-group hybrid same-camera trial proposed; source/lighting/detail/coverage quality reviewed separately",
+    "existingCloudCandidate": "D100 TUNE retained",
+    "deferred": [
+      "A-P3",
+      "Story",
+      "BC",
+      "D080 fallback comparison"
+    ]
   }
 }

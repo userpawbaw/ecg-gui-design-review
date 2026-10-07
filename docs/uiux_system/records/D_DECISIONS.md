@@ -2530,3 +2530,26 @@ OpenVDB native dense export, 제작자 JS reader export, transparent bake, 전�
 원본 grid 해석 실패 또는 품질·비용 미달은 사실대로 기록하고 다른 실제 변환 경로/transparent layer/D080 대안을 검토. 기존 KEEP 및 사용자 feedback2/2 실패 이력 유지; 이번 경로가 성공했다고 자동 채택하지 않는다.
 
 D100 구현결과: JS0/1mask REJECT, nativeactualscalar/transform검증→onecloud06 sameWebGLvolume3.375MiB·13구도/6wheel·TUNE. terrainshadowmapOFF대조개선/기본OFF, 고정태양opticalshadow유지. archive covercamera명시. 상세 ECG_A_cloud_live_same_scene_review_2026-10-07.md.
+
+## D-101. 광역 구름 수량·비용을 공유 자산과 화면 작업량으로 나누어 검토
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [코드] [문헌] |
+| 상태 | 연구/추천 packet, 군집 구현·최종 채택 없음 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 두 항공사진 기준 cloud수량·resource·performance제한검토요청. D100단독후보KEEP로해석하지않음.
+
+### 검토한 선택지
+동일 최고품질volume단순반복, sharedsource+거리별hybrid, 단일넓은densevolume, offline전체RGB.
+
+### 고른 것과 근거
+near3–6/mid12–24/far40–80군집은art시작범위로제안. source3개10.125MiB와atlas/targets포함cloud45–80MiB잠정GPUbudget, shareddepth1회/occupancyskip·거리표현필요를기록. source확정/제작승인/성능보장아님. GPU추가2–4ms는실측아닌도전목표.
+
+### 버린 것과 이유
+currentfullscreenvolume+scene redraw100회 반복부적합. source회전시fixedsun cache방향을검증없이공유하는방식은광학오류. samecount→고정FPS감소주장배제.
+
+### 되돌려야 하는 조건
+동일camera/settledLOD에서GPU median/p95및시각·정역인계검증후res/step/nearcount조정. targetPC미확정/2차실패D080이력유지. ECG_A_cloud_field_resource_review_2026-10-07.md.

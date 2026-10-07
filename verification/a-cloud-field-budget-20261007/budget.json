@@ -1,0 +1,64 @@
+{
+  "evidence": "analytical memory/work model; no GPU measurement, no new cloud implementation",
+  "sourceRuntime": "36b7d8cc47d3c3996ce330e24927dab534c359fa",
+  "MiB": {
+    "oneCurrentScalar": 3.375,
+    "threeCurrentShapes": 10.125,
+    "threeDoubleAxesScalar": 81.0,
+    "atlas2048RGBA8withMips": 21.333333333333332,
+    "occupancy64R8": 0.25,
+    "coverage512RGBA8": 1.0,
+    "shadow1024R16F": 2.0
+  },
+  "1080PhysicalPixels": [
+    {
+      "linearScale": 0.6,
+      "target": [
+        1152,
+        648
+      ],
+      "steps": 160,
+      "fullBoxStepCeiling": 119439360,
+      "densityPlusLightFetchCeiling": 238878720,
+      "cloudColorAndDepthColorDepthMiB": 11.390625
+    },
+    {
+      "linearScale": 0.5,
+      "target": [
+        960,
+        540
+      ],
+      "steps": 96,
+      "fullBoxStepCeiling": 49766400,
+      "densityPlusLightFetchCeiling": 99532800,
+      "cloudColorAndDepthColorDepthMiB": 7.91015625
+    },
+    {
+      "linearScale": 0.35,
+      "target": [
+        672,
+        378
+      ],
+      "steps": 64,
+      "fullBoxStepCeiling": 16257024,
+      "densityPlusLightFetchCeiling": 32514048,
+      "cloudColorAndDepthColorDepthMiB": 3.8759765625
+    }
+  ],
+  "fpsExamples": [
+    {
+      "baselineMs": 10,
+      "cloudExtraMs": 4,
+      "beforeFps": 100.0,
+      "afterFps": 71.42857142857143,
+      "notMeasured": true
+    },
+    {
+      "baselineMs": 16.667,
+      "cloudExtraMs": 4,
+      "beforeFps": 59.998800023999515,
+      "afterFps": 48.38631634973629,
+      "notMeasured": true
+    }
+  ]
+}

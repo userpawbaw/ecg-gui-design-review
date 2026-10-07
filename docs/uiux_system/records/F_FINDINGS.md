@@ -1763,3 +1763,17 @@ Three공식source Fresnel대기/표면cloud packedtexture; Takramweather/shapeDe
 
 ### 놓쳤다면
 지구원형잘보이는texture를확대하거나VDB군집을늘려근접구름품질도자동충족한다고판단했을것. 완성광학chain원형부터재현하고동일terrain최소구도시험으로검증해야함. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md
+
+
+## F-070. 광학 후처리의 입력이 albedo인지 radiance인지 먼저 맞춰야 한다
+
+2026-10-08 [코드] [브라우저] · D104 / CASE-007.
+
+### 발단
+Takram 전체chain을 기존 north에 넣자 지형조명이 원본과 달랐다.
+### 먼저 의심한 것과 배제 방법
+km→m/ECEF, sun 및 normal/depth 연결을 확인하고 aerialshader의 sun/sky 계산을 읽었다.
+### 결정적 근거
+inputColor를 albedo로 Lambert/π 처리하는 source. 이미 PBR lighting된 입력과 새 Basic albedo 입력 actual capture 차이. map/DEM1.5× 유지하되 후보Lambert로 분리.
+### 놓쳤다면
+구름에 가려진 지형 과노출/암부를 texture품질 문제로 오인했을 것이다. runtimePASS와 시각TUNE, albedo/radiance/PBR변경 경계를 보고서에 명시한다.

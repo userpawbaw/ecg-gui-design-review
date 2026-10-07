@@ -648,3 +648,9 @@ D102 최종 records219 PASS/build67 PASS. 원격 FETCH_HEAD=6578aa9, claude73045
 사용자D102품질불만족/TUNE. 5개제시레퍼런스원문/실제화면·source검증; 추가Takram300/3500m외부demo·weather/shape/detail/STBN·LUT·Vanilla/shader/npm0.7.6조달·pin. Solar8k403실패/공식Three4k성공분리. productionruntime안바꿈/원형독립재현→기존terrain동일3구도→globe인계가다음. 이전combined2/2실패·D080미실행·Story/BC별도·기존6capture보존. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md
 
 D103 최종 records221 PASS, runtime변경없어build재실행안함. 기존north globe=Moto조달WebP임을소스/registry로확인, Three4k를고품질업그레이드로오인하지않고비교자산으로기록. 47실제조달파일17,769,255bytes(문서/소스/package/texture합계, VRAM아님)/외부6browser캡처.
+
+
+## 2026-10-08 · D104 Takram renderer 독립 시험
+사용자진행승인. pinned0.7.6/0.19.1/0.6.4 설치, 실제LUT/noise/BSM/temporal/AGX후처리. 기존north maps/geometry1.5×사용, albedo계약수정. 6기준/2OFF actual PNG+JSON, GPUcomposer120query. runtimePASS/qualityTUNE. 기존사용자수정north/ridge6파일제외. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_cloud_reproduction_review_2026-10-08.md
+D104 최종검사: cloudLab 포함 Vite76modules build PASS / records224 PASS / browsererror0. temporalOFF는grain개선하지만GPU29.26ms로비용증가, ON4.91ms와대조. 원형재현시점의qualityTUNE 유지.
+D104 원격저장: GitHub push 두차례가 remote Internal Server Error로 거절됨. 로컬commit완료·사용자기존수정6파일제외, 원격HEAD는 f9b656e 유지. 승인검토차단이아닌서버오류. 원격저장은미완으로인계.

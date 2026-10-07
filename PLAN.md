@@ -443,3 +443,10 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 
 ### 2026-10-08 D103/F069 구름 레퍼런스 mining·실제 차용 자산
 사용자D102품질불만족/TUNE. 5개제시레퍼런스원문/실제화면·source검증; 추가Takram300/3500m외부demo·weather/shape/detail/STBN·LUT·Vanilla/shader/npm0.7.6조달·pin. Solar8k403실패/공식Three4k성공분리. productionruntime안바꿈/원형독립재현→기존terrain동일3구도→globe인계가다음. 이전combined2/2실패·D080미실행·Story/BC별도·기존6capture보존. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md
+
+
+## 2026-10-08 D104 checkpoint
+- 완료: Takram독립cloud-lab/6기준구도/누적OFF·cloudOFF대조, 같은north DEM1.5×.
+- TUNE: grain/밝은face/terrainLambert·normal정합.
+- 다음: 사용자후보품질리뷰→필요한동일구도튜닝→globe/cloud인계. A-P3/Story/BC·D080별도.
+- 기준: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_cloud_reproduction_review_2026-10-08.md

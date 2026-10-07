@@ -2603,3 +2603,30 @@ D102 구현 후: native3source near4/mid16/far60 field 제작. scalar+shadow14.3
 
 ### 되돌려야 하는 조건
 Takram원형재현·temporal움직임·same-cameraterrain정합미달시후속경로비교. globalspace지원TODO/ghosting한계존재, 최종winner/KEEP미확정. 현재D102구현보존·기존combined2/2실패/D080미실행·Story/BC별도. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md
+
+## D-104. Takram 원형 optical chain 독립 재현 후 동일 북반구 지형 비교
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화] runtime 구현 전 |
+| 상태 | 사용자 D103 추천 진행 승인 / 새 후보 TUNE |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 "응". 확보한 renderer를 원형 그대로 재현하고 기존 북유럽 terrain 같은 구도에 비교한다.
+
+### 검토한 선택지
+기존80VDB 기본경로 즉시교체, 별도cloud-lab optical candidate, source일부분만복사자체튜닝.
+
+### 고른 것과 근거
+별도페이지/원본clouds0.7.6+atmosphere0.19.1+effects0.6.4/Vanilla chain을먼저실행. 실제defaultweather/shape/detail/STBN/LUT 사용. normal/depth/AGX/LensFlare/Dithering·sunsky·BSM/temporaloverlay 보존. 첫원형=Vanilla source 위치/날짜/parameter, Basic3500 screenshot과는동일숫자로간주하지않음. 북반구비교는같은scene/DEM1.5/camera기준 km↔meterECEF/태양/구름고도를정합. 바뀌는것은cloud/대기후처리 후보, terrainRGBplate교체없음.
+
+### 버린 것과 이유
+동작확인전기존D102를최종교체하지않음. 원본데모성능을우리targetPC성능으로사용하지않음. Takramproceduralweather를nativeVDB라고표기하지않음. sourcechain중간shader를미술상수로구조변경하지않음.
+
+### 되돌려야 하는 조건
+원형재현FAIL/새shimmer/깊이위치불일치/terrainKEEP손상이있으면독립candidate에서수정. actualuserqualityreview전TUNE. 이전combined2/2실패·D080fallback미실행·A-P3/Story/BC별도유지.
+
+
+### D104 구현 결과
+독립 runtime/6기준구도+2OFF대조 완료. source observercamera/halfLUT/noSMAA, northLambert입력 변경 명시. functionalPASS/visualTUNE. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_cloud_reproduction_review_2026-10-08.md

@@ -192,3 +192,7 @@ AI는같은terrain source/camera로nativeRGBplate를제작→사용자 “이전
 
 ### 2026-10-08 D103/F069 구름 레퍼런스 mining·실제 차용 자산
 사용자D102품질불만족/TUNE. 5개제시레퍼런스원문/실제화면·source검증; 추가Takram300/3500m외부demo·weather/shape/detail/STBN·LUT·Vanilla/shader/npm0.7.6조달·pin. Solar8k403실패/공식Three4k성공분리. productionruntime안바꿈/원형독립재현→기존terrain동일3구도→globe인계가다음. 이전combined2/2실패·D080미실행·Story/BC별도·기존6capture보존. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md
+
+
+## 2026-10-08 D104 · 원형 renderer와 번안 결과를 분리
+사용자 “응” → D103완성renderer 차용 승인 → AI가 원형 chain과 같은north시험 → 이미조명된입력 계약불일치 발견 → albedo로수정. 외부데모/원형관찰카메라/같은지형후보/생성목업을분리하고 source asset hash 및 실제캡처를 남겼다. 기능PASS는품질승인이아님. D104/F070/O018/REF015 보고서가 현재 기준, grain/노출TUNE·globe인계미완.

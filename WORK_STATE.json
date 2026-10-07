@@ -1217,5 +1217,29 @@
       "BC",
       "D080 fallback comparison"
     ]
+  },
+  "north_cloud_takram_2026_10_08": {
+    "status": "IMPLEMENTED_FUNCTIONAL_PASS_VISUAL_TUNE",
+    "decision": "D104",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_cloud_reproduction_review_2026-10-08.md",
+    "preview": "http://127.0.0.1:4198/cloud-lab.html",
+    "gallery": "verification/a-takram-lab-20261008/gallery.html",
+    "terrainHeightScale": 1.5,
+    "mainReplaced": false,
+    "remoteSave": "pending: GitHub Internal Server Error on two pushes; local commit retained",
+    "next": "User quality review then same-pose tune before globe handoff",
+    "limits": [
+      "Not pixel-identical source Basic: observer camera, half-float LUT, no SMAA",
+      "North uses source terrain geometry/maps at 1.5x but albedo-to-Lambert optical lighting, not original PBR",
+      "GPU query scopes composer only; not CPU, cloud incremental cost, FPS or target-PC proof",
+      "Persistent fine grain, pale highlights, terrain lighting and normals require further review",
+      "No complete globe-to-archive integration"
+    ],
+    "deferred": [
+      "A-P3",
+      "Story",
+      "BC",
+      "D080 alternatives"
+    ]
   }
 }

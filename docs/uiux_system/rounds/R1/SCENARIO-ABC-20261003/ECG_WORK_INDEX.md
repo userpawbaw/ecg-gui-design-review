@@ -216,3 +216,7 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026
 
 ### 현행 구름 재탐색 / 제작 후보 — D103
 [ECG_A_cloud_reference_mining_2026-10-08.md](ECG_A_cloud_reference_mining_2026-10-08.md) → assets/research/cloud-reference-20261008/manifest.json → 외부실제화면verification/a-cloud-reference-20261008 → 다음Takram원형renderer독립시험. 현재D102사용자품질TUNE·같은terrain유지, 새library未통합/未채택. 원본globe자료와근접cloud자료/파일조달을구분한다.
+
+
+### 현재 독립 renderer 후보 — D104
+[ECG_A_takram_cloud_reproduction_review_2026-10-08.md](ECG_A_takram_cloud_reproduction_review_2026-10-08.md) → REF015 / cloud-lab.html / verification/a-takram-lab-20261008/gallery.html. 같은north3구도와원형3구도 실제비교, 품질TUNE. 기존D103未통합상태는historical조달시점으로유지; 현재D104독립통합됨. globe→archive main통합미완.

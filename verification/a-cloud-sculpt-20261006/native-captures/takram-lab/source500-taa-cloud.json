@@ -1,0 +1,106 @@
+{
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "mode": "source500",
+    "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+    "p": null,
+    "sourceLocation": [
+      0,
+      67,
+      500
+    ],
+    "sourceDate": "2000-06-01T10:00:00Z",
+    "camera": [
+      2499430.3733836757,
+      6.174758543839788e-14,
+      5848873.59567338
+    ],
+    "localCamera": [
+      0,
+      0,
+      0
+    ],
+    "worldToECEF": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "sun": [
+      0.8065631117248505,
+      0.45569007827833824,
+      0.3765667263094398
+    ],
+    "layers": [
+      {
+        "altitude": 750,
+        "height": 650,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1
+      },
+      {
+        "altitude": 1000,
+        "height": 1200,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1
+      },
+      {
+        "altitude": 7500,
+        "height": 500,
+        "densityScale": 0.003,
+        "shapeDetailAmount": 0
+      },
+      {
+        "altitude": 0,
+        "height": 0,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1
+      }
+    ],
+    "quality": "high",
+    "coverage": 0.4,
+    "temporal": true,
+    "wind": false,
+    "terrain": {
+      "visibleTiles": 0,
+      "drawTriangles": 0,
+      "residentGpuBytes": 0,
+      "queued": 0,
+      "pending": 0,
+      "fullSurfaceTriangles": 812800,
+      "fullTiledTriangles": 847090,
+      "heightGain": 1.5,
+      "maxErrorPixels": 0,
+      "highTextures": false,
+      "errors": [],
+      "detailReveal": 0,
+      "coarseReady": 0
+    },
+    "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+    "renderSize": [
+      1920,
+      1080
+    ],
+    "gpu": {
+      "available": true,
+      "count": 120,
+      "p50": 3.608576,
+      "p95": 4.135936
+    },
+    "frames": 1458
+  },
+  "url": "http://127.0.0.1:4198/cloud-lab.html"
+}

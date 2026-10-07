@@ -69,3 +69,6 @@
 
 ## 2026-10-06 궤도 cloud 제작 분석
 - [REF-014](REF-014_PLANETARY_CLOUD_PRODUCTION.md): Epic ground-space, Nubis 가까운volume, Takramweb, SpaceEngine구면/역사사례를증거범위별로비교. same-cloud연속목업/large-detail분리/광학기준은A-P2보고서로연결.
+
+
+- [REF-015](REF-015_TAKRAM_CLOUD_OPTICAL_CHAIN.md): Takram 완성 optical chain 실제 재현, 같은 north와 albedo/radiance 계약·시각TUNE 구분.

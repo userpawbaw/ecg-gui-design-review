@@ -1,0 +1,24 @@
+{
+  "sourceManifest": "manifest.json",
+  "clouds": "0.7.6",
+  "atmosphere": "0.19.1",
+  "effects": "0.6.4",
+  "helperEvidence": {
+    "assets/research/cloud-reference-20261008/basic-helper-source/Clouds-Basic.tsx": "b6dcf6aa8daf60e83414420e7cb683080bed607d07e449f764bc8c0161cb4e22",
+    "assets/research/cloud-reference-20261008/basic-helper-source/useApplyLocation.tsx": "fedfeb53f42783a840fa4099de140a460e39a56c87e66c3f2686af7548f7abb6",
+    "assets/research/cloud-reference-20261008/basic-helper-source/useLocalDateControls.tsx": "80f3c8309e8c7d3f12f7bee5b1da7b9aff8f44fb64b0c472b6bd9a40eea53e7b",
+    "assets/research/cloud-reference-20261008/basic-helper-source/useLocationControls.tsx": "fdbd5c28a563c985f87d8b912cf1eb5feebf018975b82ea66d464eb1b325f7b3"
+  },
+  "higherOrderScattering": {
+    "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/eac103980f20c0956f2d3215833e73514be08462/packages/atmosphere/assets/higher_order_scattering.bin",
+    "bytes": 8388608,
+    "sha256": "857847f34fc9c856866506015a3d3fc4bd60c18eaf961bde8d6e567df503d6bc",
+    "type": "HalfFloat binary LUT"
+  },
+  "runtimeFiles": {
+    "prototype/spikes/a-climb/cloud-lab.ts": "f8de94e20e16c4e478aff7f385d74a9c0d6a223e955bbe5bff1998f4d8c0c585",
+    "prototype/spikes/a-climb/cloud-lab.html": "4588557b2c8d0ee3545ce999c2a1c170b3990228ab5e0f4be2652773523541c9",
+    "prototype/spikes/a-climb/package-lock.json": "14c8c38a4980be647aff230244c71d420290f68dcc14ec0f85b60b6b90d1b898",
+    "prototype/spikes/a-climb/vite.config.mjs": "c8ed17fa4f2c3d09cf2dc400606ace75c329b75e94d5e87b632ededf9a3a604b"
+  }
+}

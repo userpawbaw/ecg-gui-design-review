@@ -376,3 +376,16 @@ onBeforeCompile 기존 shader에 같은 scope로 shadow 변수 edge를주입. bu
 
 ### 재발 방지와 자동화 상태
 shader주입변수namespace/scope를 확인하고nativecanvas를본다. 자동shader회귀test미추가, actualcompiledview근거. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md
+
+
+## O-018. Cloud optical chain에 이미 조명된 terrain을 넣은 이중 조명 시험
+
+2026-10-08 [코드] [브라우저] · D104.
+### 증상
+첫 북유럽 시험에서 기존 PBR 지형의 빛과 Aerial sun/sky가 중복. rejected-double-light PNG/JSON 보존.
+### 원인과 영향
+Aerial input albedo 계약과 기존 rendered radiance 계약 불일치. texture/geometry unchanged만으로 조명 동일성은 성립하지 않는다.
+### 조치
+후보 MeshBasic albedo로 map/color/geometryhandoff 유지, Aerial Lambert에 단일 lighting 위임. 기본mainPBR 미변경.
+### 재발 방지와 자동화 상태
+새후처리 source의 입력색 의미/normal/depth/unit을 읽고 actualON/OFF 동일구도로 점검. 자동회귀test미추가, 북유럽시각TUNE/normalborder한계는 별도열림.

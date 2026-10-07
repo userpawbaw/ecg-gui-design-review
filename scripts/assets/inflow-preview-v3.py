@@ -184,25 +184,29 @@ def run(L):
     cand = np.where((np.abs(V[:, 0]) < .015) & (np.abs(V[:, 2] - (ra[2] - .06)) < .015))[0]
     sternum = int(cand[np.argmin(V[cand, 1])])                                       # most frontal (−y) point mid-chest
     print(f'   sternum vertex {sternum} at {np.round(V[sternum], 3)} (RA {np.round(ra, 3)})')
-    cs = cams['side']; cs.data.ortho_scale = 1.75; cs.location.z += .12   # head inside the frame (1.6 cropped it, first run)
+    cs = cams['side']; cs.data.ortho_scale = 1.9; cs.location.z += .2    # whole head in frame (1.6 and 1.75 + .12 cropped it)
     cs.data.clip_start = max(.05, abs(cs.location.x) - .45)     # ortho: skip the archive desk between the camera and the figure
     with_electrodes(0.0, 0.0); fr = []
     lo_, hi_ = float(np.percentile(x, 1)), float(np.percentile(x, 99))
     bmin, bmax = float(base_lp.min()), float(base_lp.max())
     def breath_bw(t):                                            # F-030: the breath follows the stored baseline (inhale = rise)
         return float(np.clip((base_lp[max(0, int(t * fs) - 1)] - bmin) / (bmax - bmin), 0, 1))
-    for i, t in enumerate((1.1, 2.5, 4.6, 6.0)):                 # stored baseline extremes (IDEA-R1-NOISE §6.2): ↓ ↑ ↓ ↑
-        bb = breath_bw(t); cm.breath_bones(P, Vector, base, .8 * bb); apply(*state('close', 0.0))
+    def chest_px(bb):
+        cm.breath_bones(P, Vector, base, .8 * bb); apply(*state('close', 0.0))
         o.data.shape_keys.key_blocks['breath_deep'].value = .8 * bb; bpy.context.view_layer.update()
         dg = bpy.context.evaluated_depsgraph_get(); me = o.evaluated_get(dg).to_mesh()
         cp = o.matrix_world @ me.vertices[sternum].co; o.evaluated_get(dg).to_mesh_clear()
-        q = w2c(sc, cams['side'], cp); cx, cy = q.x * W, (1 - q.y) * H
+        q = w2c(sc, cams['side'], cp); return q.x * W, (1 - q.y) * H
+    ex_x, ex_y = chest_px(0.0)                                   # exhaled chest point: the reference tick
+    y0 = ex_y                                                    # panel layout only: 0 mV at the exhaled chest height
+    k_px = min((y0 - .12 * H) / max(float(x.max()), 1e-3), (.95 * H - y0) / max(-float(x.min()), 1e-3))   # whole stored trace fits
+    print(f'   B-b panel: 0 mV at y {y0:.0f} px, {k_px:.0f} px/mV (stored range {x.min():+.2f}..{x.max():+.2f} mV)')
+    for i, t in enumerate((1.1, 2.5, 4.6, 6.0)):                 # stored baseline extremes (IDEA-R1-NOISE §6.2): ↓ ↑ ↓ ↑
+        bb = breath_bw(t); cx, cy = chest_px(bb)
         im = panel(shot('side', f'bw_{i}')); d = ImageDraw.Draw(im)
         px0, px1, py0, py1 = int(.64 * W), int(.97 * W), int(.25 * H), int(.75 * H)
         n = int(t * fs) if t > 0 else 1; win = int(4 * fs)                           # sweep: the last 4 s up to t
         i0 = max(0, n - win); seg = x[i0:n]
-        if i == 0: y0 = cy                                        # panel layout only: 0 mV sits at the chest point's height,
-        k_px = .5 * H / (hi_ - lo_)                              # so the thread is ~horizontal; values and mV scale untouched
         def Y(v): return y0 - v * k_px
         def X(j): return px0 + (j - (n - win)) / win * (px1 - px0)
         if len(seg) > 1: d.line([(X(i0 + j), Y(v)) for j, v in enumerate(seg)], fill=(235, 238, 245), width=2)
@@ -210,7 +214,10 @@ def run(L):
         for wd, col in ((7, (90, 60, 30)), (3, (255, 196, 120)), (1, (255, 240, 210))):   # warm thread with a soft glow
             d.line([(cx, cy), (hx, hy)], fill=col, width=wd)
         d.ellipse([hx - 4, hy - 4, hx + 4, hy + 4], outline=(255, 210, 150), width=2)
+        d.line([(ex_x - 22, ex_y), (ex_x - 6, ex_y)], fill=(150, 140, 125), width=1)     # exhaled chest height (reference)
+        d.line([(px0 - 8, y0), (px0 - 2, y0)], fill=(150, 140, 125), width=1)            # 0 mV on the panel edge
+        d.ellipse([cx - 5, cy - 5, cx + 5, cy + 5], fill=(255, 205, 140))                # chest point: its rise reads against the tick
         d.text((px0, int(.06 * H)), 'stored input  d0-bw_synth −5 dB  (synthetic noise · illustrative)', fill=(200, 200, 205))
-        fr.append((f'B-b {i}  t={t:.1f} s  breath {bb:.2f}  baseline {base_lp[n - 1]:+.2f} mV', im))
+        fr.append((f'B-b {i}  t={t:.1f} s  breath {bb:.2f}  baseline {base_lp[n - 1]:+.2f} mV  chest {ex_y - cy:+.0f} px', im))
     sheet(fr, os.path.join(OUT, 'inflow_bw.jpg'))
     print('   inflow stills →', OUT)

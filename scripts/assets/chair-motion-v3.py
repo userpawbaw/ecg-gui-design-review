@@ -35,9 +35,15 @@ def breath_bones(P, Vector, base, b):
     for k, M in base.items(): P.pb[k].matrix_basis = M.copy()
     X, Y = Vector((1, 0, 0)), Vector((0, 1, 0))
     if b <= 0: P.up(); return
+    fa0 = (P.tail('ORG-forearm.L') - P.head('ORG-forearm.L')).normalized()
     P.turn('chest', -BR_EXT * b, X); P.turn('neck', BR_EXT * b, X)
     a = BR_SH * b / SH_CM_PER_DEG
     P.turn('shoulder.R', a, Y); P.turn('shoulder.L', -a, Y)
+    # the left hand rests on the thigh: with it fixed, the rising shoulder swings the forearm and the wrist passes its radial
+    # deviation limit at the peak (20.8° > 20°, first gate run) — the hand rolls with the forearm instead (about the wrist)
+    fa1 = (P.tail('ORG-forearm.L') - P.head('ORG-forearm.L')).normalized()
+    q = fa0.rotation_difference(fa1); ax, ang = q.axis, q.angle
+    if ang > 1e-5: P.turn('hand_ik.L', math.degrees(ang), ax)
 
 
 FIG_ANCHOR = (0.0, .0087, .4313)                                     # figure.json poses_v3.chair.anchor (rig frame): buttock contact
@@ -212,7 +218,7 @@ def render(g):
         sc.world = sc.world or bpy.data.worlds.new('w'); sc.world.color = (.30, .32, .36)
 
     # ---- breath bones: snapshot the posed controls, gate the extremes ----
-    base = {k: P.pb[k].matrix_basis.copy() for k in ('chest', 'neck', 'shoulder.L', 'shoulder.R')}
+    base = {k: P.pb[k].matrix_basis.copy() for k in ('chest', 'neck', 'shoulder.L', 'shoulder.R', 'hand_ik.L')}
     pc, chair_objs = g['pc'], [x for x in bpy.data.objects if x.get('chair')]
     bf = 0
     for b in (0.0, .4, .8):

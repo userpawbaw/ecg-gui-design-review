@@ -173,6 +173,12 @@ def run(L):
         sheet(fr, os.path.join(OUT, 'inflow_ma.jpg'))
         front.default_value = -1; ring.default_value = lead.default_value = 0
 
+    if 'field' in ONLY:                                          # P-b first stage on a wide crane shot (inflow-field-v3.py)
+        import importlib.util as _iu, types
+        _sp = _iu.spec_from_file_location('inflow_field', os.path.join(ROOT, 'scripts', 'assets', 'inflow-field-v3.py'))
+        _f = _iu.module_from_spec(_sp); _sp.loader.exec_module(_f)
+        _f.run(dict(g=g, sc=sc, cams=cams, ip=types.SimpleNamespace(add_red=add_red), red=(common, front),
+                    with_electrodes=with_electrodes, sheet=sheet))
     if 'bw' not in ONLY: print('   inflow stills →', OUT); return
     # ---- B-b baseline: side view, chest front → stored baseline thread ----
     x, fs = stored_trace(ROOT, 'd0-bw_synth--5')

@@ -156,3 +156,6 @@ AI가 BC 필수보완→ABC비교로 순서를 제안하려던 단계에서 사�
 
 ### 2026-10-07 D092/F060 — 필요한 화면에 필요한 디테일
 사용자 지형디테일KEEP·1.5×시험승인과거리/가시영역최적화요청→공식Three/Cesium자료→지역64tile/4LOD·화면오차·지연로드/cache·caster구분→실제IAB광역/접근/능선/왕복. 가까운시점은디테일을유지하므로절감폭작음. 품질KEEP와최적화/빛TUNE,전체전이/피드백1/2를분리. 상세 ECG_A_terrain_lod_review_2026-10-07.md(F060/O013). 이것은새계정전체규칙이나기존승인서고재제작승인이아니다.
+
+### 2026-10-07 D093/F061 — 확대 품질의 부모층·실제 적용 검증
+사용자 지역 detail 중심 진행→같은좌표global/region→좁은patch대조를실제화면에서발견→중간parent60tile/테두리광학추가. cloud준비표시true/오류0에도가림이실제로없어ShaderPass의복제uniform수정. nativeVDB와웹bake/live미완을구분. 시각TUNE/피드백1/2를유지하며완성후보와부분검증을구분한다. 상세 ECG_A_north_handoff_review_2026-10-07.md.

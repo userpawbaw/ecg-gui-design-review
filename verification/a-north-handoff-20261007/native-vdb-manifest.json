@@ -1,0 +1,75 @@
+{
+  "source": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_06_variant_0000.vdb",
+  "source_sha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+  "heightGain": 1.5,
+  "cloud_width_km": 18,
+  "cloud_base_km": 4.2,
+  "density": 0.8,
+  "samples": 48,
+  "sun": "same packed detailed terrain scene",
+  "devices": [
+    [
+      "NVIDIA GeForce RTX 3070",
+      "CUDA",
+      false
+    ],
+    [
+      "AMD Ryzen 5 3600 6-Core Processor",
+      "CPU",
+      false
+    ],
+    [
+      "NVIDIA GeForce RTX 3070",
+      "OPTIX",
+      true
+    ]
+  ],
+  "frames": [
+    {
+      "name": "terrain-cloud-approach",
+      "camera": [
+        18,
+        -25,
+        14
+      ],
+      "target": [
+        0,
+        0,
+        4.5
+      ],
+      "seconds": 39.72123742103577,
+      "sha256": "70d4c96c1ecd52a7bf576780fb1b62c8f56b6c44b62e65f359a1710900f845ab"
+    },
+    {
+      "name": "terrain-cloud-side",
+      "camera": [
+        10,
+        -16,
+        6
+      ],
+      "target": [
+        0,
+        0,
+        5.5
+      ],
+      "seconds": 83.153883934021,
+      "sha256": "a4ee6f4f776c12216f73d005b2165e80bda355ca7d84c1153bcdd6f18d618af4"
+    },
+    {
+      "name": "cloud-cover",
+      "camera": [
+        0,
+        -5,
+        6
+      ],
+      "target": [
+        0,
+        8,
+        6
+      ],
+      "seconds": 186.97761344909668,
+      "sha256": "644b7e991215475af868a10639b5da59dad9f3e6fe35c268ed2d4aeab2fbd9a3"
+    }
+  ],
+  "scope": "actual VDB shadows/occlusion on terrain; web uses cover bake only, not real-time VDB volume"
+}

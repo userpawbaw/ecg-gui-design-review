@@ -1,0 +1,401 @@
+{
+  "target": [
+    61.63,
+    8.4
+  ],
+  "scope": "Jotunheimen mountain candidate; regional target not final adopted",
+  "maps": [
+    {
+      "tag": "macro",
+      "bounds": [
+        0.0,
+        56.0,
+        16.0,
+        68.0
+      ],
+      "zoom": 7,
+      "dimensions": [
+        1456,
+        2362
+      ],
+      "nominal_map_pixel_metres_at_target": 581.1214487792072,
+      "note": "WMTS samples of Sentinel composite; native source10m and server sample resolution distinct",
+      "output": {
+        "file": "assets/processed/a-north-macro-20261007/macro.jpg",
+        "bytes": 913967,
+        "sha256": "0111ddb3bdb1b0a231e037e91def09bc77de581897328a230b787882831f1e65"
+      },
+      "tiles": [
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-30.jpg",
+          "bytes": 860,
+          "sha256": "6b017a24473cef139b9bb9b2e0b5fcbae069b5d816509fe027af2d5afafd1171",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/30/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-30.jpg",
+          "bytes": 762,
+          "sha256": "84ba742947b0c5273cb489e43509d12847dd9442f625be0a2e64400feb1232b7",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/30/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-30.jpg",
+          "bytes": 803,
+          "sha256": "b89fda344633a6df481959a3797af085efe5e1731c9007be64edfc09a03dc124",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/30/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-30.jpg",
+          "bytes": 777,
+          "sha256": "a86d3eae53904fc2218f6ebd0111c6f812ae6a7fe12fdc2721b16fc614283486",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/30/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-30.jpg",
+          "bytes": 3102,
+          "sha256": "99481ee5e7c00718a6bf5ca947aa1a2e1c69341dfc8fa01014c3810b96849385",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/30/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-30.jpg",
+          "bytes": 16260,
+          "sha256": "c73253b557f0b12bb4608d5bd45b262bc76aebdec21500b04b739330f7cbc758",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/30/69.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-31.jpg",
+          "bytes": 887,
+          "sha256": "f108411d32540b5f6dd1219590497cbeb91b95db3856ba7addd9cbbc74c264eb",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/31/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-31.jpg",
+          "bytes": 714,
+          "sha256": "de0ff5af412e8ea779ac09c63e2ae660c567ed9d70eb7d607e1ca7cb1d974bbb",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/31/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-31.jpg",
+          "bytes": 742,
+          "sha256": "ec5f6ecfd2ffec2ca98163d3f8bd73c2905b2317609b98fae81d5801f5963598",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/31/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-31.jpg",
+          "bytes": 728,
+          "sha256": "80a533eb483134159779e12d5d7a1c9142f31c04be329416a970c3f0e99f7dbb",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/31/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-31.jpg",
+          "bytes": 4841,
+          "sha256": "f09d56ab7ba7705a8a851ced8f61e1a1b02562077c291bc5ae2253f7847c6c4b",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/31/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-31.jpg",
+          "bytes": 21759,
+          "sha256": "628de3959e92ae0768e42a08a13975b2d7afa39f7ef8189e6d6ba71a9f9b7013",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/31/69.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-32.jpg",
+          "bytes": 885,
+          "sha256": "83ebb0a1a47552f2352b8ba6f998b3b66c16aab82f1d454634e6affe334ad1b2",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/32/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-32.jpg",
+          "bytes": 755,
+          "sha256": "8029b81f5511f09cfb5c518bd03c032ee394a9b8efa75a284ec302d5d71f808d",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/32/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-32.jpg",
+          "bytes": 741,
+          "sha256": "7e04a27091addd5837bffa6f76b3cfdc7817ea4e37e415801330821e010ab186",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/32/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-32.jpg",
+          "bytes": 728,
+          "sha256": "9e464c9af88073d97cf0498d762056121f4fb63d14cd646772eeeb424b1d18a6",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/32/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-32.jpg",
+          "bytes": 13856,
+          "sha256": "5b41bd49befdbfe9ff6e3f1c63e96bf68eb6e048d02e9219da9c1e79c4f6a6f5",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/32/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-32.jpg",
+          "bytes": 17511,
+          "sha256": "2a832e49ab43a4d98de656b55fdd02f4822948b32c5517d32e130a13ae67a19f",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/32/69.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-33.jpg",
+          "bytes": 769,
+          "sha256": "5eab6767dc860b6bfb01340874d8e57a957460441ee2a3f96174b151eef90fd7",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/33/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-33.jpg",
+          "bytes": 832,
+          "sha256": "7d5273b49280f4781a5b6dd7895d3eeb0c09f89b575c76455481b5b0643dd1ad",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/33/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-33.jpg",
+          "bytes": 722,
+          "sha256": "46cde3e7c97c326a1fceed63db2120ea50ceaab054f0b382d44cbdc6ea4ad375",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/33/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-33.jpg",
+          "bytes": 4164,
+          "sha256": "04991d978a659808047610230cd5472c4208f84c1d371f35c5454607abe71dfc",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/33/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-33.jpg",
+          "bytes": 17749,
+          "sha256": "7b7e9bdf8695f8bbdf2bcb51ae45a9b280ff3b17052d8c8d152aee71ae5c5178",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/33/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-33.jpg",
+          "bytes": 15477,
+          "sha256": "d3babb5078897d25cef20756ebdcabcb2d63ad70597d876353870d58f9ae7228",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/33/69.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-34.jpg",
+          "bytes": 751,
+          "sha256": "d3e96de002818b854e8a50d80bd0572c803897f349eb95248464d886571514e2",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/34/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-34.jpg",
+          "bytes": 777,
+          "sha256": "5aeb02f829834dfd784360f8fb1bc3fd5d57b02211864e24bfa152dbd57aa519",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/34/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-34.jpg",
+          "bytes": 3487,
+          "sha256": "dbb9f385770fb7c88e6fc3edaec780a791da656058505b5fa8922691238ebeaf",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/34/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-34.jpg",
+          "bytes": 14406,
+          "sha256": "41750af1e021e3a1013e5e67855b56a8cd14b6b94f269e7404822289c632be21",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/34/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-34.jpg",
+          "bytes": 15348,
+          "sha256": "1fd8d1d264617f38a739e450b545e5ebc94f6aaa7147fab6ef6ad9d4def6adb6",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/34/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-34.jpg",
+          "bytes": 15102,
+          "sha256": "30a19b4cc5691bd87ad9f65738f70368639385c52611a96a4c76d2c95d2afac3",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/34/69.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-35.jpg",
+          "bytes": 726,
+          "sha256": "3c3a92f5f51384edfaa52012db5f00da74334547051c4959305fa7fc2dfbbc93",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/35/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-35.jpg",
+          "bytes": 3562,
+          "sha256": "46062fff94b94d5b56675a693fdcc386fe8094bd2a227f8cf84e3bf380097e16",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/35/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-35.jpg",
+          "bytes": 23131,
+          "sha256": "d809d133c4f991c3597a69f56145225659ba30d1c43c27515b41dab202034caf",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/35/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-35.jpg",
+          "bytes": 24684,
+          "sha256": "496f8502833c98ba7f4321b3dac8faf5b31ac22503d42b68991c575102eed2cc",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/35/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-35.jpg",
+          "bytes": 19713,
+          "sha256": "f97c0ef10563260628366e69a33c5828eb55bdf00e0ae726b7c8da697802a1ec",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/35/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-35.jpg",
+          "bytes": 16687,
+          "sha256": "6b78d318310f39042522403c6a95a4c872509bfdb8e2a17db720a18b05433209",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/35/69.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-36.jpg",
+          "bytes": 686,
+          "sha256": "bfa5760810d8fea34efe62bf86b0b9234a38255b80ca43f70076804d2dfe71dd",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/36/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-36.jpg",
+          "bytes": 6460,
+          "sha256": "12e6f0019393c88fa7e56816b90d9dd38a982f4d5e7129b1edbacc85f3706c86",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/36/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-36.jpg",
+          "bytes": 24607,
+          "sha256": "bb1e3e17b879b805fbbfbe7897e23e0cf5da362c9f577ec0f0685b5b265e008e",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/36/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-36.jpg",
+          "bytes": 18328,
+          "sha256": "1c0bff2301f996c7b2c2349aec10bfd65c68b32967e264664145d811d06f0119",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/36/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-36.jpg",
+          "bytes": 15745,
+          "sha256": "6400bc65f2c90543eb199382377e306bb345ca747b25b820c9f54ba52bd800b5",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/36/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-36.jpg",
+          "bytes": 15919,
+          "sha256": "82342148c72b150a3354daa910c2c3f4e7d33aa52e4e6b75b9cac4225d08b030",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/36/69.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-37.jpg",
+          "bytes": 671,
+          "sha256": "d370f78f2cefaf83aaf49d4056f78ec214dc6acefefe74ec618be6f4f1019d36",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/37/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-37.jpg",
+          "bytes": 3832,
+          "sha256": "f806a2a84cb1ae78bd5d0aae87a1b76e1dd44588b75654143068f793ff72f2d7",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/37/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-37.jpg",
+          "bytes": 20383,
+          "sha256": "469d1ad53f92111fa4f4fe75263dbfb6c71735b933db46417a0f758286ff795a",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/37/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-37.jpg",
+          "bytes": 15705,
+          "sha256": "431e58dbf690501847e19609e4bd425fffb0aa5942be65f3af36a2166a5374e0",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/37/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-37.jpg",
+          "bytes": 14104,
+          "sha256": "d0dc09cb91c8e948b2c9d826e96cd71a81deafd9d6b42a8112763927e892c590",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/37/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-37.jpg",
+          "bytes": 17586,
+          "sha256": "be205f02014218da60e6fc630001960a39f92fcc9b15a1e0fdb7c07f36451ea1",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/37/69.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-38.jpg",
+          "bytes": 671,
+          "sha256": "d370f78f2cefaf83aaf49d4056f78ec214dc6acefefe74ec618be6f4f1019d36",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/38/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-38.jpg",
+          "bytes": 919,
+          "sha256": "3dc790ed419aa3aa3fa01fab973c7a97459e73bdc981b2ef595df56cf414354e",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/38/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-38.jpg",
+          "bytes": 8271,
+          "sha256": "1875e2b0421a5794c39d21367be430d4f41cb692bfb41175aaedafc4c023ccfa",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/38/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-38.jpg",
+          "bytes": 3854,
+          "sha256": "36a656e84fee99f929af4b38b89e63452b609cc1db5c45b5f5d03ff924b27241",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/38/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-38.jpg",
+          "bytes": 15659,
+          "sha256": "7c91f17616f960afcb9ffa6c65b4eb5c7183fd6eda7a975806bbc310fe8f30ed",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/38/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-38.jpg",
+          "bytes": 15686,
+          "sha256": "a89fd9262a506761a522f5110a6eeaeae6d88422a5f64bf978a5f1d7fdd047b9",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/38/69.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-64-39.jpg",
+          "bytes": 673,
+          "sha256": "13342f72eb0aace1cd376acc22f99a8bedc93b501583d8629f5f900eb0ba470e",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/39/64.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-65-39.jpg",
+          "bytes": 681,
+          "sha256": "d6cde6157f96a35f2a66b7d07d8bc266848f538183fd3124086eef8c3ccb82bb",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/39/65.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-66-39.jpg",
+          "bytes": 2719,
+          "sha256": "df25176e09d0505f43068225856c50d6c03ed7fa605cd09aa050a96468547e84",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/39/66.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-67-39.jpg",
+          "bytes": 16045,
+          "sha256": "a281d72302898e8b5971fa3909a9bbc55b3a864bdb0d659a5cecd21e9a6d5048",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/39/67.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-68-39.jpg",
+          "bytes": 11676,
+          "sha256": "936e166a300f91db80d78fe6d70546354231ba5b23082cd2474b7b100218cc8d",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/39/68.jpg"
+        },
+        {
+          "file": "assets/source/a-north-macro-20261007/eox-7-69-39.jpg",
+          "bytes": 12945,
+          "sha256": "3193ab4417adb6242a59d50af03c49b9a192c0991c761a8ca52bbcd5d648bcb2",
+          "url": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/GoogleMapsCompatible/7/39/69.jpg"
+        }
+      ]
+    }
+  ],
+  "runtime": {
+    "file": "prototype/spikes/a-climb/public/north-earth/macro.jpg",
+    "bytes": 582648,
+    "sha256": "0c6fbe5a02594b89b081d5258119c12d49413947621399157526b84e36c55004"
+  },
+  "runtime_dimensions": [
+    1262,
+    2048
+  ]
+}

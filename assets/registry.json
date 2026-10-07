@@ -3047,6 +3047,52 @@
         "prototype/spikes/a-climb/terrain-regional.ts"
       ],
       "review": "D092 user approved height1.5; terrain detail KEEP; regional LOD/lighting TUNE; manifest pins256 geometry files"
+    },
+    {
+      "id": "north-parent-map-20261007",
+      "title": "north-parent-map-20261007",
+      "kind": "texture",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://cloudless.eox.at/documentation/usage"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "EOX Sentinel-2 cloudless / JangaFX cloud pack; see original registry and manifest",
+      "original": null,
+      "processed": {
+        "file": "prototype/spikes/a-climb/public/north-earth/macro.jpg",
+        "bytes": 582648,
+        "sha256": "0c6fbe5a02594b89b081d5258119c12d49413947621399157526b84e36c55004"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb/arrival-north.ts"
+      ],
+      "review": "D093 scoped northern handoff; optical/edge/motion TUNE; cover is actual VDB bake, not live volume"
+    },
+    {
+      "id": "north-vdb-cover-bake-20261007",
+      "title": "north-vdb-cover-bake-20261007",
+      "kind": "texture",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://jangafx.com/software/embergen/download/free-vdb-animations/"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "EOX Sentinel-2 cloudless / JangaFX cloud pack; see original registry and manifest",
+      "original": null,
+      "processed": {
+        "file": "prototype/spikes/a-climb/public/north-earth/cloud-cover.png",
+        "bytes": 892163,
+        "sha256": "644b7e991215475af868a10639b5da59dad9f3e6fe35c268ed2d4aeab2fbd9a3"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb/arrival-north.ts"
+      ],
+      "review": "D093 scoped northern handoff; optical/edge/motion TUNE; cover is actual VDB bake, not live volume"
     }
   ],
   "rejected": [

@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "terrain_detail_KEEP_height15_tiled_lod_verified_global_optics_and_handoff_pending",
+    "status": "northern_global_region_archive_candidate_rendered_live_cloud_and_motion_TUNE",
     "records": [
       "D-065",
       "D-066",
@@ -952,7 +952,7 @@
         "status": "actual EOX113 tiles and native ArcticDEM acquired; 6 connected terrain renders, 4 independent high-look renders verified; native packed scene reopened; visual TUNE, web integration pending",
         "feedback": "low/entry should visibly show mountains and height variation; detailed maps start at low; high uses selective polar geometry, night lights and atmosphere; geography need not be exact",
         "production_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_detailed_terrain_production_review_2026-10-07.md",
-        "next": "high/global optical tune at its view; regional footprint and camera handoff with height1.5 LOD; VDB same sun and receiver; approved archive transition; complete candidate feedback2",
+        "next": "continuous northern path edge/light tuning; local approved VDB density/optical cache or continuous camera bake trial; existing archive bridge tempo and GPU/scroll validation; complete candidate feedback2",
         "detailed_asset": {
           "metadata": "assets/processed/a-terrain-detailed-20261007/metadata.json",
           "native": "assets/processed/a-terrain-detailed-20261007/detailed-terrain.blend",
@@ -982,6 +982,27 @@
           "geometryBudgetMiB": 48,
           "fullEarthHandoff": false,
           "feedback": "user cloud production1/2 retained"
+        },
+        "northern_handoff": {
+          "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_handoff_review_2026-10-07.md",
+          "route": "?terrain=north",
+          "camera_anchor": [
+            61.63,
+            8.4
+          ],
+          "parentTiles": 60,
+          "parentRuntimeSize": [
+            1262,
+            2048
+          ],
+          "heightGain": 1.5,
+          "evidence": "verification/a-north-handoff-20261007",
+          "nativeVdbFrames": 3,
+          "webFrames": 9,
+          "webCloud": "inside occlusion bake only; live regional volume/receiver pending",
+          "globalDefaultAdopted": false,
+          "visual": "TUNE: macro/region edge, highlights, atmosphere, gray cover bridge and continuous motion",
+          "userCloudFeedback": "1/2 retained"
         }
       }
     }

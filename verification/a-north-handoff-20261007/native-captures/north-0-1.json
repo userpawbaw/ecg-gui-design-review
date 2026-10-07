@@ -1,0 +1,126 @@
+{
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "scroll": {
+      "top": 0,
+      "max": 5834,
+      "locked": true,
+      "targetProgress": 0.1
+    },
+    "p": 0.1,
+    "t": 2.4,
+    "arrival": {
+      "model": "North anchored kilometre sphere + 1.5x regional LOD",
+      "atmosphere": true,
+      "cloud": true,
+      "cloudCoverReady": true,
+      "cloudModel": "real VDB optical cover bake; regional live volume pending",
+      "terrain": {
+        "visibleTiles": 46,
+        "drawTriangles": 609416,
+        "residentGpuBytes": 17690464,
+        "queued": 0,
+        "pending": 0,
+        "fullSurfaceTriangles": 812800,
+        "fullTiledTriangles": 847090,
+        "heightGain": 1.5,
+        "maxErrorPixels": 3.105118750951893e-15,
+        "highTextures": true,
+        "errors": []
+      },
+      "progress": 0.1,
+      "anchor": [
+        61.63,
+        8.4
+      ],
+      "sunDirection": [
+        -0.6642786286868113,
+        0.2776089791526973,
+        -0.694022447881743
+      ]
+    },
+    "scene": "d0-mixed-0",
+    "record": "S022",
+    "fs": 250,
+    "winner": "M08",
+    "sample": 600,
+    "sourceSample": 657,
+    "rAbs": 487,
+    "rOffsets": [
+      75,
+      282,
+      487,
+      678,
+      883,
+      1085,
+      1285,
+      1487,
+      1675,
+      1880,
+      2083
+    ],
+    "beatAge": 0.45199999999999996,
+    "heartScale": 1.000343299574907,
+    "sharedClock": true,
+    "bodyVisible": false,
+    "heartVisible": false,
+    "heartScreen": [
+      0.20406360346356403,
+      0.3002068358294394,
+      0.9999657238302183
+    ],
+    "camera": [
+      950,
+      3700,
+      1400
+    ],
+    "cameraTarget": [
+      0,
+      -1200,
+      0
+    ],
+    "cartSocket": [
+      -1.29,
+      0.88,
+      -3.9
+    ],
+    "volume": true,
+    "bloom": true,
+    "clay": false,
+    "aa": "msaa",
+    "actualSamples": 4,
+    "supportedSamples": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "smaa": false,
+    "dpr": 1,
+    "pixelRatio": 1,
+    "renderSize": [
+      1116,
+      884
+    ],
+    "grain": false,
+    "jitter": true,
+    "steps": 96,
+    "frame": 12,
+    "gpu": {
+      "available": false,
+      "count": 0,
+      "p50": null,
+      "p95": null
+    },
+    "raf": {
+      "count": 600,
+      "p50": 17.20000000001164,
+      "p95": 18.10000000000582
+    },
+    "cpuRenderMsMean": 0.5774999999130765,
+    "drawCalls": 21,
+    "triangles": 65043
+  },
+  "url": "http://127.0.0.1:4198/?terrain=north&reviewCapture=1&reviewRound=north-handoff"
+}

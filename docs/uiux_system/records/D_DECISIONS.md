@@ -2336,3 +2336,26 @@ nodata 비중/지도정합/확대 품질이 부족하면 해당 지역의 Sentin
 
 ### 되돌려야 하는 조건
 1.5×가근접에서늘어짐을만들면1×복귀가능. 확대시mesh틈/popping/blur가보이면화면오차/경계/texture해상도를해당시점에서보완. 지형디테일KEEP와새LOD동작TUNE를분리. 사용자전체구름제작피드백1/2는유지.
+
+## D-093. 같은 지역 좌표계의 지구→1.5× 지형 연결과 시점별 광학 시험
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [설계] [자료] |
+| 상태 | 구현 진행 / 기본채택·완성구름과 구분 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자D092다음진행승인. 북반구global에서승인지역terrain으로camera/조명이정합되는candidate를제작.
+
+### 검토한 선택지
+다른scene간두화면crossfade,전체지구고밀도terrain,하나의Jotunheimenlocal-km좌표에globalEarth와tile을같이배치해연속camera로연결.
+
+### 고른 것과 근거
+세번째. 지구중심(0,-6371,0)와지역tangentframe/위경도UV정합,지역LOD거리에맞춰가시성/로드. Moto공개day/night/packedmap과표면specular/roughness분리,투명유리shell대신고도별ray밀도산란광을범위한정하여시험. 높은시점/확대/지역camera구도로검증. 승인서고는기존scene을유지.
+
+### 버린 것과 이유
+현재순수지형preview를완성전체전이로부르지않음. packed-map극지돌출을실측iceDEM으로부르지않음. 원작shader/물리적대기완전재현주장없음. 승인VDB의진짜volume/receiver와runtime효과는별도증거를남기며완성전피드백2로세지않음.
+
+### 되돌려야 하는 조건
+확대지역이탈/texture정합오류/카메라jump/유리막/빛계단이발생하면해당시점에서복구. 새로운연결은terrain=north 별도후보이며global기본/승인서고KEEP/사용자feedback1/2보존.

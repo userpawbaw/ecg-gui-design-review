@@ -16,6 +16,7 @@ import {decode} from '../../v2/src/engine';
 import {createGrade} from '../../v2/src/story/intro/space';
 import {createArrival} from './arrival';
 import {createArrival as createLegacyArrival} from './arrival-legacy';
+import {createNorthernArrival} from './arrival-north';
 const $=(id:string)=>document.getElementById(id)!;
 $('labels').querySelector('h2')!.textContent='잡음이 섞인 심전도';
 $('labels').querySelector('small')!.textContent='MIXED INPUT · 0 dB / 2.5 s';
@@ -27,6 +28,7 @@ const URLs={body:new URL('../../v2/src/story/intro/assets/a-climb/body_climb.glb
 async function start(){
 const params=new URLSearchParams(location.search);
 const full=params.get('stage')!=='room';
+if(params.get('terrain')==='north'){$('title').style.maxWidth='310px';$('title').style.fontSize='clamp(36px,4.5vw,68px)';$('title').style.lineHeight='1.13';}
 if(full)$('content').style.height='760vh';
 const aa=params.get('aa')||'msaa';
 const initialSteps=[48,64,96].includes(Number(params.get('steps')))?Number(params.get('steps')):96;
@@ -41,7 +43,7 @@ const pct=(a:number[],q:number)=>a.length?[...a].sort((x,y)=>x-y)[Math.min(a.len
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
 renderer.setClearColor(0x070605);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(40,1,.025,40);
-const arrival=full?(params.get('planet')==='legacy'?await createLegacyArrival():await createArrival(renderer,camera)):null;
+const arrival=full?(params.get('terrain')==='north'?await createNorthernArrival(renderer):params.get('planet')==='legacy'?await createLegacyArrival():await createArrival(renderer,camera)):null;
 arrival?.setEffects({flare:params.get('flare')!=='0',cloud:params.get('cloud')!=='0',cloudShadow:params.get('cloudShadow')!=='0',atmosphere:params.get('atmosphere')!=='0',specular:params.get('specular')!=='0'});
 const loader=new GLTFLoader();
 const [arch,b,h,e,meta,w]=await Promise.all([createArchive(),loader.loadAsync(URLs.body),loader.loadAsync(URLs.heart),loader.loadAsync(URLs.electrodes),fetch(URLs.manifest).then(r=>r.json()),fetch('/wave.json').then(r=>r.json())]);
@@ -126,7 +128,7 @@ function draw(dt:number){
  t=frozenTime??t;
  const roomP=full?THREE.MathUtils.clamp((p-.55)/.45,0,1):p;
  const inSpace=full&&p<.32;
- $('status').textContent=inSpace?'NASA EARTH OBSERVATORY · A 제작 중':'A · 제작 중';
+ $('status').textContent=inSpace?(params.get('terrain')==='north'?'EOX · ARCTICDEM · NORTHERN TRIAL':'NASA EARTH OBSERVATORY · A 제작 중'):'A · 제작 중';
  const wave=ss(.78,.96,roomP),phase=beatPhase(loop,w.fs,t);
  const pulse=Math.exp(-phase.sincePrev/.085);
  const pos0=arch.shot('s2_beams').pos,pos1=new THREE.Vector3(.55,2.15,-.7),pos2=new THREE.Vector3(2.5,1.97,-4.32);
@@ -164,7 +166,7 @@ function draw(dt:number){
  const query=timer&&gpuPending.length<8?gl.createQuery():null;
  if(query)gl.beginQuery(timer.TIME_ELAPSED_EXT,query);composer.render(dt);if(query){gl.endQuery(timer.TIME_ELAPSED_EXT);gpuPending.push(query);}
  const blend=wave; $('wavebox').style.opacity=String(blend);$('labels').style.opacity=String(blend);
- $('title').style.opacity=String(full?1-ss(.12,.25,p):1-ss(.25,.5,p));$('hint').style.opacity=String(full?1-ss(.1,.2,p):1-ss(.2,.5,p));
+ $('title').style.opacity=String(full?1-ss(params.get('terrain')==='north'?.07:.12,params.get('terrain')==='north'?.14:.25,p):1-ss(.25,.5,p));$('hint').style.opacity=String(full?1-ss(.1,.2,p):1-ss(.2,.5,p));
  sweep.draw({t,startAbs:0,mix:0,alpha:blend,reduced,ring:null,comet:null,gridAlpha:.2});
  frame++;
 }
@@ -183,6 +185,7 @@ if(params.has('reviewP')||params.has('reviewPath')||params.has('reviewCapture'))
  const save=document.createElement('button');save.textContent='프레임 저장';save.id='review-save';save.style.cssText='position:fixed;right:16px;top:16px;z-index:99;padding:8px 14px;background:#121a20;color:white;border:1px solid #46515a';
  const saveFrame=async()=>{draw(0);const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'manual',shot:params.get('reviewShot')||('frame-'+Math.round(p*1000)),image:renderer.domElement.toDataURL('image/png'),meta:{renderer:(()=>{const e=gl.getExtension('WEBGL_debug_renderer_info');return e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null;})(),state:state(),url:location.href}})});if(!response.ok)throw Error(await response.text());save.textContent='프레임 저장 완료';console.info('CLOUD_REVIEW_SAVED '+await response.text());};
  save.onclick=()=>void saveFrame().catch(console.error);document.body.append(save);if(params.has('reviewShot')&&!params.has('reviewCapture'))requestAnimationFrame(()=>requestAnimationFrame(()=>void saveFrame().catch(console.error)));
+ if(params.get('terrain')==='north'){const selector=document.createElement('select');selector.setAttribute('aria-label','전이 검토 구도');selector.style.cssText='position:fixed;right:16px;top:62px;z-index:99;padding:8px;background:#121a20;color:white';for(const [name,value] of [['원형 지구',0],['궤도 수평선',.10],['북유럽 확대',.18],['지역 인계',.235],['상세 지형',.265],['능선 접근',.294],['구름 가림',.319],['서고',.55],['심장·파형',.95]] as const){const o=document.createElement('option');o.value=String(value);o.textContent=name;selector.append(o);}selector.onchange=()=>{save.textContent='프레임 저장';params.set('reviewShot','north-'+selector.value.replace('.','-'));configure(Number(selector.value),2.4,{frame:12,grain:false});};document.body.append(selector);}
  const info=gl.getExtension('WEBGL_debug_renderer_info');console.info('CLOUD_REVIEW_META '+JSON.stringify({renderer:info?gl.getParameter(info.UNMASKED_RENDERER_WEBGL):null,userAgent:navigator.userAgent,state:state(),url:location.href}));
  if(['forward','reverse'].includes(params.get('reviewPath')||'')){(window as any).aPreview.path(8,params.get('reviewPath')==='reverse');setTimeout(()=>{console.info('CLOUD_REVIEW_TIMING '+JSON.stringify(state()));},8600);}
 }

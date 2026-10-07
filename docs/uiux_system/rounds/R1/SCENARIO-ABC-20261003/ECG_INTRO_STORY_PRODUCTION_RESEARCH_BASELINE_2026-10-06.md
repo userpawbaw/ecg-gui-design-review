@@ -1,3 +1,5 @@
+2026-10-07 최신 D093/F061: [북반구 지구·지역 인계 검토](ECG_A_north_handoff_review_2026-10-07.md). terrain=north 별도후보에서global→북유럽parent→1.5×tile→VDB가림bake→기존서고/심장. 실제nativeVDB+지형3장과웹9구도. 지역liveVDB·연속motion·광학경계TUNE,최종채택/feedback2아님.
+
 2026-10-07 최신 D092/F060: [1.5× 지형·화면별LOD 실제 검토](ECG_A_terrain_lod_review_2026-10-07.md). 사용자지형디테일KEEP/1.5×시험승인. 별도terrain.html에서타일별4LOD/지연로드/frustum/cache적용,실제3구도·왕복오류0. 높은시점광학·확대지역인계·VDB·서고는각시점보완후전체연결. 기본지구미교체/사용자구름제작피드백1/2 유지.
 
 2026-10-07 최신 — D091/F059: [실제 상세 지형·고시점 광학 제작 검토](ECG_A_detailed_terrain_production_review_2026-10-07.md). EOX113타일/국소32mDEM 연결지형6장·높은시점off/on4장·packed Blender 원본 검증. 1×지형 다음통합 추천,2.5×근접질감/높은시점광학 TUNE. 다음거리인계→승인VDB→같은서고 연속전이. 사용자제작피드백1/2 유지, 기본웹미통합. 아래 이전 연구단계는 이 결과로 갱신한다.

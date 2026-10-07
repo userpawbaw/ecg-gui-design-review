@@ -8,11 +8,13 @@ export async function createRegionalTerrain(renderer:THREE.WebGLRenderer){
  const response=await fetch(new URL('manifest.json',base));if(!response.ok)throw Error('Terrain manifest unavailable');const manifest=await response.json();
  const group=new THREE.Group(),loader=new THREE.TextureLoader(),low=await loader.loadAsync(new URL('broad-low.jpg',base).href);
  low.colorSpace=THREE.SRGBColorSpace;low.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
- const nearUV=new THREE.Vector4(...manifest.nearUV),nearTexture={value:low},nearEnabled={value:0};
+ const nearUV=new THREE.Vector4(...manifest.nearUV),nearTexture={value:low},nearEnabled={value:0},borderMap={value:low},borderPacked={value:low},borderOn={value:0};
  const material=new THREE.MeshStandardMaterial({map:low,roughness:.87,metalness:0});
- material.onBeforeCompile=s=>{s.uniforms.regionNear=nearTexture;s.uniforms.regionNearEnabled=nearEnabled;s.uniforms.regionUV={value:nearUV};s.fragmentShader=s.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D regionNear;uniform vec4 regionUV;uniform float regionNearEnabled;').replace('#include <map_fragment>',`#include <map_fragment>
+ material.onBeforeCompile=s=>{s.uniforms.regionNear=nearTexture;s.uniforms.regionNearEnabled=nearEnabled;s.uniforms.regionUV={value:nearUV};s.uniforms.borderMap=borderMap;s.uniforms.borderPacked=borderPacked;s.uniforms.borderOn=borderOn;const fb=manifest.broadBounds;s.uniforms.globalUV={value:new THREE.Vector4((fb[0]+180)/360,(fb[1]+90)/180,(fb[2]-fb[0])/360,(fb[3]-fb[1])/180)};s.fragmentShader=s.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D regionNear,borderMap,borderPacked;uniform vec4 regionUV,globalUV;uniform float regionNearEnabled,borderOn;').replace('#include <map_fragment>',`#include <map_fragment>
  vec2 q=(vMapUv-regionUV.xy)/(regionUV.zw-regionUV.xy);float e=min(min(q.x,q.y),min(1.-q.x,1.-q.y));float regionMix=clamp(e/.05,0.,1.)*regionNearEnabled;
- diffuseColor.rgb=mix(diffuseColor.rgb,texture2D(regionNear,q).rgb,regionMix);`);};
+ diffuseColor.rgb=mix(diffuseColor.rgb,texture2D(regionNear,q).rgb,regionMix);
+ float border=min(min(vMapUv.x,vMapUv.y),min(1.-vMapUv.x,1.-vMapUv.y));vec2 guv=globalUV.xy+vMapUv*globalUV.zw;vec3 globalColor=texture2D(borderMap,guv).rgb;globalColor=mix(globalColor,vec3(.9,.94,1.),texture2D(borderPacked,guv).b*.60);
+ diffuseColor.rgb=mix(diffuseColor.rgb,mix(globalColor,diffuseColor.rgb,smoothstep(0.,.12,border)),borderOn);diffuseColor.a*=mix(1.,smoothstep(0.,.05,border),borderOn);`);};
  const meshes=new Map<string,THREE.Mesh>(),cache=new Map<string,Resident>(),pending=new Set<string>(),failed=new Set<string>(),requested: {tile:Tile;level:Level}[]=[];
  const frustum=new THREE.Frustum(),pv=new THREE.Matrix4();let active=0,clock=0,disposed=false,highStarted=false,highTextures:THREE.Texture[]=[];let faults:string[]=[];
  let metrics={visibleTiles:0,drawTriangles:0,residentGpuBytes:0,queued:0,pending:0,fullSurfaceTriangles:manifest.fullSurfaceTriangles,fullTiledTriangles:manifest.fullTiledTriangles,heightGain:1.5,maxErrorPixels:0,highTextures:false,errors:faults};
@@ -29,7 +31,7 @@ export async function createRegionalTerrain(renderer:THREE.WebGLRenderer){
  function loadHigh(){if(highStarted||disposed)return;highStarted=true;
   Promise.all([loader.loadAsync(new URL('broad.jpg',base).href),loader.loadAsync(new URL('near.jpg',base).href)]).then(textures=>{if(disposed){textures.forEach(t=>t.dispose());return;}highTextures=textures;textures.forEach(t=>{t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());});material.map=textures[0];material.needsUpdate=true;nearTexture.value=textures[1];metrics.highTextures=true;}).catch(e=>{faults.push(String(e));});
  }
- return {group,manifest,state:()=>({...metrics,errors:[...faults]}),update(camera:THREE.PerspectiveCamera,pixelHeight:number){
+ return {group,manifest,setGlobalBorder(map:THREE.Texture,packed:THREE.Texture){borderMap.value=map;borderPacked.value=packed;borderOn.value=1;material.alphaHash=true;material.needsUpdate=true;},state:()=>({...metrics,errors:[...faults]}),update(camera:THREE.PerspectiveCamera,pixelHeight:number){
   if(disposed)return;clock++;if(metrics.highTextures)nearEnabled.value=Math.min(1,nearEnabled.value+.06);camera.updateMatrixWorld();pv.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse);frustum.setFromProjectionMatrix(pv);
   const focal=pixelHeight/(2*Math.tan(THREE.MathUtils.degToRad(camera.fov/2))),position=camera.position.toArray(),used=new Set<string>();let triangles=0,visible=0,maxError=0;
   for(const tile of manifest.tiles as Tile[]){let mesh=meshes.get(tile.id);const box=new THREE.Box3(new THREE.Vector3(...tile.min),new THREE.Vector3(...tile.max));

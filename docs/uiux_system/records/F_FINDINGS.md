@@ -1596,3 +1596,23 @@ verification/a-terrain-lod-20261007:256파일/hash/byte/index PASS,3camera오차
 
 ### 놓쳤다면
 LOD사용이메모리자동최적화나모든시점큰성능향상이라고오인하거나,디테일을일괄줄여사용자승인품질을훼손했을것이다. 광학·구름보완은각전이시점에서계속하고전체후보피드백1/2유지.
+
+## F-061. 지역 상세지형 이전에 중간 imagery가 필요하고 준비표시만으로후처리적용을증명하지못함
+
+| | |
+|---|---|
+| 발견 | 2026-10-07 [렌더] [코드] [캡처] [자료] |
+| 상태 | nativeVDB3장/북반구 연결후보 구현, 전체시각TUNE |
+| 연결 | D-093, O-014, CASE-007 |
+
+### 발단
+사용자D092후진행승인. 같은km좌표의북반구지구→1.5×tile→기존서고후보제작.
+
+### 먼저 의심한 것과 배제 방법
+좁은상세patch가흐린global에떠보임→EOX북유럽parent60tile/1262×2048추가·지역UV/alphaHash경계·zoomvisibility보완. 유리shell대신고도별24step광학근사/surface강도분리. 실제VDB cloud06+같은1.5terrain/sun native3장.
+
+### 결정적 근거
+verification/a-north-handoff-20261007/native-vdb-manifest와native-captures9구도. source256tile기반regionLOD/anchor정합,macro원본metadata/URLhash,OptiX장치활성/native완료. cloud준비true인데p.319실제이미지에서는가림없음→ShaderPass복제uniform에직접ready/texture반영해복구. 현재웹cloud는가림bake한장,live지역volume/그림자미구현. 높은시점경계/하이라이트/연속동작TUNE.
+
+### 놓쳤다면
+좁은patch만고해상도여서생기는자료/normal/조명차이를mesh품질문제로만보거나,준비표시/무오류캡처를실제구름적용완료로오해했을것이다. bakebridge와nativevolume/web미완을분리하고전체피드백1/2유지한다.

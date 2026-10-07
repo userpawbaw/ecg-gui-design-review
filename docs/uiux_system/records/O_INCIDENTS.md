@@ -303,3 +303,27 @@ IAB3구도/왕복새capture에서errors0,geometry렌더확인. 256gzip원본과i
 
 ### 재발 방지와 자동화 상태
 압축자산은원본압축/HTTP자동decode양쪽을지원하고length를검증한다. build출력에별도entry존재확인후실제로딩·화면을확인한다. geometry 검증script는추가했으나자동HTTPdecode두경로회귀테스트는미추가.
+
+## O-014. 북반구 연결 후보의 패스 interface·uniform 복제와 native 장치 복원
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [코드] [캡처] [로그] |
+| 상태 | 해결 / native3장 완료와 실제 가림 확인 |
+| 연결 | D-093, F-061 |
+| 원인 | 새cloudPass에uAspect부재,ShaderPass복제된uniform을외부준비값과혼동 |
+
+### 증상
+첫resize에서undefined.value오류. 이후준비상태true·오류0인데p.319에서구름가림보이지않음. native재개렌더의두번째shot예상12분대.
+
+### 원인
+기존resize계약의uAspect를누락. ShaderPass가복제한uniform과원래객체가달라texture/ready외부변경은렌더에반영되지않음. native scene을열때Cyclespreferences/device설정은복원하지않음;첫실행장치미검증이므로CPU라고확정하지않음.
+
+### 조치
+uAspect/crop계약추가. shaderPass.uniforms.uCloud/uReady직접갱신·state도실제uniform기준. 실패전9capture와첫nativePNG/로그보존. 정확한workspacePython+script명인자자체job만중지하고OptiX활성명시로재렌더. 기본CIM권한부족은escalation승인후동일자체process종료로해결.
+
+### 검증과 한계
+최종native장치RTX3070OptiX true/CPU false와3PNG/hash확인. 웹p.319실제로회색VDBinside가림을확인후9capture재저장. uniform준비값이독립적인visualPASS가아님. 지역livevolume/전체motion성능미검증.
+
+### 재발 방지와 자동화 상태
+후처리interface/복제uniform의실제render객체와loadingstate를일치시킨다. nativejob재개는preferences/장치활성출력을고정한다. 실제효과off/on/pixel기여로확인한다. 이번에uniform복제자동회귀테스트는미추가.

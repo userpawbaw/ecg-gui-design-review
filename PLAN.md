@@ -401,3 +401,6 @@ EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1
 
 ### 2026-10-07 高detail KEEP·높이1.5×/지역LOD 실제 적용 — D092/F060/O013
 사용자디테일KEEP·1.5×시험승인(문제면1×복귀). 1.5×Cycles3장/packed원본유지,64tile×4LOD 256파일약15.1MB·triangular화면오차1.2px/20%hysteresis/skirt/commonnormal/frustum·caster분리/4요청·선행refine/48MiBgeometrycache·dispose/high지도지연구현. 별도terrain.html WebGL실제광역→접근→능선→광역→접근/capture3장오류0. 최종주camera선택715300/820700/609416 대 fulltiled847090(15.6/3.1/28.1%감소),GPU/FPS효과아님. gzipHTTP이중decode/entryconfig복구,초기bilinear통계철회. native/WebGL빛·질감/연속popping TUNE;global/cloud/서고미통합. 다음높은시점광학→목적지확대거리인계→승인VDB같은sun/receiver→같은서고전체후보. 사용자제작피드백1/2 유지. 검토 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_terrain_lod_review_2026-10-07.md.
+
+### 2026-10-07 북반구 지구→1.5×지역→같은서고 후보 — D093/F061/O014
+같은km/tangentframe에서globalEarth+regionLOD카메라연결,원형/수평선/북유럽/지역/능선/가림/서고/심장9구도. EOXparent60tile/1262×2048추가,p별parent/broad/nearUV·경계alphaHash,MeshPhysicalspecular/.6kmbump·24step고도산란surface/sky분리. cloud06실제VDB를같은1.5terrain/sun에서OptiX48sample3native render;웹에는inside 가림bake한장만적용,지역livevolume/receiver미구현. uAspect누락/ShaderPass복제uniform적용오류복구와nativepreferences/장치명시재개,실패전캡처·PNG/로그보존. 전체시각TUNE/기본미채택/서고KEEP/사용자feedback1/2. 다음연속움직임과edge→국소VDB광학/연속bake비교→samearchive가림템포/성능→전체후보피드백2. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_handoff_review_2026-10-07.md.

@@ -153,31 +153,39 @@ def run(L):
             bpy.data.objects.remove(x, do_unlink=True)
         pose(t, fist); return electrodes(bpy, Vector, o, fj)
 
+    ONLY = os.environ.get('INFLOW_ONLY', 'pli,ma,bw').split(',')     # rerun one scene: INFLOW_ONLY=bw
     # ---- P-b power line: none → common mode → difference at RA ----
-    ring, lead = with_electrodes(0.0, 0.0); fr = []
-    for lab, c, r, l in (('P-b 0  before', 0, 0, 0), ('P-b 1  common mode: whole body faint red', .35, .6, 0),
-                         ('P-b 2  difference: RA ring + lead', .08, 14, 9)):
-        common.default_value, ring.default_value, lead.default_value = c, r, l
-        fr.append((lab, panel(shot('ma', 'pli_' + lab[4]))))
-    sheet(fr, os.path.join(OUT, 'inflow_pli.jpg'))
-    common.default_value = ring.default_value = lead.default_value = 0
+    if 'pli' in ONLY:
+        ring, lead = with_electrodes(0.0, 0.0); fr = []
+        for lab, c, r, l in (('P-b 0  before', 0, 0, 0), ('P-b 1  common mode: whole body faint red', .35, .6, 0),
+                             ('P-b 2  difference: RA ring + lead', .08, 14, 9)):
+            common.default_value, ring.default_value, lead.default_value = c, r, l
+            fr.append((lab, panel(shot('ma', 'pli_' + lab[4]))))
+        sheet(fr, os.path.join(OUT, 'inflow_pli.jpg'))
+        common.default_value = ring.default_value = lead.default_value = 0
 
     # ---- M-b muscle: fist closed, the wave front climbs forearm → RA ----
-    ring, lead = with_electrodes(1.6, 1.0); fr = []
-    for i, k in enumerate((0, .33, .66, 1.0)):
-        front.default_value = k * total; ring.default_value = 14 * max(0, k - .8) / .2; lead.default_value = 9 * max(0, k - .9) / .1
-        fr.append((f'M-b {i}  wave front {k * total:.2f} m of {total:.2f}', panel(shot('ma', f'ma_{i}'))))
-    sheet(fr, os.path.join(OUT, 'inflow_ma.jpg'))
-    front.default_value = -1; ring.default_value = lead.default_value = 0
+    if 'ma' in ONLY:
+        ring, lead = with_electrodes(1.6, 1.0); fr = []
+        for i, k in enumerate((0, .33, .66, 1.0)):
+            front.default_value = k * total; ring.default_value = 14 * max(0, k - .8) / .2; lead.default_value = 9 * max(0, k - .9) / .1
+            fr.append((f'M-b {i}  wave front {k * total:.2f} m of {total:.2f}', panel(shot('ma', f'ma_{i}'))))
+        sheet(fr, os.path.join(OUT, 'inflow_ma.jpg'))
+        front.default_value = -1; ring.default_value = lead.default_value = 0
 
+    if 'bw' not in ONLY: print('   inflow stills →', OUT); return
     # ---- B-b baseline: side view, chest front → stored baseline thread ----
     x, fs = stored_trace(ROOT, 'd0-bw_synth--5')
     k_ = int(fs); base_lp = np.convolve(x, np.ones(k_) / k_, mode='same')          # 1 s moving average = the slow baseline
-    kb = o.data.shape_keys.key_blocks['Basis']; V = np.array([v.co[:] for v in kb.data])
-    ra_z = fj['electrodes']['RA']['p'][2]
-    cand = np.where((np.abs(V[:, 0]) < .015) & (np.abs(V[:, 2] - (ra_z - .06)) < .015))[0]
+    pose(0.0, 0.0)                                               # pick the sternum on the posed skin (the rest mesh stands:
+    dg = bpy.context.evaluated_depsgraph_get(); me = o.evaluated_get(dg).to_mesh()   # its z = .9 m is the hip — first run)
+    V = np.array([(o.matrix_world @ v.co)[:] for v in me.vertices]); o.evaluated_get(dg).to_mesh_clear()
+    ra = V[fj['electrodes']['RA']['v']]
+    cand = np.where((np.abs(V[:, 0]) < .015) & (np.abs(V[:, 2] - (ra[2] - .06)) < .015))[0]
     sternum = int(cand[np.argmin(V[cand, 1])])                                       # most frontal (−y) point mid-chest
-    cams['side'].data.ortho_scale = 1.6
+    print(f'   sternum vertex {sternum} at {np.round(V[sternum], 3)} (RA {np.round(ra, 3)})')
+    cs = cams['side']; cs.data.ortho_scale = 1.6
+    cs.data.clip_start = max(.05, abs(cs.location.x) - .45)     # ortho: skip the archive desk between the camera and the figure
     with_electrodes(0.0, 0.0); fr = []
     lo_, hi_ = float(np.percentile(x, 1)), float(np.percentile(x, 99))
     bmin, bmax = float(base_lp.min()), float(base_lp.max())

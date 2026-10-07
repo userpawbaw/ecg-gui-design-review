@@ -1,0 +1,17 @@
+{
+  "scope": "rejected border bump trial; not current renderer",
+  "files": [
+    {
+      "file": "north-0-15.json",
+      "p": 0.15,
+      "json_sha256": "f9a38504588a12e9047d612e92e8ebeb5262f25efc468be3790cba0a45223a0d",
+      "png_sha256": "e61290b7ae7fdf48c95b49089c1b865c05aefad8bbc0668c1deefea54cd376c2"
+    },
+    {
+      "file": "north-0-18.json",
+      "p": 0.18,
+      "json_sha256": "6a853ee8fc8465df98779be12ca3d4c05fa61becad63a44b29cf21881184c646",
+      "png_sha256": "56d46fafe350a90dc98e60ebf04da2409c1bb5a51a572447655c16b632c2f3a7"
+    }
+  ]
+}

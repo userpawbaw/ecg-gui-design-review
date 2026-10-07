@@ -1066,7 +1066,7 @@
   },
   "north_map_seam_2026_10_07": {
     "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md",
-    "status": "TUNE_user_review_pending",
+    "status": "user_satisfied_baseline_residual_seam_TUNE",
     "previousArtifacts": "user confirmed resolved",
     "poses": [
       0.1,
@@ -1075,6 +1075,13 @@
       0.294
     ],
     "cloudFeedback": "1/2 retained",
-    "next": "User map seam confirmation then regional VDB optics/occlusion/archive transition"
+    "next": "Proceed regional VDB optics/occlusion; residual seam geometry/normal polish tracked"
+  },
+  "north_residual_seam_2026_10_07": {
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md",
+    "trial": "border bump experiment rejected for negligible effect",
+    "runtime": "a732228 baseline retained",
+    "fullSeamElimination": false,
+    "next": "geometry/normal/color unification as later polish; no new runtime change"
   }
 }

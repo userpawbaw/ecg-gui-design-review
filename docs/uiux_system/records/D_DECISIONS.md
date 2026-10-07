@@ -2432,3 +2432,28 @@ near clipping·근접 지형 손상/잔여 shimmer면 거리별 범위와 재질
 해결된 자글거림/구름 손상, 승인능선1.5× 변화 또는 경계잔여 시 정합 요소별 재검증. 사용자 완료판정과 자동검증 구분, 전체 cloud feedback1/2 유지.
 
 D-096 구현 체크포인트: 색·edge·sphereNormal morph·Physical roughness/specular 정합, globe macro 내부 bump fade. .10/.15/.18/.294 IAB 관찰/error0, build65 PASS. 새 경계는 사용자 검토 전 TUNE. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md
+
+## D-097. 잔여 경계의 범프 조명 정합 시험
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [코드] |
+| 상태 | 구현 전 시험 / 기존 D096 만족 수준 보존 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 약한 경계 잔여 지적, 현 수준도 만족. AI의 경계 소멸 단정은 철회. globe 테두리 bump .6과 parent bump 없음 차이를 발견.
+
+### 검토한 선택지
+현 후보 유지, fade 폭만 확대, global bump를 parent 외곽 동일 좌표로 정합.
+
+### 고른 것과 근거
+세 번째를 제한 시험. 같은 packed map의 UV변환 복제, .6 bumpScale와 동일 .12 attenuation. 내부 실제 terrain 정상과 높이1.5× 유지.
+
+### 버린 것과 이유
+fade 확대만으로 테두리의 조명 법선 불일치 미해결. 구름량/노출 변경은 만족한 방향 훼손.
+
+### 되돌려야 하는 조건
+미세 shimmer 재발/근접 detail 손상 또는 경계 효과 미미하면 D096 baseline 복귀. 완전무경계 보장 아님, 생성지도 색상/기하 근사도 잔여가능.
+
+D-097 결과: 실제 .15/.18 범프 시험 화면 차이가 매우 작아 미채택/REJECT. runtime parent를 기존 a732228 baseline으로 복귀. 잔여 경계 TUNE, 현 수준 사용자 만족 기록. 후속 geometry/normal/color 정합은 제안이며 미구현. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md

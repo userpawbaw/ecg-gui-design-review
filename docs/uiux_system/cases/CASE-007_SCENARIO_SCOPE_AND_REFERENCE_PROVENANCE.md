@@ -168,3 +168,6 @@ AI가 BC 필수보완→ABC비교로 순서를 제안하려던 단계에서 사�
 
 ### 2026-10-07 D096/F064 — 사용자 해결 판정과 다음 결함 분리
 사용자가 “구름 문제와 지형의 자글거림 … 해결”→기존문제 KEEP와 남은 사각조명만 분리→AI가 exposure 가림 대신 color/normal/PBR 정합→같은 .15 화면과 정착된근접 detailReveal1 증거 확보. 기존 규약 적용이며 신규방법론으로 과장하지 않는다. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md
+
+### 2026-10-07 D097 — 제한된 관찰의 단정 정정
+AI가 경계 소멸로 보고→사용자가 희미한 잔여와 현재 만족을 함께 전달→추가 범프 시험의 작은 변화만 확인→미채택/baseline 유지 및 전체소멸 단정 철회. 실제 code mismatch와 시각 주원인 확정을 분리했다. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md

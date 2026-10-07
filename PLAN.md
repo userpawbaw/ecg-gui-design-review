@@ -418,3 +418,6 @@ near/far 정밀도 보정과 z8 지도 선행 반영. 원형/광역 줄·점 패
 
 ### 2026-10-07 지도 조명 사각 경계 정합 — D096/F064
 이전 구름/지형자글거림 사용자 해결/KEEP. 광역 globe/parent 색·법선·PBR 정합 후보, IAB4구도. 다음 경계 사용자 확인→VDB 지역 광학·구름 통과. 전체 cloud feedback1/2 유지. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md
+
+### 2026-10-07 희미한 경계 검토 — D097
+현재 수준 사용자 만족, 잔여seam TUNE. 범프정합 실험 효과미미→미채택/baseline복구. 추가 geometry/normal/color 정합은 후속polish, 지금 다음 VDB 광학·통과 단계 가능. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md

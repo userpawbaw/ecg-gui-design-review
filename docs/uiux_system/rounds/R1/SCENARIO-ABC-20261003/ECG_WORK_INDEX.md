@@ -195,3 +195,6 @@ ECG_A_cloud_asset_lighting_audit_2026-10-06.md → D082 → 현재cloud-photo NO
 
 ### 지도 조명 경계 작업 참조 (2026-10-07)
 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md — D096/F064. 이전 자글거림 사용자 해결; 새 사각 조명 수정 후보와 후속 VDB 단계 분리.
+
+### 잔여 경계 재검토
+docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md — D097 시험 미채택/기존baseline 유지, 주원인 미확정·후속 polish 구분.

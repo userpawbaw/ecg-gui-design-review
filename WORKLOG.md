@@ -617,3 +617,6 @@ D095 최종검사: build65modules PASS / records204 PASS. 기록 초안 필수�
 source수치 불일치 감사→정합→실제IAB .10/.15/.18/.294 PNG+JSON. .15 사각경계 제거 관찰, 근접 detailReveal1/coarse64/height1.5/오류0. 최종build65modules PASS. 기존 north-morph .15/.18 및 ridge 미커밋6파일 보존·이번커밋제외. 연속영상/GPU미검증. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md
 
 D096 최종 records206 PASS. 추가 sphereNormal attribute792588bytes(coarse parent, regional48MiB cache 밖); Physical shading 비용 증가 가능, GPU timing 미검증.
+
+### 2026-10-07 D097 잔여 경계 검토/실험 미채택
+Same-view .15/.18 범프정합 시험/build65 PASS, RGB차 .0132/.0078 및 차>2픽셀 .0006/.0003. 시각적 제거 증거 부족→parent runtime a732228으로 복귀. 기존 사용자 만족을 유지, 과거 소멸 단정 정정. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md

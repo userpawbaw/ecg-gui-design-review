@@ -606,3 +606,4 @@ EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1
 ### 2026-10-07 지역 인계 피드백·광역 DEM/연속 morph — D094/F062
 사용자 pop/사각 점경계/주변 평면 지적, 근접능선KEEP. 실제Mapzenz7 60tiles/uint16513² parent를추가, p.135–.19광역높이/p.18–.245상세 높이·normal 연속인계·경계20%/색18%parent환원·alphaHash제거. coarse64준비/cache속성bytes산입/48MiB유지; parent131072tri와global1024×512는별도비용. 실제IAB13구도coarse64/error0, PageDown/PageUp unlocked/지역재진입. 수평선/곡률·자료·normal차이/영상·GPU·targetPC TUNE/미검증. 현재중간피드백이며cloud전체1/2유지·웹cloudbake한장·서고KEEP/A-P3/Story/BC보류. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_regional_morph_review_2026-10-07.md
 최종 검증: build65modules PASS, records202/CASE/진입점 PASS, 13PNG/state/hash 및60원본핀 확인. diff EOF공백수정후 재검사. 지역 GPU 메모리 관측 최대41.26MB는 총VRAM/프레임시간 개선 증거 아님. 서버재시작 data error policy 차단 뒤정상localhost 새IAB탭에서복구,최종error0.
+신규asset script staging 후 EOF공백1건을 추가 발견해 후속정리. 기존tracked diff검사와 staged 전체검사를 구분; 전체 staged diff 재검사 후저장. 동작 변경 없음.

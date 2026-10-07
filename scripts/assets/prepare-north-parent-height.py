@@ -28,4 +28,3 @@ reproject(mosaic,h,src_transform=from_bounds(*sb,mosaic.shape[1],mosaic.shape[0]
 h=np.maximum(0,h);encoded=np.round(h).astype('<u2');p=O/'parent-height.bin';p.write_bytes(encoded.tobytes())
 metadata={'bounds':bounds,'size':513,'encoding':'uint16 little endian height metres, north row first','source':'AWS Mapzen Terrain Tiles z7','heightGain':1.5,'sourceTiles':[x[3] for x in results],'output':{'file':str(p.relative_to(R)).replace('\\','/'),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()},'note':'coarse source sample ~650m; raster cell ~1.3-2km, resampling adds no detail; negative bathymetry clamped to sea level; mixed DEM datum not surveyed alignment','min':float(h.min()),'max':float(h.max())}
 (O/'parent-height.json').write_text(json.dumps(metadata,indent=2)+'\n',encoding='utf-8');print('PARENT READY',len(results),metadata['output'],flush=True)
-

@@ -612,3 +612,8 @@ EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1
 EOXz8 228tiles/2526×4096 조달·hash, near8% 보정, 일반 depth 검사 유지, 얇은 cloud shell 및 select 입력 충돌 수정. 첫 sandbox build EPERM→승인 build65modules PASS(최종 재검사 별도). 사각 조명경계/구름중복·연속 shimmer TUNE. 사용자 수정된 old north .15/.18/ridge 증거6파일 보존/커밋 제외. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md
 
 D095 최종검사: build65modules PASS / records204 PASS. 기록 초안 필수절11누락→규약형식 보완 후 PASS. 최종 원형/광역 일반depth 캡처, 오류0. 근접 trial capture detailReveal=.05로 아직 morph 중이므로 최종능선 품질검증으로 사용하지 않음. 연속영상·GPU미검증.
+
+### 2026-10-07 D096/F064 지도 조명 경계
+source수치 불일치 감사→정합→실제IAB .10/.15/.18/.294 PNG+JSON. .15 사각경계 제거 관찰, 근접 detailReveal1/coarse64/height1.5/오류0. 최종build65modules PASS. 기존 north-morph .15/.18 및 ridge 미커밋6파일 보존·이번커밋제외. 연속영상/GPU미검증. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md
+
+D096 최종 records206 PASS. 추가 sphereNormal attribute792588bytes(coarse parent, regional48MiB cache 밖); Physical shading 비용 증가 가능, GPU timing 미검증.

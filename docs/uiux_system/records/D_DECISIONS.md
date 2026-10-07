@@ -2407,3 +2407,28 @@ UV discard, 깊이 검사 우회, near/far 재설정, logarithmic depth, mipmaps
 
 ### 되돌려야 하는 조건
 near clipping·근접 지형 손상/잔여 shimmer면 거리별 범위와 재질 분리 검증. 지도 조명경계·구름중복은 TUNE. 전체 구름 피드백1/2 유지. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md
+
+## D-096. 지도 영역의 색·법선·재질 정합
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [코드] |
+| 상태 | 구현 전 선택 / 품질 TUNE |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 구름/지형 자글거림 해결 확인. 남은 어두운 사각 지도 경계만 수정.
+
+### 검토한 선택지
+전체 조명 밝기 증가, 경계 구름량 증가, parent/global 색·법선·재질 일치.
+
+### 고른 것과 근거
+세 번째. parent의 cloud tint .15와 globe .60 및 macro edge .18/.12, morph되지 않은 법선, Standard/Physical 재질 차이를 일치시킨다. 바깥쪽은 구면 법선으로 환원하고 높이와 normal을 함께 보간한다.
+
+### 버린 것과 이유
+전역 조명 증가는 영역간 차이를 유지. 구름 가림 추가는 사용자가 만족한 구름을 훼손할 수 있음.
+
+### 되돌려야 하는 조건
+해결된 자글거림/구름 손상, 승인능선1.5× 변화 또는 경계잔여 시 정합 요소별 재검증. 사용자 완료판정과 자동검증 구분, 전체 cloud feedback1/2 유지.
+
+D-096 구현 체크포인트: 색·edge·sphereNormal morph·Physical roughness/specular 정합, globe macro 내부 bump fade. .10/.15/.18/.294 IAB 관찰/error0, build65 PASS. 새 경계는 사용자 검토 전 TUNE. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md

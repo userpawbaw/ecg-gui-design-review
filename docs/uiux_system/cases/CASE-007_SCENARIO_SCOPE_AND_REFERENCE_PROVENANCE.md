@@ -165,3 +165,6 @@ AI가 BC 필수보완→ABC비교로 순서를 제안하려던 단계에서 사�
 
 ### 2026-10-07 D095/F063 — 질감/깊이 오류 구분
 사용자 “구름을 렌더했더니 … 원형 지구단계부터” 지적→near/far 코드와 공식 Cameras 자료 대조→우회 depthTest보다 clip precision 보정 선택. 정적 개선과 전체 움직임 소멸을 구분. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md
+
+### 2026-10-07 D096/F064 — 사용자 해결 판정과 다음 결함 분리
+사용자가 “구름 문제와 지형의 자글거림 … 해결”→기존문제 KEEP와 남은 사각조명만 분리→AI가 exposure 가림 대신 color/normal/PBR 정합→같은 .15 화면과 정착된근접 detailReveal1 증거 확보. 기존 규약 적용이며 신규방법론으로 과장하지 않는다. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md

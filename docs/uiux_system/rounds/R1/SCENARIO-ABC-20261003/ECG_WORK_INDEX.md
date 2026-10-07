@@ -192,3 +192,6 @@ ECG_A_cloud_asset_lighting_audit_2026-10-06.md → D082 → 현재cloud-photo NO
 
 ### 이용 범위 — D084
 현재는 내부 검토용 시안. 새 탐색 시 24번의 현재 이용 단계 정책을 참조하고 접근 가능한 모든 품질 후보를 조사한다. 에셋별 반복 확인 없이 출처/조건/출품 전 확인·대체 목록을 유지한다.
+
+### 지도 조명 경계 작업 참조 (2026-10-07)
+docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md — D096/F064. 이전 자글거림 사용자 해결; 새 사각 조명 수정 후보와 후속 VDB 단계 분리.

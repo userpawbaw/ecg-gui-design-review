@@ -415,3 +415,6 @@ EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1
 
 ### 2026-10-07 지구/구름 깊이 간섭 조사 — D095/F063
 near/far 정밀도 보정과 z8 지도 선행 반영. 원형/광역 줄·점 패턴과 작은 질감 shimmer 구분. 지도 경계/구름 중복 TUNE, 연속 영상 미검증. 다음 현재 후보 사용자 움직임 피드백→잔여 shimmer 분리→live VDB. 전체 feedback1/2 유지. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md
+
+### 2026-10-07 지도 조명 사각 경계 정합 — D096/F064
+이전 구름/지형자글거림 사용자 해결/KEEP. 광역 globe/parent 색·법선·PBR 정합 후보, IAB4구도. 다음 경계 사용자 확인→VDB 지역 광학·구름 통과. 전체 cloud feedback1/2 유지. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md

@@ -1,0 +1,33 @@
+{
+  "scope": "four final native same-engine review poses",
+  "files": [
+    {
+      "file": "north-0-1.json",
+      "p": 0.1,
+      "detailReveal": 0,
+      "json_sha256": "342ab40c3821ab77c73769d9704c7ee74020a93b25d915d6d79d72c9c187fa93",
+      "png_sha256": "0959323a7c6844997e38c51466087a36952776c9c824350b4cd7852587b77850"
+    },
+    {
+      "file": "north-0-15.json",
+      "p": 0.15,
+      "detailReveal": 0,
+      "json_sha256": "eb543576f33fac623af185f0e343a4828a1ea66ace4b786630cff67e8c147299",
+      "png_sha256": "fc86d89909151119e4e1f8a1e737683191d4554c48ff601f990f57d5b6a6299b"
+    },
+    {
+      "file": "north-0-18.json",
+      "p": 0.18,
+      "detailReveal": 0,
+      "json_sha256": "e123fb6034e191ed6473cb565592c80cad9bccb4f1d796ce3d60c4c364831a1d",
+      "png_sha256": "5ab73a701a688ed837f6d23314955c6f6abd9605f0e0803e5e7b45e63587fb7c"
+    },
+    {
+      "file": "north-0-294.json",
+      "p": 0.294,
+      "detailReveal": 1,
+      "json_sha256": "666320c9c22196cf301e19ce3d73e0669c1e4f5d92129639b6e7eefeae749648",
+      "png_sha256": "319b38775fb0d3a22e52870e84faa311d3e2348633002f16d3fec38d434c08d9"
+    }
+  ]
+}

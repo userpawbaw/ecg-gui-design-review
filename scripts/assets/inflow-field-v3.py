@@ -39,7 +39,7 @@ def run(L):
     # ---- field shells: copies of the cable curve with a wide bevel, plus spheres around the strip ----
     dg = bpy.context.evaluated_depsgraph_get()
     cm_ = cab.evaluated_get(dg).to_mesh(); CP = np.array([(cab.matrix_world @ v.co)[:] for v in cm_.vertices]); cab.evaluated_get(dg).to_mesh_clear()
-    me = o.evaluated_get(dg).to_mesh(); BP = np.array([(o.matrix_world @ v.co)[:] for v in me.vertices[::40]]); o.evaluated_get(dg).to_mesh_clear()
+    me = o.evaluated_get(dg).to_mesh(); BP = np.array([(o.matrix_world @ v.co)[:] for v in list(me.vertices)[::40]]); o.evaluated_get(dg).to_mesh_clear()
     reach = float(min(np.min(np.linalg.norm(BP - c, axis=1)) for c in CP[::max(1, len(CP) // 200)]))
     print(f'   field: cable {len(CP)} pts, nearest body point {reach:.2f} m from the cable')
     shells = []

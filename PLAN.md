@@ -404,3 +404,7 @@ EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1
 
 ### 2026-10-07 북반구 지구→1.5×지역→같은서고 후보 — D093/F061/O014
 같은km/tangentframe에서globalEarth+regionLOD카메라연결,원형/수평선/북유럽/지역/능선/가림/서고/심장9구도. EOXparent60tile/1262×2048추가,p별parent/broad/nearUV·경계alphaHash,MeshPhysicalspecular/.6kmbump·24step고도산란surface/sky분리. cloud06실제VDB를같은1.5terrain/sun에서OptiX48sample3native render;웹에는inside 가림bake한장만적용,지역livevolume/receiver미구현. uAspect누락/ShaderPass복제uniform적용오류복구와nativepreferences/장치명시재개,실패전캡처·PNG/로그보존. 전체시각TUNE/기본미채택/서고KEEP/사용자feedback1/2. 다음연속움직임과edge→국소VDB광학/연속bake비교→samearchive가림템포/성능→전체후보피드백2. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_handoff_review_2026-10-07.md.
+
+
+### 2026-10-07 컴팩트 전 기록 정리·현재 후보 피드백 대기
+사용자 요청에 따라 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_precompact_checkpoint_2026-10-07.md에 D080–D093 흐름/KEEP·TUNE·미완/검증 증거/피드백 범위/재개 순서를 통합. D093 구현44b11426 원격 확인. 웹 구름은 가림 bake 한 장이며 live volume/receiver와 연속 motion 미완; 전체 제작 피드백1/2 유지, 다음은 사용자 현재 파트 중간 피드백. A-P3/Story/BC 보류 유지. 시작 시 ridge.png/json 미커밋 변경은 보존하고 이번 문서 커밋에서 제외. 코드·렌더 변경 없음; 기존200 records PASS와 새 문서 검사를 구분한다.

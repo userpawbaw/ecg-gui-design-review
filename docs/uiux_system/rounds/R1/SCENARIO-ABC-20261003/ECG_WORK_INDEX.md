@@ -1,3 +1,5 @@
+2026-10-07 컴팩트/피드백 재개: [현재 A-P2 요약·피드백 진입점](ECG_A_north_precompact_checkpoint_2026-10-07.md). 구현44b11426 기준, 웹 구름 한 장 bake/live volume 미완, 현재 후보 중간 피드백 대기. 아래 단계별 이력은 보존한다.
+
 2026-10-07 최신 D093/F061: [북반구 지구·지역 인계 검토](ECG_A_north_handoff_review_2026-10-07.md). terrain=north 별도후보에서global→북유럽parent→1.5×tile→VDB가림bake→기존서고/심장. 실제nativeVDB+지형3장과웹9구도. 지역liveVDB·연속motion·광학경계TUNE,최종채택/feedback2아님.
 
 2026-10-07 최신 D092/F060: [1.5× 지형·화면별LOD 실제 검토](ECG_A_terrain_lod_review_2026-10-07.md). 사용자지형디테일KEEP/1.5×시험승인. 별도terrain.html에서타일별4LOD/지연로드/frustum/cache적용,실제3구도·왕복오류0. 높은시점광학·확대지역인계·VDB·서고는각시점보완후전체연결. 기본지구미교체/사용자구름제작피드백1/2 유지.

@@ -704,11 +704,25 @@
       "D-086",
       "F-054",
       "D-087",
-      "F-055"
+      "F-055",
+      "D-088",
+      "D-089",
+      "D-090",
+      "D-091",
+      "D-092",
+      "D-093",
+      "F-056",
+      "F-057",
+      "F-058",
+      "F-059",
+      "F-060",
+      "F-061",
+      "O-013",
+      "O-014"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Acquire detailed local Sentinel/terrain or ready mountainous asset; revise camera slant range/hero ridge and fully lit high/low/cloud-entry frames, then distance handoff plus accepted VDB/same archive. Artistic terrain allowed; comparison ECG strict. Runtime unchanged; feedback1/2.",
+    "next": "Await user feedback on current northern candidate. Record scene-scoped KEEP/TUNE/REJECT, then tune edges/optics/motion and implement regional VDB or continuous bake. A-P3/Story/BC deferred; complete-cloud feedback1/2 retained.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -1005,6 +1019,16 @@
           "userCloudFeedback": "1/2 retained"
         }
       }
+    },
+    "precompact_checkpoint_2026_10_07": {
+      "document": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_precompact_checkpoint_2026-10-07.md",
+      "implementation_commit": "44b11426da93a05b00cb8cb19a2834f9e7e46ab4",
+      "status": "documentation_complete_current_part_user_feedback_pending",
+      "scope": "documentation only; no new render/code; intermediate feedback is not automatically full production round2",
+      "preserved_uncommitted": [
+        "verification/a-terrain-lod-20261007/native-captures/ridge.png",
+        "verification/a-terrain-lod-20261007/native-captures/ridge.json"
+      ]
     }
   }
 }

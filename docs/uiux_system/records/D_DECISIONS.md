@@ -2359,3 +2359,5 @@ nodata 비중/지도정합/확대 품질이 부족하면 해당 지역의 Sentin
 
 ### 되돌려야 하는 조건
 확대지역이탈/texture정합오류/카메라jump/유리막/빛계단이발생하면해당시점에서복구. 새로운연결은terrain=north 별도후보이며global기본/승인서고KEEP/사용자feedback1/2보존.
+
+2026-10-07 D-093 체크포인트 보충: 구현44b11426·native3/웹9구도 완료, 전체시각TUNE/기본미채택. 컴팩트 전 정리 문서 `docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_precompact_checkpoint_2026-10-07.md`와 WORK_STATE 현행 next를 연결. 현재 사용자 파트 피드백 대기이며 live 구름/연속motion/전체완성 제작피드백2는 미완. 새로운 설계 결정으로 세지 않는다. [대화] [커밋]

@@ -389,8 +389,17 @@ def chair_fit(objs):
     print(f'chair_fit: seat {seat_z:.3f} m, back dir ({b.x:.2f}, {b.y:.2f}), backrest face {dback:.3f} m, yaw {math.degrees(yaw):.1f}°')
     return dict(seat_z=seat_z, yaw=yaw, anchor=anchor)
 if args.light == 'r2':
-    _mch = place('modern_arm_chair_01', MCHAIR.x, MCHAIR.y, 0, 0.82, rot=math.radians(200)); CHAIR_FIT = chair_fit(_mch)
-    for _o in _mch: _o['mchair'] = True                          # chair-motion-v3 swaps this chair for its own
+    # GreenChair_01 (Poly Haven CC0, native scale): armrests 0.21 m over the seat carry the seated forearm (D-053, user 2026-10-07
+    # "의자 GreenChair_01로 교체"; was modern_arm_chair_01 at 0.82 m, armrests 0.15 m). Placed by chair-motion-v3.place_chair
+    # (rotation_mode set, so its yaw applies — F-033), backrest toward +y as the old chair measured (yaw −0.6°), then moved to MCHAIR
+    import importlib.util as _ilu
+    _s = _ilu.spec_from_file_location('chair_motion', os.path.join(ROOT, 'scripts/assets/chair-motion-v3.py')); _cmv = _ilu.module_from_spec(_s); _s.loader.exec_module(_cmv)
+    _mch = _cmv.place_chair(bpy, Vector, ROOT)['objects']; bpy.context.view_layer.update()
+    _lo, _hi = world_bbox(_mch); _c = (_lo + _hi) / 2
+    for _o in _mch:
+        if _o.parent is None: _o.location += Vector((MCHAIR.x - _c.x, MCHAIR.y - _c.y, 0))
+    for _o in _mch: _o['group'] = 'decor'; _o['mchair'] = True  # chair-motion-v3 drops this chair and places its own copy
+    bpy.context.view_layer.update(); CHAIR_FIT = chair_fit(_mch)
     scene['chair_fit'] = list(CHAIR_FIT['anchor']) + [CHAIR_FIT['yaw'], CHAIR_FIT['seat_z']]
 # floor clutter that makes the aisle lived-in (kept off the camera path x ∈ [−0.6, 0.6])
 place('cardboard_box_01', -0.95, -2.2, 0, 0.32, rot=0.3)
@@ -687,7 +696,7 @@ if args.pose and FIG is not None:                                 # skill pose-a
     bpy.context.view_layer.update()
     _skip = ('El_', 'Lead_', 'LeadYoke', 'TrunkCable', 'CommCable', 'Sig_', 'RA_noise_ring', 'PowerNoise', 'Haze', 'VOL_', 'APR_', 'Floor', 'heart')
     _col = pc.scene_collisions(FIG, [o for o in scene.objects if o is not HEART], ignore=_skip)
-    SOFT = {'modern_arm_chair_01': 35}                           # upholstered (leather cushion): thighs may sink a little; 60 mm buried the knees (user 2026-10-05)
+    SOFT = {'modern_arm_chair_01': 35, 'GreenChair_01': 35}                           # upholstered (leather cushion): thighs may sink a little; 60 mm buried the knees (user 2026-10-05)
     _st = {k: ('FAIL' if v[0] > SOFT.get(k, 25) else 'WARN' if v[0] > 10 else 'OK') for k, v in _col.items()}
     print('figure collisions (mm, figure-frame point):', _col, '→', _st, '→', 'FAIL' if 'FAIL' in _st.values() else 'WARN' if 'WARN' in _st.values() else 'OK')
 if args.pose and FIG is not None:                                 # D-050 shots: one per spot, each opening a new part of the archive

@@ -55,12 +55,14 @@ def run(L):
     for x in strip: pts += [x.matrix_world @ Vector(c) for c in x.bound_box]
     ctr = sum(pts, Vector()) / len(pts)
     cd = bpy.data.cameras.new('wide'); cam = bpy.data.objects.new('wide', cd); sc.collection.objects.link(cam); cd.lens = 24; cd.sensor_width = 36
-    d = Vector((-.55, -.75, .75)).normalized()                     # front-right of the figure, high, ~45° down
+    d = Vector((.5, -.75, .8)).normalized()                        # front-left of the figure (the aisle side), high, ~45° down —
+                                                                     # front-right put the camera inside the left-wall stacks (first run)
     for dist in np.arange(1.5, 6.0, .1):
         cam.location = ctr + d * dist; cam.rotation_euler = (-d).to_track_quat('-Z', 'Y').to_euler(); bpy.context.view_layer.update()
         q = [w2c(sc, cam, p) for p in pts]
         if all(.06 < v.x < .94 and .06 < v.y < .94 and v.z > 0 for v in q): break
-    print(f'   wide camera at {tuple(round(v, 2) for v in cam.location)}, {dist:.1f} m from the centre')
+    cd.clip_start = max(.1, dist - 1.8)                           # skip shelves / beams between the camera and the chair spot
+    print(f'   wide camera at {tuple(round(v, 2) for v in cam.location)}, {dist:.1f} m from the centre, clip {cd.clip_start:.2f} m')
     cams = dict(L['cams']); cams['wide'] = cam
     common, front = ip.add_red(bpy, o.data.materials[0]) if not L.get('red') else L['red']
     ring, lead = L['with_electrodes'](0.0, 0.0)

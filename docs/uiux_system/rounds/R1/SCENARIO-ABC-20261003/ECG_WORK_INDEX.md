@@ -198,3 +198,6 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_
 
 ### 잔여 경계 재검토
 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md — D097 시험 미채택/기존baseline 유지, 주원인 미확정·후속 polish 구분.
+
+### 북반구 지형·구름·서고 통합 후보 검토
+[ECG_A_north_cloud_joined_review_2026-10-07.md](ECG_A_north_cloud_joined_review_2026-10-07.md) → D098/F065 → verification/a-north-cloud-path-20261007/gallery.html/manifest/browser-manifest → north-cloud-joined 최종 캡처. CPU trial/초기 FOV 미채택은 별도보존. 구름 feedback1/2/시각TUNE, 서고KEEP·Story/BC별도.

@@ -620,3 +620,8 @@ D096 최종 records206 PASS. 추가 sphereNormal attribute792588bytes(coarse par
 
 ### 2026-10-07 D097 잔여 경계 검토/실험 미채택
 Same-view .15/.18 범프정합 시험/build65 PASS, RGB차 .0132/.0078 및 차>2픽셀 .0006/.0003. 시각적 제거 증거 부족→parent runtime a732228으로 복귀. 기존 사용자 만족을 유지, 과거 소멸 단정 정정. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md
+
+### 2026-10-07 D098/F065 통합 제작
+CPU normal32.6ms/37.5max 시험→GPU surface derivative로교체. 초기 horizontalFOV7장 미채택→web verticalFOV47로 40native 다시렌더/OptiX/6bounce. PNG40/WebP40/SHA/3,082,334bytes/source3개pins. build66 PASS, 실제14구도+정역휠 캡처·지형errors0/구름40ready. camera/plate색·frame밀도·GPU/targetPC·영상 TUNE/미검증. unknown 기존6capture 보존·커밋제외. ECG_A_north_cloud_joined_review_2026-10-07.md
+
+D098 최종검사: records210 PASS / build66 PASS. 실제wheel 정방향서고·역방향구름복귀, 정착 .274 detailReveal1/error0. 마지막runtime_source SHA와browser캡처manifest 갱신. O015필수증상/조치절 보완후검사PASS. 사용자기존6파일보존.

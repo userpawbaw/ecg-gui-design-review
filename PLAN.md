@@ -421,3 +421,6 @@ near/far 정밀도 보정과 z8 지도 선행 반영. 원형/광역 줄·점 패
 
 ### 2026-10-07 희미한 경계 검토 — D097
 현재 수준 사용자 만족, 잔여seam TUNE. 범프정합 실험 효과미미→미채택/baseline복구. 추가 geometry/normal/color 정합은 후속polish, 지금 다음 VDB 광학·통과 단계 가능. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md
+
+### 2026-10-07 지형 법선·실제 VDB 통과 묶음 제작 — D098/F065
+사용자 별도검토 없이 구름까지 제작승인. 실제surface derivative GPU정합(CPU32ms시험미채택), CyclesVDB06/01/10 40장960×540/약3.08MB 경로 베이크→스크롤neighborblend→서고 동일pose 시간재매핑. 제작/불러오기·정역입력PASS/시각TUNE, 전체구름 feedback1/2 유지. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_cloud_joined_review_2026-10-07.md

@@ -1,0 +1,159 @@
+{
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "scroll": {
+      "top": 676,
+      "max": 4435,
+      "locked": false,
+      "targetProgress": 0.152423900789177
+    },
+    "p": 0.1524252635302601,
+    "t": 98.84770000000916,
+    "arrival": {
+      "model": "North anchored kilometre sphere + 1.5x regional LOD",
+      "atmosphere": true,
+      "cloud": true,
+      "cloudCoverReady": true,
+      "cloudPath": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "cloudModel": "thin global shell + Cycles physical VDB camera-path bake; no live volume",
+      "mapDimensions": [
+        2526,
+        4096
+      ],
+      "depthNear": 128.84933273737767,
+      "terrain": {
+        "visibleTiles": 64,
+        "drawTriangles": 34836,
+        "residentGpuBytes": 38737680,
+        "queued": 0,
+        "pending": 0,
+        "fullSurfaceTriangles": 812800,
+        "fullTiledTriangles": 847090,
+        "heightGain": 1.5,
+        "maxErrorPixels": 0.8656287175140975,
+        "highTextures": true,
+        "errors": [],
+        "detailReveal": 0,
+        "coarseReady": 64
+      },
+      "parentTerrain": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 0.23752703902437683,
+        "detail": 0,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "progress": 0.1524252635302601,
+      "anchor": [
+        61.63,
+        8.4
+      ],
+      "sunDirection": [
+        -0.6642786286868113,
+        0.2776089791526973,
+        -0.694022447881743
+      ]
+    },
+    "scene": "d0-mixed-0",
+    "record": "S022",
+    "fs": 250,
+    "winner": "M08",
+    "sample": 24711,
+    "sourceSample": 381,
+    "rAbs": 24669,
+    "rOffsets": [
+      75,
+      282,
+      487,
+      678,
+      883,
+      1085,
+      1285,
+      1487,
+      1675,
+      1880,
+      2083
+    ],
+    "beatAge": 0.1717000000091531,
+    "heartScale": 1.0092858825546085,
+    "sharedClock": true,
+    "bodyVisible": false,
+    "heartVisible": false,
+    "heartScreen": [
+      0.008283205088071502,
+      0.22779673855982996,
+      0.8655936213107328
+    ],
+    "camera": [
+      420.39936153769827,
+      1610.6166592172208,
+      855.8897550044845
+    ],
+    "cameraTarget": [
+      0,
+      -329.4236080071753,
+      0
+    ],
+    "cartSocket": [
+      -1.29,
+      0.88,
+      -3.9
+    ],
+    "volume": true,
+    "bloom": true,
+    "clay": false,
+    "aa": "msaa",
+    "actualSamples": 4,
+    "supportedSamples": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "smaa": false,
+    "dpr": 1,
+    "pixelRatio": 1,
+    "renderSize": [
+      997,
+      672
+    ],
+    "grain": false,
+    "jitter": true,
+    "steps": 96,
+    "frame": 11755,
+    "gpu": {
+      "available": false,
+      "count": 0,
+      "p50": null,
+      "p95": null
+    },
+    "raf": {
+      "count": 600,
+      "p50": 16.699999999982538,
+      "p95": 16.79999999998836
+    },
+    "cpuRenderMsMean": 0.8916666671633721,
+    "drawCalls": 23,
+    "triangles": 1242643
+  },
+  "url": "http://127.0.0.1:4198/?terrain=north&reviewCapture=1&reviewRound=north-cloud-joined"
+}

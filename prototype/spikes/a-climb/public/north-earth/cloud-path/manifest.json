@@ -1,0 +1,901 @@
+{
+  "renderer": "Cycles 4.5.3 LTS",
+  "samples": 24,
+  "size": [
+    960,
+    540
+  ],
+  "count": 40,
+  "heightGain": 1.5,
+  "source_assets": [
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_06_variant_0000.vdb",
+      "sha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "width": 18,
+      "base": 4.2,
+      "center": [
+        0,
+        -4
+      ]
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_01_variant_0000.vdb",
+      "sha256": "c91381781adc353f26a25d6cb6c9e254f47b89db04d2e99d289ae0e7d545945c",
+      "width": 12,
+      "base": 3.8,
+      "center": [
+        -10,
+        -8
+      ]
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_10_variant_0000.vdb",
+      "sha256": "05bdc59f23d4888cb0d1d06f7d087e91b3312d91ac2259181b165289dc692d96",
+      "width": 10,
+      "base": 4.0,
+      "center": [
+        13,
+        -5
+      ]
+    }
+  ],
+  "sun": [
+    -0.6642786860466003,
+    0.6940224766731262,
+    0.2776089906692505
+  ],
+  "density": 0.8,
+  "anisotropy": 0.45,
+  "volume_bounces": 6,
+  "step_rate": 1,
+  "camera_start_web_progress": 0.28,
+  "frames": [
+    {
+      "index": 0,
+      "q": 0.0,
+      "camera": [
+        23.983999252319336,
+        -40.84000015258789,
+        24.91200065612793
+      ],
+      "target": [
+        0.0,
+        0.0,
+        1.7999999523162842
+      ],
+      "seconds": 7.5170183181762695,
+      "sha256": "836e838e0f9e45c9e991341e0382e05b787dad662f3d420de5670aaab4d5307c"
+    },
+    {
+      "index": 1,
+      "q": 0.02564102564102564,
+      "camera": [
+        23.643030166625977,
+        -39.93743896484375,
+        24.29023551940918
+      ],
+      "target": [
+        0.0,
+        -0.17094022035598755,
+        1.9538462162017822
+      ],
+      "seconds": 5.6909120082855225,
+      "sha256": "104c5926da547a66627a851135d662f072298c5487d42ae116fc743ef902cbb5"
+    },
+    {
+      "index": 2,
+      "q": 0.05128205128205128,
+      "camera": [
+        23.30206298828125,
+        -39.03487014770508,
+        23.668466567993164
+      ],
+      "target": [
+        0.0,
+        -0.3418804407119751,
+        2.107692241668701
+      ],
+      "seconds": 5.618742227554321,
+      "sha256": "b6e049b14182e0def98c9aa65c5d0babda0a21922b2c65e4696db264022226e3"
+    },
+    {
+      "index": 3,
+      "q": 0.07692307692307693,
+      "camera": [
+        22.96109390258789,
+        -38.13230895996094,
+        23.046701431274414
+      ],
+      "target": [
+        0.0,
+        -0.5128204822540283,
+        2.261538505554199
+      ],
+      "seconds": 5.77786922454834,
+      "sha256": "aa511e834396c5b3ca3597ac436db128e72cffc4390fc25bd2f0bb10c2cac8c8"
+    },
+    {
+      "index": 4,
+      "q": 0.10256410256410256,
+      "camera": [
+        22.62012481689453,
+        -37.22974395751953,
+        22.42493438720703
+      ],
+      "target": [
+        0.0,
+        -0.6837607026100159,
+        2.4153847694396973
+      ],
+      "seconds": 5.858184099197388,
+      "sha256": "069783d9a0cb8e6ef8f59e10ea6238582df400925c57fd11318f4fb94e511108"
+    },
+    {
+      "index": 5,
+      "q": 0.1282051282051282,
+      "camera": [
+        22.279155731201172,
+        -36.327178955078125,
+        21.80316734313965
+      ],
+      "target": [
+        0.0,
+        -0.8547009229660034,
+        2.569230794906616
+      ],
+      "seconds": 5.787269353866577,
+      "sha256": "b017005b2586e5c7a8565b52b792763c22950a34c202a1aee9e19def860483d2"
+    },
+    {
+      "index": 6,
+      "q": 0.15384615384615385,
+      "camera": [
+        21.938186645507812,
+        -35.42461395263672,
+        21.18140411376953
+      ],
+      "target": [
+        0.0,
+        -1.0256409645080566,
+        2.723076820373535
+      ],
+      "seconds": 5.973991632461548,
+      "sha256": "4d2916620344cc37df4a1493b0fab0ad35a1590cfcb20e393ba116ed566acd15"
+    },
+    {
+      "index": 7,
+      "q": 0.1794871794871795,
+      "camera": [
+        21.597219467163086,
+        -34.52204895019531,
+        20.559635162353516
+      ],
+      "target": [
+        0.0,
+        -1.1965811252593994,
+        2.876923084259033
+      ],
+      "seconds": 5.989536285400391,
+      "sha256": "4946bcae565542812b3a1d7d81044c3e52a79d947032f12d763fbd0b0e294ab4"
+    },
+    {
+      "index": 8,
+      "q": 0.20512820512820512,
+      "camera": [
+        21.256250381469727,
+        -33.619483947753906,
+        19.937870025634766
+      ],
+      "target": [
+        0.0,
+        -1.3675214052200317,
+        3.0307693481445312
+      ],
+      "seconds": 6.1496241092681885,
+      "sha256": "98252c65b2dc3fd3c1a22b63a18ccd12cb761474dbe8ebd404056a3525ab879b"
+    },
+    {
+      "index": 9,
+      "q": 0.23076923076923078,
+      "camera": [
+        20.915283203125,
+        -32.716922760009766,
+        19.316102981567383
+      ],
+      "target": [
+        0.0,
+        -1.538461685180664,
+        3.1846156120300293
+      ],
+      "seconds": 6.220561265945435,
+      "sha256": "ffc6b099ea92a0c516061a625024c12010fb1604f5504417cb9fc0d085a6243c"
+    },
+    {
+      "index": 10,
+      "q": 0.2564102564102564,
+      "camera": [
+        20.57431411743164,
+        -31.814359664916992,
+        18.6943359375
+      ],
+      "target": [
+        0.0,
+        -1.7094016075134277,
+        3.338461399078369
+      ],
+      "seconds": 6.3076581954956055,
+      "sha256": "75dd481d180bafe9f79dcd9e4cb10a9046fcd2b4d3bb302a89b9a4ac06e13819"
+    },
+    {
+      "index": 11,
+      "q": 0.28205128205128205,
+      "camera": [
+        20.23334503173828,
+        -30.911794662475586,
+        18.07257080078125
+      ],
+      "target": [
+        0.0,
+        -1.88034188747406,
+        3.492307662963867
+      ],
+      "seconds": 6.554058074951172,
+      "sha256": "9b334d4f806c66c24c9a18b05df4c8b2da12ede01dd010211a9c363cee833c29"
+    },
+    {
+      "index": 12,
+      "q": 0.3076923076923077,
+      "camera": [
+        19.892375946044922,
+        -30.00922966003418,
+        17.450803756713867
+      ],
+      "target": [
+        0.0,
+        -2.0512821674346924,
+        3.6461539268493652
+      ],
+      "seconds": 6.621527910232544,
+      "sha256": "1d06670e7c202c986894a0bbf605362ea9e8016604ac918aed6119bd06763de4"
+    },
+    {
+      "index": 13,
+      "q": 0.3333333333333333,
+      "camera": [
+        19.551406860351562,
+        -29.106666564941406,
+        16.829036712646484
+      ],
+      "target": [
+        0.0,
+        -2.222222089767456,
+        3.799999952316284
+      ],
+      "seconds": 6.783942699432373,
+      "sha256": "1e828989a6b282844ef1f69ceabd5c2b6b9c74bb39060ff25f7ce15fc717bc90"
+    },
+    {
+      "index": 14,
+      "q": 0.358974358974359,
+      "camera": [
+        19.210437774658203,
+        -28.2041015625,
+        16.207271575927734
+      ],
+      "target": [
+        0.0,
+        -2.393162250518799,
+        3.9538462162017822
+      ],
+      "seconds": 6.9428324699401855,
+      "sha256": "69e57392aabc8de8e829c9c104b73ab0c6b8ffe9f571cdda42c6bf723c471370"
+    },
+    {
+      "index": 15,
+      "q": 0.38461538461538464,
+      "camera": [
+        18.869470596313477,
+        -27.301538467407227,
+        15.585503578186035
+      ],
+      "target": [
+        0.0,
+        -2.5641026496887207,
+        4.107692241668701
+      ],
+      "seconds": 7.118382215499878,
+      "sha256": "0953b4aa5a6f4d03c1e47db04347faf96057906726fbc3bf5e7ff56fd84d7717"
+    },
+    {
+      "index": 16,
+      "q": 0.41025641025641024,
+      "camera": [
+        18.528501510620117,
+        -26.39897346496582,
+        14.963737487792969
+      ],
+      "target": [
+        0.0,
+        -2.7350428104400635,
+        4.261538505554199
+      ],
+      "seconds": 7.451654434204102,
+      "sha256": "43d8bfb3eb3c94e381657ae8a3d2be32290179cc145ffa9b2501ee157d9ca0ce"
+    },
+    {
+      "index": 17,
+      "q": 0.4358974358974359,
+      "camera": [
+        18.18753433227539,
+        -25.496410369873047,
+        14.341972351074219
+      ],
+      "target": [
+        0.0,
+        -2.9059829711914062,
+        4.415384769439697
+      ],
+      "seconds": 7.570687770843506,
+      "sha256": "897ad4a69281bbb70671d8a61bde46f94926571d9faf93eddb74fdc6987d1287"
+    },
+    {
+      "index": 18,
+      "q": 0.46153846153846156,
+      "camera": [
+        17.571428298950195,
+        -24.571430206298828,
+        13.769230842590332
+      ],
+      "target": [
+        0.0,
+        -2.9010989665985107,
+        4.549450397491455
+      ],
+      "seconds": 7.735867261886597,
+      "sha256": "2c4a1c757a3de4d9645a37bce05a13a8b71d604253e4df61795aa72847bc3e62"
+    },
+    {
+      "index": 19,
+      "q": 0.48717948717948717,
+      "camera": [
+        16.619047164916992,
+        -23.619047164916992,
+        13.256409645080566
+      ],
+      "target": [
+        0.0,
+        -2.681318759918213,
+        4.6593403816223145
+      ],
+      "seconds": 8.053744316101074,
+      "sha256": "0646ef458473d7c7b086b045e67f8b8d1bfc0b9c4d89dec5ec94c9783568a6d2"
+    },
+    {
+      "index": 20,
+      "q": 0.5128205128205128,
+      "camera": [
+        15.666666984558105,
+        -22.666667938232422,
+        12.743589401245117
+      ],
+      "target": [
+        0.0,
+        -2.461538553237915,
+        4.769230842590332
+      ],
+      "seconds": 8.673259973526001,
+      "sha256": "eb7fd2264f79aa3cfa98fc98eea170f6db0e20c1407bfecc27e6eeeae2a080a7"
+    },
+    {
+      "index": 21,
+      "q": 0.5384615384615384,
+      "camera": [
+        14.714284896850586,
+        -21.71428680419922,
+        12.230769157409668
+      ],
+      "target": [
+        0.0,
+        -2.241758108139038,
+        4.879120826721191
+      ],
+      "seconds": 9.367624759674072,
+      "sha256": "4a36369037fdb01a4e19ca4aea62248a078eb4baa613e9510c469e375302f551"
+    },
+    {
+      "index": 22,
+      "q": 0.5641025641025641,
+      "camera": [
+        13.761903762817383,
+        -20.761903762817383,
+        11.717948913574219
+      ],
+      "target": [
+        0.0,
+        -2.0219779014587402,
+        4.989010810852051
+      ],
+      "seconds": 10.175291776657104,
+      "sha256": "094a438213a3918f18a7f26ae5088d0aa34799fb32ede00a6fd899105a07ed07"
+    },
+    {
+      "index": 23,
+      "q": 0.5897435897435898,
+      "camera": [
+        12.809523582458496,
+        -19.809524536132812,
+        11.205127716064453
+      ],
+      "target": [
+        0.0,
+        -1.8021976947784424,
+        5.098901271820068
+      ],
+      "seconds": 10.463550329208374,
+      "sha256": "3b566913cc99484c4c1b95306653cdfa3b1eacdd8e0a416708d999950c937f48"
+    },
+    {
+      "index": 24,
+      "q": 0.6153846153846154,
+      "camera": [
+        11.857142448425293,
+        -18.85714340209961,
+        10.692307472229004
+      ],
+      "target": [
+        0.0,
+        -1.5824174880981445,
+        5.208791255950928
+      ],
+      "seconds": 10.726570129394531,
+      "sha256": "a1e280d2550d7a066e982ded444930957e9c2ad2874795c291471f080057e00a"
+    },
+    {
+      "index": 25,
+      "q": 0.6410256410256411,
+      "camera": [
+        10.90476131439209,
+        -17.904762268066406,
+        10.179487228393555
+      ],
+      "target": [
+        0.0,
+        -1.3626372814178467,
+        5.318681240081787
+      ],
+      "seconds": 10.954343795776367,
+      "sha256": "1b8902331e8ecb3b4cb08092c3084a529b88e3826b1963adfc22f00e45c1048e"
+    },
+    {
+      "index": 26,
+      "q": 0.6666666666666666,
+      "camera": [
+        9.952381134033203,
+        -16.952381134033203,
+        9.666666030883789
+      ],
+      "target": [
+        0.0,
+        -1.1428570747375488,
+        5.428571701049805
+      ],
+      "seconds": 11.275477409362793,
+      "sha256": "384c551ebfe716365c9a9d6870b6cd50ed3861ae07429863b364ec9b495b4ac8"
+    },
+    {
+      "index": 27,
+      "q": 0.6923076923076923,
+      "camera": [
+        9.0,
+        -16.0,
+        9.153846740722656
+      ],
+      "target": [
+        0.0,
+        -0.923076868057251,
+        5.538461685180664
+      ],
+      "seconds": 11.78959345817566,
+      "sha256": "6e0314dd3bcfd25269ee4889b6874b43d647400b486a168c5ed12dae62b223a5"
+    },
+    {
+      "index": 28,
+      "q": 0.717948717948718,
+      "camera": [
+        8.047618865966797,
+        -15.047618865966797,
+        8.64102554321289
+      ],
+      "target": [
+        0.0,
+        -0.7032966613769531,
+        5.648351669311523
+      ],
+      "seconds": 12.757412910461426,
+      "sha256": "7b3c4a5444d1c96c74395834afc6a4ed7f51590b28b5c77868722775d2879d0f"
+    },
+    {
+      "index": 29,
+      "q": 0.7435897435897436,
+      "camera": [
+        7.095238208770752,
+        -14.095237731933594,
+        8.128204345703125
+      ],
+      "target": [
+        0.0,
+        -0.4835164546966553,
+        5.758241653442383
+      ],
+      "seconds": 14.316921949386597,
+      "sha256": "fcdeb673802c8edda97d5f346841db661031f0e6d158f9b70ef15165053b3140"
+    },
+    {
+      "index": 30,
+      "q": 0.7692307692307693,
+      "camera": [
+        6.142857074737549,
+        -13.14285659790039,
+        7.615384578704834
+      ],
+      "target": [
+        0.0,
+        -0.2637362480163574,
+        5.868131637573242
+      ],
+      "seconds": 15.955418109893799,
+      "sha256": "afd4a818ac1525e49d5a2cb36479689afa806727d993e7b7c9b848b654055fb2"
+    },
+    {
+      "index": 31,
+      "q": 0.7948717948717948,
+      "camera": [
+        5.190475940704346,
+        -12.190476417541504,
+        7.102564334869385
+      ],
+      "target": [
+        0.0,
+        -0.04395604133605957,
+        5.97802209854126
+      ],
+      "seconds": 17.854079008102417,
+      "sha256": "02920b1fe9619f695958383c3fbea9b28aadb846639593af0818636d6d5cab05"
+    },
+    {
+      "index": 32,
+      "q": 0.8205128205128205,
+      "camera": [
+        4.487179756164551,
+        -11.384614944458008,
+        6.897435665130615
+      ],
+      "target": [
+        0.0,
+        0.8205127716064453,
+        6.0
+      ],
+      "seconds": 19.18480110168457,
+      "sha256": "2f82b945107ed68da6918b9cfe95a7a694d6cc29d4c19fcc30c999baf5adeb20"
+    },
+    {
+      "index": 33,
+      "q": 0.8461538461538461,
+      "camera": [
+        3.846153974533081,
+        -10.615384101867676,
+        6.769230842590332
+      ],
+      "target": [
+        0.0,
+        1.846153736114502,
+        6.0
+      ],
+      "seconds": 20.958844900131226,
+      "sha256": "a8589fe67b196692dac08a2ab455fe6130d8ea86fbcc509754e634e165ccb5ae"
+    },
+    {
+      "index": 34,
+      "q": 0.8717948717948718,
+      "camera": [
+        3.2051281929016113,
+        -9.84615421295166,
+        6.641025543212891
+      ],
+      "target": [
+        0.0,
+        2.8717947006225586,
+        6.0
+      ],
+      "seconds": 23.088292598724365,
+      "sha256": "1be84a71860b98d26f981e87b1647430a1350b70817f7c0bc124da0effe99103"
+    },
+    {
+      "index": 35,
+      "q": 0.8974358974358975,
+      "camera": [
+        2.5641024112701416,
+        -9.076923370361328,
+        6.512820243835449
+      ],
+      "target": [
+        0.0,
+        3.8974361419677734,
+        6.0
+      ],
+      "seconds": 26.584726095199585,
+      "sha256": "feef1ed0b9b108bc78b35db742fb15e11a5bf5342a1c72588b2d57a2f472a029"
+    },
+    {
+      "index": 36,
+      "q": 0.9230769230769231,
+      "camera": [
+        1.923076868057251,
+        -8.30769157409668,
+        6.384615421295166
+      ],
+      "target": [
+        0.0,
+        4.92307710647583,
+        6.0
+      ],
+      "seconds": 31.42464804649353,
+      "sha256": "d68b9ed8b8f307d9cf519f71e416f59d7355142de6ba72329c1dd2ae8c6b383b"
+    },
+    {
+      "index": 37,
+      "q": 0.9487179487179487,
+      "camera": [
+        1.2820512056350708,
+        -7.538461208343506,
+        6.256410121917725
+      ],
+      "target": [
+        0.0,
+        5.948718070983887,
+        6.0
+      ],
+      "seconds": 31.57743263244629,
+      "sha256": "f510a0e00854883d28a8594e06b0df7448b00b2e9bd04baf2343f6e786909232"
+    },
+    {
+      "index": 38,
+      "q": 0.9743589743589743,
+      "camera": [
+        0.6410256028175354,
+        -6.769230842590332,
+        6.128204822540283
+      ],
+      "target": [
+        0.0,
+        6.974359035491943,
+        6.0
+      ],
+      "seconds": 29.88068461418152,
+      "sha256": "7e49f6de38d1b5070184385c5d5b038bd1bda7243d670a655d72a152b8d09bfd"
+    },
+    {
+      "index": 39,
+      "q": 1.0,
+      "camera": [
+        0.0,
+        -6.0,
+        6.0
+      ],
+      "target": [
+        0.0,
+        8.0,
+        6.0
+      ],
+      "seconds": 29.701277494430542,
+      "sha256": "87267ecd449f353f28f90abd9dafeca43e72274d078fae80a9a07b55e62584d7"
+    }
+  ],
+  "scope": "physical offline VDB+terrain render; AgX plates. No live volume, AI video or free camera.",
+  "runtime_files": [
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/000.webp",
+      "bytes": 121070,
+      "sha256": "664194a4d91c92bee579f3878f001f9f0a07fac91bfafd2a13e3718ee7c1e5ae"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/001.webp",
+      "bytes": 120146,
+      "sha256": "98fcd7096e98262d77408711111082403555d0c84db493077985ac898eb2df73"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/002.webp",
+      "bytes": 119228,
+      "sha256": "04a5bb78a710e839620726c8a231c4e9b7b3045e7b2588ea477e0bd483da02bb"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/003.webp",
+      "bytes": 118132,
+      "sha256": "e4b95fa03c35728d9713705d23286916d3621e774a5eaba0f07dd5bea9068fe4"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/004.webp",
+      "bytes": 116796,
+      "sha256": "67487829653c0ac5600462e69726dc4913c546f7d01d6d4ecc4042ab751ca284"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/005.webp",
+      "bytes": 115586,
+      "sha256": "710f1be1638ef643fe8a47a4b5c03a9ed9b87c7f265f85f917bf06f77030aa47"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/006.webp",
+      "bytes": 114380,
+      "sha256": "3a3156841fee97f7b63af974aea7ce367a0c341c8adfc1d293e2a8138514af00"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/007.webp",
+      "bytes": 113474,
+      "sha256": "f9d23c6740af24135b460eafab8f0bb856dbcecaccd5ea26c4f4050db5f2f3f9"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/008.webp",
+      "bytes": 112706,
+      "sha256": "97369871354de2c5f7f300f97af56aa24548b58bf4878ed982f9fa77008f7ff0"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/009.webp",
+      "bytes": 111282,
+      "sha256": "54dc227864971f2600d0fc21b430a0d0cddb24a895056ecf91a6463000f5a94d"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/010.webp",
+      "bytes": 109326,
+      "sha256": "bdd2bfe5cf563f86496540e11657987f061f036de9b53a407c278fc2cb7290b1"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/011.webp",
+      "bytes": 108896,
+      "sha256": "15e4c3e98d7caf0d75456f5c1392ac29ce9c31913b2876843af7760cb9b9c3d7"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/012.webp",
+      "bytes": 106274,
+      "sha256": "e1501d2f1baa067cb02f961b703bedb4e09c2f354268d874d4ee5730bcf6cb8b"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/013.webp",
+      "bytes": 105948,
+      "sha256": "638f6d8fd4b2db4eb8d839389618894365160e4689aed70f6099e3c505a800a2"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/014.webp",
+      "bytes": 103864,
+      "sha256": "01e860e78cb033e85bf33d49a53fc3b8e2a840caabd09d8911065e2215a19044"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/015.webp",
+      "bytes": 102716,
+      "sha256": "35c36eab2801a5875d4520fc6836e11244c50e41df498fc28b2b062d0dae89c7"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/016.webp",
+      "bytes": 100832,
+      "sha256": "6928ef6bdbaf71d8ea04a4dbeda0b2f73a9e2cacddb19b141cb5a23498fe4ecf"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/017.webp",
+      "bytes": 97966,
+      "sha256": "e982094c3a154207945bf9f6b4082287ad3161909513478b8464579acc9f080d"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/018.webp",
+      "bytes": 95452,
+      "sha256": "c5e003dbeeff4c3b63c280642996e0a160663e385c4a4cf099b6a6294fac9203"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/019.webp",
+      "bytes": 96212,
+      "sha256": "122d647066829744421536c8052eca6b23445bcffe05d87140a66be8fb24287f"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/020.webp",
+      "bytes": 90530,
+      "sha256": "144db668ca141ca7f19944c8ac2a36081d24aa268603830599044b84adcf8065"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/021.webp",
+      "bytes": 86832,
+      "sha256": "11b1c7ffd934b9ebbed6eed5bc6c1055bd541f11fd6bd06e4cfac79b836f6f17"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/022.webp",
+      "bytes": 85092,
+      "sha256": "e2840faa2fd87a20b85aacd77b5aa74863acfcaefded605cdbf3c906c7b6e3e4"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/023.webp",
+      "bytes": 77576,
+      "sha256": "17d6d4b2627fa383115a45c5ac0e479a2ba2cc868d56aff0f6c8b50b76b86e2e"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/024.webp",
+      "bytes": 72968,
+      "sha256": "aff805f86d04587e764068a4da5514c42665e39bb088f096885fdbc406640827"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/025.webp",
+      "bytes": 69256,
+      "sha256": "389ee182344c3cdc0f51e7b115eb24c3d6318adedabd0d35c7e056fb76a8d209"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/026.webp",
+      "bytes": 63134,
+      "sha256": "f5c1c8e082fc2b7c38b2e5678a6cf5f8c626f9cc4477f1008992e289f445b23f"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/027.webp",
+      "bytes": 56202,
+      "sha256": "cda5f0348a7b03cb769ba6b954433dcd84ee269fb5c777fc74296fd6434a2231"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/028.webp",
+      "bytes": 49994,
+      "sha256": "6dff7953058cde513d3d90017014d03d8300a064e450d2e4ef53b821affcb521"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/029.webp",
+      "bytes": 47056,
+      "sha256": "5652a6803fc2cd7e98455a81a0b7e6c019a4039198b84e436f6712840885f0a2"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/030.webp",
+      "bytes": 41606,
+      "sha256": "fa43f3193771ab8635a3324ad901720192faff85cad6261fe1293f8e322b3e34"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/031.webp",
+      "bytes": 37792,
+      "sha256": "1cc87b0dbd2cb5bada94baf10c07ee22f144b0258c4799dffa8d713a43a63e93"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/032.webp",
+      "bytes": 34128,
+      "sha256": "2064813648eaa5006e83d88f574da92b285fe1a70b45acb759d8ce22164e1f32"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/033.webp",
+      "bytes": 29114,
+      "sha256": "eeedf0fd670a5556cad423b0b343c82b648566f84844b44c856fed70515081ed"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/034.webp",
+      "bytes": 23020,
+      "sha256": "a3121990ae14f7f69d2859b896aef9d30eaf8219286c2e6767594ec385cf5188"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/035.webp",
+      "bytes": 11892,
+      "sha256": "926aaeb343b908f3c4e84dc860936bd6fdebaaf011a95ae5bc0829485796ec39"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/036.webp",
+      "bytes": 3226,
+      "sha256": "4a75478468f0a88965154c90eda74f707461c0e381ccd4d937898d7dcc169278"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/037.webp",
+      "bytes": 4220,
+      "sha256": "829f77282cf684d35b015c61e18090d9af22623a10091ba56cd9ec8c34c40e70"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/038.webp",
+      "bytes": 4258,
+      "sha256": "998ab633a71aa92a67f164040f2e013fe02881619e0b40cea0bc332fabfa3539"
+    },
+    {
+      "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/039.webp",
+      "bytes": 4152,
+      "sha256": "053725a6e99d6ce82c2399c723a83e39ff8851598d60e7bea625478bbb3ef7b6"
+    }
+  ],
+  "runtime_encoded_bytes": 3082334,
+  "decoded_rgba_bytes": 82944000,
+  "shader_color": "AgX sRGB plates after OutputPass; no second tone mapping",
+  "motion_limit": "40 native frames with neighbor crossfade; not optical-flow interpolation or verified <=3px/frame at 1920"
+}

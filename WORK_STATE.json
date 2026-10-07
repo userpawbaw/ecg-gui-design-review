@@ -1083,5 +1083,28 @@
     "runtime": "a732228 baseline retained",
     "fullSeamElimination": false,
     "next": "geometry/normal/color unification as later polish; no new runtime change"
+  },
+  "north_cloud_joined_2026_10_07": {
+    "status": "implemented_TUNE_combined_user_review_pending",
+    "decision": "D098",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_cloud_joined_review_2026-10-07.md",
+    "runtime": "GPU deformed-surface derivatives + physical Cycles VDB path bake",
+    "cloudFeedback": "1/2 retained until combined user feedback",
+    "cloudFrames": 40,
+    "liveVolume": false,
+    "aiVideo": false,
+    "nativeSize": [
+      960,
+      540
+    ],
+    "encodedBytes": 3082334,
+    "decodedRGBABytes": 82944000,
+    "next": "combined terrain/cloud/archive feedback; if second cloud production feedback fails follow D080 two fallback comparison",
+    "deferred": [
+      "A-P3",
+      "Story",
+      "BC"
+    ],
+    "preservedUserModifiedCaptures": 6
   }
 }

@@ -9,23 +9,37 @@ export async function createTerrainParent(macro:THREE.Texture,broad:THREE.Textur
   return h-(x*x+z*z)/(2*6371);
  }
  function normal(x:number,z:number){const step=.8;return new THREE.Vector3(-(sample(x+step,z)-sample(x-step,z))/(2*step),1,-(sample(x,z+step)-sample(x,z-step))/(2*step)).normalize();}
- const geometry=new THREE.PlaneGeometry(1,1,256,256),pos=geometry.getAttribute('position'),uv=geometry.getAttribute('uv'),ground=new Float32Array(pos.count);const la0=THREE.MathUtils.degToRad(lat0);
- for(let i=0;i<pos.count;i++){const lon=b[0]+uv.getX(i)*(b[2]-b[0]),lat=b[1]+uv.getY(i)*(b[3]-b[1]),x=(lon-lon0)*kx,z=(lat0-lat)*ky;const la=THREE.MathUtils.degToRad(lat),delta=THREE.MathUtils.degToRad(lon-lon0),ex=6371*Math.cos(la)*Math.sin(delta),ey=6371*(Math.sin(la)*Math.sin(la0)+Math.cos(la)*Math.cos(la0)*Math.cos(delta))-6371,ez=6371*(Math.sin(la0)*Math.cos(la)*Math.cos(delta)-Math.cos(la0)*Math.sin(la)),edge=Math.min(uv.getX(i),uv.getY(i),1-uv.getX(i),1-uv.getY(i)),rU=(lon-7.1)/2.6,rV=(lat-61.)/1.2,re=Math.min(rU,rV,1-rU,1-rV),w=smooth(-.35,0,re);ground[i]=THREE.MathUtils.lerp(ey,-(x*x+z*z)/(2*6371),w);pos.setXYZ(i,THREE.MathUtils.lerp(ex,x,w),ground[i]+(sample(x,z)+(x*x+z*z)/(2*6371))*smooth(0,.12,edge),THREE.MathUtils.lerp(ez,z,w));}
- geometry.setAttribute('groundHeight',new THREE.BufferAttribute(ground,1));geometry.computeVertexNormals();geometry.computeBoundingSphere();
- // The undeformed sphere and the height field need the same shading normal at the join.
- const sphereNormals=new Float32Array(pos.count*3);
- for(let i=0;i<pos.count;i++){const v=new THREE.Vector3(pos.getX(i),ground[i]+6371,pos.getZ(i)).normalize();sphereNormals.set(v.toArray(),i*3);}
- geometry.setAttribute('sphereNormal',new THREE.BufferAttribute(sphereNormals,3));
+ // D098: evaluate normals on the actual deformed surface, rather than lerping unrelated normals.
+ const geometry=new THREE.PlaneGeometry(1,1,256,256),pos=geometry.getAttribute('position'),uv=geometry.getAttribute('uv');
+ const sphere=new Float32Array(pos.count*3),tangent=new Float32Array(pos.count*3),weights=new Float32Array(pos.count),regionWeights=new Float32Array(pos.count),la0=THREE.MathUtils.degToRad(lat0);
+ for(let i=0;i<pos.count;i++){
+  const u=uv.getX(i),v=uv.getY(i),lon=b[0]+u*(b[2]-b[0]),lat=b[1]+v*(b[3]-b[1]),x=(lon-lon0)*kx,z=(lat0-lat)*ky,la=THREE.MathUtils.degToRad(lat),delta=THREE.MathUtils.degToRad(lon-lon0);
+  sphere.set([6371*Math.cos(la)*Math.sin(delta),6371*(Math.sin(la)*Math.sin(la0)+Math.cos(la)*Math.cos(la0)*Math.cos(delta))-6371,6371*(Math.sin(la0)*Math.cos(la)*Math.cos(delta)-Math.cos(la0)*Math.sin(la))],i*3);
+  const edge=Math.min(u,v,1-u,1-v),rU=(lon-7.1)/2.6,rV=(lat-61)/1.2,re=Math.min(rU,rV,1-rU,1-rV),inner=smooth(-.35,0,re),curve=-(x*x+z*z)/(2*6371);
+  tangent.set([THREE.MathUtils.lerp(sphere[i*3],x,inner),THREE.MathUtils.lerp(sphere[i*3+1],curve,inner)+(sample(x,z)-curve),THREE.MathUtils.lerp(sphere[i*3+2],z,inner)],i*3);
+  weights[i]=smooth(0,.12,edge);regionWeights[i]=smooth(0,.20,re);
+ }
+ // Surface derivatives are linear in the morph weights; their cross product gives the actual deformed normal on the GPU.
+ const deltas=new Float32Array(pos.count*3),contact=new Float32Array(pos.count*4);
+ for(let i=0;i<pos.count;i++){const k=i*3,w=weights[i];for(let axis=0;axis<3;axis++)deltas[k+axis]=(tangent[k+axis]-sphere[k+axis])*w;pos.setXYZ(i,sphere[k],sphere[k+1],sphere[k+2]);const len=Math.hypot(sphere[k],sphere[k+1]+6371,sphere[k+2]);contact.set([sphere[k]/len,(sphere[k+1]+6371)/len,sphere[k+2]/len,w],i*4);}
+ const du=new Float32Array(pos.count*3),dv=new Float32Array(pos.count*3),deltaU=new Float32Array(pos.count*3),deltaV=new Float32Array(pos.count*3),detailGrad=new Float32Array(pos.count*2),side=257;
+ for(let i=0;i<pos.count;i++){
+  const col=i%side,row=Math.floor(i/side),left=col>0?i-1:i,right=col<side-1?i+1:i,up=row>0?i-side:i,down=row<side-1?i+side:i;
+  for(let k=0;k<3;k++){du[i*3+k]=sphere[right*3+k]-sphere[left*3+k];dv[i*3+k]=sphere[down*3+k]-sphere[up*3+k];deltaU[i*3+k]=deltas[right*3+k]-deltas[left*3+k];deltaV[i*3+k]=deltas[down*3+k]-deltas[up*3+k];}
+  detailGrad[i*2]=-4*(regionWeights[right]-regionWeights[left]);detailGrad[i*2+1]=-4*(regionWeights[down]-regionWeights[up]);
+ }
+ for(const [name,array,itemSize] of [['terrainDelta',deltas,3],['surfaceU',du,3],['surfaceV',dv,3],['deltaU',deltaU,3],['deltaV',deltaV,3],['detailGradient',detailGrad,2],['sphereContact',contact,4],['dropWeight',regionWeights,1]] as const)geometry.setAttribute(name,new THREE.BufferAttribute(array,itemSize));
+ geometry.computeVertexNormals();geometry.computeBoundingBox();geometry.boundingBox!.expandByScalar(8);geometry.boundingSphere=geometry.boundingBox!.getBoundingSphere(new THREE.Sphere());
  const amount={value:0},detail={value:0},mat=new THREE.MeshPhysicalMaterial({map:macro,roughness:1,specularIntensity:.16,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
  mat.onBeforeCompile=s=>{Object.assign(s.uniforms,{parentAmount:amount,detailAmount:detail,parentBroad:{value:broad},parentDay:{value:day},parentPacked:{value:packed}});
-  s.vertexShader=s.vertexShader.replace('#include <common>','#include <common>\nattribute float groundHeight;attribute vec3 sphereNormal;uniform float parentAmount,detailAmount;').replace('#include <beginnormal_vertex>',`#include <beginnormal_vertex>
-   float normalEdge=min(min(uv.x,uv.y),min(1.-uv.x,1.-uv.y));
-   objectNormal=normalize(mix(sphereNormal,objectNormal,parentAmount*smoothstep(0.,.12,normalEdge)));
+  s.vertexShader=s.vertexShader.replace('#include <common>',`#include <common>
+   attribute vec3 terrainDelta,surfaceU,surfaceV,deltaU,deltaV;attribute vec2 detailGradient;attribute vec4 sphereContact;attribute float dropWeight;uniform float parentAmount,detailAmount;
+  `).replace('#include <beginnormal_vertex>',`#include <beginnormal_vertex>
+   vec3 actualU=surfaceU+parentAmount*deltaU,actualV=surfaceV+parentAmount*deltaV;
+   actualU.y+=detailAmount*detailGradient.x;actualV.y+=detailAmount*detailGradient.y;
+   objectNormal=normalize(mix(sphereContact.xyz,normalize(cross(actualV,actualU)),sphereContact.w));
   `).replace('#include <begin_vertex>',`#include <begin_vertex>
-   float curve=groundHeight;float edge=min(min(uv.x,uv.y),min(1.-uv.x,1.-uv.y));
-   transformed.y=mix(curve,position.y,parentAmount*smoothstep(0.,.12,edge));
-   vec2 region=(vec2(position.x/${kx},61.63-position.z/111.32)+vec2(8.4,0.)-vec2(7.1,61.))/vec2(2.6,1.2);float re=min(min(region.x,region.y),min(1.-region.x,1.-region.y));
-   transformed.y-=4.*detailAmount*smoothstep(0.,.20,re);
+   transformed+=parentAmount*terrainDelta;transformed.y-=4.*detailAmount*dropWeight;
   `);
   s.fragmentShader=s.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D parentBroad,parentDay,parentPacked;').replace('#include <map_fragment>',`#include <map_fragment>
    vec2 ll=vec2(vMapUv.x*16.,56.+vMapUv.y*12.),guv=(ll+vec2(180.,90.))/vec2(360.,180.);float edge=min(min(vMapUv.x,vMapUv.y),min(1.-vMapUv.x,1.-vMapUv.y));
@@ -42,5 +56,5 @@ export async function createTerrainParent(macro:THREE.Texture,broad:THREE.Textur
   `);
  };
  const mesh=new THREE.Mesh(geometry,mat);mesh.name='Northern coarse parent terrain';mesh.renderOrder=1;mesh.receiveShadow=true;
- return {mesh,sample,normal,macro,bounds:b,set(p:number,d:number){amount.value=p;detail.value=d;mesh.visible=p>0;},state:()=>({source:m.source,bounds:b,triangles:256*256*2,reveal:amount.value,detail:detail.value}),dispose(){geometry.dispose();mat.dispose();}};
+ return {mesh,sample,normal,macro,bounds:b,set(p:number,d:number){amount.value=p;detail.value=d;mesh.visible=p>0;},state:()=>({source:m.source,bounds:b,triangles:256*256*2,reveal:amount.value,detail:detail.value,normalModel:'GPU derivatives of actual deformed surface + analytic sphere contact',cpuGeometryUpdatesPerFrame:0}),dispose(){geometry.dispose();mat.dispose();}};
 }

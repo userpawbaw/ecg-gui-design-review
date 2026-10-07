@@ -1672,3 +1672,28 @@ AA/구름 질감 해상도만 높여 깊이 오류를 남겼을 것이다. 근�
 F-063 사용자 검증 보충(2026-10-07): “구름 문제와 지형의 자글거림 문제는 아예 해결” 판정. AI의 전체연속영상/GPU 미검증 기록을 사용자 확인으로 가장하지 않으며, 해당 시각문제 해결과 제작 전체 단계 완료를 구분한다.
 
 F-064 정정/추가(2026-10-07): 사용자 첨부에서 희미한 seam 잔여. 이전 “소멸”은 제한된 고정 구도 관찰로 정정하고 전체 구간 소멸 주장을 철회. 범프 정합 시험 .15/.18 변화가 미미하여 미채택, baseline 유지. 후속 실제 geometry/normal 공통 함수 필요성은 코드 기반 추론이며 주원인 분리 미완. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md
+
+## F-065. 실제 surface 법선과 물리 VDB 경로를 정합해도 성능·접합은 별도 gate
+
+2026-10-07 [코드] [런타임] [캡처] [대화], D-098 / CASE-007 · 잠정/TUNE.
+
+### 발단
+사용자 잔여 seam 추가 검토 이후 구름까지 묶음 제작을 요청. height morph와 normal이 별도이므로 실제 변형에 맞춘 법선을 시도했다.
+
+### 먼저 의심한 것과 배제 방법
+globe/parent bump 불일치는 D097에서 효과 미미. CPU geometry 실제 normal 재계산은 .15 last32.6ms/max37.5ms로 움직임 비용이 커 미채택. 같은 변형의 U/V기울기는 parent/detail의 선형식으로 표현 가능해 GPU cross product로 교체.
+
+### 결정적 근거
+최종 IAB .15/.18에서 강한 사각 대비를 관찰하지 않았으나 완전 제거 미확정. shader compile/source error0 및 cpuGeometryUpdatesPerFrame0. 실제 VDB06/01/10과1.5terrain/같은sun40native 렌더를 웹 scroll plate로 연결했고 정역 입력에서 loaded40/fault null/terrain errors[] 확인. 실제 physical bake와 live volume/AI 영상을 구분한다. ECG_A_north_cloud_joined_review_2026-10-07.md와 manifest/실제캡처 참조.
+
+### 조치와 검토한 대안
+GPU actual surface derivatives, all40ready gate, neighborblend, native sRGB plate를OutputPass뒤에합성. .278–.284 web→plate/.284–.365 접근·진입/.385–.445 서고해소. 새syntheticnoise/livedensity추측재제작을 피하고 승인source광학기준 재사용.
+
+### 비용 / 영향 범위
+parent22float×66049=5.8MB GPU속성 추가(지역48MiBcache외). plateRGBA79.1MiB/GPU79.1MiB 별도. 40frame960×540으로1920 motion-per-frame gate 미확정, native/WebGL색/sky 차이 TUNE. 성능/PASS를사용자품질채택과 혼동하지 않는다.
+
+### 놓쳤다면
+seam감소 정적화면만 확인하고30ms CPU변형 비용을스크롤에남기거나, 실제VDB가뿌옇게나온 한장이 live공간을증명한다고 과장했을 것이다.
+
+### 일반화
+형태·빛·동적 비용·카메라 접합을 별도 검증하고 사용자 지정 리뷰 단위에서 한 흐름으로 제시한다.

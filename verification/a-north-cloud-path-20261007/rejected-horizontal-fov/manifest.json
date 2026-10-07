@@ -1,0 +1,167 @@
+{
+  "renderer": "Cycles 4.5.3 LTS",
+  "samples": 24,
+  "size": [
+    960,
+    540
+  ],
+  "count": 40,
+  "heightGain": 1.5,
+  "source_assets": [
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_06_variant_0000.vdb",
+      "sha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "width": 18,
+      "base": 4.2,
+      "center": [
+        0,
+        -4
+      ]
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_01_variant_0000.vdb",
+      "sha256": "c91381781adc353f26a25d6cb6c9e254f47b89db04d2e99d289ae0e7d545945c",
+      "width": 12,
+      "base": 3.8,
+      "center": [
+        -10,
+        -8
+      ]
+    },
+    {
+      "file": "assets\\source\\jangafx-cloud-pack\\unpacked\\CloudPack\\CloudPackVDB\\cloud_10_variant_0000.vdb",
+      "sha256": "05bdc59f23d4888cb0d1d06f7d087e91b3312d91ac2259181b165289dc692d96",
+      "width": 10,
+      "base": 4.0,
+      "center": [
+        13,
+        -5
+      ]
+    }
+  ],
+  "sun": [
+    -0.6642786860466003,
+    0.6940224766731262,
+    0.2776089906692505
+  ],
+  "density": 0.8,
+  "anisotropy": 0.45,
+  "volume_bounces": 6,
+  "step_rate": 1,
+  "camera_start_web_progress": 0.28,
+  "frames": [
+    {
+      "index": 0,
+      "q": 0.0,
+      "camera": [
+        23.983999252319336,
+        -40.84000015258789,
+        24.91200065612793
+      ],
+      "target": [
+        0.0,
+        0.0,
+        1.7999999523162842
+      ],
+      "seconds": 10.075347661972046,
+      "sha256": "2865d5d17067836e3c39f5bc2eb33a0e8ef96c37bd92d6de7ac4d21fa417af64"
+    },
+    {
+      "index": 1,
+      "q": 0.02564102564102564,
+      "camera": [
+        23.643030166625977,
+        -39.93743896484375,
+        24.29023551940918
+      ],
+      "target": [
+        0.0,
+        -0.17094022035598755,
+        1.9538462162017822
+      ],
+      "seconds": 8.428179740905762,
+      "sha256": "515e9a9fa7efe8ef15a00135ddcc06e53e62588b7fe6515c5d4f5b7321daa71f"
+    },
+    {
+      "index": 2,
+      "q": 0.05128205128205128,
+      "camera": [
+        23.30206298828125,
+        -39.03487014770508,
+        23.668466567993164
+      ],
+      "target": [
+        0.0,
+        -0.3418804407119751,
+        2.107692241668701
+      ],
+      "seconds": 8.469825267791748,
+      "sha256": "45c570c5c6460e6059aa2f67addea9a5057e229bd74f7101a1f684ae20742414"
+    },
+    {
+      "index": 3,
+      "q": 0.07692307692307693,
+      "camera": [
+        22.96109390258789,
+        -38.13230895996094,
+        23.046701431274414
+      ],
+      "target": [
+        0.0,
+        -0.5128204822540283,
+        2.261538505554199
+      ],
+      "seconds": 8.689572095870972,
+      "sha256": "0a04395d3c044ca08b141929309f42fab8d8439b143148ec9d9db89879993546"
+    },
+    {
+      "index": 4,
+      "q": 0.10256410256410256,
+      "camera": [
+        22.62012481689453,
+        -37.22974395751953,
+        22.42493438720703
+      ],
+      "target": [
+        0.0,
+        -0.6837607026100159,
+        2.4153847694396973
+      ],
+      "seconds": 9.421251773834229,
+      "sha256": "abfe7ef523f072dd081dd066ce0189555ffb95ad704307905ba646177847e551"
+    },
+    {
+      "index": 5,
+      "q": 0.1282051282051282,
+      "camera": [
+        22.279155731201172,
+        -36.327178955078125,
+        21.80316734313965
+      ],
+      "target": [
+        0.0,
+        -0.8547009229660034,
+        2.569230794906616
+      ],
+      "seconds": 9.29544997215271,
+      "sha256": "0d98eef365b871db308c1abe8f8bd79401b06db77cec852637fffb9091e3fba3"
+    },
+    {
+      "index": 6,
+      "q": 0.15384615384615385,
+      "camera": [
+        21.938186645507812,
+        -35.42461395263672,
+        21.18140411376953
+      ],
+      "target": [
+        0.0,
+        -1.0256409645080566,
+        2.723076820373535
+      ],
+      "seconds": 9.406748056411743,
+      "sha256": "481fc50f92f47837bbe19b82a8d8099be3414a7eec6c50ff0b02fe852ec73cbe"
+    }
+  ],
+  "scope": "physical offline VDB+terrain render; AgX plates. No live volume, AI video or free camera."
+}

@@ -2457,3 +2457,28 @@ fade 확대만으로 테두리의 조명 법선 불일치 미해결. 구름량/�
 미세 shimmer 재발/근접 detail 손상 또는 경계 효과 미미하면 D096 baseline 복귀. 완전무경계 보장 아님, 생성지도 색상/기하 근사도 잔여가능.
 
 D-097 결과: 실제 .15/.18 범프 시험 화면 차이가 매우 작아 미채택/REJECT. runtime parent를 기존 a732228 baseline으로 복귀. 잔여 경계 TUNE, 현 수준 사용자 만족 기록. 후속 geometry/normal/color 정합은 제안이며 미구현. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md
+
+## D-098. 지형 법선 정합에서 실제 VDB 통과까지 묶음 제작
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [코드] 구현 전 |
+| 상태 | 사용자 제작 승인 / 결과 TUNE |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자: "완료되면 검토 없이 구름 단계까지 쭉 진행해줘. 같이 리뷰할게." 잔여 사각 조명 경계와 실제 VDB 접근/통과를 하나의 리뷰 단위로 제작한다.
+
+### 검토한 선택지
+별도 법선 보간 유지, 변형된 실제 geometry에서 법선 재계산, 단일 adaptive surface 재구축. 구름은 기존 한 장 가림, 실제 VDB 경로 베이크, 새로운 실시간 밀도 변환을 비교.
+
+### 고른 것과 근거
+parent의 구면→지역 높이 변형과 법선을 같은 geometry로 정합. 구면 접합에서는 원래 방사 법선으로 환원한다. 승인된 1.5× DEM/근접 LOD/깊이 정밀도는 보존한다. D085/D093의 JangaFX06 및 실제 Cycles terrain receiver를 사용해 연속 카메라 경로를 렌더링하고 스크롤에서 인접 프레임을 보간한다. 접근은 웹과 같은 좌표·시야각, 진입은 자연스러운 구름 가림을 거쳐 서고로 연결. 실제 VDB 오프라인 베이크이며 AI 영상이나 실시간 volume이라고 부르지 않는다.
+
+### 버린 것과 이유
+새 합성 noise 구름은 이미 실패한 조형을 되풀이할 위험. 한 장 가림은 접근 부피감·움직임 증거 부족. adaptive 전체 지형 재구축/새 live VDB 변환은 승인된 능선 품질과 성공한 depth fix에 대한 영향이 커 이번 묶음 범위를 넘는다.
+
+### 되돌려야 하는 조건
+법선 갱신의 CPU 비용/기하 popping/근접 손상은 해당 정합만 복귀. 베이크의 해상도·정역 연속성·색/카메라 접합을 실제 브라우저에서 확인한다. GPU decoded RGBA 예산을 산입한다. 결과는 사용자 검토 전 TUNE이며 제작 피드백1/2를 유지; 2차 실패 시 D080 두 대안 비교. 서고 KEEP 및 Story/BC는 별도.
+
+D-098 구현 결과: CPU 실제normal trial 비용32.6/최대37.5ms로미채택→GPU actualsurface derivative. nativehorizontalFOV7장미채택→vertical47수정40장. Cycles source06/01/10/receiver/sun/SHA/WebP3.08MB 고정,14구도 및 정역실입력/errors0. 시각TUNE/사용자묶음검토전/전체cloud feedback1/2 유지. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_cloud_joined_review_2026-10-07.md.

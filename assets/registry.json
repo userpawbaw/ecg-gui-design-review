@@ -3139,6 +3139,24 @@
         "prototype/spikes/a-climb/arrival-north.ts"
       ],
       "review": "D095 228 source tiles pinned in metadata; bounded map, not full Earth detail"
+    },
+    {
+      "id": "north-vdb-cloud-path-20261007",
+      "kind": "rendered-image-sequence",
+      "status": "test-only",
+      "source_url": "https://jangafx.com/software/embergen/download/free-vdb-animations",
+      "licence": "CC0 source CloudPack; terrain source licences retained in terrain entries",
+      "original": null,
+      "processed": {
+        "file": "prototype/spikes/a-climb/public/north-earth/cloud-path/manifest.json",
+        "sha256": "bec08578ab6303eafa219b3d44cf905227c88f0e88178aa0a9b7decb1291b330",
+        "bytes": 3082334
+      },
+      "used_by": [
+        "prototype/spikes/a-climb/cloud-path.ts"
+      ],
+      "review": "D098 physical Cycles VDB+1.5x terrain path, TUNE before user combined review; no live volume/AI video",
+      "pins_manifest": "prototype/spikes/a-climb/public/north-earth/cloud-path/manifest.json"
     }
   ],
   "rejected": [

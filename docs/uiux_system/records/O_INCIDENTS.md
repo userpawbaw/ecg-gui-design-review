@@ -327,3 +327,19 @@ uAspect/crop계약추가. shaderPass.uniforms.uCloud/uReady직접갱신·state�
 
 ### 재발 방지와 자동화 상태
 후처리interface/복제uniform의실제render객체와loadingstate를일치시킨다. nativejob재개는preferences/장치활성출력을고정한다. 실제효과off/on/pixel기여로확인한다. 이번에uniform복제자동회귀테스트는미추가.
+
+## O-015. 웹·native 카메라의 수평/수직 FOV 혼동으로 부분 경로 재렌더
+
+2026-10-07 [코드] [렌더] · D098.
+
+### 증상
+Cycles 첫7frame에서 cam.angle47을horizontal sensorfit에 적용. 웹camera.fov47은verticalFOV여서 같은 위치에서도 crop/구도 불일치. 첫7native파일과manifest는 rejected-horizontal-fov에 보존.
+
+### 원인과 영향
+동일숫자만 확인하고FOV축을고정하지 못함. 초기7장 렌더비용을 잃었으며 외부preview로채택하지 않음. 별도CPUactualnormal32ms시험은 기능오류가아니라 비용 gate에서미채택.
+
+### 조치
+자체실행session Ctrl-C 종료 후 sensorfitVERTICAL/sensorheight24/lens=24/(2tan(47/2))로40frame 재렌더. 웹(x,y,z)→native(x,-z,y)과startcamera p.280 좌표 고정. 최종manifest40/hash/직접native및IAB접근캡처확인. Windowsregistry read_text cp949오류는UTF8명시로복구, packaging완료.
+
+### 재발 방지와 자동화 상태
+camera좌표·look·FOV축·aspect·color pipeline을같이핀한다. 본스크립트에verticalsensor명시. 자동native/web投影동일성테스트는미추가; 직접구도접합TUNE유지.

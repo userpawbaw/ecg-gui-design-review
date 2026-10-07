@@ -1,0 +1,711 @@
+{
+  "scope": "actual final IAB fixed-view captures; no motion-video/target-PC/soak proof",
+  "frames": [
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-1.json",
+      "png_sha256": "c24b9cd8b42da8c323654c8d049040c7a6fbbe7a2e3f879138879652bbed3574",
+      "p": 0.1,
+      "terrainErrors": [],
+      "detailReveal": 0,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 0,
+        "detail": 0,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-15.json",
+      "png_sha256": "2172c4097c2b11e66b6c3af05916266f64dff46c12ee8069a3fce562db9448bc",
+      "p": 0.15,
+      "terrainErrors": [],
+      "detailReveal": 0,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 0.1825694966190831,
+        "detail": 0,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-18.json",
+      "png_sha256": "9c6dc808dcb65e149d111902f8cae40da9a53d776d0196d587329cdb296cf602",
+      "p": 0.18,
+      "terrainErrors": [],
+      "detailReveal": 0,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 0.9128474830954169,
+        "detail": 0,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-235.json",
+      "png_sha256": "7a9ac0f46ee868082f4a8824c1bf03a3c8a4974f3bcbfb8bb2c92a06e7a9fd6c",
+      "p": 0.235,
+      "terrainErrors": [],
+      "detailReveal": 0.325,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 0.325,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-274.json",
+      "png_sha256": "74407f7e1c594c375d077a280f5ea95be7114e4da3a1a2a5250711bafd5ee4c5",
+      "p": 0.274,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-28.json",
+      "png_sha256": "6326fe80861f7fd19d873ef35d822060fadbdde8678ee8798b892bcfe1ec312a",
+      "p": 0.28,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-3.json",
+      "png_sha256": "cbfb1d66ceb9e23cb7c81daf776686d61af962e965feca05ace0daec1fa9c934",
+      "p": 0.3,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 7,
+        "blend": 0.7037037037037086,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-32.json",
+      "png_sha256": "329afc22dda28153a04fcdb78959def0488aebf289969d2413dd25dd491cc5f1",
+      "p": 0.32,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 17,
+        "blend": 0.33333333333334636,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-345.json",
+      "png_sha256": "b62188929f5cb49c5441f882a893feea92588f4f49cfa6304c86e2f28c30a119",
+      "p": 0.345,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 29,
+        "blend": 0.37037037037036313,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-365.json",
+      "png_sha256": "0eb0f154389ab380320196505681741fe585abdf806498c74599268d3521429f",
+      "p": 0.365,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 39,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-41.json",
+      "png_sha256": "10bba99e73e345357d20ea27dfb84bbebd630b9600a792f4f509683ac888b68f",
+      "p": 0.41,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 39,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-445.json",
+      "png_sha256": "92b3da36dae6d27e9e5c3a024779ac39985e3c51a11ebd6aca4d512902304dcf",
+      "p": 0.445,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 39,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0-55.json",
+      "png_sha256": "c6bfd74cb2e4faabc67e1ddc4df10028efbedfe81d30a9f71ec25a717a44d5c6",
+      "p": 0.55,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 39,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/north-0.json",
+      "png_sha256": "3dce0ab26236ae6f1f52b3d2d9731f8588743796354c662337fa1a2cf67bb06d",
+      "p": 0,
+      "terrainErrors": [],
+      "detailReveal": 0,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 0,
+        "detail": 0,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/scroll-1524.json",
+      "png_sha256": "58fe8d2b9d3d73ea6fedfcb0416328f6db8b66bd97f27054f819834c65c63467",
+      "p": 0.1524252635302601,
+      "terrainErrors": [],
+      "detailReveal": 0,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 0.23752703902437683,
+        "detail": 0,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/scroll-2065.json",
+      "png_sha256": "8f2636d378d1f8a42bbb5c71e552359894ea92bb4a10e367c3eaa310184eddf0",
+      "p": 0.20653889515219814,
+      "terrainErrors": [],
+      "detailReveal": 0.3639787019334743,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 0,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 0.3639787019334743,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/scroll-2904.json",
+      "png_sha256": "62d51153e437900df97a4499073988a1af362fbc99b6741172f23acf03273199",
+      "p": 0.2904171364148811,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 3,
+        "blend": 0.08973234790572349,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/scroll-3581.json",
+      "png_sha256": "698c81d70a215f26d6958bb931f9fcb6bba062794fcf16c09ae657e2a339e2dc",
+      "p": 0.3580608793686578,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 35,
+        "blend": 0.658941918242661,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/scroll-3977.json",
+      "png_sha256": "e3e18833f6577fdc33615c24812b11e633746e13ba735b51b2ca79eac389221c",
+      "p": 0.3977452085682079,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 39,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-cloud-joined/scroll-5096.json",
+      "png_sha256": "46c8312c1dcea5f47c168c52d0cab92c51afef0f9c949cedeadf004c309f290d",
+      "p": 0.5095828635851173,
+      "terrainErrors": [],
+      "detailReveal": 1,
+      "cloud": {
+        "ready": true,
+        "loaded": 40,
+        "frames": 40,
+        "currentFrame": 39,
+        "blend": 0,
+        "fault": null,
+        "render": "Cycles physical VDB path bake",
+        "decodedRGBABytes": 82944000,
+        "maxTextureRGBABytes": 82944000,
+        "freeCamera": false
+      },
+      "parent": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 1,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ],
+  "runtime_source_pins": [
+    {
+      "file": "prototype/spikes/a-climb/terrain-parent.ts",
+      "sha256": "21e954e95976f2ea0344cb0d4d58dd335b8b73ae1b11d1f9b89408223e80d6d8"
+    },
+    {
+      "file": "prototype/spikes/a-climb/cloud-path.ts",
+      "sha256": "8b94807a086216fb6e1a7b7be1c5730ac9addcc950ac0c653150ceba62b994ff"
+    },
+    {
+      "file": "prototype/spikes/a-climb/arrival-north.ts",
+      "sha256": "bc4975593dec25feeaea5be1bc6fce9e92d7dd2d8bdc586c1bd58be7408e9352"
+    },
+    {
+      "file": "prototype/spikes/a-climb/main.ts",
+      "sha256": "b94cc86cdd62046cf186bf2806891beb217bbc5ebace91856e39503aad051dd3"
+    }
+  ],
+  "real_input_frames": [
+    0.1524252635302601,
+    0.20653889515219814,
+    0.2904171364148811,
+    0.3580608793686578,
+    0.3977452085682079,
+    0.5095828635851173
+  ]
+}

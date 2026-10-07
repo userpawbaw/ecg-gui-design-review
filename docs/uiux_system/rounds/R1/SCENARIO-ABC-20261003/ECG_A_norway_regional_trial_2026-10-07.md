@@ -31,3 +31,5 @@
 3. 현재서고KEEP를같은도착점으로연결한전체후보를완성한후 사용자제작피드백2. 구름형태KEEP/제작피드백1/2/실패후두fallback비교는유지한다.
 
 PASS: 실제 원본/선택지역read/coverage·hash·9PNG hash와size, 단일surface형상 비교. TUNE: 지역룩/광학/데이터와시안높이기준, 실제runtime 인계. NOT VERIFIED: 새지형web성능/애니메이션/서고전체전이/원작pixel충실도/최종목업품질. 기존 웹기본값과서고는미변경.
+
+미리보기 전달 점검: 중단 후 기존4198 연결거부 확인. 서버를 재시작해 Vite ready를 확인했으나, 앱 Browser Use가 URL 정책으로 갤러리 접근을 차단했다. 같은 접근을 다른 브라우저로 우회하지 않았다. 갤러리의 실제 앱 브라우저 표시/console 검증은 NOT VERIFIED이며 직접 검토한 로컬 PNG/contact를 전달한다. 별도 데이터/API/env가 없는 정적 갤러리다.

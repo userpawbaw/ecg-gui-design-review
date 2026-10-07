@@ -3,6 +3,9 @@
 Not run on its own — `FIST_POSE=chair python scripts/assets/fist-v3.py` poses the chair figure, solves and gates the fist
 (42 frames) and then calls render() here with its globals.
   breath  2 per 10 s (D-053): inhale 2.0 s, exhale 3.0 s (smoothstep), deep-breath key × 0.8 (breath_deep_v3.npz, breath-v3.py)
+          + bones on the same curve (r1-breath README 'left'): thoracic extension (chest control back about its head, 4° × 0.8),
+          the neck turned forward by the same angle so the gaze stays put, both shoulders raised 1.5 cm × 0.8; the hands are IK
+          (fixed), so only the elbows follow. Gated at breath 0 / .5 / 1 × open / fist (pose-check + chair contact) before frames
   fist    the video's timing: close window = mean close core / .62, open window = median open core / .62 (the profile window
           spans the core widened 30 % each side), hold 0.45 s; three clenches in 10 s
   views   'ma'   low, in front of the right knee looking up past the fist to the chest (IDEA-R1-NOISE §8.5)
@@ -20,6 +23,21 @@ def smooth(x):
 def breath_at(t, period=5.0, inhale=2.0):
     u = t % period
     return smooth(u / inhale) if u < inhale else 1.0 - smooth((u - inhale) / (period - inhale))
+
+
+BR_EXT, BR_SH = 4.0, 1.5          # deep-breath peak: thoracic extension (°), shoulder rise (cm); ×0.8 like the shape key
+SH_CM_PER_DEG = 1.4 / 5           # probe: shoulder.R 5° about +y lifts the shoulder joint 1.4 cm
+
+
+def breath_bones(P, Vector, base, b):
+    """Breath b (0..1, already × 0.8) on the spine/shoulder controls, from their posed matrix_basis in `base`.
+    The figure faces −y: a turn about +x at the chest control bends the upper body forward, so extension is negative."""
+    for k, M in base.items(): P.pb[k].matrix_basis = M.copy()
+    X, Y = Vector((1, 0, 0)), Vector((0, 1, 0))
+    if b <= 0: P.up(); return
+    P.turn('chest', -BR_EXT * b, X); P.turn('neck', BR_EXT * b, X)
+    a = BR_SH * b / SH_CM_PER_DEG
+    P.turn('shoulder.R', a, Y); P.turn('shoulder.L', -a, Y)
 
 
 FIG_ANCHOR = (0.0, .0087, .4313)                                     # figure.json poses_v3.chair.anchor (rig frame): buttock contact
@@ -193,6 +211,20 @@ def render(g):
         clay = bpy.data.materials.new('clay'); clay.diffuse_color = (.66, .64, .61, 1); o.data.materials.clear(); o.data.materials.append(clay)
         sc.world = sc.world or bpy.data.worlds.new('w'); sc.world.color = (.30, .32, .36)
 
+    # ---- breath bones: snapshot the posed controls, gate the extremes ----
+    base = {k: P.pb[k].matrix_basis.copy() for k in ('chest', 'neck', 'shoulder.L', 'shoulder.R')}
+    pc, chair_objs = g['pc'], [x for x in bpy.data.objects if x.get('chair')]
+    bf = 0
+    for b in (0.0, .4, .8):
+        for lab, st in (('open', state('close', 0.0)), ('fist', state('close', 1.0))):
+            breath_bones(P, Vector, base, b); apply(*st)
+            rows = pc.check(rig, None, g['CHAIR_SPEC']); nf = sum(r['status'] == 'FAIL' for r in rows); bf += nf
+            bad = [f"{r['status']} {r['name']} {r['value']}" for r in rows if r['status'] in ('FAIL', 'WARN')]
+            print(f'   breath {b:.1f} {lab}: FAIL {nf}', '; '.join(bad), '| chair', pc.scene_collisions(o, chair_objs, reach=.06))
+    if bf and not os.environ.get('POSE_ALLOW_FAIL'):
+        print('   BREATH GATE FAIL — no renders'); import sys; sys.stdout.flush(); os._exit(1)
+    breath_bones(P, Vector, base, 0.0)
+
     # ---- cameras (placed on the open-hand pose) ----
     A0, T0 = state('close', 0.0); apply(A0, T0)
     hand = P.head('ORG-hand.R'); chest = P.head('ORG-spine.003')
@@ -233,8 +265,6 @@ def render(g):
     c2 = bpy.data.cameras.new('side'); o2 = bpy.data.objects.new('side', c2); sc.collection.objects.link(o2)
     c2.type = 'ORTHO'; c2.ortho_scale = 1.9; o2.location = Vector((-1.2, chest.y - .05, chest.z - .2))   # inside the archive walls
     o2.rotation_euler = (math.radians(90), 0, math.radians(-90)); cams['side'] = o2
-    chair_objs = [x for x in bpy.data.objects if x.get('chair')]
-    pc = g['pc']
     for lab, st in (('open', state('close', 0.0)), ('fist', state('close', 1.0))):
         apply(*st); bpy.context.view_layer.update()
         print(f'   body vs chair ({lab}):', pc.scene_collisions(o, chair_objs, reach=.06))
@@ -256,12 +286,12 @@ def render(g):
         sc.render.border_min_x, sc.render.border_max_x = .03, .36; sc.render.border_min_y, sc.render.border_max_y = .06, .52
         clip = os.path.join(FR, os.environ['CLIP']); os.makedirs(clip, exist_ok=True)
         for i in range(m):
-            t = t0 + i / FPS; A, T = fist_at(t); apply(A, T)
+            t = t0 + i / FPS; breath_bones(P, Vector, base, .8 * breath_at(t)); A, T = fist_at(t); apply(A, T)
             o.data.shape_keys.key_blocks['breath_deep'].value = .8 * breath_at(t)
             sc.camera = cams['ma']; sc.render.filepath = os.path.join(clip, f'c_{i:04d}.png'); bpy.ops.render.render(write_still=True)
         print('   clip frames →', clip, m); return
     for i in range(n):
-        t = i / FPS; A, T = fist_at(t); apply(A, T)
+        t = i / FPS; breath_bones(P, Vector, base, .8 * breath_at(t)); A, T = fist_at(t); apply(A, T)
         o.data.shape_keys.key_blocks['breath_deep'].value = .8 * breath_at(t)
         for name, cam in cams.items():
             sc.camera = cam; sc.render.filepath = os.path.join(FR, f'{name}_{i:04d}.png')
@@ -277,12 +307,14 @@ def render(g):
     for i in range(n):
         im = Image.open(os.path.join(FR, f'ma_{i:04d}.png')).convert('RGB')
         Image.composite(black, im, alpha).save(os.path.join(FR, f'ov_{i:04d}.png'))
-    mp4 = os.path.join(OUT, 'chair_motion.mp4')
+    NAME = os.environ.get('OUT_NAME', 'chair_motion')
+    mp4 = os.path.join(OUT, f'{NAME}.mp4')
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', os.path.join(FR, 'ov_%04d.png'),
                     '-vf', 'format=yuv420p', '-c:v', 'libx264', '-crf', '20', mp4], check=True)
     # key-frame sheet: open, mid-close, fist, inhale peak, exhale trough
     from PIL import ImageDraw
-    keys = [(0.0, 'open, exhaled'), (1.0 + cl * .5, 'closing'), (1.0 + cl + .2, 'fist, inhaling'), (2.0, 'inhale peak'), (4.95, 'exhale end')]
+    keys = [(0.0, 'open, exhaled'), (1.0 + cl * .5, 'closing'), (1.0 + cl + .2, 'fist held'), (2.0, 'inhale peak'), (4.95, 'exhale end')]
+    keys.sort()
     rows_ = ('ov', 'side') if 'side' in cams else ('ov',)
     W, Hh = 384, 216; sheet = Image.new('RGB', (W * len(keys), Hh * len(rows_) + 22), 'white'); dr = ImageDraw.Draw(sheet)
     for c, (t, lab) in enumerate(keys):
@@ -290,5 +322,10 @@ def render(g):
         dr.text((c * W + 4, 5), f't={i / FPS:.2f}s {lab}  breath {breath_at(i / FPS):.2f}', fill='black')
         for r, name in enumerate(rows_):
             sheet.paste(Image.open(os.path.join(FR, f'{name}_{i:04d}.png')).convert('RGB').resize((W, Hh)), (c * W, 22 + r * Hh))
-    sheet.save(os.path.join(OUT, 'chair_motion_keys.jpg'), quality=85)
+    sheet.save(os.path.join(OUT, f'{NAME}_keys.jpg'), quality=85)
+    if 'side' in cams:                                                # breath check: side silhouettes, exhaled (t=0) vs inhale peak (t=2)
+        a_ = np.asarray(Image.open(os.path.join(FR, 'side_0000.png')).convert('L'), float)
+        b_ = np.asarray(Image.open(os.path.join(FR, f'side_{int(2.0 * FPS):04d}.png')).convert('L'), float)
+        ov = np.stack([b_, a_, a_], -1).astype(np.uint8)              # red fringe = inhale only, cyan = exhale only
+        Image.fromarray(ov).save(os.path.join(OUT, f'{NAME}_side_overlay.png'))
     print('   video →', mp4)

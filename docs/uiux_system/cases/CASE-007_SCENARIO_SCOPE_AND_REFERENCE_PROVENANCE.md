@@ -188,3 +188,7 @@ AI는같은terrain source/camera로nativeRGBplate를제작→사용자 “이전
 
 ### D102 / F068 / O017 — 구름 군집 구현과 측정 범위
 사용자 사진레퍼런스 비용질문(D101)→80군집 진행승인→actual3source/scalarLOD/shareddepth→초기shader변수충돌 수정→규칙배치 개선→native1080p12case. 리소스14.4MiB와composerquery의증거를 레퍼런스동등품질/targetPC성능과분리했다. 원경impostor제안 대신 첫시험lowvolume으로 시차를유지, 후보TUNE/먼지형직선경계·구름노출추가리뷰. 기존combined2/2실패와D080미실행은유지. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md
+
+
+### 2026-10-08 D103/F069 구름 레퍼런스 mining·실제 차용 자산
+사용자D102품질불만족/TUNE. 5개제시레퍼런스원문/실제화면·source검증; 추가Takram300/3500m외부demo·weather/shape/detail/STBN·LUT·Vanilla/shader/npm0.7.6조달·pin. Solar8k403실패/공식Three4k성공분리. productionruntime안바꿈/원형독립재현→기존terrain동일3구도→globe인계가다음. 이전combined2/2실패·D080미실행·Story/BC별도·기존6capture보존. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md

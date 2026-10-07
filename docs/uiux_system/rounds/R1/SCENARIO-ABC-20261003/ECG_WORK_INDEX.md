@@ -212,3 +212,7 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026
 
 ### 현재80군집 실제 field 검토 — D102
 [ECG_A_cloud_field_production_review_2026-10-07.md](ECG_A_cloud_field_production_review_2026-10-07.md) → verification/a-cloud-field-20261007/gallery.html / asset-pins / browser-manifest → cloud-field.ts. 단독D100비교는cloudMode=single. 시각TUNE, exactGPUincremental/targetPC/영상미확정. 이전wholeplate feedback2/2·D080미실행보존. A-P3/Story/BC별도.
+
+
+### 현행 구름 재탐색 / 제작 후보 — D103
+[ECG_A_cloud_reference_mining_2026-10-08.md](ECG_A_cloud_reference_mining_2026-10-08.md) → assets/research/cloud-reference-20261008/manifest.json → 외부실제화면verification/a-cloud-reference-20261008 → 다음Takram원형renderer독립시험. 현재D102사용자품질TUNE·같은terrain유지, 새library未통합/未채택. 원본globe자료와근접cloud자료/파일조달을구분한다.

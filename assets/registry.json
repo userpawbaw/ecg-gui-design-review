@@ -3194,6 +3194,16 @@
         "bytes": 15098880
       },
       "review": "D102 actual sources06/01/10 shared by80 groups, TUNE; no screen terrain bake"
+    },
+    {
+      "id": "cloud-reference-takram-three-20261008",
+      "kind": "renderer-source-and-texture-lut-research",
+      "status": "test-only",
+      "source_url": "https://github.com/takram-design-engineering/three-geospatial",
+      "licence": "Takram MIT; Three MIT; Solar System Scope textures CC BY4.0, per-file manifest; D084 internal concept",
+      "pins_manifest": "assets/research/cloud-reference-20261008/manifest.json",
+      "used_by": [],
+      "review": "D103 actual files acquired; author live 300m/3500m observed, project runtime not integrated/adopted"
     }
   ],
   "rejected": [

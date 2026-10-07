@@ -1746,3 +1746,20 @@ npm0.3.0 파일 parse 성공 후 resample output unique=0/.5/1에 불과. local 
 
 ### 놓쳤다면
 산술 군집 수·메모리만으로 성능과 레퍼런스 품질 달성을 선언했을 것이다. source메모리/공통RT/전체composerGPU/시각품질을 분리해 보고해야한다. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md
+
+
+## F-069. Globe 레퍼런스의 멋과 근접 구름의 해법을 구별해야 한다
+
+2026-10-08 [자료] [코드] [브라우저] · D103 / CASE007.
+
+### 발단
+사용자80군집품질불만족, 다른AI globe레퍼런스제시/직접탐색·asset차용요청.
+
+### 먼저 의심한 것과 배제 방법
+사용자제공설명과실제사이트/공식source를대조. Populousproject회전·카드확인, citymesh연속하강미확인. Threecloud는packedB/color·roughness·bump. Takram300→3500mUI변경실제volumelayer관찰, 공개defaulttexture/nativeLFS파일·shader확인.
+
+### 결정적 근거
+Three공식source Fresnel대기/표면cloud packedtexture; Takramweather/shapeDetail/skyirradiance/powder/BSM/temporal패스. beta/globalspaceTODO·ghosting명시. 현재앱atmosphere0.19.1이미설치됐지만northpath별도shader, 새cloud통합미완. 8k403 vs4k/volume/LUT실제조달분리.
+
+### 놓쳤다면
+지구원형잘보이는texture를확대하거나VDB군집을늘려근접구름품질도자동충족한다고판단했을것. 완성광학chain원형부터재현하고동일terrain최소구도시험으로검증해야함. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md

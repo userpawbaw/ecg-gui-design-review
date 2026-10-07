@@ -1,0 +1,376 @@
+{
+  "date": "2026-10-08",
+  "decision": "D103",
+  "takramSourceCommit": "b012ad06d858fc035d88aacfd73f092f93c994e4",
+  "threeSourceCommit": "9453b799b251a9d4066799a9152f549ddcd0d7d1",
+  "sourceFiles": {
+    "atmosphere-assets/irradiance.bin": {
+      "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/eac103980f20c0956f2d3215833e73514be08462/packages/atmosphere/assets/irradiance.bin",
+      "bytes": 8192,
+      "sha256": "126bd4ff0419e04c877639caf9e3cd64a139ae511cf315a23a0c989fc47b51a5",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "atmosphere-assets/scattering.bin": {
+      "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/eac103980f20c0956f2d3215833e73514be08462/packages/atmosphere/assets/scattering.bin",
+      "bytes": 8388608,
+      "sha256": "82c505fe6e3b7f1995c650cc8a1478f42bd510029bf63845e9485c078aef6617",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "atmosphere-assets/transmittance.bin": {
+      "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/eac103980f20c0956f2d3215833e73514be08462/packages/atmosphere/assets/transmittance.bin",
+      "bytes": 131072,
+      "sha256": "a2a0dd1464048d92e7bfdf385a9108e8d9c3e2748684f1f64523587d5894180a",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "clouds-npm-0.7.6.json": {
+      "url": "https://registry.npmjs.org/@takram%2fthree-clouds/0.7.6",
+      "bytes": 3192,
+      "sha256": "44e4d35e4bddb32f2431654a3f3b63c90389942e27dd5833a69bd833ba04f8d4",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "earth_bump_roughness_clouds_4096.jpg": {
+      "url": "https://raw.githubusercontent.com/mrdoob/three.js/9453b799b251a9d4066799a9152f549ddcd0d7d1/examples/textures/planets/earth_bump_roughness_clouds_4096.jpg",
+      "bytes": 1508389,
+      "sha256": "0796f4211c209d1afe9e26a06a283cdc21434430a780a25457b2417568a8591e",
+      "status": "acquired-research-only",
+      "conditions": "Solar System Scope CC BY4.0"
+    },
+    "earth_day_4096.jpg": {
+      "url": "https://raw.githubusercontent.com/mrdoob/three.js/9453b799b251a9d4066799a9152f549ddcd0d7d1/examples/textures/planets/earth_day_4096.jpg",
+      "bytes": 473093,
+      "sha256": "cd7712d3e891425d9948ea5ac18d3bb1e7e834ea038188587897e689a7b35d0f",
+      "status": "acquired-research-only",
+      "conditions": "Solar System Scope CC BY4.0"
+    },
+    "earth_night_4096.jpg": {
+      "url": "https://raw.githubusercontent.com/mrdoob/three.js/9453b799b251a9d4066799a9152f549ddcd0d7d1/examples/textures/planets/earth_night_4096.jpg",
+      "bytes": 267061,
+      "sha256": "17a868f79c7be40fa1f557e6114d7889d907f18f7a3fce51f33b0b830ef50242",
+      "status": "acquired-research-only",
+      "conditions": "Solar System Scope CC BY4.0"
+    },
+    "LICENSE": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/LICENSE",
+      "bytes": 1081,
+      "sha256": "00846a358b3d0c38070523fc09e8bb2996d4515ca83b4cc18612e8a362398ffb",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/atmosphere/src/constants.ts": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/atmosphere/src/constants.ts",
+      "bytes": 1438,
+      "sha256": "c49a0b01969c79715e3f3a80f81755123c1a47ae28442d39c0907d46d99eb0a9",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/package.json": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/package.json",
+      "bytes": 1825,
+      "sha256": "7221b4450173bf980ef5e3cbcbcc94be241d9d63f115b548eed4cd62e46af512",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/README.md": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/README.md",
+      "bytes": 40631,
+      "sha256": "387b4af7853ed015abdccfddf4a8e9c4f1f7340b8334b307d49ccebc0f60691f",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/CloudLayers.ts": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/CloudLayers.ts",
+      "bytes": 4696,
+      "sha256": "0038c64d36e76ac63f98d4b2f834329e2b12b04c57a240a40cf16002146178fb",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/CloudsEffect.ts": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/CloudsEffect.ts",
+      "bytes": 24133,
+      "sha256": "db3800833dfb13e96ec292a631f9a782f7637909fb167c9443cd64583c9b43c3",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/CloudsMaterial.ts": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/CloudsMaterial.ts",
+      "bytes": 15454,
+      "sha256": "ff72428e0d8008ed3489b26eb0d297b488d48a58187ad7d0b3aa758aa2f21e80",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/constants.ts": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/constants.ts",
+      "bytes": 865,
+      "sha256": "1341d55de83f45b1db5937c854845a8f8fdf31431b324625016621eae0e4e95b",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/catmullRomSampling.glsl": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/catmullRomSampling.glsl",
+      "bytes": 4990,
+      "sha256": "1934d33aa226ca2da34be3bce4af287ca9d2dcaa858ab4c996bae870e9d5980d",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/clouds.frag": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/clouds.frag",
+      "bytes": 31688,
+      "sha256": "9bdbae45569399ed43728a374583f75f1ef2e873deab65fa79131e2bfd825994",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/clouds.glsl": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/clouds.glsl",
+      "bytes": 6075,
+      "sha256": "bbb3f037e55aed6c989d77d197af33f44ee5565b0ca7988eab44f52ddd509eb5",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/clouds.vert": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/clouds.vert",
+      "bytes": 2422,
+      "sha256": "5c18ec6948b49764cae6a2498278cea45feeb7a92e703c32ac393fa0839e5947",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/cloudsEffect.frag": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/cloudsEffect.frag",
+      "bytes": 390,
+      "sha256": "a204544e5e17f239d1037506badc9e628e38a2406c9747b90c5b3cdd3d947950",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/cloudShape.frag": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/cloudShape.frag",
+      "bytes": 2636,
+      "sha256": "0a2e83960f2aa8f29488699c2ba266fdfb3f2c23ff05d930c5792c37df33f764",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/cloudShapeDetail.frag": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/cloudShapeDetail.frag",
+      "bytes": 1962,
+      "sha256": "0d75842283971b40004919bc5d124e057099ee95a76a2850a66bce4ee297861f",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/cloudsResolve.frag": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/cloudsResolve.frag",
+      "bytes": 5478,
+      "sha256": "ed36ccbf85ac017f3e220bd89ed65cfc73a74c40f2e2013439360eaf9421f67c",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/cloudsResolve.vert": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/cloudsResolve.vert",
+      "bytes": 173,
+      "sha256": "9b2a5730178336f17216545f68c51bd4eb0877563999293bcc43747c15b4169c",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/localWeather.frag": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/localWeather.frag",
+      "bytes": 1612,
+      "sha256": "b2108dd56f3aa1790e885892aa761f0d134463dbda717f8217a9681dd8045fac",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/parameters.glsl": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/parameters.glsl",
+      "bytes": 1674,
+      "sha256": "2e09f0951d1e9312424bc0b3fe916024e8109bcb5b6856e11044364c61e8226f",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/perlin.glsl": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/perlin.glsl",
+      "bytes": 8173,
+      "sha256": "eb5523c83dd86a848cf61ac2659113df185c561290abc2e2c26cb2e7e68f917d",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/shadow.frag": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/shadow.frag",
+      "bytes": 6151,
+      "sha256": "7c80aceb815e56a639ff8709fc3969eff67cff3ac50894966811d6e39e449c35",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/shadow.vert": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/shadow.vert",
+      "bytes": 173,
+      "sha256": "9b2a5730178336f17216545f68c51bd4eb0877563999293bcc43747c15b4169c",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/shadowResolve.frag": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/shadowResolve.frag",
+      "bytes": 1897,
+      "sha256": "b23889a2bc99631bb29b721588e09a0cacc5b571b6618b9b27d35daf5d447926",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/shadowResolve.vert": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/shadowResolve.vert",
+      "bytes": 173,
+      "sha256": "9b2a5730178336f17216545f68c51bd4eb0877563999293bcc43747c15b4169c",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/structuredSampling.glsl": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/structuredSampling.glsl",
+      "bytes": 3127,
+      "sha256": "057e53764ffb6cc2dd510316f62aedc6821baf9b4d14acba7c1812e2c93756d7",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/tileableNoise.glsl": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/tileableNoise.glsl",
+      "bytes": 3001,
+      "sha256": "7746f7ec38efbe4e547fe7140838d3fea67e87228176e8a68ff1a3c3c397146c",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/turbulence.frag": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/turbulence.frag",
+      "bytes": 1277,
+      "sha256": "417c19cfa5541eed068ec93538636c9b7c279a815be11101797f139fe1885978",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/types.glsl": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/types.glsl",
+      "bytes": 253,
+      "sha256": "c7c351a59bf3b58648de4447cb1d9a3a8317a713c83fc6f5e804866d7c4fe397",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/clouds/src/shaders/varianceClipping.glsl": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/clouds/src/shaders/varianceClipping.glsl",
+      "bytes": 3504,
+      "sha256": "b7ef065e7e7b9e8069ea3f6a3597f4e25e3ca4809b0ad2aa1bdae10abcbeaba6",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "packages/core/src/constants.ts": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/packages/core/src/constants.ts",
+      "bytes": 361,
+      "sha256": "472c857b52781e881ea57420bff565ee9ca265a1e034c3964e2e7af18b57ae9e",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "storybook/src/clouds/Clouds-Vanilla.tsx": {
+      "url": "https://raw.githubusercontent.com/takram-design-engineering/three-geospatial/b012ad06d858fc035d88aacfd73f092f93c994e4/storybook/src/clouds/Clouds-Vanilla.tsx",
+      "bytes": 7194,
+      "sha256": "262f0f97f519620764060f2fcf4eb0e93383259a993334eb9cdcde18a38f4921",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "takram-assets/local_weather.png": {
+      "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/45a1c6c1bb9fd38b3680fd120795ff4c32df68ff/packages/clouds/assets/local_weather.png",
+      "bytes": 679653,
+      "sha256": "b84daef855dc5eebcc9b174fe832ba75a98e44b846dde201bce354417cc08031",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "takram-assets/shape.bin": {
+      "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/45a1c6c1bb9fd38b3680fd120795ff4c32df68ff/packages/clouds/assets/shape.bin",
+      "bytes": 2097152,
+      "sha256": "ef65cf6156894720c00bf572c49e3e254f8899c4b5158246e5a35a1922e2519c",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "takram-assets/shape_detail.bin": {
+      "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/45a1c6c1bb9fd38b3680fd120795ff4c32df68ff/packages/clouds/assets/shape_detail.bin",
+      "bytes": 32768,
+      "sha256": "c09112199c6e0281b74ff5283c11c2943ae082650b9b67978cf5d59ed2956e4f",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "takram-assets/stbn.bin": {
+      "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/9627216cc50057994c98a2118f3c4a23765d43b9/packages/core/assets/stbn.bin",
+      "bytes": 1048576,
+      "sha256": "51f52f21e5578384585050390821a0a486dcb81e11a716fa7b92fbb6515ba852",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "takram-assets/turbulence.png": {
+      "url": "https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/45a1c6c1bb9fd38b3680fd120795ff4c32df68ff/packages/clouds/assets/turbulence.png",
+      "bytes": 49691,
+      "sha256": "ec2b1b0af4a6a6104102b21e58beb300b0a3d334c0281d84fde8c91d322910f9",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "takram-tree.json": {
+      "url": "https://api.github.com/repos/takram-design-engineering/three-geospatial",
+      "bytes": 308104,
+      "sha256": "661182ba9200f2071b52e5123684d684bb24a530c8b6b917c82e049c84a5c6fa",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "three-clouds-0.7.6.tgz": {
+      "url": "https://registry.npmjs.org/@takram/three-clouds/-/three-clouds-0.7.6.tgz",
+      "bytes": 2582174,
+      "sha256": "a727b8b692f0403d0b2dc2f2e5175ef167396786000b1be2493894ee957e65ec",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "three-commit.txt": {
+      "url": "https://api.github.com/repos/mrdoob/three.js/commits/dev",
+      "bytes": 42,
+      "sha256": "caf230cf1f27ce8dc478f37f9f6bf7dc2805c30b6e8fa2c2a4e02936c450d478",
+      "status": "acquired-research-only",
+      "conditions": "Takram MIT source; per-asset checks retained"
+    },
+    "three-earth.html": {
+      "url": "https://raw.githubusercontent.com/mrdoob/three.js/9453b799b251a9d4066799a9152f549ddcd0d7d1/examples/webgpu_tsl_earth.html",
+      "bytes": 6981,
+      "sha256": "ced7e417b97d6b25ea03fa9cdbf84e9ec90c543be316d50cd18ebeeabfb49fc8",
+      "status": "acquired-research-only",
+      "conditions": "Three.js MIT"
+    }
+  },
+  "screenshots": {
+    "discovery-globe.jpg": {
+      "bytes": 32372,
+      "sha256": "78f99f7a0ade253322634200f62282a822289bb8131909754468bc17db5c56a0",
+      "type": "external live browser screenshot, not project implementation"
+    },
+    "google-earth-access.jpg": {
+      "bytes": 83934,
+      "sha256": "83e4e1d672811ebc0923b71a686cbb71d378eba2c5fc5781c2d2804d88c6539a",
+      "type": "external live browser screenshot, not project implementation"
+    },
+    "populous-globe.jpg": {
+      "bytes": 92983,
+      "sha256": "29fae7ae25e6235a546272d6135352cbab1c4133cbe3e10600c07ee708b4538e",
+      "type": "external live browser screenshot, not project implementation"
+    },
+    "takram-3500m.jpg": {
+      "bytes": 87957,
+      "sha256": "dc21e9c7686ae10600d01568f48c3d0c68baa0b7e9804920977b46668e298522",
+      "type": "external live browser screenshot, not project implementation"
+    },
+    "takram-basic.jpg": {
+      "bytes": 70074,
+      "sha256": "660603e224e3129d7faa60186f309531be4a6d2ee279f86da4ca23f59c8902f1",
+      "type": "external live browser screenshot, not project implementation"
+    },
+    "three-earth.jpg": {
+      "bytes": 59221,
+      "sha256": "5e72bcfb02f19c5c324f75e3043578aed4d051a3a046906ddef21002d28cb6a3",
+      "type": "external live browser screenshot, not project implementation"
+    }
+  },
+  "failedAcquisition": [
+    {
+      "url": "https://www.solarsystemscope.com/textures/download/8k_earth_clouds.jpg",
+      "status": "HTTP403, no asset saved"
+    }
+  ],
+  "scope": "internal concept D084; new runtime not installed or adopted; final exhibition review pending"
+}

@@ -1166,7 +1166,7 @@
     ]
   },
   "north_cloud_field_2026_10_07": {
-    "status": "IMPLEMENTED_TUNE_user_review_pending",
+    "status": "IMPLEMENTED_TUNE_user_quality_unsatisfactory_D103_research",
     "decision": "D102",
     "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md",
     "counts": [
@@ -1197,6 +1197,25 @@
       "BC",
       "D080 fallback comparison"
     ],
-    "next": "user review coverage/volume/light/terrain preservation/cover transition"
+    "next": "D103 borrowed optical renderer original reproduction, then same-terrain 3-view comparison"
+  },
+  "north_cloud_reference_2026_10_08": {
+    "status": "RESEARCH_ACQUIRED_new_renderer_not_integrated",
+    "decision": "D103",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md",
+    "sourceManifest": "assets/research/cloud-reference-20261008/manifest.json",
+    "candidate": "Takram WebGL2 CloudsEffect + AerialPerspective vanilla; Three Earth for globe",
+    "actualSourceFiles": 47,
+    "externalBrowserShots": 6,
+    "globalSpaceCloudSupport": "author TODO, not assumed supported",
+    "solar8k": "HTTP403 not acquired",
+    "terrainPreserved": true,
+    "next": "separate intact source renderer reproduction then same north terrain/camera depth 3-view comparison",
+    "deferred": [
+      "A-P3",
+      "Story",
+      "BC",
+      "D080 fallback comparison"
+    ]
   }
 }

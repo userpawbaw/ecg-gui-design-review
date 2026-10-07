@@ -1,0 +1,106 @@
+{
+  "bugs": {
+    "url": "https://github.com/takram-design-engineering/three-geospatial/issues"
+  },
+  "dist": {
+    "shasum": "83f7640d91168ac6c6c8d867084ecd9e290fbe8c",
+    "tarball": "https://registry.npmjs.org/@takram/three-clouds/-/three-clouds-0.7.6.tgz",
+    "fileCount": 103,
+    "integrity": "sha512-cfoEI3W5NJuYUL1Pd4k5UXLlb7rLThh3dNIOO+/EPw8cbuRUgiIVEVtNPmA+v5KRJf87gPI+rjuxgK0huAajDw==",
+    "signatures": [
+      {
+        "sig": "MEQCIGIDa82aOrNWJppSdN9QYXo23Ij21sJYggdyst6t+gfiAiBy+mw9rpVpHTItb1Q4ERqoBYaMJ2avIJvgfN3cRYnZDw==",
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+      }
+    ],
+    "unpackedSize": 4104403
+  },
+  "main": "./build/index.cjs",
+  "name": "@takram/three-clouds",
+  "type": "module",
+  "_from": "file:takram-three-clouds-0.7.6.tgz",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "Shota Matsuda",
+    "email": "shota@takram.com"
+  },
+  "module": "./build/index.js",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./build/index.js",
+      "require": "./build/index.cjs"
+    },
+    "./r3f": {
+      "types": "./types/r3f/index.d.ts",
+      "import": "./build/r3f.js",
+      "require": "./build/r3f.cjs"
+    }
+  },
+  "license": "MIT",
+  "_npmUser": {
+    "name": "shotamatsuda",
+    "email": "shota@takram.com"
+  },
+  "homepage": "https://github.com/takram-design-engineering/three-geospatial/tree/main/packages/clouds",
+  "keywords": [
+    "three",
+    "three.js",
+    "geospatial",
+    "volumetric",
+    "clouds"
+  ],
+  "_resolved": "/private/var/folders/dp/36650_jx1svgxp8b1h1bwjlh0000gn/T/24b49d6e44e12eea943fd7e9b98f1d29/takram-three-clouds-0.7.6.tgz",
+  "_integrity": "sha512-cfoEI3W5NJuYUL1Pd4k5UXLlb7rLThh3dNIOO+/EPw8cbuRUgiIVEVtNPmA+v5KRJf87gPI+rjuxgK0huAajDw==",
+  "repository": {
+    "url": "git+https://github.com/takram-design-engineering/three-geospatial.git",
+    "type": "git"
+  },
+  "_npmVersion": "10.9.4",
+  "description": "A Three.js and R3F implementation of geospatial volumetric clouds",
+  "directories": {},
+  "maintainers": [
+    {
+      "name": "shotamatsuda",
+      "email": "shota@takram.com"
+    }
+  ],
+  "_nodeVersion": "22.22.1",
+  "dependencies": {
+    "type-fest": "^5.4.4",
+    "tiny-invariant": "^1.3.3",
+    "@takram/three-atmosphere": "0.19.1",
+    "@takram/three-geospatial": "0.9.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "_hasShrinkwrap": false,
+  "peerDependencies": {
+    "react": ">=19.0",
+    "three": ">=0.170.0",
+    "postprocessing": ">=6.36.7",
+    "@react-three/fiber": ">=9.0.4",
+    "@react-three/postprocessing": ">=3.0.4"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "@react-three/drei": {
+      "optional": true
+    },
+    "@react-three/fiber": {
+      "optional": true
+    },
+    "@react-three/postprocessing": {
+      "optional": true
+    }
+  },
+  "_npmOperationalInternal": {
+    "tmp": "tmp/three-clouds_0.7.6_1778050871892_0.011330938554664272",
+    "host": "s3://npm-registry-packages-npm-production"
+  },
+  "_id": "@takram/three-clouds@0.7.6",
+  "version": "0.7.6"
+}

@@ -2579,3 +2579,27 @@ terrainRGBplate교체와군집별scene다시그리기배제. fixedsun cache를�
 
 
 D102 구현 후: native3source near4/mid16/far60 field 제작. scalar+shadow14.399MiB, actual1080p12case/120GPU샘플과13fixed구도. 순차모드 측정편차로 정확한 incremental GPU 예산판정 보류. far-impostor 대신 low volume 우선 시험, 최종 시각 TUNE/사용자리뷰대기. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md
+
+
+## D-103. 사용자 품질 불만족 후 완성 cloud renderer·공개 자산을 차용 후보로 고정
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화] [자료] [브라우저] |
+| 상태 | 재탐색·실제조달 완료 / 후보 미채택 / D102 품질TUNE |
+| CASE | CASE-007 |
+
+### 갈림길
+80군집 결과 품질 불만족. 사용자 Populous/Discovery/Google/Mapped/Three 예시와 최대한 asset 차용 요청.
+
+### 검토한 선택지
+기존VDB상수반복튜닝, globe이미지로근접확대, 완성Takramclouds+대기chain intact차용, offline/AI영상.
+
+### 고른 것과 근거
+실제원문·browser·source차이대조. Takram300/3500m cloudscape를직접관찰, source0.7.6/실제weather·shape·detail·STBN·LUT/npm파일조달/SHA. 원형renderer독립후동일terrain시험 권장. Three공식globe texture+bump와근접volume분리; currentinstalledatmosphere0.19.1과dependencyversion일치만확인, 통합미검증. 자료·자산그대로/수정차용 범위D084 유지.
+
+### 버린 것과 이유
+다른AI문구를구름기술검증으로인용하지않음. globe예제=근접cloud해결법/다수군집=품질완성 주장은배제. 실제403의8ktexture는조달성공으로기록하지않음. terrainwholeRGB교체반복배제.
+
+### 되돌려야 하는 조건
+Takram원형재현·temporal움직임·same-cameraterrain정합미달시후속경로비교. globalspace지원TODO/ghosting한계존재, 최종winner/KEEP미확정. 현재D102구현보존·기존combined2/2실패/D080미실행·Story/BC별도. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md

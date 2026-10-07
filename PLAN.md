@@ -439,3 +439,7 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 
 ### 2026-10-07 D102/F068/O017 실제80군집 field
 사용자진행승인. cloud06/01/10 native연속밀도 hi/mid/far/occupancy/fixedsun 공유, 근4/중16/원60 irregular배치·LOD연속혼합·depth1회/volume1draw. scalar+shadow15,098,880bytes/1080pRT별도약11.39MiB. actual1080p12case 각GPU120sample/13fixed+actual정역wheel. 순차비교편차있어추가GPU예산판정보류. 최신shader오류없음/build67PASS, 최종시각TUNE·cloud노출/먼지형직선경계보완. 기존6capture보존·커밋제외, A-P3/Story/BC별도/D080두fallback미실행. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md
+
+
+### 2026-10-08 D103/F069 구름 레퍼런스 mining·실제 차용 자산
+사용자D102품질불만족/TUNE. 5개제시레퍼런스원문/실제화면·source검증; 추가Takram300/3500m외부demo·weather/shape/detail/STBN·LUT·Vanilla/shader/npm0.7.6조달·pin. Solar8k403실패/공식Three4k성공분리. productionruntime안바꿈/원형독립재현→기존terrain동일3구도→globe인계가다음. 이전combined2/2실패·D080미실행·Story/BC별도·기존6capture보존. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_reference_mining_2026-10-08.md

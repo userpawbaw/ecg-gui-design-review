@@ -2482,3 +2482,26 @@ parent의 구면→지역 높이 변형과 법선을 같은 geometry로 정합. 
 법선 갱신의 CPU 비용/기하 popping/근접 손상은 해당 정합만 복귀. 베이크의 해상도·정역 연속성·색/카메라 접합을 실제 브라우저에서 확인한다. GPU decoded RGBA 예산을 산입한다. 결과는 사용자 검토 전 TUNE이며 제작 피드백1/2를 유지; 2차 실패 시 D080 두 대안 비교. 서고 KEEP 및 Story/BC는 별도.
 
 D-098 구현 결과: CPU 실제normal trial 비용32.6/최대37.5ms로미채택→GPU actualsurface derivative. nativehorizontalFOV7장미채택→vertical47수정40장. Cycles source06/01/10/receiver/sun/SHA/WebP3.08MB 고정,14구도 및 정역실입력/errors0. 시각TUNE/사용자묶음검토전/전체cloud feedback1/2 유지. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_cloud_joined_review_2026-10-07.md.
+
+## D-099. 화면 교체 후보 미채택·실제 VDB 동일 공간 경로 검토
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [코드] [자료] |
+| 상태 | 기존 후보 사용자 REJECT / 동일공간 구현 packet 제안·미구현 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자가갑작스러운cloud와지형교체지적, 기존형태에서같이만들가능성을질문. 구름피드백2/2후current통합후보실패, D080두대안비교는미실행보존.
+
+### 검토한 선택지
+전체plate fade연장, 기존WebGLterrain+실제VDBdensity livevolume, transparentcloud bake+depth/shadow cache, D080구름없는/AI영상.
+
+### 고른 것과 근거
+전체RGBplate미채택을기록. 실시간가능성원자료와기존3Dtexture shader확인, cloud06한개변환→같은kmframe/terrain/camera/sun→lighting/cache→거리LOD 시험을권장packet으로정리. 새renderer채택이나구현완료를뜻하지않음.
+
+### 버린 것과 이유
+전체화면fade반복은지형연속성요구를반영하지못함. 새synthetic구름생성은승인source대신실패조형을반복할위험.
+
+### 되돌려야 하는 조건
+실제VDBgrid변환/실시간광학·비용미달이면transparentlayer및D080두대안비교. 사용자최신동일공간질문을2차피드백실패후의자동winner선택으로대체하지않는다. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_same_scene_feasibility_2026-10-07.md.

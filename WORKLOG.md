@@ -625,3 +625,6 @@ Same-view .15/.18 범프정합 시험/build65 PASS, RGB차 .0132/.0078 및 차>2
 CPU normal32.6ms/37.5max 시험→GPU surface derivative로교체. 초기 horizontalFOV7장 미채택→web verticalFOV47로 40native 다시렌더/OptiX/6bounce. PNG40/WebP40/SHA/3,082,334bytes/source3개pins. build66 PASS, 실제14구도+정역휠 캡처·지형errors0/구름40ready. camera/plate색·frame밀도·GPU/targetPC·영상 TUNE/미검증. unknown 기존6capture 보존·커밋제외. ECG_A_north_cloud_joined_review_2026-10-07.md
 
 D098 최종검사: records210 PASS / build66 PASS. 실제wheel 정방향서고·역방향구름복귀, 정착 .274 detailReveal1/error0. 마지막runtime_source SHA와browser캡처manifest 갱신. O015필수증상/조치절 보완후검사PASS. 사용자기존6파일보존.
+
+### 2026-10-07 D099/F066
+사용자wholeplate지형교체/등장실패반영. 코드3Dtexture+scene-depth144step기존shader확인; 공식OpenVDBcopyToArray/Threevolume및creatorJSVDB자료확인. nativeBakedonly제약아님. 변경사항은기록/다음packet, 새live변환구현없음. ECG_A_cloud_same_scene_feasibility_2026-10-07.md

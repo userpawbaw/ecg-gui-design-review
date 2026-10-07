@@ -201,3 +201,6 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026
 
 ### 북반구 지형·구름·서고 통합 후보 검토
 [ECG_A_north_cloud_joined_review_2026-10-07.md](ECG_A_north_cloud_joined_review_2026-10-07.md) → D098/F065 → verification/a-north-cloud-path-20261007/gallery.html/manifest/browser-manifest → north-cloud-joined 최종 캡처. CPU trial/초기 FOV 미채택은 별도보존. 구름 feedback1/2/시각TUNE, 서고KEEP·Story/BC별도.
+
+### 동일 공간 구름 가능성·wholeplate 피드백
+[ECG_A_cloud_same_scene_feasibility_2026-10-07.md](ECG_A_cloud_same_scene_feasibility_2026-10-07.md) → D099/F066 → 원본VDB변환/기존kmterrain과live합성 packet. D098사용자REJECT, live미구현; D080대안미실행보존.

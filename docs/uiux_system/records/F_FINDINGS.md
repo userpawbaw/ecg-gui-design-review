@@ -1697,3 +1697,19 @@ seam감소 정적화면만 확인하고30ms CPU변형 비용을스크롤에남�
 
 ### 일반화
 형태·빛·동적 비용·카메라 접합을 별도 검증하고 사용자 지정 리뷰 단위에서 한 흐름으로 제시한다.
+
+## F-066. 같은 지형 source·camera를 사용해도 전체 RGB plate가 기존 지형 연속성을 유지하지 못함
+
+2026-10-07 [대화] [코드] [자료], D099 / CASE007 · 확정(사용자 후보 REJECT)/실시간 대안 잠정.
+
+### 발단
+사용자 구름 sudden pop·기존에없던terrain 교체 지적, 기존형태에서같이만들 수있는지 질문.
+
+### 먼저 의심한 것과 배제 방법
+D098은 같은1.5DEM source/FOV를정합했지만 fullRGBplate로 별도receiver/sky/post를함께덮는다. camera정합만으로meshLOD·material·lighting차이가사라지지 않음. fade만늘리는방법은surface보존을보장하지못함.
+
+### 결정적 근거
+actualsource cloud-path RGB composite, arrival p.278 camerafreeze, native terrain이별도mesh다. 사용자결과 REJECT. 현재planet-cloud-photo에는3Dtexture와scene-depth raymarch가존재하고 OpenVDB copyToArray/Three3Dtexture/creatorVDBloader source가경로를지원. 실제cloud06변환·r186/압축호환·km좌표동작은미검증.
+
+### 놓쳤다면
+동일source와카메라라는 말로surface연속성충족을주장하고wholeplate crossfade를반복했을 것이다. 실제위치/shape를보존한cloud-only 동일공간 합성이필요. ECG_A_cloud_same_scene_feasibility_2026-10-07.md.

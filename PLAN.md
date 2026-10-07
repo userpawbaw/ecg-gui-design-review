@@ -424,3 +424,6 @@ near/far 정밀도 보정과 z8 지도 선행 반영. 원형/광역 줄·점 패
 
 ### 2026-10-07 지형 법선·실제 VDB 통과 묶음 제작 — D098/F065
 사용자 별도검토 없이 구름까지 제작승인. 실제surface derivative GPU정합(CPU32ms시험미채택), CyclesVDB06/01/10 40장960×540/약3.08MB 경로 베이크→스크롤neighborblend→서고 동일pose 시간재매핑. 제작/불러오기·정역입력PASS/시각TUNE, 전체구름 feedback1/2 유지. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_cloud_joined_review_2026-10-07.md
+
+### 2026-10-07 D099/F066 같은 공간 feasibility
+D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedback2/2 current후보실패. D080두fallback미실행보존. 최신같은공간가능성질문→기존sampler3Dshader+공식OpenVDBdense/Threevolume/creatorVDBloader확인. cloud06실제변환→kmterrain유지단독live시험권장, 구현/채택미완. ECG_A_cloud_same_scene_feasibility_2026-10-07.md

@@ -174,3 +174,6 @@ AI가 경계 소멸로 보고→사용자가 희미한 잔여와 현재 만족�
 
 ### 2026-10-07 D098/F065 — 사용자 지정 리뷰 단위
 사용자 “검토 없이 구름 단계까지 쭉 … 같이 리뷰” → 개별 지형 승인대기 대신 남은 경계와 실제 에셋 passage를 묶어 제작 → CPU normal 비용 관찰로 actual surface derivative를GPU로전환 → 출처가 고정된 물리VDB 경로베이크와 웹 정역 증거를분리. 새 livevolume/AI영상이라고 과장하지 않고 source·완료·사용자품질판정을분리한다. 기존 기록체계 적용이며 새방법론 규칙 신설은 아님. ECG_A_north_cloud_joined_review_2026-10-07.md
+
+### 2026-10-07 D099/F066 — 같은 source와같은장면의차이
+AI는같은terrain source/camera로nativeRGBplate를제작→사용자 “이전에없던지형으로바뀌어서별로”와 “이전형태에서같이” 질문→AI는실제WebGLsurface보존요구미충족을확인,wholeplate미채택과actualVDB동일공간packet기록. 같은데이터의별도렌더가같은scene연속성을보장하지않는사례. 기존자료→코드→사용자품질검증규약적용, live가능성과완료를구분. ECG_A_cloud_same_scene_feasibility_2026-10-07.md

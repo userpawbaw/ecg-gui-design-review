@@ -90,3 +90,9 @@ Blender Workbench 점토 렌더(웹 아님). 만들기: `FIST_POSE=chair python 
 - `chair_motion_breath_clay_side_overlay.png`: 옆 실루엣, 빨강 = 들숨에만, 청록 = 날숨에만. 등이 뒤로 펴지고 어깨·가슴이 올라가는 것이 보입니다. 오른손 색 차이는 주먹 시점 차이입니다.
 - 키 시트의 칸 순서를 시간순으로 고쳤습니다('fist held' 2.08 s가 들숨 최고 2.00 s 뒤).
 - H5 서고 클립(`chair_motion.mp4`, `chair_motion_keys.jpg`)을 숨 뼈 움직임을 넣어 다시 렌더했습니다. 첫 실행은 2시간 작업 제한에 119/120 프레임에서 끊겨, `RESUME=1`로 남은 프레임만 이어 그렸습니다. 렌더 전 관문 FAIL 0.
+
+## 갱신 (7) 2026-10-07 — 서고 측정 의자를 GreenChair_01로
+사용자: "의자 GreenChair_01로 교체 진행해줘."
+- `build_archive.py --light r2`가 modern_arm_chair_01 대신 GreenChair_01을 놓습니다. 크기는 원본 그대로(좌면 0.46 m, 팔걸이 0.67 m)이고, 자리와 방향은 이전 의자와 같습니다(`chair_fit` 등받이 방향 (−0.01, 1.00), yaw 0.6°). 배치는 `chair-motion-v3.place_chair`를 그대로 써서 돌림 값이 적용됩니다(F-033 회피).
+- `archive_greenchair_d3.jpg`: 서고 r2, d3 시점, H5. 의자는 서고에 맞게 놓였습니다.
+- **알려진 FAIL**: 이 정지 렌더의 사람은 아직 D-050 의자 자세(`body_v3_chair.glb`, 두 손을 허벅지에)라서 높은 팔걸이를 팔이 168 mm 파고듭니다. story 자세(이 폴더의 의자 동작 자세, 아래팔을 팔걸이에)로 바꾸는 일은 브리프 3의 자세 glb 내보내기에서 합니다. 웹 `archive.glb`(10-03 굽기)에는 측정 의자가 아직 없으므로, 웹 교체도 브리프 3의 다시 굽기에서 함께 됩니다.

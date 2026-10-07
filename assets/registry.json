@@ -3178,6 +3178,22 @@
         "prototype/spikes/a-climb/cloud-live.ts"
       ],
       "review": "D100 native scalar density, live volume+fixed sun optical-depth cache, same WebGL terrain; one-cloud TUNE, not screen bake/AI video"
+    },
+    {
+      "id": "north-vdb-cloud-field-20261007",
+      "kind": "volume-density-lod-light-and-shadow-cache",
+      "status": "test-only",
+      "source_url": "https://jangafx.com/software/embergen/download/free-vdb-animations",
+      "licence": "CC0 CloudPack source acquisition D085 retained; D084 internal concept, exhibition review pending",
+      "pins_manifest": "verification/a-cloud-field-20261007/asset-pins.json",
+      "used_by": [
+        "prototype/spikes/a-climb/cloud-field.ts"
+      ],
+      "processed": {
+        "file": "prototype/spikes/a-climb/public/north-earth/cloud-field/field.json",
+        "bytes": 15098880
+      },
+      "review": "D102 actual sources06/01/10 shared by80 groups, TUNE; no screen terrain bake"
     }
   ],
   "rejected": [

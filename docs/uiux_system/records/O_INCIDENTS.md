@@ -359,3 +359,20 @@ composite생성시tCloud null, 생성후actualuniform에volumeTarget.texture 직
 
 ### 재발 방지와 자동화 상태
 기존O014 지침을 실제postpass수정시확인해야함. runtime renderTargetuniform은constructor후직접부착. 자동회귀test미추가, 실제nativecanvas와off/on기여확인. 관련report ECG_A_cloud_live_same_scene_review_2026-10-07.md.
+
+
+## O-017. Cloud shadow 주입 shader 변수와 기존 terrain 변수 충돌
+
+2026-10-07 [코드] [런타임] · D102.
+
+### 증상
+최초 field 캡처에서 MeshPhysicalMaterial fragment compile error `edge : redefinition`. native first trial PNG/JSON 보존.
+
+### 원인과 영향
+onBeforeCompile 기존 shader에 같은 scope로 shadow 변수 edge를주입. build통과가실제shadercompile통과가아님. 초기지형이정상렌더되지않음.
+
+### 조치
+주입부 독립 block scope로 격리. 최종browser13fixed/12benchmark와실제wheel 확인, 후속오류없음. 도구로그 과거timestamp14:39:20 오류는보존되고새오류와구별.
+
+### 재발 방지와 자동화 상태
+shader주입변수namespace/scope를 확인하고nativecanvas를본다. 자동shader회귀test미추가, actualcompiledview근거. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md

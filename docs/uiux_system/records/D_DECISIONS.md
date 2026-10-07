@@ -2553,3 +2553,29 @@ currentfullscreenvolume+scene redraw100회 반복부적합. source회전시fixed
 
 ### 되돌려야 하는 조건
 동일camera/settledLOD에서GPU median/p95및시각·정역인계검증후res/step/nearcount조정. targetPC미확정/2차실패D080이력유지. ECG_A_cloud_field_resource_review_2026-10-07.md.
+
+## D-102. 80군집·공통 깊이·실제 VDB 거리표현 시험
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] 구현 전 |
+| 상태 | 사용자 D101 추천 시험 승인 / 후보 TUNE |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 "한번 진행해보자". near4/mid16/far60 초기구성과같은terrain/camera를시험한다.
+
+### 검토한 선택지
+각군집fullscreenpass반복, 공통depth+instancedbox volume, cloud-onlyimpostor atlas. source3개 실제native밀도와고정sun cache공유.
+
+### 고른 것과 근거
+공통depth1회/공통volume target1개와back-to-front instancedbox. source densityhi/mid/far·conservativeoccupancy로sampling을줄인다. 원경은첫시험에서저해상도volume으로하여자유camera시차·빛연속성을유지;비용미달시cloud-onlyimpostor로교체. 큰bank를80번반복하지않고군집크기·거리·간격을변화. rotation없음/scale광학길이정합. GPUquery와같은정착구도4상태검증.
+
+### 버린 것과 이유
+terrainRGBplate교체와군집별scene다시그리기배제. fixedsun cache를임의회전하여공유하지않음. 신규simulation·alphaHash·매frame랜덤밀도미사용.
+
+### 되돌려야 하는 조건
+원경volume비용·질감미달시impostor, overlap정렬결함시공간중첩제한/공통rayfield. 사용자KEEP/60fps보장아님. 기존2/2실패·D080대안미실행·Story/BC별도유지.
+
+
+D102 구현 후: native3source near4/mid16/far60 field 제작. scalar+shadow14.399MiB, actual1080p12case/120GPU샘플과13fixed구도. 순차모드 측정편차로 정확한 incremental GPU 예산판정 보류. far-impostor 대신 low volume 우선 시험, 최종 시각 TUNE/사용자리뷰대기. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md

@@ -208,3 +208,7 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026
 
 ### 동일 공간 구름 가능성·wholeplate 피드백
 [ECG_A_cloud_same_scene_feasibility_2026-10-07.md](ECG_A_cloud_same_scene_feasibility_2026-10-07.md) → D099/F066 → 원본VDB변환/기존kmterrain과live합성 packet. D098사용자REJECT, live미구현; D080대안미실행보존.
+
+
+### 현재80군집 실제 field 검토 — D102
+[ECG_A_cloud_field_production_review_2026-10-07.md](ECG_A_cloud_field_production_review_2026-10-07.md) → verification/a-cloud-field-20261007/gallery.html / asset-pins / browser-manifest → cloud-field.ts. 단독D100비교는cloudMode=single. 시각TUNE, exactGPUincremental/targetPC/영상미확정. 이전wholeplate feedback2/2·D080미실행보존. A-P3/Story/BC별도.

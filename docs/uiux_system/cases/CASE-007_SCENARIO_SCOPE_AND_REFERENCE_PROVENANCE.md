@@ -184,3 +184,7 @@ AI는같은terrain source/camera로nativeRGBplate를제작→사용자 “이전
 
 ### 2026-10-07 D101 — 광역 분포 질문을 실제 비용 구조로 변환
 사용자 "레퍼런스만큼 구름이 떠다니게 … 리소스 … 성능 제한폭"→AI가첨부사진의군집/빈공간/거리/그림자를구분, 현재texture3.375MiB 및depth재그리기를감사하고Epic/Guerrilla원자료대조. 약80군집hybrid를시작범위로제안하되메모리산술/GPUwork상한/실측FPS를분리. 회전된fixedsun cache의유효성도검토. 기존source→smalltrial규약의적용이며새benchmark나user채택없음. 상세 ECG_A_cloud_field_resource_review_2026-10-07.md.
+
+
+### D102 / F068 / O017 — 구름 군집 구현과 측정 범위
+사용자 사진레퍼런스 비용질문(D101)→80군집 진행승인→actual3source/scalarLOD/shareddepth→초기shader변수충돌 수정→규칙배치 개선→native1080p12case. 리소스14.4MiB와composerquery의증거를 레퍼런스동등품질/targetPC성능과분리했다. 원경impostor제안 대신 첫시험lowvolume으로 시차를유지, 후보TUNE/먼지형직선경계·구름노출추가리뷰. 기존combined2/2실패와D080미실행은유지. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md

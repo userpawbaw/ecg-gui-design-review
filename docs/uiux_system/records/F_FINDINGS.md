@@ -1729,3 +1729,20 @@ npm0.3.0 파일 parse 성공 후 resample output unique=0/.5/1에 불과. local 
 
 ### 놓쳤다면
 0/1 occupancy를 실제 구름density라 부르고 외곽과 빛을 튜닝하며 낮은질감을반복했을것이다. 파일parse/histogram/source voxel/nativetransform을 함께확인해야한다. report ECG_A_cloud_live_same_scene_review_2026-10-07.md.
+
+
+## F-068. 군집 수보다 공유 패스·화면 점유·측정 조건이 중요하다
+
+2026-10-07 [코드] [런타임] · D102 / CASE007.
+
+### 발단
+사용자 항공사진처럼 구름이 퍼진 field를 실제 진행 승인.
+
+### 먼저 의심한 것과 배제 방법
+단독 full-screen cloud pass를80회 반복하면 비용이 커진다. shared scene-depth1회+instanced volume1회, source3개/거리별 density LOD/occupancy를 적용했다. 순차측정 편차는 exact cloud incremental cost로 해석하지 않는다.
+
+### 결정적 근거
+80개 actual density, GPU RTX3070/1920×1080/MSAA4/각120유효query. .235/.365 OFF→80 중앙값차 약1.00/2.03ms이나 .300은 OFF가20/80보다높아 편차존재. shader 구조/실제PNG·JSON/sourcepins 확인. 근중원경 visual TUNE, far직선경계/노출미완.
+
+### 놓쳤다면
+산술 군집 수·메모리만으로 성능과 레퍼런스 품질 달성을 선언했을 것이다. source메모리/공통RT/전체composerGPU/시각품질을 분리해 보고해야한다. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md

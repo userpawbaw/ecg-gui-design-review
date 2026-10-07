@@ -1,0 +1,107 @@
+{
+  "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_01_variant_0000.vdb",
+  "sourceSHA256": "c91381781adc353f26a25d6cb6c9e254f47b89db04d2e99d289ae0e7d545945c",
+  "converter": "native OpenVDB13.0.0 copyToArray / numpy2.5.3",
+  "grid": "density",
+  "indexBounds": [
+    [
+      49,
+      91,
+      11
+    ],
+    [
+      318,
+      612,
+      182
+    ]
+  ],
+  "worldBounds": [
+    [
+      -158.5,
+      -228.5,
+      -100.5
+    ],
+    [
+      110.5,
+      292.5,
+      70.5
+    ]
+  ],
+  "sourceRange": [
+    0.0020008087158203125,
+    0.666015625
+  ],
+  "sourceActiveCount": 4587573,
+  "dims": [
+    128,
+    64,
+    192
+  ],
+  "lightDims": [
+    64,
+    32,
+    96
+  ],
+  "extentKm": [
+    19.565217391304348,
+    12.46376811594203,
+    37.826086956521735
+  ],
+  "paddingFraction": 0.04,
+  "baseKm": 3.701449275362319,
+  "centerXZ": [
+    0,
+    -4
+  ],
+  "sun": [
+    -0.6642786286868113,
+    0.2776089791526973,
+    -0.694022447881743
+  ],
+  "extinctionPerKm": 12,
+  "densityRange": [
+    0.0,
+    0.5529741644859314
+  ],
+  "positiveSamples": 282419,
+  "lightCache": "80 steps * .55km density integral toward fixed sun; no pixels baked",
+  "sourceAxisToWorld": "native X,Z,-Y; x-fast array",
+  "sourceToDense": "trilinear actual scalar values; empty padded bounds",
+  "files": {
+    "density.f16": {
+      "bytes": 3145728,
+      "sha256": "ecb3b83c8c5d59acc54efdfa4869afbd97917041dc4d48747f2c536ce94f3c09"
+    },
+    "light.f16": {
+      "bytes": 393216,
+      "sha256": "ae5819c371da64311e6e992e30e9baaec1d4035141a8cc0788e2c5b0f7afe6e7"
+    },
+    "density-mid.f16": {
+      "bytes": 393216,
+      "sha256": "f2676f618af2ea6a92088f06f2cc249765ba2dd4c883ed6dc5f08901cdb9b18b"
+    },
+    "density-far.f16": {
+      "bytes": 49152,
+      "sha256": "5aa5c8803b4eb72cf97b55e7ff9e339ff72cb2c6df1e2837aeb9c1685faf66a4"
+    },
+    "occupancy.r8": {
+      "bytes": 3072,
+      "sha256": "d622044591480976135b6c4e7eeae6553014152ee0173bbb58e6895434d929be"
+    }
+  },
+  "midDims": [
+    64,
+    32,
+    96
+  ],
+  "farDims": [
+    32,
+    16,
+    48
+  ],
+  "occupancyDims": [
+    16,
+    8,
+    24
+  ]
+}

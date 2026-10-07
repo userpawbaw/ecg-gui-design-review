@@ -435,3 +435,7 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 
 ### 2026-10-07 D101 구름 field resource 검토
 첨부항공사진·현재shader/3.375MiB scalar감사·Epic/Guerrilla원자료대조. near3–6/mid12–24/far40–80군집 art시작범위, source공유3개10.125MiB/cloudGPU45–80MiB잠정산술예산, pixel/step/coverage/overlap·depth반복병목·fixedsun회전cache검토. GPU추가2–4ms는도전목표/FPS예시는산술이며미측정. 검토완료/새runtime·군집미구현/D100TUNE유지. 다음shareddepth/occupancy+80군집hybrid동일camera시험제안. 상세 ECG_A_cloud_field_resource_review_2026-10-07.md.
+
+
+### 2026-10-07 D102/F068/O017 실제80군집 field
+사용자진행승인. cloud06/01/10 native연속밀도 hi/mid/far/occupancy/fixedsun 공유, 근4/중16/원60 irregular배치·LOD연속혼합·depth1회/volume1draw. scalar+shadow15,098,880bytes/1080pRT별도약11.39MiB. actual1080p12case 각GPU120sample/13fixed+actual정역wheel. 순차비교편차있어추가GPU예산판정보류. 최신shader오류없음/build67PASS, 최종시각TUNE·cloud노출/먼지형직선경계보완. 기존6capture보존·커밋제외, A-P3/Story/BC별도/D080두fallback미실행. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_field_production_review_2026-10-07.md

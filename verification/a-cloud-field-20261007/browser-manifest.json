@@ -1,0 +1,835 @@
+{
+  "benchmark": [
+    {
+      "file": "bench-p235-l0.json",
+      "p": 0.235,
+      "groups": 0,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 5.784576,
+        "p95": 8.471552
+      },
+      "terrainReveal": 0.9362767410104686,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p235-l1.json",
+      "p": 0.235,
+      "groups": 4,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 6.513664,
+        "p95": 9.044992
+      },
+      "terrainReveal": 0.9362767410104686,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p235-l2.json",
+      "p": 0.235,
+      "groups": 20,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 6.569984,
+        "p95": 9.170944
+      },
+      "terrainReveal": 0.9362767410104686,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p235-l3.json",
+      "p": 0.235,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 6.781952,
+        "p95": 9.532416
+      },
+      "terrainReveal": 0.9362767410104686,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p300-l0.json",
+      "p": 0.3,
+      "groups": 0,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 5.844992,
+        "p95": 8.819712
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p300-l1.json",
+      "p": 0.3,
+      "groups": 4,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 7.25504,
+        "p95": 9.911296
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p300-l2.json",
+      "p": 0.3,
+      "groups": 20,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 5.639168,
+        "p95": 8.144896
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p300-l3.json",
+      "p": 0.3,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 5.656576,
+        "p95": 7.948288
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p365-l0.json",
+      "p": 0.365,
+      "groups": 0,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 3.69152,
+        "p95": 5.736448
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p365-l1.json",
+      "p": 0.365,
+      "groups": 4,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 5.690368,
+        "p95": 7.872512
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p365-l2.json",
+      "p": 0.365,
+      "groups": 20,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 5.767168,
+        "p95": 7.972864
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "bench-p365-l3.json",
+      "p": 0.365,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 5.725184,
+        "p95": 8.771584
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ],
+  "frames": [
+    {
+      "file": "north-0-1.json",
+      "p": 0.1,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 8,
+        "p50": 3.529728,
+        "p95": 5.684224
+      },
+      "terrainReveal": 0.14999999999999938,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-18.json",
+      "p": 0.18,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 10,
+        "p50": 3.890176,
+        "p95": 7.456768
+      },
+      "terrainReveal": 0,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-235.json",
+      "p": 0.235,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 8,
+        "p50": 5.256192,
+        "p95": 8.025088
+      },
+      "terrainReveal": 0.19999999999999998,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-265.json",
+      "p": 0.265,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 10,
+        "p50": 6.838272,
+        "p95": 9.250816
+      },
+      "terrainReveal": 0.8000000000000004,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-28.json",
+      "p": 0.28,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 8,
+        "p50": 5.927936,
+        "p95": 8.43776
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-3.json",
+      "p": 0.3,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 9,
+        "p50": 5.1456,
+        "p95": 9.49248
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-32.json",
+      "p": 0.32,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 9,
+        "p50": 5.383168,
+        "p95": 8.45824
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-345.json",
+      "p": 0.345,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 8,
+        "p50": 5.900288,
+        "p95": 8.496128
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-365.json",
+      "p": 0.365,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 7,
+        "p50": 6.201344,
+        "p95": 8.384512
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-41.json",
+      "p": 0.41,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 10,
+        "p50": 7.735296,
+        "p95": 20.9152
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-445.json",
+      "p": 0.445,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 8,
+        "p50": 3.649536,
+        "p95": 5.250048
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0-55.json",
+      "p": 0.55,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 10,
+        "p50": 6.94272,
+        "p95": 26.85952
+      },
+      "terrainReveal": 1,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "north-0.json",
+      "p": 0,
+      "groups": 80,
+      "size": [
+        1920,
+        1080
+      ],
+      "gpu": {
+        "available": true,
+        "count": 10,
+        "p50": 2.7904,
+        "p95": 5.22752
+      },
+      "terrainReveal": 0.7499999999999998,
+      "locked": true,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "scroll-1445.json",
+      "p": 0.14451306099813718,
+      "groups": 80,
+      "size": [
+        1116,
+        828
+      ],
+      "gpu": {
+        "available": true,
+        "count": 600,
+        "p50": 5.067776,
+        "p95": 7.921664
+      },
+      "terrainReveal": 0.3512240990537694,
+      "locked": false,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "scroll-2034.json",
+      "p": 0.2034068756053783,
+      "groups": 80,
+      "size": [
+        1116,
+        828
+      ],
+      "gpu": {
+        "available": true,
+        "count": 600,
+        "p50": 5.0432,
+        "p95": 6.291456
+      },
+      "terrainReveal": 0.15563457041551373,
+      "locked": false,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "scroll-2852.json",
+      "p": 0.2852077382084048,
+      "groups": 80,
+      "size": [
+        1116,
+        828
+      ],
+      "gpu": {
+        "available": true,
+        "count": 600,
+        "p50": 5.07392,
+        "p95": 7.921664
+      },
+      "terrainReveal": 1,
+      "locked": false,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "scroll-3401.json",
+      "p": 0.3400601587274974,
+      "groups": 80,
+      "size": [
+        1116,
+        828
+      ],
+      "gpu": {
+        "available": true,
+        "count": 600,
+        "p50": 5.042176,
+        "p95": 6.72768
+      },
+      "terrainReveal": 1,
+      "locked": false,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "scroll-3841.json",
+      "p": 0.38413373166850046,
+      "groups": 80,
+      "size": [
+        1116,
+        828
+      ],
+      "gpu": {
+        "available": true,
+        "count": 600,
+        "p50": 5.054464,
+        "p95": 7.586816
+      },
+      "terrainReveal": 1,
+      "locked": false,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "file": "scroll-428.json",
+      "p": 0.04281272972760689,
+      "groups": 80,
+      "size": [
+        1116,
+        828
+      ],
+      "gpu": {
+        "available": true,
+        "count": 600,
+        "p50": 5.040128,
+        "p95": 6.268928
+      },
+      "terrainReveal": 0,
+      "locked": false,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ],
+  "files": {
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p235-l0.json": {
+      "bytes": 4321,
+      "sha256": "bec1f34c28e0c3cc48346cfd66b902961c7a7d73ce2a651e3e9be4d804d43120"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p235-l0.png": {
+      "bytes": 3603343,
+      "sha256": "dfbaee35b16a8c1aebb46eadef193759733c5652c4576c8865dcef3c0c509a09"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p235-l1.json": {
+      "bytes": 4323,
+      "sha256": "75a53789e87cd05dacb6a9784dd17a4bda7cecdfeb39029ceb41fee95a55072d"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p235-l1.png": {
+      "bytes": 3590632,
+      "sha256": "44c12a50a26cf191c2e48e54b084b94ac2cba6f6f15b976cf8d31619cfc37fcf"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p235-l2.json": {
+      "bytes": 4324,
+      "sha256": "52512c2402087dc6180c96eee57201c4d687c7576aa235e54d37ff0006c2c8d2"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p235-l2.png": {
+      "bytes": 3568613,
+      "sha256": "85cc5e4ccd20267f585a5ef4993ec0b8206f41dd72c843465a9aa6c850c4b7d7"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p235-l3.json": {
+      "bytes": 4324,
+      "sha256": "48903067521bff27a4107c98221059c38470e75db65e7890fc4f2fca9d949d24"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p235-l3.png": {
+      "bytes": 3612184,
+      "sha256": "7724461b9d3d89baf0be4d7ce5a6593d6eb7609d714cc4cc2a91da073c3d5be5"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p300-l0.json": {
+      "bytes": 4378,
+      "sha256": "880386b4ccaf48a3bca8112f8b382ad59fb19dd75f75a0b7c313612c6f9f2b0d"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p300-l0.png": {
+      "bytes": 3451754,
+      "sha256": "9573198882377b77dbf415e27c808e5b2648a709ddd99dde04379f948fcb87a2"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p300-l1.json": {
+      "bytes": 4377,
+      "sha256": "9772b32edeab34fe124630a8e45868824433563bc09c2996f3ecdae109b04829"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p300-l1.png": {
+      "bytes": 3136139,
+      "sha256": "51af0d4dc3bc453075ea8bc00f1891b4ec1571e1da9372551317f6575e07db4d"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p300-l2.json": {
+      "bytes": 4380,
+      "sha256": "5adf75417fd8ffd0dba5d0466f7df045d96a6b697ffc33df3a9d5f2dc2dd062e"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p300-l2.png": {
+      "bytes": 3090762,
+      "sha256": "64d4ebc8fc006a67b2e446f2740dc84160bbc27b4cae90dd0abdd349ca75d7cb"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p300-l3.json": {
+      "bytes": 4379,
+      "sha256": "8cb4d8bf160809aa4f99feed26317bc81d80710ecda831277b574c1d16cc6978"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p300-l3.png": {
+      "bytes": 3105361,
+      "sha256": "832be50bb58d346520d717b4de4b4f1bf8c17137c18cb1ecdc22155c894a1355"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p365-l0.json": {
+      "bytes": 4284,
+      "sha256": "49a8348d5b8febb9ef211200753d97ec95b4eb259d230381ac3ac1d68e8aeb85"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p365-l0.png": {
+      "bytes": 1777032,
+      "sha256": "c3708e8de249a69cda7bddbfc8738f366829ebe63f0167b8177c1a08c3e4854e"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p365-l1.json": {
+      "bytes": 4284,
+      "sha256": "56e1565e0e748becc6c2cc0a2efdab41d42c7ce26ba2464ddee0b23c5606fbfc"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p365-l1.png": {
+      "bytes": 725358,
+      "sha256": "2a89ac77fc60ba03b72107c2354a6b421b4aff5092dce476c42e0143731b211e"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p365-l2.json": {
+      "bytes": 4286,
+      "sha256": "05fb3c71ff48331caddee72eb8066d2ed9687f5b1281cfeba64f2c7f7a9d8918"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p365-l2.png": {
+      "bytes": 745654,
+      "sha256": "16144c89f6a342a7612fb7cee6b59aad24253b96d8d2d98545e4a1210605b7e2"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p365-l3.json": {
+      "bytes": 4286,
+      "sha256": "fd1d7cc245683e6336c122d28c592ba22c37e0086dcc25ab27e48bcd87d15d8b"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/bench-p365-l3.png": {
+      "bytes": 747680,
+      "sha256": "eefcbb5c2e0c6db0373278dce46103b3a86fc694ce601983770c0c12366e1241"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-1.json": {
+      "bytes": 4314,
+      "sha256": "0f6bd71e054b4f820f2f62806049bf87e5c795a7f721110131a975154daef6e7"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-1.png": {
+      "bytes": 3075663,
+      "sha256": "dc0182cb69548809f1d1aad268ee5a3e77288686823275e6daefdb5fc542bc43"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-18.json": {
+      "bytes": 4302,
+      "sha256": "1378e869f6e1b9b030b06786aa242901ca52201fdd94bd49c0adf9619dfc0d06"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-18.png": {
+      "bytes": 2454377,
+      "sha256": "951a8e761ddea4caf6574b239cb23cdc66c7f7f76109775ee19d0920112414aa"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-235.json": {
+      "bytes": 4322,
+      "sha256": "d37fcd2bacea28cc8c8fb33de61333df6266a5c1dd492131b740a9e3128209ba"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-235.png": {
+      "bytes": 3591868,
+      "sha256": "d779181a6f3a5add64152958aea9d44c3d52c28d3ba182792e32c6fa95797fa5"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-265.json": {
+      "bytes": 4318,
+      "sha256": "10202c4c3947a377171a2f6ac76cb748643ecaff25519f871699df136a77f29a"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-265.png": {
+      "bytes": 3807631,
+      "sha256": "a6e88f73d59e2df9fd4a4d75be6f51bf39a04c3c784ac42829d20eb3f7f1cac7"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-28.json": {
+      "bytes": 4340,
+      "sha256": "0528a258ca3a69f4a1989599f54197c8bb7f9a905f612c0df648744183573c02"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-28.png": {
+      "bytes": 3618415,
+      "sha256": "7929ca344f09cceaba18760777a85712a17417e6b115b66e1ae265e1eb2e51bd"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-3.json": {
+      "bytes": 4373,
+      "sha256": "85ff98caaaf8664cacd1419f24865da571300a30cbe64bee8bb09eda14e23dd9"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-3.png": {
+      "bytes": 3105361,
+      "sha256": "832be50bb58d346520d717b4de4b4f1bf8c17137c18cb1ecdc22155c894a1355"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-32.json": {
+      "bytes": 4369,
+      "sha256": "628eefd7cc1bd0f94d44bcd0ea657ccce1fd38d5335911f7db3b63931ab7bac4"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-32.png": {
+      "bytes": 2618123,
+      "sha256": "5f667a448037a8aa68bacbb4f33c29ca41f8373fc1659d0012173680c6cdad9e"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-345.json": {
+      "bytes": 4284,
+      "sha256": "390ba53e5998c4f370e29710d5033338ec423dc0304bc86f37c7d94b3a9adf48"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-345.png": {
+      "bytes": 1735979,
+      "sha256": "395b29beed2f416bab8d131ae69e4bd28199762ad6dd72c049e9877ac4411fb5"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-365.json": {
+      "bytes": 4285,
+      "sha256": "a374e3b286af35797ba9fb65c96dfa03c3be31983fd2d72a4c71e60e1ddd8bd2"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-365.png": {
+      "bytes": 747680,
+      "sha256": "eefcbb5c2e0c6db0373278dce46103b3a86fc694ce601983770c0c12366e1241"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-41.json": {
+      "bytes": 4340,
+      "sha256": "1beb2cb4f488567fe28893f38c420aa8c963a3a4ae08bd296ef5cf9a9989e104"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-41.png": {
+      "bytes": 1978344,
+      "sha256": "1c6e364ad9307184837b481ebcc6b8bfadb987a558698e63f2e1fd2df909c2a4"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-445.json": {
+      "bytes": 4335,
+      "sha256": "1994210eda220a59e37e4d6fc549ab68f83772bed0869928fd815a8bd1c6483c"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-445.png": {
+      "bytes": 1197950,
+      "sha256": "8ea79e96688e1704c8ee13b47f6b1b9718bec0fe2d25f56333669e2fcedc8333"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-55.json": {
+      "bytes": 4321,
+      "sha256": "e86de2e9fde8ffb19c80cd7ab71c2d3560f9f7cda052a1ae82579e9eb19379c8"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0-55.png": {
+      "bytes": 3251987,
+      "sha256": "a3a8a1ad1c58e4ea229385c5da421b8ce1196b65621434534748aec6451f95b9"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0.json": {
+      "bytes": 4307,
+      "sha256": "26aa8f6edaf7e1109fed1daf67ada89cb46fd76bdd2ed19a73133c2736e7d925"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/north-0.png": {
+      "bytes": 1347366,
+      "sha256": "e2408f1b9912ddba97310fd08c68edbcd46e9baf6f82b6f48402831a7b9d1a30"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-1445.json": {
+      "bytes": 4486,
+      "sha256": "c9f95a5825705cf2e4f6e8802795092f7f7bc7e35fe9872de6ec9416cd672ecc"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-1445.png": {
+      "bytes": 1467730,
+      "sha256": "112b45d3cc8f7521b411ff0ab432226c4789d7d8157aa20d7fef1d5b78085dac"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-2034.json": {
+      "bytes": 4471,
+      "sha256": "b17f15275b68ab590b2a0f87b51bb82692db7e5dbd2bb728211acd1ef301020f"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-2034.png": {
+      "bytes": 1453155,
+      "sha256": "2b0754430db6734fc239f9c03435ff4fc4d99db7b53a2bea88818f733bd44751"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-2852.json": {
+      "bytes": 4425,
+      "sha256": "329abcd82629d4406916b549e5b9fc9bf30e0dd45ab02636f8358f4790277ee7"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-2852.png": {
+      "bytes": 1692755,
+      "sha256": "d09e93ab24fa55efbe4ebb75f7293e78920a3c9f1de5bd20e8e50bba1f39d622"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-3401.json": {
+      "bytes": 4453,
+      "sha256": "2056f9f28cf2f691d14c95ca5a9152e899ccf6c5784dec7eddfeebc74143b867"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-3401.png": {
+      "bytes": 1197752,
+      "sha256": "ba8c8344a3314af2f60dd743009a3888dda06ba6a67654c3a195d2f13ebee32b"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-3841.json": {
+      "bytes": 4421,
+      "sha256": "76db45ca4681e8d00acbee387875217b680e1bfce96fd7909b5153c0404eaecb"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-3841.png": {
+      "bytes": 1043023,
+      "sha256": "57b051fcf8da2952f58463c4d27c2857adf202ace1b8bae8ea41338e81972e83"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-428.json": {
+      "bytes": 4438,
+      "sha256": "5bffb95e6d2f49d8058e4d61f06b73fab9b09f583a2d7933de280ea8db986602"
+    },
+    "verification/a-cloud-sculpt-20261006/native-captures/north-field-1080/scroll-428.png": {
+      "bytes": 1606234,
+      "sha256": "a84c5d4d58d85e9cfa45ab3e648c8ad3cef9590c2d64a404de05d2610c6b5c62"
+    },
+    "prototype/spikes/a-climb/cloud-field.ts": {
+      "bytes": 12378,
+      "sha256": "fc5d9b5a5874ecc7208e0c841f4705cee8dea86a8943b83a4d37cb991d7b656a"
+    },
+    "prototype/spikes/a-climb/arrival-north.ts": {
+      "bytes": 12763,
+      "sha256": "977b1a259b03e6099fd9f811ef9dcec2881276ec7252dd30be465c6da01b1bd5"
+    },
+    "prototype/spikes/a-climb/main.ts": {
+      "bytes": 25912,
+      "sha256": "0bc85556ca5a6d65d5e5a5fd54d5d2333d59de6c0f8321708f46f1390756b57c"
+    },
+    "scripts/assets/export-cloud-field-native.py": {
+      "bytes": 4251,
+      "sha256": "569d7972384f91853dce5a21de085271403996dc2cf16fc43a41f801ffb85588"
+    },
+    "scripts/assets/build-cloud-field-layout.py": {
+      "bytes": 3760,
+      "sha256": "fb32047afd8cf100a706efca4340a92e61c0c9dbe81a0a3629b7d6c822e6fb90"
+    }
+  },
+  "scope": "native canvas, same-camera fixed samples; no target-PC or continuous-video certification"
+}

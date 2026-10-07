@@ -283,6 +283,12 @@ def render(g):
                 sc.camera = cam; sc.render.filepath = os.path.join(OUT, f'still_{name}_{lab}{tag}.png'); bpy.ops.render.render(write_still=True)
         print('   stills →', OUT); return
 
+    if os.environ.get('INFLOW'):                                     # D-054 inflow-marker check stills (inflow-preview-v3.py)
+        import importlib.util as _iu, types
+        _sp = _iu.spec_from_file_location('inflow', os.path.join(ROOT, 'scripts', 'assets', 'inflow-preview-v3.py'))
+        _m = _iu.module_from_spec(_sp); _sp.loader.exec_module(_m)
+        _m.run(dict(g=g, sc=sc, cams=cams, base=base, cm=types.SimpleNamespace(breath_at=breath_at, breath_bones=breath_bones)))
+        return
     # ---- frames ----
     FPS, DUR = int(os.environ.get('FPS', 15)), 10.0; n = int(FPS * DUR)
     if os.environ.get('NO_SIDE'): cams = {'ma': cams['ma']}              # archive (Cycles) runs: the reference view only

@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "northern_global_region_archive_candidate_rendered_live_cloud_and_motion_TUNE",
+    "status": "regional_parent_dem_and_continuous_handoff_implemented_visual_TUNE",
     "records": [
       "D-065",
       "D-066",
@@ -718,11 +718,13 @@
       "F-060",
       "F-061",
       "O-013",
-      "O-014"
+      "O-014",
+      "D-094",
+      "F-062"
     ],
     "first_bundle": "A4-A6 ladder reveal / climbing rear / side orbit / heart and mixed ECG",
     "plan": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_production_plan_2026-10-05.md",
-    "next": "Await user feedback on current northern candidate. Record scene-scoped KEEP/TUNE/REJECT, then tune edges/optics/motion and implement regional VDB or continuous bake. A-P3/Story/BC deferred; complete-cloud feedback1/2 retained.",
+    "next": "User scene feedback on north-morph candidate; remaining horizon/curvature/optics/motion TUNE, actual regional VDB pending. Ridge detail KEEP/height1.5 trial; full-cloud feedback1/2 retained; A-P3/Story/BC deferred.",
     "B_C_followup_order": "undecided",
     "B_C_repairs": "preserved_deferred_after_A",
     "product_code_changed": true,
@@ -1029,6 +1031,25 @@
         "verification/a-terrain-lod-20261007/native-captures/ridge.png",
         "verification/a-terrain-lod-20261007/native-captures/ridge.json"
       ]
+    },
+    "regional_morph_2026_10_07": {
+      "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_regional_morph_review_2026-10-07.md",
+      "evidence": "verification/a-north-morph-20261007",
+      "coarseBounds": [
+        0,
+        56,
+        16,
+        68
+      ],
+      "sourceTiles": 60,
+      "parentTriangles": 131072,
+      "heightGain": 1.5,
+      "fixedPoses": 13,
+      "keyboardScrollEndpoints": true,
+      "continuousVideoVerified": false,
+      "gpuTimingVerified": false,
+      "cloudFeedback": "1/2 retained; intermediate scene feedback",
+      "status": "TUNE"
     }
   }
 }

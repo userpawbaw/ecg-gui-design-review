@@ -1,0 +1,162 @@
+{
+  "frames": [
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-15.png",
+      "sha256": "a08a4c9131344d77ff5b34c5c8acdd77f1d25a8808a771e2fec94c402e7ff3d8",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.15,
+      "detailReveal": 0.8249999999999998,
+      "parentReveal": 0.1825694966190831,
+      "residentGpuBytes": 31899288
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-18.png",
+      "sha256": "43010e3a8c45919801bb925540edb84ef3fdc19064a5ce8759501e7f2ccdc039",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.18,
+      "detailReveal": 0.2999999999999994,
+      "parentReveal": 0.9128474830954169,
+      "residentGpuBytes": 33528600
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-19.png",
+      "sha256": "f94378e05067f96deb7445d2a4d57e468c4fa71bed209d4fb87030f88dcad55f",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.19,
+      "detailReveal": 0.06372325898953128,
+      "parentReveal": 1,
+      "residentGpuBytes": 33826344
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-2.png",
+      "sha256": "4a6a4c2f86a7479526501b7da078e1896669fc092b4d891af79b9cedafbe5334",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.2,
+      "detailReveal": 0.2257624032771965,
+      "parentReveal": 1,
+      "residentGpuBytes": 34980792
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-21.png",
+      "sha256": "c74779872f673720645134a973c2200f8520b593b4426a524632e142da6550f0",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.21,
+      "detailReveal": 0.3757624032771966,
+      "parentReveal": 1,
+      "residentGpuBytes": 35670360
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-215.png",
+      "sha256": "718938248c12b77740b42a1d36c8e8cfe76aaef025930f8cc275f62ece70fab3",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.215,
+      "detailReveal": 0.5575785161583979,
+      "parentReveal": 1,
+      "residentGpuBytes": 35931576
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-22.png",
+      "sha256": "09fb85646cbbc3bfee6c827ad77305d0b45daa00ddf1642d6b1ca8a3f55ccc3a",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.22,
+      "detailReveal": 0.6700045516613565,
+      "parentReveal": 1,
+      "residentGpuBytes": 35968104
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-225.png",
+      "sha256": "b5940e7791a03ca40b0aabe0b43ac909bf55ad2af53adb81c62af477cd2fb706",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.225,
+      "detailReveal": 0.7742375967228041,
+      "parentReveal": 1,
+      "residentGpuBytes": 36406440
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-23.png",
+      "sha256": "8976d906c433e6e71ae8cdb4c1cca9b356c41233d49edaa2f6079f4699eeb752",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.23,
+      "detailReveal": 0.8648156577150662,
+      "parentReveal": 1,
+      "residentGpuBytes": 36990888
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-235.png",
+      "sha256": "716b6d8f47b24db5dddb40649b4bf8efb1f57d7376d1beb1f1a5292708822c5b",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.235,
+      "detailReveal": 0.9362767410104686,
+      "parentReveal": 1,
+      "residentGpuBytes": 16280160
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-245.png",
+      "sha256": "7e5ee933cdabe25d34b9db1f170d99ebf2c9fb0c4f226e63be7e5f2b05def6e6",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.245,
+      "detailReveal": 1,
+      "parentReveal": 1,
+      "residentGpuBytes": 38834904
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-265.png",
+      "sha256": "b5b69cd1deabae65567893dee6dd00e5e5cfcfb8f857a40e5e3a17d65028054d",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.265,
+      "detailReveal": 1,
+      "parentReveal": 1,
+      "residentGpuBytes": 41258904
+    },
+    {
+      "file": "verification/a-north-morph-20261007/native-captures/north-0-294.png",
+      "sha256": "4b3bb1bcad3ba96d3512cfd7e80176b75c86c2607ef46f1dd99804892319ccd5",
+      "size": [
+        1280,
+        720
+      ],
+      "p": 0.294,
+      "detailReveal": 1,
+      "parentReveal": 1,
+      "residentGpuBytes": 31826232
+    }
+  ],
+  "scope": "13 fixed poses, keyboard scrolling endpoints; no continuous video/GPU timing or target PC proof",
+  "sources": "prototype/spikes/a-climb/public/north-earth/parent-height.json"
+}

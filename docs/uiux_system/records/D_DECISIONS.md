@@ -2361,3 +2361,26 @@ nodata 비중/지도정합/확대 품질이 부족하면 해당 지역의 Sentin
 확대지역이탈/texture정합오류/카메라jump/유리막/빛계단이발생하면해당시점에서복구. 새로운연결은terrain=north 별도후보이며global기본/승인서고KEEP/사용자feedback1/2보존.
 
 2026-10-07 D-093 체크포인트 보충: 구현44b11426·native3/웹9구도 완료, 전체시각TUNE/기본미채택. 컴팩트 전 정리 문서 `docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_precompact_checkpoint_2026-10-07.md`와 WORK_STATE 현행 next를 연결. 현재 사용자 파트 피드백 대기이며 live 구름/연속motion/전체완성 제작피드백2는 미완. 새로운 설계 결정으로 세지 않는다. [대화] [커밋]
+
+## D-094. 지역 인계의 광역 바탕 지형과 연속 높이·법선 인계
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [코드] [자료] |
+| 상태 | 구현 전 선택 / 실제 품질 TUNE |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 지역이 툭 나타남·사각형 경계/자글거림·지도만인 주변 지형 지적. 능선 접근 품질은 만족. 상세1.5× 유지와 지역 인계의 연속성·넓은 시야 relief를 해결한다.
+
+### 검토한 선택지
+수십 개 고정 mesh 단계 교체, 기존 alphaHash fade 확대, 구름 가림으로 교체, 광역 저해상도 DEM 기반 parent + 상세 높이/normal/색상 연속 morph.
+
+### 고른 것과 근거
+마지막. AWS/Mapzen Terrain Tiles의 공개 광역 높이 자료를 실제 조달/핀하고 기존 EOX parent 범위에 coarse geometry를 만든다. 상세 지역은 parent 표면에서 연속 p 보간하고 경계로 갈수록 parent 높이/normal/색상으로 돌아간다. alphaHash 점투명도를 제거한다. Cesium fill/ancestor 원리를 참고하되 완전 Cesium terrain 엔진 도입으로 주장하지 않는다. 가까운 승인능선1.5×와 기존 지역LOD·서고를 유지한다.
+
+### 버린 것과 이유
+고정 단계는 교체 때 추가 pop 위험, 투명도만으로 relief/normal 단절은 미해결. 구름 가림은 parent coverage/경계 문제를 먼저 해결한 뒤 실패시 국소 대안. 세계 전체 고품질 terrain 생성하지 않음. 넓은 coarse 범위는 카메라 footprint로 검증하고 부족하면 확장.
+
+### 되돌려야 하는 조건
+새 parent 가시 경계/LOD 과비용/가짜 해안/근접 detail 손실이 있으면 해당 범위·밀도·morph 보정. 현재 중간 파트 피드백이며 완성구름 전체feedback2로 세지 않음.

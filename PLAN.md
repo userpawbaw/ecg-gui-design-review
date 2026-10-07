@@ -408,3 +408,7 @@ EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1
 
 ### 2026-10-07 컴팩트 전 기록 정리·현재 후보 피드백 대기
 사용자 요청에 따라 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_north_precompact_checkpoint_2026-10-07.md에 D080–D093 흐름/KEEP·TUNE·미완/검증 증거/피드백 범위/재개 순서를 통합. D093 구현44b11426 원격 확인. 웹 구름은 가림 bake 한 장이며 live volume/receiver와 연속 motion 미완; 전체 제작 피드백1/2 유지, 다음은 사용자 현재 파트 중간 피드백. A-P3/Story/BC 보류 유지. 시작 시 ridge.png/json 미커밋 변경은 보존하고 이번 문서 커밋에서 제외. 코드·렌더 변경 없음; 기존200 records PASS와 새 문서 검사를 구분한다.
+
+
+### 2026-10-07 지역 인계 피드백·광역 DEM/연속 morph — D094/F062
+사용자 pop/사각 점경계/주변 평면 지적, 근접능선KEEP. 실제Mapzenz7 60tiles/uint16513² parent를추가, p.135–.19광역높이/p.18–.245상세 높이·normal 연속인계·경계20%/색18%parent환원·alphaHash제거. coarse64준비/cache속성bytes산입/48MiB유지; parent131072tri와global1024×512는별도비용. 실제IAB13구도coarse64/error0, PageDown/PageUp unlocked/지역재진입. 수평선/곡률·자료·normal차이/영상·GPU·targetPC TUNE/미검증. 현재중간피드백이며cloud전체1/2유지·웹cloudbake한장·서고KEEP/A-P3/Story/BC보류. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_regional_morph_review_2026-10-07.md

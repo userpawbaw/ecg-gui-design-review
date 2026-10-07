@@ -1616,3 +1616,23 @@ verification/a-north-handoff-20261007/native-vdb-manifest와native-captures9구�
 
 ### 놓쳤다면
 좁은patch만고해상도여서생기는자료/normal/조명차이를mesh품질문제로만보거나,준비표시/무오류캡처를실제구름적용완료로오해했을것이다. bakebridge와nativevolume/web미완을분리하고전체피드백1/2유지한다.
+
+## F-062. 투명 경계만으로 지역 지형 인계는 해결되지 않음
+
+| | |
+|---|---|
+| 발견 | 2026-10-07 [대화] [코드] [런타임] [캡처] |
+| 상태 | 광역 coarse/연속 morph 구현, 시각 TUNE |
+| 연결 | D-094, CASE-007 |
+
+### 발단
+사용자 narrow 지역이 갑자기 나타나고 alpha 경계 자글거림·주변 지도 평면 지적. 능선 품질 만족과 분리.
+
+### 먼저 의심한 것과 배제 방법
+기존p>.215 visibility/alphaHash/source경계 확인. opacity를 더 줄이는 선택과 구름가림보다 parent actual DEM coverage/높이·normal·색상 인계를 우선 시험.
+
+### 결정적 근거
+AWS Mapzenz7 실제60tiles/uint16513², EOX parent 0–16E/56–68N coarsegeometry, 상세경계20% 높이/normal·18%색상 morph. 실제IAB13구도regioncoarse64/error0; 사각점경계 제거·주변relief 관찰. PageDown/PageUp unlocked/지형 재진입 확인. 수평선/자료·곡률/normal 잔여TUNE, GPU/영상미검증. 상세 ECG_A_regional_morph_review_2026-10-07.md.
+
+### 놓쳤다면
+alpha가 자연스러워지면 주변 평면과 조형 단절도 해결됐다고 오인했을 것이다. 품질 단계와 실제 지형 coverage를 함께 설계하고 만족한 근접 detail을 유지한다.

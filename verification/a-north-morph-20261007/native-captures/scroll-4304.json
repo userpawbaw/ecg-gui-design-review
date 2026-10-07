@@ -1,0 +1,140 @@
+{
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "scroll": {
+      "top": 3780,
+      "max": 4752,
+      "locked": false,
+      "targetProgress": 0.7954545454545454
+    },
+    "p": 0.4304286360439898,
+    "t": 18.17600000001175,
+    "arrival": {
+      "model": "North anchored kilometre sphere + 1.5x regional LOD",
+      "atmosphere": true,
+      "cloud": true,
+      "cloudCoverReady": true,
+      "cloudModel": "real VDB optical cover bake; regional live volume pending",
+      "terrain": {
+        "visibleTiles": 60,
+        "drawTriangles": 36436,
+        "residentGpuBytes": 1748688,
+        "queued": 128,
+        "pending": 132,
+        "fullSurfaceTriangles": 812800,
+        "fullTiledTriangles": 847090,
+        "heightGain": 1.5,
+        "maxErrorPixels": 171.1813217083802,
+        "highTextures": true,
+        "errors": [],
+        "detailReveal": 0.07500000000000001,
+        "coarseReady": 64
+      },
+      "parentTerrain": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 0.07500000000000001
+      },
+      "progress": 0.30943246785154516,
+      "anchor": [
+        61.63,
+        8.4
+      ],
+      "sunDirection": [
+        -0.6642786286868113,
+        0.2776089791526973,
+        -0.694022447881743
+      ]
+    },
+    "scene": "d0-mixed-0",
+    "record": "S022",
+    "fs": 250,
+    "winner": "M08",
+    "sample": 4544,
+    "sourceSample": 167,
+    "rAbs": 4509,
+    "rOffsets": [
+      75,
+      282,
+      487,
+      678,
+      883,
+      1085,
+      1285,
+      1487,
+      1675,
+      1880,
+      2083
+    ],
+    "beatAge": 0.1400000000117494,
+    "heartScale": 1.013483091492305,
+    "sharedClock": true,
+    "bodyVisible": false,
+    "heartVisible": false,
+    "heartScreen": [
+      -3.955815130575566,
+      -2.7030676276217984,
+      0.9903197900817837
+    ],
+    "camera": [
+      -4.043603559000926,
+      4.5792392767076775,
+      3.58
+    ],
+    "cameraTarget": [
+      -2.6,
+      4.575,
+      3.58
+    ],
+    "cartSocket": [
+      -1.29,
+      0.88,
+      -3.9
+    ],
+    "volume": true,
+    "bloom": true,
+    "clay": false,
+    "aa": "msaa",
+    "actualSamples": 4,
+    "supportedSamples": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "smaa": false,
+    "dpr": 1,
+    "pixelRatio": 1,
+    "renderSize": [
+      1280,
+      720
+    ],
+    "grain": true,
+    "jitter": true,
+    "steps": 96,
+    "frame": 1084,
+    "gpu": {
+      "available": false,
+      "count": 0,
+      "p50": null,
+      "p95": null
+    },
+    "raf": {
+      "count": 600,
+      "p50": 16.69999999999891,
+      "p95": 16.799999999999272
+    },
+    "cpuRenderMsMean": 3.000833333407839,
+    "drawCalls": 45,
+    "triangles": 115679
+  },
+  "url": "http://127.0.0.1:4198/?terrain=north&reviewCapture=1&reviewRound=north-morph"
+}

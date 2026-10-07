@@ -1,3 +1,5 @@
+2026-10-07 최신 D094/F062: [지역 인계·광역 DEM·연속 morph 검토](ECG_A_regional_morph_review_2026-10-07.md). 실제60parent타일/13구도/키보드재진입; patch점경계제거,능선KEEP·수평선/연속motionTUNE. 북반구 후보 피드백 진입점이며 cloud전체1/2유지.
+
 2026-10-07 컴팩트/피드백 재개: [현재 A-P2 요약·피드백 진입점](ECG_A_north_precompact_checkpoint_2026-10-07.md). 구현44b11426 기준, 웹 구름 한 장 bake/live volume 미완, 현재 후보 중간 피드백 대기. 아래 단계별 이력은 보존한다.
 
 2026-10-07 최신 D093/F061: [북반구 지구·지역 인계 검토](ECG_A_north_handoff_review_2026-10-07.md). terrain=north 별도후보에서global→북유럽parent→1.5×tile→VDB가림bake→기존서고/심장. 실제nativeVDB+지형3장과웹9구도. 지역liveVDB·연속motion·광학경계TUNE,최종채택/feedback2아님.

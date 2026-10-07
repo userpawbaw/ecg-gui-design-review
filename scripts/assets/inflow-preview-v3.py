@@ -43,6 +43,8 @@ def arc_attribute(bpy, o, rig, ra_v):
         dist, t = _seg_param(Vw, pts[i], pts[i + 1])
         sel = dist < best; best[sel] = dist[sel]; arc[sel] = acc + t[sel] * seg_len[i]; acc += seg_len[i]
     d = np.clip(arc - start, 0, None); m = np.clip(1 - (best - .05) / .04, 0, 1)
+    m *= np.clip((arc - .5 * start) / (.5 * start), 0, 1)         # hand and wrist excluded: the wave starts in the forearm muscle
+                                                                   # (front 0 lit the whole fist in the first sheet)
     m[Vw[:, 0] > .02] = 0                                    # right side only (the figure's right is −x)
     for name, val in (('_inflow_d', d), ('_inflow_m', m)):
         a = o.data.attributes.get(name) or o.data.attributes.new(name, 'FLOAT', 'POINT')
@@ -70,7 +72,8 @@ def add_red(bpy, mat):
     x = op('DIVIDE', op('SUBTRACT', ad.outputs['Fac'], front.outputs[0]), v=.045)
     wave = op('EXPONENT', op('MULTIPLY', op('MULTIPLY', x, x), v=-1.0))
     fall = op('EXPONENT', op('MULTIPLY', ad.outputs['Fac'], v=-1 / .9))
-    w = op('MULTIPLY', op('MULTIPLY', op('MULTIPLY', wave, am.outputs['Fac']), fall), v=5.0)
+    wk = N('ShaderNodeValue'); wk.name = 'wave_k'; wk.outputs[0].default_value = 5.0
+    w = op('MULTIPLY', op('MULTIPLY', op('MULTIPLY', wave, am.outputs['Fac']), fall), wk.outputs[0])
     s = op('ADD', w, op('MULTIPLY', common.outputs[0], v=.9))
     em = N('ShaderNodeEmission'); em.inputs['Color'].default_value = (*RED, 1); L(s, em.inputs['Strength'])
     add = N('ShaderNodeAddShader'); L(prev, add.inputs[0]); L(em.outputs[0], add.inputs[1]); L(add.outputs[0], out.inputs['Surface'])
@@ -179,6 +182,20 @@ def run(L):
         _f = _iu.module_from_spec(_sp); _sp.loader.exec_module(_f)
         _f.run(dict(g=g, sc=sc, cams=cams, ip=types.SimpleNamespace(add_red=add_red), red=(common, front),
                     with_electrodes=with_electrodes, sheet=sheet))
+    if 'tune' in ONLY:                                           # strength comparison (user 2026-10-07 "세기 조정")
+        wk = o.data.materials[0].node_tree.nodes['wave_k'].outputs[0]
+        ring, lead = with_electrodes(0.0, 0.0); fr = []
+        for c in (.35, .7, 1.2):
+            common.default_value, ring.default_value = c, .6
+            fr.append((f'P-b common mode  {c:.2f}', panel(shot('ma', f'tune_pli_{c:.2f}'))))
+        sheet(fr, os.path.join(OUT, 'tune_pli_common.jpg')); common.default_value = ring.default_value = 0
+        ring, lead = with_electrodes(1.6, 1.0); fr = []
+        for k in (5.0, 9.0, 14.0):
+            wk.default_value = k
+            for fi, fk in ((0, 0.0), (1, .45)):
+                front.default_value = fk * total
+                fr.append((f'M-b wave {k:.0f}  front {fk * total:.2f} m', panel(shot('ma', f'tune_ma_{k:.0f}_{fi}'))))
+        sheet(fr, os.path.join(OUT, 'tune_ma_wave.jpg')); front.default_value = -1; wk.default_value = 5.0
     if 'bw' not in ONLY: print('   inflow stills →', OUT); return
     # ---- B-b baseline: side view, chest front → stored baseline thread ----
     x, fs = stored_trace(ROOT, 'd0-bw_synth--5')

@@ -1713,3 +1713,19 @@ actualsource cloud-path RGB composite, arrival p.278 camerafreeze, native terrai
 
 ### 놓쳤다면
 동일source와카메라라는 말로surface연속성충족을주장하고wholeplate crossfade를반복했을 것이다. 실제위치/shape를보존한cloud-only 동일공간 합성이필요. ECG_A_cloud_same_scene_feasibility_2026-10-07.md.
+
+## F-067. VDB 파일을 읽는 성공과 실제 밀도 보존은 다르다
+
+2026-10-07 [코드] [런타임] [자료] · D100 / CASE007.
+
+### 발단
+D099 same-scene packet 제작 승인. 실제 source를 읽는 JS loader가 필요 밀도까지 보존하는지 검사.
+
+### 먼저 의심한 것과 배제 방법
+npm0.3.0 파일 parse 성공 후 resample output unique=0/.5/1에 불과. local source leaf getValue activeMask1/0, readBuffers 비어있음 확인. topology와 scalar를 분리, 이 후보 REJECT. native OpenVDB13 copyToArray 대조.
+
+### 결정적 근거
+같은 cloud06 hash에서 native active4,987,187 / density.00200081–.65917969, padding/trilinear dense.0–.60634917. JS worldtransform도native bounds와불일치. 실제 scalar+density opticaldepth cache를 km WebGL terrain에 배치,13final구도와effectsOFF대조. native변환 성공을 전체구름광학PASS로 확대하지않음.
+
+### 놓쳤다면
+0/1 occupancy를 실제 구름density라 부르고 외곽과 빛을 튜닝하며 낮은질감을반복했을것이다. 파일parse/histogram/source voxel/nativetransform을 함께확인해야한다. report ECG_A_cloud_live_same_scene_review_2026-10-07.md.

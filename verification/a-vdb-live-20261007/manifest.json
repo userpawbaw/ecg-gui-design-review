@@ -1,0 +1,353 @@
+{
+  "status": "TUNE one actual cloud06 same-scene trial; not whole Intro adoption",
+  "fixedPoses": [
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0.json",
+      "p": 0,
+      "sha256": "8e64c2315e19976d1f48e5902bebf2197e15e9797ecfd8475f1dadd0619b80bf",
+      "pngSHA256": "15aa30900754e0ff30f7e6889ef8920e5a6f70d875dc1bc691bd971a47a3c683",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 0
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-1.json",
+      "p": 0.1,
+      "sha256": "dc3280afca31b3853e2bb4c736991dc6af16527fa02b18623a0c408456dd2f2e",
+      "pngSHA256": "f505262d52685aaf4a00099aa8b86ce6304d009bb8403a5d8dc4d6c900bb4ab4",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 0
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-18.json",
+      "p": 0.18,
+      "sha256": "9affb8a762ddc02e9de7220d297368b86bae724567ba43fc66d79eb04b43c66c",
+      "pngSHA256": "9500e8265e487e4ed1215512bc554401ac069bf3f07a1386ebd85fc26a9e5bf2",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 0
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-235.json",
+      "p": 0.235,
+      "sha256": "b827fae34ac4881c1de8686dbabe754c540d5309e135dc0df9c28452e047c233",
+      "pngSHA256": "b85508aa31de7d0df814f744851019c15bf66a9e57c753145b53fb0969789f57",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 0.325
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-274.json",
+      "p": 0.274,
+      "sha256": "4feb4d5003398bdd7a3af648d2a13ab905352b3d2f682c5ce28f39ed2607d651",
+      "pngSHA256": "925e24440ee3a75fc99eccc73ab4448aab6f85fac948981cae81c7274e0fbdf4",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 1
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-28.json",
+      "p": 0.28,
+      "sha256": "d4c7b092d083a2d57fbbebef9ac13c9eccf5bec959ca690b3b07e16129a08bee",
+      "pngSHA256": "cca073cc5165a95b754e4311d76095fdcdd20ec7faa1fd85b010f3a9b745ae61",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 1
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-3.json",
+      "p": 0.3,
+      "sha256": "bc616ce0d18444e4281ba6140e7395b1e191a021798ce5217abe1b7fdd690994",
+      "pngSHA256": "41cbc3b3b8b75a60c16a74a5aac9f61871bb18e9966665702e2f69335f80ce05",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 1
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-32.json",
+      "p": 0.32,
+      "sha256": "d402a7ef4ff49d48e32b2b64ace981218a9d8e626445fb1d954ea1cd8279d9d6",
+      "pngSHA256": "2f9ed101cabf753a103c87985d5b6a573f7e58f4f471a95a4a70da7411123555",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 1
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-345.json",
+      "p": 0.345,
+      "sha256": "d21079ea892a8707ec8341322e9f3f07adedbdaeb1e2b68dcc2a95b23168a70e",
+      "pngSHA256": "401790d2d0a80c7983e29f3aef54d5ca942bd37806114bb908227524bdb673ae",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 1
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-365.json",
+      "p": 0.365,
+      "sha256": "c467ea3c798badcae7ca4a25e22f22ecebaf3c796c71e670e848a5fc70aad4dc",
+      "pngSHA256": "08b192305231dc354e62fc5aaab43f9c427c04664a68417c4204d12183bb041f",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 1
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-41.json",
+      "p": 0.41,
+      "sha256": "9a77ac26c5677bec1a7250f3734de0c00576bbf31be4af160ccd863c66a722f4",
+      "pngSHA256": "3d561032e104862f87eedc41d98e97ffa2b24adc9f1777cf797c0953ea711626",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 1
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-445.json",
+      "p": 0.445,
+      "sha256": "6dc551286829e91392cd68adef08cbdd083248a0ec256247e839f04fb4b831a1",
+      "pngSHA256": "b3d9662a64519839e5065163b72f285f0d44df1f0386ee15f6a7352fa8c497b0",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 1
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/north-0-55.json",
+      "p": 0.55,
+      "sha256": "1e217568d2d8762a46655631729468817bbf2ba514f1ec8e0ad4f52278cb0f1a",
+      "pngSHA256": "50832609097c0530fd722de3e4d224dc20fd2e67c969fdcfc388c14d25631968",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "terrainErrors": [],
+      "detailReveal": 1
+    }
+  ],
+  "runtimeCode": {
+    "prototype/spikes/a-climb/cloud-live.ts": "61b2d6edf47421d0675d1041672e5a5f79082d08ef7ba39652d489e6aeac4f17",
+    "prototype/spikes/a-climb/arrival-north.ts": "9bcb3538a58d0f78567d072e33eff27e1de5e26a17a7ea27894f5e2a095e6ff2",
+    "prototype/spikes/a-climb/main.ts": "ee878efc6d6ff84919ba619c3230845050a4cb915d3bb6a3553e0ca24fd2e6f7",
+    "prototype/spikes/a-climb/terrain-regional.ts": "d619174a328d010c0452100a013ede11a2eadc54eb1fb1cb3d9c29ce40cbeb00",
+    "scripts/assets/export-cloud06-native.py": "1421aebc07d23a867577cf4f9cdd64f258232b9919a406f10f4bf0846461849c"
+  },
+  "nativeAssetManifest": {
+    "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+    "sourceSHA256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+    "converter": "native OpenVDB13.0.0 copyToArray / numpy2.5.3",
+    "grid": "density",
+    "indexBounds": [
+      [
+        47,
+        117,
+        11
+      ],
+      [
+        356,
+        571,
+        163
+      ]
+    ],
+    "worldBounds": [
+      [
+        -160.5,
+        -202.5,
+        -100.5
+      ],
+      [
+        148.5,
+        251.5,
+        51.5
+      ]
+    ],
+    "sourceRange": [
+      0.0020008087158203125,
+      0.6591796875
+    ],
+    "sourceActiveCount": 4987187,
+    "dims": [
+      128,
+      64,
+      192
+    ],
+    "lightDims": [
+      64,
+      32,
+      96
+    ],
+    "extentKm": [
+      19.565217391304348,
+      9.656381486676016,
+      28.716690042075733
+    ],
+    "paddingFraction": 0.04,
+    "baseKm": 3.8137447405329596,
+    "centerXZ": [
+      0,
+      -4
+    ],
+    "sun": [
+      -0.6642786286868113,
+      0.2776089791526973,
+      -0.694022447881743
+    ],
+    "extinctionPerKm": 12,
+    "densityRange": [
+      0.0,
+      0.6063491702079773
+    ],
+    "positiveSamples": 344804,
+    "lightCache": "80 steps * .55km density integral toward fixed sun; no pixels baked",
+    "sourceAxisToWorld": "native X,Z,-Y; x-fast array",
+    "sourceToDense": "trilinear actual scalar values; empty padded bounds",
+    "files": {
+      "density.f16": {
+        "bytes": 3145728,
+        "sha256": "b754c083d5bed2e2c5a96ada177c0ab88cf79acc95f946fe5f65145a5f821592"
+      },
+      "light.f16": {
+        "bytes": 393216,
+        "sha256": "aca55eb4bed134865ab011fa6f20bdabaf880c6755f00d375e3773e0e9ca60a9"
+      }
+    }
+  },
+  "wheelBeforeLastCoverCameraFix": [
+    {
+      "p": 0.20335456346147948,
+      "locked": false,
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/scroll-2034.json"
+    },
+    {
+      "p": 0.33735555340871937,
+      "locked": false,
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/scroll-3374.json"
+    },
+    {
+      "p": 0.042816291273863355,
+      "locked": false,
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/scroll-428.json"
+    },
+    {
+      "p": 0.4357996302086719,
+      "locked": false,
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/scroll-4358.json"
+    },
+    {
+      "p": 0.46710470491706063,
+      "locked": false,
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/scroll-4671.json"
+    },
+    {
+      "p": 0.535092462021882,
+      "locked": false,
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-final/scroll-5351.json"
+    }
+  ],
+  "limits": [
+    "source scalar converted; JS occupancy rejected",
+    "single local cloud, not whole regional weather field",
+    "approximate multi-scattering, not native Cycles equivalence",
+    "60 percent volume target; no temporal accumulation",
+    "two actual-scene draws, GPU timing/targetPC/continuousvideo unverified",
+    "terrain shadow map default off after observed triangular artifacts",
+    "D080 fallback comparison unexecuted; no automatic final adoption"
+  ],
+  "wheelFinal": [
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-motion-final/scroll-1966.json",
+      "p": 0.19664376564883088,
+      "scroll": {
+        "top": 1234,
+        "max": 4435,
+        "locked": false,
+        "targetProgress": 0.2781907529234535
+      },
+      "sha256": "e1418139489b041a8c04f871ec34012f301e8c27353a6043617b9b342809de04",
+      "pngSHA256": "41446a6430ef86ac51c66564773d8650cfd104d49c7230a5038ea8790d89f470"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-motion-final/scroll-3392.json",
+      "p": 0.33915972802110245,
+      "scroll": {
+        "top": 1878,
+        "max": 4435,
+        "locked": false,
+        "targetProgress": 0.42355413165935757
+      },
+      "sha256": "bcbc2cdb0c690f83a3e6af6eda6e554f953f8fda4d17ddd3d4381d927df07a51",
+      "pngSHA256": "3bafeb881cbb0b1cd8f8a6bc3da6d3f0bdd1b201c6b16aa71d879fc69e86e937"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-motion-final/scroll-4349.json",
+      "p": 0.43490937523675044,
+      "scroll": {
+        "top": 1549,
+        "max": 4435,
+        "locked": false,
+        "targetProgress": 0.34926199311184347
+      },
+      "sha256": "6bacd9795684bd1d0a0abbc04c075685bdb1d6c7ff7feb06bb79d3e84cc7159f",
+      "pngSHA256": "b6233da06ac4ced3d5032fcb76dfec46c027f1eabadca1f8b561f153b54a0df1"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-motion-final/scroll-4614.json",
+      "p": 0.4614469996003587,
+      "scroll": {
+        "top": 2469,
+        "max": 4435,
+        "locked": false,
+        "targetProgress": 0.556619594071396
+      },
+      "sha256": "a428d1b2d74aea7e3457a5d0cf594d97a8129087cace3e40da482886ef570e79",
+      "pngSHA256": "7200222721120347a46056220a7f6c7202105177dd26fd459585345804557108"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-motion-final/scroll-526.json",
+      "p": 0.05263999199939925,
+      "scroll": {
+        "top": 529,
+        "max": 4435,
+        "locked": false,
+        "targetProgress": 0.1191956766280612
+      },
+      "sha256": "ef403f20d4b7efaa2f140e1bbd0a2c10069b99db827cd48bf672cfe4601b1d50",
+      "pngSHA256": "52c68f9b6e9a8a66d86e16d3b511e17224894536f70be59bebc0023c76d201c9"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/north-vdb-live-motion-final/scroll-5330.json",
+      "p": 0.5330158428325344,
+      "scroll": {
+        "top": 2199,
+        "max": 4435,
+        "locked": false,
+        "targetProgress": 0.495779362773133
+      },
+      "sha256": "9966066d7473707ace2f7be688518dd4e5315d9b03e8d6d46336cb3db30b393a",
+      "pngSHA256": "74c4e1d826cca6e2d99139ca4547c784a7a60c230d1e4dd4f72a0033c70ecc45"
+    }
+  ],
+  "cloudShadowContribution": {
+    "meanAbsoluteRGB255": 6.090347766876221,
+    "fractionPixelsAnyChannelOver2": 0.2380638940631418,
+    "detailRevealBoth": 1,
+    "scope": "settled same p .300 camera; optical-shadow contribution, not physical accuracy proof; first nonsettled comparison withdrawn"
+  },
+  "effectsAudit": [
+    {
+      "round": "north-vdb-cloud-shadow-off",
+      "detailReveal": 1,
+      "file": "verification\\a-cloud-sculpt-20261006\\native-captures\\north-vdb-cloud-shadow-off\\north-0-3.json",
+      "jsonSHA256": "96e42d3be29a12d683932c04bd4841ef459b37d08ded3e33e3441059cd1590b0",
+      "pngSHA256": "8c1dad6ebb25d107631e09ee44445bbcbc410e5c3649fcd78a13f737e3127e7c"
+    },
+    {
+      "round": "north-vdb-volume-off",
+      "detailReveal": 1,
+      "file": "verification\\a-cloud-sculpt-20261006\\native-captures\\north-vdb-volume-off\\north-0-3.json",
+      "jsonSHA256": "2198803f8de8f315452eade125566878773d5dc23bd9abc00ac561f36ffa15bf",
+      "pngSHA256": "8df201b8004604007258bf7ac9a0c5016d694b5d66b7d078f7ddc78360660784"
+    },
+    {
+      "round": "north-vdb-terrain-shadow-off",
+      "detailReveal": 0.6500000000000002,
+      "file": "verification\\a-cloud-sculpt-20261006\\native-captures\\north-vdb-terrain-shadow-off\\north-0-3.json",
+      "jsonSHA256": "3c0c75bf294d2759c45cf6dda8074b150af85723b7138265e316ed33f00a81a1",
+      "pngSHA256": "5fe65c4a818b6c36c1bceee6067cbdcb3dcf8c0c9976f82fae4c1f194cdc7607"
+    }
+  ]
+}

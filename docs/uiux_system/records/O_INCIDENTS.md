@@ -343,3 +343,19 @@ Cycles 첫7frame에서 cam.angle47을horizontal sensorfit에 적용. 웹camera.f
 
 ### 재발 방지와 자동화 상태
 camera좌표·look·FOV축·aspect·color pipeline을같이핀한다. 본스크립트에verticalsensor명시. 자동native/web投影동일성테스트는미추가; 직접구도접합TUNE유지.
+
+## O-016. 렌더 타깃 uniform 복제로 초기 live volume 합성이 검게 나옴
+
+2026-10-07 [코드] [캡처] · D100. O014의 유사패턴 재발.
+
+### 증상
+live volume/terrain ready true와 shader error0에도 .300 canvas 검은 화면. clone renderTarget texture warning 발생.
+
+### 원인과 영향
+ShaderPass plain shader uniform의 volumeTarget.texture를 clone할때 null이됨. initial build66PASS는 시각기능증거아님. 초기검은캡처는owntrial에서덮었고원본PNG별도보존없음, 도구스크린샷이증거. JS밀도probe도parse성공후scalar불일치로별도REJECT.
+
+### 조치
+composite생성시tCloud null, 생성후actualuniform에volumeTarget.texture 직접대입. 실제화면확인/13구도재캡처. primaryPython packaging의cp949오류는명시UTF8로복구. native변환환경은workspace격리, sandbox실행제약은해당nativeexe만승격.
+
+### 재발 방지와 자동화 상태
+기존O014 지침을 실제postpass수정시확인해야함. runtime renderTargetuniform은constructor후직접부착. 자동회귀test미추가, 실제nativecanvas와off/on기여확인. 관련report ECG_A_cloud_live_same_scene_review_2026-10-07.md.

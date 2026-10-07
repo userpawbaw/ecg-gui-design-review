@@ -3155,8 +3155,29 @@
       "used_by": [
         "prototype/spikes/a-climb/cloud-path.ts"
       ],
-      "review": "D098 physical Cycles VDB+1.5x terrain path, TUNE before user combined review; no live volume/AI video",
+      "review": "D098 physical Cycles VDB+1.5x terrain path, TUNE before user combined review; no live volume/AI video; later user REJECT D099 terrain handoff, archived source only, not current northern runtime",
       "pins_manifest": "prototype/spikes/a-climb/public/north-earth/cloud-path/manifest.json"
+    },
+    {
+      "id": "north-vdb-live-cloud06-20261007",
+      "kind": "volume-density-and-light-cache",
+      "status": "test-only",
+      "source_url": "https://jangafx.com/software/embergen/download/free-vdb-animations",
+      "licence": "CC0 CloudPack source; source licence acquisition D085 retained",
+      "original": {
+        "file": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+        "sha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee"
+      },
+      "processed": {
+        "file": "prototype/spikes/a-climb/public/north-earth/vdb-live/manifest.json",
+        "sha256": "76eac55028cf31e2a8a6e68c5374f1f9ecd90ca45b1e202403b8676e8f625643",
+        "bytes": 3538944
+      },
+      "pins_manifest": "prototype/spikes/a-climb/public/north-earth/vdb-live/manifest.json",
+      "used_by": [
+        "prototype/spikes/a-climb/cloud-live.ts"
+      ],
+      "review": "D100 native scalar density, live volume+fixed sun optical-depth cache, same WebGL terrain; one-cloud TUNE, not screen bake/AI video"
     }
   ],
   "rejected": [

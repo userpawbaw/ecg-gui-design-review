@@ -2505,3 +2505,28 @@ D-098 구현 결과: CPU 실제normal trial 비용32.6/최대37.5ms로미채택�
 
 ### 되돌려야 하는 조건
 실제VDBgrid변환/실시간광학·비용미달이면transparentlayer및D080두대안비교. 사용자최신동일공간질문을2차피드백실패후의자동winner선택으로대체하지않는다. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_same_scene_feasibility_2026-10-07.md.
+
+## D-100. 실제 cloud06 밀도 변환과 같은 WebGL 장면 시험
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] 구현 전 |
+| 상태 | 사용자 진행 승인 / 단독 변환·광학 시험 |
+| CASE | CASE-007 |
+
+### 갈림길
+D099 다음 packet 사용자가 진행 승인. 기존 지형을 RGB plate로 바꾸지 않고 cloud06 실제 density를 같은 km 장면에 넣는다.
+
+### 검토한 선택지
+OpenVDB native dense export, 제작자 JS reader export, transparent bake, 전체 RGB plate.
+
+### 고른 것과 근거
+실제 원본을 읽는 호환 변환 경로부터 검증하고 dense texture 및 고정 태양 optical-depth cache를 만든다. 기존 terrain/camera/sun을 유지한 한 개 live volume 단독 시험 후 접근·통과를 연결한다. 빛 cache는 화면 베이크가 아니다.
+
+### 버린 것과 이유
+전체 RGB plate는 사용자 REJECT. 새 synthetic 조형으로 실제 에셋 변환 실패를 감추지 않는다.
+
+### 되돌려야 하는 조건
+원본 grid 해석 실패 또는 품질·비용 미달은 사실대로 기록하고 다른 실제 변환 경로/transparent layer/D080 대안을 검토. 기존 KEEP 및 사용자 feedback2/2 실패 이력 유지; 이번 경로가 성공했다고 자동 채택하지 않는다.
+
+D100 구현결과: JS0/1mask REJECT, nativeactualscalar/transform검증→onecloud06 sameWebGLvolume3.375MiB·13구도/6wheel·TUNE. terrainshadowmapOFF대조개선/기본OFF, 고정태양opticalshadow유지. archive covercamera명시. 상세 ECG_A_cloud_live_same_scene_review_2026-10-07.md.

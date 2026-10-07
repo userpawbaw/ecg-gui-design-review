@@ -1,0 +1,181 @@
+{
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "scroll": {
+      "top": 1234,
+      "max": 4435,
+      "locked": false,
+      "targetProgress": 0.2781907529234535
+    },
+    "p": 0.19664376564883088,
+    "t": 147.97160000001895,
+    "arrival": {
+      "model": "North anchored kilometre sphere + 1.5x regional LOD",
+      "atmosphere": true,
+      "cloud": true,
+      "cloudCoverReady": true,
+      "terrainShadowMap": false,
+      "cloudPath": {
+        "ready": true,
+        "render": "actual OpenVDB13 density, same WebGL terrain/camera",
+        "sourceSHA256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+        "volumeBounds": [
+          [
+            -9.782608695652174,
+            3.8137447405329596,
+            -18.358345021037866
+          ],
+          [
+            9.782608695652174,
+            13.470126227208976,
+            10.358345021037866
+          ]
+        ],
+        "densityRange": [
+          0,
+          0.6063491702079773
+        ],
+        "steps": 96,
+        "target": [
+          599,
+          404
+        ],
+        "scalarTextureBytes": 3538944,
+        "freeCamera": true,
+        "screenBake": false,
+        "shadow": true,
+        "enabled": true,
+        "fade": 1,
+        "progress": 0.19664376564883088
+      },
+      "cloudModel": "thin global shell + actual cloud06 live volume in same terrain scene",
+      "mapDimensions": [
+        2526,
+        4096
+      ],
+      "depthNear": 52.96822186700091,
+      "terrain": {
+        "visibleTiles": 64,
+        "drawTriangles": 57710,
+        "residentGpuBytes": 3282984,
+        "queued": 13,
+        "pending": 17,
+        "fullSurfaceTriangles": 812800,
+        "fullTiledTriangles": 847090,
+        "heightGain": 1.5,
+        "maxErrorPixels": 1.6969530414907499,
+        "highTextures": true,
+        "errors": [],
+        "detailReveal": 0.11328159833957285,
+        "coarseReady": 64
+      },
+      "parentTerrain": {
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 0.11328159833957285,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "progress": 0.19664376564883088,
+      "anchor": [
+        61.63,
+        8.4
+      ],
+      "sunDirection": [
+        -0.6642786286868113,
+        0.2776089791526973,
+        -0.694022447881743
+      ]
+    },
+    "scene": "d0-mixed-0",
+    "record": "S022",
+    "fs": 250,
+    "winner": "M08",
+    "sample": 36992,
+    "sourceSample": 1577,
+    "rAbs": 36959,
+    "rOffsets": [
+      75,
+      282,
+      487,
+      678,
+      883,
+      1085,
+      1285,
+      1487,
+      1675,
+      1880,
+      2083
+    ],
+    "beatAge": 0.13560000001893968,
+    "heartScale": 1.0141994200777684,
+    "sharedClock": true,
+    "bodyVisible": false,
+    "heartVisible": false,
+    "heartScreen": [
+      0.0034055878399787106,
+      0.010154509513073406,
+      0.8804802268556188
+    ],
+    "camera": [
+      183.81521888984636,
+      662.1027733375114,
+      540.3491481510496
+    ],
+    "cameraTarget": [
+      0,
+      0.3947430666562216,
+      0
+    ],
+    "cartSocket": [
+      -1.29,
+      0.88,
+      -3.9
+    ],
+    "volume": true,
+    "bloom": true,
+    "clay": false,
+    "aa": "msaa",
+    "actualSamples": 4,
+    "supportedSamples": [
+      8,
+      4,
+      2,
+      1
+    ],
+    "smaa": false,
+    "dpr": 1,
+    "pixelRatio": 1,
+    "renderSize": [
+      997,
+      672
+    ],
+    "grain": true,
+    "jitter": true,
+    "steps": 96,
+    "frame": 8877,
+    "gpu": {
+      "available": false,
+      "count": 0,
+      "p50": null,
+      "p95": null
+    },
+    "raf": {
+      "count": 600,
+      "p50": 16.699999999982538,
+      "p95": 16.79999999998836
+    },
+    "cpuRenderMsMean": 1.9950000000496706,
+    "drawCalls": 156,
+    "triangles": 2600688
+  },
+  "url": "http://127.0.0.1:4198/?terrain=north&reviewCapture=1&reviewRound=north-vdb-live-motion-final"
+}

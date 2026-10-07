@@ -628,3 +628,7 @@ D098 최종검사: records210 PASS / build66 PASS. 실제wheel 정방향서고·
 
 ### 2026-10-07 D099/F066
 사용자wholeplate지형교체/등장실패반영. 코드3Dtexture+scene-depth144step기존shader확인; 공식OpenVDBcopyToArray/Threevolume및creatorJSVDB자료확인. nativeBakedonly제약아님. 변경사항은기록/다음packet, 새live변환구현없음. ECG_A_cloud_same_scene_feasibility_2026-10-07.md
+
+
+### 2026-10-07 D100/F067 실제 밀도·동일 장면 구름
+사용자 진행 승인. JS reader topology0/1 미채택→native OpenVDB13 copyToArray scalar 확인/half3D+fixedsun cache3,538,944bytes. 같은 northern terrain/camera에 단독cloud06 live광학·receiver그림자·서고가림. terrain shadowmap 삼각음영 OFF대조 개선→trial기본OFF/기존서고KEEP. 최종13fixed+6actualwheel·shader error0, source/native/code/capturehash·환경lock. GPU/전체연속영상/광학동등성/최종채택미검증. report ECG_A_cloud_live_same_scene_review_2026-10-07.md; 다음 사용자같은공간/질감/가림피드백, A-P3/Story/BC별도, 기존2/2실패·D080두fallback미실행보존.

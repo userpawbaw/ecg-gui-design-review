@@ -177,3 +177,7 @@ AI가 경계 소멸로 보고→사용자가 희미한 잔여와 현재 만족�
 
 ### 2026-10-07 D099/F066 — 같은 source와같은장면의차이
 AI는같은terrain source/camera로nativeRGBplate를제작→사용자 “이전에없던지형으로바뀌어서별로”와 “이전형태에서같이” 질문→AI는실제WebGLsurface보존요구미충족을확인,wholeplate미채택과actualVDB동일공간packet기록. 같은데이터의별도렌더가같은scene연속성을보장하지않는사례. 기존자료→코드→사용자품질검증규약적용, live가능성과완료를구분. ECG_A_cloud_same_scene_feasibility_2026-10-07.md
+
+
+### 2026-10-07 D100/F067 — 실제 밀도 검증 후 같은 장면 제작
+사용자 “진행해줘”, 이어 “계속 진행하자” → AI가 D099단독packet제작. JS파일parse성공을scalar성공으로판단하려던초기경로에서 unique0/.5/1 및 readBuffers비구현을확인→REJECT/nativecopyToArray실제연속density로교체. 같은terrain livevolume·광학cache/그림자→13fixed+6wheel확인. 기존전체RGBplate실패는보존, 새로운경로를자동KEEP하지않음. source/native/runtime증거분리·작은같은구도시험이라는기존D083규약적용이며 신규방법론확정아님. report ECG_A_cloud_live_same_scene_review_2026-10-07.md.

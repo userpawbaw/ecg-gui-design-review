@@ -1099,7 +1099,7 @@
     ],
     "encodedBytes": 3082334,
     "decodedRGBABytes": 82944000,
-    "next": "D099 same-scene actual VDB conversion feasibility packet; live conversion not implemented; D080 cloud-free/AI-video alternatives comparison remains unexecuted",
+    "next": "D100 actual scalar conversion and same-scene live one-cloud candidate implemented/TUNE; D080 fallback comparison unexecuted",
     "deferred": [
       "A-P3",
       "Story",
@@ -1107,5 +1107,27 @@
     ],
     "preservedUserModifiedCaptures": 6,
     "reviewFollowup": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_same_scene_feasibility_2026-10-07.md"
+  },
+  "north_cloud_live_2026_10_07": {
+    "status": "one_real_cloud06_same_scene_TUNE_user_review_pending",
+    "decision": "D100",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_live_same_scene_review_2026-10-07.md",
+    "sourceScalar": true,
+    "screenBake": false,
+    "terrainPreserved": true,
+    "cloudFeedback": "prior combined production feedback2/2 failed retained; current same-scene new packet not finally adopted",
+    "scalarBytes": 3538944,
+    "nativeConverter": "OpenVDB13.0.0 copyToArray",
+    "fixedPoses": 13,
+    "wheelCaptures": 6,
+    "terrainShadowMap": "default OFF after triangular artifact contribution test; optical cloud shadows ON",
+    "next": "user review appearance/continuity/terrain preservation/cover timing; fine density/field coverage/lighting tuning after packet, D080 two fallback candidates unexecuted",
+    "deferred": [
+      "A-P3",
+      "Story",
+      "BC"
+    ],
+    "gpuTimingVerified": false,
+    "continuousVideoVerified": false
   }
 }

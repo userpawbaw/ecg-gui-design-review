@@ -44,7 +44,7 @@ renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.
 renderer.setClearColor(0x070605);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(40,1,.025,40);
 const arrival=full?(params.get('terrain')==='north'?await createNorthernArrival(renderer):params.get('planet')==='legacy'?await createLegacyArrival():await createArrival(renderer,camera)):null;
-arrival?.setEffects({flare:params.get('flare')!=='0',cloud:params.get('cloud')!=='0',cloudShadow:params.get('cloudShadow')!=='0',atmosphere:params.get('atmosphere')!=='0',specular:params.get('specular')!=='0'});
+arrival?.setEffects({terrainShadow:params.get('terrainShadow')==='1',flare:params.get('flare')!=='0',cloud:params.get('cloud')!=='0',cloudShadow:params.get('cloudShadow')!=='0',atmosphere:params.get('atmosphere')!=='0',specular:params.get('specular')!=='0'});
 const loader=new GLTFLoader();
 const [arch,b,h,e,meta,w]=await Promise.all([createArchive(),loader.loadAsync(URLs.body),loader.loadAsync(URLs.heart),loader.loadAsync(URLs.electrodes),fetch(URLs.manifest).then(r=>r.json()),fetch('/wave.json').then(r=>r.json())]);
 scene.add(arch.room,arch.dust);arch.setFade(1);
@@ -79,13 +79,13 @@ const fill=new THREE.HemisphereLight(0x858c92,0x100c08,.18);scene.add(fill);
 const heartLight=new THREE.PointLight(0xffb677,.035,.7,2);person.add(heartLight);heartLight.position.copy(heart.position).add(new THREE.Vector3(.13,.06,-.18));
 const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:actualSamples,resolveDepthBuffer:true,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
 const renderPass=new RenderPass(scene,camera);composer.addPass(renderPass);if(arrival&&'atmospherePass' in arrival)composer.addPass(arrival.atmospherePass);composer.addPass(arch.vol);
-if(arrival&&params.get('terrain')!=='north')composer.addPass(arrival.cloudPass);
+if(arrival)composer.addPass(arrival.cloudPass);
 if(arrival)composer.addPass(arrival.flarePass);
 const bloom=new UnrealBloomPass(new THREE.Vector2(512,512),.35,.4,.65);composer.addPass(bloom);
 // r186 SMAA expects linear-sRGB, before OutputPass. Keep the ECG/DOM layers separate.
 const smaa=['smaa','hybrid'].includes(aa)||(['msaa','hybrid'].includes(aa)&&actualSamples===0)?new SMAAPass():null;
 if(smaa)composer.addPass(smaa);
-composer.addPass(new OutputPass());if(arrival&&params.get('terrain')==='north')composer.addPass(arrival.cloudPass);const grade=createGrade();composer.addPass(grade);
+composer.addPass(new OutputPass());const grade=createGrade();composer.addPass(grade);
 // Local diagnostics only: existing product shaders/defaults remain unchanged.
 grade.uniforms.uGrain={value:1};
 grade.material.fragmentShader=grade.material.fragmentShader.replace('uniform float uTime,uAspect,uSpace;','uniform float uTime,uAspect,uSpace,uGrain;').replace('(.012+.014*uSpace);','(.012+.014*uSpace)*uGrain;');
@@ -186,7 +186,7 @@ if(params.has('reviewP')||params.has('reviewPath')||params.has('reviewCapture'))
  const save=document.createElement('button');save.textContent='프레임 저장';save.id='review-save';save.style.cssText='position:fixed;right:16px;top:16px;z-index:99;padding:8px 14px;background:#121a20;color:white;border:1px solid #46515a';
  const saveFrame=async()=>{draw(0);const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'manual',shot:!locked?('scroll-'+Math.round(p*10000)):params.get('reviewShot')||('frame-'+Math.round(p*1000)),image:renderer.domElement.toDataURL('image/png'),meta:{renderer:(()=>{const e=gl.getExtension('WEBGL_debug_renderer_info');return e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null;})(),state:state(),url:location.href}})});if(!response.ok)throw Error(await response.text());save.textContent='프레임 저장 완료';console.info('CLOUD_REVIEW_SAVED '+await response.text());};
  save.onclick=()=>void saveFrame().catch(console.error);document.body.append(save);if(params.has('reviewShot')&&!params.has('reviewCapture'))requestAnimationFrame(()=>requestAnimationFrame(()=>void saveFrame().catch(console.error)));
- if(params.get('terrain')==='north'){const selector=document.createElement('select');selector.setAttribute('aria-label','전이 검토 구도');selector.style.cssText='position:fixed;right:16px;top:62px;z-index:99;padding:8px;background:#121a20;color:white';for(const [name,value] of [['원형 지구',0],['궤도 수평선',.10],['광역 지형 시작',.15],['북유럽 확대',.18],['인계 1',.19],['인계 2',.20],['인계 3',.21],['인계 4',.215],['인계 5',.22],['인계 6',.225],['인계 7',.23],['지역 인계',.235],['인계 완료',.245],['상세 지형',.265],['능선 접근',.274],['베이크 접합',.28],['구름 접근',.300],['구름 양감',.320],['구름 진입',.345],['구름 내부',.365],['서고 인계',.410],['서고 입구',.445],['서고',.55],['심장·파형',.95]] as const){const o=document.createElement('option');o.value=String(value);o.textContent=name;selector.append(o);}selector.onchange=()=>{save.textContent='프레임 저장';params.set('reviewShot','north-'+selector.value.replace('.','-'));configure(Number(selector.value),2.4,{frame:12,grain:false});};document.body.append(selector);}
+ if(params.get('terrain')==='north'){const selector=document.createElement('select');selector.setAttribute('aria-label','전이 검토 구도');selector.style.cssText='position:fixed;right:16px;top:62px;z-index:99;padding:8px;background:#121a20;color:white';for(const [name,value] of [['원형 지구',0],['궤도 수평선',.10],['광역 지형 시작',.15],['북유럽 확대',.18],['인계 1',.19],['인계 2',.20],['인계 3',.21],['인계 4',.215],['인계 5',.22],['인계 6',.225],['인계 7',.23],['지역 인계',.235],['인계 완료',.245],['상세 지형',.265],['능선 접근',.274],['같은 지형·구름',.28],['구름 접근',.300],['구름 양감',.320],['구름 진입',.345],['구름 내부',.365],['서고 인계',.410],['서고 입구',.445],['서고',.55],['심장·파형',.95]] as const){const o=document.createElement('option');o.value=String(value);o.textContent=name;selector.append(o);}selector.onchange=()=>{save.textContent='프레임 저장';params.set('reviewShot','north-'+selector.value.replace('.','-'));configure(Number(selector.value),2.4,{frame:12,grain:false});};document.body.append(selector);}
  const info=gl.getExtension('WEBGL_debug_renderer_info');console.info('CLOUD_REVIEW_META '+JSON.stringify({renderer:info?gl.getParameter(info.UNMASKED_RENDERER_WEBGL):null,userAgent:navigator.userAgent,state:state(),url:location.href}));
  if(['forward','reverse'].includes(params.get('reviewPath')||'')){(window as any).aPreview.path(8,params.get('reviewPath')==='reverse');setTimeout(()=>{console.info('CLOUD_REVIEW_TIMING '+JSON.stringify(state()));},8600);}
 }

@@ -1,0 +1,37 @@
+{
+  "scope": "final whole-earth and broad-start captures; orbit and ridge earlier intermediate configurations, see depth review",
+  "files": [
+    {
+      "file": "north-0-1.json",
+      "p": 0.1,
+      "near": null,
+      "detailReveal": 0,
+      "sha256": "4a4f7645b9b0008b4e505cdb36aa54e7087fc7aedc1a2f1cb901630f3b516c09",
+      "png_sha256": "7803ce482eaf5272f805069a2ebceec7bba36cad196bfa5da1ad75649bc09fa8"
+    },
+    {
+      "file": "north-0-15.json",
+      "p": 0.15,
+      "near": 138.5,
+      "detailReveal": 0,
+      "sha256": "d1c65e3d3c8a8b0c5b8cc5ed50b46a7296fafef251a8fa6aa1b8e15fcabae476",
+      "png_sha256": "b3b06775ebf247845b47ad5b60228fa370c8063a7030951322ff1acdc44893a2"
+    },
+    {
+      "file": "north-0-294.json",
+      "p": 0.294,
+      "near": 1.0868309483783674,
+      "detailReveal": 0.05,
+      "sha256": "40c12e3c7a5749829404173be315c2d580b194959bb3bdc08ae122b42996d23c",
+      "png_sha256": "676682bd43a4675a107dd164d0bebdf70b83f528d9b708a324cf06f8e17a91f6"
+    },
+    {
+      "file": "north-0.json",
+      "p": 0,
+      "near": 1520,
+      "detailReveal": 0,
+      "sha256": "2263cdfc7369e7e21ddc89c5d2df7c2fb40134ba94f578cd5a62b76a24b76bd6",
+      "png_sha256": "513731115599ddfc9f97d18314369ba0f605406c817b276ccee04debe0ab4ab0"
+    }
+  ]
+}

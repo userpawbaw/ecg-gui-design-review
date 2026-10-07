@@ -607,3 +607,8 @@ EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1
 사용자 pop/사각 점경계/주변 평면 지적, 근접능선KEEP. 실제Mapzenz7 60tiles/uint16513² parent를추가, p.135–.19광역높이/p.18–.245상세 높이·normal 연속인계·경계20%/색18%parent환원·alphaHash제거. coarse64준비/cache속성bytes산입/48MiB유지; parent131072tri와global1024×512는별도비용. 실제IAB13구도coarse64/error0, PageDown/PageUp unlocked/지역재진입. 수평선/곡률·자료·normal차이/영상·GPU·targetPC TUNE/미검증. 현재중간피드백이며cloud전체1/2유지·웹cloudbake한장·서고KEEP/A-P3/Story/BC보류. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_regional_morph_review_2026-10-07.md
 최종 검증: build65modules PASS, records202/CASE/진입점 PASS, 13PNG/state/hash 및60원본핀 확인. diff EOF공백수정후 재검사. 지역 GPU 메모리 관측 최대41.26MB는 총VRAM/프레임시간 개선 증거 아님. 서버재시작 data error policy 차단 뒤정상localhost 새IAB탭에서복구,최종error0.
 신규asset script staging 후 EOF공백1건을 추가 발견해 후속정리. 기존tracked diff검사와 staged 전체검사를 구분; 전체 staged diff 재검사 후저장. 동작 변경 없음.
+
+### 2026-10-07 D095/F063 깊이 간섭 조사 및 후보
+EOXz8 228tiles/2526×4096 조달·hash, near8% 보정, 일반 depth 검사 유지, 얇은 cloud shell 및 select 입력 충돌 수정. 첫 sandbox build EPERM→승인 build65modules PASS(최종 재검사 별도). 사각 조명경계/구름중복·연속 shimmer TUNE. 사용자 수정된 old north .15/.18/ridge 증거6파일 보존/커밋 제외. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md
+
+D095 최종검사: build65modules PASS / records204 PASS. 기록 초안 필수절11누락→규약형식 보완 후 PASS. 최종 원형/광역 일반depth 캡처, 오류0. 근접 trial capture detailReveal=.05로 아직 morph 중이므로 최종능선 품질검증으로 사용하지 않음. 연속영상·GPU미검증.

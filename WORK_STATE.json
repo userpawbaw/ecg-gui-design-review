@@ -1051,5 +1051,17 @@
       "cloudFeedback": "1/2 retained; intermediate scene feedback",
       "status": "TUNE"
     }
+  },
+  "north_depth_precision_2026_10_07": {
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md",
+    "status": "TUNE",
+    "next": "User moving Earth/orbit feedback; then residual shimmer isolation and cloud/map boundary tuning",
+    "cloudFeedback": "1/2 retained",
+    "nearFactor": 0.08,
+    "mapDimensions": [
+      2526,
+      4096
+    ],
+    "continuousVideoVerified": false
   }
 }

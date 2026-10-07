@@ -109,7 +109,7 @@ lenis.on('scroll',ev=>{if(!locked)targetP=ev.progress;});
 const resumeScroll=()=>{if(params.has('reviewP')||params.has('reviewPath'))return;locked=false;pathStart=null;frozenTime=null;testFrame=null;};
 addEventListener('wheel',resumeScroll,{passive:true});
 addEventListener('touchstart',resumeScroll,{passive:true});
-addEventListener('keydown',ev=>{if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(ev.key))resumeScroll();});
+addEventListener('keydown',ev=>{if((ev.target as HTMLElement)?.closest('select,input,textarea'))return;if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(ev.key))resumeScroll();});
 const pointer={x:0,y:0,sx:0,sy:0};addEventListener('pointermove',ev=>{pointer.x=ev.clientX/W-.5;pointer.y=ev.clientY/H-.5;});
 const clayMat=new THREE.MeshStandardMaterial({color:0x777b7d,roughness:.9});
 function configure(pv:number,time:number,opts:any={}){

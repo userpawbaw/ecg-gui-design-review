@@ -162,3 +162,6 @@ AI가 BC 필수보완→ABC비교로 순서를 제안하려던 단계에서 사�
 
 ### 2026-10-07 D094/F062 — 지역 patch 피드백으로 인계 기준 확장
 [대화] 사용자는 “툭 튀어나와서”, “경계가 너무 선명히 나타나고 자글자글해서”, “화면에 들어오는 지형 전체가 다 렌더링되어야”, “능선 접근 단계의 퀄리티는 충분”이라고 구분했다. AI는 visibility/alphaHash를 확인하고 투명 fade 확대와 구름가림을 검토한 뒤, 실제 광역 parent DEM과 높이/normal/color 연속 인계를 우선 구현했다. 기존 narrow shape 디테일을 삭제하지 않고 주변 coarsecoverage를 채웠다. 13구도·키보드 재진입 증거와 수평선/곡률·GPU/연속영상 한계를 분리했다. 새 규칙이 아니라 기존 scene-specific KEEP/TUNE와 source→actual evidence 방식의 적용 사례이며, 전체 구름 피드백2로 자동 계산하지 않는다. 별도 대화 export는 없으며 현재 채팅 원문을 인용했다.
+
+### 2026-10-07 D095/F063 — 질감/깊이 오류 구분
+사용자 “구름을 렌더했더니 … 원형 지구단계부터” 지적→near/far 코드와 공식 Cameras 자료 대조→우회 depthTest보다 clip precision 보정 선택. 정적 개선과 전체 움직임 소멸을 구분. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md

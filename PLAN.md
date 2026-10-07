@@ -412,3 +412,6 @@ EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1
 
 ### 2026-10-07 지역 인계 피드백·광역 DEM/연속 morph — D094/F062
 사용자 pop/사각 점경계/주변 평면 지적, 근접능선KEEP. 실제Mapzenz7 60tiles/uint16513² parent를추가, p.135–.19광역높이/p.18–.245상세 높이·normal 연속인계·경계20%/색18%parent환원·alphaHash제거. coarse64준비/cache속성bytes산입/48MiB유지; parent131072tri와global1024×512는별도비용. 실제IAB13구도coarse64/error0, PageDown/PageUp unlocked/지역재진입. 수평선/곡률·자료·normal차이/영상·GPU·targetPC TUNE/미검증. 현재중간피드백이며cloud전체1/2유지·웹cloudbake한장·서고KEEP/A-P3/Story/BC보류. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_regional_morph_review_2026-10-07.md
+
+### 2026-10-07 지구/구름 깊이 간섭 조사 — D095/F063
+near/far 정밀도 보정과 z8 지도 선행 반영. 원형/광역 줄·점 패턴과 작은 질감 shimmer 구분. 지도 경계/구름 중복 TUNE, 연속 영상 미검증. 다음 현재 후보 사용자 움직임 피드백→잔여 shimmer 분리→live VDB. 전체 feedback1/2 유지. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md

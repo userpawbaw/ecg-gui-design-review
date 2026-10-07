@@ -3116,6 +3116,29 @@
         "prototype/spikes/a-climb/terrain-parent.ts"
       ],
       "review": "D094 coarse actual elevation, sea bathymetry clamped0, mixed datum; not surveyed seamless integration or final adoption"
+    },
+    {
+      "id": "north-macro-high-imagery-20261007",
+      "title": "EOX bounded northern z8 imagery",
+      "kind": "image",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://maps.eox.at/"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "EOX Sentinel-2 cloudless 2023; internal review; exhibition verification pending",
+      "original": null,
+      "processed": {
+        "file": "prototype/spikes/a-climb/public/north-earth/macro-high.jpg",
+        "bytes": 2319845,
+        "sha256": "17f1bbd7c44f36682f487a5587be9b14d745325ddcbca821108aa248e03bb18c"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb/arrival-north.ts"
+      ],
+      "review": "D095 228 source tiles pinned in metadata; bounded map, not full Earth detail"
     }
   ],
   "rejected": [

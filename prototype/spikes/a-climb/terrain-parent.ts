@@ -22,11 +22,11 @@ export async function createTerrainParent(macro:THREE.Texture,broad:THREE.Textur
   `);
   s.fragmentShader=s.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D parentBroad,parentDay,parentPacked;').replace('#include <map_fragment>',`#include <map_fragment>
    vec2 ll=vec2(vMapUv.x*16.,56.+vMapUv.y*12.),guv=(ll+vec2(180.,90.))/vec2(360.,180.);float edge=min(min(vMapUv.x,vMapUv.y),min(1.-vMapUv.x,1.-vMapUv.y));
-   vec3 globalColor=texture2D(parentDay,guv).rgb;globalColor=mix(globalColor,vec3(.9,.94,1.),texture2D(parentPacked,guv).b*.60);
+   vec3 globalColor=texture2D(parentDay,guv).rgb;globalColor=mix(globalColor,vec3(.9,.94,1.),texture2D(parentPacked,guv).b*.15);
    diffuseColor.rgb=mix(globalColor,diffuseColor.rgb,smoothstep(0.,.18,edge));
    vec2 r=(ll-vec2(7.1,61.))/vec2(2.6,1.2);float re=min(min(r.x,r.y),min(1.-r.x,1.-r.y));diffuseColor.rgb=mix(diffuseColor.rgb,texture2D(parentBroad,r).rgb,smoothstep(0.,.18,re));
   `);
  };
- const mesh=new THREE.Mesh(geometry,mat);mesh.name='Northern coarse parent terrain';mesh.receiveShadow=true;
+ const mesh=new THREE.Mesh(geometry,mat);mesh.name='Northern coarse parent terrain';mesh.renderOrder=1;mesh.receiveShadow=true;
  return {mesh,sample,normal,macro,bounds:b,set(p:number,d:number){amount.value=p;detail.value=d;mesh.visible=p>0;},state:()=>({source:m.source,bounds:b,triangles:256*256*2,reveal:amount.value,detail:detail.value}),dispose(){geometry.dispose();mat.dispose();}};
 }

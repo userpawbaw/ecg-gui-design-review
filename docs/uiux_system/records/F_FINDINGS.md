@@ -1636,3 +1636,19 @@ AWS Mapzenz7 실제60tiles/uint16513², EOX parent 0–16E/56–68N coarsegeomet
 
 ### 놓쳤다면
 alpha가 자연스러워지면 주변 평면과 조형 단절도 해결됐다고 오인했을 것이다. 품질 단계와 실제 지형 coverage를 함께 설계하고 만족한 근접 detail을 유지한다.
+
+## F-063. 지구·구름 자글거림의 깊이 정밀도 원인
+
+2026-10-07 [대화] [코드] [자료] [런타임], D-095 / CASE-007.
+
+### 발단
+구름층 추가 후 원형 지구부터 스크롤 자글거림 사용자 지적.
+
+### 먼저 의심한 것과 배제 방법
+alphaHash는 이전 제거됨. 얇은층 depthWrite=false만으로 해결되지 않았고 clip near/far를 공식 Cameras 자료와 대조.
+
+### 결정적 근거
+near.38/far65000km와10km shell의 깊이 정밀도 부족. near1520km 원형/거리별8%로 보정 뒤 광역 줄·점 패턴 감소. 부분고정 IAB 증거이며 전체 동적 shimmer 소멸 미검증. detailed report: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md
+
+### 놓쳤다면
+AA/구름 질감 해상도만 높여 깊이 오류를 남겼을 것이다. 근접 고정캡처 detailReveal=.05는 morph 진행중 증거로 분리하며 승인 지형 최종품질로 판정하지 않는다.

@@ -2384,3 +2384,26 @@ nodata 비중/지도정합/확대 품질이 부족하면 해당 지역의 Sentin
 
 ### 되돌려야 하는 조건
 새 parent 가시 경계/LOD 과비용/가짜 해안/근접 detail 손실이 있으면 해당 범위·밀도·morph 보정. 현재 중간 파트 피드백이며 완성구름 전체feedback2로 세지 않음.
+
+## D-095. 광역 시작 깊이 정밀도·구름층·지도 선행 갱신
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [코드] [자료] |
+| 상태 | 후보 구현 / 품질 TUNE |
+| CASE | CASE-007 |
+
+### 갈림길
+광역 자글거림과 수평선 저해상도 개선 중, 사용자가 원형부터 구름 추가 후 자글거림을 지적.
+
+### 검토한 선택지
+UV discard, 깊이 검사 우회, near/far 재설정, logarithmic depth, mipmaps/TAA, 구름만 가림.
+
+### 고른 것과 근거
+기존 camera near.38/far65000km를 확인하여 near=max(.05,y*.08) 적용. 일반 depth 검사 유지와 cloud depthWrite=false. EOXz8 228tiles 지도2526×4096을 p.045–.10 선행. 기존 packed mask의 얇은층 별도 사용.
+
+### 버린 것과 이유
+임시 UV discard/depthTest 우회는 철회. 구름만 가림과 MSAA 추가는 깊이 정밀도 해결이 아님. logarithmic depth/TAA는 shader 호환/ghosting 검증 필요하여 deferred.
+
+### 되돌려야 하는 조건
+near clipping·근접 지형 손상/잔여 shimmer면 거리별 범위와 재질 분리 검증. 지도 조명경계·구름중복은 TUNE. 전체 구름 피드백1/2 유지. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_depth_precision_review_2026-10-07.md

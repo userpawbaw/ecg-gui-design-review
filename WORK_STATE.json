@@ -676,7 +676,7 @@
     "next": "BC user scene review and mandatory TUNE; ABC role comparison and production order; B runtime remains deferred"
   },
   "scenario_a_production_2026_10_05": {
-    "status": "detailed_terrain_native_asset_rendered_visual_TUNE_distance_handoff_pending",
+    "status": "terrain_detail_KEEP_height15_tiled_lod_verified_global_optics_and_handoff_pending",
     "records": [
       "D-065",
       "D-066",
@@ -952,21 +952,36 @@
         "status": "actual EOX113 tiles and native ArcticDEM acquired; 6 connected terrain renders, 4 independent high-look renders verified; native packed scene reopened; visual TUNE, web integration pending",
         "feedback": "low/entry should visibly show mountains and height variation; detailed maps start at low; high uses selective polar geometry, night lights and atmosphere; geography need not be exact",
         "production_review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_detailed_terrain_production_review_2026-10-07.md",
-        "next": "1x regional terrain camera handoff; global/high optical quality and distance LOD; approved VDB same sun/receiver; same archive continuous transition; user feedback2 on complete candidate",
+        "next": "high/global optical tune at its view; regional footprint and camera handoff with height1.5 LOD; VDB same sun and receiver; approved archive transition; complete candidate feedback2",
         "detailed_asset": {
           "metadata": "assets/processed/a-terrain-detailed-20261007/metadata.json",
           "native": "assets/processed/a-terrain-detailed-20261007/detailed-terrain.blend",
           "gallery": "verification/a-terrain-detailed-20261007/gallery.html",
           "vertices": 407676,
-          "height_gain_recommended": 1,
+          "height_gain_recommended": 1.5,
           "default_web_adopted": false,
-          "user_production_feedback": "1/2 retained"
+          "user_production_feedback": "1/2 retained",
+          "user_verdict": "terrain detail KEEP; height1.5 approved trial with 1x rollback allowed",
+          "height15_native": "assets/processed/a-terrain-detailed-20261007/detailed-terrain-height1.5.blend"
         },
         "high_look": {
           "gallery": "verification/a-high-orbit-look-20261007/gallery.html",
           "frames": 4,
           "status": "TUNE: atmosphere luminosity, ocean reflection, polar artistic proxy; no cloud/terrain handoff",
           "renderer": "Cycles 4.5.3 LTS OptiX; not original Moto shader or physical atmosphere"
+        },
+        "lod_trial": {
+          "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_terrain_lod_review_2026-10-07.md",
+          "route": "/terrain.html",
+          "tiles": 64,
+          "levels": 4,
+          "heightGain": 1.5,
+          "screenErrorPixels": 1.2,
+          "evidence": "verification/a-terrain-lod-20261007",
+          "status": "native3 plus real IAB3 captures and bidirectional UI selection verified; regional lighting/motion TUNE",
+          "geometryBudgetMiB": 48,
+          "fullEarthHandoff": false,
+          "feedback": "user cloud production1/2 retained"
         }
       }
     }

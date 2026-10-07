@@ -1,0 +1,9 @@
+{
+  "file": "assets\\processed\\a-terrain-detailed-20261007\\detailed-terrain-height1.5.blend",
+  "bytes": 18713134,
+  "sha256": "2db3813e8fa9674c82af621bc79c923b885f510dfbc0c773f18b4bd551dc0be0",
+  "height_gain_default": 1.5,
+  "alternative_mesh_height_gain": 1.5,
+  "packed_textures": true,
+  "scope": "native Blender scene; not a web-ready GLB or runtime integration"
+}

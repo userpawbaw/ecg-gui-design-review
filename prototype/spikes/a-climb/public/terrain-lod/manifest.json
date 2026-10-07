@@ -1,0 +1,3812 @@
+{
+  "heightGain": 1.5,
+  "units": "km; x east/y height/z south",
+  "ssePixels": 1.2,
+  "hysteresis": 0.2,
+  "skirtKm": 0.5,
+  "cacheGpuBytes": 50331648,
+  "target": [
+    61.63,
+    8.4
+  ],
+  "broadBounds": [
+    7.1,
+    61.0,
+    9.7,
+    62.2
+  ],
+  "nearBounds": [
+    8.12,
+    61.5,
+    8.65,
+    61.75
+  ],
+  "nearUV": [
+    0.3923076923076922,
+    0.4166666666666657,
+    0.5961538461538465,
+    0.6249999999999986
+  ],
+  "tiles": [
+    {
+      "id": "0-0",
+      "min": [
+        -68.7637698905029,
+        -1.0622993298118357,
+        13.167068750000285
+      ],
+      "max": [
+        -13.332278401997307,
+        2.9995889929875323,
+        70.13160000000028
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 2.090988062862064,
+          "file": "tile-0-0-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3895,
+          "gpuBytes": 8512,
+          "sha256": "e079ea0f63242de682070f6c6ae7187b29343076c44444ec01d244416b12fd0d"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.856582621966815,
+          "file": "tile-0-0-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13081,
+          "gpuBytes": 28192,
+          "sha256": "ddd066586c33e66b070ed920390406d128c2770e9ba6792938ac9aeccc31d700"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 1.3033042804211816,
+          "file": "tile-0-0-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46950,
+          "gpuBytes": 101152,
+          "sha256": "2813e8be39f8737d854d17823dea8f0bc88ab08c4dd29fd6054be98d27366398"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-0-0-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 173030,
+          "gpuBytes": 372280,
+          "sha256": "fc7f7e17757f2ac64a3b0e53971aab680b3d3c6b4c4fcc588d785ec32de387bc"
+        }
+      ]
+    },
+    {
+      "id": "1-0",
+      "min": [
+        -13.332278401997307,
+        0.7976669193102888,
+        13.167068750000285
+      ],
+      "max": [
+        -9.170913240955482,
+        3.098771158879311,
+        70.13160000000028
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.7558057227414117,
+          "file": "tile-1-0-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3838,
+          "gpuBytes": 8512,
+          "sha256": "f2329f5243b07b23ef97ffaae1bfa737c94b0698d9ccc6d363ceb8f5aa10d2f6"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.6232091830931772,
+          "file": "tile-1-0-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12906,
+          "gpuBytes": 28192,
+          "sha256": "724559a8027e6123167eb29bda03ef4a388e351b462181b1c4bc264936943764"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.5808281013817029,
+          "file": "tile-1-0-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46444,
+          "gpuBytes": 101152,
+          "sha256": "a2d71dd2224f916609eff4d906360481dc84412a77f11f736eb9323bcd633ace"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-1-0-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 171123,
+          "gpuBytes": 376848,
+          "sha256": "5bdc86d4efb435a0f2e4bd050fd60a292668f5e635f937078684882733794137"
+        }
+      ]
+    },
+    {
+      "id": "2-0",
+      "min": [
+        -9.170913240955482,
+        0.48287071928853453,
+        13.167068750000285
+      ],
+      "max": [
+        -5.064302884664183,
+        3.0731567796879204,
+        70.13160000000028
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.0064609225903318,
+          "file": "tile-2-0-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3842,
+          "gpuBytes": 8512,
+          "sha256": "070d4d11e006be2b683d108bef3202609f5b0f0c15847b9d3c895a61a4a740bb"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.8341322215533303,
+          "file": "tile-2-0-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12875,
+          "gpuBytes": 28192,
+          "sha256": "0a6bca5e1962396b0d61a3a2e5d36f666c31321f4d1feb8fdab2c7c8b01dcaed"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.6004997577570856,
+          "file": "tile-2-0-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46450,
+          "gpuBytes": 101152,
+          "sha256": "d6db63954723139bbe731556d1fd9c18205d7505ba6e00f33d0c3e371fde29c4"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-2-0-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 169721,
+          "gpuBytes": 372280,
+          "sha256": "803c8c846c0bd4f36d5875c8057e3e5d773e6af9fb74d6821596438b7527bbb3"
+        }
+      ]
+    },
+    {
+      "id": "3-0",
+      "min": [
+        -5.064302884664183,
+        0.1613245900089756,
+        13.167068750000285
+      ],
+      "max": [
+        -0.8481829188717414,
+        3.1513291754148227,
+        70.13160000000028
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.1094233228597747,
+          "file": "tile-3-0-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3860,
+          "gpuBytes": 8512,
+          "sha256": "3397563e308d06ee451643746f3cfc86784b97a6a5ef328e9a605daf7caf67a9"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.9519752824429972,
+          "file": "tile-3-0-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12895,
+          "gpuBytes": 28192,
+          "sha256": "d46a1ae538bfbf37629ec51f1113965c4d26146b1f7dfca951f43a6412f69d85"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.683254599794691,
+          "file": "tile-3-0-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46434,
+          "gpuBytes": 101152,
+          "sha256": "886157280da1e610f7a957c20c12943e77449e2faafc0f8df7cab22d588eec49"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-3-0-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 170797,
+          "gpuBytes": 376848,
+          "sha256": "4c55aeddd925a18913f24ae188a2546cbeee01c214781cf548cba63678664dbc"
+        }
+      ]
+    },
+    {
+      "id": "4-0",
+      "min": [
+        -0.8481829188717414,
+        -0.6904347746761307,
+        13.167068750000285
+      ],
+      "max": [
+        3.258427437419558,
+        3.294021692147476,
+        70.13160000000028
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 2.13073294739925,
+          "file": "tile-4-0-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3840,
+          "gpuBytes": 8512,
+          "sha256": "72a858a11151cf8280a71d49087f833d9d6200192fc27bb35dbc018c20216a14"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.4014196137067092,
+          "file": "tile-4-0-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12908,
+          "gpuBytes": 28192,
+          "sha256": "c33d7c9870f54a2c5c25b473cedaf63992cf0dca870c6d58b0a08cac2357e1f2"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.9637334961133399,
+          "file": "tile-4-0-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46506,
+          "gpuBytes": 101152,
+          "sha256": "e100cad9ef763828f545e66633444d356e9a15be4899d842a8dab6351737cf86"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-4-0-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170231,
+          "gpuBytes": 372280,
+          "sha256": "0f0c1bc4117214664836d91549203435c2cda8ebc58f2c18ee5e002054850687"
+        }
+      ]
+    },
+    {
+      "id": "5-0",
+      "min": [
+        3.258427437419558,
+        0.022239213229088506,
+        13.167068750000285
+      ],
+      "max": [
+        7.419792598461382,
+        3.186809706072813,
+        70.13160000000028
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.2785302715591405,
+          "file": "tile-5-0-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3870,
+          "gpuBytes": 8512,
+          "sha256": "4e6e320a45de363f363e363fc5685fd5705672d1190e670b9060705786dc322a"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.0293828724405012,
+          "file": "tile-5-0-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12943,
+          "gpuBytes": 28192,
+          "sha256": "161b4ffe646c27217de25803402b6445d0a97ceaca511b93e3b0eca6479d4a7c"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.7093779682062018,
+          "file": "tile-5-0-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46453,
+          "gpuBytes": 101152,
+          "sha256": "6430bb633a8c60172d35576be4c9217278e7841dd760c1e05301ae98345448a2"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-5-0-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 169715,
+          "gpuBytes": 372280,
+          "sha256": "b902d4c2a0ab0b70651ec7c520efab45efb5463bcc5298dbad34653ae5ea7194"
+        }
+      ]
+    },
+    {
+      "id": "6-0",
+      "min": [
+        7.419792598461382,
+        0.01698811120491872,
+        13.167068750000285
+      ],
+      "max": [
+        11.581157759503299,
+        3.26484623948082,
+        70.13160000000028
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.3254578604225207,
+          "file": "tile-6-0-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3848,
+          "gpuBytes": 8512,
+          "sha256": "68815d3860758663de48c3e1a4b764892ae2cfeedaf8bcf4494bd293fb895dc4"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.9913161404878941,
+          "file": "tile-6-0-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12927,
+          "gpuBytes": 28192,
+          "sha256": "03d9e1a548089a678539433c40c7c61b8fa2c8fb6937fa2c6c63665f86ad44cf"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.7215423370711824,
+          "file": "tile-6-0-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46427,
+          "gpuBytes": 101152,
+          "sha256": "fcdf1ea9d0c2e3de2eb7a3fe721609302ac67c7782d6d737a8681aaebfec48e2"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-6-0-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 171843,
+          "gpuBytes": 376848,
+          "sha256": "4f0101e7e22f75e3bb556dcd4529b7ab1e161bf816b6c5800bb8bdf361856c74"
+        }
+      ]
+    },
+    {
+      "id": "7-0",
+      "min": [
+        11.581157759503299,
+        -0.4010347371351498,
+        13.167068750000285
+      ],
+      "max": [
+        63.39160036780727,
+        3.187642241760493,
+        70.13160000000028
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.0713492573010395,
+          "file": "tile-7-0-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3882,
+          "gpuBytes": 8512,
+          "sha256": "c0af5a06e5371ac2ec280cc099166ac7735017755b313f7f8faee5633643921f"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.003516193135394,
+          "file": "tile-7-0-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13009,
+          "gpuBytes": 28192,
+          "sha256": "9a45f395e220d5598e1432308a2dccd855c65800af38a27bb0b9d1400b95b064"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.5632743328598306,
+          "file": "tile-7-0-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46744,
+          "gpuBytes": 101152,
+          "sha256": "f740ecbaefe8c6bb2fb42ca2381319ccce9c899d3d96127828e833a705fc53c8"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-7-0-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 171401,
+          "gpuBytes": 372280,
+          "sha256": "7882d8437727523899a1c3de836b12fa69fcbbe2202a54ac8fb0ea61230af5ea"
+        }
+      ]
+    },
+    {
+      "id": "0-1",
+      "min": [
+        -68.7637698905029,
+        -0.5855713085193711,
+        8.981697656250285
+      ],
+      "max": [
+        -13.332278401997307,
+        3.2819604232567188,
+        13.167068750000285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.6257780598730232,
+          "file": "tile-0-1-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3917,
+          "gpuBytes": 8512,
+          "sha256": "57065692c5c26d0c7fafea0219fdb7298915843fbd2d1670235fda7d9a0dfeda"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.822192780118516,
+          "file": "tile-0-1-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13185,
+          "gpuBytes": 28192,
+          "sha256": "8c986a9320b5f0cc5dee36716602ac7ea6376a6bdaae055b1d8e3bcf9a8fe17e"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 1.0508296093102878,
+          "file": "tile-0-1-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46904,
+          "gpuBytes": 101152,
+          "sha256": "7c1d56a7ba02b2698a0df8ba94b2c33bd6a48f5b5ad357981c232865e936c5ec"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-0-1-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 175035,
+          "gpuBytes": 376848,
+          "sha256": "4538017fee4c30a16beda17d9a048de185a8138efe1f506ddb404127eb9c6816"
+        }
+      ]
+    },
+    {
+      "id": "1-1",
+      "min": [
+        -13.332278401997307,
+        1.3443621082410788,
+        8.981697656250285
+      ],
+      "max": [
+        -9.170913240955482,
+        3.040676508492933,
+        13.167068750000285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.21261467560364,
+          "file": "tile-1-1-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3903,
+          "gpuBytes": 8512,
+          "sha256": "f76a36ad9e4c1ec2073f78efb9c8b1c382773373590862056d9467d56e61c702"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.11345270680152364,
+          "file": "tile-1-1-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13134,
+          "gpuBytes": 28192,
+          "sha256": "bcd5eef33124aa6535eba846b99a3fa670553baf25bf6587756f1c519bd1919f"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.08358573327750696,
+          "file": "tile-1-1-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46586,
+          "gpuBytes": 101152,
+          "sha256": "3db9fc3302e1e88304fb5a6e3ba7ad3cb924dd02f706f4dc6a21801c21aa494b"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-1-1-l3.bin.gz",
+          "vertices": 6881,
+          "indices": 40320,
+          "bytes": 174933,
+          "gpuBytes": 381472,
+          "sha256": "20301439388c731f9285eaa15912da6d7834241ac41cf04f3efda8cc1085bc43"
+        }
+      ]
+    },
+    {
+      "id": "2-1",
+      "min": [
+        -9.170913240955482,
+        1.609893166015866,
+        8.981697656250285
+      ],
+      "max": [
+        -5.064302884664183,
+        3.042537644113602,
+        13.167068750000285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2532748473028663,
+          "file": "tile-2-1-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3905,
+          "gpuBytes": 8512,
+          "sha256": "f0453c7f6cb7d359967385e8a1fae0adcde6e0acf4cf12a2fe1f0c8579bea219"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.1990264323165114,
+          "file": "tile-2-1-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13084,
+          "gpuBytes": 28192,
+          "sha256": "05ee8ca4144878ab64cac25736dd14fc35f429496cef1a11c69169e1d1c4c837"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.04467508874618531,
+          "file": "tile-2-1-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46697,
+          "gpuBytes": 101152,
+          "sha256": "e4e046930b8f4f5ec412f3d243bf81328dd4359a705b933885344aa662a4f1e5"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-2-1-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 172592,
+          "gpuBytes": 376848,
+          "sha256": "9aa5897c12deca7e6e74a1456f5d70b81e658c3c2829f4f7d0be5dec06bbd419"
+        }
+      ]
+    },
+    {
+      "id": "3-1",
+      "min": [
+        -5.064302884664183,
+        1.6068990520027921,
+        8.981697656250285
+      ],
+      "max": [
+        -0.8481829188717414,
+        3.370890196131135,
+        13.167068750000285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2718155704425218,
+          "file": "tile-3-1-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3905,
+          "gpuBytes": 8512,
+          "sha256": "1ae63b4c362df4d73e560036a30f69fa472666654beca1d5d7994591d61c8e59"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.1734165615158112,
+          "file": "tile-3-1-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13096,
+          "gpuBytes": 28192,
+          "sha256": "d35561f0b52be57bd638df487763edb70988a6fd2798d9254d3cac9b1a73656b"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.07975159631449458,
+          "file": "tile-3-1-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46606,
+          "gpuBytes": 101152,
+          "sha256": "605956ad9551dfcf47339c0cd11d78519ea25e79fc0dcf27045a9643069e52ad"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-3-1-l3.bin.gz",
+          "vertices": 6881,
+          "indices": 40320,
+          "bytes": 175164,
+          "gpuBytes": 381472,
+          "sha256": "d7893ec31ea55d3bdfde41d7c4e3a6121c9c123efc2afdc41cb88f727eb30f9a"
+        }
+      ]
+    },
+    {
+      "id": "4-1",
+      "min": [
+        -0.8481829188717414,
+        1.832412658919456,
+        8.981697656250285
+      ],
+      "max": [
+        3.258427437419558,
+        3.524413531382773,
+        13.167068750000285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.3486375119116212,
+          "file": "tile-4-1-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3858,
+          "gpuBytes": 8512,
+          "sha256": "bab019ef389c5039a0983d7481bb88e175f65b3c1f64bc4f54796827e30bfc1c"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.18029392187920834,
+          "file": "tile-4-1-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13010,
+          "gpuBytes": 28192,
+          "sha256": "8bedd842ae7f8a345bd2847e5b2c81050b808f57bd6999b9cda2634a52be3e91"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.09788004480081147,
+          "file": "tile-4-1-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46546,
+          "gpuBytes": 101152,
+          "sha256": "8147ec4e1ff43a53dcf1745c3ed7c93e839dd65fce22477c9fa4bbb1c7eb2771"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-4-1-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 173348,
+          "gpuBytes": 376848,
+          "sha256": "db2f87e475d1b603f4fb139516a82b25d6380479a6de16d7d4ab0e21e13cc86f"
+        }
+      ]
+    },
+    {
+      "id": "5-1",
+      "min": [
+        3.258427437419558,
+        1.5274299595847531,
+        8.981697656250285
+      ],
+      "max": [
+        7.419792598461382,
+        3.3898931581852936,
+        13.167068750000285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2495062072951204,
+          "file": "tile-5-1-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3868,
+          "gpuBytes": 8512,
+          "sha256": "49ff4c3543753233e1fb6517337767948a4a5761bccc0bad77ac7d4b37c31a92"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.11783855128470178,
+          "file": "tile-5-1-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13055,
+          "gpuBytes": 28192,
+          "sha256": "96828c650a6cc476349f9db5fa91fb9fb903d98f274f50193b088dd4e729c8dd"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.07596379356095939,
+          "file": "tile-5-1-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46665,
+          "gpuBytes": 101152,
+          "sha256": "da4253f1b5f7b02253242e6b1729f4d36ffffcb23f45d036590d8192db9d8161"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-5-1-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 172898,
+          "gpuBytes": 376848,
+          "sha256": "b5aaab3e8327bc7b70aa0800a09c1faba3ff71cf5d2995c9eb59e30c17055ce3"
+        }
+      ]
+    },
+    {
+      "id": "6-1",
+      "min": [
+        7.419792598461382,
+        1.6269439346108578,
+        8.981697656250285
+      ],
+      "max": [
+        11.581157759503299,
+        3.590425058723779,
+        13.167068750000285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2951474202439752,
+          "file": "tile-6-1-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3859,
+          "gpuBytes": 8512,
+          "sha256": "0613b69e295604b04f1874542b0fc5b88797e5ae9eeec5836f832b4d06f80840"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.15113554521830475,
+          "file": "tile-6-1-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13051,
+          "gpuBytes": 28192,
+          "sha256": "1b19b9a20da10f0266bd17113fe1b13e8befa016d0951779adac7a7607552b8f"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.13042081628522606,
+          "file": "tile-6-1-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46705,
+          "gpuBytes": 101152,
+          "sha256": "ccdf0471877238698e4e869589b0047dc77bf47d77a0868bdbfdb6858cb5297b"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-6-1-l3.bin.gz",
+          "vertices": 6881,
+          "indices": 40320,
+          "bytes": 176296,
+          "gpuBytes": 381472,
+          "sha256": "abb12703c2278abac6bb63116831eb3c120e63c73ff3760831462a172fb4e8cc"
+        }
+      ]
+    },
+    {
+      "id": "7-1",
+      "min": [
+        11.581157759503299,
+        0.0064234016322084475,
+        8.981697656250285
+      ],
+      "max": [
+        63.39160036780727,
+        3.323879822904925,
+        13.167068750000285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.385401310424668,
+          "file": "tile-7-1-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3894,
+          "gpuBytes": 8512,
+          "sha256": "646a6a4e19696421c0cb65babdbab3545772cde786f156b3666286f95918b5f3"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.3380288324991088,
+          "file": "tile-7-1-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13194,
+          "gpuBytes": 28192,
+          "sha256": "42e46665c06822dc1ad1af08c11d47b9ead37dd2d76a9f0a7a6915deff9ef05a"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.5339753337743844,
+          "file": "tile-7-1-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46696,
+          "gpuBytes": 101152,
+          "sha256": "db53a1dbdd59b12e464332cde1e9f327f70c25aecaaa802e77a0d392781246da"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-7-1-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 173597,
+          "gpuBytes": 376848,
+          "sha256": "a24b8938ce5f235fb18440f2b053341a4c35e36842ca45817893ad7b4faa0464"
+        }
+      ]
+    },
+    {
+      "id": "0-2",
+      "min": [
+        -68.7637698905029,
+        -0.5028280330337229,
+        4.850682031250284
+      ],
+      "max": [
+        -13.332278401997307,
+        3.250290635424891,
+        8.981697656250285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.2687220701274655,
+          "file": "tile-0-2-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3896,
+          "gpuBytes": 8512,
+          "sha256": "edf7aa4ca0b1c04719ae461a11e1e3d6f3bd33fac3cde61d60a6ed347f33a4aa"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.3405587002263495,
+          "file": "tile-0-2-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13233,
+          "gpuBytes": 28192,
+          "sha256": "4ad0c2091dfc7ab4f2818ae63cf8721a670a28c3473d896b396d3f54771d5ad4"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.6792577194328947,
+          "file": "tile-0-2-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46921,
+          "gpuBytes": 101152,
+          "sha256": "85aa3ed6f2811bfeae6a67c2ab1a3a286f731f5b36551ae4e3c8023c6fdf2518"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-0-2-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 172495,
+          "gpuBytes": 372280,
+          "sha256": "080b04783c1a38a01133efe1201b70851374d4728203b38a778721507c3a8a3a"
+        }
+      ]
+    },
+    {
+      "id": "1-2",
+      "min": [
+        -13.332278401997307,
+        1.316106980159548,
+        4.850682031250284
+      ],
+      "max": [
+        -9.170913240955482,
+        3.121400931864783,
+        8.981697656250285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.22114788026105625,
+          "file": "tile-1-2-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3895,
+          "gpuBytes": 8512,
+          "sha256": "aaf21670e7094311d4a69c9f7f378a46700f3a49e8be40e7fe0d03119f0fec37"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.14627342633507556,
+          "file": "tile-1-2-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13123,
+          "gpuBytes": 28192,
+          "sha256": "71c6c9c2960d00d53092e4545b3c9dacb7ac812f8b42ed216307ff41a000da48"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.08495948205672166,
+          "file": "tile-1-2-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46648,
+          "gpuBytes": 101152,
+          "sha256": "e097837ac7fd345b97efefbd8522ae156ab54c71b946dec6daf39edd7a525161"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-1-2-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 173489,
+          "gpuBytes": 376848,
+          "sha256": "3bf7474e0da3192251ce20870623ff59a1e30ebff311537e23a878512e38a847"
+        }
+      ]
+    },
+    {
+      "id": "2-2",
+      "min": [
+        -9.170913240955482,
+        1.5521825331234966,
+        4.850682031250284
+      ],
+      "max": [
+        -5.064302884664183,
+        3.283413212429886,
+        8.981697656250285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.3256535548504371,
+          "file": "tile-2-2-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3865,
+          "gpuBytes": 8512,
+          "sha256": "d95e1d9f04f31b4392fddd526ffc63249fd2c35178f0b48a2e0712bc30b2a6f4"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.17179718726006632,
+          "file": "tile-2-2-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13082,
+          "gpuBytes": 28192,
+          "sha256": "ef2feec7d966283e7da8d8f3e9f32363fe487b4f09b7fcaf127964695287e24f"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.08462915979110486,
+          "file": "tile-2-2-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46513,
+          "gpuBytes": 101152,
+          "sha256": "1ea764bcfac9d47f8c949f404cd68ac494509ce33f58742623146d2a6c9e179f"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-2-2-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170709,
+          "gpuBytes": 372280,
+          "sha256": "e45151e0b568b32ae73487c9512914d9f122aae585d30c311473980fdb76eefa"
+        }
+      ]
+    },
+    {
+      "id": "3-2",
+      "min": [
+        -5.064302884664183,
+        1.4424130314360364,
+        4.850682031250284
+      ],
+      "max": [
+        -0.8481829188717414,
+        3.3383497936139874,
+        8.981697656250285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.30090356691182363,
+          "file": "tile-3-2-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3865,
+          "gpuBytes": 8512,
+          "sha256": "24d58dba162090b97d47a9e746e562834bf059f83d504379454a88f1db03e41f"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.17723768286033348,
+          "file": "tile-3-2-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13055,
+          "gpuBytes": 28192,
+          "sha256": "b341a8adbda4b7bd2a2f739011d334eb6331d9a2b8200092bab7fb581c262ec3"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.09415778527934648,
+          "file": "tile-3-2-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46426,
+          "gpuBytes": 101152,
+          "sha256": "574b9cfbd71560f5bf83abc417ecfa2caa299a64f00080d38995ec964f2bace4"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-3-2-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 172612,
+          "gpuBytes": 376848,
+          "sha256": "da3dee167969163bd79881c635a71093ccc7b202207a299e8020c7982a823d9c"
+        }
+      ]
+    },
+    {
+      "id": "4-2",
+      "min": [
+        -0.8481829188717414,
+        1.3978409868685584,
+        4.850682031250284
+      ],
+      "max": [
+        3.258427437419558,
+        3.511015421264155,
+        8.981697656250285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.22592112358575944,
+          "file": "tile-4-2-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3867,
+          "gpuBytes": 8512,
+          "sha256": "810ebf89bd59e2ae7fc81e0eb3df302b7f35a30c89b636e760a772bf62509884"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.15191056006281567,
+          "file": "tile-4-2-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13087,
+          "gpuBytes": 28192,
+          "sha256": "05246e5a2ca085910fdc879ad74dfe5ede22fb418e82cf382cff575469c0654e"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.08668085656838187,
+          "file": "tile-4-2-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46636,
+          "gpuBytes": 101152,
+          "sha256": "d0e20a3f27c504d69c656e6864801d77bd4b5c78492aae22833a07fad328dfae"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-4-2-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 172314,
+          "gpuBytes": 372280,
+          "sha256": "6908fabbc8ca3959937c5877057450105e7fcea009f3425d54d8069ce37d9db4"
+        }
+      ]
+    },
+    {
+      "id": "5-2",
+      "min": [
+        3.258427437419558,
+        2.0370459322924304,
+        4.850682031250284
+      ],
+      "max": [
+        7.419792598461382,
+        3.5735252725527493,
+        8.981697656250285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2935305212562329,
+          "file": "tile-5-2-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3839,
+          "gpuBytes": 8512,
+          "sha256": "846f0b946deb10f8d0fdac262728e5158f8af3eb76236936f78d677d9ef029d3"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.17021872656675807,
+          "file": "tile-5-2-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13002,
+          "gpuBytes": 28192,
+          "sha256": "dbee4f1388bf807027e3d84550d91989ffcbe3970eee1aba7af07ce0646105ff"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.09559433923441274,
+          "file": "tile-5-2-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46483,
+          "gpuBytes": 101152,
+          "sha256": "a1db1937046af8647d7e42be5da39d7ac084e47a40dfbdfc4500511ca9f5becd"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-5-2-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170084,
+          "gpuBytes": 372280,
+          "sha256": "c0321548b697551b488ce915e1cae3c573954e885f135c43c2b52f697ea0e876"
+        }
+      ]
+    },
+    {
+      "id": "6-2",
+      "min": [
+        7.419792598461382,
+        1.8489339094514152,
+        4.850682031250284
+      ],
+      "max": [
+        11.581157759503299,
+        3.390540373099131,
+        8.981697656250285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.21215777369870237,
+          "file": "tile-6-2-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3836,
+          "gpuBytes": 8512,
+          "sha256": "639d067ae63e9d9001f16ce48c89c0e119395cdfee5a3dfae0b1913120e0bec7"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.1384162363323398,
+          "file": "tile-6-2-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12985,
+          "gpuBytes": 28192,
+          "sha256": "b917d7b4ec67d1fc0b6d30bc9a03e11aa8e5fe029561809486ffe8d559ab5c41"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.08562461267195642,
+          "file": "tile-6-2-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46495,
+          "gpuBytes": 101152,
+          "sha256": "cfd5f93bb9e741d666f4b1bec0d031000eac2ebb6ffc43e8b5bb892e39cd90db"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-6-2-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 172398,
+          "gpuBytes": 376848,
+          "sha256": "7969333e3e1ab7063c99864bc03606e267cebd14313151a239777ea2e44d4949"
+        }
+      ]
+    },
+    {
+      "id": "7-2",
+      "min": [
+        11.581157759503299,
+        -0.16274280320929763,
+        4.850682031250284
+      ],
+      "max": [
+        63.39160036780727,
+        2.978315250572955,
+        8.981697656250285
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.7316336458378734,
+          "file": "tile-7-2-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3878,
+          "gpuBytes": 8512,
+          "sha256": "65913f9c6367e3c02f0671de63a5ff809738b65c9b51a0bc13934be83285fbf5"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.5123763878885059,
+          "file": "tile-7-2-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13174,
+          "gpuBytes": 28192,
+          "sha256": "4455c27e2b29043d29ae1d5e417b2d8d3f1bd18af2a7f6f4ec071d8bae92a19f"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.5355883403662762,
+          "file": "tile-7-2-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46542,
+          "gpuBytes": 101152,
+          "sha256": "8b07c0e3708122df8c2a3d8e194ea01b8e819024a8464179f611905b762f2c42"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-7-2-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170047,
+          "gpuBytes": 372280,
+          "sha256": "542b3e0ec08e9b4b2b167caf01ae77ef7bc9fb6c5cdf4c4ce4f67c974a0c452a"
+        }
+      ]
+    },
+    {
+      "id": "0-3",
+      "min": [
+        -68.7637698905029,
+        -0.4432667019637024,
+        0.6653109375002847
+      ],
+      "max": [
+        -13.332278401997307,
+        3.2950561007471753,
+        4.850682031250284
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.1503455758951584,
+          "file": "tile-0-3-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3912,
+          "gpuBytes": 8512,
+          "sha256": "baf3c5c6feb94146014c43ca730a8e06145db3ea9195e751d2cfabf3b4dd2921"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.2331607986913025,
+          "file": "tile-0-3-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13209,
+          "gpuBytes": 28192,
+          "sha256": "a3f36232440408414bf9c4d03422fea99db6bf88c918d8a11dea0bfd2375e166"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 1.187915253902744,
+          "file": "tile-0-3-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46921,
+          "gpuBytes": 101152,
+          "sha256": "14ae228740948cb879226e16d8763e0459ae3aa9b84e5522d7569e88c0b56d64"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-0-3-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 174736,
+          "gpuBytes": 376848,
+          "sha256": "e19566e3ab56c5cd8a2566b487baae9cb8ea12a6839c41ac21606125067df103"
+        }
+      ]
+    },
+    {
+      "id": "1-3",
+      "min": [
+        -13.332278401997307,
+        1.02467986699177,
+        0.6653109375002847
+      ],
+      "max": [
+        -9.170913240955482,
+        3.042553977793537,
+        4.850682031250284
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.3048364636350662,
+          "file": "tile-1-3-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3887,
+          "gpuBytes": 8512,
+          "sha256": "f90c2ce7bd6db81a88b2aed51f269d3ca6767718141c17c9088343469a88887f"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.1716314738203839,
+          "file": "tile-1-3-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13090,
+          "gpuBytes": 28192,
+          "sha256": "f8dffc7704f5d6de1011eaadfae4ed29aa4e34993e95befd25c0b564a5481add"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.10145847497661897,
+          "file": "tile-1-3-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46615,
+          "gpuBytes": 101152,
+          "sha256": "c10b7f80b9f518e6ee9f3c8512bac1dcb2e7d10719ef56bb6ef7883046fb3a1e"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-1-3-l3.bin.gz",
+          "vertices": 6881,
+          "indices": 40320,
+          "bytes": 176700,
+          "gpuBytes": 381472,
+          "sha256": "94242baee77ddfe7b5f93a2a1c0202e9b26f8afc1e38e0f1d19ed7fe7b32f3e2"
+        }
+      ]
+    },
+    {
+      "id": "2-3",
+      "min": [
+        -9.170913240955482,
+        -0.5051282571999667,
+        0.6653109375002847
+      ],
+      "max": [
+        -5.064302884664183,
+        3.5163829336275128,
+        4.850682031250284
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 2.9723119489313063,
+          "file": "tile-2-3-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3858,
+          "gpuBytes": 8512,
+          "sha256": "2864324b90016864b685677268f1a1aaf3e9137d401dd87283d85b735bd363c7"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 2.96308201531517,
+          "file": "tile-2-3-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13000,
+          "gpuBytes": 28192,
+          "sha256": "278a832f6cf91107a121cd5424915044e9cb1ba6db547bfc83228953b28ab2ae"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 2.943755758421781,
+          "file": "tile-2-3-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46551,
+          "gpuBytes": 101152,
+          "sha256": "edd382ab7e76e02cd4bf03789d79c751513b48f46e81dff592a668dfd708987e"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-2-3-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 173257,
+          "gpuBytes": 376848,
+          "sha256": "cb417bfb49f03fefc9a2a78186a5380e3d404f7aa1e3d48fc7c758dd22e66564"
+        }
+      ]
+    },
+    {
+      "id": "3-3",
+      "min": [
+        -5.064302884664183,
+        1.3277217067697915,
+        0.6653109375002847
+      ],
+      "max": [
+        -0.8481829188717414,
+        3.5071535136514362,
+        4.850682031250284
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2910409829272118,
+          "file": "tile-3-3-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3848,
+          "gpuBytes": 8512,
+          "sha256": "6c2b3fce08e808d731df73e8d7b505a44e15d6a70428e23c91262eaa01edae36"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.18449234717219065,
+          "file": "tile-3-3-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12981,
+          "gpuBytes": 28192,
+          "sha256": "be617a60ca29a7a2a56e6768fb5de3bfeca38ac034acc5bab21bb0a3da0a1c9c"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.09637839685160543,
+          "file": "tile-3-3-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46358,
+          "gpuBytes": 101152,
+          "sha256": "14dea83fcc03c6d34bceff29e6837f416de02c27c74f8463410597479e021010"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-3-3-l3.bin.gz",
+          "vertices": 6881,
+          "indices": 40320,
+          "bytes": 175139,
+          "gpuBytes": 381472,
+          "sha256": "81c3ab9e0ea6af03c1bab5039bd687c2aa5e0e24d6e54306f26394732dc24481"
+        }
+      ]
+    },
+    {
+      "id": "4-3",
+      "min": [
+        -0.8481829188717414,
+        1.211164036100939,
+        0.6653109375002847
+      ],
+      "max": [
+        3.258427437419558,
+        3.5144630771024854,
+        4.850682031250284
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.17651740381382286,
+          "file": "tile-4-3-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3902,
+          "gpuBytes": 8512,
+          "sha256": "a0a662e2284127ba3915fcdb208ee9511d1508420e2b9d32538043cd890b32fb"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.08121534399314623,
+          "file": "tile-4-3-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13100,
+          "gpuBytes": 28192,
+          "sha256": "b2722833ed45a3241a3381df56910916d48b310c2e0f4ff852c4b0246c72971d"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.04734394103296058,
+          "file": "tile-4-3-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46581,
+          "gpuBytes": 101152,
+          "sha256": "8938dccc272c85ebbf9fdb7c21ee318006cdae54c850dafb31f3e716c0606337"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-4-3-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 174704,
+          "gpuBytes": 376848,
+          "sha256": "e01aa1a291d1099cf5a57c14aeb08ed772aeb3067e298c3a511c8dea309bbfd8"
+        }
+      ]
+    },
+    {
+      "id": "5-3",
+      "min": [
+        3.258427437419558,
+        1.8562817678629533,
+        0.6653109375002847
+      ],
+      "max": [
+        7.419792598461382,
+        3.5580990993926003,
+        4.850682031250284
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.23590554591549395,
+          "file": "tile-5-3-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3853,
+          "gpuBytes": 8512,
+          "sha256": "bc3bcf2f49124efc7e5a4ab1e6b1a79a2ef2a0c7ece1b0c2311f1d0f6f7d8f65"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.12631465216358828,
+          "file": "tile-5-3-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12976,
+          "gpuBytes": 28192,
+          "sha256": "30d54524727d078d083794d31f58b63106472fc86dbcda49bc23a3d006c3667e"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.08439597497666584,
+          "file": "tile-5-3-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46413,
+          "gpuBytes": 101152,
+          "sha256": "75f535b74e4dc57fc878f8e0198c0721a09def775bbf2a789745cf34db6671d6"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-5-3-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 171838,
+          "gpuBytes": 376848,
+          "sha256": "ba1a6e6906e25f971e358db6c83630f24ab7516053685b539f37c6409c1b50c9"
+        }
+      ]
+    },
+    {
+      "id": "6-3",
+      "min": [
+        7.419792598461382,
+        1.6742785168620853,
+        0.6653109375002847
+      ],
+      "max": [
+        11.581157759503299,
+        3.253777603428472,
+        4.850682031250284
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.20949249049557928,
+          "file": "tile-6-3-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3861,
+          "gpuBytes": 8512,
+          "sha256": "2ef04dd0bace447c7f30d7bee1ad53d3ef05891b054d5c6d6d42e089ff0ddc5f"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.13354352515074863,
+          "file": "tile-6-3-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12960,
+          "gpuBytes": 28192,
+          "sha256": "d879e13d79387fae3875d7a2e2832db907a4dd0e505b1b5087aca7b37500772f"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.0769985140391376,
+          "file": "tile-6-3-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46314,
+          "gpuBytes": 101152,
+          "sha256": "8223adeb1d5a8089aaae96670e39dd619050c125d79139dcbfd546d1a6a08c64"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-6-3-l3.bin.gz",
+          "vertices": 6881,
+          "indices": 40320,
+          "bytes": 173281,
+          "gpuBytes": 381472,
+          "sha256": "bc9e1776cd38b4cfa120a746363a3b8113e3b9ec66822722be80c346da71f34d"
+        }
+      ]
+    },
+    {
+      "id": "7-3",
+      "min": [
+        11.581157759503299,
+        0.5300793012515577,
+        0.6653109375002847
+      ],
+      "max": [
+        63.39160036780727,
+        3.2406027942010813,
+        4.850682031250284
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.6956174143010896,
+          "file": "tile-7-3-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3877,
+          "gpuBytes": 8512,
+          "sha256": "5644f3e5de3f9a3de271c0342574525250fa7a84ee76a92e3dc4989f10d14fb2"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.6945096534266382,
+          "file": "tile-7-3-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13099,
+          "gpuBytes": 28192,
+          "sha256": "6dbfa1aee9e4c0214571e5bc2622bec9b420bb1b71fee5718fd26f7e1f384db2"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.3654150165672472,
+          "file": "tile-7-3-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46329,
+          "gpuBytes": 101152,
+          "sha256": "0b18e097bd16c12feb619daed66a55fd9bb1dc2bc51ee5ae0b1bb4c49f380df4"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-7-3-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 171787,
+          "gpuBytes": 376848,
+          "sha256": "66c58cde31c6179db66b032f979062507043fec60b4b11fbc2b73545ef07e874"
+        }
+      ]
+    },
+    {
+      "id": "0-4",
+      "min": [
+        -68.7637698905029,
+        -0.41683997035415066,
+        -3.465704687499715
+      ],
+      "max": [
+        -13.332278401997307,
+        3.2857982248898243,
+        0.6653109375002847
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.2252924879246838,
+          "file": "tile-0-4-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3916,
+          "gpuBytes": 8512,
+          "sha256": "328c006902259f88d18bbfd5ad9d6f2038ccfae386edd0c2fed70c788ef0bef0"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.1572961805621587,
+          "file": "tile-0-4-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13176,
+          "gpuBytes": 28192,
+          "sha256": "4441718642b3dbdb17a457089cd4774c4172a3bcae8f92bcea5a269a47712dc3"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 1.1921868527187092,
+          "file": "tile-0-4-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46812,
+          "gpuBytes": 101152,
+          "sha256": "921bf5373b6882267586c0f0c38d432d403f022b9b96f841e3dd73546894314f"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-0-4-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 171917,
+          "gpuBytes": 372280,
+          "sha256": "1f22c29ce4f684cb0ec28f7ada6c325742612e296b9583ef29358aa15135fb3a"
+        }
+      ]
+    },
+    {
+      "id": "1-4",
+      "min": [
+        -13.332278401997307,
+        0.900922869313791,
+        -3.465704687499715
+      ],
+      "max": [
+        -9.170913240955482,
+        3.1642015361797724,
+        0.6653109375002847
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2189857052119697,
+          "file": "tile-1-4-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3876,
+          "gpuBytes": 8512,
+          "sha256": "80e4d5bfbb56e444505b306279bf48f92077393c2b6e8104f0c6c49dc22b4de0"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.16095642798276488,
+          "file": "tile-1-4-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13045,
+          "gpuBytes": 28192,
+          "sha256": "0349e6794db23c7b7c161c9687535bc4feaafebbbc0916051480ae98c1c31437"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.0835017794199886,
+          "file": "tile-1-4-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46500,
+          "gpuBytes": 101152,
+          "sha256": "c58842531306a3945360d115ddb1262e39a3cd898cdd8024062ba61ce568a054"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-1-4-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 174232,
+          "gpuBytes": 376848,
+          "sha256": "18c0933ef536ae110f2f0456b49eebe9ff22f16491bc4ac6f80c415dc52124b4"
+        }
+      ]
+    },
+    {
+      "id": "2-4",
+      "min": [
+        -9.170913240955482,
+        1.5907497884616513,
+        -3.465704687499715
+      ],
+      "max": [
+        -5.064302884664183,
+        3.583434308021575,
+        0.6653109375002847
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.3272020426712312,
+          "file": "tile-2-4-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3859,
+          "gpuBytes": 8512,
+          "sha256": "50c4c0f20c5eae578b2b20c1e5bc77d6fc15f58c73e124b8ce848cc1500f0e0d"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.16641333639636624,
+          "file": "tile-2-4-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12980,
+          "gpuBytes": 28192,
+          "sha256": "7b27a9acbaa1dffeadc15c0a5c72d25495fbe0c03d7b5906f5330f0990a12afb"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.10880205071999383,
+          "file": "tile-2-4-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46514,
+          "gpuBytes": 101152,
+          "sha256": "9606a8047ad65595389030281b0793b68da9d0b994cb05fd912023ff39bebf12"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-2-4-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170303,
+          "gpuBytes": 372280,
+          "sha256": "6fbcad34ca71b83cc6bdeda06a7c266079e50d20a29f220303deea733b23addc"
+        }
+      ]
+    },
+    {
+      "id": "3-4",
+      "min": [
+        -5.064302884664183,
+        1.6686938355525118,
+        -3.465704687499715
+      ],
+      "max": [
+        -0.8481829188717414,
+        3.7540383169550577,
+        0.6653109375002847
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.23720400074514103,
+          "file": "tile-3-4-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3852,
+          "gpuBytes": 8512,
+          "sha256": "016a87d0fd2ab960a28f47f592c37590f578ddbd4324cf8e8e5008e05a6db715"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.19783872168388905,
+          "file": "tile-3-4-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12964,
+          "gpuBytes": 28192,
+          "sha256": "e050f2e70fcf5f055465054a3a66c18d10b9aeaeb14ec13beb5bd084fb305ca3"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.10285703454693929,
+          "file": "tile-3-4-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46377,
+          "gpuBytes": 101152,
+          "sha256": "b2469ee53856c38c3c27d31982510f9d0a0990dffff2256db16191f44575c963"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-3-4-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 172530,
+          "gpuBytes": 376848,
+          "sha256": "b88bb1596bb6785b3af2e03afe4bf881fec8c68223adb2255593db00b0a563a5"
+        }
+      ]
+    },
+    {
+      "id": "4-4",
+      "min": [
+        -0.8481829188717414,
+        0.9698601980227426,
+        -3.465704687499715
+      ],
+      "max": [
+        3.258427437419558,
+        3.05930856190423,
+        0.6653109375002847
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.1673157385413786,
+          "file": "tile-4-4-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3890,
+          "gpuBytes": 8512,
+          "sha256": "51cd47e3b970b85d205ded2a27df9a5e34b0d68cc8346d2296d80e045ebc9c1c"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.11008551733822314,
+          "file": "tile-4-4-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13057,
+          "gpuBytes": 28192,
+          "sha256": "3441b404585302f84df314002c55cc46c8981e496ffd473c494d7a24a13bebc2"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.060464639527401776,
+          "file": "tile-4-4-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46541,
+          "gpuBytes": 101152,
+          "sha256": "bd14e467676ddb5e81bd1d1801d2d5b4060c87206ff83af6321ce9f45c96c7b8"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-4-4-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 172291,
+          "gpuBytes": 372280,
+          "sha256": "d60571a3198bf829dc30747df9e9550711416979b62285be1bb437a8d52143fd"
+        }
+      ]
+    },
+    {
+      "id": "5-4",
+      "min": [
+        3.258427437419558,
+        1.6600680698613086,
+        -3.465704687499715
+      ],
+      "max": [
+        7.419792598461382,
+        3.606053946384764,
+        0.6653109375002847
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2314399868894892,
+          "file": "tile-5-4-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3873,
+          "gpuBytes": 8512,
+          "sha256": "ddda1618529c35b87b257dd10299d59686f2a9dbdb18a41a141e430911558570"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.12413236182061427,
+          "file": "tile-5-4-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13016,
+          "gpuBytes": 28192,
+          "sha256": "368a90b3bd314621a8eded6bce0eda2afa125bdec35b0f66eb87c7bb0b4d72ad"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.08702518640241141,
+          "file": "tile-5-4-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46481,
+          "gpuBytes": 101152,
+          "sha256": "c370d50643a2fb188b6b52c6f9edb22ea1424c3644b18bace69c2f6ae689bc54"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-5-4-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170603,
+          "gpuBytes": 372280,
+          "sha256": "111bbeec882188019d2ab12147030f25fb1807f3db7218a109be3092434c6aa0"
+        }
+      ]
+    },
+    {
+      "id": "6-4",
+      "min": [
+        7.419792598461382,
+        1.8042451784980238,
+        -3.465704687499715
+      ],
+      "max": [
+        11.581157759503299,
+        3.7281432055423656,
+        0.6653109375002847
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.21939557540044152,
+          "file": "tile-6-4-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3837,
+          "gpuBytes": 8512,
+          "sha256": "ae243f7f0c9a5f0720a8d15d475b808ba835a513472c0ee277bddd8421e91cbc"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.15524037579799854,
+          "file": "tile-6-4-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12926,
+          "gpuBytes": 28192,
+          "sha256": "5757bbb0c15d4a636d19b0330749e3caca71e7d6a6908f8531af2243d6f3ec62"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.07847397790631128,
+          "file": "tile-6-4-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46279,
+          "gpuBytes": 101152,
+          "sha256": "e708abae1f8e7ca5ce561af9232c221875d52045d521b5dd9551bf45011f1157"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-6-4-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 170772,
+          "gpuBytes": 376848,
+          "sha256": "d4816f1b98b251a404f41cb610d38b91b3aa7205668ee872fff88ea40628b7c7"
+        }
+      ]
+    },
+    {
+      "id": "7-4",
+      "min": [
+        11.581157759503299,
+        -0.3662567355349535,
+        -3.465704687499715
+      ],
+      "max": [
+        63.39160036780727,
+        3.080485056000672,
+        0.6653109375002847
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.8806741968097964,
+          "file": "tile-7-4-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3882,
+          "gpuBytes": 8512,
+          "sha256": "f8779c600fb368e407a4190362e18eab3074346014e5b39eb9ba5cc98eb61d00"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.8967031196131798,
+          "file": "tile-7-4-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13076,
+          "gpuBytes": 28192,
+          "sha256": "377af52b75e9f1c0ccc3646e1d35bf602456fc515bff3442d5c871edc378a6a5"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.3820460285301266,
+          "file": "tile-7-4-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46417,
+          "gpuBytes": 101152,
+          "sha256": "7dda5db974e0d39b267e9ee5eff4a4652cc8857e0e41921eed69e8c13a4c4f18"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-7-4-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170403,
+          "gpuBytes": 372280,
+          "sha256": "5cd1cd59112ba9d0b7908fd951119e14417bc5466bd5039206a145b5811f804b"
+        }
+      ]
+    },
+    {
+      "id": "0-5",
+      "min": [
+        -68.7637698905029,
+        -0.30614756646271724,
+        -7.542364843749715
+      ],
+      "max": [
+        -13.332278401997307,
+        2.538298003809612,
+        -3.465704687499715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.6920966626948042,
+          "file": "tile-0-5-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3928,
+          "gpuBytes": 8512,
+          "sha256": "a6c93062fd11c662ce542781919e9f316da24dd20c9d43da4e48649d7e9ee132"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.3765677658543956,
+          "file": "tile-0-5-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13192,
+          "gpuBytes": 28192,
+          "sha256": "4af8b67d653bebd8fde3f42af319b025cbc8d999ee89ab4fcd20fe7ecaa0bd9c"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.6054983317600273,
+          "file": "tile-0-5-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46871,
+          "gpuBytes": 101152,
+          "sha256": "a5995c0e4d6a92662b667d2bfa9e96a7734b65aeb7f720a470b02b9839a2ee50"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-0-5-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 172254,
+          "gpuBytes": 372280,
+          "sha256": "c4fe9e9c3a105871e5027ca3677f5acfaca266828cbcd7fbc7d50c326545b171"
+        }
+      ]
+    },
+    {
+      "id": "1-5",
+      "min": [
+        -13.332278401997307,
+        0.6635441724957334,
+        -7.542364843749715
+      ],
+      "max": [
+        -9.170913240955482,
+        2.0907497884616513,
+        -3.465704687499715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.17545164897080934,
+          "file": "tile-1-5-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3860,
+          "gpuBytes": 8512,
+          "sha256": "03d732e9d4c8451fc207a462a171c19ca475e72c5e2670fd609f3ba92acd5d06"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.11910460608335227,
+          "file": "tile-1-5-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13000,
+          "gpuBytes": 28192,
+          "sha256": "898d14a0a2de63f74a58a59db30f75bc1523eb2cdf99298458079c71144fa1d9"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.06071270166120546,
+          "file": "tile-1-5-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46525,
+          "gpuBytes": 101152,
+          "sha256": "28b7c46a77372e7c3bebac4455f273025ddcf5e02a2e24b53d5e10af4be38f87"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-1-5-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 174055,
+          "gpuBytes": 376848,
+          "sha256": "134b70b105e1ab9f1832c0c72827a8d00bb8d4cb393b30001ff9f612674193a1"
+        }
+      ]
+    },
+    {
+      "id": "2-5",
+      "min": [
+        -9.170913240955482,
+        0.5945691653360643,
+        -7.542364843749715
+      ],
+      "max": [
+        -5.064302884664183,
+        3.075072999586197,
+        -3.465704687499715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2572961315707447,
+          "file": "tile-2-5-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3861,
+          "gpuBytes": 8512,
+          "sha256": "6c97e3db02ef278b55a20c66cf29b3dff7b6b1f0306dea6de8969f980e4af329"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.11372629492611885,
+          "file": "tile-2-5-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12972,
+          "gpuBytes": 28192,
+          "sha256": "e47ab520060a8e0b1e61b3ca1ad5030ece3bcd3453295aa3cf504be38f376007"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.13266349206642536,
+          "file": "tile-2-5-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46472,
+          "gpuBytes": 101152,
+          "sha256": "695d494731aa348807e26f2588ad7699a2c85b3648017d9131870234a3a44b0e"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-2-5-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170759,
+          "gpuBytes": 372280,
+          "sha256": "001c06db9cafc9f0528433fc6c474d67c6b2a437044bb957b0824d68196c385e"
+        }
+      ]
+    },
+    {
+      "id": "3-5",
+      "min": [
+        -5.064302884664183,
+        0.8339472864905426,
+        -7.542364843749715
+      ],
+      "max": [
+        -0.8481829188717414,
+        3.39647809971704,
+        -3.465704687499715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2340450071604936,
+          "file": "tile-3-5-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3862,
+          "gpuBytes": 8512,
+          "sha256": "333d68693b64c4752fdfa55584183422e1aabc8af319308ae6a65428937cd4e5"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.19525526360784928,
+          "file": "tile-3-5-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12965,
+          "gpuBytes": 28192,
+          "sha256": "e12c771799e2fa44abe1fd6691c22b29c778c132516748bee1fc4ceba0a823fe"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.10654093347271498,
+          "file": "tile-3-5-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46384,
+          "gpuBytes": 101152,
+          "sha256": "dc0b973a43643fe51bb0d5d15ca43977f749f29e24c656c94a9709e826f1ac40"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-3-5-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 172241,
+          "gpuBytes": 376848,
+          "sha256": "b12fd6dca8f1b4c2ebaf7b9e2d58d9cd51da5375569934f324f2d89f66bf6d3f"
+        }
+      ]
+    },
+    {
+      "id": "4-5",
+      "min": [
+        -0.8481829188717414,
+        0.7694527799812014,
+        -7.542364843749715
+      ],
+      "max": [
+        3.258427437419558,
+        2.8232187351754603,
+        -3.465704687499715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.10377157810794291,
+          "file": "tile-4-5-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3895,
+          "gpuBytes": 8512,
+          "sha256": "a419f87078e588e324818ad26d4b56c5fde211b574848db6c576bafd3d4f37f1"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.0631577735627542,
+          "file": "tile-4-5-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13057,
+          "gpuBytes": 28192,
+          "sha256": "a811fddeb63694f5ad4bd4af224763029766268f634af822dc6a8922e3147185"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.05093901647842003,
+          "file": "tile-4-5-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46523,
+          "gpuBytes": 101152,
+          "sha256": "a692c8b48d060078bdd0865e95c6298d0576c22b4a7584d44e5814eae0e97e1d"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-4-5-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 172730,
+          "gpuBytes": 372280,
+          "sha256": "59a84bacc4a175163b3b6990287a6dc1dc2074adbeb9a3ebab998ac56134dc0d"
+        }
+      ]
+    },
+    {
+      "id": "5-5",
+      "min": [
+        3.258427437419558,
+        1.1025352039511813,
+        -7.542364843749715
+      ],
+      "max": [
+        7.419792598461382,
+        3.4149778261054196,
+        -3.465704687499715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.15648884335223334,
+          "file": "tile-5-5-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3873,
+          "gpuBytes": 8512,
+          "sha256": "a6d5ae1069cc657e01f246f57ec02fbc8c1ecf7856de8b5135e8933b8c756e4e"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.10701646013951605,
+          "file": "tile-5-5-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13016,
+          "gpuBytes": 28192,
+          "sha256": "babe977f1cea3b0b1d651ff4b5b263073e36cc6a1045b1f60d6075e9072d480a"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.0635380460194197,
+          "file": "tile-5-5-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46494,
+          "gpuBytes": 101152,
+          "sha256": "e0714fcb7d4ba02c9b477fb3cedaa0cfb5104572e4884927855631bce9e443d7"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-5-5-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170873,
+          "gpuBytes": 372280,
+          "sha256": "51d358d1d33078d5bd14a353b2b3a342ef2d525007e18d387faa9fe939ae1d97"
+        }
+      ]
+    },
+    {
+      "id": "6-5",
+      "min": [
+        7.419792598461382,
+        1.9771325158031474,
+        -7.542364843749715
+      ],
+      "max": [
+        11.581157759503299,
+        3.4155146094907542,
+        -3.465704687499715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.2798406154837476,
+          "file": "tile-6-5-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3827,
+          "gpuBytes": 8512,
+          "sha256": "4a44ca2326bc4a837bf46e3394305051a11ac5767f107fb81914869ad227b75c"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.1778418107051718,
+          "file": "tile-6-5-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12906,
+          "gpuBytes": 28192,
+          "sha256": "e00b7e64cb9cff6dec1c7bd0adb9e062a1283651377a14ddbcc79e6975f8ebd4"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.10734422512253339,
+          "file": "tile-6-5-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46388,
+          "gpuBytes": 101152,
+          "sha256": "23db4c707e19256a666a457307fcfba08edb15bb19159d9ed6ded3ac89479112"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-6-5-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 171724,
+          "gpuBytes": 376848,
+          "sha256": "244afb0ac9f2e5797061a7352da3ec309c4da35be49443d6ea94ac25167118e2"
+        }
+      ]
+    },
+    {
+      "id": "7-5",
+      "min": [
+        11.581157759503299,
+        -0.3650206892529947,
+        -7.542364843749715
+      ],
+      "max": [
+        63.39160036780727,
+        3.040814083864499,
+        -3.465704687499715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.9029235189462721,
+          "file": "tile-7-5-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3884,
+          "gpuBytes": 8512,
+          "sha256": "ec544d840e16d2e65fcef04fcfd401696ea2274bdc55b6b2c07a72bd38c53537"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.7960532004963005,
+          "file": "tile-7-5-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13074,
+          "gpuBytes": 28192,
+          "sha256": "8a2010067b3646986f0606776bd510320a3dc87885920b0765b0739e13ef085e"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.4821274181250037,
+          "file": "tile-7-5-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46443,
+          "gpuBytes": 101152,
+          "sha256": "281f3e4eaf534e7dde0d718633e30c59f9e2f2363d7452212a21dba25a66c001"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-7-5-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 169540,
+          "gpuBytes": 372280,
+          "sha256": "1c38c193f9c86777f9e2e187084dd0b1aa8014286e17293a640e1da60e7e2b58"
+        }
+      ]
+    },
+    {
+      "id": "0-6",
+      "min": [
+        -68.7637698905029,
+        0.02084518229929988,
+        -11.727735937499714
+      ],
+      "max": [
+        -13.332278401997307,
+        3.1507379367107218,
+        -7.542364843749715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.461256817037485,
+          "file": "tile-0-6-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3914,
+          "gpuBytes": 8512,
+          "sha256": "e5a44c2d26af86b646de2e55d64a7d7bc8568a012392c024bf5be2fa0a6268c8"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.9171239651006091,
+          "file": "tile-0-6-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13150,
+          "gpuBytes": 28192,
+          "sha256": "5da2a6aea28f9123d7c9ae5bbf5e6d9546f70fc12581995af29cfd5182a021d8"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.7818711460680874,
+          "file": "tile-0-6-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46660,
+          "gpuBytes": 101152,
+          "sha256": "23a9828d595efb0ef6b9c7ea6e651996f0c008c4705b4082b6dbe6965d10f84c"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-0-6-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 172285,
+          "gpuBytes": 376848,
+          "sha256": "956c05e8fab2c7cc37bc45659fde4f1f04d8355bef560a0e88d737a1e8b67537"
+        }
+      ]
+    },
+    {
+      "id": "1-6",
+      "min": [
+        -13.332278401997307,
+        0.6347061619474488,
+        -11.727735937499714
+      ],
+      "max": [
+        -9.170913240955482,
+        2.5410293284426975,
+        -7.542364843749715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.22650790418935163,
+          "file": "tile-1-6-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3877,
+          "gpuBytes": 8512,
+          "sha256": "10e9280197b56c3955f5856d44aab8e56f4cfaccd0375702c2e99a5ddc0d96aa"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.1312674783977983,
+          "file": "tile-1-6-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13034,
+          "gpuBytes": 28192,
+          "sha256": "88b02d9da0fc18b2edb60056c0236ff4b2f656c14db4cc7557023edbbe4d62d5"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.07078199182232692,
+          "file": "tile-1-6-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46397,
+          "gpuBytes": 101152,
+          "sha256": "c547566d16048c73c9021a9c48d757a23fffb31c185887a12c94b0b5d4e36691"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-1-6-l3.bin.gz",
+          "vertices": 6881,
+          "indices": 40320,
+          "bytes": 175025,
+          "gpuBytes": 381472,
+          "sha256": "e5b0de012583a0404b612f13e7a0c4191b85051200819053ad7c2ef27e0133e1"
+        }
+      ]
+    },
+    {
+      "id": "2-6",
+      "min": [
+        -9.170913240955482,
+        0.4930092436422193,
+        -11.727735937499714
+      ],
+      "max": [
+        -5.064302884664183,
+        1.916894130966267,
+        -7.542364843749715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.21278028651607284,
+          "file": "tile-2-6-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3869,
+          "gpuBytes": 8512,
+          "sha256": "5f724c183154dff914e57a9e1397447968eda7ed57f0439050392db76045f87d"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.13059438269472867,
+          "file": "tile-2-6-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13002,
+          "gpuBytes": 28192,
+          "sha256": "a8567b8fa702735e67728b63d5be8f73ee165034bdf2cd73055242bff2ab1f47"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.06532641015728258,
+          "file": "tile-2-6-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46606,
+          "gpuBytes": 101152,
+          "sha256": "7a8dca3c47bb473935ed73d8570bbb8147b3f4c3957dfe6917eb6779810d350a"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-2-6-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 173974,
+          "gpuBytes": 376848,
+          "sha256": "4114917f23fcb86fea9e0ee28fa03fa56972be99eb4cb57a536510bfa0248514"
+        }
+      ]
+    },
+    {
+      "id": "3-6",
+      "min": [
+        -5.064302884664183,
+        0.3545633227468038,
+        -11.727735937499714
+      ],
+      "max": [
+        -0.8481829188717414,
+        2.3808885991090714,
+        -7.542364843749715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.21432187135519243,
+          "file": "tile-3-6-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3881,
+          "gpuBytes": 8512,
+          "sha256": "8d108c5d6501c978d06737f8c25f19b305cad96b50ebf2f5660e50db02318df9"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.11383519690364508,
+          "file": "tile-3-6-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13048,
+          "gpuBytes": 28192,
+          "sha256": "0194d9891fa476ea72cdc7fe2a1d0a4d343ad706fd54a73c0e157cf928fdada8"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.06871129785260455,
+          "file": "tile-3-6-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46526,
+          "gpuBytes": 101152,
+          "sha256": "3fbaf5700f843f2fc7dd4c26f5d7fee841dccca1a67db73a6c4c0f0844d684ba"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-3-6-l3.bin.gz",
+          "vertices": 6881,
+          "indices": 40320,
+          "bytes": 176101,
+          "gpuBytes": 381472,
+          "sha256": "24b799b309f98ccce6c038950d73f728ef33952ca2e35cc3636b976ca8d6f663"
+        }
+      ]
+    },
+    {
+      "id": "4-6",
+      "min": [
+        -0.8481829188717414,
+        0.4836047006791826,
+        -11.727735937499714
+      ],
+      "max": [
+        3.258427437419558,
+        2.3878797173683957,
+        -7.542364843749715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.21985191617716793,
+          "file": "tile-4-6-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3873,
+          "gpuBytes": 8512,
+          "sha256": "bc75796d32df3287866c77e9c657bd29071dcdd5b74b1a83f3307cfc63283e4d"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.0860845819064977,
+          "file": "tile-4-6-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13052,
+          "gpuBytes": 28192,
+          "sha256": "19dbe935f042fa01fee39c54d77f46dde79371801df560cf30449dbda84e06c3"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.06588509191784397,
+          "file": "tile-4-6-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46523,
+          "gpuBytes": 101152,
+          "sha256": "f531be04db682f154a5a8622a2eb7ce20be67d4db39182faee0a9dbe5255a4a2"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-4-6-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 174169,
+          "gpuBytes": 376848,
+          "sha256": "9a3a1f56f582706fd0d089b6e3e5b74a13cab8ddc16d8fb2972315c084399332"
+        }
+      ]
+    },
+    {
+      "id": "5-6",
+      "min": [
+        3.258427437419558,
+        1.055165325837032,
+        -11.727735937499714
+      ],
+      "max": [
+        7.419792598461382,
+        2.8870018509852526,
+        -7.542364843749715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.17851970664462602,
+          "file": "tile-5-6-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3888,
+          "gpuBytes": 8512,
+          "sha256": "4fdbe363e54523258b9e553480be6f18b45c0b49501679f91cb3dc12efb5459a"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.10495931298400007,
+          "file": "tile-5-6-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13045,
+          "gpuBytes": 28192,
+          "sha256": "c53f7a035617b1401ec39d608848200c3c9b2f2f5863b1b3d12b9b46143b94a0"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.0508899442127837,
+          "file": "tile-5-6-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46315,
+          "gpuBytes": 101152,
+          "sha256": "830f821abca09f0edbc48943dd282e1c81442818d436260829873a7c0c2dda4b"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-5-6-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 171231,
+          "gpuBytes": 376848,
+          "sha256": "9d783aa3e13e9e541fcf9bc855f350d3a146ea573ee3f20da475a43732c2ff6e"
+        }
+      ]
+    },
+    {
+      "id": "6-6",
+      "min": [
+        7.419792598461382,
+        1.2545077841602343,
+        -11.727735937499714
+      ],
+      "max": [
+        11.581157759503299,
+        3.3578445547268605,
+        -7.542364843749715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 0.3018156610280349,
+          "file": "tile-6-6-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3867,
+          "gpuBytes": 8512,
+          "sha256": "79f2032d7b0d14cec0815279a6a3f2123d133172e235b73b14dffbcac38e84ee"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.19319296973077815,
+          "file": "tile-6-6-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13014,
+          "gpuBytes": 28192,
+          "sha256": "b9382dc493d3fc62b1a8f6e49dce28ec6cf584229bbe08f9d33a2ed8dfda7d6c"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.11472693811139312,
+          "file": "tile-6-6-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46497,
+          "gpuBytes": 101152,
+          "sha256": "d9279f5368aff7ec6d78f16fd34dc69d3ac2aaca1a65a2b2e230258597fcbb7b"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-6-6-l3.bin.gz",
+          "vertices": 6881,
+          "indices": 40320,
+          "bytes": 174588,
+          "gpuBytes": 381472,
+          "sha256": "11fe1e11a6a196806f65bb121a27b8c3923ee3265d90278b7882fb894b081cb4"
+        }
+      ]
+    },
+    {
+      "id": "7-6",
+      "min": [
+        11.581157759503299,
+        -0.30808659324760174,
+        -11.727735937499714
+      ],
+      "max": [
+        63.39160036780727,
+        3.1206717800533545,
+        -7.542364843749715
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.2146357295468355,
+          "file": "tile-7-6-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3873,
+          "gpuBytes": 8512,
+          "sha256": "b3acd5f78b5cc3a00f14996ad26fc052d50698c71de66b1c316a53239827b135"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.8417775968088906,
+          "file": "tile-7-6-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13121,
+          "gpuBytes": 28192,
+          "sha256": "8f4f74920a571dc3ec6eb7520b5e7a447b0c982090058ed873ef76f92177cafa"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.5465100502129623,
+          "file": "tile-7-6-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46469,
+          "gpuBytes": 101152,
+          "sha256": "7e0bddec8b9e0d3c0df7dceb3b5c9ad5e8ff4d08d98a9ab5f7d5d23fbd6ec2f3"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-7-6-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 173109,
+          "gpuBytes": 376848,
+          "sha256": "98fd20c6780d69a3650334b13211f73b0b7ecda4738648f431018c6267ef63cf"
+        }
+      ]
+    },
+    {
+      "id": "0-7",
+      "min": [
+        -68.7637698905029,
+        -1.02243214572569,
+        -63.452400000000026
+      ],
+      "max": [
+        -13.332278401997307,
+        3.2101235678009448,
+        -11.727735937499714
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.6017472906612906,
+          "file": "tile-0-7-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3885,
+          "gpuBytes": 8512,
+          "sha256": "a2bee143c16cadbc44dba89ebcdb496bf950ed1248d4f809c1aca0d46e332b08"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.750064792071738,
+          "file": "tile-0-7-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13067,
+          "gpuBytes": 28192,
+          "sha256": "a72513d84385b948f0141684fa4af466104d282cdb5c0d065f1a9bc724a1071f"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 1.2247723186996584,
+          "file": "tile-0-7-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46729,
+          "gpuBytes": 101152,
+          "sha256": "5f77f8d6f93e8c753f25dbceb6629818ce604503d0a4c7ad3f2ed74a22b45d80"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 1.1102230246251565e-16,
+          "file": "tile-0-7-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 171438,
+          "gpuBytes": 372280,
+          "sha256": "bb14a4b2e79bd5ee1ad34c950d56d14ada52b3321c6464ec87ef4d5536c4688c"
+        }
+      ]
+    },
+    {
+      "id": "1-7",
+      "min": [
+        -13.332278401997307,
+        0.11432158048278063,
+        -63.452400000000026
+      ],
+      "max": [
+        -9.170913240955482,
+        3.0463395901192594,
+        -11.727735937499714
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.0535544240253656,
+          "file": "tile-1-7-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3858,
+          "gpuBytes": 8512,
+          "sha256": "054ffb430ee00ccc6921cc5ccec75f183a8695a5cdacdb65b3c21e1edd5a91d4"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.8245803027952205,
+          "file": "tile-1-7-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12953,
+          "gpuBytes": 28192,
+          "sha256": "e570580c0942412ec3b07277d2c1a417b20a560ebc4e0269161d1e2f8b971241"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.3893877245130142,
+          "file": "tile-1-7-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46209,
+          "gpuBytes": 101152,
+          "sha256": "13fc3dd0e8e59f330e50be38442d1d7ec93fadac7d16d775a881584afff7f180"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-1-7-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 169948,
+          "gpuBytes": 376848,
+          "sha256": "2d69e77301a511ec7b7708b6d01abdc927aa55baca21164e5378c5ea4d2749d1"
+        }
+      ]
+    },
+    {
+      "id": "2-7",
+      "min": [
+        -9.170913240955482,
+        0.10486279410832544,
+        -63.452400000000026
+      ],
+      "max": [
+        -5.064302884664183,
+        2.996143758952932,
+        -11.727735937499714
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.4103835095099924,
+          "file": "tile-2-7-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3859,
+          "gpuBytes": 8512,
+          "sha256": "4397286b77da46535b401e2e052ffe9c857ce170813d0f4ffff0cd196658bd2a"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.7641724974030206,
+          "file": "tile-2-7-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12893,
+          "gpuBytes": 28192,
+          "sha256": "47e55a11a83355e102f7a779b6f841323f63904ef1277afe6ef56dff9923c783"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.5047409648272287,
+          "file": "tile-2-7-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46288,
+          "gpuBytes": 101152,
+          "sha256": "000925d51ff38c3e37b9a1c9f77603d596b47d43bf04ab86b185aa317a6f5013"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-2-7-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 167812,
+          "gpuBytes": 372280,
+          "sha256": "d332d56fcf195de10908c83f5049e969d4305e95aaf1df4d3ea6986eeaade595"
+        }
+      ]
+    },
+    {
+      "id": "3-7",
+      "min": [
+        -5.064302884664183,
+        0.06319597797183885,
+        -63.452400000000026
+      ],
+      "max": [
+        -0.8481829188717414,
+        3.0129681675452153,
+        -11.727735937499714
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.4974130096789655,
+          "file": "tile-3-7-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3845,
+          "gpuBytes": 8512,
+          "sha256": "00f04ef112f354a7f490a54924c80f646364dadb2da11eb7503a024433bdb759"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.7325683870177695,
+          "file": "tile-3-7-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12886,
+          "gpuBytes": 28192,
+          "sha256": "11e07777bd158b62c502e0c0e9b98a45d16676552e5f978adbd57b1493e3b53d"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.3869614295113135,
+          "file": "tile-3-7-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46227,
+          "gpuBytes": 101152,
+          "sha256": "5076b57f4d7c93b9ced9b83cb1ad3c50abf1d7187ebd21572e28e0e27ccebe2d"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-3-7-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 170735,
+          "gpuBytes": 376848,
+          "sha256": "bb1a47353bff900a61fc84f7cfcdfe1b78b0cb0c6c0b52f7d2ace6b2204bf0bc"
+        }
+      ]
+    },
+    {
+      "id": "4-7",
+      "min": [
+        -0.8481829188717414,
+        0.05733299287150628,
+        -63.452400000000026
+      ],
+      "max": [
+        3.258427437419558,
+        2.8795185640382095,
+        -11.727735937499714
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.554730509968898,
+          "file": "tile-4-7-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3859,
+          "gpuBytes": 8512,
+          "sha256": "4079035a57b27893785fe83048b79f41fc8620130153c2f436065373e077b0c2"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.9840854236690438,
+          "file": "tile-4-7-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12959,
+          "gpuBytes": 28192,
+          "sha256": "2d3870c792ef3fba44041c895a1c9395b765a4e6a88a9bba2548fe51c95a62e0"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.5116876303124581,
+          "file": "tile-4-7-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46361,
+          "gpuBytes": 101152,
+          "sha256": "e5252012de617e46beaf640411341c3446132e868c820d7fb454cf24a41996e6"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-4-7-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 169648,
+          "gpuBytes": 372280,
+          "sha256": "3443a569f03e6c53b831c3aee46af914b6193d69eb59b462ddd9c29f6df22288"
+        }
+      ]
+    },
+    {
+      "id": "5-7",
+      "min": [
+        3.258427437419558,
+        0.05548594169109178,
+        -63.452400000000026
+      ],
+      "max": [
+        7.419792598461382,
+        2.9878798252041125,
+        -11.727735937499714
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.5464957499931293,
+          "file": "tile-5-7-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3851,
+          "gpuBytes": 8512,
+          "sha256": "a24c96e25458d2545bb39d1ddb4b92d5d098fcaa4e01495f58defc00c7ac1ee8"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.3732634212129287,
+          "file": "tile-5-7-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12930,
+          "gpuBytes": 28192,
+          "sha256": "a570c017e52ec1c2225b47f72304a9c74e25e326e74e87e3c1b0f319c9ac633b"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.4902788391310935,
+          "file": "tile-5-7-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46351,
+          "gpuBytes": 101152,
+          "sha256": "45a06c887155356607e9dd69c2615d2bc59db831d94a2253694566c3315390fb"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-5-7-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 168792,
+          "gpuBytes": 372280,
+          "sha256": "fe32363ddc5de8fd7a2ff924d9563c52a2245733ea1cb56a526ecab164c1dcc1"
+        }
+      ]
+    },
+    {
+      "id": "6-7",
+      "min": [
+        7.419792598461382,
+        0.05488627785488087,
+        -63.452400000000026
+      ],
+      "max": [
+        11.581157759503299,
+        3.0112444191352292,
+        -11.727735937499714
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.0696856266088677,
+          "file": "tile-6-7-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3886,
+          "gpuBytes": 8512,
+          "sha256": "b8bdc4e62839af295757b00cb872f7faab7bffa10624c7f071bbd3c5941470d5"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 1.0266390600210467,
+          "file": "tile-6-7-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 13025,
+          "gpuBytes": 28192,
+          "sha256": "f517163a6193bba4662feb94fc8f81cc7d7d7a535d14c4edafe4a87a759f65d0"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.45089948388110057,
+          "file": "tile-6-7-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46338,
+          "gpuBytes": 101152,
+          "sha256": "6efc02a7654c27a208423de87bb96e566db7dcf8c01342567a5f4d7856ae43b2"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-6-7-l3.bin.gz",
+          "vertices": 6798,
+          "indices": 39828,
+          "bytes": 171204,
+          "gpuBytes": 376848,
+          "sha256": "9b30e4a0fb9469c44251d9658fcf94afe4583c04c4f8155d1fa7d5958872c9c6"
+        }
+      ]
+    },
+    {
+      "id": "7-7",
+      "min": [
+        11.581157759503299,
+        -0.3207971046707681,
+        -63.452400000000026
+      ],
+      "max": [
+        63.39160036780727,
+        3.0122549732711694,
+        -11.727735937499714
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "stride": 8,
+          "errorKm": 1.11953606324434,
+          "file": "tile-7-7-l0.bin.gz",
+          "vertices": 161,
+          "indices": 840,
+          "bytes": 3860,
+          "gpuBytes": 8512,
+          "sha256": "2081694108d53bd824e49290f066f919024b4ed173983a1f0a1237de4fd2b6dc"
+        },
+        {
+          "level": 1,
+          "stride": 4,
+          "errorKm": 0.9742996782412998,
+          "file": "tile-7-7-l1.bin.gz",
+          "vertices": 521,
+          "indices": 2880,
+          "bytes": 12999,
+          "gpuBytes": 28192,
+          "sha256": "c5553df456e16bf7cb16b0d883f3ffd1901bc974ce617195882029f48451242c"
+        },
+        {
+          "level": 2,
+          "stride": 2,
+          "errorKm": 0.733525209846986,
+          "file": "tile-7-7-l2.bin.gz",
+          "vertices": 1841,
+          "indices": 10560,
+          "bytes": 46448,
+          "gpuBytes": 101152,
+          "sha256": "42a398a4aa5942b0348a2a3493001adb7d346a5318b2cf12a9aed7ee5ebaf171"
+        },
+        {
+          "level": 3,
+          "stride": 1,
+          "errorKm": 0.0,
+          "file": "tile-7-7-l3.bin.gz",
+          "vertices": 6716,
+          "indices": 39342,
+          "bytes": 170644,
+          "gpuBytes": 372280,
+          "sha256": "00fa1108900ba4cc1ae63fde59c4dcc394e92f218f383f1bf9d0eb4be332a7ee"
+        }
+      ]
+    }
+  ],
+  "fullSurfaceTriangles": 812800,
+  "fullTiledTriangles": 847090,
+  "maxNearHeightMetres": 2503.8371582031136,
+  "scope": "regional production candidate, not global Earth handoff"
+}

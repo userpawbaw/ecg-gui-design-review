@@ -1,0 +1,61 @@
+{
+  "filesVerified": 256,
+  "compressedGeometryBytes": 15084720,
+  "heightGain": 1.5,
+  "fullTiledTriangles": 847090,
+  "states": [
+    {
+      "name": "broad",
+      "visible": 64,
+      "triangles": 737372,
+      "maxError": 1.0800531573628644,
+      "histogram": [
+        0,
+        1,
+        10,
+        53
+      ],
+      "reductionComparedWithFullTiled": 0.12952342726274657
+    },
+    {
+      "name": "approach",
+      "visible": 63,
+      "triangles": 833976,
+      "maxError": 3.3679572357714745e-15,
+      "histogram": [
+        0,
+        0,
+        0,
+        63
+      ],
+      "reductionComparedWithFullTiled": 0.015481235760072765
+    },
+    {
+      "name": "ridge",
+      "visible": 45,
+      "triangles": 596140,
+      "maxError": 4.5839139932038695e-15,
+      "histogram": [
+        0,
+        0,
+        0,
+        45
+      ],
+      "reductionComparedWithFullTiled": 0.29624951303875624
+    },
+    {
+      "name": "outside",
+      "visible": 0,
+      "triangles": 0,
+      "maxError": 0,
+      "histogram": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "reductionComparedWithFullTiled": 1
+    }
+  ],
+  "scope": "CPU data/selection/frustum verification; not GPU timing or pixel fidelity"
+}

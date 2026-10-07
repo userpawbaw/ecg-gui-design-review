@@ -1,0 +1,30 @@
+{
+  "visibleTiles": 46,
+  "drawTriangles": 609416,
+  "residentGpuBytes": 26799224,
+  "queued": 0,
+  "pending": 0,
+  "fullSurfaceTriangles": 812800,
+  "fullTiledTriangles": 847090,
+  "heightGain": 1.5,
+  "maxErrorPixels": 3.105118750951891e-15,
+  "highTextures": true,
+  "errors": [],
+  "camera": [
+    10.00000000000001,
+    6.000000000000011,
+    16.000000000000014
+  ],
+  "progress": 0.9999999999999993,
+  "renderer": {
+    "frame": 1143,
+    "calls": 114,
+    "triangles": 1499530,
+    "points": 0,
+    "lines": 0
+  },
+  "viewport": [
+    1116,
+    884
+  ]
+}

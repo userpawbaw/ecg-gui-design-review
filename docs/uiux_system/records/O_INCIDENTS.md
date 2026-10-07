@@ -279,3 +279,27 @@ native wheel: content hit/scrollTop1254→3914/서고및심장파형도달. fixe
 
 ### 재발 방지와 자동화 상태
 고정프레임/harness검증외에실제휠로첫화면→서고왕복경로를검증한다.
+
+## O-013. 정적 호스트의 gzip 자동 해제로 지형 타일 이중 디코딩 실패
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [코드] [캡처] |
+| 상태 | 해결 / 실제3구도 로딩오류0 |
+| 연결 | D-092, F-060 |
+| 원인 | fetch가이미gzipdecode한payload에DecompressionStream을다시적용 |
+
+### 증상
+build성공후실제미리보기geometry0/Tile decode failed. coarse0-0 실제8512bytes를gzip으로다시해제했다.
+
+### 원인
+서버의압축전송처리와애플리케이션자체압축해제를구분하지않았다. 원본3895bytes/해제8512bytes 실제대조.
+
+### 조치
+gzipmagic1f8b인경우만해제,예상geometrybyteLength검증. 실패tile무한재요청방지. 기존Vite config.mjs에새entry를추가해terrain.html이실제build에포함되도록복구. 초기PCFSoftShadowMap경고는현재Three공식PCFShadowMap으로변경.
+
+### 검증과 한계
+IAB3구도/왕복새capture에서errors0,geometry렌더확인. 256gzip원본과index/hash검증. GPU성능과전체전이는미검증.
+
+### 재발 방지와 자동화 상태
+압축자산은원본압축/HTTP자동decode양쪽을지원하고length를검증한다. build출력에별도entry존재확인후실제로딩·화면을확인한다. geometry 검증script는추가했으나자동HTTPdecode두경로회귀테스트는미추가.

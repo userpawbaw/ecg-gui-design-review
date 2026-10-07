@@ -1,8 +1,10 @@
 """Real detailed mountain patch, connected surface, matched lighting height comparison."""
-import bpy,numpy as np,math,json,time,hashlib
+import bpy,numpy as np,math,json,time,hashlib,argparse
 from pathlib import Path
 from mathutils import Vector
-R=Path(__file__).resolve().parents[2]; P=R/'assets/processed/a-terrain-detailed-20261007'; O=R/'verification/a-terrain-detailed-20261007'; O.mkdir(exist_ok=True)
+args=argparse.ArgumentParser();args.add_argument('--gain',type=float);args.add_argument('--output',default='verification/a-terrain-detailed-20261007');args=args.parse_args()
+gains=[args.gain] if args.gain is not None else [1,2.5]
+R=Path(__file__).resolve().parents[2]; P=R/'assets/processed/a-terrain-detailed-20261007'; O=R/args.output; O.mkdir(exist_ok=True)
 meta=json.loads((P/'metadata.json').read_text()); near=np.load(P/'height-metres.npy'); far=np.load(P/'far-height.npy')
 bpy.ops.wm.read_factory_settings(use_empty=True); s=bpy.context.scene;s.render.engine='CYCLES';s.cycles.samples=64;s.cycles.use_denoising=True
 prefs=bpy.context.preferences.addons['cycles'].preferences;prefs.compute_device_type='OPTIX';prefs.get_devices()
@@ -48,26 +50,26 @@ for tag,bounds in [('broad',fb),('near',nb)]:
   clamp=ns.new('ShaderNodeClamp');lk.new(mathnode('MULTIPLY',edge,20),clamp.inputs[0])
 mix=ns.new('ShaderNodeMixRGB');lk.new(clamp.outputs[0],mix.inputs[0]);lk.new(images[0].outputs[0],mix.inputs[1]);lk.new(images[1].outputs[0],mix.inputs[2]);lk.new(mix.outputs[0],bs.inputs['Base Color'])
 meshes={}
-for gain in [1,2.5]:
+for gain in gains:
  mesh=bpy.data.meshes.new('real terrain gain '+str(gain));vs=np.stack([x,y,height*gain-curve],-1).reshape(-1,3);mesh.from_pydata(vs.tolist(),[],faces);mesh.update();uv=mesh.uv_layers.new()
  uvvalues=np.stack([(lo-fb[0])/(fb[2]-fb[0]),(la-fb[1])/(fb[3]-fb[1])],-1).reshape(-1,2)
  for f in mesh.polygons:
   f.use_smooth=True
   for li in f.loop_indices:uv.data[li].uv=uvvalues[mesh.loops[li].vertex_index]
  mesh.materials.append(mat);meshes[gain]=mesh
-obj=bpy.data.objects.new('Connected detailed mountain surface',meshes[1]);s.collection.objects.link(obj)
+obj=bpy.data.objects.new('Connected detailed mountain surface',meshes[gains[0]]);s.collection.objects.link(obj)
 bpy.ops.object.camera_add();cam=bpy.context.object;s.camera=cam;cam.data.lens=42;cam.data.clip_start=.01;cam.data.clip_end=500
 frames=[]
 shots=[('low-orbit',(35,-70,45),(0,0,1.5)),('cloud-approach',(18,-25,14),(0,0,1.6)),('ridge-close',(10,-16,6),(0,1,1.8))]
 for shot,pos,target in shots:
  cam.location=pos;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat('-Z','Y').to_euler();sky.altitude=0 # surface skylight is evaluated at terrain, not the distant camera
- for gain in [1,2.5]:
+ for gain in gains:
   obj.data=meshes[gain];tag=f'{shot}-height{gain:g}';s.render.filepath=str(O/(tag+'.png'));start=time.time();bpy.ops.render.render(write_still=True)
   frames.append({'name':tag,'camera_km':pos,'target_km':target,'slant_distance_km':(Vector(pos)-Vector(target)).length,'height_gain':gain,'sha256':hashlib.sha256((O/(tag+'.png')).read_bytes()).hexdigest(),'seconds':time.time()-start})
   (O/'render-manifest.json').write_text(json.dumps({'renderer':bpy.app.version_string,'samples':64,'vertices':rows*cols,'target_latlon':meta['target'],'sun_local_direction':list(light),'units':'local km; spherical curvature approximation, not true orbital surveyed camera','scope':'detailed terrain/light candidate; broad satellite and near satellite blend; no VDB or archive integration','frames':frames},indent=2)+'\n')
   print('RENDER READY',tag,flush=True)
 bpy.ops.file.pack_all()
-obj.data=meshes[1]
-bpy.ops.wm.save_as_mainfile(filepath=str(P/'detailed-terrain.blend'),compress=True)
-native=P/'detailed-terrain.blend'
-(O/'native-asset.json').write_text(json.dumps({'file':str(native.relative_to(R)),'bytes':native.stat().st_size,'sha256':hashlib.sha256(native.read_bytes()).hexdigest(),'height_gain_default':1,'alternative_mesh_height_gain':2.5,'packed_textures':True,'scope':'native Blender scene; not a web-ready GLB or runtime integration'},indent=2)+'\n')
+obj.data=meshes[gains[0]]
+native=P/('detailed-terrain.blend' if args.gain is None else f'detailed-terrain-height{args.gain:g}.blend')
+bpy.ops.wm.save_as_mainfile(filepath=str(native),compress=True)
+(O/'native-asset.json').write_text(json.dumps({'file':str(native.relative_to(R)),'bytes':native.stat().st_size,'sha256':hashlib.sha256(native.read_bytes()).hexdigest(),'height_gain_default':gains[0],'alternative_mesh_height_gain':gains[-1],'packed_textures':True,'scope':'native Blender scene; not a web-ready GLB or runtime integration'},indent=2)+'\n')

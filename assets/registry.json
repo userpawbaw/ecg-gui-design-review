@@ -3001,6 +3001,52 @@
         "scripts/assets/render-detailed-terrain.py"
       ],
       "review": "D091 internal concept use. Actual map samples/DEM density and gain recorded; global orbit/web integration pending."
+    },
+    {
+      "id": "jotunheimen-height15-scene-20261007",
+      "title": "jotunheimen-height15-scene-20261007",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://www.pgc.umn.edu/data/arcticdem/"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "EOX Sentinel-2 cloudless 2023 / PGC ArcticDEM",
+      "original": null,
+      "processed": {
+        "file": "assets/processed/a-terrain-detailed-20261007/detailed-terrain-height1.5.blend",
+        "bytes": 18713134,
+        "sha256": "2db3813e8fa9674c82af621bc79c923b885f510dfbc0c773f18b4bd551dc0be0"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb/terrain-regional.ts"
+      ],
+      "review": "D092 user approved height1.5; terrain detail KEEP; regional LOD/lighting TUNE; manifest pins256 geometry files"
+    },
+    {
+      "id": "jotunheimen-tiled-lod-20261007",
+      "title": "jotunheimen-tiled-lod-20261007",
+      "kind": "terrain",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://www.pgc.umn.edu/data/arcticdem/"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "EOX Sentinel-2 cloudless 2023 / PGC ArcticDEM",
+      "original": null,
+      "processed": {
+        "file": "prototype/spikes/a-climb/public/terrain-lod/manifest.json",
+        "bytes": 108923,
+        "sha256": "13ddb8d00676657e9693061b00b5f4ebd4c5b0db801881e3904c5febeb93e89a"
+      },
+      "used_by": [
+        "prototype/spikes/a-climb/terrain-regional.ts"
+      ],
+      "review": "D092 user approved height1.5; terrain detail KEEP; regional LOD/lighting TUNE; manifest pins256 geometry files"
     }
   ],
   "rejected": [

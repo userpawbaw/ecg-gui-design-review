@@ -1,3 +1,5 @@
+2026-10-07 최신 D092/F060: [1.5× 지형·화면별LOD 실제 검토](ECG_A_terrain_lod_review_2026-10-07.md). 사용자지형디테일KEEP/1.5×시험승인. 별도terrain.html에서타일별4LOD/지연로드/frustum/cache적용,실제3구도·왕복오류0. 높은시점광학·확대지역인계·VDB·서고는각시점보완후전체연결. 기본지구미교체/사용자구름제작피드백1/2 유지.
+
 2026-10-07 최신 — D091/F059: [실제 상세 지형·고시점 광학 제작 검토](ECG_A_detailed_terrain_production_review_2026-10-07.md). EOX113타일/국소32mDEM 연결지형6장·높은시점off/on4장·packed Blender 원본 검증. 1×지형 다음통합 추천,2.5×근접질감/높은시점광학 TUNE. 다음거리인계→승인VDB→같은서고 연속전이. 사용자제작피드백1/2 유지, 기본웹미통합. 아래 이전 연구단계는 이 결과로 갱신한다.
 
 2026-10-07 지형 품질 피드백·재조사 — D090/F058: [상세지형·완성asset·고궤도광학](ECG_A_terrain_assets_and_optics_research_2026-10-07.md). cloud목표645km/low1490km·평균grid/거친mesh감사. low부터고해상도map/native상세/아트용terrain허용,high극지edge+night+대기룩별도. 다음원본/완성asset조달→새camera·조형/빛완성대표frame→웹인계. 서고·구름shapeKEEP/피드백1/2 유지.

@@ -1,0 +1,107 @@
+{
+  "frames": [
+    {
+      "name": "broad",
+      "visibleTiles": 64,
+      "drawTriangles": 715300,
+      "residentGpuBytes": 26799224,
+      "queued": 0,
+      "pending": 0,
+      "fullSurfaceTriangles": 812800,
+      "fullTiledTriangles": 847090,
+      "heightGain": 1.5,
+      "maxErrorPixels": 0.9494479155847968,
+      "highTextures": true,
+      "errors": [],
+      "camera": [
+        35,
+        45,
+        70
+      ],
+      "progress": 1.970106079827685e-106,
+      "renderer": {
+        "frame": 4281,
+        "calls": 128,
+        "triangles": 1430600,
+        "points": 0,
+        "lines": 0
+      },
+      "viewport": [
+        1116,
+        884
+      ],
+      "camera_triangle_reduction_vs_full_tiled": 0.15557969046972575,
+      "image_sha256": "8466f9b6423b7d1352db4d0099776bfeba3aec45e931573cee7b9260b556a178"
+    },
+    {
+      "name": "approach",
+      "visibleTiles": 62,
+      "drawTriangles": 820700,
+      "residentGpuBytes": 26799224,
+      "queued": 0,
+      "pending": 0,
+      "fullSurfaceTriangles": 812800,
+      "fullTiledTriangles": 847090,
+      "heightGain": 1.5,
+      "maxErrorPixels": 2.2814361658405985e-15,
+      "highTextures": true,
+      "errors": [],
+      "camera": [
+        18.00000000000001,
+        14.000000000000021,
+        25.00000000000003
+      ],
+      "progress": 0.49999999999999967,
+      "renderer": {
+        "frame": 6235,
+        "calls": 128,
+        "triangles": 1694180,
+        "points": 0,
+        "lines": 0
+      },
+      "viewport": [
+        1116,
+        884
+      ],
+      "camera_triangle_reduction_vs_full_tiled": 0.031153714481341965,
+      "image_sha256": "2a0074e4cab7bc9887ab029d93ca0bfd33158f6be2250771d7bc4caeeed187eb"
+    },
+    {
+      "name": "ridge",
+      "visibleTiles": 46,
+      "drawTriangles": 609416,
+      "residentGpuBytes": 26799224,
+      "queued": 0,
+      "pending": 0,
+      "fullSurfaceTriangles": 812800,
+      "fullTiledTriangles": 847090,
+      "heightGain": 1.5,
+      "maxErrorPixels": 3.105118750951891e-15,
+      "highTextures": true,
+      "errors": [],
+      "camera": [
+        10.00000000000001,
+        6.000000000000011,
+        16.000000000000014
+      ],
+      "progress": 0.9999999999999993,
+      "renderer": {
+        "frame": 1143,
+        "calls": 114,
+        "triangles": 1499530,
+        "points": 0,
+        "lines": 0
+      },
+      "viewport": [
+        1116,
+        884
+      ],
+      "camera_triangle_reduction_vs_full_tiled": 0.28057703431748693,
+      "image_sha256": "c82591aa3111bf5bf4ed114d3213267af611c043e9883ed433f7023c76b626f8"
+    }
+  ],
+  "verified": "real IAB UI broad -> approach -> ridge -> broad -> approach; final captures; no current loading errors",
+  "scope": "primary selection counts differ from renderer total including shadow draws; not GPU time or hardware benchmark",
+  "old_warning": "PCFSoftShadowMap warning before replacement with PCFShadowMap; old log retained",
+  "native_sha256": "2db3813e8fa9674c82af621bc79c923b885f510dfbc0c773f18b4bd551dc0be0"
+}

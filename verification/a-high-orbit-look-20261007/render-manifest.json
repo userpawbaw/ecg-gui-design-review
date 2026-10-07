@@ -1,0 +1,74 @@
+{
+  "renderer": "4.5.3 LTS",
+  "samples": 48,
+  "polar_relief": "0.002 Earth-radius bounded artistic packed-map proxy, not measured ice DEM",
+  "atmosphere": "radial single-color scattering volume, not full spectral Bruneton Rayleigh/Mie",
+  "density_scale_height_earth_radii": 0.002,
+  "surface_density": 24,
+  "frames": [
+    {
+      "name": "earth-hero-volume-off",
+      "camera": [
+        1.510242223739624,
+        0.6392138004302979,
+        3.6637513637542725
+      ],
+      "sun": [
+        0.07558458298444748,
+        -0.9811000227928162,
+        0.1781284660100937
+      ],
+      "atmosphere": "volume-off",
+      "seconds": 7.511684894561768,
+      "sha256": "77024c8b96be06599551454d527662bbbdba07807280a7b84e3344710f19c19c"
+    },
+    {
+      "name": "earth-hero-volume-on",
+      "camera": [
+        1.510242223739624,
+        0.6392138004302979,
+        3.6637513637542725
+      ],
+      "sun": [
+        0.07558458298444748,
+        -0.9811000227928162,
+        0.1781284660100937
+      ],
+      "atmosphere": "volume-on",
+      "seconds": 6.985829591751099,
+      "sha256": "25099dbf47938f8e94ece7b206a2918a4fa5d260f6a9a1b617d332a2cf907e85"
+    },
+    {
+      "name": "high-orbit-volume-off",
+      "camera": [
+        1.0240758657455444,
+        0.40945693850517273,
+        2.5842819213867188
+      ],
+      "sun": [
+        0.07558458298444748,
+        -0.9811000227928162,
+        0.1781284660100937
+      ],
+      "atmosphere": "volume-off",
+      "seconds": 6.418081045150757,
+      "sha256": "631c7682d6cf40f72b87429990ea6c006f882943cacf56e6270a6dc5386379ee"
+    },
+    {
+      "name": "high-orbit-volume-on",
+      "camera": [
+        1.0240758657455444,
+        0.40945693850517273,
+        2.5842819213867188
+      ],
+      "sun": [
+        0.07558458298444748,
+        -0.9811000227928162,
+        0.1781284660100937
+      ],
+      "atmosphere": "volume-on",
+      "seconds": 7.926532506942749,
+      "sha256": "937278769580c4c6f312fbe366494f7456a4c73a4e2e380eda51e7a55cc11d11"
+    }
+  ]
+}

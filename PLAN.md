@@ -395,3 +395,6 @@ JangaFX10종 원본 획득·hash/조건/metadata 고정, Cycles4.5.3/RTX3070Opti
 
 ### 2026-10-07 Moto 실제 에셋/빛·북반구 경로 검토 — D087/F055
 활성source/liveEdge/텍스처4K3종·구체64²/낮밤mix/2스크롤캡처 재확인. 남반구제작비최적화의도근거없음. 북반구육지anchor우선·남미대안5구도비교추천. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_moto_earth_northern_route_review_2026-10-07.md. 현재runtime/경로/자산재사용미변경,서고·구름형태KEEP/제작피드백1/2 유지.
+
+### 2026-10-07 상세 지형·고시점 광학 실제 제작 — D091/F059
+EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1025grid/광역513grid/연결407676vertices 제작. Jotunheimen3camera×height1/2.5의6PNG, packed Blender18.7MB 재개봉검증. 지표하늘광 보정전6장 보존. 1×능선·계곡 가독성개선/2.5×근접경사질감TUNE. 별도Moto4K번역+극지proxy/단색방사volume의off/on4PNG, 초기4장보존/과장극지축소·대기광보정. 높은시점대기광·해양hotspot·극지재질은TUNE. 최종웹/구름/서고연속전이미통합, 기본웹미변경·서고/구름shapeKEEP·사용자피드백1/2유지. 다음1×지역인계→global/high광학·거리LOD→승인VDB같은태양/receiver→같은서고연속경로→전체후보피드백2. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_detailed_terrain_production_review_2026-10-07.md.

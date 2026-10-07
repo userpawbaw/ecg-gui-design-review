@@ -2909,6 +2909,98 @@
         "scripts/assets/render-norway-region.py"
       ],
       "review": "D-089 internal concept trial, metadata records source resolution, resampling, datum and remote full-file hash limit; exhibition review pending"
+    },
+    {
+      "id": "eox-detailed-broad-20261007",
+      "title": "eox-detailed-broad-20261007",
+      "kind": "texture",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://cloudless.eox.at/documentation/usage"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "EOX Sentinel-2 cloudless 2023 / PGC ArcticDEM",
+      "original": null,
+      "processed": {
+        "file": "assets/processed/a-terrain-detailed-20261007/broad.jpg",
+        "bytes": 2259488,
+        "sha256": "41cc646653f9886ed79e8a6cef2a7d9534e41d531fdc3f2c93af410a198c3a6d"
+      },
+      "used_by": [
+        "scripts/assets/render-detailed-terrain.py"
+      ],
+      "review": "D091 internal concept use. Actual map samples/DEM density and gain recorded; global orbit/web integration pending."
+    },
+    {
+      "id": "eox-detailed-near-20261007",
+      "title": "eox-detailed-near-20261007",
+      "kind": "texture",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://cloudless.eox.at/documentation/usage"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "EOX Sentinel-2 cloudless 2023 / PGC ArcticDEM",
+      "original": null,
+      "processed": {
+        "file": "assets/processed/a-terrain-detailed-20261007/near.jpg",
+        "bytes": 1329034,
+        "sha256": "ce4ab1015ab801e6ddd79219fa4e5e7d84535747eb68f33be573ee0f9fefa36b"
+      },
+      "used_by": [
+        "scripts/assets/render-detailed-terrain.py"
+      ],
+      "review": "D091 internal concept use. Actual map samples/DEM density and gain recorded; global orbit/web integration pending."
+    },
+    {
+      "id": "arcticdem-detailed-20261007",
+      "title": "arcticdem-detailed-20261007",
+      "kind": "terrain",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://www.pgc.umn.edu/data/arcticdem/"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "EOX Sentinel-2 cloudless 2023 / PGC ArcticDEM",
+      "original": null,
+      "processed": {
+        "file": "assets/processed/a-terrain-detailed-20261007/height-metres.npy",
+        "bytes": 4202628,
+        "sha256": "4552ae396ce2904c9bcc0b556e7a1677fded8edf9a6f0b1c933ee1c7cc94e7f1"
+      },
+      "used_by": [
+        "scripts/assets/render-detailed-terrain.py"
+      ],
+      "review": "D091 internal concept use. Actual map samples/DEM density and gain recorded; global orbit/web integration pending."
+    },
+    {
+      "id": "jotunheimen-detailed-scene-20261007",
+      "title": "jotunheimen-detailed-scene-20261007",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "page",
+        "page": "https://www.pgc.umn.edu/data/arcticdem/"
+      },
+      "licence": "unknown",
+      "attribution_required": true,
+      "attribution": "EOX Sentinel-2 cloudless 2023 / PGC ArcticDEM",
+      "original": null,
+      "processed": {
+        "file": "assets\\processed\\a-terrain-detailed-20261007\\detailed-terrain.blend",
+        "bytes": 18716458,
+        "sha256": "255d05bd35acee9e93fcc3a5f48ab3e96d508e76fd86ae1865436c43fadd0ec2"
+      },
+      "used_by": [
+        "scripts/assets/render-detailed-terrain.py"
+      ],
+      "review": "D091 internal concept use. Actual map samples/DEM density and gain recorded; global orbit/web integration pending."
     }
   ],
   "rejected": [

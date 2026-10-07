@@ -2290,3 +2290,26 @@ nodata 비중/지도정합/확대 품질이 부족하면 해당 지역의 Sentin
 
 ### 되돌려야 하는 조건
 정지low/entry에서도능선·골짜기읽힘/광학·시차/metadata획득/실제assetfootprint확인. geography정확성은Introvisual의필수아님,comparisonECG계약은유지. userfeedback1/2,서고·구름shapeKEEP유지.
+
+## D-091. 실제 고해상도 지도·Jotunheimen 상세 지형으로 가까운 구도 제작
+
+| | |
+|---|---|
+| 시점 | 2026-10-07 [대화] [설계] |
+| 상태 | 제작 진행 / 최종 지역·룩 채택과 분리 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자가D090조사후진행요청. 이전낮은내륙anchor보다능선이뚜렷한Jotunheimen목표를시험한다.
+
+### 검토한 선택지
+계정없는상태에서무료marketasset다운로드중단,임의구매,현재접근가능한EOX지역지도+nativeArcticDEM으로상세mesh먼저제작.
+
+### 고른 것과 근거
+세번째. Sentineltile실제응답확인,광역zoom10/국소zoom12파일·hash고정. 약28km국소32mDEM정보를평균500m로줄이지않고1025grid/513mesh로사용. 가까운camera1×/연출2.5×비교·낮은사선태양/분리된광역표면. 지도정합은provenance로,실측과다른높이gain은명시한다. high극지·야간·대기는별도룩제작범위다.
+
+### 버린 것과 이유
+무료표시가계정없는원본확보를보증하지않음. 거친map를계속확대하거나32mnative라고이름만바꾸지않음. 공개제품tile과native10m원본해상도는구별.
+
+### 되돌려야 하는 조건
+능선/정지그림자/레이어seam/지역광학quality확인후웹인계. asset교체도후보유지. 기본웹/서고·구름KEEP/사용자feedback1/2유지.

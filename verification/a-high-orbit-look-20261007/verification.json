@@ -1,0 +1,39 @@
+{
+  "frames_verified": 4,
+  "dimensions": [
+    1600,
+    900
+  ],
+  "source_pins": [
+    {
+      "file": "assets/source/moto-reference-20261007/day.webp",
+      "bytes": 314824,
+      "sha256": "d934e6257b5cc2cd9c4cf9c80bc571209ce08884f2a3b5aac52df2dbb9685b9a"
+    },
+    {
+      "file": "assets/source/moto-reference-20261007/night.webp",
+      "bytes": 185610,
+      "sha256": "5e453b1bf8abc83e3139e26adf9f9b1ff64587fa3008e847504ce576e2b5ad6b"
+    },
+    {
+      "file": "assets/source/moto-reference-20261007/bump.webp",
+      "bytes": 565976,
+      "sha256": "b77e3cbcf86eedf2026ddf796cd8012f77a53173d6f19141621b3e6741378297"
+    }
+  ],
+  "volume_contribution": [
+    {
+      "shot": "earth-hero",
+      "mean_absolute_RGB_delta": 2.7033050060272217,
+      "scope": "contribution check only, not visual quality score"
+    },
+    {
+      "shot": "high-orbit",
+      "mean_absolute_RGB_delta": 4.559230804443359,
+      "scope": "contribution check only, not visual quality score"
+    }
+  ],
+  "previous_trial_manifest_sha256": "7d7b262d7be4698977f15fffdd8c7e97ca5a5d6bdb9cec95f125c60d191d83e9",
+  "correction": "polar geometry gain .012 -> .002; atmosphere density 6 ->24 and scale height .0013 ->.002; still TUNE",
+  "runtime_integration": false
+}

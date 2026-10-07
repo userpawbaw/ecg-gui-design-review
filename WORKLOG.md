@@ -583,3 +583,7 @@ D088 remote b6471d0 완료상태에서재개. NASA500m C1원본/crop, ArcticDEM3
 
 ### 2026-10-07 지형smooth피드백교정·산업/완성asset조사 — D090/F058
 camera고도와target거리구별: low382/1490km,cloud76/645km; native32m을평균/약1kmmesh로축소. 능선표현필요없다는식의해석철회,실측과다른asset·gain허용반영. Cesium/Frostbite/SideFX/WorldCreator,EOX/Kartverket,무료photoscan/valley·Fab8KLOD와대기구현조사. EOXcaps실제accessPASS. 새지도tile/assetdownload/renderer미실행. 다음완성hero지형+high광학frame부터,기본웹/서고·구름KEEP/피드백1/2 유지.
+
+### 2026-10-07 상세 지형·고시점 광학 실제 제작 — D091/F059
+EOX2023 113타일(광역73m/국소18m)과ArcticDEM32m native범위read→국소1025grid/광역513grid/연결407676vertices 제작. Jotunheimen3camera×height1/2.5의6PNG, packed Blender18.7MB 재개봉검증. 지표하늘광 보정전6장 보존. 1×능선·계곡 가독성개선/2.5×근접경사질감TUNE. 별도Moto4K번역+극지proxy/단색방사volume의off/on4PNG, 초기4장보존/과장극지축소·대기광보정. 높은시점대기광·해양hotspot·극지재질은TUNE. 최종웹/구름/서고연속전이미통합, 기본웹미변경·서고/구름shapeKEEP·사용자피드백1/2유지. 다음1×지역인계→global/high광학·거리LOD→승인VDB같은태양/receiver→같은서고연속경로→전체후보피드백2. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_detailed_terrain_production_review_2026-10-07.md.
+검증: PNG10장1600×900/hash PASS, packed Blender 재개봉407676vertices/406400quads/texture2 PASS, 신규6Python syntax PASS, records194 PASS, diff check PASS. 원격commit전 work785da955/maincfef4300 확인. 기본웹/전체전이/GPU성능 검증과 별도; 이전 URL 정책 차단을 우회하지 않음.

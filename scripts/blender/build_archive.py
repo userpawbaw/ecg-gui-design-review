@@ -748,7 +748,7 @@ if args.pose and FIG is not None:                                 # D-050 shots:
         'desk': {'d4_desk': ((-0.15, 1.75, 1.55), (-1.75, 3.3, .55), 32)},      # second draft: the power strip + line in frame
         'wall': {'d5_wall': ((-0.25, 1.0, 1.5), (-3.4, 1.0, 1.3), 40)},
         'climb': {'d6_climb': ((2.45, 2.2, 1.7), (LAD_X, 3.85, 1.9), 52)},
-        'ar_floor': {'i1_wide': ((-0.35, 1.0, 1.8), (LAD_X + .5, 4.0, 1.2), 46), 'i2_climb': ((2.2, 2.3, 2.1), (LAD_X, 3.9, 1.9), 46),
+        'ar_floor': {'i1_wide': ((-0.35, 1.0, 1.8), (LAD_X + .5, 4.0, 1.2), 46), 'i2_climb': ((-0.1, 1.3, 1.9), (LAD_X, 3.8, 1.6), 46),
                      'i3_floor': (tuple(AW + Vector((-.55, -1.7, .65))), tuple(AW + Vector((0, 0, .38))), 38)},
     }[args.pose]
     if args.pose in ('chair', 'desk', 'wall', 'climb'): SHOTS = dict(SHOTS)

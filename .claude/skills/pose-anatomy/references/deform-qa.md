@@ -95,6 +95,11 @@ intersection, what it went into.
 - **Neighbour gate.** Skin within 4 cm at rest is never counted as intersecting, so a fold that passes through itself is
   invisible to `intersect`. Use `crease` and the close-ups.
 
+- **Intended contacts count as intersections.** The elbow resting on the knee, a hand on the shin, and a tightly folded leg
+  all show as FAIL. On 2026-10-08 the Mixamo auto-rig, which looked clearly better, scored worse (10 FAIL) than our
+  direct rig (8 FAIL). So `deform-check` **locates** problems; it does not **rank** candidates. Rank by the close-ups.
+  Planned: a contact allow-list taken from §1.2, and strain measured relative to the rest-fold zones.
+
 ### Outputs and views
 - 6 heatmaps from the figure's own sides: front, back, right, left, 3/4, top.
 - Close-ups of every non-hand FAIL cluster, looked at from outside the body.
@@ -139,3 +144,17 @@ Delta Mush / Corrective Smooth evens out strain but does **not** remove self-int
 - Twist sharing: Unity `HumanDescription.upperArmTwist`.
 - Delta Mush limits: CESCG "Improving Delta Mush Based Character Animation".
 - IK goals in retargeting: Unreal IK Retargeter (IK Goals), Maya HumanIK effectors — the same idea as §1.2.
+
+## 5. Rigging route (2026-10-08)
+Compared on the same mesh and pose: Mixamo auto-rig vs our Rigify fit vs our own Mixamo-named skeleton with Blender
+bone-heat weights.
+- Mixamo's joint placement and weights won by eye. Mixamo puts the elbow at a 50/50 shoulder→wrist split; our Rigify fit
+  had it ≈ 5 cm low.
+- Mixamo is a cloud service built on a template skeleton fitted with machine learning; its patent describes
+  diffusion-based weights (<https://patents.google.com/patent/US11170558>). It has no API; uploads are manual.
+- To carry Mixamo-quality weights to edited meshes (clothes, electrodes, a remeshed body): use robust skin-weight transfer
+  with inpainting (Epic, SIGGRAPH Asia 2023, <https://github.com/rin-23/RobustSkinWeightsTransferCode>).
+- Learned auto-rigging, if a new body must be rigged without Mixamo: UniRig (SIGGRAPH 2025, MIT code; checkpoint and data
+  licences separate, GPU needed), <https://github.com/VAST-AI-Research/UniRig>.
+- Geodesic voxel binding (Dionne & de Lasa 2013) is Maya's robust bind, not available in Blender.
+

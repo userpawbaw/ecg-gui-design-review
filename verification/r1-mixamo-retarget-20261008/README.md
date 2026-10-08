@@ -43,3 +43,26 @@ deform-check (8 FAIL) — what is left:
   intro cameras, left as game rigs leave them (user: Y Bot reads natural because it does not squash overlaps);
 - thigh into lower belly at the groin fold (27–41 cm²).
 Not yet checked: the user's auto-rigged file (pending), the ladder pose on this rig, web export.
+
+## 2026-10-08 (later) — Mixamo auto-rig of our mesh (user upload) vs the direct route
+Files from the user: our `ecg_figure_v3_for_mixamo.fbx` auto-rigged on mixamo.com, downloaded with `Sitting_Idle` and `Climbing_Ladder`
+(kept outside the repository like the other Mixamo files). Same 53,286 vertices, same order and faces as `body_v3`, so results drop into
+our tools unchanged. 65-bone Mixamo skeleton, weights on 52 bones, ≤ 4 influences per vertex.
+
+`autorig_vs_direct_sheet.jpg`: row 1 auto-rig sitting, row 2 direct route (m9), row 3 auto-rig ladder frame 1.
+`autorig_vs_direct_closeups.jpg`: top auto-rig, bottom direct — chest, buttock side, buttock back, left armpit.
+
+User verdict: "자동 리깅이 훨씬 퀄리티가 높은 것 같은데." AI comparison agrees:
+- buttock: round on the floor (direct: pointed V at the thigh–buttock junction even after flattening);
+- armpit and back: smooth, natural fold (direct: a web toward the lat);
+- chest/belly: clean without any ironing pass (direct needed a flip-iron pass);
+- elbow on the knee: the forearm rests on the knee as in the source (elbow–knee joint distance 6.9 cm).
+Where Mixamo put the joints: elbow at a 50/50 split of shoulder→wrist (0.238 / 0.239 m); our Rigify fit had 0.32 / 0.21 m — the elbow
+was ≈ 4.9 cm too low, one cause of the earlier arm problems.
+
+**deform-check disagrees with the eye here** (`autorig_sit_deform.json`: 10 FAIL vs direct 8). Its FAILs are the rest-fold strain
+(perineum, armpits) and *intended contacts* (forearm on the knee, hand on the shin, folded leg). So deform-check is a locator, not a
+ranking: compare candidates with the close-ups. It needs contact allow-lists and rest-fold normalisation (deform-qa.md §2).
+Ladder export faces +y (180° from the sitting file) — yaw to fix when placing it in the archive.
+
+Decision (user): continue with the auto-rig; the direct route stops here (script kept for reference).

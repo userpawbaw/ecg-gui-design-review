@@ -11,7 +11,9 @@ import {ShaderPass} from 'three/addons/postprocessing/ShaderPass.js';
 
 export type ArchiveManifest={lm_scale:number,groups:Record<string,{object:string,file?:string,vertex_color?:string}>,
  sun:{to_dir:number[],color:number[]},shots:Record<string,{pos:number[],look:number[],fov_v_deg:number}>,
- room:{min:number[],max:number[]},figure:{location:number[],heart:number[],heart_q_wxyz_blender:number[],hand_r:number[]}};
+ room:{min:number[],max:number[]},figure:{location:number[],heart:number[],heart_q_wxyz_blender:number[],hand_r:number[]},
+ // intro2 (REVIEW-R1-WEB-20261008 I-4/I-5): the climber on the ladder, before the floor-sitter (figure) appears
+ climb?:{location:number[],pitch_x_rad:number,glb:string,rung_dz:number}};
 
 // Packaged assets live in src/story/intro/assets/archive/ (tracked; prototype/v2/public/ is gitignored). Static URLs so
 // Vite fingerprints them; lightmap files are looked up by name from the manifest.
@@ -141,7 +143,7 @@ export async function createArchive(){
  const hq=fig.heart_q_wxyz_blender;                               // Blender (w, x, y, z) z-up → three y-up: (x, z, −y)
  const heartQuat=new THREE.Quaternion(hq[1],hq[3],-hq[2],hq[0]);
  return{manifest,room,dust,vol,mats,shared,lightRT,lightVP,sunTo,sunCol,renderSunDepth,
-  figureLocation:V(fig.location),heart:V(fig.heart),heartQuat,handR:V(fig.hand_r),
+  figureLocation:V(fig.location),heart:V(fig.heart),heartQuat,handR:V(fig.hand_r),climb:manifest.climb?{location:V(manifest.climb.location),pitch:manifest.climb.pitch_x_rad}:null,
   shot:(k:string)=>({pos:V(manifest.shots[k].pos),look:V(manifest.shots[k].look),fov:manifest.shots[k].fov_v_deg}),
   setFade(a:number){shared.uFade.value=a;room.visible=a>.002;dust.visible=a>.002;},
   update(t:number,frame:number,camera:THREE.Camera,depth:THREE.DepthTexture|null,shafts:number){

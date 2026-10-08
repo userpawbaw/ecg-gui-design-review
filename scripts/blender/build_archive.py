@@ -30,9 +30,11 @@ ap.add_argument('--signal', default='off', choices=['off', 'clean', 'noise'], he
 ap.add_argument('--bake', default='', help='bake lightmaps + export the web scene into this dir')
 ap.add_argument('--nofig', action='store_true', help='no figure (and no electrodes/leads): an empty room to compose a separately posed figure into (chair-motion-v3)')
 ap.add_argument('--export-rig', default='', help='v3 only: write the electrodes, yoke, leads, trunk, comm cable, power line, inside-body signal paths and RA ring as one rig.glb into this dir (web dash shader; IMPL_BRIEF_FIGURE_V3_WEB B2)')
+ap.add_argument('--intro2', action='store_true', help='REVIEW-R1-WEB-20261008 I-4/I-5: Mixamo auto-rig figures — climber on the ladder (rungs re-spaced to the source motion) + floor-sitter with electrodes right of the ladder')
 ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--bsamples', type=int, default=128)
 args = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
+if args.intro2: args.fig = 'v3'; args.pose = 'ar_floor'
 if args.pose: args.fig = 'v3'
 rng = random.Random(args.seed)
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -272,17 +274,20 @@ cyl('LadderRail', 0.016, 2 * XW - 0.4, (0, BY - 0.08, 4.25), M_BRASS, rot=(0, ma
 # ---------------- library ladder (the figure sits on it) ----------------
 LAD_X, LAD_TOP, LAD_ANG = 0.55, 4.25, math.radians(14)
 LAD_FOOT_Y = BY - 0.08 - LAD_TOP * math.tan(LAD_ANG)
+# intro2: the Mixamo climb's rung spacing fitted with its hand/foot contacts (0.2525 m along the stile, max error 23 mm;
+# the old 0.29 m left 79 mm) — the user allowed changing the ladder rather than the motion (2026-10-08)
+RUNG_DZ = 0.2525 * math.cos(LAD_ANG) if args.intro2 else 0.29
 def ladder():
     objs = []
     for dx in (-0.24, 0.24):
         o = box('LadderStile', (0.045, 0.07, LAD_TOP / math.cos(LAD_ANG) + 0.1), (LAD_X + dx, (LAD_FOOT_Y + BY - 0.08) / 2, LAD_TOP / 2), M_DARK, grain=True,
                 rot=(-LAD_ANG, 0, 0)); objs.append(o)
     rungs = []
-    for i in range(1, 15):
-        z = i * 0.29
+    for i in range(1, 20):
+        z = i * RUNG_DZ
         if z > LAD_TOP - 0.1: break
         y = LAD_FOOT_Y + z * math.tan(LAD_ANG)
-        if args.light == 'r2':                                    # D-050 climb: round rungs (r 19 mm) the hands close around
+        if args.light == 'r2' or args.intro2:                                    # D-050 climb: round rungs (r 19 mm) the hands close around
             o = cyl('LadderRung', 0.019, 0.48, (LAD_X, y, z), M_DARK, rot=(0, math.radians(90), 0), verts=20); world_uv(o, 1.2, True)
         else:
             o = box('LadderRung', (0.48, 0.09, 0.03), (LAD_X, y, z), M_DARK, grain=True)
@@ -441,6 +446,9 @@ if os.path.exists(fig_path) and not args.nofig:
                  'chair': ((CHAIR_FIT['anchor'], CHAIR_FIT['yaw']) if CHAIR_FIT else (Vector((MCHAIR.x, MCHAIR.y + .02, .44)), math.radians(20))),
                  'desk': (Vector((DESK.x + .1, DESK.y - .75, .5)), math.pi),
                  'wall': (Vector((-XW + .2, 1.0, 0)), math.pi / 2)}
+        if args.pose == 'ar_floor':                              # right of the ladder, back 4 cm off the shelf face (BY − .02)
+            back = max(v.co.y for v in FIG.data.vertices) - an.y
+            SPOTS['ar_floor'] = (Vector((LAD_X + .95, BY - .06 - back, 0)), 0.0)
         if args.pose == 'climb':                                 # ladder plane at the foot rung = the rung; climber faces the ladder (+y)
             FYAW = math.pi; FROT = Matrix.Rotation(FYAW, 3, 'Z')
             if 'rung0' in fj['stile']:                           # Rigify build: the figure's rung 0 centre = the ladder's first rung
@@ -493,6 +501,39 @@ if os.path.exists(fig_path) and not args.nofig:
     HEART.location = FIG.location + FROT @ Vector(fj['heart_b'])
     hm2 = mat('heart_glow', srgb('#ff5a64'), .5, emit=6.0); HEART.data.materials.clear(); HEART.data.materials.append(hm2)
     print('figure seat at', tuple(round(v, 3) for v in FIG.location), 'heart', tuple(round(v, 3) for v in HEART.location))
+CLIMB = None
+if args.intro2 and not args.nofig:
+    # the climber: leaned 18.5° (fitted: its hand and foot contacts coplanar within 14 mm on the 14° ladder), hands centred on the
+    # ladder, slid along the stile to the rung phase that puts the contacts on rungs (offsets: grip = rung axis, 2 cm in front;
+    # ball of the foot 4.5 cm above and 3 cm in front of the rung axis)
+    cj = json.load(open(os.path.join(A, 'figure.json'), encoding='utf-8'))['poses_v3']['ar_climb']
+    before = set(bpy.data.objects); bpy.ops.import_scene.gltf(filepath=os.path.join(A, 'body_v3_ar_climb.glb'))
+    CLIMB = [o for o in bpy.data.objects if o not in before and o.type == 'MESH'][0]
+    CLIMB.rotation_mode = 'XYZ'; CPITCH = -math.radians(18.5); CROT = Matrix.Rotation(CPITCH, 3, 'X'); CLIMB.rotation_euler = (CPITCH, 0, 0)
+    u_ = Vector((0, math.sin(LAD_ANG), math.cos(LAD_ANG))); n_ = Vector((0, math.cos(LAD_ANG), -math.sin(LAD_ANG)))
+    O_ = Vector((LAD_X, LAD_FOOT_Y, 0)); L_ = RUNG_DZ / math.cos(LAD_ANG)
+    OFF = {'hand': (0.0, -0.02), 'foot': (-0.045, -0.03)}
+    cs = {k: CROT @ Vector(v) for k, v in cj['contacts'].items() if k != 'foot.R'}       # the right foot is mid-step in frame 1
+    beta = sum(OFF[k.split('.')[0]][1] - c.dot(n_) for k, c in cs.items()) / len(cs)
+    gam = LAD_X - sum(c.x for k, c in cs.items() if k.startswith('hand')) / 2
+    # height: the left foot on rung 3 (≈ 0.74 m) — hands then near 2 m, the climber fills the shot under the ceiling beams;
+    # the slide is then fine-tuned within ±L/2 so the three contacts share the rung phase best
+    al0 = 3 * L_ + OFF['foot'][0] - cs['foot.L'].dot(u_)
+    best = None
+    for i in range(-25, 26):
+        al = al0 + i * L_ / 50
+        e = [((c.dot(u_) + al - OFF[k.split('.')[0]][0]) / L_) for k, c in cs.items()]
+        err = max(abs(x - round(x)) for x in e) * L_
+        if best is None or err < best[0]: best = (err, al)
+    T_ = O_ + u_ * best[1] + n_ * beta
+    CLIMB.location = Vector((gam, T_.y, T_.z)) - Vector((O_.x, 0, 0)) + Vector((O_.x, 0, 0)) * 0
+    CLIMB.location.x = gam
+    bpy.context.view_layer.update()
+    for k, v in cj['contacts'].items():
+        w_ = CLIMB.matrix_world @ Vector(v); d_ = min(((w_.y - ry) ** 2 + (w_.z - rz) ** 2) ** .5 for rz, ry in RUNGS)
+        print(f'   contact {k}: world {tuple(round(x, 3) for x in w_)}, nearest rung axis {d_ * 1000:.0f} mm')
+    print(f'climber on the ladder: pitch 18.5°, rung contact max error {best[0] * 1000:.0f} mm, location {tuple(round(v, 3) for v in CLIMB.location)}')
+    CLIMB.data.materials.clear(); CLIMB.data.materials.append(rm)
 # ---------------- v3: ECG electrodes, lead wires, trunk to the cart, cable to the computer (D-048) ----------------
 def catmull(pts, n=10):
     P = [Vector(p) for p in pts]; P = [P[0]] + P + [P[-1]]; out = []
@@ -707,6 +748,8 @@ if args.pose and FIG is not None:                                 # D-050 shots:
         'desk': {'d4_desk': ((-0.15, 1.75, 1.55), (-1.75, 3.3, .55), 32)},      # second draft: the power strip + line in frame
         'wall': {'d5_wall': ((-0.25, 1.0, 1.5), (-3.4, 1.0, 1.3), 40)},
         'climb': {'d6_climb': ((2.45, 2.2, 1.7), (LAD_X, 3.85, 1.9), 52)},
+        'ar_floor': {'i1_wide': ((-0.35, 1.0, 1.8), (LAD_X + .5, 4.0, 1.2), 46), 'i2_climb': ((2.2, 2.3, 2.1), (LAD_X, 3.9, 1.9), 46),
+                     'i3_floor': (tuple(AW + Vector((-.55, -1.7, .65))), tuple(AW + Vector((0, 0, .38))), 38)},
     }[args.pose]
     if args.pose in ('chair', 'desk', 'wall', 'climb'): SHOTS = dict(SHOTS)
     if args.pose == 'climb' and 'hand_r' in fj:                  # second draft: muscle-artifact close-up — the gripping hand and RA together
@@ -764,7 +807,8 @@ if args.bake:
     OUT = os.path.join(ROOT, args.bake); os.makedirs(OUT, exist_ok=True)
     # the figure, heart and preview haze are not part of the baked room (the figure is light, it casts no shadow)
     FIG_LOC = FIG.location.copy() if FIG is not None else None
-    for o in [x for x in (FIG, globals().get('HEART'), hz, *hz_extra) if x is not None]:
+    CLIMB_LOC = CLIMB.location.copy() if CLIMB is not None else None
+    for o in [x for x in (FIG, globals().get('HEART'), CLIMB, hz, *hz_extra) if x is not None]:
         bpy.data.objects.remove(o, do_unlink=True)
     # v3 rig (electrodes, leads, trunk, comm, signal paths) and the power line are web objects with their own dash
     # shader (IMPL_BRIEF_FIGURE_V3_WEB B2), never baked into the room
@@ -859,5 +903,7 @@ if args.bake:
     if FIG_LOC is not None:
         man['figure'] = {'location': b2t(FIG_LOC), 'heart': b2t(FIG_LOC + Vector(fj['heart_b'])),
                          'heart_q_wxyz_blender': fj['heart_q_wxyz'], 'hand_r': b2t(FIG_LOC + Vector(fj['hand_r']))}
+    if CLIMB_LOC is not None:
+        man['climb'] = {'location': b2t(CLIMB_LOC), 'pitch_x_rad': CPITCH, 'glb': 'body_v3_ar_climb.glb', 'rung_dz': RUNG_DZ}
     json.dump(man, open(os.path.join(OUT, 'manifest.json'), 'w', encoding='utf-8'), indent=1)
     print('exported', OUT)

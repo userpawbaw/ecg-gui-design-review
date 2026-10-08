@@ -68,6 +68,21 @@ export function createBeatMix(steps=4){
  };
 }
 
+// D-055 (replaces T2 for the intro): the input→output blend follows the scroll, cut to 2.5 % steps and eased over ~0.08 s;
+// scrolling back undoes it. Same interface as createBeatMix (value, goal, flash, reset).
+export function createScrollMix(stepFrac=.025,tau=.08){
+ let shown=0,goal=0;
+ return{
+  update(target:number,dt:number,reduced:boolean){
+   goal=Math.round(Math.min(1,Math.max(0,target))/stepFrac)*stepFrac;
+   shown=reduced?goal:shown+(goal-shown)*(1-Math.exp(-dt/tau));
+   if(Math.abs(goal-shown)<1e-4)shown=goal;
+  },
+  get value(){return shown;},get goal(){return goal;},get flash(){return 0;},
+  reset(){shown=goal=0;},
+ };
+}
+
 // symbol-only scramble: unrevealed characters show symbols, never digits (no invented values)
 const SYM='#%*/+<>=';
 export function scrambled(final:string,k:number,seed:number){

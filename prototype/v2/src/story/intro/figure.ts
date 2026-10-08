@@ -7,6 +7,7 @@ import {LineGeometry} from 'three/addons/lines/LineGeometry.js';
 import {LineMaterial} from 'three/addons/lines/LineMaterial.js';
 
 export type FigureData={height:number,heart:[number,number,number],silhouette:[number,number][]};
+export const HEART_SCALE_H5=.68;
 export const FEET_Y=-.633;   // body stands centred on the camera axis height (0.2) at z = 0
 
 const rimVert=/* glsl */`
@@ -120,7 +121,7 @@ void main(){
  vS=aSlice;vInD=aInD;vInM=aInM;vec4 w=modelMatrix*vec4(transformed,1.);vW=w.xyz;vN=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*w;
 }`;
 const h5Frag=/* glsl */`
-uniform vec3 uSkin,uLine,uSunCol,uSunTo;uniform float uOpacity,uFlash,uFeet,uDensity,uScan,uScanOn,uRefDist,uSunOn,uExposure;
+uniform vec3 uSkin,uLine,uSunCol,uSunTo;uniform float uOpacity,uFlash,uFeet,uDensity,uScan,uScanOn,uScanDir,uRefDist,uSunOn,uExposure;
 uniform vec3 uHeart;uniform float uWaveT,uWaveAmp;
 uniform sampler2D tLight;uniform mat4 uLightVP;
 uniform float uCommon,uFront,uWaveK;                             // Story inflow markers (D-054): 0 = off (intro)
@@ -146,7 +147,9 @@ void main(){
  float dh=distance(vW,uHeart),hl=exp(-dh*dh/.018);
  float band=exp(-pow((dh-uWaveT*1.5)/.05,2.))*exp(-uWaveT/.32)*uWaveAmp;col+=uLine*band*.5;
  float a=mix(.7,.95,pow(fres,1.4))*(1.-.5*hl);                    // thin centre, dense edge; thinner over the heart
- float reveal=smoothstep(uScan-.004,uScan+.012,y);
+ // uScanDir 1: visible above the scan line (appear top-down); −1: visible below it (vanish from the top, the reverse of
+ // appearing — REVIEW-R1-WEB-20261008 I-5 ②)
+ float reveal=uScanDir>0.?smoothstep(uScan-.004,uScan+.012,y):1.-smoothstep(uScan-.012,uScan+.004,y);
  float scanLine=exp(-pow((y-uScan)/.012,2.))*uScanOn*(.6+fres);
  a=a*reveal*uOpacity;
  // heart glow scattered by the frosted surface: emitted light, so it is divided by alpha to survive the blend (the stills'
@@ -164,7 +167,7 @@ function h5Material(){
  return new THREE.ShaderMaterial({vertexShader:h5Vert,fragmentShader:h5Frag,transparent:true,depthWrite:false,depthFunc:THREE.LessEqualDepth,side:THREE.DoubleSide,
   uniforms:{uSkin:{value:new THREE.Color('#d9dde3')},uLine:{value:new THREE.Color('#f4f1ea')},uSunCol:{value:new THREE.Color('#ffd09a')},uSunTo:{value:new THREE.Vector3(0,-1,0)},
    uExposure:{value:.42},uRefDist:{value:0},uSunOn:{value:0},tLight:{value:null},uLightVP:{value:new THREE.Matrix4()},uOpacity:{value:0},uFlash:{value:0},uFeet:{value:FEET_Y},
-   uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},
+   uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uScanDir:{value:1},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},
    uCommon:{value:0},uFront:{value:-1},uWaveK:{value:0}}});
 }
 
@@ -197,6 +200,10 @@ export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometr
  const heartMesh=new THREE.Mesh(heart,heartMat);heartMesh.position.set(...data.heart);
  // heart.glb (HRA reference organ) is already in body orientation: apex down, forward, to the person's left
  heartMesh.renderOrder=2;group.add(heartMesh);
+ // I-6 (REVIEW-R1-WEB-20261008, user: "심장이 가슴을 뚫고 나옴"): the HRA heart is 15.6 cm long, larger than an adult heart
+ // (~12 cm); measured inside the v3 bodies (scripts check, 2026-10-08): floor-sit needs ≤ 0.70 to stay wholly inside, the
+ // story chair ≤ 0.90. 0.68 leaves room for the beat swell, for both the intro and the Story (H5 look only)
+ if(look==='h5')heartMesh.scale.setScalar(HEART_SCALE_H5);
  // depth pre-pass with the same beat deformation: the additive rim then shows only the nearest surface, not every
  // crease behind it (the anatomical heart has deep grooves between chambers)
  const heartDepthMat=new THREE.ShaderMaterial({vertexShader:rimVert,fragmentShader:'void main(){gl_FragColor=vec4(0.);}',uniforms:heartMat.uniforms,colorWrite:false,transparent:true});   // transparent list: drawn after the backdrop glow (renderOrder)

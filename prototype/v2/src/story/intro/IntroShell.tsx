@@ -63,7 +63,7 @@ export function IntroShell({bank,onNext,onLab}:Props){
   <div ref={refs.labels} className="it-labels" aria-live="polite">
    <div ref={refs.labelIn} className="it-lab in is-current"><i className="bar"/><b>잡음 섞인 입력</b><small>INPUT · WHITE NOISE {scene.s.snr} dB · {scene.s.record}</small></div>
    <div ref={refs.labelOut} className="it-lab out"><i className="bar"/><b>잡음 제거 출력</b><small ref={refs.outMono as never}>OUTPUT · STORED</small></div>
-   <div ref={refs.steps} className="it-steps" aria-hidden="true"><i/><i/><i/><i/><em>박동마다 한 겹</em></div>
+   <div ref={refs.steps} className="it-steps" aria-hidden="true"><i/><i/><i/><i/><em>입력 ↔ 출력</em></div>
   </div>
   <div ref={refs.end} className="it-end">
    <p>같은 심장, 같은 기록 — 잡음을 걷어내기 전과 후.</p>

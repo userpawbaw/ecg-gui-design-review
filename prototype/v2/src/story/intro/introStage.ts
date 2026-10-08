@@ -17,7 +17,7 @@ import {createArchive} from './archive';
 import {createSignalRig,SIGNAL_CLEAN,SIGNAL_NOISE,SIGNAL_OFF,type SignalState} from './signalRig';
 import {createSweep,type SweepView} from './sweep';
 import {beatPhase,type Loop} from './beats';
-import {createGrid,createBeatMix,mvPerBoxFor,scrambled} from './waveUi';
+import {createGrid,createScrollMix,mvPerBoxFor,scrambled} from './waveUi';
 
 export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Array,metrics:{snrIn:number,snrOut:number,cc:number}};
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
@@ -44,7 +44,10 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   fig:new URL('./assets/figure.json',import.meta.url).href,day:new URL('./assets/earth_day.jpg',import.meta.url).href,
   night:new URL('./assets/earth_night.jpg',import.meta.url).href,clouds:new URL('./assets/earth_clouds.jpg',import.meta.url).href,
   floor:new URL('./assets/floor_light.png',import.meta.url).href,seatedV3:new URL('./assets/body_seated_v3.glb',import.meta.url).href,
-  rig:new URL('./assets/rig_v3.glb',import.meta.url).href};
+  rig:new URL('./assets/rig_v3.glb',import.meta.url).href,
+  // intro2 (I-4/I-5): Mixamo auto-rig of the story mesh — climber, then the floor-sitter with electrodes (rig_v3_floor)
+  arClimb:new URL('./assets/body_v3_ar_climb.glb',import.meta.url).href,arFloor:new URL('./assets/body_v3_ar_floor.glb',import.meta.url).href,
+  rigFloor:new URL('./assets/rig_v3_floor.glb',import.meta.url).href};
  // --- renderer (REF-001: ACES, exposure 1.16, pixel ratio capped) ---
  const renderer=new THREE.WebGLRenderer({canvas:dom.gl,antialias:true,powerPreference:'high-performance'});
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x000000,1);
@@ -59,8 +62,15 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const style=opt.look??'archive';   // D-046 archive is the default (brief 1 T9); ?look=v2 keeps the grid world
  // D-046: the ECG record archive (baked room + shafts + dust); D-048: figure v3 (3-lead) seated mid-ladder, H5 frosted body
  const arch=style==='archive'?await createArchive():null;
- const seated=arch?await geomMorph(urls.seatedV3):null;
+ const intro2=!!arch?.climb;
+ const seated=arch?await geomMorph(intro2?urls.arFloor:urls.seatedV3):null;
  const figure=createFigure(seated?seated.geo:bodyGeo,heartGeo,fig,arch?'h5':style==='v1'?'v1':'v2',seated?.morph??[]);scene.add(figure.group,figure.line);
+ // the climber: same H5 look, own uniforms (its own scan), no heart; placed and leaned as the bake placed it
+ const climber=intro2?createFigure((await geomMorph(urls.arClimb)).geo,heartGeo.clone(),fig,'h5',[]):null;
+ let climbTop=0;
+ if(climber&&arch?.climb){climber.heartMesh.visible=false;climber.line.visible=false;climber.group.position.copy(arch.climb.location);climber.group.rotation.x=arch.climb.pitch;
+  scene.add(climber.group);climber.group.updateMatrixWorld(true);
+  const bb=new THREE.Box3().setFromObject(climber.bodyMesh);climbTop=bb.max.y;}
  let scanTop=fig.height;
  if(arch){
   scene.add(arch.room,arch.dust);
@@ -73,9 +83,11 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   figure.line.visible=false;
   seated!.geo.computeBoundingBox();scanTop=seated!.geo.boundingBox!.max.y;
   figure.setGrip(opt.grip??0);
+  if(climber){const cu=climber.bodyMat.uniforms;cu.uFeet.value=0;cu.uRefDist.value=2.6;cu.uSunOn.value=1;cu.tLight.value=arch.lightRT.depthTexture;
+   cu.uLightVP.value=arch.lightVP;cu.uSunTo.value=arch.sunTo;cu.uHeart.value.set(0,-9,0);}
  }
  // electrodes, leads, trunk, comm cable, power line and the inside-body paths with the flowing dash shader (C4)
- const rig=arch?await createSignalRig(urls.rig,arch,{uScan:figure.bodyMat.uniforms.uScan,uFeet:figure.bodyMat.uniforms.uFeet}):null;
+ const rig=arch?await createSignalRig(intro2?urls.rigFloor:urls.rig,arch,{uScan:figure.bodyMat.uniforms.uScan,uFeet:figure.bodyMat.uniforms.uFeet}):null;
  if(rig){scene.add(rig.group);rig.setSignal(opt.signal==='noise'?SIGNAL_NOISE:opt.signal==='off'?SIGNAL_OFF:SIGNAL_CLEAN);}
  const space=style==='v2'?createSpace(floorLm):null;if(space)scene.add(space.group);
  const reflection=style==='v2'?figure.mirror():null;if(reflection)scene.add(reflection.group);
@@ -121,7 +133,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const clock=()=>frozenT??(performance.now()-t0)/1000;
  type Wave={state:'off'|'flying'|'on',t0:number,t1:number,start:number|null};
  const wave:Wave={state:'off',t0:0,t1:0,start:null};
- const mix=createBeatMix(4);
+ const mix=createScrollMix();   // D-055: follows the scroll (2.5 % steps), reversible
  const labelState={current:'in' as 'in'|'out',handoff:-1,annAbs:NaN};
  const outBase=dom.outMono.textContent||'',outFinal=`SNR ${data.metrics.snrIn} dB → ${data.metrics.snrOut.toFixed(2)} dB · cc ${data.metrics.cc.toFixed(3)}`;
  const L=data.loop;
@@ -153,13 +165,14 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  // (SPACE-R1-ARCHIVE §3). Catmull–Rom through the Blender shot list, constant speed per segment.
  let archCam:((p:number)=>void)|null=null;
  if(arch){
-  const K=['s1_top','s2_beams','s3_aisle','s4_person'].map(k=>arch.shot(k));
+  // intro2: … down the aisle → the climber on the ladder → down to the floor-sitter right of it → into the chest (I-5)
+  const K=(intro2?['s1_top','s2_beams','s3_aisle','i2_climb','i3_floor']:['s1_top','s2_beams','s3_aisle','s4_person']).map(k=>arch.shot(k));
   const yaw=.6,dEnd=.62,rightE=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
   const endPos=arch.heart.clone().add(new THREE.Vector3(Math.sin(yaw)*dEnd,.05,Math.cos(yaw)*dEnd));
   const posC=new THREE.CatmullRomCurve3([...K.map(k=>k.pos),endPos],false,'centripetal');
   const lookPts=[...K.map(k=>k.look),arch.heart.clone()];
   const lookC=new THREE.CatmullRomCurve3(lookPts,false,'centripetal');
-  const fovs=[...K.map(k=>k.fov),25],knots=[.25,.33,.45,.55,.72];
+  const fovs=[...K.map(k=>k.fov),25],knots=intro2?[.25,.31,.38,.46,.57,.72]:[.25,.33,.45,.55,.72];
   const lk=new THREE.Vector3();
   archCam=(pp:number)=>{
    if(pp<knots[0]){camera.position.copy(A_POS);lk.copy(A_LOOK);if(camera.fov!==25){camera.fov=25;camera.updateProjectionMatrix();}}
@@ -214,13 +227,21 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   let bodyA:number;
   if(arch){
    // archive: scan once the figure is in view down the aisle; rings fade as the camera enters the chest
-   const sk=seg(p,.45,.54),bu=figure.bodyMat.uniforms,c2=seg(p,.55,.72);
+   const sk=intro2?seg(p,.52,.585):seg(p,.45,.54),bu=figure.bodyMat.uniforms,c2=intro2?seg(p,.58,.72):seg(p,.55,.72);
    bu.uScan.value=(1-inOut(sk))*(scanTop+.04)-.02;bu.uScanOn.value=sk>0&&sk<1?1:Math.max(0,1-(sk-1)*20);
    bodyA=(sk>0?1:0)*(1-.85*THREE.MathUtils.smoothstep(c2,.15,.75))*(1-THREE.MathUtils.smoothstep(c2,.7,.95));
+   if(climber){
+    // I-5 ① appears top-down while the camera comes down the aisle, ② vanishes from the top (the reverse) as the camera
+    // moves down to the floor; then ③ the floor-sitter appears with the electrodes (sk above)
+    const cin=seg(p,.37,.44),cout=seg(p,.475,.535),cu=climber.bodyMat.uniforms,top=climbTop+.04;
+    if(cout>0){cu.uScanDir.value=-1;cu.uScan.value=top-inOut(cout)*(top+.02);cu.uScanOn.value=cout<1?1:0;}
+    else{cu.uScanDir.value=1;cu.uScan.value=(1-inOut(cin))*top-.02;cu.uScanOn.value=cin>0&&cin<1?1:0;}
+    climber.setBodyOpacity(cin>0&&cout<1?1:0);
+   }
    // C3: breath only — a slow cycle (~4 s) unrelated to the beat, small amplitude; grip stays 0 in the intro (?grip=1 checks it)
    figure.setBreath(opt.reduced?0:.35*(.5-.5*Math.cos(2*Math.PI*t/4)));
    // C5: clean flow once the person is revealed (p ≥ .45), slow; the noise staging belongs to the Story (P5)
-   rig?.setPerson(Math.min(1,bodyA*1.4));rig?.setFlow(opt.signal?1:inOut(seg(p,.47,.56)),.6);rig?.update(t);
+   rig?.setPerson(Math.min(1,bodyA*1.4));rig?.setFlow(opt.signal?1:inOut(intro2?seg(p,.56,.63):seg(p,.47,.56)),.6);rig?.update(t);
   }else if(style==='v2'){
    // H3: the scan line runs head → feet over the body segment; rings stay, thinning out as the camera dives in
    const sk=seg(p,...MAP.body),bu=figure.bodyMat.uniforms;
@@ -233,7 +254,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   if(reflection)reflection.group.visible=spaceA>.002;
   shaftA=spaceA*(1-THREE.MathUtils.smoothstep(cam,.15,.6));
   grade.uniforms.uSpace.value=spaceA;grade.uniforms.uTime.value=opt.frozenT!==null?0:(state.frame%97)*.13;
-  const heartA=arch?seg(p,.48,.56):seg(p,...MAP.heart);figure.heartMat.uniforms.uOpacity.value=heartA*1.6;figure.heartMesh.visible=heartA>.002;
+  const heartA=arch?(intro2?seg(p,.56,.62):seg(p,.48,.56)):seg(p,...MAP.heart);figure.heartMat.uniforms.uOpacity.value=heartA*1.6;figure.heartMesh.visible=heartA>.002;
   figure.beat(ph,heartA>0?1:0);
   state.heart.V=figure.heartMat.uniforms.uV.value;state.heart.flash=figure.heartMat.uniforms.uFlash.value;
   if(arch){
@@ -253,8 +274,8 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   if(wave.state==='flying'&&t>=wave.t1)wave.state='on';
   const headAbs=Math.floor(t*data.fs+1e-6);state.headAbs=headAbs;
   const hs=toScreen(H3);
-  // T2: scroll sets the target, R peaks release it a quarter at a time (only once the trace is running)
-  mix.update(wave.state==='on'?inOut(seg(p,...MAP.mix)):0,ph.prev,t,opt.reduced);
+  // D-055: the blend follows the scroll once the trace is running (replaces T2's quarter per R peak)
+  mix.update(wave.state==='on'?seg(p,...MAP.mix):0,dt,opt.reduced);
   const enterA=seg(p,...MAP.enter);
   const v:SweepView={t,startAbs:wave.start,mix:mix.value,flash:opt.reduced?0:mix.flash,gridAlpha:enterA,alpha:wave.state==='off'?0:waveA,reduced:opt.reduced,ring:null,comet:null};
   if(wave.state==='flying'&&!opt.reduced&&t>=wave.t0){
@@ -283,7 +304,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const hk=cur==='out'?clamp((t-labelState.handoff)/.35):0;
   const mono=cur==='out'?(opt.reduced||hk>=1?outFinal:scrambled(outFinal,hk,Math.floor(t*30))):outBase;
   if(dom.outMono.textContent!==mono)dom.outMono.textContent=mono;
-  const filled=Math.round(mix.value*4);dom.steps.forEach((el,i)=>el.classList.toggle('on',i<filled));
+  const filled=Math.floor(mix.value*4+1e-6);dom.steps.forEach((el,i)=>el.classList.toggle('on',i<filled));   // 25/50/75/100 %
   // L2: annotation pinned to an R sample that is 0.35–1.9 s old (stays with its sample until the sweep erases it)
   let annA=0;
   if(wave.state==='on'&&wave.start!==null){
@@ -314,7 +335,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;mix.reset();},
   dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
-   globe.dispose();figure.dispose();space?.dispose();arch?.dispose();rig?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
+   globe.dispose();figure.dispose();climber?.dispose();space?.dispose();arch?.dispose();rig?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
  };
 }
 export type Intro=Awaited<ReturnType<typeof createIntro>>;

@@ -167,6 +167,22 @@ def resolve_contacts(V0, V1, T, Adj, bvh_cls, Vec, rounds=6, share=.5, smooth=8,
     return V, n
 
 
+def iron(V0, V1, F, reg, Adj, rounds=3, it=30, rings=4, lam=.5, mu=-.53):
+    """Local Taubin smoothing of the posed mesh where creases / strain clusters are (the sculptor's smooth brush, baked as a
+    corrective): volume-preserving (λ/μ), feathered over `rings` rings, repeated while the crease area drops."""
+    V = V1.copy(); deg = np.maximum(np.asarray(Adj.sum(1)).ravel(), 1)
+    for _ in range(rounds):
+        _, tri, T = check(V0, V, F, reg)
+        bad = (tri['crease'] | tri['strain']) & ~tri['hand']
+        w = np.zeros(len(V)); w[T[bad].ravel()] = 1
+        for _ in range(rings): w = np.maximum(w, .7 * (Adj @ w) / deg)
+        if not bad.any(): break
+        for _ in range(it):
+            for f in (lam, mu):
+                L = (Adj @ V) / deg[:, None] - V; V = V + (f * w)[:, None] * L
+    return V
+
+
 def summary(rows):
     return {'FAIL': sum(r['status'] == 'FAIL' for r in rows), 'WARN': sum(r['status'] == 'WARN' for r in rows)}
 

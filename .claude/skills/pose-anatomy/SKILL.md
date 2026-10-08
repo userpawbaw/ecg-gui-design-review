@@ -1,6 +1,6 @@
 ---
 name: pose-anatomy
-description: Pose a rigged human figure (Blender / Rigify, the R1 archive figure) so it reads as natural — joint range-of-motion limits, comfortable resting ranges, self- and object-collision, contacts, balance, and a reference-pose search before posing. Use whenever a figure pose is created or changed, or a render shows a bent/twisted limb, and run the pose validator (scripts/assets/pose-check-v3.py) before showing any render.
+description: Pose a rigged human figure (Blender / Rigify, the R1 archive figure) so it reads as natural — joint range-of-motion limits, comfortable resting ranges, self- and object-collision, contacts, balance, and a reference-pose search before posing; retarget Mixamo-style motion with a skeleton-fidelity table and contact IK; check the skin (stretch, crease, intersection) with deform-check-v3. Use whenever a figure pose is created, retargeted or changed, or a render shows a bent/twisted limb or torn/stretched skin, and run the validators (pose-check-v3.py, deform-check-v3.py) before showing any render.
 ---
 
 # Pose anatomy — natural human poses with a feedback loop
@@ -28,6 +28,22 @@ Searched 2026-10-05: existing public skills cover rigging basics (joint types, h
    if a straight interpolation collides, search a detour offset, do not loosen the limit.
 4. **Self-test at the extremes**: the selftest must hold a valid end-range case (fist) and an invalid one just past it.
    If a measured value jumps between neighbouring frames, suspect the measurement formula before the pose (R-021).
+
+## Retargeted poses (Mixamo etc.) and skin QA — added 2026-10-08
+
+Manual and thresholds: `references/deform-qa.md`. Order matters: get the **skeleton** right before judging the **skin**.
+On 2026-10-08 hours went into skin metrics and weight edits on a skeleton that was wrong; the user spotted it: the elbow was
+meant to rest on the knee, but our armpit rested there instead.
+
+1. **List the source contacts** (what rests on what), from the sheet or the source mesh rendered from 4 sides.
+2. **Fidelity table first**: `FIX='{"diag":1}' python scripts/assets/retarget-mixamo-v3.py …`. Every key joint must be within
+   3 cm of the scaled source (relative to the pelvis) before anything else. Rotations copy angles, not positions; spines
+   and clavicles cut differently between rigs.
+3. **Contacts by IK goals** (`FIX='{"ik":…}'`), pushed out until the capsules clear. Only small shrug / lean / foot slide
+   allowed. If the solver wants more, step 2 is not done.
+4. **Skin**: `deform-check-v3.py` (heatmaps, FAIL close-ups, `ON_REST=1`). Fix weights or corrective shapes only after
+   steps 1–3. Measure DEF bones, not ORG, for skin questions.
+5. **Side by side with the source** from the user's viewing angle before showing anything.
 
 ## Natural-pose heuristics (beyond the hard limits)
 

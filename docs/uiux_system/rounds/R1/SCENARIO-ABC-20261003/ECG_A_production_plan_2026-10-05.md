@@ -110,3 +110,6 @@ D078/F049: 구도·양감 사용자KEEP. J5v5 질감후보 검토 먼저, 이후
 
 ### 2026-10-09 D114 원경 분포 gate 구현
 상세 ECG_A_orbital_cloud_proxy_trial_2026-10-09.md. 두구도/두명암/실제wheel정역정착6native,자체TUNE·사용자룩채택전. 다음고해상도지역cloud자료확보→국소광학/원경shadow→same-footprintnear인계→서고. 기존near그림자보류유지. 이번실패/내부보정은사용자피드백횟수로세지않음.
+
+### 2026-10-09 D116 실제 상세 구름 자료 gate
+8K미러원본확보,같은원본2K와필요crop8K/R8만GPU적재,4native/8초실제영상. 확대결개선은관찰이나부피/빛은TUNE. 상세 ECG_A_cloud_detail_trial_2026-10-09.md. 다음국소양감·opticalthickness·같은방향원경shadow→nearfootprint정합→서고; 기존near그림자결함튜닝보류유지.

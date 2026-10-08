@@ -1,3 +1,7 @@
+# Current A checkpoint — 2026-10-09 D116/F081
+
+Real 8K cloud file acquired from pinned public mirror after official download failure (O023). Same-source 2K vs regional 8K R8 in two views, native4 + actual8s camera video; small details improved, flat volume lighting remains TUNE. Review verification/a-cloud-detail-20261009/gallery.html. Next local optical/top-height/shadow contribution → same-footprint near volume → archive. Near shadow defect tuning user-deferred. D115 experience knowledge DB remains separate; do not include its pending changes in this checkpoint.
+
 # Current A checkpoint — 2026-10-09 D114/F080
 
 Orbital satellite-shape proxy implemented in two views (p.18/.235), coverage/relief native4 + real wheel settled2. Self verdict TUNE: oval mask removed, 2K close texture/relief insufficient. Review verification/a-orbital-cloud-20261009/gallery.html. Next source-resolution/crop gate → local optical/shadow → same-footprint near handoff → archive. Near shadow defect tuning remains user-deferred; main unchanged and candidate not adopted. See ECG_A_orbital_cloud_proxy_trial_2026-10-09.md.

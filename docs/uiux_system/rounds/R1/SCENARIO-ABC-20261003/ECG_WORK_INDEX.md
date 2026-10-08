@@ -265,3 +265,6 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D114 위성 분포 원경 실제 시험
 [두 구도 구현·초기 실패·자체 TUNE·후속 순서](ECG_A_orbital_cloud_proxy_trial_2026-10-09.md) → verification/a-orbital-cloud-20261009/gallery.html. native4+realwheel정착2. 타원제거/위성전선고정배치, 2K확대결·입체대비미달. 다음자료/crop→국소광학→같은footprint인계→서고. 전체채택없음.
+
+## D116 확대 결의 원본·지역 R8 대조
+[구름 원본 확보·같은2K/지역8K 대조·후속](ECG_A_cloud_detail_trial_2026-10-09.md) → verification/a-cloud-detail-20261009/gallery.html. 실제native4/8초영상. 작은결개선관찰·전체TUNE. 공식출처와미러바이트분리,자료gate후국소광학/near/서고별도. D115경험DB작업미커밋보존.

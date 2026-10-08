@@ -2877,3 +2877,23 @@ NASA출처페이지가리디렉트되어새다운로드URL추측이나거대자�
 
 ### D114 구현 후 갱신 — 2026-10-09
 두 구도×2명암 native4 + 실제wheel정역정착2 구현/저장. NASA2K원본 hash일치 복구, 광역원본 투영은 넓은흰막으로미달→광량/얇은층 기여 보정→위성전선 고정아트배치로 띠/여백선택. sourcePlacement를metadata에명시. 국소경사명암은구면proxy 근사이며 높이측정/다중산란/near인계없음. 확대질감·입체대비TUNE,최종채택없음. 초기4native보존. 상세 ECG_A_orbital_cloud_proxy_trial_2026-10-09.md / verification/a-orbital-cloud-20261009/manifest.json. D113의원경shadow설계와근경보류를유지. 고해상도원본현재미확보,자료확보→국소광학→same-footprint인계→서고순서유지.
+
+## D-116. 같은 8K 구름 원본의 2K 대조와 지역 R8로 확대 질감을 먼저 검토한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-09 [대화][문헌][코드][캡처] |
+| 상태 | 실제 자료·두 구도 구현 / 자체 TUNE / 최종 채택 전 |
+| 연결 | D-114 / F-080 / F-081 / O-023 |
+| CASE | CASE-007 |
+
+### 갈림길
+2K 흐림을 새volume노이즈로덮을지, 실제더상세한구름자료와같은원본의대조를확보할지.
+### 검토한 선택지
+NASA 고해상도원본 재탐색, Solar System Scope 공식8K, 공개미러8K, 기존2K업스케일, 전역8K RGBA 적재.
+### 고른 것과 근거
+공식목록과실제미러획득을분리해8192×4096파일확보/sha고정. 같은원본2Kglobal대조와4096×1536지역R8원본crop를동일카메라/sun/DEM에서비교한다. 임의upsample없음. 전역fallback과지역경계smoothstep/mipmap으로부분품질정합. 약10.7MiB는구름texture계산예산일뿐실측총GPU메모리가아니다. 구현전갈림길은 ECG_A_cloud_detail_trial_2026-10-09.md에먼저기록. 새4native+8초actualrenderer영상확보,외형은TUNE.
+### 버린 것과 이유
+2K를8K로확대해새디테일이라고표시하는안,상층량만늘려빈곳을덮는안은자료한계해결아님. 전역8KRGBA는이번bounded뷰에불필요. 공식403/브라우저다운로드976초시간초과를반복하지않고공개미러바이트만검증한다. 직접공식hash동일성은미확정.
+### 되돌려야 하는 조건
+crop경계/motionaliasing/과한잘린외형이남으면TUNE. regioncoverage범위확대나국소광학이필요하면별도gate. 기존near그림자튜닝보류,near인계/서고/Story미채택유지. 현재shader의표면명암을실제volume빛처리완성으로확대하지않는다.

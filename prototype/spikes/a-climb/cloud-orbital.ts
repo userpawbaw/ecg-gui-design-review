@@ -3,7 +3,8 @@ import * as THREE from 'three';
 import {Effect,BlendFunction} from 'postprocessing';
 
 const fragment=`
-uniform sampler2D cloudMap;
+uniform sampler2D cloudMap, cloudDetailMap;
+uniform float rawSource, detailAmount;
 uniform mat4 inverseProjection;
 uniform mat3 viewRotation, geographicRotation;
 uniform vec3 eye, sunLocal;
@@ -15,7 +16,15 @@ vec2 geoUV(vec3 n){
  return vec2(atan(g.y,g.x)/6.28318530718+.5,asin(clamp(g.z,-1.,1.))/3.14159265359+.5);
 }
 // Fixed artistic placement of a satellite front; not today's northern weather.
-float density(vec2 uv){return texture2D(cloudMap,(uv-vec2(.523333333,.842388889))*2.+vec2(.64,.78)).r;}
+float density(vec2 uv){
+ vec2 source=(uv-vec2(.523333333,.842388889))*2.+vec2(.64,.78);
+ if(rawSource<.5)return texture2D(cloudMap,source).r;
+ float coarse=texture2D(cloudMap,vec2(source.x,1.-source.y)).r;
+ vec2 crop=(source-vec2(.375,.5625))/vec2(.5,.375);
+ float edge=min(min(crop.x,1.-crop.x),min(crop.y,1.-crop.y));
+ float fine=texture2D(cloudDetailMap,vec2(crop.x,1.-crop.y)).r;
+ return mix(coarse,fine,detailAmount*smoothstep(0.,.05,edge));
+}
 float shell(vec3 ray,float h){
  vec3 o=eye-centre;float b=dot(o,ray),c=dot(o,o)-(radius+h)*(radius+h);
  float d=b*b-c;if(d<0.)return -1.;float t=-b-sqrt(d);return t>0.?t:-1.;
@@ -52,7 +61,7 @@ void mainImage(const in vec4 inputColor,const in vec2 uv,out vec4 outputColor){
 
 export class OrbitalCloudEffect extends Effect{
  constructor(){super('OrbitalCloudProxy',fragment,{blendFunction:BlendFunction.NORMAL,uniforms:new Map<string,THREE.Uniform>([
-  ['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
+  ['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
   ['viewRotation',new THREE.Uniform(new THREE.Matrix3())],['geographicRotation',new THREE.Uniform(new THREE.Matrix3())],
   ['eye',new THREE.Uniform(new THREE.Vector3())],['sunLocal',new THREE.Uniform(new THREE.Vector3())],
   ['relief',new THREE.Uniform(1)],['amount',new THREE.Uniform(1)]
@@ -63,6 +72,21 @@ export class OrbitalCloudEffect extends Effect{
   texture.minFilter=THREE.LinearMipmapLinearFilter;texture.magFilter=THREE.LinearFilter;texture.anisotropy=8;
   this.uniforms.get('cloudMap')!.value=texture;
  }
+ async loadRegion(globalURL:string,detailURL:string){
+  const data=await Promise.all([globalURL,detailURL].map(async url=>{
+   const response=await fetch(url);if(!response.ok)throw Error(`Cloud R8 load ${response.status}`);return new Uint8Array(await response.arrayBuffer());
+  }));
+  const make=(bytes:Uint8Array,w:number,h:number)=>{
+   if(bytes.length!==w*h)throw Error('Cloud R8 byte count mismatch');
+   const t=new THREE.DataTexture(bytes,w,h,THREE.RedFormat,THREE.UnsignedByteType);
+   t.internalFormat='R8';t.colorSpace=THREE.NoColorSpace;t.generateMipmaps=true;t.flipY=false;
+   t.minFilter=THREE.LinearMipmapLinearFilter;t.magFilter=THREE.LinearFilter;t.anisotropy=8;t.needsUpdate=true;return t;
+  };
+  this.uniforms.get('cloudMap')!.value=make(data[0],2048,1024);
+  this.uniforms.get('cloudDetailMap')!.value=make(data[1],4096,1536);
+  this.uniforms.get('rawSource')!.value=1;
+ }
+ setDetail(value:string){this.uniforms.get('detailAmount')!.value=value==='8k'?1:0;}
  sync(camera:THREE.PerspectiveCamera,toECEF:THREE.Matrix4,sunECEF:THREE.Vector3,mode:string,on:boolean){
   const basis=new THREE.Matrix3().setFromMatrix4(toECEF);
   this.uniforms.get('inverseProjection')!.value.copy(camera.projectionMatrixInverse);

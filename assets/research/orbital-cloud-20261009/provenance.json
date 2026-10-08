@@ -1,0 +1,53 @@
+{
+  "publisher": "Solar System Scope / INOVE (official listed asset); actual bytes acquired from public mirror",
+  "officialPage": "https://extension.solarsystemscope.com/textures/",
+  "officialUrl": "https://extension.solarsystemscope.com/textures/download/8k_earth_clouds.jpg",
+  "download": "https://raw.githubusercontent.com/Siqister/files/2ed70f6955b88070080e21067568c233a50856ec/8k_earth_clouds.jpg",
+  "directOfficialHashVerified": false,
+  "mirrorCommit": "2ed70f6955b88070080e21067568c233a50856ec",
+  "dimensions": [
+    8192,
+    4096
+  ],
+  "bytes": 11619184,
+  "sha256": "c792eca228989d36ebb45d3ea6ff1198be5e21a25d70d2fbcb2124ffd14ba7f5",
+  "licenseListed": "CC BY 4.0 on publisher page; mirrored-file attribution not independently documented",
+  "useStage": "internal concept review",
+  "cropPixels": [
+    3072,
+    256,
+    7168,
+    1792
+  ],
+  "cropDimensions": [
+    4096,
+    1536
+  ],
+  "cropUV": [
+    0.375,
+    0.5625,
+    0.5,
+    0.375
+  ],
+  "globalDimensions": [
+    2048,
+    1024
+  ],
+  "processing": "Pillow grayscale crop without upsampling; global downsample Lanczos; raw R8 upload with mipmaps; raw rows top-down are inverted in shader",
+  "cropSha256": "52f264b3bbc2a790da2ffb84e5341b01487164df92404723afcd7cdd33b9283f",
+  "globalSha256": "dacd3002c09c48e0f964d9d6d87e08e780076934d062e479f3c9771802d53736",
+  "notEvidenceFor": [
+    "current northern weather",
+    "measured height",
+    "measured density"
+  ],
+  "budgetMiB": {
+    "globalR8WithMips": 2.6666666666666665,
+    "cropR8WithMips": 8.0,
+    "full8kRGBAWithMipsAvoided": 170.66666666666666
+  },
+  "downloadIncidents": [
+    "official shell403 twice",
+    "browser downloadMedia exceeded timeout and reset kernel; no acquired file found in Downloads"
+  ]
+}

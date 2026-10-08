@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D114 orbital two-view proxy trial implemented; self TUNE, user visual review pending. Next detailed regional cloud-only source/crop acquisition then local optical/shadow prototype, same-footprint near handoff, motion review and archive. Existing near shadow defect tuning user-deferred. Main unchanged; candidate not adopted.",
+  "next_action": "D116 real 8K source/crop two-view comparison and actual8s camera video complete, self TUNE. Next local mass/optical thickness/height/shadow contribution, same-footprint near handoff, archive. Existing near shadow defect tuning user-deferred; main unchanged; final visual adoption not decided.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1370,6 +1370,29 @@
     "archiveIntegrated": false,
     "mainIntegrated": false,
     "candidateAdopted": false,
+    "nearShadowTuningDeferred": true
+  },
+  "cloudDetailD116": {
+    "decision": "D116",
+    "finding": "F081",
+    "incident": "O023",
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_detail_trial_2026-10-09.md",
+    "manifest": "verification/a-cloud-detail-20261009/manifest.json",
+    "nativeFixed": 4,
+    "actualRendererVideos": 1,
+    "sourceSize": [
+      8192,
+      4096
+    ],
+    "renderSize": [
+      1280,
+      720
+    ],
+    "nominalCloudTextureMiB": 10.667,
+    "selfVerdict": "TUNE: source detail improved, flat proxy optical mass insufficient",
+    "candidateAdopted": false,
+    "nearHandoff": false,
+    "archiveIntegrated": false,
     "nearShadowTuningDeferred": true
   }
 }

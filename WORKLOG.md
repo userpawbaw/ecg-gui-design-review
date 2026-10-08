@@ -720,3 +720,8 @@ clouds resolveMaterial alpha.05 단독후보3정착+8초영상추가로27fixed/4
 D113추천첫gate를사용자승인후두구도proxy로제작. NASA2K기존등록원본복구/해시일치,광역첫흰막 native4보존→radiance/alpha/고정위성전선배치 보정. thin12.5km/thick8.5km 구면proxy와finite-difference명암을Takram지형대기후합성. 실제최종4PNG/JSON+wheel정역2정착,RTX3070/942×672/contextLostfalse/런타임error없음. 2K확대흐림/입체명암부족은자체TUNE로분명히표시. 고해상도cloud원본미확보(옛NASA페이지redirect/추정TIFF404); 자료/crop→국소광학→같은분포near인계→서고후속. 기본main/Story미교체,near그림자보류유지. F080/D114/CASE007/색인·PLAN·WORK_STATE갱신. provenance/manifest/gallery로근거추적. 코드URL만바이트동일researchcopy로옮긴후최종빌드하며capturenative광학값변경없음.
 
 검증 마감: spike Vite build81 modules PASS, records:check248 PASS, diff --check PASS. 갤러리6/6 실제이미지942×672 로딩확인,검토탭유지. 자산 원본 hash 일치와 런타임 저장/휠입력 증거는 품질KEEP/near인계완료를 의미하지 않는다.
+
+## 2026-10-09 D116 지역 상세 구름 자료 대조
+공식Solar8K목록확인→shell403/브라우저약976초timeout/kernelreset(O023)→공개Siqister/files commit2ed70f... 에서11.6MB8K획득/sha·dimensions확인. 같은원본2K다운샘플과지역8KR8crop로카메라/sun/shape/opacity고정4native,실제8초정역camera/WebM456trace/decode확인. 1280×720/RTX3070/contextLostfalse. 작은결개선관찰·flatproxy양감/조명TUNE. source·provenance·bytes고정,crop/global texture약10.7MiB명목값과실측총성능구별. D116/F081/CASE007/report/PLAN/state/색인갱신. D115DB미커밋·6usercapture·개인영상추출프레임보존. 다음국소광학→near같은footprint→서고,near그림자결함튜닝보류.
+
+최종검증: Vite81 modules PASS / diffcheck PASS / 격리된 HEAD+이번D116/F081/O023 기록snapshot251 PASS. 별도D115미커밋기록과경험DB는검사·commit범위에서제외하고보존. 브라우저사진4/4 1280×720,영상readyState4/errornull/7.971초로확인·탭유지. 정착/8초증거로자글거림완전해결·전체구름룩채택을주장하지않는다.

@@ -1793,3 +1793,16 @@ inputColor를 albedo로 Lambert/π 처리하는 source. 이미 PBR lighting된 �
 
 ### 놓쳤다면
 잘못된 OFF로 원인을 판단하거나, software 저부하 화면을 RTX 고품질/성능 증거로 오해했을 것이다. 원본 빛 띠 기여와 북유럽 번안의 부족한 가시성, 정지 진단과 연속 움직임 검증을 분리한다. 최신 보고서 ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md.
+
+## F-072. GPU 회복과 구름의 샘플링·밀도 개선은 서로 다른 검증 결과다
+
+2026-10-08 [대화] [코드] [브라우저] [캡처] · D106 / CASE-007.
+
+### 발단
+사용자가 컴퓨터 중단 복구 후 새로고침하고 재개를 승인했다. 기존 GPU 상실과 구름 grain을 함께 다시 확인할 필요가 있었다.
+### 먼저 의심한 것과 배제 방법
+64×64 장치 점검으로 RTX3070 회복을 먼저 확인하고, 같은 지형/카메라의 high50% upscale/fullres/밀도대비1.6 세 조건을 각각6구도로 캡처했다. 같은 high25%에서 시간 업스케일 ON/OFF도 대조했다.
+### 결정적 근거
+새26 native 쌍의 RTX/contextLost=false와 저장 경로 성공. fullres에서 반복 점선·입자가 크게 줄었고, weatherExponent1.6은 약한 날씨 밀도를 줄여 빈 공간과 남은 덩어리를 강조했다. 구름 총량/크기도 줄며 그림자 영역이 달라진다. fullres50%는 화면1280×720에서 cloud640×360이고, TAA는 유지된다. 비용은 각 fixed pose의 composer GPU query이며 총FPS/targetPC 보장이 아니다.
+### 놓쳤다면
+GPU가 회복됐다는 이유로 grain이 해결됐다고 하거나, 밀도 감소를 새 고품질 에셋/모든 구도의 국소 응집 완성으로 오인했을 것이다. RTX 복구/기능 PASS와 품질 TUNE, 원래 중단 원인 미확정, 아직 약한 빛 커튼/암부/연속 움직임 검증을 분리한다. ECG_A_takram_hardware_recheck_2026-10-08.md 참조.

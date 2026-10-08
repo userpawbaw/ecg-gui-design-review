@@ -2656,3 +2656,25 @@ Takram원형재현·temporal움직임·same-cameraterrain정합미달시후속�
 
 ### D105 구현 / 검증 결과
 원본 .42/54 및650/1200m 두께, SMAA, maxFar100km와 빛 커튼 제어를 별도 후보에 반영했다. source Basic300의 실제 빛 띠 ON/OFF와 수정된 cloud OFF 기여를 확인했다. 최신 north8km 층은6고정 구도 diagnostic 캡처; 빔 가시성/질감은 TUNE. GPU 컨텍스트 오류2프레임을 REJECT 보존했고 이후 renderer는 Microsoft Basic Render Driver로 확인돼 하드웨어 안정성 검증이 남았다. fullres TAA 표기를 정정하고 preset 뒤 옵션 재적용/지형 lazy 초기화/오류 시 정상 캡처 중단을 구현했다. 기본 화면 교체는 미완. 보고서 ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md, F071/O019–020/REF015 참조.
+
+## D-106. 중단 후 GPU 회복을 작은 진단에서 확인하고 기존 구름 후보 검증을 이어간다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화] 구현 전 |
+| 상태 | 사용자 새로고침 완료 / 재개 승인; 품질 TUNE 유지 |
+| CASE | CASE-007 |
+
+### 갈림길
+컴퓨터 중단 후 파일 복구와 원격 저장은 확인했지만 하드웨어 renderer 회복은 미확인이다. 사용자가 갤러리를 새로고침하고 진행을 요청했다.
+### 검토한 선택지
+즉시 높은 부하 구름/지형 재실행, 작은 WebGL 장치 점검 후 단계적 실행, software 상태를 모른 채 기존 캡처 반복.
+### 고른 것과 근거
+64×64 WebGL 화면에서 renderer/context/timer 지원을 먼저 확인한다. 정상 하드웨어이면 source 저부하 → north 고정 구도 → 필요한 범위 high 시험 순서로 진행한다. 신규 캡처는 takram-hardware-20261008에 분리해 D105와 사용자 capture6파일을 보존한다.
+### 버린 것과 이유
+GPU 모델 확인을 고부하 안정성이나 targetPC 성능으로 간주하지 않는다. 시스템 GPU 설정/드라이버 변경, 과거 증거 덮어쓰기, 품질 미확인 main 통합은 진행하지 않는다.
+### 되돌려야 하는 조건
+software renderer/context loss/조작 지연이 재발하면 높은 부하로 더 올리지 않고 해당 범위만 중단·기록한다. 최신 shader와 main 지형은 보존하고 source/단위/temporal 조건의 최소 시험으로 원인을 좁힌다.
+
+### D106 구현 결과
+RTX3070/context 정상/timer 회복 확인 후 low25%→high50% 단계 실행. 같은 north6카메라를 upscale50%/fullres50%/fullres50% 대비1.6 세 조건으로 저장했고, 같은 high25% 시간 업스케일 대조, repeat54/100, 두 대비에서 shaft ON/OFF도 저장했다. 새native26쌍, console warn/error0. fullres와 대비1.6을 검토 후보로 제시하되 원형 기본대비1 및 main을 유지한다. 빔 강도/암부/연속 움직임/원래 중단 원인은 열려 있다. 실제 검증은 scoped PASS, visual TUNE. URL cluster 옵션과 새 캡처 폴더로 D105 증거를 보존. F072/최신 hardware review 참조.

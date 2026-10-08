@@ -415,3 +415,6 @@ EffectPass.setEffects와 recompile로 cloud를 제외하고 aerial overlay/shado
 실패 PNG/JSON을 rejected-context에 보존. lost context 때 렌더 루프와 정상 저장을 중단. Basic 원형에서 북유럽 리소스를 lazy 초기화하고 25% 진단 옵션 추가. software에서 six fixed north pose와 OFF 기능을 확인했지만 GPU timer unavailable, 하드웨어 near-field 품질/안정성 재검증은 남았다.
 ### 재발 방지와 자동화 상태
 각 native 캡처에 renderer/context/품질/층/패스 연결 조건을 기록한다. 고부하 시험의 결과 불명은 성공으로 처리하지 않는다. 테스트 PC GPU 복구 후 high six-pose 및 연속 움직임 확인이 필요하다. 사용자의 다른 앱이나 GPU 설정은 변경하지 않았다.
+
+### D106 후속 검증 — 2026-10-08
+사용자 새로고침 후 RTX3070/timer 회복을 실제로 확인했다. source와 최신 north high 세 조건×6구도, 별도 옵션 대조를 저장했고 새context loss/warn/error는 미관찰. 이 범위의 회복 확인으로 진행을 재개했으나 원래 컴퓨터 전체 중단 원인이 해결됐다고 결론 내리지 않는다. 장기/연속scroll/targetPC 검증은 남아 있다. D106/F072 및 ECG_A_takram_hardware_recheck_2026-10-08.md가 현재 기준이다.

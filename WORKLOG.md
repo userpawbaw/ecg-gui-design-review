@@ -670,3 +670,8 @@ RTX source Basic high/fullres75% shaft ON/OFF 및 north.300 초기5km native 저
 사용자 컴퓨터 중단 보고 후 재개. D105 native 정상17쌍/REJECT2쌍 PNG chunk CRC·압축 스트림·SHA256, manifest runtime/source helper 해시 확인 PASS, 누락/변조0. 저장된 코드/문서/이미지 손실은 확인되지 않았다. RAM의 카메라/렌더 상태와 dev server는 소실됐으며 4198 server 재실행 성공. browser 연결오류 페이지는 getTab 프로토콜 보안 정책으로 접근 거절; 우회하지 않음. 사용자가 해당 localhost 탭을 새로고침한 뒤 hardware 회복 확인부터 이어갈 수 있다. 고부하 cloud trial은 이 복구단계에서 재실행하지 않았다. 중단 전 build76 PASS, records228 PASS; 최종 기록 재검사와 Git 저장 진행. 사용자 수정6capture는 보존/스테이징 제외. 증거 verification/a-takram-audit-20261008/interruption-recovery.json.
 
 D105 최종 checkpoint: 기록228 PASS / diff check PASS / 중단 전 Vite76modules build 및 남은 dist 확인 / manifest17정상+2실패 쌍 SHA256·PNG검사 PASS. 사용자 capture6파일은 커밋 제외. local fea5bdac4fff6c50928519a8125bf7a87ae02254 push 성공, ls-remote 및 FETCH_HEAD 복구 JSON 내용 readback 확인. 이전 D104 서버오류로 미푸시된 변경도 함께 저장됐다. main은 변경하지 않았다. browser protocol 차단으로 최신 hardware 재검증은 user 새로고침 후 남음.
+
+
+## 2026-10-08 · D106 RTX 복구 후 구름 검증 재개
+
+사용자 새로고침 완료/진행 승인. gallery 정상,64×64 장치 및 모든26native RTX3070/contextLost=false 확인. source low25→high50→north high upscale/fullres/대비1.6 세 조건×6구도 순서로 진행. 동일high25 temporal 대조, repeat54/100, 대비1/1.6 shaft OFF 추가. console warn/error0, 빌드79 PASS. source/data/저장UI 경계 확인; 기본main/globe는 미통합, 품질TUNE 및 원래 시스템 중단 원인 미확정. 최신 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_hardware_recheck_2026-10-08.md. D10517정상+2실패 및 사용자수정6capture는 덮어쓰지 않음.

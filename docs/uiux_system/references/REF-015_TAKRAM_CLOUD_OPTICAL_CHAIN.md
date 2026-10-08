@@ -74,3 +74,6 @@ RCP 승격 미실행. 완성 chain 원형→단위/normal/depth/albedo 정합→
 ## D105 정정과 추가 효과 분석 — 2026-10-08
 
 D104의 cloud OFF는 Effect에 지원되지 않는 enabled를 설정해서 무효였다. 과거 PNG/JSON은 보존하며 OFF 성능/기여 근거에서 제외한다. “시간 누적 OFF/raw”는 full-resolution TAA이며 4×4 temporal upscale OFF를 의미한다. 현재 source Basic SMAA와 maxFar100km를 추가했고, 원본650/1200m 층 두께로 복귀했다. latest north altitude8000/8250/14750m는 camera7–7.5km 아래 구도를 위한 번안 수치다. 기존 north5km 초기 캡처와 섞지 않는다.
+
+## D106 하드웨어 재검증 — 2026-10-08
+RTX3070 회복 확인 후 같은 latest north6구도를 upscale50%/fullres50%/fullres50% 대비1.6 세 조건으로 재캡처. fullres의 반복 입자 감소와 대비1.6의 밀도·빈 공간 변화를 구분했다. fullres50%는1280×720 화면에서 cloud640×360이고 TAA는 계속 사용한다. 그림자/커튼은 단순 blur나 bloom으로 대체하지 않았다. 원래 시스템 중단 원인과 강렬한 커튼 가시성/암부/연속camera 품질은 미완이며 EFX01502 상태는 spike/TUNE을 유지한다. 최신 ECG_A_takram_hardware_recheck_2026-10-08.md / native26쌍 / F072/D106/O020 후속이 근거.

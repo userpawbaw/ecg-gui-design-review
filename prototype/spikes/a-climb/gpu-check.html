@@ -1,0 +1,15 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GPU 회복 점검</title>
+<style>body{background:#101820;color:#e2edf4;font:16px system-ui;margin:32px;line-height:1.6}pre{white-space:pre-wrap}button{padding:12px;font:inherit}canvas{width:192px;height:192px;image-rendering:pixelated}</style>
+<h1>GPU 회복 점검</h1><p>64×64 WebGL2 색상 출력만 실행합니다. 구름·지형은 로드하지 않습니다. 장치 확인은 고부하 안정성이나 성능 검증이 아닙니다.</p>
+<canvas width="64" height="64"></canvas><pre id="state" aria-label="장치 상태"></pre><button id="save">장치 상태 저장</button><p id="result" role="status"></p>
+<script type="module">
+const canvas=document.querySelector('canvas'),out=document.querySelector('#state'),button=document.querySelector('#save'),result=document.querySelector('#result');
+const gl=canvas.getContext('webgl2');
+const info=gl?.getExtension('WEBGL_debug_renderer_info');
+const renderer=info?gl.getParameter(info.UNMASKED_RENDERER_WEBGL):null;
+const state={ready:!!gl,contextLost:gl?.isContextLost()??true,renderer,software:renderer? /Microsoft Basic Render Driver|SwiftShader|llvmpipe/i.test(renderer):null,timerAvailable:!!gl?.getExtension('EXT_disjoint_timer_query_webgl2'),scope:'64x64 context clear only; no cloud/terrain performance measurement'};
+function draw(){if(gl&&!gl.isContextLost()){gl.clearColor(.12,.4,.7,1);gl.clear(gl.COLOR_BUFFER_BIT);gl.finish();}}
+draw();out.textContent=JSON.stringify(state,null,2);button.disabled=!gl;
+canvas.addEventListener('webglcontextlost',()=>{button.disabled=true;result.textContent='컨텍스트 상실: 이후 부하 시험을 진행하지 않습니다.';});
+button.onclick=async()=>{draw();if(gl.isContextLost())return;const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:'takram-hardware-20261008',shot:'device-'+Date.now(),image:canvas.toDataURL('image/png'),meta:{renderer,state,url:location.href,capturedAt:new Date().toISOString()}})});result.textContent=response.ok?'장치 상태 저장 완료':await response.text();};
+</script></html>

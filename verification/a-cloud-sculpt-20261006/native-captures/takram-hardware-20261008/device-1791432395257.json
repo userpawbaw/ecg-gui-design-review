@@ -1,0 +1,13 @@
+{
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "contextLost": false,
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "software": false,
+    "timerAvailable": true,
+    "scope": "64x64 context clear only; no cloud/terrain performance measurement"
+  },
+  "url": "http://127.0.0.1:4198/gpu-check.html",
+  "capturedAt": "2026-10-08T04:06:35.261Z"
+}

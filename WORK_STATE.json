@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "A D105: hardware renderer recovery → latest north6 high/same-view distribution and shaft/temporal tests → tune before globe integration. Read ECG_WORK_INDEX latest D105; Story/BC separate.",
+  "next_action": "A D106 quality review: fullres50/contrast1.6 six-pose gallery, then beam and terrain light tuning before globe integration. Story/BC separate.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1219,21 +1219,21 @@
     ]
   },
   "north_cloud_takram_2026_10_08": {
-    "status": "D105_FUNCTIONAL_CONDITIONAL_VISUAL_TUNE_HARDWARE_RECHECK_PENDING",
-    "decision": "D105",
-    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md",
-    "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=basic300&scale=.5&upscale=1",
-    "gallery": "verification/a-takram-audit-20261008/gallery.html",
+    "status": "D106_SCOPED_RUNTIME_PASS_VISUAL_TUNE",
+    "decision": "D106",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_hardware_recheck_2026-10-08.md",
+    "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&reviewRound=takram-hardware-20261008",
+    "gallery": "verification/a-takram-hardware-20261008/gallery.html",
     "terrainHeightScale": 1.5,
     "mainReplaced": false,
-    "remoteSave": "D104+D105 push and remote readback verified at fea5bdac4fff6c50928519a8125bf7a87ae02254",
-    "next": "Confirm RTX hardware recovery, recheck latest north six poses high + weather54/100, shafts/temporal/terrain lighting, then continuous globe handoff",
+    "remoteSave": "D106 local edits pending; D105 previously verified at 8d20f37",
+    "next": "User quality review fullres50/contrast1.6; minimum beam aperture/sun-camera/haze-receiver trial and terrain lighting tune before continuous globe handoff",
     "limits": [
-      "Source Basic shaft contribution verified; not pixel-identical reference",
-      "D104 cloud OFF invalid; temporal OFF is fullres TAA",
-      "Two lost-context white frames rejected, root cause unconfirmed",
-      "Software low diagnostic six stills and high software still do not prove GPU performance or motion quality",
-      "No final cloud recipe adoption or continuous globe-to-archive integration"
+      "Original system-freeze root cause unresolved; bounded test does not prove long-term stability",
+      "Fullres50 cloud buffers are 640x360 at 1280x720 display; TAA remains",
+      "No target-PC/full replay/continuous scroll quality proof",
+      "Beam intensity/terrain darks and final adoption remain TUNE",
+      "Main/global globe-to-archive path unchanged"
     ],
     "deferred": [
       "A-P3",
@@ -1242,7 +1242,7 @@
       "D080 alternatives"
     ],
     "historicalD104Off": "invalid; unsupported Effect.enabled; retained and annotated",
-    "currentRenderer": "Microsoft Basic Render Driver after GPU context loss; no GPU timer",
+    "currentRenderer": "RTX3070 recovered; native26 contextLost=false; timer available",
     "northCloudBaseMetres": 8000,
     "northHighFieldLighting": "TUNE; pale faces/dark terrain/shaft visibility",
     "interruptionRecovery": {
@@ -1252,8 +1252,24 @@
       "browser": "Error-document protocol access rejected by browser security policy; user refresh required, no workaround attempted",
       "performance": "Hardware recovery not verified; no new heavy trial",
       "report": "verification/a-takram-audit-20261008/interruption-recovery.json",
-      "pending": "Manual gallery refresh, then confirm hardware renderer recovery before high near-field recheck"
+      "pending": "D106 hardware recovery verified; remaining beam/terrain/motion quality review"
     },
-    "lastVerifiedRemoteCommit": "fea5bdac4fff6c50928519a8125bf7a87ae02254"
+    "lastVerifiedRemoteCommit": "fea5bdac4fff6c50928519a8125bf7a87ae02254",
+    "hardwareRecoveryD106": {
+      "nativePairs": 26,
+      "samePoseSets": 3,
+      "sourceAndNorth": "RTX/context normal throughout captured sequence",
+      "console": "0 warnings/errors",
+      "build": "79 modules PASS",
+      "manifest": "verification/a-takram-hardware-20261008/manifest.json",
+      "reviewCandidate": {
+        "cloudResolutionScale": 0.5,
+        "temporalUpscale": false,
+        "weatherExponent": 1.6,
+        "coverage": 0.42,
+        "weatherRepeat": 54,
+        "adopted": false
+      }
+    }
   }
 }

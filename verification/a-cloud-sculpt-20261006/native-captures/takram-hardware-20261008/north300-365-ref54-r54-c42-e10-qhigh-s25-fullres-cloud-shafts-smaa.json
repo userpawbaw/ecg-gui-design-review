@@ -1,0 +1,129 @@
+{
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "contextLost": false,
+    "mode": "north300",
+    "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+    "p": 0.365,
+    "sourceLocation": [
+      8.4,
+      61.63,
+      "camera metres in localCamera ×1000"
+    ],
+    "sourceDate": "fixed north scene sun vector",
+    "camera": [
+      0,
+      7000,
+      -3000
+    ],
+    "localCamera": [
+      0,
+      7,
+      -3
+    ],
+    "worldToECEF": [
+      -0.14608302856241162,
+      0.9892723329629883,
+      0,
+      0,
+      0.4700661645077798,
+      0.0694133320501771,
+      0.879897488528429,
+      0,
+      0.8704582412447932,
+      0.12853808994869273,
+      -0.4751635609780734,
+      0,
+      3005946.305815795,
+      443879.53187203227,
+      5589039.74196397,
+      1
+    ],
+    "sun": [
+      -0.3765831374164645,
+      -0.727091024320655,
+      0.5740416212836077
+    ],
+    "layers": [
+      {
+        "altitude": 8000,
+        "height": 650,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1,
+        "weatherExponent": 1
+      },
+      {
+        "altitude": 8250,
+        "height": 1200,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1,
+        "weatherExponent": 1
+      },
+      {
+        "altitude": 14750,
+        "height": 500,
+        "densityScale": 0.003,
+        "shapeDetailAmount": 0,
+        "weatherExponent": 1
+      },
+      {
+        "altitude": 0,
+        "height": 0,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1,
+        "weatherExponent": 1
+      }
+    ],
+    "quality": "high",
+    "look": "ref54",
+    "coverage": 0.42,
+    "localWeatherRepeat": [
+      54,
+      54
+    ],
+    "localWeatherOffset": [
+      0,
+      0
+    ],
+    "resolutionScale": 0.25,
+    "lightShafts": true,
+    "shadowMaxFar": 100000,
+    "shadowLengthLinked": true,
+    "temporal": false,
+    "temporalUpscale": false,
+    "temporalAntialiasing": true,
+    "clouds": true,
+    "cloudPassAttached": true,
+    "smaa": true,
+    "wind": false,
+    "terrain": {
+      "visibleTiles": 8,
+      "drawTriangles": 105398,
+      "residentGpuBytes": 36444024,
+      "queued": 0,
+      "pending": 0,
+      "fullSurfaceTriangles": 812800,
+      "fullTiledTriangles": 847090,
+      "heightGain": 1.5,
+      "maxErrorPixels": 5.6119226898038294e-15,
+      "highTextures": true,
+      "errors": [],
+      "detailReveal": 1,
+      "coarseReady": 64
+    },
+    "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+    "renderSize": [
+      1280,
+      720
+    ],
+    "gpu": {
+      "available": true,
+      "count": 300,
+      "p50": 7.899136,
+      "p95": 10.21952
+    },
+    "frames": 28210
+  },
+  "url": "http://127.0.0.1:4198/cloud-lab.html?pose=basic300&scale=.25&quality=low&upscale=1&reviewRound=takram-hardware-20261008"
+}

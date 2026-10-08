@@ -204,3 +204,9 @@ AI는같은terrain source/camera로nativeRGBplate를제작→사용자 “이전
 이에 원본 UI/helper와 사용자 screenshot의 .42/54를 구별하고, 층 두께/카메라 상대 고도/그림자 범위/AA/시간 재구성을 대조했다. 이 과정에서 이전 cloud OFF가 실제로 cloud를 제외하지 않은 진단 오류를 발견했다. 또한 GPU 오류 후 software 렌더로 바뀐 것을 native metadata로 확인했다. 원형의 빛 띠 기여는 확인됐으나 north 번안의 강도/질감은 TUNE이다.
 
 사용자 기여: 실제 화면의 국소 응집/빛 커튼이라는 판별 기준 제시. AI 기여: source 계약과 OFF wiring 수정, GPU 실패 분리, 각 캡처의 renderer/옵션 기록. 판단 변화: asset 동일성이나 checkbox 상태가 효과 재현/성능 검증을 대신하지 않는다. source 원형→같은 지형 번안→제품 연속 구현, 그리고 hardware 정상/diagnostic software의 증거를 따로 이어간다. 현재 대화의 인용이며 별도 machine-export transcript는 없다. F071/D105/O019–020/REF015와 최신 settings review가 근거다.
+
+## 2026-10-08 D106 · 복구를 선언하기 전에 장치와 같은 화면의 차이를 확인
+
+[대화] 사용자 “컴퓨터가 중간에 멈춰서 중단되었어” → 파일17정상/2실패 증거와 source 해시 손실 점검 → 갤러리 새로고침 후 사용자 “진행해줘”. AI는 기존 증거를 덮지 않는 새 폴더에서 작은 장치 점검으로 RTX 회복을 확인하고, source/같은 north 카메라의 세 조건×6구도 비교를 이어갔다.
+
+GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 분리는 점선/입자 문제의 진단이고, weatherExponent1.6은 구름 밀도와 빈 공간의 검토 옵션이다. 이를 각각의 증거로 남겨 하드웨어 정상, scoped 기능 PASS, 시각 TUNE을 분리했다. 원래 컴퓨터 중단 원인과 빛 커튼의 충분한 강도, 장기/연속camera 품질은 여전히 열린 질문이다. F072/D106/O020 후속 및 hardware report 참조. 현재 대화 인용이며 별도 export transcript는 없다.

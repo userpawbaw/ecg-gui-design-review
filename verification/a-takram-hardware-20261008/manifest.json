@@ -1,0 +1,3307 @@
+{
+  "decision": "D106",
+  "sourceBaseCommit": "8d20f37a5c2c45aa49746437f399ae5d60732f3a",
+  "status": "RTX_RECOVERED_SCOPED_RUNTIME_PASS_VISUAL_TUNE",
+  "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&reviewRound=takram-hardware-20261008",
+  "captures": [
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/basic300-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/basic300-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.png",
+      "sha256": "6c0919397e12e13df414145957cc7ac528be06ab67d7b7c5fbd06c592f5e514f",
+      "pngSha256": "9d406fee36a33770157d15780c806df99c95234596006409b07f6ca5b3925a74",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "basic300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": null,
+        "sourceLocation": [
+          30,
+          35,
+          300
+        ],
+        "sourceDate": "2026-01-02T07:00:00Z",
+        "camera": [
+          4529606.6706149345,
+          2614762.716348607,
+          3638805.5858316743
+        ],
+        "localCamera": [
+          0,
+          0,
+          0
+        ],
+        "worldToECEF": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "sun": [
+          0.22300214114771516,
+          0.8937423487449461,
+          -0.3892231482111538
+        ],
+        "layers": [
+          {
+            "altitude": 750,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 1000,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 7500,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": true,
+        "temporalUpscale": true,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 300,
+          "p50": 4.795392,
+          "p95": 7.325696
+        },
+        "frames": 12734
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/basic300-ref54-r54-c42-e10-qlow-s25-upscale-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/basic300-ref54-r54-c42-e10-qlow-s25-upscale-cloud-shafts-smaa.png",
+      "sha256": "b081e6b9ef024ff445f3092fb8611baf3ce30f7c31d23e1f2385743fa20e8921",
+      "pngSha256": "72422a0f29396d85a4fd79fa5a4da1265a0c36afbe49e4c667ee9014313d86f7",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "basic300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": null,
+        "sourceLocation": [
+          30,
+          35,
+          300
+        ],
+        "sourceDate": "2026-01-02T07:00:00Z",
+        "camera": [
+          4529606.6706149345,
+          2614762.716348607,
+          3638805.5858316743
+        ],
+        "localCamera": [
+          0,
+          0,
+          0
+        ],
+        "worldToECEF": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "sun": [
+          0.22300214114771516,
+          0.8937423487449461,
+          -0.3892231482111538
+        ],
+        "layers": [
+          {
+            "altitude": 750,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 1000,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 7500,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "low",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.25,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": true,
+        "temporalUpscale": true,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 300,
+          "p50": 4.231168,
+          "p95": 6.224896
+        },
+        "frames": 10437
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/device-1791432395257.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/device-1791432395257.png",
+      "sha256": "1e36982d1cba8fe752eb87afe65b24456086631871372aae404e0811666860bd",
+      "pngSha256": "9ec666be98ebadd86419b407e9c5b76ff3bda6c2e02711e1190a337f6b3e9ae5",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "software": false,
+        "timerAvailable": true,
+        "scope": "64x64 context clear only; no cloud/terrain performance measurement"
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-265-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-265-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "6580dc46c786a6df20c5fc4a3994b597ff7d26fc4b8dd9d08ea0b2b785e801aa",
+      "pngSha256": "39692a8fcbdd51f9743bd2014d3924e8e3a402658f74336cd2feb52c3b344bb2",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.265,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          35000,
+          45000,
+          70000
+        ],
+        "localCamera": [
+          35,
+          45,
+          70
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 64,
+          "drawTriangles": 650798,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 0.9497435436789134,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 9.044992,
+          "p95": 9.732096
+        },
+        "frames": 44234
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-265-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-265-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.png",
+      "sha256": "69001195f90ddc36e601fc13e34adf6e24542226f5606cdb4da33186190e95bc",
+      "pngSha256": "f22cd2596729ec73db377eabbd387e89abd1a8ac721d74e3167a52f2c0e60ca2",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.265,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          35000,
+          45000,
+          70000
+        ],
+        "localCamera": [
+          35,
+          45,
+          70
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": true,
+        "temporalUpscale": true,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 64,
+          "drawTriangles": 484132,
+          "residentGpuBytes": 26470128,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 1.1274168815960335,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 6.899712,
+          "p95": 8.275968
+        },
+        "frames": 14922
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-265-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-265-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "acf88183c9c07a5f61ec14976848aa28d2fd56d58848e254ae3ef4fa487354cf",
+      "pngSha256": "fe072b53c98b150aea76f8b92926e8de1b45829ba2bff1031fffea5c9fe8deae",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.265,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          35000,
+          45000,
+          70000
+        ],
+        "localCamera": [
+          35,
+          45,
+          70
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 64,
+          "drawTriangles": 650798,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 0.9497435436789134,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 7.489536,
+          "p95": 8.369152
+        },
+        "frames": 54144
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-285-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-285-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "88de3b6a2bdb2181375baf8bccdcfe1676333f1e8ec441097da584b3ee9fbdd8",
+      "pngSha256": "4906438616d907b608efdfd3f13141d004ceafb3dacb47bed1ca1417e88e7671",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.285,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          19768.000000000007,
+          17224.000000000015,
+          29680.000000000022
+        ],
+        "localCamera": [
+          19.768000000000008,
+          17.224000000000014,
+          29.68000000000002
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 64,
+          "drawTriangles": 808228,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 1.1944133700184374,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 9.107456,
+          "p95": 9.739264
+        },
+        "frames": 44418
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-285-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-285-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.png",
+      "sha256": "08821d75cfb6848a2fbc3af290e51c5d65b2984cc0351f59dd845c2f5af5635c",
+      "pngSha256": "20a651338f7c42ec7c4b0129a7a970ed42ac6017b1e5e7a47193578d21fdad6c",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.285,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          19768.000000000007,
+          17224.000000000015,
+          29680.000000000022
+        ],
+        "localCamera": [
+          19.768000000000008,
+          17.224000000000014,
+          29.68000000000002
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": true,
+        "temporalUpscale": true,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 64,
+          "drawTriangles": 778796,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 1.1944133700184374,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 8.82176,
+          "p95": 9.51296
+        },
+        "frames": 15105
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-285-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-285-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "2acaf5efa12de822c0444dbcf5340c02870de75c5bfb72c1d0797ccf7f19837b",
+      "pngSha256": "3ecb5ef4653e35be418b5db9abd3bd6a6378a34f5ece65b57a447e669f236368",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.285,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          19768.000000000007,
+          17224.000000000015,
+          29680.000000000022
+        ],
+        "localCamera": [
+          19.768000000000008,
+          17.224000000000014,
+          29.68000000000002
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 64,
+          "drawTriangles": 808228,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 1.1944133700184374,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 9.034688,
+          "p95": 9.749504
+        },
+        "frames": 54328
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-300-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-300-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "c020420d15fc3cba5eb78397351ff5f5b426cabe3ac5e2e2b8235622057b8ef2",
+      "pngSha256": "89b9a7a19cfdaf0fefc8c31199c0246985be1e3ca7ba7257cfdb64e40d114e19",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.3,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          15802.28791668375,
+          12626.429947927343,
+          22527.57390626922
+        ],
+        "localCamera": [
+          15.80228791668375,
+          12.626429947927344,
+          22.527573906269218
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 63,
+          "drawTriangles": 833976,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 2.0006695189420625e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 9.07264,
+          "p95": 9.781152
+        },
+        "frames": 44601
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-300-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-300-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.png",
+      "sha256": "f9f61584c0e150d29867b6847c889a9b59b4157ccbfbfb09ad529e20b8ef61c3",
+      "pngSha256": "6962413bb0ed41243b754e7cf646b0dd6a8c9afe9dec37b5c04cbd2aef88a9bb",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.3,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          15802.28791668375,
+          12626.429947927343,
+          22527.57390626922
+        ],
+        "localCamera": [
+          15.80228791668375,
+          12.626429947927344,
+          22.527573906269218
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": true,
+        "temporalUpscale": true,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 63,
+          "drawTriangles": 833976,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 2.0006695189420625e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 7.849984,
+          "p95": 8.787968
+        },
+        "frames": 15288
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-300-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-300-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "08be5358f3e11b339cc28e33e505a065726a373a33d30c1c296cf3a3df238781",
+      "pngSha256": "df6439b2848030a8b9357f0be1783258298bf66436691148d2a0d06d4c1dfa53",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.3,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          15802.28791668375,
+          12626.429947927343,
+          22527.57390626922
+        ],
+        "localCamera": [
+          15.80228791668375,
+          12.626429947927344,
+          22.527573906269218
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 63,
+          "drawTriangles": 833976,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 2.0006695189420625e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 9.019392,
+          "p95": 9.885696
+        },
+        "frames": 54511
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-320-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-320-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "4e135a00ddd98ea45b9fe11c525be5de8ff915d22177f479c478c5d245e9acb0",
+      "pngSha256": "7f151eee24957bfb192d2b2aa07dc279e8bd052c75ac0e09394ad97bf7d2bfb1",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.32,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          9969.731451979973,
+          8993.513882567138,
+          15965.407373691396
+        ],
+        "localCamera": [
+          9.969731451979973,
+          8.993513882567138,
+          15.965407373691397
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 51,
+          "drawTriangles": 675146,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 2.507942796591375e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 9.018368,
+          "p95": 9.846784
+        },
+        "frames": 44785
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-320-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-320-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.png",
+      "sha256": "d80c8e2652e39c050e4a4ff2dac0b46d9822ce9fc13fa4de166e5ec4142fb217",
+      "pngSha256": "8ff8ebc75d1eb2e0d7cabb3aabf7ae3be6c403da15369d4f089da44952694a25",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.32,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          9969.731451979973,
+          8993.513882567138,
+          15965.407373691396
+        ],
+        "localCamera": [
+          9.969731451979973,
+          8.993513882567138,
+          15.965407373691397
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": true,
+        "temporalUpscale": true,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 51,
+          "drawTriangles": 675146,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 2.507942796591375e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 6.974464,
+          "p95": 8.927232
+        },
+        "frames": 15473
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-320-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-320-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "79bd8de85f6fc814505116667cc18aaea318f30bbbd7fba3cf0a02137f1f9f74",
+      "pngSha256": "efc40bd0513cc6cb36aae8eeac2c91b51dbf2a3d1206b09b3be9edae21e32f03",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.32,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          9969.731451979973,
+          8993.513882567138,
+          15965.407373691396
+        ],
+        "localCamera": [
+          9.969731451979973,
+          8.993513882567138,
+          15.965407373691397
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 51,
+          "drawTriangles": 675146,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 2.507942796591375e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 9.090048,
+          "p95": 9.839616
+        },
+        "frames": 54694
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-345-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-345-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "d1abfc681d12b934d66ea890d86b6020966fc324145077796975247c52d2a77f",
+      "pngSha256": "42b79c1e58ffeb76ba2ca2a9dcad0b75246292083798290eb85a32228512534e",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.345,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          3000,
+          7500,
+          8000
+        ],
+        "localCamera": [
+          3,
+          7.5,
+          8
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 31,
+          "drawTriangles": 410268,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 3.5397665339519657e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 8.767488,
+          "p95": 9.3952
+        },
+        "frames": 44968
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-345-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-345-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.png",
+      "sha256": "26c2931e58c395750b3ca4802f1e21a2c8dbf5eb8b52deabd766c57a7ade1eb1",
+      "pngSha256": "318da67da935d4a651135e97588dd67d81dd2533f7c0f5b246785ce16f501010",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.345,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          3000,
+          7500,
+          8000
+        ],
+        "localCamera": [
+          3,
+          7.5,
+          8
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": true,
+        "temporalUpscale": true,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 31,
+          "drawTriangles": 410268,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 3.5397665339519657e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 6.35904,
+          "p95": 11.471872
+        },
+        "frames": 15657
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-345-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-345-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "b7fd0776a60a26e97085e6160ced15d7191d5abfd4ba405102dfe3b60c2a3032",
+      "pngSha256": "7a14bb8301446079c4f9a4ffaa63a53c84f72918a4f55fb41850cfc7823351f8",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.345,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          3000,
+          7500,
+          8000
+        ],
+        "localCamera": [
+          3,
+          7.5,
+          8
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 31,
+          "drawTriangles": 410268,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 3.5397665339519657e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 8.90048,
+          "p95": 10.427392
+        },
+        "frames": 54877
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r100-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r100-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "cba7f3877475dd8432003dd4a0d813243049fdf5ab2ca146bed446d3c6701098",
+      "pngSha256": "b9f5df2b6bd38db6cea5a15bc07971c88db878a2d41ed63f6b7cb34d81a78a45",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.365,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          0,
+          7000,
+          -3000
+        ],
+        "localCamera": [
+          0,
+          7,
+          -3
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          100,
+          100
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 8,
+          "drawTriangles": 105398,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 5.6119226898038294e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 300,
+          "p50": 8.882176,
+          "p95": 9.534464
+        },
+        "frames": 38821
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s25-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s25-fullres-cloud-shafts-smaa.png",
+      "sha256": "669c9d2650834aaa26d5f9273ca8a503ff7c329d480819949a3a66a6a4719185",
+      "pngSha256": "270f9dc72e2b2cf602ea13f363c61b5abb9b52720164eba1cd2461dc34a5478d",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.365,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          0,
+          7000,
+          -3000
+        ],
+        "localCamera": [
+          0,
+          7,
+          -3
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.25,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 8,
+          "drawTriangles": 105398,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 5.6119226898038294e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 300,
+          "p50": 7.899136,
+          "p95": 10.21952
+        },
+        "frames": 28210
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s25-upscale-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s25-upscale-cloud-shafts-smaa.png",
+      "sha256": "59aebcfe9fa12245b4c0b9cd1d6d59bb7cdf1d7621a9f8c6283345c2ccf324fb",
+      "pngSha256": "9581444cbee07c1c0ea394a4475230fb7bd64e7c5634531552f317998421cba5",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.365,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          0,
+          7000,
+          -3000
+        ],
+        "localCamera": [
+          0,
+          7,
+          -3
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.25,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": true,
+        "temporalUpscale": true,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 8,
+          "drawTriangles": 105398,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 5.6119226898038294e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 300,
+          "p50": 6.6816,
+          "p95": 10.478592
+        },
+        "frames": 31540
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-nosh-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-nosh-smaa.png",
+      "sha256": "97717f2c78393057ae61fbb5b1c7f24ae717fa128ff613e95a0bb3dc7a9b7c24",
+      "pngSha256": "4d22f0862d9d24d3478ee208084c7a2e60d05f0bb78ffb4a3191b42840f9940d",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.365,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          0,
+          7000,
+          -3000
+        ],
+        "localCamera": [
+          0,
+          7,
+          -3
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": false,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": false,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 8,
+          "drawTriangles": 105398,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 5.6119226898038294e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 300,
+          "p50": 8.449024,
+          "p95": 9.460736
+        },
+        "frames": 53945
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "e51fa833ac61cdd1cfce096e8e058a6465895a5a4c541ccf370cee5ae5e09a9b",
+      "pngSha256": "704308949715c650a4332dca58a596e51db7cfd0c268c723815250104716489e",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.365,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          0,
+          7000,
+          -3000
+        ],
+        "localCamera": [
+          0,
+          7,
+          -3
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 8,
+          "drawTriangles": 105398,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 5.6119226898038294e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 8.691712,
+          "p95": 9.227264
+        },
+        "frames": 45151
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e10-qhigh-s50-upscale-cloud-shafts-smaa.png",
+      "sha256": "ed2aef59838a2b7641683be3f3fabb5ffbe703f7220c285bbcd316a4b0dba509",
+      "pngSha256": "3fb8b17901ce0c8c49dff81fec382190e62b6fda0f4a9bceeebfdf053a645a2b",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.365,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          0,
+          7000,
+          -3000
+        ],
+        "localCamera": [
+          0,
+          7,
+          -3
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": true,
+        "temporalUpscale": true,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 8,
+          "drawTriangles": 105398,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 5.6119226898038294e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 6.37952,
+          "p95": 10.52672
+        },
+        "frames": 15839
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-nosh-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-nosh-smaa.png",
+      "sha256": "d70fbcf38f1624e27df0b8181ae38fce189566e9ac2072387e2d815834d1d2b9",
+      "pngSha256": "adae1aa1802759dabf72ba387ceffbcdf300c476f32c7bc45bc9616f461798a6",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.365,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          0,
+          7000,
+          -3000
+        ],
+        "localCamera": [
+          0,
+          7,
+          -3
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": false,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": false,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 8,
+          "drawTriangles": 105398,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 5.6119226898038294e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 300,
+          "p50": 8.420352,
+          "p95": 9.18016
+        },
+        "frames": 69742
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.json",
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-hardware-20261008/north300-365-ref54-r54-c42-e16-qhigh-s50-fullres-cloud-shafts-smaa.png",
+      "sha256": "29d5995682e16a7fe0cd0fdb9c0b209b6688d444faf7b09d9967072fbb9b8a58",
+      "pngSha256": "9785d8b304674e40a54e1c470928af8ced98912f7b014d527f7bddb6739af3e6",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "ready": true,
+        "contextLost": false,
+        "mode": "north300",
+        "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+        "p": 0.365,
+        "sourceLocation": [
+          8.4,
+          61.63,
+          "camera metres in localCamera ×1000"
+        ],
+        "sourceDate": "fixed north scene sun vector",
+        "camera": [
+          0,
+          7000,
+          -3000
+        ],
+        "localCamera": [
+          0,
+          7,
+          -3
+        ],
+        "worldToECEF": [
+          -0.14608302856241162,
+          0.9892723329629883,
+          0,
+          0,
+          0.4700661645077798,
+          0.0694133320501771,
+          0.879897488528429,
+          0,
+          0.8704582412447932,
+          0.12853808994869273,
+          -0.4751635609780734,
+          0,
+          3005946.305815795,
+          443879.53187203227,
+          5589039.74196397,
+          1
+        ],
+        "sun": [
+          -0.3765831374164645,
+          -0.727091024320655,
+          0.5740416212836077
+        ],
+        "layers": [
+          {
+            "altitude": 8000,
+            "height": 650,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 8250,
+            "height": 1200,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1.6
+          },
+          {
+            "altitude": 14750,
+            "height": 500,
+            "densityScale": 0.003,
+            "shapeDetailAmount": 0,
+            "weatherExponent": 1
+          },
+          {
+            "altitude": 0,
+            "height": 0,
+            "densityScale": 0.2,
+            "shapeDetailAmount": 1,
+            "weatherExponent": 1
+          }
+        ],
+        "quality": "high",
+        "look": "ref54",
+        "coverage": 0.42,
+        "localWeatherRepeat": [
+          54,
+          54
+        ],
+        "localWeatherOffset": [
+          0,
+          0
+        ],
+        "resolutionScale": 0.5,
+        "lightShafts": true,
+        "shadowMaxFar": 100000,
+        "shadowLengthLinked": true,
+        "temporal": false,
+        "temporalUpscale": false,
+        "temporalAntialiasing": true,
+        "clouds": true,
+        "cloudPassAttached": true,
+        "smaa": true,
+        "wind": false,
+        "terrain": {
+          "visibleTiles": 8,
+          "drawTriangles": 105398,
+          "residentGpuBytes": 36444024,
+          "queued": 0,
+          "pending": 0,
+          "fullSurfaceTriangles": 812800,
+          "fullTiledTriangles": 847090,
+          "heightGain": 1.5,
+          "maxErrorPixels": 5.6119226898038294e-15,
+          "highTextures": true,
+          "errors": [],
+          "detailReveal": 1,
+          "coarseReady": 64
+        },
+        "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+        "renderSize": [
+          1280,
+          720
+        ],
+        "gpu": {
+          "available": true,
+          "count": 120,
+          "p50": 8.675328,
+          "p95": 9.736192
+        },
+        "frames": 55060
+      }
+    }
+  ],
+  "hashBasis": "SHA256 of original working-tree bytes. JSON/text hashes can differ after Git line-ending conversion; PNG bytes are not transformed.",
+  "runtimeFiles": {
+    "prototype/spikes/a-climb/cloud-lab.ts": "059e445c40370c1b1bd92d9d0ae32095456acf3c2f7376d3e3446a034f71fd1e",
+    "prototype/spikes/a-climb/gpu-check.html": "4b2f240c8dd8af814a041d6ef3db777cb44beea7b91eaea92707c0a78cc89366",
+    "prototype/spikes/a-climb/vite.config.mjs": "00cfec39a36bdcad61ceff6db70278e2857f6a9d750bb04cbfade1cafeca8906"
+  },
+  "evidenceVersions": "Source rendering unchanged during captures; final patch adds URL cluster initialization and separate capture round. Manual captured UI state is authoritative over initial URL.",
+  "limits": [
+    "Device recovery and this bounded trial do not prove original system-freeze root cause repaired",
+    "Full-resolution TAA at scale .5 means 640x360 cloud buffers for 1280x720 display",
+    "No matched six-frame external reference video, no target-PC/full replay or continuous scroll proof",
+    "Beam intensity, sparse cloud look and terrain lighting require user quality review",
+    "No main integration or final adoption"
+  ]
+}

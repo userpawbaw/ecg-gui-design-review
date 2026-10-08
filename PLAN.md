@@ -460,3 +460,10 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 - TUNE: north 빔 가시성/국소 군집/temporal grain. 최신 층8km, 초기 RTX p.300 층5km와 구분.
 - 다음: hardware renderer 회복 확인 → latest north6구도 high + weather54/100/정착된 exponent 대조 → beam/terrain lighting/ghosting 튜닝 → globe 연속 인계. 품질 승인/기본 화면 통합 미완.
 - 기존 terrain1.5×/서고KEEP, capture6파일 보존, A-P3/Story/BC/D080 별도 유지.
+
+
+## 2026-10-08 D106 checkpoint
+
+완료: RTX 회복 확인, scoped source→north 재실행, 같은6구도 upscale/fullres/대비1.6 비교 및 빛/분포 대조. native26쌍, build79 PASS. 원래 컴퓨터 중단 원인은 미확정. 품질 TUNE.
+
+다음: 새 gallery의 high/fullres50%/대비1.6 후보 사용자 피드백 → beam의 구름 빈 창/태양·카메라/연무·수광 거리 최소 시험과 terrain 암부 점검 → 품질 확인 뒤 globe 연속 인계. D105고도8km·terrain1.5×/archiveKEEP·Story/BC/D080별도 유지. 기준 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_hardware_recheck_2026-10-08.md.

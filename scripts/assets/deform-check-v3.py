@@ -183,6 +183,37 @@ def iron(V0, V1, F, reg, Adj, rounds=3, it=30, rings=4, lam=.5, mu=-.53):
     return V
 
 
+def flips(V, T, Adj_t=None, P=None):
+    """Triangles whose normal points against their neighbours' (micro crumples: the specks in clay renders)."""
+    n = np.cross(V[T[:, 1]] - V[T[:, 0]], V[T[:, 2]] - V[T[:, 0]]); a = np.linalg.norm(n, axis=1); n = n / np.maximum(a, 1e-12)[:, None]
+    P = edge_pairs(T) if P is None else P
+    m = np.zeros_like(n); np.add.at(m, P[:, 0], n[P[:, 1]] * a[P[:, 1], None]); np.add.at(m, P[:, 1], n[P[:, 0]] * a[P[:, 0], None])
+    return (n * m).sum(1) < 0
+
+
+def iron_flips(V1, T, Adj, rounds=4, it=12, rings=3, lam=.5, mu=-.53):
+    """Taubin smoothing only around flipped triangles (and a few rings), repeated while flips remain."""
+    V = V1.copy(); deg = np.maximum(np.asarray(Adj.sum(1)).ravel(), 1); P = edge_pairs(T); n0 = None
+    for r in range(rounds):
+        f = flips(V, T, P=P); n0 = n0 if n0 is not None else int(f.sum())
+        if not f.any(): break
+        w = np.zeros(len(V)); w[T[f].ravel()] = 1
+        for _ in range(rings): w = np.maximum(w, .75 * (Adj @ w) / deg)
+        for _ in range(it):
+            for k in (lam, mu): V = V + (k * w)[:, None] * ((Adj @ V) / deg[:, None] - V)
+    return V, n0, int(flips(V, T, P=P).sum())
+
+
+def flatten_floor(V1, Adj, sink=.015, rings=12):
+    """Soft floor contact: sink the body by `sink`, put the skin below the floor on it, and spread that push over the
+    neighbourhood so the seat flattens instead of folding (buttocks on a floor are flat, not pointed)."""
+    V = V1.copy(); V[:, 2] -= sink; deg = np.maximum(np.asarray(Adj.sum(1)).ravel(), 1)
+    d = np.maximum(0, -V[:, 2]); hit = d > 0; D = d.copy()
+    for _ in range(rings): D = np.maximum(D, .85 * (Adj @ D) / deg)
+    V[:, 2] += D * np.where(hit, 1, .9); V[:, 2] = np.maximum(V[:, 2], 0)
+    return V
+
+
 def summary(rows):
     return {'FAIL': sum(r['status'] == 'FAIL' for r in rows), 'WARN': sum(r['status'] == 'WARN' for r in rows)}
 

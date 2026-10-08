@@ -21,3 +21,25 @@
 1. 바닥 자세 FAIL 3을 모션캡처 예외로 받을지, 몸을 조금 뒤로 기울여 엉덩관절 굽힘을 줄일지(사용자 판단).
 2. 사다리: Mixamo 동작의 손·발 높이에서 가로대 간격을 재 우리 서고 사다리와 비교 → 사다리 간격을 고치거나 손발을 가로대에 붙임.
 3. 서고 배치(사다리 위 / 사다리 오른쪽 바닥), H5 고리 속성 넣어 웹 glb 내보내기, 심장 크기 조정(story에도 반영), 도입부 카메라·나타나기/사라지기 연출.
+
+## 2026-10-08 (later) — direct route: our mesh on a Mixamo skeleton (`scripts/assets/mixamo-rig-v3.py`)
+Run in parallel with the user's Mixamo auto-rig upload (user: "계획은 병렬로 시행해줘"). Result `direct_mixamo_skeleton_sheet.jpg`
+(4 views + buttock side, buttock back, chest close-ups), settings `WEIGHTS=auto ARMLEAK=0 MORPH=1 CS=1 BUTT=0 IRON=1 FLAT=0.035`.
+
+| Step | What changed | Effect |
+|---|---|---|
+| Same skeleton | Mixamo names/hierarchy; trunk and clavicles at the Y Bot's relative positions on our trunk | Back curve, head tilt and arm root follow the source (user review: hunch / turtle neck / dropped shoulder) |
+| MORPH=1 | Elbow at the Y Bot's upper-arm/forearm split of our arm length (mesh follows) | Left elbow–knee joint distance 11.8 cm vs source 11.0 cm (was 16.8 cm) |
+| Bone-heat weights | Fresh Blender automatic weights on the Mixamo skeleton instead of our Rigify DEF weights summed | Armpit webbing, back flaps and belly tears gone |
+| IRON | Taubin smoothing only around flipped triangles | Chest/belly specks: 678 → 5 flipped triangles (75 after the floor pass) |
+| FLAT | 3.5 cm soft floor contact | Buttock bottom flattened on the floor instead of pointed |
+
+Fidelity (cm, joints vs scaled source, pelvis-relative): knee 2.3, ankle 2.4, chest 3.4, neck 2.6, head 1.3, shoulder joints 3.7–3.9,
+elbows 4.3–4.6, wrists 4.7–4.8.
+
+deform-check (8 FAIL) — what is left:
+- strain clusters in the rest-fold zones (perineum 268 cm², left/right armpit 180/63 cm²): smooth in the close-ups (deform-qa.md §2 blind spot);
+- leg-leg intersections of the folded right leg (calf in hamstring, 64–67 cm²) and the right hand on the shin (contact): hidden from the
+  intro cameras, left as game rigs leave them (user: Y Bot reads natural because it does not squash overlaps);
+- thigh into lower belly at the groin fold (27–41 cm²).
+Not yet checked: the user's auto-rigged file (pending), the ladder pose on this rig, web export.

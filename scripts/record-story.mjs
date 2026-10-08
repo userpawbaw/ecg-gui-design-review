@@ -17,7 +17,8 @@ await p.evaluate(()=>window.__intro.pause(true));
 const NI=Math.round(INTRO_S*FPS);
 for(let i=0;i<NI;i++)await snap(()=>p.evaluate(([i,NI,FPS])=>{const k=i/(NI-1);window.__intro.set({p:k*.995,t:i/FPS});window.__intro.renderOnce(true);},[i,NI,FPS]));
 console.log('intro frames',n);
-await p.getByText('잡음마다 다를까요?').click();await p.waitForFunction(()=>window.__noise?.ready,null,{timeout:180000});
+await p.evaluate(([NI,FPS])=>{window.__intro.set({p:.995,t:(NI-1)/FPS});window.__intro.renderOnce(true);},[NI,FPS]);   // resumed runs skip the intro frames
+await p.evaluate(()=>[...document.querySelectorAll('button')].find(x=>x.textContent.includes('잡음마다 다를까요'))?.click());await p.waitForFunction(()=>window.__noise?.ready,null,{timeout:180000});
 for(const [cond,dur] of SCENES){
  const N=Math.round(dur*FPS);
  for(let i=0;i<N;i++)await snap(()=>p.evaluate(t=>{window.__noise.set({t});window.__noise.renderOnce();},i/FPS));

@@ -1823,3 +1823,19 @@ TAA 선호 후 구름 양/시간대 최적성과 다른 조절 항목을 사용�
 고도7km 기본 haze density 약2.74e-8이 GLSL 생략기준1e-7보다낮다. 감쇠.00035는기여를늘리지만 actual빔목표해결은미달. cloud 양.50은지형암부심화. verification/a-takram-parameters-20261008/manifest.json과 native9쌍.
 ### 놓쳤다면
 낮은 원본카메라의 광학을 높은카메라에 복사하고 GPU비용만 늘리거나 구름양/연무 하나로 완성되었다고 오판했을 수 있다. 조사·보완시험·최종채택을 분리한다.
+
+## F-074. 높은 하강 카메라에서도 시야 내 태양과 고도 연무를 함께 맞추면 원본 커튼빛을 드러낼 수 있다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화][실제렌더][소스] |
+| 연결 | D-108 / CASE-007 / REF-015 |
+
+### 발단
+D107 단독태양/연무시험은원하는광선에미달. 사용자이후보완승인.
+### 먼저 의심한 것과 배제 방법
+빔shader를새로추가하거나exposure/ultra증가하기전에sun시야위치와haze감쇠를결합. layer두께/density/offset,shaftsOFF,groundshadowOFF로기여분리.
+### 결정적 근거
+sun15°/az0/hazeExponent.00018·두께1.2에서p.345/.365커튼광선이보이고shaftsOFF는연무만남음. shadowOFF에서지형밝아짐. 동일6구도기준/후보와정역6moving frame 실제24쌍. manifest verification/a-takram-beam-20261008/manifest.json. GPUwholecomposer순차120sample은두조건대략8.3–9.3ms p50,성능차확정아님. finalconsole0/context정상.
+### 놓쳤다면
+원본자산동일성을구도/고도광학동등성으로혼동하고자체beam이나GPU반복수만늘렸을것이다. 이번룩은TUNE이며광선기여확인을최종레퍼런스동등품질/실제wheel/전체main안정성으로확대하지않는다.

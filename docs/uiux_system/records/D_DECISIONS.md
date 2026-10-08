@@ -2700,3 +2700,25 @@ coverage.42를 화면42%로 해석하거나 screenshot 값을 최적값으로 �
 
 ### D107 검토·첫 보완 결과
 원본 live UI/pinned helper 조사 완료. fullres TAA 유지 선호 반영, .42/54 기준 유지·최적값 미확정. 양.32/.50, offset.12, sun고도30/방위-30, haze감쇠.00035 단독·조합ON/OFF 실제9쌍. 많은구름은암부심화, sun은terrain개선여지, 연무만으로커튼빛불충분/TUNE. 컨트롤추가·sourcehelper보존·shot길이80제한실패를compactID로수정. 다음 aperture/layer/중간하강 beam정합→terrain광학→6구도/정역스크롤→globe. F073/보고서 ECG_A_takram_parameter_review_2026-10-08.md 참조.
+
+## D-108. 고도와 시야에 맞는 구름 빈 창·태양·연무를 묶고 같은 하강 구도로 검증한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화] 구현 전 |
+| 상태 | D107 다음 보완 사용자 진행 승인 |
+| CASE | CASE-007 |
+
+### 갈림길
+D107의 양/태양/연무 단독시험은 커튼광선목표에 미달했다. 사용자가 다음 단계 진행을 승인했다.
+### 검토한 선택지
+발광beam추가/노출증가, 원본shadowLength·연무를실제고도/시야에맞추고cloud aperture설계, 바로main통합.
+### 고른 것과 근거
+원본pinned광학코드는유지하고lab에layer두께/density/weatherY를추가한다. sun을카메라시야안쪽으로배치하고고도7km에서도haze근사가남는감쇠를검토. baseline/단독대조/후보최소6고정구도 및 정역 진행을 실제렌더로검증한다. ground shadow 기여를별도OFF로대조해terrain암부를검토한다. 새round takram-beam-20261008에분리.
+### 버린 것과 이유
+Bloom/CSS beam으로원본효과를대체하지않는다. 높은GPUiteration부터늘리지않는다. 후처리PASS만으로시각채택/전체경로품질을선언하지않는다. main/Story/BC/D080별도.
+### 되돌려야 하는 조건
+구름양감/질감훼손, fog로지형소실, context loss, 이전시점에cloud pop이보이면baseline보존/TUNE. 빔목표가여전히미달이면미달범위를기록하고추가검증범위를늘리지않는다.
+
+### D108 구현 결과
+sun15°/방위0°와고도연무감쇠.00018,layer두께1.2후보에서커튼광선확인;ON/OFF로기여분리. 양.42/repeat54/density.2/offset0/TAA유지. .0001은지형을많이가리고offset.12/.10은태양통로차단,density.8은명확개선부족으로기준복귀. 같은6구도기준/후보12fixed·6광학단독·6정역moving actual24쌍. fixed120GPUquery/79modulebuildPASS, 품질TUNE. main미통합/사용자6capture보존. 최신 ECG_A_takram_beam_review_2026-10-08.md / F074.

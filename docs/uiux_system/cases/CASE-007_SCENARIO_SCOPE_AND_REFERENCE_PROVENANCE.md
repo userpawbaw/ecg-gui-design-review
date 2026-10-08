@@ -211,3 +211,4 @@ AI는같은terrain source/camera로nativeRGBplate를제작→사용자 “이전
 
 GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 분리는 점선/입자 문제의 진단이고, weatherExponent1.6은 구름 밀도와 빈 공간의 검토 옵션이다. 이를 각각의 증거로 남겨 하드웨어 정상, scoped 기능 PASS, 시각 TUNE을 분리했다. 원래 컴퓨터 중단 원인과 빛 커튼의 충분한 강도, 장기/연속camera 품질은 여전히 열린 질문이다. F072/D106/O020 후속 및 hardware report 참조. 현재 대화 인용이며 별도 export transcript는 없다.
 2026-10-08 D107: 사용자 TAA 선호→다른 설정/최적성 질문→원본 live/pinned 파라미터와 고도연무의 의미 대조→같은구도 단독9대조→연무만으로커튼빛해결불충분 기록. D107/F073; 조사와 보완시험/최종채택 분리.
+2026-10-08 D108: D107단독시험미달→사용자진행승인→카메라시야/고도연무결합으로커튼빛확인→sourceON/OFF·shadowOFF·same6pose·정역진행actual24쌍→runtimePASS/visualTUNE와실제wheel/main미검증분리. D108/F074.

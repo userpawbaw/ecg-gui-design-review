@@ -681,3 +681,7 @@ D106 최종 checkpoint: Vite79modules build PASS / records230 PASS / diff check 
 ## 2026-10-08 D107 파라미터 검토 / 보완 시작
 사용자 fullresTAA선호·추가설정검토와이후보완승인. originallive/pinnedhelper/GLSL대조, 양.42/54기준유지·고정sun/고도연무번안이필요함. high50/TAA같은p.3659native, cloud양/offset/sun/haze단독대조. 커튼빛불충분/TUNE, terrain밝기튜닝여지. 컨트롤추가·sourcehelper보존·capture80자제한오류compactID수정. 다음aperture/layer/중간하강beam정합→terrain광학→6구도motion→globe. main/Story/BC/사용자6capture보존. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_parameter_review_2026-10-08.md; gallery verification/a-takram-parameters-20261008/gallery.html.
 D107 최종QA: Vite79modules build PASS / records232 PASS / native9쌍 저장응답UI 확인 / warn,error0 / gallery DOM9후보 확인. GPU는 rolling 메타데이터만 보존, 성능 우열 미판정.
+
+## 2026-10-08 D108 커튼빛·양감 보완
+완료: source광학유지·sun15/az0/haze.00018/layer1.2후보,같은6구도·ON/OFF·정역6moving actual24쌍. high50/fullresTAA,terrain1.5×/archiveKEEP,main미변경. 원본광선기여확인/79modulebuildPASS/fixed120GPUquery범위. 품질TUNE·nearface/far반복/역광암부보완. 다음이룩사용자리뷰→globe지역/하강인계와실제wheel/서고가림검증;Story/BC/D080별도. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_beam_review_2026-10-08.md;gallery verification/a-takram-beam-20261008/gallery.html.
+D108 최종QA: Vite79modules build PASS / records234 PASS / native24쌍 검증 및 gallery24이미지·실시간recipe선택 DOM 확인 / 정역 재생 완료 / warn,error0. fixed6구도×2 각GPU120query; 자동재생과 실제wheel/main 검증 분리. 사용자6capture 제외.

@@ -25,12 +25,25 @@ const clusterLabel=document.createElement('label');clusterLabel.innerHTML='응�
 const cluster=dom<HTMLInputElement>('cluster');
 // D107: independent art-direction controls; original/main defaults stay intact.
 const optics=document.createElement('details');optics.innerHTML='<summary>빛·분포 보완 시험</summary>'+[
- ['weatherX','날씨 위치 X',0,0,1,.01],['sunElevation','태양 고도',16.1,5,60,1],['sunAzimuth','태양 방위',43.75,-180,180,1],['hazeFalloff','연무 고도 감쇠',.001,.0001,.002,.00005]
+ ['weatherX','날씨 위치 X',0,0,1,.01],['weatherY','날씨 위치 Y',0,0,1,.01],['sunElevation','태양 고도',16.1,5,60,1],['sunAzimuth','태양 방위',43.75,-180,180,1],['hazeFalloff','연무 고도 감쇠',.001,.0001,.002,.00005],['layerDepth','구름 두께 배율',1,.6,1.4,.1],['layerDensity','구름 밀도 배율',1,.5,1.5,.1]
 ].map(([id,label,value,min,max,step])=>`<label>${label} <input id="${id}" aria-label="${label}" type="number" value="${value}" min="${min}" max="${max}" step="${step}"></label>`).join('');settings.append(optics);
 const weatherX=dom<HTMLInputElement>('weatherX'),sunElevation=dom<HTMLInputElement>('sunElevation'),sunAzimuth=dom<HTMLInputElement>('sunAzimuth'),hazeFalloff=dom<HTMLInputElement>('hazeFalloff');
+const weatherY=dom<HTMLInputElement>('weatherY'),layerDepth=dom<HTMLInputElement>('layerDepth'),layerDensity=dom<HTMLInputElement>('layerDensity');
+const shadowLabel=document.createElement('label');shadowLabel.innerHTML='<input id="groundShadow" type="checkbox" aria-label="지형 구름 그림자" checked> 지형 구름 그림자';optics.append(shadowLabel);
+const groundShadow=dom<HTMLInputElement>('groundShadow');groundShadow.onchange=()=>{aerial.shadow=enabled.checked&&groundShadow.checked?clouds.atmosphereShadow:null;gpuTimes.length=0;};
+const recipeLabel=document.createElement('label');recipeLabel.innerHTML='조명 후보 <select id="recipe" aria-label="조명 후보"><option value="baseline">이전 기준 · TAA</option><option value="curtain">커튼 광선 · 고도 연무</option></select>';settings.prepend(recipeLabel);
+const recipe=dom<HTMLSelectElement>('recipe');
+function applyRecipe(value:string){
+ recipe.value=value;coverage.value='.42';weatherRepeat.value='54';cluster.value='1.6';weatherX.value=weatherY.value='0';
+ sunElevation.value=value==='curtain'?'15':'16.1';sunAzimuth.value=value==='curtain'?'0':'43.75';hazeFalloff.value=value==='curtain'?'.00018':'.001';layerDepth.value=value==='curtain'?'1.2':'1';layerDensity.value='1';
+ groundShadow.checked=shafts.checked=true;clouds.lightShafts=true;aerial.shadow=enabled.checked?clouds.atmosphereShadow:null;applyWeather();applyOptics();
+}
+recipe.onchange=()=>applyRecipe(recipe.value);
 function applyOptics(){
- clouds.localWeatherOffset.x=Number(weatherX.value);clouds.clouds.hazeExponent=Number(hazeFalloff.value);
+ clouds.localWeatherOffset.set(Number(weatherX.value),Number(weatherY.value));clouds.clouds.hazeExponent=Number(hazeFalloff.value);
  if(activePose.startsWith('north')){
+  clouds.cloudLayers[0].height=(look.value==='ref54'?650:1200)*Number(layerDepth.value);clouds.cloudLayers[1].height=(look.value==='ref54'?1200:1800)*Number(layerDepth.value);
+  clouds.cloudLayers[0].densityScale=clouds.cloudLayers[1].densityScale=.2*Number(layerDensity.value);
   const el=THREE.MathUtils.degToRad(Number(sunElevation.value)),az=THREE.MathUtils.degToRad(Number(sunAzimuth.value));
   if(Number(sunElevation.value)===16.1&&Number(sunAzimuth.value)===43.75)aerial.sunDirection.copy(northSun);
   else aerial.sunDirection.set(-Math.sin(az)*Math.cos(el),Math.sin(el),-Math.cos(az)*Math.cos(el)).applyMatrix3(new THREE.Matrix3().setFromMatrix4(northToECEF));
@@ -38,10 +51,12 @@ function applyOptics(){
  }
  gpuTimes.length=0;
 }
-weatherX.oninput=sunElevation.oninput=sunAzimuth.oninput=hazeFalloff.oninput=applyOptics;
+weatherX.oninput=weatherY.oninput=sunElevation.oninput=sunAzimuth.oninput=hazeFalloff.oninput=layerDepth.oninput=layerDensity.oninput=applyOptics;
 dom('panel').style.maxHeight='calc(100vh - 64px)';dom('panel').style.overflowY='auto';
 const save=dom<HTMLButtonElement>('save');
 const captureSet=document.createElement('button');captureSet.textContent='기준 구도 저장';save.after(captureSet);
+const motionReview=document.createElement('button');motionReview.textContent='정역 이동 검증';captureSet.after(motionReview);
+let capturePhase='fixed';
 const basicOption=document.createElement('option');basicOption.value='basic3500';basicOption.textContent='Basic 조명 비교 · 3500m';pose.add(basicOption);
 const basicLow=document.createElement('option');basicLow.value='basic300';basicLow.textContent='Basic 빛 커튼 · 300m';pose.add(basicLow);
 const renderer=new THREE.WebGLRenderer({depth:false,logarithmicDepthBuffer:false,antialias:false});
@@ -62,7 +77,7 @@ const aerial=new AerialPerspectiveEffect(camera);aerial.sky=true;aerial.sunLight
 const clouds=new CloudsEffect(camera);clouds.coverage=.4;clouds.qualityPreset='high';
 clouds.events.addEventListener('change',e=>{
  if(e.property==='atmosphereOverlay')aerial.overlay=clouds.atmosphereOverlay;
- if(e.property==='atmosphereShadow')aerial.shadow=clouds.atmosphereShadow;
+ if(e.property==='atmosphereShadow')aerial.shadow=groundShadow.checked?clouds.atmosphereShadow:null;
  if(e.property==='atmosphereShadowLength')aerial.shadowLength=clouds.atmosphereShadowLength;
 });
 const composer=new EffectComposer(renderer,{frameBufferType:THREE.HalfFloatType,multisampling:0});
@@ -83,7 +98,7 @@ function setCloudEnabled(){
  // CloudsEffect has no enabled property. The author's R3F scene conditionally mounts it.
  opticalPass.configure(enabled.checked?[clouds,aerial]:[aerial]);
  aerial.overlay=enabled.checked?clouds.atmosphereOverlay:null;
- aerial.shadow=enabled.checked?clouds.atmosphereShadow:null;
+ aerial.shadow=enabled.checked&&groundShadow.checked?clouds.atmosphereShadow:null;
  aerial.shadowLength=enabled.checked?clouds.atmosphereShadowLength:null;
  gpuTimes.length=0;
 }
@@ -172,7 +187,8 @@ look.onchange=()=>setPose(activePose);
 shafts.onchange=()=>{clouds.lightShafts=shafts.checked;gpuTimes.length=0;};
 cloudScale.onchange=()=>{clouds.resolutionScale=Number(cloudScale.value);gpuTimes.length=0;};
 function state(){return{ready,contextLost:gl.isContextLost(),mode:activePose,source:'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
- opticalTrial:{weatherX:clouds.localWeatherOffset.x,sunElevation:Number(sunElevation.value),sunAzimuth:Number(sunAzimuth.value),hazeExponent:clouds.clouds.hazeExponent,hazeDensityScale:clouds.clouds.hazeDensityScale},
+ capturePhase,
+ opticalTrial:{weatherX:clouds.localWeatherOffset.x,weatherY:clouds.localWeatherOffset.y,sunElevation:Number(sunElevation.value),sunAzimuth:Number(sunAzimuth.value),hazeExponent:clouds.clouds.hazeExponent,hazeDensityScale:clouds.clouds.hazeDensityScale,layerDepth:Number(layerDepth.value),layerDensity:Number(layerDensity.value),groundShadow:groundShadow.checked,groundShadowLinked:!!aerial.shadow},
  sourceLocation:activePose.startsWith('basic')?[30,35,activePose==='basic300'?300:3500]:activePose.startsWith('north')?[8.4,61.63,'camera metres in localCamera ×1000']:[0,67,activePose==='source500'?500:3500],sourceDate:activePose.startsWith('basic')?'2026-01-02T07:00:00Z':activePose.startsWith('north')?'fixed north scene sun vector':'2000-06-01T10:00:00Z',camera:camera.position.toArray(),localCamera:lastCamera,
  worldToECEF:aerial.worldToECEFMatrix.toArray(),sun:aerial.sunDirection.toArray(),layers:clouds.cloudLayers.map(l=>({altitude:l.altitude,height:l.height,densityScale:l.densityScale,shapeDetailAmount:l.shapeDetailAmount,weatherExponent:l.weatherExponent})),
  quality:quality.value,look:look.value,coverage:clouds.coverage,localWeatherRepeat:clouds.localWeatherRepeat.toArray(),localWeatherOffset:clouds.localWeatherOffset.toArray(),resolutionScale:clouds.resolutionScale,lightShafts:clouds.lightShafts,shadowMaxFar:clouds.shadow.maxFar,shadowLengthLinked:!!aerial.shadowLength,temporal:clouds.temporalUpscale,temporalUpscale:clouds.temporalUpscale,temporalAntialiasing:enabled.checked,clouds:enabled.checked,cloudPassAttached:opticalPass.hasCloud(),smaa:aa.checked,wind:wind.checked,
@@ -191,13 +207,15 @@ async function saveFrame(){
  draw();
  let shot=activePose+(activePose.startsWith('north')?'-'+Math.round(Number(progress.value)*1000):'')+'-'+look.value+'-r'+weatherRepeat.value+'-c'+Math.round(Number(coverage.value)*100)+'-e'+Math.round(Number(cluster.value)*10)+'-q'+quality.value+'-s'+Math.round(Number(cloudScale.value)*100)+(temporal.checked?'-upscale':'-fullres')+(enabled.checked?'-cloud':'-off')+(shafts.checked?'-shafts':'-nosh')+(aa.checked?'-smaa':'-noaa')+(params.get('reviewRound')?.startsWith('takram-parameters')?`-x${Math.round(Number(weatherX.value)*100)}-el${Math.round(Number(sunElevation.value)*100)}-az${Math.round(Number(sunAzimuth.value)*100)}-hz${Math.round(Number(hazeFalloff.value)*1e6)}`:'');
  if(params.get('reviewRound')?.startsWith('takram-parameters'))shot='p'+Math.round(Number(progress.value)*1000)+'-c'+Math.round(Number(coverage.value)*100)+'-x'+Math.round(Number(weatherX.value)*100)+'-el'+Math.round(Number(sunElevation.value)*100)+'-az'+Math.round(Number(sunAzimuth.value)*100)+'-hz'+Math.round(Number(hazeFalloff.value)*1e6)+(shafts.checked?'-on':'-off');
+ if(params.get('reviewRound')?.startsWith('takram-beam'))shot='p'+Math.round(Number(progress.value)*1000)+'-x'+Math.round(Number(weatherX.value)*100)+'-y'+Math.round(Number(weatherY.value)*100)+'-az'+Math.round(Number(sunAzimuth.value))+'-el'+Math.round(Number(sunElevation.value))+'-h'+Math.round(Number(hazeFalloff.value)*1e6)+'-d'+Math.round(Number(layerDepth.value)*10)+'-n'+Math.round(Number(layerDensity.value)*10)+(shafts.checked?'-on':'-off')+(groundShadow.checked?'-gs':'-nogs');
+ if(capturePhase!=='fixed')shot=capturePhase+'-'+shot;
  const e=gl.getExtension('WEBGL_debug_renderer_info');
  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),url:location.href}})});
  if(!response.ok){error.textContent=await response.text();return;}save.textContent='프레임 저장 완료';
 }
 save.onclick=saveFrame;
 captureSet.onclick=async()=>{
- captureSet.disabled=save.disabled=pose.disabled=true;
+ captureSet.disabled=save.disabled=pose.disabled=motionReview.disabled=true;
  const framesFor=async(n:number)=>{for(let i=0;i<n;i++)await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));};
  try{
   await ensureNorth();setPose('north300');
@@ -208,7 +226,23 @@ captureSet.onclick=async()=>{
    await saveFrame();
   }
   captureSet.textContent='기준 구도 저장 완료';
- }finally{captureSet.disabled=save.disabled=pose.disabled=false;}
+ }finally{captureSet.disabled=save.disabled=pose.disabled=motionReview.disabled=false;}
+};
+motionReview.onclick=async()=>{
+ motionReview.disabled=captureSet.disabled=save.disabled=pose.disabled=true;
+ const step=()=>new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));
+ try{
+  await ensureNorth();setPose('north300');progress.value='.265';for(let i=0;i<60;i++)await step();
+  for(const [phase,points] of [['forward',[.285,.300,.345,.365]],['reverse',[.345,.300,.285,.265]]] as const){
+   capturePhase=phase;motionReview.textContent=phase==='forward'?'정방향 이동 중':'역방향 이동 중';
+   for(const target of points){
+    const start=Number(progress.value),t0=performance.now();let elapsed=0;
+    do{if(gl.isContextLost())throw Error('GPU context lost');elapsed=Math.min(1,(performance.now()-t0)/800);progress.value=String(start+(target-start)*elapsed);await step();}while(elapsed<1);
+    if(target!==.265&&target!==.365)await saveFrame();
+   }
+  }
+  motionReview.textContent='정역 이동 검증 완료';
+ }catch(e){error.textContent=String(e);}finally{capturePhase='fixed';motionReview.disabled=captureSet.disabled=save.disabled=pose.disabled=false;}
 };
 function draw(){
  if(!ready||gl.isContextLost())return;
@@ -251,7 +285,7 @@ async function init(){
  quality.value=params.get('quality')||'high';clouds.qualityPreset=quality.value as any;
  const requestedCluster=Number(params.get('cluster')||'1');cluster.value=String(Number.isFinite(requestedCluster)?THREE.MathUtils.clamp(requestedCluster,1,3):1);
  temporal.checked=params.get('upscale')==='1';clouds.temporalUpscale=temporal.checked;clouds.lightShafts=shafts.checked;aa.checked=true;smaaPass.enabled=true;cloudScale.value=params.get('scale')||'.75';clouds.resolutionScale=Number(cloudScale.value);
- ready=true;setPose(params.get('pose')||'basic300');renderer.setAnimationLoop(draw);
+ ready=true;setPose(params.get('pose')||'basic300');if(params.get('recipe')==='curtain')applyRecipe('curtain');renderer.setAnimationLoop(draw);
 }
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);});
 init().catch(e=>{error.textContent=String(e.stack||e);console.error(e);});

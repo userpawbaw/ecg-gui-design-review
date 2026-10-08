@@ -1,6 +1,6 @@
 // Story noise scenes, first pass (brief 3 IMPL_BRIEF_STORY_NOISE_WEB_2026-10-08, D-053/D-054, IDEA-R1-NOISE §10).
 // One seated figure on GreenChair_01 at the archive's measurement spot; per noise only the inflow marker and the motion
-// that makes the noise change. Fixed composition (camera moves are the second pass). Vanilla module mounted by React (D-028):
+// that makes the noise change. Second pass: per-scene camera paths (§10) that settle on the first pass's composition. Vanilla module mounted by React (D-028):
 // one GSAP ticker drives the WebGL scene and the Canvas 2D wave panel from one playback clock t.
 // Data contract: the panel draws stored samples only (input / stored output of d0-*--5, cross-faded per beat as in the intro);
 // breath (bw) and clench (ma) timings are computed from the stored traces (F-030); the red markers are illustration, not data.
@@ -132,10 +132,46 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
  const camDef=story.cams[data.cond==='bw'?'side':'ma'];
  const camLoc=toThree(camDef.loc,A),e=camDef.rot_euler,eul=new THREE.Euler(e[0],e[1],e[2],'ZYX');   // Blender XYZ euler = Rz·Ry·Rx = three order ZYX
  const fwdB=new THREE.Vector3(0,0,-1).applyEuler(eul),camLook=toThree([camDef.loc[0]+fwdB.x,camDef.loc[1]+fwdB.y,camDef.loc[2]+fwdB.z],A);
- const persp=new THREE.PerspectiveCamera(60,1,.05,60),ortho=new THREE.OrthographicCamera(-1,1,1,-1,.6,30);
- const camera:THREE.PerspectiveCamera|THREE.OrthographicCamera=camDef.type==='ortho'?ortho:persp;
- camera.position.copy(camLoc);camera.up.set(0,1,0);camera.lookAt(camLook);
- if(camDef.type==='ortho'){ortho.near=Math.max(.05,camLoc.distanceTo(origin)-.45);ortho.far=30;}   // skip the archive desk in front (inflow stills: clip start)
+ const camera=new THREE.PerspectiveCamera(60,1,.05,60);camera.up.set(0,1,0);
+ // second pass (IDEA-R1-NOISE §10): per-scene camera path that settles on the first pass's composition. Keys are
+ // (time, position, look, horizontal fov); between keys the view direction turns about the look point (orbit-like) and
+ // the distance / look / fov ease, so pull-backs, orbits, tracking and the crane read as one continuous move.
+ type Key={t:number,pos:THREE.Vector3,look:THREE.Vector3,hfov:number,ease?:'whip'};
+ const deg=(r:number)=>r*180/Math.PI,hfovOf=(lens:number)=>2*Math.atan(18/lens);
+ const V3=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
+ const H0=heartWorld.clone(),Fo=origin.clone();
+ const STRIP=V3(-.97,.05,-3.62),DESK=V3(-2.35,1.0,-3.55);         // archive power strip / desk (Blender archive frame → three)
+ let finalPos=camLoc.clone(),finalLook=camLook.clone(),finalH=hfovOf(camDef.lens??16);
+ if(camDef.type==='ortho'){                                       // B-b side view: the stills' orthographic camera becomes a long
+  const fwd=camLook.clone().sub(camLoc).normalize(),pivot=camLoc.clone().addScaledVector(fwd,Math.abs(camDef.loc[0]));   // lens far away
+  finalLook=pivot.clone().add(V3(0,.05,0));finalPos=pivot.clone().addScaledVector(fwd,-4.5);finalH=2*Math.atan((camDef.ortho_scale??1.9)/2/4.5);}
+ const maDef=story.cams.ma,maE=maDef.rot_euler,maF=new THREE.Vector3(0,0,-1).applyEuler(new THREE.Euler(maE[0],maE[1],maE[2],'ZYX'));
+ const maPos=toThree(maDef.loc,A),maLook=toThree([maDef.loc[0]+maF.x,maDef.loc[1]+maF.y,maDef.loc[2]+maF.z],A),maH=hfovOf(maDef.lens??16);
+ const K:Record<Cond,Key[]>={
+  pli:[{t:0,pos:H0.clone().add(V3(0,.03,.42)),look:H0,hfov:.6},
+   {t:3,pos:H0.clone().add(V3(.1,.1,.95)),look:H0,hfov:.85},
+   {t:7,pos:Fo.clone().add(V3(1.25,1.15,1.35)),look:H0.clone().lerp(DESK,.55),hfov:.95},          // orbit: desk + computer behind
+   {t:10,pos:STRIP.clone().add(V3(-.6,.32,.5)),look:STRIP,hfov:.9},                               // down along the power line (from the person's right: the chair hid it)
+   {t:13,pos:STRIP.clone().add(V3(.16,.12,.36)),look:STRIP,hfov:.7},                              // the strip, close
+   {t:17,pos:Fo.clone().add(V3(.73,2.27,1.65)),look:Fo.clone().add(V3(-.35,.55,-.25)),hfov:hfovOf(24)},   // crane up, wide
+   {t:18.6,pos:finalPos,look:finalLook,hfov:finalH,ease:'whip'}],                               // whip zoom on a beat
+  bw:[{t:0,pos:maPos,look:maLook,hfov:maH},{t:4,pos:finalPos,look:finalLook,hfov:finalH}],         // 90° orbit to the side view
+  ma:[{t:0,pos:Fo.clone().add(V3(-1.3,1.0,.6)),look:H0,hfov:.9},{t:4,pos:finalPos,look:finalLook,hfov:finalH}]};   // down to the arm, low angle
+ const keys=K[data.cond],TP={pli:19,bw:11,ma:11}[data.cond];      // panel (right curtain + wave) from TP
+ const ez=(k:number)=>k<.5?4*k*k*k:1-(-2*k+2)**3/2,whip=(k:number)=>1-(1-k)**4;
+ const tmpD=new THREE.Vector3();
+ function camAt(t:number,breathOff=0){
+  let i=0;while(i<keys.length-1&&t>=keys[i+1].t)i++;
+  const a=keys[i],b=keys[Math.min(i+1,keys.length-1)],u=b===a?1:clamp((t-a.t)/(b.t-a.t)),k=b.ease==='whip'?whip(u):ez(u);
+  const look=a.look.clone().lerp(b.look,k),da=a.pos.clone().sub(a.look),db=b.pos.clone().sub(b.look);
+  const dist=THREE.MathUtils.lerp(da.length(),db.length(),k);
+  const qa=new THREE.Quaternion(),q=new THREE.Quaternion().setFromUnitVectors(da.clone().normalize(),db.clone().normalize());
+  tmpD.copy(da).normalize().applyQuaternion(qa.slerp(q,k)).multiplyScalar(dist);
+  camera.position.copy(look).add(tmpD);camera.position.y+=breathOff;camera.lookAt(look.x,look.y+breathOff,look.z);
+  const h=THREE.MathUtils.lerp(a.hfov,b.hfov,k);camera.fov=deg(2*Math.atan(Math.tan(h/2)/camera.aspect));
+  camera.near=dist>2.5?Math.max(.05,dist-.8):.03;                // long views skip the stacks between camera and figure
+  camera.updateProjectionMatrix();camera.updateMatrixWorld();
+ }
  // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
  const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
  composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);
@@ -152,9 +188,7 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
   W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio||1,1.25);
   renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);bloom.resolution.set(W*pr/2,H*pr/2);
   arch.setPx(H,pr);grade.uniforms.uAspect.value=W/H;
-  if(camDef.type==='ortho'){const s=(camDef.ortho_scale??1.9)/2,a=W/H;ortho.left=-s;ortho.right=s;ortho.top=s/a;ortho.bottom=-s/a;ortho.updateProjectionMatrix();}
-  else{const hf=2*Math.atan((camDef.sensor_width??36)/2/(camDef.lens??16));persp.fov=2*Math.atan(Math.tan(hf/2)/(W/H))*180/Math.PI;persp.aspect=W/H;persp.updateProjectionMatrix();}
-  camera.updateMatrixWorld();
+  camera.aspect=W/H;camAt(1e9);                                  // panel layout is measured on the settled composition
   // B-b: the panel's 0 mV sits at the exhaled chest height (layout only); other scenes centre it
   setMorphs(0,0);figure.group.updateMatrixWorld(true);panelMid=data.cond==='bw'?sternumPx().y:.5*H;
   const half=.2*H,b={l:.64*W,r:.97*W,t:panelMid-half,b:panelMid+half},mv=mvPerBoxFor(b,2.5);sweep.resize(b,mv);grid.resize(b,2.5,mv);
@@ -170,7 +204,7 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
  const breathFixed=(t:number)=>{const u=t%5;return u<2?ss(0,2,u):1-ss(2,5,u);};              // D-053: 2 per 10 s
  const fistAt=(t:number)=>{for(const c of clenches){const d=t-c;if(d<0||d>CLOSE+HOLD+OPEN)continue;return d<CLOSE?ss(0,CLOSE,d):d<CLOSE+HOLD?1:1-ss(CLOSE+HOLD,CLOSE+HOLD+OPEN,d);}return 0;};
  const waveAt=(t:number)=>{let best=-1;for(const c of clenches){const d=t-c-.3;if(d>=0&&d<1.6)best=d;}return best;};   // wave starts as the fist tightens
- const PROC=data.cond==='pli'?4:2;                                   // the processing strip starts after the inflow is shown
+ const PROC=TP+3;                                                    // the processing strip starts after the inflow is shown
 
  const t0=performance.now();let frozen=opt.frozenT,frame=0;
  const clock=()=>frozen??(performance.now()-t0)/1000;
@@ -178,25 +212,28 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
   const t=clock(),tl=((t%T)+T)%T;frame++;
   // motion
   const breath=bw?bw.breath[Math.min(bw.breath.length-1,Math.floor(tl*data.fs))]:breathFixed(t);
-  const fist=data.cond==='ma'?fistAt(tl):0;
+  const fist=data.cond==='ma'&&t>2?fistAt(tl):0;
+  const panelK=ss(TP,TP+.6,t);camAt(t,bw&&t>4?.015*(2*breath-1):0);    // camera before anything is projected
   setMorphs(breath,fist);placeElectrodes();
   // inflow markers
   let common=0,ringK=0,leadK=0,front=-1,waveK=0;
-  if(data.cond==='pli'){common=.7*ss(0,1.2,t)*(1-.85*ss(1.4,2.2,t));ringK=ss(1.4,2.2,t);leadK=ss(1.6,2.4,t);}
-  if(data.cond==='ma'){const d=waveAt(tl);if(d>=0){front=(ss(0,1.2,d)*1.15-.05)*story.ra_arc_m;waveK=12;ringK=ss(1.05,1.3,d)*(1-ss(1.3,1.6,d)*.6);leadK=ringK;}}
+  if(data.cond==='pli'){const p=t-16.6;common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p));ringK=ss(1.4,2.2,p);leadK=ss(1.6,2.4,p);}   // field reaches the body as the crane ends
+  if(data.cond==='ma'&&t>4){const d=waveAt(tl);if(d>=0){front=(ss(0,1.2,d)*1.15-.05)*story.ra_arc_m;waveK=12;ringK=ss(1.05,1.3,d)*(1-ss(1.3,1.6,d)*.6);leadK=ringK;}}
   bu.uCommon.value=common;bu.uFront.value=front;bu.uWaveK.value=waveK;
   ringMat.opacity=ringK;leadMat.opacity=leadK;
   // heart + sweep on the same clock
   const ph=beatPhase(data.loop,data.fs,t);figure.beat(ph,1);
   const procOn=t>PROC;mix.update(procOn?1:0,ph.prev,t,opt.reduced);
-  sweep.draw({t,startAbs:0,mix:mix.value,alpha:1,reduced:opt.reduced,ring:null,comet:null,flash:mix.flash,gridAlpha:1});
+  sweep.draw({t,startAbs:0,mix:mix.value,alpha:panelK,reduced:opt.reduced,ring:null,comet:null,flash:mix.flash,gridAlpha:1});
   const filled=Math.round(mix.goal*4);dom.cells.forEach((c,i)=>c.classList.toggle('on',i<filled));
+  dom.grid.style.opacity=String(panelK);const sp=dom.cells[0]?.parentElement;if(sp)sp.style.opacity=String(panelK);
   // overlay: right ~40 % darkened to 70 % (left → right ramp) + B-b thread
   og.clearRect(0,0,W,H);const gr=og.createLinearGradient(.58*W,0,.66*W,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,.7)');
-  og.fillStyle=gr;og.fillRect(.58*W,0,.42*W,H);
-  if(bw){const c=sternumPx(),hx=sweep.slotX(Math.floor(t*data.fs)),base=bw.base[Math.min(bw.base.length-1,Math.floor(tl*data.fs))],hy=sweep.yOf(base);
+  og.fillStyle=gr;og.globalAlpha=panelK;og.fillRect(.58*W,0,.42*W,H);
+  if(bw&&panelK>.01){const c=sternumPx(),hx=sweep.slotX(Math.floor(t*data.fs)),base=bw.base[Math.min(bw.base.length-1,Math.floor(tl*data.fs))],hy=sweep.yOf(base);
    og.lineCap='round';for(const [w,col] of [[7,'rgba(120,80,40,.5)'],[3,'rgba(255,196,120,.9)'],[1,'rgba(255,240,210,1)']] as const){og.strokeStyle=col;og.lineWidth=w;og.beginPath();og.moveTo(c.x,c.y);og.lineTo(hx,hy);og.stroke();}
    og.fillStyle='rgba(255,205,140,1)';og.beginPath();og.arc(c.x,c.y,4,0,7);og.fill();}
+  og.globalAlpha=1;
   arch.update(t,frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,.6);
   grade.uniforms.uTime.value=t;composer.render();
  }

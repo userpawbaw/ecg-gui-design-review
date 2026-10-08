@@ -431,3 +431,17 @@ localendpoint는lowercaseID만허용하고saveFrame은실패시return해batch가
 ID를lowercase로정규화하고API실패시throw. 초기partialround보존,새finalround에서24쌍/hash/실제metadata검증.
 ### 재발 방지와 자동화 상태
 batch완료문구에의존하지않고예상artifact수와설정metadata/API응답을검증. packaging은24고정쌍과3WebM완료trace를assert. endpoint검증을느슨하게하지않음.
+
+
+## O-022. 슬라이더 반올림으로 휠 카메라가 목표 직전에 멈춤
+
+2026-10-08 [브라우저][코드] · D112 / F078 / CASE-007.
+
+### 증상
+실제wheel후현재p.2132–.2133/target.2136이남았다. D109의.00011 snap만으로모든프레임간격을보장하지못함.
+### 원인과 영향
+시간감쇠의다음입력으로step.0001 HTML range값을다시읽으면작은증분이반올림되어계속손실된다. 범위확장시 실제입력검증에서재발.
+### 조치
+wheelCurrent 연속float를슬라이더와분리해매frame감쇠,progress는표시/렌더샘플만담당. 첫wheel에서현재slider로연속값초기화. target .00011 이내snap유지. 자동카메라영상은realwheel증명으로쓰지않음.
+### 재발 방지와 자동화 상태
+새범위의실제정역wheel/정착JSON으로재검증. 이번문서/빌드PASS를입력PASS로대신하지않고결과를보고서에추가한다. 초기parent embeddedCloud변수누락ReferenceError는명시적선언으로수정,실패초기화와최종정상capture분리.

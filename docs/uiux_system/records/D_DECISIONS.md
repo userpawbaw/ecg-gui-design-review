@@ -2794,3 +2794,43 @@ banding/빛소실/그림자이동/추가GPU부담/컨텍스트오류시candidate
 
 ### D111 구름 TAA 단독 후보 — 구현 전
 그림자측옵션으로volume자글거림개선이명확하지않아pinnedCloudsResolveMaterial의current-frame temporalAlpha .1→.05 단독후보를추가한다. varianceGamma2유지,shadowalpha.01유지,동일full-bufferTAA. 목표는확률noise누적완화이며motionghosting증가가능. 3정착구도+동일8초영상에서기준과대조,검증전기본채택안함. 비용증가만큰march대체시험이다.
+
+
+## D-112. 같은 기상장으로 북유럽 원경부터 구름 가장자리까지 연결한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화][소스] |
+| 상태 | 사용자 다음 단계 진행 승인 / 구현 전 |
+| CASE | CASE-007 |
+
+### 갈림길
+D111 이후 사용자 자글거림 잠정 개선 관찰, 그림자 추가 튜닝 보류. 다음은 같은 구름군 원경·근경 인계이다.
+### 검토한 선택지
+별도 원경 mask를 volume과 정합, 하나의 Takram 기상장/volume과 원래 거리별 mip 샘플링 유지, 무관한 새 전환 구름 추가.
+### 고른 것과 근거
+첫 후보는 단일 기상장/volume을 광역부터 유지한다. pinned clouds.glsl sampleWeather는 동일 globeUV×repeat+offset와 textureLod를 쓰고 clouds.frag는 카메라 고도별 mip와 레이어 교차를 계산한다. 추가 mask의 이중 coverage 문제를 피하고 실제 같은 구름군 연속성을 먼저 시험한다. 기존 지구 재질의 cloudMask와 외부 cloud shell은 후보에서 제외한다. 기존 terrain1.5× 및 커튼 조명 유지, 그림자 수정 없음. cloud alpha.05는 명시적 비교 후보로만 사용, baseline 기본값 보존.
+### 버린 것과 이유
+기상장과 무관한 두꺼운 덩어리/scroll에 따른 두께 성장/whole RGB 지형 교체는 이전 피드백과 충돌한다. 아직 검증 없이 archive 컷을 강제하지 않는다.
+### 되돌려야 하는 조건
+광역 화면의 균일 반복/먼 volume 비용/접근시 점프/통과 가림 부족시 TUNE. 가림이 충분한 native 증거를 확보한 뒤에만 기존 서고 KEEP renderer에 연결한다. 이 단위는 6구도 연결 후보와 실제 정역 영상까지, 기본 main 및 Story 변경은 후속 단위이다.
+
+
+### D112 첫 6구도 관찰과 수정 전 근거
+[캡처] 초기6구도에서 광역 star points와 parent 지형의 인쇄 cloud가 남았고, cloud alpha는 .18에서 평균.006, .41 가림비율.222로 컷 조건 미달이다. 초기 증거는 takram-handoff-20261008에 보존. [소스] marchClouds stepSize=minStep+(perspectiveStepScale-1)*rayNearFar.x: 1000km에서 기본1.01은 약10km 초기step으로 얇은층을 건너뛸 수 있다. 후보에서100–600km 카메라 고도 구간에 perspectiveStepScale1.01→1.0002를 연속 인계, minStep50/층 두께/coverage 고정. 비용은 다시 실측한다. 스타/parent 인쇄cloud도 후보에서 제외한다. 원본 weather PNG와 pinned cube-sphere UV를 CPU로 분석한 근방 R채널245/255 지점 local(12,-4)km로 edge 접근을 조정한다. 이 CPU 근사는 실제3D 밀도/완전 가림 증명이 아니며 native 재검증한다. 그림자 파라미터는 수정하지 않는다.
+
+
+### D112 원경 자체 리뷰와 기상장 보완 — 적용 전
+[캡처] 원경 미세shape 생략만으로는 volume이 넓게 흰 점/얇은막으로 보여 TUNE/미채택. last .410 실제cloud alpha opaqueFraction1/min.973으로 가림 조건은 확보. 다음 후보는 source weather의 세부 RG에 고정된 비대칭 macro band envelope를 곱해1024² weatherRT에 한번 베이크한다. 모든 고도에서 같은 새weather텍스처를 사용하며 camera/scroll마다 형태 생성하지 않는다. band는 구름 인계 목표를 위한 절차적 아트디렉션이며 실제 북유럽 기상 관측/원본 Takram 그대로가 아니다. ECEF anchor의 local(12,8.2,-4)km cube-sphereUV를 주 band 중심으로 두어 같은 근경 구름을 유지한다. source coverage/높이/밀도는 고정하되 새 기상장 분포가 기존 빛커튼에 미치는 영향은 actual6구도/영상으로 다시검토한다. 4MiB RT +mips 약5.33MiB, 이는cloud전체GPU예산이 아니다. 이전 증거 보존, 원경채택/서고통합 아직미완.
+
+
+### D112 macro tile 반복 분리 — 구현 전 수정
+[캡처] band를 기존54배 weather tile 내부에만 넣으면 넓은 화면에서 band 자체가 반복되어 부적절했다. 다음 후보는 macro repeat9, 세부 source texture 샘플6배(9×6=54)로 분리한다. 하나의2048² weatherRT를 동일 UV/offset로 모든 높이에서 공유한다. macro 주기는6배 넓히고 source 세부 반복 주기는54를 유지하는 번안이다. wrap seam에서 fine sampling은 정수6배로 연속. RT16MiB+mips21.33MiB로 앞의1024² 예산을 supersede하며 이전실패이미지를보존한다. near window/커튼빛과 full occlusion 다시검토.
+
+
+### D112 원경 연무 분리 후보
+[소스] clouds.frag의최종alpha는cloud와원본haze가합성된overlay이다. 처음probe명칭cloud-only는정정: 지형없는cloud+haze alpha이다. macro9원경은도트반복이줄었지만회백색veil로해안선이덜읽혀TUNE. cloud overlay의원경haze기여를45–200km고도구간에서3e-5→0으로연속감쇠하는후보를분리시험한다. near커튼구간45km미만은기존값복원, aerialPerspective대기산란유지/새안개추가없음. 원경veil원인확정/해결증명은실제대조후기록한다. sameweather/camera/terrain유지,그림자튜닝보류.
+
+
+### D112 원경 shape 제거 가설 철회
+[캡처] 원경haze density0 단독변경에도veil/alpha.75가남아haze원인확정가설을채택하지않는다. [소스] weather.density의coverageFilterWidth.6은weather0에도층높이에따라미소양의밀도를만든다. 원래shape erosion은그희박한영역을다시깎으므로shapeAmount0으로빼면균일막이남을수있다. shapeAmount1 유지로복원하고원경은shapeDetailAmount만감쇠한다. 다른sampling/기상장/구름밀도/그림자변경없음,실제대조후판정. 제거했던shape는지형적응LOD필수기능과구분하며이전실패증거보존.

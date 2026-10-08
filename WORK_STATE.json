@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "User deferred cloud ground-shadow investigation; next plan six same-footprint distant-to-near cloud views, then single-renderer globe/DEM/descent/archive candidate. Noise improvement tentative; no fix or candidate adoption confirmed.",
+  "next_action": "D112 six-view cloud handoff trial rendered; distant band speckle and terrain optics remain TUNE. Next same-weather distant coverage proxy/volume handoff refinement, then archive KEEP connection. Shadow investigation user-deferred.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1219,7 +1219,7 @@
     ]
   },
   "north_cloud_takram_2026_10_08": {
-    "status": "D111_USER_REVIEW_SHADOW_DEFERRED_NEXT_SAME_FOOTPRINT_HANDOFF_TUNE",
+    "status": "D112_NATIVE_SIX_VIEW_HANDOFF_TRIAL_TUNE_FAR_QUALITY_UNRESOLVED",
     "decision": "D111",
     "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_defect_isolation_2026-10-08.md",
     "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-defect-interactive-20261008",
@@ -1328,6 +1328,33 @@
       "baselineCloudAlpha": 0.1,
       "userFeedback": "Noise may be improved; not confirmed fixed. Ground shadow investigation deferred by user.",
       "shadowInvestigationDeferred": true
+    },
+    "handoffTrialD112": {
+      "decision": "D112",
+      "manifest": "verification/a-cloud-handoff-20261008/manifest.json",
+      "fixedPairs": 6,
+      "actualRendererVideos": 1,
+      "videoDurationMs": 24000,
+      "macroRepeat": 9,
+      "fineRepeat": 54,
+      "weatherRtMipBudgetMiB": 21.333,
+      "fullOcclusionSample": {
+        "size": [
+          32,
+          18
+        ],
+        "meanAlpha": 0.9992578976034862,
+        "minAlpha": 0.9686274509803922,
+        "opaqueFraction": 1,
+        "fullOcclusion": true
+      },
+      "mainIntegrated": false,
+      "archiveIntegrated": false,
+      "candidateAdopted": false,
+      "farCloudQuality": "TUNE residual dot texture",
+      "shadowTuningDeferred": true,
+      "wheelContinuousFloatFix": "O022",
+      "build": "80 modules PASS"
     }
   }
 }

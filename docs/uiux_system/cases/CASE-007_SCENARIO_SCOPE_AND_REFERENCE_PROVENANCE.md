@@ -221,3 +221,7 @@ GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 �
 
 ### D111 [대화][소스][실제렌더] 후속 분리시험
 사용자진행승인→AI8설정대조/정착24사진+실제8초영상3개→shadowOFF기여·촘촘march비용확인→명확한해결미확정으로baseline유지. native동작증거와시각해결을구별하고sourceAPI実값을metadata로검증. O021저장누락복구/F077/D111참조. 다음worldpoint조도/volume-onlymotion과원경인계를분리해지속.
+
+
+## D112 같은 기상장 연결과 실패 가설 수정
+사용자: 자글거림잠정개선, 그림자보류 → AI: 동일volume/거리mip 6구도시험 → 실제원경에서별점/인쇄cloud/샘플건너뜀/shape생략흰막/반복macro발견 → 고정macro9×세부6으로번안,기본shape복원,원경detail만감쇠 → 가림gate확보와원경품질TUNE를분리. F078/O022. 사용자긍정을전체KEEP로확대하지않고world-spacecoverage/수정전native를남긴다. 기본main/Story/서고연결미완과그림자보류를작업상태에유지한다.

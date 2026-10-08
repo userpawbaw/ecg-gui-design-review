@@ -255,3 +255,7 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 [대화] 사용자: “자글거림은 좀 나아진 것 같기도 한데.” “그림자는 엄청 거슬리는 문제는 일단 아니긴 해. 보류하자.”
 자글거림은 잠정 개선 관찰이며 해결/전체 룩 KEEP/alpha .05 기본 채택으로 확대하지 않는다. 그림자 world-point 추적 및 추가 튜닝은 사용자 재개 요청까지 보류한다. 현재 그림자를 끄거나 제거하지 않는다.
 다음은 D110의 같은 구름군 인계 설계: 북유럽 광역 → 지역 확대 → 구름 접근 → 측면/아래 커튼빛 → 가장자리 통과 → 서고 가림의 최소 6구도. 동일 지형·구름 footprint와 카메라 경로를 먼저 고정하고, 원경 mask와 근경 volume의 단계적 기여 및 단일 renderer 후보 통합을 진행한다. 갑작스러운 구름 생성/지형 교체/이중 밝기 누적을 검증한다. 움직임 자글거림·TAA 잔상·GPU는 이 인계 후보의 실제 정역 리뷰에서 계속 확인한다. 이 체크포인트는 기록만 갱신하며 새 구현/런타임 검증은 수행하지 않았다.
+
+
+## 2026-10-08 D112 동일 기상장6구도/가림후보
+사용자그림자보류·다음단계진행승인. 같은weather/ECEF/DEM으로광역→지역→접근→커튼→edge→가림6구도실제제작. 원경별/인쇄cloud제거,초기raystep거리번안,macro9×fine6고정weatherRT/shape기본복원/detail거리감쇠. 여러실패candidate native를보존,최신6정착+24초actualWebM/forwardwheel .2136정착. 원경띠내점질감/지도광학TUNE,가림표본PASS를전체품질승인으로확대하지않음. 기본main/Story/서고통합미완,그림자보류유지. 다음same-weather원경coverageproxy→근경volume보완후archiveKEEP연결. F078/D112/O022/CASE007. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_same_footprint_handoff_2026-10-08.md; gallery verification/a-cloud-handoff-20261008/gallery.html. finalbuild80module/records244PASS,다른usercapture6파일/개인영상추출프레임보존.

@@ -30,8 +30,8 @@ export async function createTerrainParent(macro:THREE.Texture,broad:THREE.Textur
  }
  for(const [name,array,itemSize] of [['terrainDelta',deltas,3],['surfaceU',du,3],['surfaceV',dv,3],['deltaU',deltaU,3],['deltaV',deltaV,3],['detailGradient',detailGrad,2],['sphereContact',contact,4],['dropWeight',regionWeights,1]] as const)geometry.setAttribute(name,new THREE.BufferAttribute(array,itemSize));
  geometry.computeVertexNormals();geometry.computeBoundingBox();geometry.boundingBox!.expandByScalar(8);geometry.boundingSphere=geometry.boundingBox!.getBoundingSphere(new THREE.Sphere());
- const amount={value:0},detail={value:0},mat=new THREE.MeshPhysicalMaterial({map:macro,roughness:1,specularIntensity:.16,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
- mat.onBeforeCompile=s=>{Object.assign(s.uniforms,{parentAmount:amount,detailAmount:detail,parentBroad:{value:broad},parentDay:{value:day},parentPacked:{value:packed}});
+ const embeddedCloud={value:1};const amount={value:0},detail={value:0},mat=new THREE.MeshPhysicalMaterial({map:macro,roughness:1,specularIntensity:.16,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
+ mat.onBeforeCompile=s=>{Object.assign(s.uniforms,{parentAmount:amount,detailAmount:detail,parentBroad:{value:broad},parentDay:{value:day},parentPacked:{value:packed},parentEmbeddedCloud:embeddedCloud});
   s.vertexShader=s.vertexShader.replace('#include <common>',`#include <common>
    attribute vec3 terrainDelta,surfaceU,surfaceV,deltaU,deltaV;attribute vec2 detailGradient;attribute vec4 sphereContact;attribute float dropWeight;uniform float parentAmount,detailAmount;
   `).replace('#include <beginnormal_vertex>',`#include <beginnormal_vertex>
@@ -41,13 +41,13 @@ export async function createTerrainParent(macro:THREE.Texture,broad:THREE.Textur
   `).replace('#include <begin_vertex>',`#include <begin_vertex>
    transformed+=parentAmount*terrainDelta;transformed.y-=4.*detailAmount*dropWeight;
   `);
-  s.fragmentShader=s.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D parentBroad,parentDay,parentPacked;').replace('#include <map_fragment>',`#include <map_fragment>
+  s.fragmentShader=s.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D parentBroad,parentDay,parentPacked;uniform float parentEmbeddedCloud;').replace('#include <map_fragment>',`#include <map_fragment>
    vec2 ll=vec2(vMapUv.x*16.,56.+vMapUv.y*12.),guv=(ll+vec2(180.,90.))/vec2(360.,180.);float edge=min(min(vMapUv.x,vMapUv.y),min(1.-vMapUv.x,1.-vMapUv.y));
    vec3 globalColor=texture2D(parentDay,guv).rgb;float macroBlend=smoothstep(0.,.12,edge);
    vec2 r=(ll-vec2(7.1,61.))/vec2(2.6,1.2);float re=min(min(r.x,r.y),min(1.-r.x,1.-r.y));float regionBlend=smoothstep(0.,.18,re);
    vec3 mappedColor=mix(globalColor,diffuseColor.rgb,macroBlend);
    float cloudMask=texture2D(parentPacked,guv).b*(1.-max(regionBlend,macroBlend));
-   mappedColor=mix(mappedColor,vec3(.9,.94,1.),cloudMask*.60);
+   mappedColor=mix(mappedColor,vec3(.9,.94,1.),cloudMask*.60*parentEmbeddedCloud);
    diffuseColor.rgb=mappedColor;
    diffuseColor.rgb=mix(diffuseColor.rgb,texture2D(parentBroad,r).rgb,regionBlend);
   `).replace('#include <roughnessmap_fragment>',`#include <roughnessmap_fragment>
@@ -56,5 +56,5 @@ export async function createTerrainParent(macro:THREE.Texture,broad:THREE.Textur
   `);
  };
  const mesh=new THREE.Mesh(geometry,mat);mesh.name='Northern coarse parent terrain';mesh.renderOrder=1;mesh.receiveShadow=true;
- return {mesh,sample,normal,macro,bounds:b,set(p:number,d:number){amount.value=p;detail.value=d;mesh.visible=p>0;},state:()=>({source:m.source,bounds:b,triangles:256*256*2,reveal:amount.value,detail:detail.value,normalModel:'GPU derivatives of actual deformed surface + analytic sphere contact',cpuGeometryUpdatesPerFrame:0}),dispose(){geometry.dispose();mat.dispose();}};
+ return {mesh,sample,normal,macro,bounds:b,setEmbeddedCloud(on:boolean){embeddedCloud.value=on?1:0;},set(p:number,d:number){amount.value=p;detail.value=d;mesh.visible=p>0;},state:()=>({source:m.source,bounds:b,triangles:256*256*2,reveal:amount.value,detail:detail.value,normalModel:'GPU derivatives of actual deformed surface + analytic sphere contact',cpuGeometryUpdatesPerFrame:0}),dispose(){geometry.dispose();mat.dispose();}};
 }

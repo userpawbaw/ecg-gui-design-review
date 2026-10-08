@@ -7,8 +7,13 @@ import {CloudsEffect} from '@takram/three-clouds';
 import {DataTextureLoader,Ellipsoid,Geodetic,parseUint8Array,STBNLoader} from '@takram/three-geospatial';
 import {DitheringEffect,LensFlareEffect} from '@takram/three-geospatial-effects';
 import {createNorthernArrival} from './arrival-north';
+import {handoffCamera,handoffFrames,cloudCoverProbe,bakeHandoffWeather} from './cloud-handoff';
 
 const params=new URLSearchParams(location.search);
+const handoff=params.get('handoff')==='1';
+let macroWeather:ReturnType<typeof bakeHandoffWeather>|null=null;
+let handoffStage:ReturnType<typeof handoffCamera>|null=null,coverMeasure:ReturnType<ReturnType<typeof cloudCoverProbe>>=null;
+if(handoff){document.title='A · 북유럽–구름 연속 인계 후보';}
 const dom=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
 const status=dom<HTMLOutputElement>('status'),error=dom<HTMLPreElement>('error');
 const pose=dom<HTMLSelectElement>('pose'),quality=dom<HTMLSelectElement>('quality');
@@ -33,6 +38,11 @@ const shadowLabel=document.createElement('label');shadowLabel.innerHTML='<input 
 const groundShadow=dom<HTMLInputElement>('groundShadow');groundShadow.onchange=()=>{aerial.shadow=enabled.checked&&groundShadow.checked?clouds.atmosphereShadow:null;gpuTimes.length=0;};
 const recipeLabel=document.createElement('label');recipeLabel.innerHTML='조명 후보 <select id="recipe" aria-label="조명 후보"><option value="baseline">이전 기준 · TAA</option><option value="curtain">커튼 광선 · 고도 연무</option></select>';settings.prepend(recipeLabel);
 const recipe=dom<HTMLSelectElement>('recipe');
+if(handoff){
+ const label=document.createElement('label');label.innerHTML='연결 구도 <select id="handoffFrame" aria-label="연결 구도">'+handoffFrames.map(f=>`<option value="${f.p}">${f.name}</option>`).join('')+'</select>';settings.prepend(label);
+ const select=dom<HTMLSelectElement>('handoffFrame');select.value='0.3';select.onchange=()=>{wheelDriving=false;inputSource='handoff-pose';progress.value=select.value;gpuTimes.length=0;};
+}
+
 const diagnosticUI=document.createElement('details');diagnosticUI.innerHTML='<summary>하강 결함 분리 시험</summary><label>분리 설정 <select id="diagnostic" aria-label="하강 분리 설정"><option value="baseline">기준</option><option value="shadowOff">지형 그림자 OFF</option><option value="margin">그림자 깊이 여유 20km</option><option value="jitterOff">그림자 jitter OFF</option><option value="march">촘촘한 볼륨 샘플</option><option value="far">그림자 범위 200km</option></select></label><button id="diagnosticSet">분리 구도 저장</button>';
 settings.append(diagnosticUI);
 const diagnostic=dom<HTMLSelectElement>('diagnostic'),diagnosticSet=dom<HTMLButtonElement>('diagnosticSet');
@@ -51,7 +61,7 @@ function applyDiagnostic(){
 }
 diagnostic.onchange=applyDiagnostic;
 function applyRecipe(value:string){
- recipe.value=value;coverage.value='.42';weatherRepeat.value='54';cluster.value='1.6';weatherX.value=weatherY.value='0';
+ recipe.value=value;coverage.value='.42';weatherRepeat.value=handoff?'9':'54';cluster.value='1.6';weatherX.value=weatherY.value='0';
  sunElevation.value=value==='curtain'?'15':'16.1';sunAzimuth.value=value==='curtain'?'0':'43.75';hazeFalloff.value=value==='curtain'?'.00018':'.001';layerDepth.value=value==='curtain'?'1.2':'1';layerDensity.value='1';
  groundShadow.checked=shafts.checked=true;clouds.lightShafts=true;aerial.shadow=enabled.checked?clouds.atmosphereShadow:null;applyWeather();applyOptics();applyDiagnostic();
 }
@@ -74,9 +84,10 @@ const save=dom<HTMLButtonElement>('save');
 const captureSet=document.createElement('button');captureSet.textContent='기준 구도 저장';save.after(captureSet);
 const motionReview=document.createElement('button');motionReview.textContent='정역 이동 검증';captureSet.after(motionReview);
 const motionVideo=document.createElement('button');motionVideo.textContent='8초 이동 영상 저장';motionReview.after(motionVideo);
+if(handoff)motionVideo.textContent='24초 연결 영상 저장';
 let capturePhase='fixed';
 // D109: physical wheel input changes a target; damping uses elapsed time, not frame rate.
-let wheelTarget=Number(progress.value),wheelDriving=false,wheelCount=0,wheelDelta=0;
+let wheelTarget=Number(progress.value),wheelCurrent=Number(progress.value),wheelDriving=false,wheelCount=0,wheelDelta=0;
 let inputSource='pose',lastDrawTime=performance.now();
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const wheelHint=document.createElement('small');wheelHint.textContent='북유럽 화면에서 휠: 하강/상승 · 패널 안에서는 설정 스크롤';settings.before(wheelHint);
@@ -87,7 +98,7 @@ function rendererWheelSetup(){
   e.preventDefault();
   const pixels=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1);
   if(!pixels)return;
-  if(!wheelDriving)wheelTarget=Number(progress.value);
+  if(!wheelDriving)wheelTarget=wheelCurrent=Number(progress.value);
   wheelTarget=THREE.MathUtils.clamp(wheelTarget+pixels*.000025,Number(progress.min),Number(progress.max));
   wheelDriving=true;wheelCount++;wheelDelta=pixels;inputSource='wheel';gpuTimes.length=0;
  },{passive:false});
@@ -96,6 +107,8 @@ const basicOption=document.createElement('option');basicOption.value='basic3500'
 const basicLow=document.createElement('option');basicLow.value='basic300';basicLow.textContent='Basic 빛 커튼 · 300m';pose.add(basicLow);
 const renderer=new THREE.WebGLRenderer({depth:false,logarithmicDepthBuffer:false,antialias:false});
 renderer.setPixelRatio(1);renderer.setSize(innerWidth,innerHeight);
+const measureCover=cloudCoverProbe(renderer);
+if(handoff){progress.min='.18';progress.max='.41';}
 renderer.toneMapping=THREE.NoToneMapping;renderer.toneMappingExposure=10;
 document.body.appendChild(renderer.domElement);
 const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,10,1e6);
@@ -212,7 +225,7 @@ function setPose(value:string){
   if(basic){getSunDirectionECEF(new Date('2026-01-02T07:00:00Z'),clouds.sunDirection);aerial.sunDirection.copy(clouds.sunDirection);}
  }
  coverage.value=look.value==='ref54'?'.42':value.startsWith('basic')?'.30':'.40';
- weatherRepeat.value=look.value==='ref54'?'54':'100';applyWeather();
+ weatherRepeat.value=handoff?'9':look.value==='ref54'?'54':'100';applyWeather();
  clouds.shadow.maxFar=1e5;
  applyOptics();applyDiagnostic();
 }
@@ -222,7 +235,7 @@ cluster.oninput=applyWeather;
 look.onchange=()=>setPose(activePose);
 shafts.onchange=()=>{clouds.lightShafts=shafts.checked;gpuTimes.length=0;};
 cloudScale.onchange=()=>{clouds.resolutionScale=Number(cloudScale.value);gpuTimes.length=0;};
-function state(){return{ready,contextLost:gl.isContextLost(),mode:activePose,source:'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
+function state(){return{handoff:handoff?{stage:handoffStage,cover:coverMeasure,weatherFixed:!wind.checked,macroWeather:macroWeather?{anchor:macroWeather.anchor,sourceRepeat:macroWeather.sourceRepeat,macroRepeat:macroWeather.macroRepeat,role:macroWeather.role}:null,embeddedCloud:false,sourceMip:true,archiveIntegrated:false}:null,ready,contextLost:gl.isContextLost(),mode:activePose,source:'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
  capturePhase,diagnostic:{name:diagnostic.value,shadowMargin:clouds.shadowMaps.margin,shadowFar:clouds.shadow.maxFar,shadowJitter:clouds.shadow.temporalJitter,shadowTemporal:clouds.shadow.temporalPass,shadowAlpha:clouds.shadowPass.resolveMaterial.uniforms.temporalAlpha.value,cloudAlpha:clouds.cloudsPass.resolveMaterial.uniforms.temporalAlpha.value,cascades:clouds.shadow.cascadeCount,mapSize:clouds.shadow.mapSize.toArray(),splitLambda:clouds.shadow.splitLambda,minStep:clouds.clouds.minStepSize,perspectiveStep:clouds.clouds.perspectiveStepScale},input:{source:inputSource,wheelCount,lastWheelPixels:wheelDelta,target:wheelDriving?wheelTarget:Number(progress.value),current:Number(progress.value),settled:!wheelDriving||Math.abs(wheelTarget-Number(progress.value))<.00011,reducedMotion},
  opticalTrial:{weatherX:clouds.localWeatherOffset.x,weatherY:clouds.localWeatherOffset.y,sunElevation:Number(sunElevation.value),sunAzimuth:Number(sunAzimuth.value),hazeExponent:clouds.clouds.hazeExponent,hazeDensityScale:clouds.clouds.hazeDensityScale,layerDepth:Number(layerDepth.value),layerDensity:Number(layerDensity.value),groundShadow:groundShadow.checked,groundShadowLinked:!!aerial.shadow},
  sourceLocation:activePose.startsWith('basic')?[30,35,activePose==='basic300'?300:3500]:activePose.startsWith('north')?[8.4,61.63,'camera metres in localCamera ×1000']:[0,67,activePose==='source500'?500:3500],sourceDate:activePose.startsWith('basic')?'2026-01-02T07:00:00Z':activePose.startsWith('north')?'fixed north scene sun vector':'2000-06-01T10:00:00Z',camera:camera.position.toArray(),localCamera:lastCamera,
@@ -234,18 +247,20 @@ temporal.onchange=()=>{clouds.temporalUpscale=temporal.checked;gpuTimes.length=0
 async function ensureNorth(){
  if(north)return;
  error.textContent='북유럽 지형을 준비하는 중입니다.';
- north=await createNorthernArrival(renderer);north.setEffects({cloud:false,cloudShadow:false,atmosphere:false});
+ north=await createNorthernArrival(renderer);north.setEffects({cloud:false,cloudShadow:false,atmosphere:false,embeddedCloud:!handoff,stars:!handoff});
  north.scene.scale.setScalar(1000);northScene.add(north.scene);error.textContent='';
 }
 pose.onchange=async()=>{pose.disabled=true;try{if(pose.value.startsWith('north'))await ensureNorth();setPose(pose.value);}catch(e){error.textContent=String(e);}finally{pose.disabled=false;}};progress.oninput=()=>{wheelDriving=false;inputSource='slider';gpuTimes.length=0;};
 async function saveFrame(){
  if(!ready||gl.isContextLost()){error.textContent='렌더가 준비되지 않았거나 GPU 컨텍스트가 끊겨 정상 프레임을 저장할 수 없습니다.';return;}
  draw();
+ if(handoff)coverMeasure=measureCover(clouds.atmosphereOverlay?.map??null);
  let shot=activePose+(activePose.startsWith('north')?'-'+Math.round(Number(progress.value)*1000):'')+'-'+look.value+'-r'+weatherRepeat.value+'-c'+Math.round(Number(coverage.value)*100)+'-e'+Math.round(Number(cluster.value)*10)+'-q'+quality.value+'-s'+Math.round(Number(cloudScale.value)*100)+(temporal.checked?'-upscale':'-fullres')+(enabled.checked?'-cloud':'-off')+(shafts.checked?'-shafts':'-nosh')+(aa.checked?'-smaa':'-noaa')+(params.get('reviewRound')?.startsWith('takram-parameters')?`-x${Math.round(Number(weatherX.value)*100)}-el${Math.round(Number(sunElevation.value)*100)}-az${Math.round(Number(sunAzimuth.value)*100)}-hz${Math.round(Number(hazeFalloff.value)*1e6)}`:'');
  if(params.get('reviewRound')?.startsWith('takram-parameters'))shot='p'+Math.round(Number(progress.value)*1000)+'-c'+Math.round(Number(coverage.value)*100)+'-x'+Math.round(Number(weatherX.value)*100)+'-el'+Math.round(Number(sunElevation.value)*100)+'-az'+Math.round(Number(sunAzimuth.value)*100)+'-hz'+Math.round(Number(hazeFalloff.value)*1e6)+(shafts.checked?'-on':'-off');
  if(params.get('reviewRound')?.startsWith('takram-beam'))shot='p'+Math.round(Number(progress.value)*1000)+'-x'+Math.round(Number(weatherX.value)*100)+'-y'+Math.round(Number(weatherY.value)*100)+'-az'+Math.round(Number(sunAzimuth.value))+'-el'+Math.round(Number(sunElevation.value))+'-h'+Math.round(Number(hazeFalloff.value)*1e6)+'-d'+Math.round(Number(layerDepth.value)*10)+'-n'+Math.round(Number(layerDensity.value)*10)+(shafts.checked?'-on':'-off')+(groundShadow.checked?'-gs':'-nogs');
  if(capturePhase!=='fixed')shot=capturePhase+'-'+shot;
  if(params.get('reviewRound')?.startsWith('takram-wheel'))shot='wheel-'+wheelCount+'-p'+Math.round(Number(progress.value)*10000)+'-'+inputSource;
+ if(handoff)shot='handoff-p'+Math.round(Number(progress.value)*10000)+'-'+capturePhase;
  if(params.get('reviewRound')?.startsWith('takram-defect'))shot=diagnostic.value.toLowerCase()+'-p'+Math.round(Number(progress.value)*10000)+'-'+capturePhase;
  const e=gl.getExtension('WEBGL_debug_renderer_info');
  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),url:location.href}})});
@@ -258,21 +273,21 @@ motionVideo.onclick=async()=>{
  try{
   if(!ready||gl.isContextLost())throw Error('Renderer not ready');
   if(!activePose.startsWith('north')){await ensureNorth();setPose('north300');}
-  error.textContent='';wheelDriving=false;inputSource='recorded-camera-path';progress.value='.265';
+  error.textContent='';wheelDriving=false;inputSource='recorded-camera-path';progress.value=handoff?'.18':'.265';
   const step=()=>new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));for(let i=0;i<60;i++)await step();
   const mime='video/webm;codecs=vp8';if(!MediaRecorder.isTypeSupported(mime))throw Error('WebM recording not supported');
   stream=renderer.domElement.captureStream(30);recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
   const chunks:BlobPart[]=[];recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
   const stopped=new Promise<void>((resolve,reject)=>{recorder!.onstop=()=>resolve();recorder!.onerror=()=>reject(Error('MediaRecorder failed'));});
-  recorder.start();motionVideo.textContent='정역 영상 녹화 중';const trace:{elapsed:number;p:number}[]=[];const start=performance.now();let elapsed=0;
+  recorder.start();motionVideo.textContent='정역 영상 녹화 중';const trace:{elapsed:number;p:number}[]=[];const start=performance.now(),duration=handoff?24000:8000,half=duration/2;let elapsed=0;
   do{
-   if(gl.isContextLost())throw Error('GPU context lost');elapsed=Math.min(8000,performance.now()-start);
-   progress.value=String(elapsed<=4000?.265+.1*elapsed/4000:.365-.1*(elapsed-4000)/4000);trace.push({elapsed,p:Number(progress.value)});await step();
-  }while(elapsed<8000);
+   if(gl.isContextLost())throw Error('GPU context lost');elapsed=Math.min(duration,performance.now()-start);
+   const startP=handoff?.18:.265,endP=handoff?.410:.365;progress.value=String(elapsed<=half?startP+(endP-startP)*elapsed/half:endP-(endP-startP)*(elapsed-half)/half);trace.push({elapsed,p:Number(progress.value)});await step();
+  }while(elapsed<duration);
   recorder.stop();await stopped;
   const blob=new Blob(chunks,{type:'video/webm'});
   const video=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=()=>reject(Error('Video read failed'));reader.readAsDataURL(blob);});
-  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-defect-video',shot:'video-'+diagnostic.value.toLowerCase(),video,meta:{state:state(),url:location.href,motion:{completed:true,nominalMs:8000,mime,trace,encodingAffectsPerformance:true}}})});
+  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-defect-video',shot:handoff?'video-handoff':'video-'+diagnostic.value.toLowerCase(),video,meta:{state:state(),url:location.href,motion:{completed:true,nominalMs:duration,mime,trace,encodingAffectsPerformance:true}}})});
   if(!response.ok)throw Error(await response.text());motionVideo.textContent='이동 영상 저장 완료';
  }catch(e){error.textContent=String(e);motionVideo.textContent='영상 저장 실패';}
  finally{if(recorder&&recorder.state!=='inactive')recorder.stop();stream?.getTracks().forEach(t=>t.stop());motionVideo.disabled=diagnosticSet.disabled=captureSet.disabled=save.disabled=pose.disabled=motionReview.disabled=diagnostic.disabled=false;}
@@ -299,7 +314,7 @@ captureSet.onclick=async()=>{
  const framesFor=async(n:number)=>{for(let i=0;i<n;i++)await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));};
  try{
   await ensureNorth();setPose('north300');
-  for(const p of [.265,.285,.300,.320,.345,.365]){
+  for(const p of handoff?handoffFrames.map(f=>f.p):[.265,.285,.300,.320,.345,.365]){
    if(!ready||gl.isContextLost())throw new Error('GPU 컨텍스트 오류로 기준 캡처를 중단했습니다.');
    progress.value=String(p);captureSet.textContent=`기준 저장 · ${p}`;await framesFor(timer?60:16);gpuTimes.length=0;
    for(let i=0;i<(timer?180:16)&&gpuTimes.length<120;i++)await framesFor(1);
@@ -327,9 +342,19 @@ motionReview.onclick=async()=>{
 function draw(){
  if(!ready||gl.isContextLost())return;
  const now=performance.now(),elapsed=Math.min(.1,Math.max(0,(now-lastDrawTime)/1000));lastDrawTime=now;
- if(wheelDriving){const current=Number(progress.value),next=reducedMotion?wheelTarget:current+(wheelTarget-current)*(1-Math.exp(-elapsed/ .16));progress.value=String(Math.abs(next-wheelTarget)<.00011?wheelTarget:next);}
+ if(wheelDriving){const current=wheelCurrent,next=reducedMotion?wheelTarget:current+(wheelTarget-current)*(1-Math.exp(-elapsed/ .16));wheelCurrent=Math.abs(next-wheelTarget)<.00011?wheelTarget:next;progress.value=String(wheelCurrent);}
  if(activePose.startsWith('north')&&north){
-  localCamera.aspect=camera.aspect;north.update(Number(progress.value),2.4,true,localCamera);
+  localCamera.aspect=camera.aspect;north.update(Math.min(.365,Number(progress.value)),2.4,true,localCamera);
+  if(handoff){handoffStage=handoffCamera(Number(progress.value),localCamera);
+   // Source step starts at minStep + (perspectiveScale-1)*rayNear. At 1000km,
+   // 1.01 skips a 0.8–1.4km slab. Keep near optics; continuously cap far overshoot.
+   const farLod=THREE.MathUtils.smoothstep(localCamera.position.y,45,200);
+   clouds.clouds.hazeDensityScale=3e-5*(1-farLod);
+   clouds.clouds.perspectiveStepScale=THREE.MathUtils.lerp(1.01,1.0002,THREE.MathUtils.smoothstep(localCamera.position.y,100,600));
+   // Same weather footprint; subpixel shape erosion has no useful silhouette at orbit distance.
+   for(let i=0;i<2;i++){clouds.cloudLayers[i].shapeAmount=1;clouds.cloudLayers[i].shapeDetailAmount=1-farLod;}
+
+  }
   // Existing and newly loaded LOD meshes must enter the optical pass as albedo,
   // not as already-lit PBR radiance. Retain texture and the source geometry/color handoff shader.
   north.scene.traverse(o=>{if(!(o instanceof THREE.Mesh)||Array.isArray(o.material)||!(o.material instanceof THREE.MeshStandardMaterial))return;
@@ -359,7 +384,8 @@ async function init(){
   dataLoader(128).loadAsync(shapeUrl),dataLoader(32).loadAsync(detailUrl),new STBNLoader().loadAsync(stbnUrl)
  ]);
  Object.assign(aerial,lut);Object.assign(clouds,lut);
- clouds.localWeatherTexture=textureSetup(w);clouds.turbulenceTexture=textureSetup(t);
+ clouds.localWeatherTexture=textureSetup(w);
+ if(handoff){macroWeather=bakeHandoffWeather(renderer,clouds.localWeatherTexture!,northToECEF);clouds.localWeatherTexture=macroWeather.target.texture;}clouds.turbulenceTexture=textureSetup(t);
  clouds.shapeTexture=textureSetup(s,true) as THREE.Data3DTexture;clouds.shapeDetailTexture=textureSetup(d,true) as THREE.Data3DTexture;
  clouds.stbnTexture=aerial.stbnTexture=b;
  if(params.get('pose')?.startsWith('north'))await ensureNorth();

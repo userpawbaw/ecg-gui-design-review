@@ -234,3 +234,6 @@ D104는 원형 chain 초기 시험 이력이다. D105가 설정·ON/OFF 판정�
 [ECG_A_takram_hardware_recheck_2026-10-08.md](ECG_A_takram_hardware_recheck_2026-10-08.md) → verification/a-takram-hardware-20261008/gallery.html / F072 / D106.
 
 RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완료. 새 검토 후보는 high/fullres50%/.42/54/대비1.6. original default대비1 유지, main 미교체, visualTUNE. beam 강도/암부/연속scroll/원래 중단 원인은 남음. 현재 exact 옵션은 새 manifest/native JSON, 과거D105는 당시software/초기GPU 증거로 보존.
+
+## 2026-10-08 D107 파라미터 검토 / 보완 시작
+사용자 fullresTAA선호·추가설정검토와이후보완승인. originallive/pinnedhelper/GLSL대조, 양.42/54기준유지·고정sun/고도연무번안이필요함. high50/TAA같은p.3659native, cloud양/offset/sun/haze단독대조. 커튼빛불충분/TUNE, terrain밝기튜닝여지. 컨트롤추가·sourcehelper보존·capture80자제한오류compactID수정. 다음aperture/layer/중간하강beam정합→terrain광학→6구도motion→globe. main/Story/BC/사용자6capture보존. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_parameter_review_2026-10-08.md; gallery verification/a-takram-parameters-20261008/gallery.html.

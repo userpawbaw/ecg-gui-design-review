@@ -1806,3 +1806,20 @@ inputColor를 albedo로 Lambert/π 처리하는 source. 이미 PBR lighting된 �
 새26 native 쌍의 RTX/contextLost=false와 저장 경로 성공. fullres에서 반복 점선·입자가 크게 줄었고, weatherExponent1.6은 약한 날씨 밀도를 줄여 빈 공간과 남은 덩어리를 강조했다. 구름 총량/크기도 줄며 그림자 영역이 달라진다. fullres50%는 화면1280×720에서 cloud640×360이고, TAA는 유지된다. 비용은 각 fixed pose의 composer GPU query이며 총FPS/targetPC 보장이 아니다.
 ### 놓쳤다면
 GPU가 회복됐다는 이유로 grain이 해결됐다고 하거나, 밀도 감소를 새 고품질 에셋/모든 구도의 국소 응집 완성으로 오인했을 것이다. RTX 복구/기능 PASS와 품질 TUNE, 원래 중단 원인 미확정, 아직 약한 빛 커튼/암부/연속 움직임 검증을 분리한다. ECG_A_takram_hardware_recheck_2026-10-08.md 참조.
+
+## F-073. 원본 지표고도 연무 설정을 높은 하강 카메라에 복사하면 같은 빛 효과가 보장되지 않는다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화][소스][실제렌더] |
+| 연결 | D-107 / CASE-007 / REF-015 |
+
+사용자 TAA 선호·추가 파라미터검토 요청. 원본coverage.30/repeat100/local09:00/300m와현재.42/54/fixedsun/약7km는다르다. source approximateHaze exp(-height*.001),density<1e-7생략으로높은카메라의기본연무기여가낮아짐. .00035대조는연무를증가시키지만커튼광선목표는아직불충분; 단일원인해결주장보류. 같은p.3659native에서.50은구름천장/암부를늘리고태양30°/-30°는지형밝기개선가능성을보였다. 수치최적화/전체경로검증이아닌art시험이며TUNE. 최신report/gallery/manifest참조. fullresTAA유지선호를density/전체main채택으로확대하지않는다.
+### 발단
+TAA 선호 후 구름 양/시간대 최적성과 다른 조절 항목을 사용자 질문.
+### 먼저 의심한 것과 배제 방법
+단순 구름 양 부족 또는 렌더 품질만 의심하지 않고 원본 live값·helper·고도 연무 GLSL과 단독 변수 actual9대조. exposure/ultra 먼저 상승은 제외.
+### 결정적 근거
+고도7km 기본 haze density 약2.74e-8이 GLSL 생략기준1e-7보다낮다. 감쇠.00035는기여를늘리지만 actual빔목표해결은미달. cloud 양.50은지형암부심화. verification/a-takram-parameters-20261008/manifest.json과 native9쌍.
+### 놓쳤다면
+낮은 원본카메라의 광학을 높은카메라에 복사하고 GPU비용만 늘리거나 구름양/연무 하나로 완성되었다고 오판했을 수 있다. 조사·보완시험·최종채택을 분리한다.

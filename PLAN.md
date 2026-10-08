@@ -467,3 +467,6 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 완료: RTX 회복 확인, scoped source→north 재실행, 같은6구도 upscale/fullres/대비1.6 비교 및 빛/분포 대조. native26쌍, build79 PASS. 원래 컴퓨터 중단 원인은 미확정. 품질 TUNE.
 
 다음: 새 gallery의 high/fullres50%/대비1.6 후보 사용자 피드백 → beam의 구름 빈 창/태양·카메라/연무·수광 거리 최소 시험과 terrain 암부 점검 → 품질 확인 뒤 globe 연속 인계. D105고도8km·terrain1.5×/archiveKEEP·Story/BC/D080별도 유지. 기준 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_hardware_recheck_2026-10-08.md.
+
+## 2026-10-08 D107 파라미터 검토 / 보완 시작
+사용자 fullresTAA선호·추가설정검토와이후보완승인. originallive/pinnedhelper/GLSL대조, 양.42/54기준유지·고정sun/고도연무번안이필요함. high50/TAA같은p.3659native, cloud양/offset/sun/haze단독대조. 커튼빛불충분/TUNE, terrain밝기튜닝여지. 컨트롤추가·sourcehelper보존·capture80자제한오류compactID수정. 다음aperture/layer/중간하강beam정합→terrain광학→6구도motion→globe. main/Story/BC/사용자6capture보존. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_parameter_review_2026-10-08.md; gallery verification/a-takram-parameters-20261008/gallery.html.

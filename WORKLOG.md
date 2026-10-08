@@ -677,3 +677,7 @@ D105 최종 checkpoint: 기록228 PASS / diff check PASS / 중단 전 Vite76modu
 D106 최종 checkpoint: Vite79modules build PASS / records230 PASS / diff check PASS. 구현 commit4ad1edd2722bca43cdd4635c8b26920bcf8cdc49 push 및 ls-remote 일치, FETCH_HEAD fidelity 내용 readback 확인. 사용자 수정6capture는 스테이징 제외·보존. main 미변경. 새 정지 비교 gallery는 검토용이며 품질TUNE·연속 전이/장기 안정성 검증은 남는다.
 
 사용자 새로고침 완료/진행 승인. gallery 정상,64×64 장치 및 모든26native RTX3070/contextLost=false 확인. source low25→high50→north high upscale/fullres/대비1.6 세 조건×6구도 순서로 진행. 동일high25 temporal 대조, repeat54/100, 대비1/1.6 shaft OFF 추가. console warn/error0, 빌드79 PASS. source/data/저장UI 경계 확인; 기본main/globe는 미통합, 품질TUNE 및 원래 시스템 중단 원인 미확정. 최신 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_hardware_recheck_2026-10-08.md. D10517정상+2실패 및 사용자수정6capture는 덮어쓰지 않음.
+
+## 2026-10-08 D107 파라미터 검토 / 보완 시작
+사용자 fullresTAA선호·추가설정검토와이후보완승인. originallive/pinnedhelper/GLSL대조, 양.42/54기준유지·고정sun/고도연무번안이필요함. high50/TAA같은p.3659native, cloud양/offset/sun/haze단독대조. 커튼빛불충분/TUNE, terrain밝기튜닝여지. 컨트롤추가·sourcehelper보존·capture80자제한오류compactID수정. 다음aperture/layer/중간하강beam정합→terrain광학→6구도motion→globe. main/Story/BC/사용자6capture보존. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_parameter_review_2026-10-08.md; gallery verification/a-takram-parameters-20261008/gallery.html.
+D107 최종QA: Vite79modules build PASS / records232 PASS / native9쌍 저장응답UI 확인 / warn,error0 / gallery DOM9후보 확인. GPU는 rolling 메타데이터만 보존, 성능 우열 미판정.

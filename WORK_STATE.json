@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "A D106 quality review: fullres50/contrast1.6 six-pose gallery, then beam and terrain light tuning before globe integration. Story/BC separate.",
+  "next_action": "A D107 parameter review and first optical trial complete; TAA keep. Next cloud aperture/layers and intermediate-view beam tuning, terrain light then six-pose/motion before globe integration. Story/BC separate.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1219,15 +1219,15 @@
     ]
   },
   "north_cloud_takram_2026_10_08": {
-    "status": "D106_SCOPED_RUNTIME_PASS_VISUAL_TUNE",
-    "decision": "D106",
-    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_hardware_recheck_2026-10-08.md",
+    "status": "D107_PARAMETER_REVIEW_COMPLETE_FIRST_OPTICAL_TRIAL_TUNE",
+    "decision": "D107",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_parameter_review_2026-10-08.md",
     "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&reviewRound=takram-hardware-20261008",
-    "gallery": "verification/a-takram-hardware-20261008/gallery.html",
+    "gallery": "verification/a-takram-parameters-20261008/gallery.html",
     "terrainHeightScale": 1.5,
     "mainReplaced": false,
     "remoteSave": "D106 implementation 4ad1edd2722bca43cdd4635c8b26920bcf8cdc49 pushed; ls-remote and FETCH_HEAD fidelity readback verified",
-    "next": "User quality review fullres50/contrast1.6; minimum beam aperture/sun-camera/haze-receiver trial and terrain lighting tune before continuous globe handoff",
+    "next": "User fullresTAA preference recorded; D107 nine parameter frames; next layer/aperture/intermediate-camera beam trial then terrain lighting and six-view motion before globe handoff",
     "limits": [
       "Original system-freeze root cause unresolved; bounded test does not prove long-term stability",
       "Fullres50 cloud buffers are 640x360 at 1280x720 display; TAA remains",

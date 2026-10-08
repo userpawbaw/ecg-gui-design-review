@@ -2678,3 +2678,25 @@ software renderer/context loss/조작 지연이 재발하면 높은 부하로 �
 
 ### D106 구현 결과
 RTX3070/context 정상/timer 회복 확인 후 low25%→high50% 단계 실행. 같은 north6카메라를 upscale50%/fullres50%/fullres50% 대비1.6 세 조건으로 저장했고, 같은 high25% 시간 업스케일 대조, repeat54/100, 두 대비에서 shaft ON/OFF도 저장했다. 새native26쌍, console warn/error0. fullres와 대비1.6을 검토 후보로 제시하되 원형 기본대비1 및 main을 유지한다. 빔 강도/암부/연속 움직임/원래 중단 원인은 열려 있다. 실제 검증은 scoped PASS, visual TUNE. URL cluster 옵션과 새 캡처 폴더로 D105 증거를 보존. F072/최신 hardware review 참조.
+
+## D-107. TAA 유지 후 원본 파라미터를 검토하고 연무·빛 커튼 최소 시험으로 이어간다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화] 구현 전 |
+| 상태 | 사용자 TAA 선호; 추가 파라미터 검토 및 보완 진행 승인 |
+| CASE | CASE-007 |
+
+### 갈림길
+구름 양/시간대가 적절한지, 다른 원본 설정을 조절할 여지가 있는지 요청했다. 북유럽은 날짜 기반 조명이 아닌 고정 sun vector이며 .42/54는 참고 이미지 값이다.
+### 검토한 선택지
+전체 파라미터 동시 변경, high/TAA 고정 후 분포→태양→연무의 한 변수 대조, ultra와 exposure만 상승.
+### 고른 것과 근거
+원본 live form 값과 pinned useCloudsControls/helper/shader를 대조하고 우선순위 표를 기록한다. 기존 high/fullres50 TAA 유지. 별도 lab에서 coverage/offset, 태양 고도·방위, 고도감쇠 연무 옵션을 개별 비교한다. shader의 hazeDensityScale*exp(-cameraHeight*hazeExponent) 및 1e-7 생략 기준을 근거로 고도 차이를 우선 시험한다. 새 round/shot suffix로 과거 증거를 보존한다.
+### 버린 것과 이유
+coverage.42를 화면42%로 해석하거나 screenshot 값을 최적값으로 확정하지 않는다. 7km 북유럽 카메라에 원본300m 시간대값을 그대로 적용하지 않는다. 사용자 TAA 선호는 fullres+TAA 유지 결정이며 전체 density1.6/main 채택으로 확대하지 않는다. ultra/모든 step 증가/exposure로 암부만 덮는 접근을 먼저 하지 않는다.
+### 되돌려야 하는 조건
+군집·밝은면 질감 저하, TAA ghosting, 지형 소실, context loss 또는 GPU 부담 증가 시 해당 후보를 TUNE/REJECT하고 baseline을 유지한다. cloud/main/Story/BC는 자동 통합하지 않는다.
+
+### D107 검토·첫 보완 결과
+원본 live UI/pinned helper 조사 완료. fullres TAA 유지 선호 반영, .42/54 기준 유지·최적값 미확정. 양.32/.50, offset.12, sun고도30/방위-30, haze감쇠.00035 단독·조합ON/OFF 실제9쌍. 많은구름은암부심화, sun은terrain개선여지, 연무만으로커튼빛불충분/TUNE. 컨트롤추가·sourcehelper보존·shot길이80제한실패를compactID로수정. 다음 aperture/layer/중간하강 beam정합→terrain광학→6구도/정역스크롤→globe. F073/보고서 ECG_A_takram_parameter_review_2026-10-08.md 참조.

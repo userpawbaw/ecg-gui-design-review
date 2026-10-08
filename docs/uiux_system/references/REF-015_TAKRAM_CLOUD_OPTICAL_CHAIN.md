@@ -77,3 +77,6 @@ D104의 cloud OFF는 Effect에 지원되지 않는 enabled를 설정해서 무�
 
 ## D106 하드웨어 재검증 — 2026-10-08
 RTX3070 회복 확인 후 같은 latest north6구도를 upscale50%/fullres50%/fullres50% 대비1.6 세 조건으로 재캡처. fullres의 반복 입자 감소와 대비1.6의 밀도·빈 공간 변화를 구분했다. fullres50%는1280×720 화면에서 cloud640×360이고 TAA는 계속 사용한다. 그림자/커튼은 단순 blur나 bloom으로 대체하지 않았다. 원래 시스템 중단 원인과 강렬한 커튼 가시성/암부/연속camera 품질은 미완이며 EFX01502 상태는 spike/TUNE을 유지한다. 최신 ECG_A_takram_hardware_recheck_2026-10-08.md / native26쌍 / F072/D106/O020 후속이 근거.
+
+## 2026-10-08 D107 파라미터 검토 / 보완 시작
+사용자 fullresTAA선호·추가설정검토와이후보완승인. originallive/pinnedhelper/GLSL대조, 양.42/54기준유지·고정sun/고도연무번안이필요함. high50/TAA같은p.3659native, cloud양/offset/sun/haze단독대조. 커튼빛불충분/TUNE, terrain밝기튜닝여지. 컨트롤추가·sourcehelper보존·capture80자제한오류compactID수정. 다음aperture/layer/중간하강beam정합→terrain광학→6구도motion→globe. main/Story/BC/사용자6capture보존. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_parameter_review_2026-10-08.md; gallery verification/a-takram-parameters-20261008/gallery.html.

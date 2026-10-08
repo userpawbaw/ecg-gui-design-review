@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "R1: brief 2 reviewed (handoffs/REVIEW_FIGURE_V3_WEB_2026-10-03.md). Await user: merge claude/r1-autopilot-impl-3d1b78 (recommended) and light round per user manual docs/uiux_system/lighting (F-032 L1-L9). Planning chat: RETURN 2 arm gap, RETURN 3 grip rest wrap.",
+  "next_action": "A D105: hardware renderer recovery → latest north6 high/same-view distribution and shaft/temporal tests → tune before globe integration. Read ECG_WORK_INDEX latest D105; Story/BC separate.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -127,7 +127,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-10-07",
+  "updated_at": "2026-10-08",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -1219,27 +1219,39 @@
     ]
   },
   "north_cloud_takram_2026_10_08": {
-    "status": "IMPLEMENTED_FUNCTIONAL_PASS_VISUAL_TUNE",
-    "decision": "D104",
-    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_cloud_reproduction_review_2026-10-08.md",
-    "preview": "http://127.0.0.1:4198/cloud-lab.html",
-    "gallery": "verification/a-takram-lab-20261008/gallery.html",
+    "status": "D105_FUNCTIONAL_CONDITIONAL_VISUAL_TUNE_HARDWARE_RECHECK_PENDING",
+    "decision": "D105",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md",
+    "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=basic300&scale=.5&upscale=1",
+    "gallery": "verification/a-takram-audit-20261008/gallery.html",
     "terrainHeightScale": 1.5,
     "mainReplaced": false,
     "remoteSave": "pending: GitHub Internal Server Error on two pushes; local commit retained",
-    "next": "User quality review then same-pose tune before globe handoff",
+    "next": "Confirm RTX hardware recovery, recheck latest north six poses high + weather54/100, shafts/temporal/terrain lighting, then continuous globe handoff",
     "limits": [
-      "Not pixel-identical source Basic: observer camera, half-float LUT, no SMAA",
-      "North uses source terrain geometry/maps at 1.5x but albedo-to-Lambert optical lighting, not original PBR",
-      "GPU query scopes composer only; not CPU, cloud incremental cost, FPS or target-PC proof",
-      "Persistent fine grain, pale highlights, terrain lighting and normals require further review",
-      "No complete globe-to-archive integration"
+      "Source Basic shaft contribution verified; not pixel-identical reference",
+      "D104 cloud OFF invalid; temporal OFF is fullres TAA",
+      "Two lost-context white frames rejected, root cause unconfirmed",
+      "Software low diagnostic six stills and high software still do not prove GPU performance or motion quality",
+      "No final cloud recipe adoption or continuous globe-to-archive integration"
     ],
     "deferred": [
       "A-P3",
       "Story",
       "BC",
       "D080 alternatives"
-    ]
+    ],
+    "historicalD104Off": "invalid; unsupported Effect.enabled; retained and annotated",
+    "currentRenderer": "Microsoft Basic Render Driver after GPU context loss; no GPU timer",
+    "northCloudBaseMetres": 8000,
+    "northHighFieldLighting": "TUNE; pale faces/dark terrain/shaft visibility",
+    "interruptionRecovery": {
+      "date": "2026-10-08",
+      "hashAndPngValidation": "PASS: 17 normal + 2 rejected pairs, runtime/helper hashes, 0 missing/corrupt",
+      "server": "4198 restarted",
+      "browser": "Error-document protocol access rejected by browser security policy; user refresh required, no workaround attempted",
+      "performance": "Hardware recovery not verified; no new heavy trial",
+      "report": "verification/a-takram-audit-20261008/interruption-recovery.json"
+    }
   }
 }

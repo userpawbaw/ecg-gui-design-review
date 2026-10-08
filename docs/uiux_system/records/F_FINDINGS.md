@@ -1777,3 +1777,19 @@ km→m/ECEF, sun 및 normal/depth 연결을 확인하고 aerialshader의 sun/sky
 inputColor를 albedo로 Lambert/π 처리하는 source. 이미 PBR lighting된 입력과 새 Basic albedo 입력 actual capture 차이. map/DEM1.5× 유지하되 후보Lambert로 분리.
 ### 놓쳤다면
 구름에 가려진 지형 과노출/암부를 texture품질 문제로 오인했을 것이다. runtimePASS와 시각TUNE, albedo/radiance/PBR변경 경계를 보고서에 명시한다.
+
+## F-071. 레퍼런스 설정값, 실제 효과 연결, 렌더 장치를 따로 확인해야 한다
+
+2026-10-08 [대화] [코드] [브라우저] [캡처] · D105 / CASE-007.
+
+### 발단
+사용자는 원본의 국소 응집과 빛 커튼을 지목하고 coverage .42 / weatherRepeat54 화면을 제공했다. 자산이 같다는 것만으로 같은 결과를 보장할 수 없었다.
+
+### 먼저 의심한 것과 배제 방법
+원본 Basic UI/helper와 설치된 shader, AA, 층 높이/두께, 시간 재구성을 대조했다. cloud OFF와 shaft OFF의 실제 기여를 native PNG와 연결 메타데이터로 확인했다.
+
+### 결정적 근거
+원본 repeat100과 참고54의 구별, 원본650/1200m 두께, SMAA, shadow maxFar100km. temporalUpscale=false도 full-resolution TAA다. CloudsEffect에 enabled 속성은 없어 이전 OFF 대조는 유효하지 않았다. 수정된 OFF에서는 cloudPassAttached=false와 aerial 연결 해제가 확인됐다. GPU 오류 뒤 renderer가 Microsoft Basic Render Driver로 바뀌어 timer가 사라진 것을 저장 메타데이터로 확인했다.
+
+### 놓쳤다면
+잘못된 OFF로 원인을 판단하거나, software 저부하 화면을 RTX 고품질/성능 증거로 오해했을 것이다. 원본 빛 띠 기여와 북유럽 번안의 부족한 가시성, 정지 진단과 연속 움직임 검증을 분리한다. 최신 보고서 ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md.

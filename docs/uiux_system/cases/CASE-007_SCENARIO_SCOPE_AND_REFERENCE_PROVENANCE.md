@@ -196,3 +196,11 @@ AI는같은terrain source/camera로nativeRGBplate를제작→사용자 “이전
 
 ## 2026-10-08 D104 · 원형 renderer와 번안 결과를 분리
 사용자 “응” → D103완성renderer 차용 승인 → AI가 원형 chain과 같은north시험 → 이미조명된입력 계약불일치 발견 → albedo로수정. 외부데모/원형관찰카메라/같은지형후보/생성목업을분리하고 source asset hash 및 실제캡처를 남겼다. 기능PASS는품질승인이아님. D104/F070/O018/REF015 보고서가 현재 기준, grain/노출TUNE·globe인계미완.
+
+## 2026-10-08 D105 · 같은 에셋보다 같은 조건과 실제 기여가 중요하다
+
+[대화] 사용자는 “원본 사이트는 좀 더 랜덤하면서도 국소적으로 응집되는 느낌”을 짚고, “구름 사이를 통과한 빛 광선이 커튼처럼” 보이는 참고 화면을 제공했다. AI의 이전 완성 renderer 차용만으로는 이 특징이 충분히 나타나지 않았다.
+
+이에 원본 UI/helper와 사용자 screenshot의 .42/54를 구별하고, 층 두께/카메라 상대 고도/그림자 범위/AA/시간 재구성을 대조했다. 이 과정에서 이전 cloud OFF가 실제로 cloud를 제외하지 않은 진단 오류를 발견했다. 또한 GPU 오류 후 software 렌더로 바뀐 것을 native metadata로 확인했다. 원형의 빛 띠 기여는 확인됐으나 north 번안의 강도/질감은 TUNE이다.
+
+사용자 기여: 실제 화면의 국소 응집/빛 커튼이라는 판별 기준 제시. AI 기여: source 계약과 OFF wiring 수정, GPU 실패 분리, 각 캡처의 renderer/옵션 기록. 판단 변화: asset 동일성이나 checkbox 상태가 효과 재현/성능 검증을 대신하지 않는다. source 원형→같은 지형 번안→제품 연속 구현, 그리고 hardware 정상/diagnostic software의 증거를 따로 이어간다. 현재 대화의 인용이며 별도 machine-export transcript는 없다. F071/D105/O019–020/REF015와 최신 settings review가 근거다.

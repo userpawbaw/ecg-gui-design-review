@@ -1,0 +1,114 @@
+{
+  "renderer": "ANGLE (Microsoft, Microsoft Basic Render Driver (0x0000008C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "ready": true,
+    "contextLost": false,
+    "mode": "basic300",
+    "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+    "p": null,
+    "sourceLocation": [
+      30,
+      35,
+      300
+    ],
+    "sourceDate": "2026-01-02T07:00:00Z",
+    "camera": [
+      4529606.6706149345,
+      2614762.716348607,
+      3638805.5858316743
+    ],
+    "localCamera": [
+      0,
+      0,
+      0
+    ],
+    "worldToECEF": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "sun": [
+      0.22300214114771516,
+      0.8937423487449461,
+      -0.3892231482111538
+    ],
+    "layers": [
+      {
+        "altitude": 750,
+        "height": 650,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1,
+        "weatherExponent": 1
+      },
+      {
+        "altitude": 1000,
+        "height": 1200,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1,
+        "weatherExponent": 1
+      },
+      {
+        "altitude": 7500,
+        "height": 500,
+        "densityScale": 0.003,
+        "shapeDetailAmount": 0,
+        "weatherExponent": 1
+      },
+      {
+        "altitude": 0,
+        "height": 0,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1,
+        "weatherExponent": 1
+      }
+    ],
+    "quality": "low",
+    "look": "ref54",
+    "coverage": 0.42,
+    "localWeatherRepeat": [
+      54,
+      54
+    ],
+    "localWeatherOffset": [
+      0,
+      0
+    ],
+    "resolutionScale": 0.25,
+    "lightShafts": true,
+    "shadowMaxFar": 100000,
+    "shadowLengthLinked": false,
+    "temporal": true,
+    "temporalUpscale": true,
+    "temporalAntialiasing": false,
+    "clouds": false,
+    "cloudPassAttached": false,
+    "smaa": true,
+    "wind": false,
+    "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+    "renderSize": [
+      1280,
+      720
+    ],
+    "gpu": {
+      "available": false,
+      "count": 0,
+      "p50": null,
+      "p95": null
+    },
+    "frames": 261
+  },
+  "url": "http://127.0.0.1:4198/cloud-lab.html?pose=basic300&scale=.25&quality=low&upscale=1"
+}

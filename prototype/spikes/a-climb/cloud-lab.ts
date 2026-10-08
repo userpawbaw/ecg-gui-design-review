@@ -1,7 +1,7 @@
-// D104. Adapted from pinned Takram Clouds-Vanilla (MIT), optical chain intact.
+// D104/D105 · REF-015 EFX-015-01/02. Pinned Takram optical chain + Basic settings trial.
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import {EffectComposer,EffectPass,NormalPass,RenderPass,ToneMappingEffect,ToneMappingMode} from 'postprocessing';
+import {EffectComposer,EffectPass,NormalPass,RenderPass,ToneMappingEffect,ToneMappingMode,SMAAEffect,type Effect} from 'postprocessing';
 import {AerialPerspectiveEffect,getSunDirectionECEF,PrecomputedTexturesLoader} from '@takram/three-atmosphere';
 import {CloudsEffect} from '@takram/three-clouds';
 import {DataTextureLoader,Ellipsoid,Geodetic,parseUint8Array,STBNLoader} from '@takram/three-geospatial';
@@ -14,9 +14,20 @@ const status=dom<HTMLOutputElement>('status'),error=dom<HTMLPreElement>('error')
 const pose=dom<HTMLSelectElement>('pose'),quality=dom<HTMLSelectElement>('quality');
 const progress=dom<HTMLInputElement>('progress'),temporal=dom<HTMLInputElement>('temporal');
 const enabled=dom<HTMLInputElement>('enabled'),wind=dom<HTMLInputElement>('wind');
+const aaLabel=document.createElement('label');aaLabel.innerHTML='<input type="checkbox" id="smaa" aria-label="원본 Basic SMAA"> 원본 Basic SMAA';wind.parentElement!.after(aaLabel);
+const aa=dom<HTMLInputElement>('smaa');
+temporal.setAttribute('aria-label','4×4 시간 업스케일');temporal.parentElement!.lastChild!.textContent=' 4×4 시간 업스케일';
+const settings=document.createElement('div');settings.innerHTML=`<label>분포 비교<select id="look" aria-label="분포 비교"><option value="ref54">참고 이미지 · 54 / 0.42</option><option value="d104">이전 후보 · 100 / 0.40</option></select></label><label>구름 범위 <input id="coverage" aria-label="구름 범위" type="number" min="0" max="1" step=".01" value=".42"></label><label>날씨 반복 <input id="weatherRepeat" aria-label="날씨 반복" type="number" min="1" max="200" step="1" value="54"></label><label><input id="shafts" aria-label="빛 커튼" type="checkbox" checked> 빛 커튼</label><label>구름 해상도<select id="cloudScale" aria-label="구름 해상도"><option value="1">100%</option><option value=".75" selected>75%</option><option value=".5">50%</option></select></label>`;
+aaLabel.after(settings);
+const look=dom<HTMLSelectElement>('look'),coverage=dom<HTMLInputElement>('coverage'),weatherRepeat=dom<HTMLInputElement>('weatherRepeat'),shafts=dom<HTMLInputElement>('shafts'),cloudScale=dom<HTMLSelectElement>('cloudScale');
+const safetyScale=document.createElement('option');safetyScale.value='.25';safetyScale.textContent='25% · 진단용';cloudScale.add(safetyScale);
+const clusterLabel=document.createElement('label');clusterLabel.innerHTML='응집 대비 <input id="cluster" aria-label="응집 대비" type="number" min="1" max="3" step=".1" value="1">';settings.append(clusterLabel);
+const cluster=dom<HTMLInputElement>('cluster');
+dom('panel').style.maxHeight='calc(100vh - 64px)';dom('panel').style.overflowY='auto';
 const save=dom<HTMLButtonElement>('save');
 const captureSet=document.createElement('button');captureSet.textContent='기준 구도 저장';save.after(captureSet);
 const basicOption=document.createElement('option');basicOption.value='basic3500';basicOption.textContent='Basic 조명 비교 · 3500m';pose.add(basicOption);
+const basicLow=document.createElement('option');basicLow.value='basic300';basicLow.textContent='Basic 빛 커튼 · 300m';pose.add(basicLow);
 const renderer=new THREE.WebGLRenderer({depth:false,logarithmicDepthBuffer:false,antialias:false});
 renderer.setPixelRatio(1);renderer.setSize(innerWidth,innerHeight);
 renderer.toneMapping=THREE.NoToneMapping;renderer.toneMappingExposure=10;
@@ -42,8 +53,24 @@ const composer=new EffectComposer(renderer,{frameBufferType:THREE.HalfFloatType,
 const renderPass=new RenderPass(sourceScene,camera),normalPass=new NormalPass(sourceScene,camera);
 aerial.normalBuffer=normalPass.texture;
 composer.addPass(renderPass);composer.addPass(normalPass);
-composer.addPass(new EffectPass(camera,clouds,aerial));
-composer.addPass(new EffectPass(camera,new LensFlareEffect(),new ToneMappingEffect({mode:ToneMappingMode.AGX}),new DitheringEffect()));
+class OpticalPass extends EffectPass {
+ configure(effects:Effect[]){this.setEffects(effects);this.recompile();}
+ hasCloud(){return this.effects.includes(clouds);}
+}
+const opticalPass=new OpticalPass(camera,clouds,aerial);composer.addPass(opticalPass);
+const lens=new LensFlareEffect(),tone=new ToneMappingEffect({mode:ToneMappingMode.AGX}),dither=new DitheringEffect(),smaa=new SMAAEffect();
+composer.addPass(new EffectPass(camera,lens,tone));
+const smaaPass=new EffectPass(camera,smaa);smaaPass.enabled=false;composer.addPass(smaaPass);
+composer.addPass(new EffectPass(camera,dither));
+aa.onchange=()=>{smaaPass.enabled=aa.checked;gpuTimes.length=0;};
+function setCloudEnabled(){
+ // CloudsEffect has no enabled property. The author's R3F scene conditionally mounts it.
+ opticalPass.configure(enabled.checked?[clouds,aerial]:[aerial]);
+ aerial.overlay=enabled.checked?clouds.atmosphereOverlay:null;
+ aerial.shadow=enabled.checked?clouds.atmosphereShadow:null;
+ aerial.shadowLength=enabled.checked?clouds.atmosphereShadowLength:null;
+ gpuTimes.length=0;
+}
 
 // Static URL literals are bundled by Vite; all source assets remain pinned research files.
 const lutUrls:Record<string,string>={
@@ -76,6 +103,7 @@ const south=new THREE.Vector3(Math.sin(northLat)*Math.cos(northLon),Math.sin(nor
 const northToECEF=new THREE.Matrix4().makeBasis(east,up,south).setPosition(northECEF);
 const northSun=new THREE.Vector3(-.67,.28,-.70).normalize().applyMatrix3(new THREE.Matrix3().setFromMatrix4(northToECEF));
 let ready=false,activePose='source500',lastCamera:[number,number,number]=[0,0,0],frames=0;
+renderer.domElement.addEventListener('webglcontextlost',()=>{renderer.setAnimationLoop(null);ready=false;error.textContent='GPU 컨텍스트가 끊겼습니다. 정상 캡처는 중단했습니다. 페이지를 새로고침하고 낮은 구름 해상도에서 재검토하세요.';});
 const gpuTimes:number[]=[];const gl=renderer.getContext() as WebGL2RenderingContext;
 const timer=gl.getExtension('EXT_disjoint_timer_query_webgl2');let query:WebGLQuery|null=null;
 const pending:WebGLQuery[]=[];
@@ -93,9 +121,15 @@ function setPose(value:string){
   clouds.cloudLayers[0].altitude=5000;clouds.cloudLayers[0].height=1200;
   clouds.cloudLayers[1].altitude=5700;clouds.cloudLayers[1].height=1800;
   clouds.cloudLayers[2].altitude=9500;
+  if(look.value==='ref54'){
+   // Shift the author's lower layers above the alpine DEM without inflating their thickness.
+   // Camera ends at 7–7.5km: place the cloud base above it to expose under-cloud shafts.
+   clouds.cloudLayers[0].altitude=8000;clouds.cloudLayers[0].height=650;clouds.cloudLayers[1].altitude=8250;clouds.cloudLayers[1].height=1200;
+   clouds.cloudLayers[2].altitude=14750;
+  }
   progress.value=value==='north265'?'.265':value==='north300'?'.300':'.345';
  }else{
-  const basic=value==='basic3500',h=value==='source500'?500:3500;
+  const basic=value.startsWith('basic'),h=value==='source500'?500:value==='basic300'?300:3500;
   const p=new Geodetic(basic?THREE.MathUtils.degToRad(30):0,THREE.MathUtils.degToRad(basic?35:67),h).toECEF();
   const frame=Ellipsoid.WGS84.getEastNorthUpFrame(p);
   const direction=new THREE.Vector3(0,1000,-130).applyMatrix3(new THREE.Matrix3().setFromMatrix4(frame));
@@ -105,25 +139,41 @@ function setPose(value:string){
    // Match the author's useApplyLocation helper: rotate the default OrbitControls offset.
    const rotation=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),camera.up);
    camera.position.copy(p).add(new THREE.Vector3(0,0,1000).applyQuaternion(rotation));controls.target.copy(p);
+   camera.near=1;camera.far=4e5;
   }
   camera.updateProjectionMatrix();controls.update();
-  if(basic){clouds.coverage=.3;getSunDirectionECEF(new Date('2026-01-02T07:00:00Z'),clouds.sunDirection);aerial.sunDirection.copy(clouds.sunDirection);}
+  if(basic){getSunDirectionECEF(new Date('2026-01-02T07:00:00Z'),clouds.sunDirection);aerial.sunDirection.copy(clouds.sunDirection);}
  }
- if(value!=='basic3500')clouds.coverage=.4;
+ coverage.value=look.value==='ref54'?'.42':value.startsWith('basic')?'.30':'.40';
+ weatherRepeat.value=look.value==='ref54'?'54':'100';applyWeather();
+ clouds.shadow.maxFar=1e5;
 }
-function state(){return{ready,mode:activePose,source:'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
- sourceLocation:activePose==='basic3500'?[30,35,3500]:[0,67,activePose==='source500'?500:3500],sourceDate:activePose==='basic3500'?'2026-01-02T07:00:00Z':'2000-06-01T10:00:00Z',camera:camera.position.toArray(),localCamera:lastCamera,
- worldToECEF:aerial.worldToECEFMatrix.toArray(),sun:aerial.sunDirection.toArray(),layers:clouds.cloudLayers.map(l=>({altitude:l.altitude,height:l.height,densityScale:l.densityScale,shapeDetailAmount:l.shapeDetailAmount})),
- quality:quality.value,coverage:clouds.coverage,temporal:clouds.temporalUpscale,clouds:clouds.enabled,wind:wind.checked,
+function applyWeather(){clouds.coverage=Number(coverage.value);clouds.localWeatherRepeat.setScalar(Number(weatherRepeat.value));clouds.cloudLayers[0].weatherExponent=clouds.cloudLayers[1].weatherExponent=Number(cluster.value);gpuTimes.length=0;}
+coverage.oninput=weatherRepeat.oninput=applyWeather;
+cluster.oninput=applyWeather;
+look.onchange=()=>setPose(activePose);
+shafts.onchange=()=>{clouds.lightShafts=shafts.checked;gpuTimes.length=0;};
+cloudScale.onchange=()=>{clouds.resolutionScale=Number(cloudScale.value);gpuTimes.length=0;};
+function state(){return{ready,contextLost:gl.isContextLost(),mode:activePose,source:'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
+ sourceLocation:activePose.startsWith('basic')?[30,35,activePose==='basic300'?300:3500]:activePose.startsWith('north')?[8.4,61.63,'camera metres in localCamera ×1000']:[0,67,activePose==='source500'?500:3500],sourceDate:activePose.startsWith('basic')?'2026-01-02T07:00:00Z':activePose.startsWith('north')?'fixed north scene sun vector':'2000-06-01T10:00:00Z',camera:camera.position.toArray(),localCamera:lastCamera,
+ worldToECEF:aerial.worldToECEFMatrix.toArray(),sun:aerial.sunDirection.toArray(),layers:clouds.cloudLayers.map(l=>({altitude:l.altitude,height:l.height,densityScale:l.densityScale,shapeDetailAmount:l.shapeDetailAmount,weatherExponent:l.weatherExponent})),
+ quality:quality.value,look:look.value,coverage:clouds.coverage,localWeatherRepeat:clouds.localWeatherRepeat.toArray(),localWeatherOffset:clouds.localWeatherOffset.toArray(),resolutionScale:clouds.resolutionScale,lightShafts:clouds.lightShafts,shadowMaxFar:clouds.shadow.maxFar,shadowLengthLinked:!!aerial.shadowLength,temporal:clouds.temporalUpscale,temporalUpscale:clouds.temporalUpscale,temporalAntialiasing:enabled.checked,clouds:enabled.checked,cloudPassAttached:opticalPass.hasCloud(),smaa:aa.checked,wind:wind.checked,
  terrain:north?.state().terrain,terrainLighting:'candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged',renderSize:[renderer.domElement.width,renderer.domElement.height],gpu:{available:!!timer,count:gpuTimes.length,p50:percentile(.5),p95:percentile(.95)},frames};}
-quality.onchange=()=>{clouds.qualityPreset=quality.value as any;clouds.temporalUpscale=temporal.checked;gpuTimes.length=0;};
-temporal.onchange=()=>{clouds.temporalUpscale=temporal.checked;gpuTimes.length=0;};enabled.onchange=()=>{clouds.enabled=enabled.checked;gpuTimes.length=0;};
-pose.onchange=()=>setPose(pose.value);progress.oninput=()=>{gpuTimes.length=0;};
+quality.onchange=()=>{clouds.qualityPreset=quality.value as any;clouds.temporalUpscale=temporal.checked;clouds.lightShafts=shafts.checked;clouds.resolutionScale=Number(cloudScale.value);gpuTimes.length=0;};
+temporal.onchange=()=>{clouds.temporalUpscale=temporal.checked;gpuTimes.length=0;};enabled.onchange=setCloudEnabled;
+async function ensureNorth(){
+ if(north)return;
+ error.textContent='북유럽 지형을 준비하는 중입니다.';
+ north=await createNorthernArrival(renderer);north.setEffects({cloud:false,cloudShadow:false,atmosphere:false});
+ north.scene.scale.setScalar(1000);northScene.add(north.scene);error.textContent='';
+}
+pose.onchange=async()=>{pose.disabled=true;try{if(pose.value.startsWith('north'))await ensureNorth();setPose(pose.value);}catch(e){error.textContent=String(e);}finally{pose.disabled=false;}};progress.oninput=()=>{gpuTimes.length=0;};
 async function saveFrame(){
+ if(!ready||gl.isContextLost()){error.textContent='렌더가 준비되지 않았거나 GPU 컨텍스트가 끊겨 정상 프레임을 저장할 수 없습니다.';return;}
  draw();
- const shot=activePose+(activePose.startsWith('north')?'-'+Math.round(Number(progress.value)*1000):'')+(temporal.checked?'-taa':'-raw')+(enabled.checked?'-cloud':'-off');
+ const shot=activePose+(activePose.startsWith('north')?'-'+Math.round(Number(progress.value)*1000):'')+'-'+look.value+'-r'+weatherRepeat.value+'-c'+Math.round(Number(coverage.value)*100)+'-e'+Math.round(Number(cluster.value)*10)+'-q'+quality.value+'-s'+Math.round(Number(cloudScale.value)*100)+(temporal.checked?'-upscale':'-fullres')+(enabled.checked?'-cloud':'-off')+(shafts.checked?'-shafts':'-nosh')+(aa.checked?'-smaa':'-noaa');
  const e=gl.getExtension('WEBGL_debug_renderer_info');
- const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:'takram-lab',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),url:location.href}})});
+ const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),url:location.href}})});
  if(!response.ok){error.textContent=await response.text();return;}save.textContent='프레임 저장 완료';
 }
 save.onclick=saveFrame;
@@ -131,16 +181,18 @@ captureSet.onclick=async()=>{
  captureSet.disabled=save.disabled=pose.disabled=true;
  const framesFor=async(n:number)=>{for(let i=0;i<n;i++)await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));};
  try{
-  for(const name of ['source500','source3500','basic3500','north265','north300','north345']){
-   setPose(name);captureSet.textContent=`기준 저장 · ${name}`;await framesFor(60);gpuTimes.length=0;
-   for(let i=0;i<180&&gpuTimes.length<120;i++)await framesFor(1);
+  await ensureNorth();setPose('north300');
+  for(const p of [.265,.285,.300,.320,.345,.365]){
+   if(!ready||gl.isContextLost())throw new Error('GPU 컨텍스트 오류로 기준 캡처를 중단했습니다.');
+   progress.value=String(p);captureSet.textContent=`기준 저장 · ${p}`;await framesFor(timer?60:16);gpuTimes.length=0;
+   for(let i=0;i<(timer?180:16)&&gpuTimes.length<120;i++)await framesFor(1);
    await saveFrame();
   }
   captureSet.textContent='기준 구도 저장 완료';
  }finally{captureSet.disabled=save.disabled=pose.disabled=false;}
 };
 function draw(){
- if(!ready)return;
+ if(!ready||gl.isContextLost())return;
  if(activePose.startsWith('north')&&north){
   localCamera.aspect=camera.aspect;north.update(Number(progress.value),2.4,true,localCamera);
   // Existing and newly loaded LOD meshes must enter the optical pass as albedo,
@@ -163,7 +215,7 @@ function draw(){
  }
  composer.render();
  if(query){gl.endQuery(timer.TIME_ELAPSED_EXT);pending.push(query);query=null;}
- frames++;if(frames%30===0)status.textContent=`${activePose} · ${renderer.domElement.width}×${renderer.domElement.height} · ${quality.value}\nGPU composer ${percentile(.5)?.toFixed(2)??'—'}ms / ${gpuTimes.length} samples · ${clouds.temporalUpscale?'시간 누적 ON':'시간 누적 OFF'}\n${activePose.startsWith('north')?'동일 DEM 1.5× · 광학 정합 검토':'원본 Vanilla 광학 chain · 구름 관찰 카메라'}`;
+ frames++;if(frames%30===0)status.textContent=`${activePose} · ${renderer.domElement.width}×${renderer.domElement.height} · ${quality.value}\nGPU composer ${percentile(.5)?.toFixed(2)??'—'}ms / ${gpuTimes.length} samples · ${clouds.temporalUpscale?'4×4 업스케일':'전체 해상도 TAA'} · ${enabled.checked?'구름 ON':'구름 OFF'}\n${activePose.startsWith('north')?'동일 DEM 1.5× · 광학 정합 검토':'원본 Vanilla 광학 chain · 구름 관찰 카메라'}`;
 }
 async function init(){
  const [lut,w,t,s,d,b]=await Promise.all([
@@ -175,10 +227,11 @@ async function init(){
  clouds.localWeatherTexture=textureSetup(w);clouds.turbulenceTexture=textureSetup(t);
  clouds.shapeTexture=textureSetup(s,true) as THREE.Data3DTexture;clouds.shapeDetailTexture=textureSetup(d,true) as THREE.Data3DTexture;
  clouds.stbnTexture=aerial.stbnTexture=b;
- north=await createNorthernArrival(renderer);north.setEffects({cloud:false,cloudShadow:false,atmosphere:false});
- north.scene.scale.setScalar(1000);northScene.add(north.scene);
+ if(params.get('pose')?.startsWith('north'))await ensureNorth();
  // Geometry/light transform uses metre local coordinates; optical ECEF transform carries only rotation+translation.
- ready=true;setPose(params.get('pose')||'source500');renderer.setAnimationLoop(draw);
+ quality.value=params.get('quality')||'high';clouds.qualityPreset=quality.value as any;
+ temporal.checked=params.get('upscale')==='1';clouds.temporalUpscale=temporal.checked;clouds.lightShafts=shafts.checked;aa.checked=true;smaaPass.enabled=true;cloudScale.value=params.get('scale')||'.75';clouds.resolutionScale=Number(cloudScale.value);
+ ready=true;setPose(params.get('pose')||'basic300');renderer.setAnimationLoop(draw);
 }
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);});
 init().catch(e=>{error.textContent=String(e.stack||e);console.error(e);});

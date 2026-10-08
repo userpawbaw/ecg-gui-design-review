@@ -2630,3 +2630,29 @@ Takram원형재현·temporal움직임·same-cameraterrain정합미달시후속�
 
 ### D104 구현 결과
 독립 runtime/6기준구도+2OFF대조 완료. source observercamera/halfLUT/noSMAA, northLambert입력 변경 명시. functionalPASS/visualTUNE. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_cloud_reproduction_review_2026-10-08.md
+
+## D-105. Takram 사용자 참고 설정 대조와 cloud 분포·빛 커튼 후보
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화] · 재확인/진단 수정 진행 중 |
+| 상태 | 사용자 설정 확인 및 빛 커튼 적용 승인 / 시각 TUNE |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 하강구름 균일함/자글거림 지적, 원본의 국소응집·커튼빛 참고화면 제공 후 계속진행 요청. 진단 OFF wiring 수정은 발견 즉시 진행했고 이후 원본 설정 번안을 구체화한다.
+
+### 검토한 선택지
+더 많은 자체VDB 군집, Takram source 설정·텍스처 sampling·temporal 및광학 chain 대조, 생성영상fallback.
+
+### 고른 것과 근거
+원본 실제UI와 pinned source/installed0.7.6을대조. 사용자 이미지coverage.42/weatherRepeat54 + original layer thickness/BasicSMAA/maxFar100km를별도cloud-lab 후보에서시험. thick layer고도는기존northDEM과겹치지않게 이동하고 두께는650/1200m로복귀. lightShafts shadowLength/sky scattering ON/OFF actual시험. D104cloudOFF는지원되지않는effect.enabled를사용했으므로미유효; shader에서effect제외/recompile로수정. temporalOFF는upscaleOFF/fullresTAA임을정정.
+
+### 버린 것과 이유
+사이트기본UI100/.30과사용자54/.42를혼동하지않음. sourceasset동일이면결과도같다고간주하지않음. reference lightShafts를CSS bloom으로대체하지않음. 아직terrain/main/globe연속경로교체없음.
+
+### 되돌려야 하는 조건
+빔가시성/국소응집/aliasing actual 검증실패면 TUNE. 품질향상을자동PASS로단정하지않음. 기존terrain1.5×/archiveKEEP·StoryBC대기/oldcombined2/2실패와D080미실행유지.
+
+### D105 구현 / 검증 결과
+원본 .42/54 및650/1200m 두께, SMAA, maxFar100km와 빛 커튼 제어를 별도 후보에 반영했다. source Basic300의 실제 빛 띠 ON/OFF와 수정된 cloud OFF 기여를 확인했다. 최신 north8km 층은6고정 구도 diagnostic 캡처; 빔 가시성/질감은 TUNE. GPU 컨텍스트 오류2프레임을 REJECT 보존했고 이후 renderer는 Microsoft Basic Render Driver로 확인돼 하드웨어 안정성 검증이 남았다. fullres TAA 표기를 정정하고 preset 뒤 옵션 재적용/지형 lazy 초기화/오류 시 정상 캡처 중단을 구현했다. 기본 화면 교체는 미완. 보고서 ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md, F071/O019–020/REF015 참조.

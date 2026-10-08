@@ -59,3 +59,8 @@ Basic3500 시간 누적 OFF actual 정지캡처는 ON보다 미세 입자감이 
 
 ### 최종 검사
 Vite cloud-lab 포함76modules build PASS. records224 PASS. browsererror0, 8actual PNG/JSON. 자동검사는사진수준품질/연속하강/targetPC 검증이아니다.
+
+
+## D105 evidence correction — 2026-10-08
+
+O019/F071: D104 north cloud OFF used an unsupported Effect.enabled property; the cloud remained in the pass. The old image/JSON is preserved but **invalid as cloud OFF or incremental performance evidence**. Basic raw/temporal OFF means **full-resolution TAA with 4×4 temporal upscale disabled**, not accumulation disabled. See ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md. D105 now removes the cloud from the pass and verifies actual attachment and aerial links. D104 performance counts remain historical; no subtraction budget is supported.

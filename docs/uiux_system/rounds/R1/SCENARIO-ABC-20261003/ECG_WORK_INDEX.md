@@ -220,3 +220,10 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026
 
 ### 현재 독립 renderer 후보 — D104
 [ECG_A_takram_cloud_reproduction_review_2026-10-08.md](ECG_A_takram_cloud_reproduction_review_2026-10-08.md) → REF015 / cloud-lab.html / verification/a-takram-lab-20261008/gallery.html. 같은north3구도와원형3구도 실제비교, 품질TUNE. 기존D103未통합상태는historical조달시점으로유지; 현재D104독립통합됨. globe→archive main통합미완.
+
+
+### 현재 설정/빛 커튼 후보 — D105
+
+[ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md](ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md) → REF015 EFX01502 / F071 / O019–020 / verification/a-takram-audit-20261008/gallery.html.
+
+D104는 원형 chain 초기 시험 이력이다. D105가 설정·ON/OFF 판정의 최신 기준. 이전 cloudOFF 무효, raw=fullresTAA 정정. 최신 north6구도는 software 진단이며 high 품질/연속 경로/hardware 안정성 검증이 남는다. source Basic의 빛 띠 기여와 north의 부족한 강도를 구별. 현재 main/globe 미교체, terrain1.5× 및 archiveKEEP 유지.

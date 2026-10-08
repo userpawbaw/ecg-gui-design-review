@@ -654,3 +654,17 @@ D103 최종 records221 PASS, runtime변경없어build재실행안함. 기존nort
 사용자진행승인. pinned0.7.6/0.19.1/0.6.4 설치, 실제LUT/noise/BSM/temporal/AGX후처리. 기존north maps/geometry1.5×사용, albedo계약수정. 6기준/2OFF actual PNG+JSON, GPUcomposer120query. runtimePASS/qualityTUNE. 기존사용자수정north/ridge6파일제외. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_cloud_reproduction_review_2026-10-08.md
 D104 최종검사: cloudLab 포함 Vite76modules build PASS / records224 PASS / browsererror0. temporalOFF는grain개선하지만GPU29.26ms로비용증가, ON4.91ms와대조. 원형재현시점의qualityTUNE 유지.
 D104 원격저장: GitHub push 두차례가 remote Internal Server Error로 거절됨. 로컬commit완료·사용자기존수정6파일제외, 원격HEAD는 f9b656e 유지. 승인검토차단이아닌서버오류. 원격저장은미완으로인계.
+
+
+## 2026-10-08 · D105 원본 설정 / 빛 커튼 / 진단 정정
+
+사용자 참고54/.42 및 커튼 광선 요청. 원본 live UI와 pinned helper/installed shader를 대조했다. 두께650/1200m·SMAA·shadow100km 반영, latest north layer8km로 카메라 아래 구도 조정. 지원되지 않는 Effect.enabled를 제거하고 native OFF cloudPassAttached=false 확인; D104 OFF 무효 정정. temporal OFF는 fullresTAA다.
+
+RTX source Basic high/fullres75% shaft ON/OFF 및 north.300 초기5km native 저장. Context Lost 흰 프레임2쌍은 rejected-context 보존. 이후 Microsoft Basic Render Driver/timer unavailable 확인. 저부하 source OFF와 north6고정 구도, high software 정지 화면은 성능 증거에서 분리. main 교체/품질 채택 미완. terrain/서고KEEP 및 사용자 capture6파일 미변경. 최신 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md.
+
+원격 사전 확인: main cfef4300e241134a7b4caf1d781766a4931a99db, 작업 branch f9b656ef4c4c629a0190f12dcafe88195197a27d. D104 local82c06e0는 이전 GitHub push 서버오류로 미푸시 상태였다. 최종 build/records/remote 결과는 후속 checkpoint에 남긴다.
+
+
+## 2026-10-08 · 중단 복구 점검
+
+사용자 컴퓨터 중단 보고 후 재개. D105 native 정상17쌍/REJECT2쌍 PNG chunk CRC·압축 스트림·SHA256, manifest runtime/source helper 해시 확인 PASS, 누락/변조0. 저장된 코드/문서/이미지 손실은 확인되지 않았다. RAM의 카메라/렌더 상태와 dev server는 소실됐으며 4198 server 재실행 성공. browser 연결오류 페이지는 getTab 프로토콜 보안 정책으로 접근 거절; 우회하지 않음. 사용자가 해당 localhost 탭을 새로고침한 뒤 hardware 회복 확인부터 이어갈 수 있다. 고부하 cloud trial은 이 복구단계에서 재실행하지 않았다. 중단 전 build76 PASS, records228 PASS; 최종 기록 재검사와 Git 저장 진행. 사용자 수정6capture는 보존/스테이징 제외. 증거 verification/a-takram-audit-20261008/interruption-recovery.json.

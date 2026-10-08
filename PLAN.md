@@ -450,3 +450,13 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 - TUNE: grain/밝은face/terrainLambert·normal정합.
 - 다음: 사용자후보품질리뷰→필요한동일구도튜닝→globe/cloud인계. A-P3/Story/BC·D080별도.
 - 기준: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_cloud_reproduction_review_2026-10-08.md
+
+
+## 2026-10-08 D105 checkpoint
+
+- 완료: 원본 UI/helper 대조 .42/54, layer650/1200m, SMAA/maxFar100km, 실제 source light-shafts ON/OFF, cloud OFF wiring 수정. source Basic에서 지형 초기화를 생략.
+- 기록: F071/D105/O019–020/REF015 EFX01502/CASE007; 최신 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md.
+- CONDITIONAL: GPU Context Lost 후 Microsoft Basic Render Driver 확인. software low six fixed north pose는 진단, high near-field 및 전체 움직임 hardware 재검증이 남음.
+- TUNE: north 빔 가시성/국소 군집/temporal grain. 최신 층8km, 초기 RTX p.300 층5km와 구분.
+- 다음: hardware renderer 회복 확인 → latest north6구도 high + weather54/100/정착된 exponent 대조 → beam/terrain lighting/ghosting 튜닝 → globe 연속 인계. 품질 승인/기본 화면 통합 미완.
+- 기존 terrain1.5×/서고KEEP, capture6파일 보존, A-P3/Story/BC/D080 별도 유지.

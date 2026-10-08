@@ -875,5 +875,12 @@
     "GPU query scopes composer only; not CPU, cloud incremental cost, FPS or target-PC proof",
     "Persistent fine grain, pale highlights, terrain lighting and normals require further review",
     "No complete globe-to-archive integration"
-  ]
+  ],
+  "d105Correction": {
+    "date": "2026-10-08",
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_settings_and_light_shafts_review_2026-10-08.md",
+    "invalidCloudOff": "north300-300-taa-off: unsupported Effect.enabled; cloud actually rendered. PNG/JSON unchanged.",
+    "rawMeaning": "Full-resolution TAA; temporalUpscale false. Not raw/no-TAA.",
+    "historicalMetrics": "No valid cloud OFF budget or incremental GPU cost inference"
+  }
 }

@@ -389,3 +389,29 @@ Aerial input albedo 계약과 기존 rendered radiance 계약 불일치. texture
 후보 MeshBasic albedo로 map/color/geometryhandoff 유지, Aerial Lambert에 단일 lighting 위임. 기본mainPBR 미변경.
 ### 재발 방지와 자동화 상태
 새후처리 source의 입력색 의미/normal/depth/unit을 읽고 actualON/OFF 동일구도로 점검. 자동회귀test미추가, 북유럽시각TUNE/normalborder한계는 별도열림.
+
+## O-019. 지원되지 않는 Effect.enabled 때문에 cloud OFF 대조가 무효였다
+
+2026-10-08 [코드] [브라우저] [캡처] · D105 / F071 / CASE-007.
+
+### 증상
+D104의 north cloud OFF checkbox는 바뀌었지만, CloudsEffect는 렌더 패스에 남아 있었다.
+### 원인과 영향
+postprocessing Effect에는 Pass.enabled 제어가 없다. JavaScript에 속성을 추가해도 실행 목록은 바뀌지 않았다. D104 OFF 이미지와 p50/p95는 cloud OFF/증분 비용의 증거로 사용할 수 없다.
+### 조치
+EffectPass.setEffects와 recompile로 cloud를 제외하고 aerial overlay/shadow/shadowLength를 해제. native OFF에서 cloudPassAttached=false 확인. D104 원본 파일을 보존하고 보고서/갤러리/manifest에 정정 근거를 추가했다.
+### 재발 방지와 자동화 상태
+옵션 존재 여부를 source/type에서 확인하고, checkbox 변화와 렌더 기여의 실제 제거를 함께 확인한다. 별도 자동 회귀 테스트는 추가하지 않았다. D105 native ON/OFF가 기능 근거이며 software 상태의 성능 증거는 없다.
+
+## O-020. GPU 컨텍스트 상실 뒤 소프트웨어 렌더로 전환된 구름 시험
+
+2026-10-08 [런타임] [캡처] · D105 / F071 / CASE-007.
+
+### 증상
+북유럽 시험 중 Context Lost가 기록됐고 흰 프레임2쌍이 저장됐다. 이후 UI 입력이 지연됐으며 native renderer가 Microsoft Basic Render Driver로 바뀌었다.
+### 원인과 영향
+근본 원인(드라이버/메모리/watchdog)은 미확정. 흰 프레임의 renderer null과 과거 GPU query를 성능 근거로 사용하지 않는다. 정상 이미지 복구와 하드웨어 렌더 복구는 별개다.
+### 조치
+실패 PNG/JSON을 rejected-context에 보존. lost context 때 렌더 루프와 정상 저장을 중단. Basic 원형에서 북유럽 리소스를 lazy 초기화하고 25% 진단 옵션 추가. software에서 six fixed north pose와 OFF 기능을 확인했지만 GPU timer unavailable, 하드웨어 near-field 품질/안정성 재검증은 남았다.
+### 재발 방지와 자동화 상태
+각 native 캡처에 renderer/context/품질/층/패스 연결 조건을 기록한다. 고부하 시험의 결과 불명은 성공으로 처리하지 않는다. 테스트 PC GPU 복구 후 high six-pose 및 연속 움직임 확인이 필요하다. 사용자의 다른 앱이나 GPU 설정은 변경하지 않았다.

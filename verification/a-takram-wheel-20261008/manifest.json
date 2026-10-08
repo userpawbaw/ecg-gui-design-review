@@ -1,0 +1,1595 @@
+{
+  "decision": "D109",
+  "nativePairs": 10,
+  "scope": "Actual browser wheel inputs; captures after settling, not continuous video or main integration",
+  "panelTest": {
+    "beforeScrollTop": 240,
+    "afterScrollTop": 0,
+    "progressBefore": 0.235,
+    "progressAfter": 0.235
+  },
+  "captures": [
+    {
+      "shot": "wheel-0-p2350-slider",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.235,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "slider",
+            "wheelCount": 0,
+            "lastWheelPixels": 0,
+            "target": 0.235,
+            "current": 0.235,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            55000,
+            100000,
+            150000
+          ],
+          "localCamera": [
+            55,
+            100,
+            150
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 64,
+            "drawTriangles": 583002,
+            "residentGpuBytes": 32765976,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 0.9466277762851917,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 0.9362767410104686,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 22,
+            "p50": 24.809472,
+            "p95": 39.631872
+          },
+          "frames": 123
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-0-p2350-slider.json": "111816ad8743790d81f3c4e155e78ece34a79875224396298636a1b1f1745741",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-0-p2350-slider.png": "6d714549f49934e43782ae74b7454ca40521980946eb400b918450a27b4b7fee"
+      }
+    },
+    {
+      "shot": "wheel-1-p2710-wheel",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.271,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "wheel",
+            "wheelCount": 1,
+            "lastWheelPixels": 1440,
+            "target": 0.271,
+            "current": 0.271,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            32532.41599999999,
+            40500.287999999986,
+            63468.159999999974
+          ],
+          "localCamera": [
+            32.53241599999999,
+            40.50028799999998,
+            63.468159999999976
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 64,
+            "drawTriangles": 489252,
+            "residentGpuBytes": 37028472,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 1.198544106151628,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 1,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 17,
+            "p50": 10.175488,
+            "p95": 28.427264
+          },
+          "frames": 144
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-1-p2710-wheel.json": "6ed61e346c62ffde1a6c7c05e2f4ac8f3288c3509931e568f583c7540a116e12",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-1-p2710-wheel.png": "e53f3d95a19a150921546ed3f14a311c9b1102d164b445ac9a87223f2cf46b8e"
+      }
+    },
+    {
+      "shot": "wheel-2-p3070-wheel",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.307,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "wheel",
+            "wheelCount": 2,
+            "lastWheelPixels": 1440,
+            "target": 0.30700000000000005,
+            "current": 0.307,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            12975.767764155971,
+            10859.854852597482,
+            19347.73873467547
+          ],
+          "localCamera": [
+            12.975767764155972,
+            10.859854852597483,
+            19.34773873467547
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 60,
+            "drawTriangles": 794310,
+            "residentGpuBytes": 37159080,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 2.2187690897839903e-15,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 1,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 39,
+            "p50": 26.848256,
+            "p95": 35.88608
+          },
+          "frames": 187
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-2-p3070-wheel.json": "b0606540ea6f7098919ac0c25d652a08782fa601d45f6ccb1556b1014ab17094",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-2-p3070-wheel.png": "8098c2507919c2aec66074b8849192b4eb4196670f88a1a8e445ca401c7743bb"
+      }
+    },
+    {
+      "shot": "wheel-3-p3430-wheel",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.343,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "wheel",
+            "wheelCount": 3,
+            "lastWheelPixels": 1440,
+            "target": 0.3430000000000001,
+            "current": 0.343,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            3117.8880291306273,
+            7525.261720527991,
+            8134.729176149289
+          ],
+          "localCamera": [
+            3.1178880291306275,
+            7.5252617205279915,
+            8.134729176149289
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 31,
+            "drawTriangles": 410268,
+            "residentGpuBytes": 37159080,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 3.5153086512578925e-15,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 1,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 16,
+            "p50": 9.986048,
+            "p95": 30.8224
+          },
+          "frames": 207
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-3-p3430-wheel.json": "b5d13d0cc569ea7be0b3de0a3eecdeadd54c87190a56ada6e77e43ba02ba8044",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-3-p3430-wheel.png": "b20c36d8b659a6fe4c56ce828a4343741380ebf5f4b0105c3bc4c5a6c49e128f"
+      }
+    },
+    {
+      "shot": "wheel-4-p3650-wheel",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.365,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "wheel",
+            "wheelCount": 4,
+            "lastWheelPixels": 1440,
+            "target": 0.365,
+            "current": 0.365,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            0,
+            7000,
+            -3000
+          ],
+          "localCamera": [
+            0,
+            7,
+            -3
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 8,
+            "drawTriangles": 105398,
+            "residentGpuBytes": 37159080,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 5.6119226898038294e-15,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 1,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 17,
+            "p50": 16.603136,
+            "p95": 29.454336
+          },
+          "frames": 228
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-4-p3650-wheel.json": "e18d797449b5945b4e426c897a702414955b2f2040824b85687783bfc2f148fb",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-4-p3650-wheel.png": "aa7d0120313f8e3f10e92a7fe68514178cb7f299766e9d21556ccf38d7171826"
+      }
+    },
+    {
+      "shot": "wheel-5-p3290-wheel",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.329,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "wheel",
+            "wheelCount": 5,
+            "lastWheelPixels": -1440,
+            "target": 0.32899999999999996,
+            "current": 0.329,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            7690.031861629487,
+            8505.006827492032,
+            13360.036413290842
+          ],
+          "localCamera": [
+            7.690031861629487,
+            8.505006827492032,
+            13.360036413290842
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 45,
+            "drawTriangles": 595652,
+            "residentGpuBytes": 37159080,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 2.772291958677685e-15,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 1,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 21,
+            "p50": 11.772928,
+            "p95": 20.932608
+          },
+          "frames": 256
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-5-p3290-wheel.json": "1d5e3be4b2361bb5ec383ab5619010eb8a4948343f38f3b9f877308812ebd75c",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-5-p3290-wheel.png": "ff235b8717c6ec4c1fe8cca26b0b46d286e899f7e7c4df1e7478e00d4c6fa441"
+      }
+    },
+    {
+      "shot": "wheel-6-p2930-wheel",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.293,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "wheel",
+            "wheelCount": 6,
+            "lastWheelPixels": -1440,
+            "target": 0.2929999999999999,
+            "current": 0.293,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            17760.87580466604,
+            13850.547377916273,
+            24730.985280249293
+          ],
+          "localCamera": [
+            17.76087580466604,
+            13.850547377916273,
+            24.730985280249293
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 64,
+            "drawTriangles": 847090,
+            "residentGpuBytes": 37159080,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 1.872710705471187e-15,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 1,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 29,
+            "p50": 14.628864,
+            "p95": 54.068224
+          },
+          "frames": 288
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-6-p2930-wheel.json": "08fbae16e8c0323b3606f267120e2cfc63c1fde46fcdcca121717bfbf77817cc",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-6-p2930-wheel.png": "63b1659f7a2fa18cccdb65f79f0861b0fc2a916b8ebb9d2db14b81863c1508fb"
+      }
+    },
+    {
+      "shot": "wheel-7-p2570-wheel",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.257,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "wheel",
+            "wheelCount": 7,
+            "lastWheelPixels": -1440,
+            "target": 0.2569999999999999,
+            "current": 0.257,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            38508.14814814815,
+            54647.40740740741,
+            84032.5925925926
+          ],
+          "localCamera": [
+            38.50814814814815,
+            54.64740740740741,
+            84.0325925925926
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 64,
+            "drawTriangles": 484132,
+            "residentGpuBytes": 37159080,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 0.9476506240532329,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 1,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 24,
+            "p50": 5.372928,
+            "p95": 67.033088
+          },
+          "frames": 327
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-7-p2570-wheel.json": "90474c752a9e359cb932f076bdb1899cdcb21ac30193344cca611547859512e1",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-7-p2570-wheel.png": "fb84bed7969af27967f8cb8de5cdb9ac39981199cb5568f0e34b7f5e1b2c826e"
+      }
+    },
+    {
+      "shot": "wheel-8-p2350-wheel",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.235,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "wheel",
+            "wheelCount": 8,
+            "lastWheelPixels": -1440,
+            "target": 0.235,
+            "current": 0.235,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            55000,
+            100000,
+            150000
+          ],
+          "localCamera": [
+            55,
+            100,
+            150
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 64,
+            "drawTriangles": 418092,
+            "residentGpuBytes": 37305192,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 1.0721546265104769,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 0.9362767410104686,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 18,
+            "p50": 35.853312,
+            "p95": 43.9808
+          },
+          "frames": 349
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-8-p2350-wheel.json": "e12c95f47e26567eef1dc5c7406a220f437f08bb30b90c38554067ea8a1d92ef",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-8-p2350-wheel.png": "2f4895502839e3670510881fba00e9327382240c2472be7442f1f97b0d701033"
+      }
+    },
+    {
+      "shot": "wheel-9-p2350-wheel",
+      "meta": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "state": {
+          "ready": true,
+          "contextLost": false,
+          "mode": "north300",
+          "source": "Takram clouds0.7.6 procedural weather, not JangaFX VDB",
+          "p": 0.235,
+          "capturePhase": "fixed",
+          "input": {
+            "source": "wheel",
+            "wheelCount": 9,
+            "lastWheelPixels": -1440,
+            "target": 0.235,
+            "current": 0.235,
+            "settled": true,
+            "reducedMotion": false
+          },
+          "opticalTrial": {
+            "weatherX": 0,
+            "weatherY": 0,
+            "sunElevation": 15,
+            "sunAzimuth": 0,
+            "hazeExponent": 0.00018,
+            "hazeDensityScale": 3e-05,
+            "layerDepth": 1.2,
+            "layerDensity": 1,
+            "groundShadow": true,
+            "groundShadowLinked": true
+          },
+          "sourceLocation": [
+            8.4,
+            61.63,
+            "camera metres in localCamera ×1000"
+          ],
+          "sourceDate": "fixed north scene sun vector",
+          "camera": [
+            55000,
+            100000,
+            150000
+          ],
+          "localCamera": [
+            55,
+            100,
+            150
+          ],
+          "worldToECEF": [
+            -0.14608302856241162,
+            0.9892723329629883,
+            0,
+            0,
+            0.4700661645077798,
+            0.0694133320501771,
+            0.879897488528429,
+            0,
+            0.8704582412447932,
+            0.12853808994869273,
+            -0.4751635609780734,
+            0,
+            3005946.305815795,
+            443879.53187203227,
+            5589039.74196397,
+            1
+          ],
+          "sun": [
+            -0.719136020091598,
+            -0.10619276842469857,
+            0.6867069830292358
+          ],
+          "layers": [
+            {
+              "altitude": 8000,
+              "height": 780,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 8250,
+              "height": 1440,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1.6
+            },
+            {
+              "altitude": 14750,
+              "height": 500,
+              "densityScale": 0.003,
+              "shapeDetailAmount": 0,
+              "weatherExponent": 1
+            },
+            {
+              "altitude": 0,
+              "height": 0,
+              "densityScale": 0.2,
+              "shapeDetailAmount": 1,
+              "weatherExponent": 1
+            }
+          ],
+          "quality": "high",
+          "look": "ref54",
+          "coverage": 0.42,
+          "localWeatherRepeat": [
+            54,
+            54
+          ],
+          "localWeatherOffset": [
+            0,
+            0
+          ],
+          "resolutionScale": 0.5,
+          "lightShafts": true,
+          "shadowMaxFar": 100000,
+          "shadowLengthLinked": true,
+          "temporal": false,
+          "temporalUpscale": false,
+          "temporalAntialiasing": true,
+          "clouds": true,
+          "cloudPassAttached": true,
+          "smaa": true,
+          "wind": false,
+          "terrain": {
+            "visibleTiles": 64,
+            "drawTriangles": 418092,
+            "residentGpuBytes": 37305192,
+            "queued": 0,
+            "pending": 0,
+            "fullSurfaceTriangles": 812800,
+            "fullTiledTriangles": 847090,
+            "heightGain": 1.5,
+            "maxErrorPixels": 1.0721546265104769,
+            "highTextures": true,
+            "errors": [],
+            "detailReveal": 0.9362767410104686,
+            "coarseReady": 64
+          },
+          "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+          "renderSize": [
+            1280,
+            720
+          ],
+          "gpu": {
+            "available": true,
+            "count": 27,
+            "p50": 39.099392,
+            "p95": 42.123264
+          },
+          "frames": 379
+        },
+        "url": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-final-20261008"
+      },
+      "files": {
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-9-p2350-wheel.json": "7a02d99d49e292985f408d0a0a1d8ffceeb2d1cfb51306ae1aef227732521257",
+        "verification/a-cloud-sculpt-20261006/native-captures/takram-wheel-final-20261008/wheel-9-p2350-wheel.png": "df8d89857c20be30a6d42595b1dd4409a94dd4a214fce827134bd8154080b6e3"
+      }
+    }
+  ],
+  "sourceAtPackaging": "360dbefa5f33417a21791d12ae7c81b3cb574857944fa01906933109f3260b26",
+  "limits": "GPU samples 16–39 only, transient spikes; no stable performance PASS. p.235 distant cloud texture remains TUNE. Main/earth/archive not integrated."
+}

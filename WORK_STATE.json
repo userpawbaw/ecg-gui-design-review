@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "A D108 curtain-light candidate review: same six poses and automated forward/reverse captured. TAA keep; next chosen look globe/regional/cloud handoff, real wheel and archive occlusion verification. Story/BC separate.",
+  "next_action": "D109 actual wheel verified in lab; next distance-aware cloud representation then same-renderer globe/DEM/descent/archive candidate handoff. Visual TUNE and unstable short GPU timing remain; Story/BC separate.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1219,14 +1219,14 @@
     ]
   },
   "north_cloud_takram_2026_10_08": {
-    "status": "D108_SCOPED_RUNTIME_PASS_CURTAIN_LIGHT_VISUAL_TUNE",
-    "decision": "D108",
-    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_beam_review_2026-10-08.md",
-    "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-beam-interactive-20261008",
-    "gallery": "verification/a-takram-beam-20261008/gallery.html",
+    "status": "D109_WHEEL_INPUT_PASS_VISUAL_PERFORMANCE_TUNE_MAIN_HANDOFF_PENDING",
+    "decision": "D109",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_wheel_and_handoff_2026-10-08.md",
+    "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-interactive-20261008",
+    "gallery": "verification/a-takram-wheel-20261008/gallery.html",
     "terrainHeightScale": 1.5,
     "mainReplaced": false,
-    "remoteSave": "D106 implementation 4ad1edd2722bca43cdd4635c8b26920bcf8cdc49 pushed; ls-remote and FETCH_HEAD fidelity readback verified",
+    "remoteSave": "D108 834a35d4e26c28ff4ce75cbce2bb09ec3f07a37a remote HEAD and FETCH_HEAD manifest content readback verified. D109 save checkpoint follows.",
     "next": "User curtain-light candidate review; next chosen look globe/regional/cloud handoff and real wheel/archive occlusion check. FullresTAA keep; cloud faces/far repetition/backlit terrain remain TUNE",
     "opticalTrialD108": {
       "nativePairs": 24,
@@ -1284,6 +1284,17 @@
         "weatherRepeat": 54,
         "adopted": false
       }
+    },
+    "wheelTrialD109": {
+      "nativePairs": 10,
+      "manifest": "verification/a-takram-wheel-20261008/manifest.json",
+      "realWheelVerified": true,
+      "scope": "lab .235-.365 actual wheel and settled captures; not main/continuous video",
+      "panelScrollSeparated": true,
+      "visualLookAdopted": false,
+      "stablePerformancePass": false,
+      "mainIntegrated": false,
+      "initialFarCloudTexture": "TUNE"
     }
   }
 }

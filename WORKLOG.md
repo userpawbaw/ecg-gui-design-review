@@ -685,3 +685,6 @@ D107 최종QA: Vite79modules build PASS / records232 PASS / native9쌍 저장응
 ## 2026-10-08 D108 커튼빛·양감 보완
 완료: source광학유지·sun15/az0/haze.00018/layer1.2후보,같은6구도·ON/OFF·정역6moving actual24쌍. high50/fullresTAA,terrain1.5×/archiveKEEP,main미변경. 원본광선기여확인/79modulebuildPASS/fixed120GPUquery범위. 품질TUNE·nearface/far반복/역광암부보완. 다음이룩사용자리뷰→globe지역/하강인계와실제wheel/서고가림검증;Story/BC/D080별도. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_beam_review_2026-10-08.md;gallery verification/a-takram-beam-20261008/gallery.html.
 D108 최종QA: Vite79modules build PASS / records234 PASS / native24쌍 검증 및 gallery24이미지·실시간recipe선택 DOM 확인 / 정역 재생 완료 / warn,error0. fixed6구도×2 각GPU120query; 자동재생과 실제wheel/main 검증 분리. 사용자6capture 제외.
+
+## 2026-10-08 D109 재개 체크포인트
+D108 원격834a35d content readback 확인 후 lab실제wheel계속진행. 코드감쇠·입력분리·range정착수정, native10쌍/패널240→0/브라우저warn-error없음/최종79modulebuild검증. 초기sandboxEPERM동일npm build escalation해결. p.235먼구름과GPU변동미해결·TUNE, 전체main인계미완. F075/D109와보고서/manifest에다음단계기록. 사용자capture6파일보존.

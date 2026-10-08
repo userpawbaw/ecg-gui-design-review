@@ -57,6 +57,23 @@ const save=dom<HTMLButtonElement>('save');
 const captureSet=document.createElement('button');captureSet.textContent='기준 구도 저장';save.after(captureSet);
 const motionReview=document.createElement('button');motionReview.textContent='정역 이동 검증';captureSet.after(motionReview);
 let capturePhase='fixed';
+// D109: physical wheel input changes a target; damping uses elapsed time, not frame rate.
+let wheelTarget=Number(progress.value),wheelDriving=false,wheelCount=0,wheelDelta=0;
+let inputSource='pose',lastDrawTime=performance.now();
+const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const wheelHint=document.createElement('small');wheelHint.textContent='북유럽 화면에서 휠: 하강/상승 · 패널 안에서는 설정 스크롤';settings.before(wheelHint);
+rendererWheelSetup();
+function rendererWheelSetup(){
+ document.addEventListener('wheel',e=>{
+  if(!ready||!activePose.startsWith('north')||captureSet.disabled||motionReview.disabled||dom('panel').contains(e.target as Node)||e.ctrlKey)return;
+  e.preventDefault();
+  const pixels=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1);
+  if(!pixels)return;
+  if(!wheelDriving)wheelTarget=Number(progress.value);
+  wheelTarget=THREE.MathUtils.clamp(wheelTarget+pixels*.000025,Number(progress.min),Number(progress.max));
+  wheelDriving=true;wheelCount++;wheelDelta=pixels;inputSource='wheel';gpuTimes.length=0;
+ },{passive:false});
+}
 const basicOption=document.createElement('option');basicOption.value='basic3500';basicOption.textContent='Basic 조명 비교 · 3500m';pose.add(basicOption);
 const basicLow=document.createElement('option');basicLow.value='basic300';basicLow.textContent='Basic 빛 커튼 · 300m';pose.add(basicLow);
 const renderer=new THREE.WebGLRenderer({depth:false,logarithmicDepthBuffer:false,antialias:false});
@@ -140,6 +157,7 @@ const timer=gl.getExtension('EXT_disjoint_timer_query_webgl2');let query:WebGLQu
 const pending:WebGLQuery[]=[];
 const percentile=(p:number)=>{const a=[...gpuTimes].sort((a,b)=>a-b);return a[Math.min(a.length-1,Math.floor(a.length*p))]??null;};
 function setPose(value:string){
+ wheelDriving=false;inputSource='pose';
  activePose=value;pose.value=value;gpuTimes.length=0;
  const isNorth=value.startsWith('north');controls.enabled=!isNorth;
  renderPass.mainScene=normalPass.mainScene=isNorth?northScene:sourceScene;
@@ -187,7 +205,7 @@ look.onchange=()=>setPose(activePose);
 shafts.onchange=()=>{clouds.lightShafts=shafts.checked;gpuTimes.length=0;};
 cloudScale.onchange=()=>{clouds.resolutionScale=Number(cloudScale.value);gpuTimes.length=0;};
 function state(){return{ready,contextLost:gl.isContextLost(),mode:activePose,source:'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
- capturePhase,
+ capturePhase,input:{source:inputSource,wheelCount,lastWheelPixels:wheelDelta,target:wheelDriving?wheelTarget:Number(progress.value),current:Number(progress.value),settled:!wheelDriving||Math.abs(wheelTarget-Number(progress.value))<.00011,reducedMotion},
  opticalTrial:{weatherX:clouds.localWeatherOffset.x,weatherY:clouds.localWeatherOffset.y,sunElevation:Number(sunElevation.value),sunAzimuth:Number(sunAzimuth.value),hazeExponent:clouds.clouds.hazeExponent,hazeDensityScale:clouds.clouds.hazeDensityScale,layerDepth:Number(layerDepth.value),layerDensity:Number(layerDensity.value),groundShadow:groundShadow.checked,groundShadowLinked:!!aerial.shadow},
  sourceLocation:activePose.startsWith('basic')?[30,35,activePose==='basic300'?300:3500]:activePose.startsWith('north')?[8.4,61.63,'camera metres in localCamera ×1000']:[0,67,activePose==='source500'?500:3500],sourceDate:activePose.startsWith('basic')?'2026-01-02T07:00:00Z':activePose.startsWith('north')?'fixed north scene sun vector':'2000-06-01T10:00:00Z',camera:camera.position.toArray(),localCamera:lastCamera,
  worldToECEF:aerial.worldToECEFMatrix.toArray(),sun:aerial.sunDirection.toArray(),layers:clouds.cloudLayers.map(l=>({altitude:l.altitude,height:l.height,densityScale:l.densityScale,shapeDetailAmount:l.shapeDetailAmount,weatherExponent:l.weatherExponent})),
@@ -201,7 +219,7 @@ async function ensureNorth(){
  north=await createNorthernArrival(renderer);north.setEffects({cloud:false,cloudShadow:false,atmosphere:false});
  north.scene.scale.setScalar(1000);northScene.add(north.scene);error.textContent='';
 }
-pose.onchange=async()=>{pose.disabled=true;try{if(pose.value.startsWith('north'))await ensureNorth();setPose(pose.value);}catch(e){error.textContent=String(e);}finally{pose.disabled=false;}};progress.oninput=()=>{gpuTimes.length=0;};
+pose.onchange=async()=>{pose.disabled=true;try{if(pose.value.startsWith('north'))await ensureNorth();setPose(pose.value);}catch(e){error.textContent=String(e);}finally{pose.disabled=false;}};progress.oninput=()=>{wheelDriving=false;inputSource='slider';gpuTimes.length=0;};
 async function saveFrame(){
  if(!ready||gl.isContextLost()){error.textContent='렌더가 준비되지 않았거나 GPU 컨텍스트가 끊겨 정상 프레임을 저장할 수 없습니다.';return;}
  draw();
@@ -209,6 +227,7 @@ async function saveFrame(){
  if(params.get('reviewRound')?.startsWith('takram-parameters'))shot='p'+Math.round(Number(progress.value)*1000)+'-c'+Math.round(Number(coverage.value)*100)+'-x'+Math.round(Number(weatherX.value)*100)+'-el'+Math.round(Number(sunElevation.value)*100)+'-az'+Math.round(Number(sunAzimuth.value)*100)+'-hz'+Math.round(Number(hazeFalloff.value)*1e6)+(shafts.checked?'-on':'-off');
  if(params.get('reviewRound')?.startsWith('takram-beam'))shot='p'+Math.round(Number(progress.value)*1000)+'-x'+Math.round(Number(weatherX.value)*100)+'-y'+Math.round(Number(weatherY.value)*100)+'-az'+Math.round(Number(sunAzimuth.value))+'-el'+Math.round(Number(sunElevation.value))+'-h'+Math.round(Number(hazeFalloff.value)*1e6)+'-d'+Math.round(Number(layerDepth.value)*10)+'-n'+Math.round(Number(layerDensity.value)*10)+(shafts.checked?'-on':'-off')+(groundShadow.checked?'-gs':'-nogs');
  if(capturePhase!=='fixed')shot=capturePhase+'-'+shot;
+ if(params.get('reviewRound')?.startsWith('takram-wheel'))shot='wheel-'+wheelCount+'-p'+Math.round(Number(progress.value)*10000)+'-'+inputSource;
  const e=gl.getExtension('WEBGL_debug_renderer_info');
  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),url:location.href}})});
  if(!response.ok){error.textContent=await response.text();return;}save.textContent='프레임 저장 완료';
@@ -246,6 +265,8 @@ motionReview.onclick=async()=>{
 };
 function draw(){
  if(!ready||gl.isContextLost())return;
+ const now=performance.now(),elapsed=Math.min(.1,Math.max(0,(now-lastDrawTime)/1000));lastDrawTime=now;
+ if(wheelDriving){const current=Number(progress.value),next=reducedMotion?wheelTarget:current+(wheelTarget-current)*(1-Math.exp(-elapsed/ .16));progress.value=String(Math.abs(next-wheelTarget)<.00011?wheelTarget:next);}
  if(activePose.startsWith('north')&&north){
   localCamera.aspect=camera.aspect;north.update(Number(progress.value),2.4,true,localCamera);
   // Existing and newly loaded LOD meshes must enter the optical pass as albedo,
@@ -268,7 +289,7 @@ function draw(){
  }
  composer.render();
  if(query){gl.endQuery(timer.TIME_ELAPSED_EXT);pending.push(query);query=null;}
- frames++;if(frames%30===0)status.textContent=`${activePose} · ${renderer.domElement.width}×${renderer.domElement.height} · ${quality.value}\nGPU composer ${percentile(.5)?.toFixed(2)??'—'}ms / ${gpuTimes.length} samples · ${clouds.temporalUpscale?'4×4 업스케일':'전체 해상도 TAA'} · ${enabled.checked?'구름 ON':'구름 OFF'}\n${activePose.startsWith('north')?'동일 DEM 1.5× · 광학 정합 검토':'원본 Vanilla 광학 chain · 구름 관찰 카메라'}`;
+ frames++;if(frames%30===0)status.textContent=`${activePose} · ${renderer.domElement.width}×${renderer.domElement.height} · ${quality.value}\nGPU composer ${percentile(.5)?.toFixed(2)??'—'}ms / ${gpuTimes.length} samples · ${clouds.temporalUpscale?'4×4 업스케일':'전체 해상도 TAA'} · ${enabled.checked?'구름 ON':'구름 OFF'}\n${activePose.startsWith('north')?'동일 DEM 1.5× · 광학 정합 검토':'원본 Vanilla 광학 chain · 구름 관찰 카메라'}\n${inputSource} · p${Number(progress.value).toFixed(4)} → ${(wheelDriving?wheelTarget:Number(progress.value)).toFixed(4)} · 휠 ${wheelCount}`;
 }
 async function init(){
  const [lut,w,t,s,d,b]=await Promise.all([

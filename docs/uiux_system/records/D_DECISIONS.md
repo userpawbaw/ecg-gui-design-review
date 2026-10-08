@@ -2722,3 +2722,25 @@ Bloom/CSS beam으로원본효과를대체하지않는다. 높은GPUiteration부�
 
 ### D108 구현 결과
 sun15°/방위0°와고도연무감쇠.00018,layer두께1.2후보에서커튼광선확인;ON/OFF로기여분리. 양.42/repeat54/density.2/offset0/TAA유지. .0001은지형을많이가리고offset.12/.10은태양통로차단,density.8은명확개선부족으로기준복귀. 같은6구도기준/후보12fixed·6광학단독·6정역moving actual24쌍. fixed120GPUquery/79modulebuildPASS, 품질TUNE. main미통합/사용자6capture보존. 최신 ECG_A_takram_beam_review_2026-10-08.md / F074.
+
+## D-109. 실제 휠 입력을 하강 카메라에 연결하고 정역 이동을 별도 검증한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화] 구현 전 |
+| 상태 | 사용자 계속 진행 승인 · D108 후보 보완 |
+| CASE | CASE-007 |
+
+### 갈림길
+D108 정역 검증은 코드가 진행 값을 움직인 시험이었다. 실제 휠 입력과 패널 스크롤을 구분하고 입력 이후 카메라·TAA 정착을 확인해야 한다.
+### 검토한 선택지
+곧바로 기본 main 교체, lab의 휠 제어와 기존 .235–.365 동일 DEM 경로를 검증, 두 렌더러 iframe을 덮어 전환.
+### 고른 것과 근거
+독립 lab에 실제 wheel 기반 목표 진행도와 시간 기반 감쇠를 연결한다. 패널에서 휠은 패널 스크롤로 유지한다. 입력 source/count/target/현재값을 캡처에 기록하고 실제 정역 휠 입력 후 상태를 비교한다. 기존 TAA 및 D108 optical candidate 유지. 전역 구름과 서고 통합은 metre/kilometre·ECEF·composer·tone mapping의 계약을 확인한 뒤 다음 단계로 이어간다.
+### 버린 것과 이유
+두 WebGL 렌더러를 동시에 계속 실행하는 iframe 덮기는 성능·색감·가림·메모리 위험 때문에 사용하지 않는다. automated progress replay를 실제 wheel PASS로 바꿔 기록하지 않는다. 이 단계에서 후보를 KEEP/기본 채택하지 않는다.
+### 되돌려야 하는 조건
+패널 스크롤 잠김, 역방향 경로 튐, context loss, TAA 잔상 또는 입력 무반응이 나타나면 제어 연결을 수정하고 사용자 품질 판정은 TUNE으로 둔다.
+
+### D109 구현 결과
+실제 wheel 목표/시간감쇠/패널분리 연결. range step 정착오차 수정. 정방향.235→.271→.307→.343→.365/역방향.329→.293→.257→.235 및 하한 반복 native10쌍, panelTop240→0/p유지 확인. input·정착PASS/시각TUNE. p.235 먼 반복구름과 짧은GPUquery16–39개의큰시간변동으로전체인계·안정성PASS미부여. 같은renderer광학모듈/거리별cloud표현/서고가림을다음단계로구체화. 보고서 ECG_A_takram_wheel_and_handoff_2026-10-08.md.

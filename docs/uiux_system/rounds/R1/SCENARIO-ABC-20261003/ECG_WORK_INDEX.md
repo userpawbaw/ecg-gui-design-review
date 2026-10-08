@@ -240,3 +240,6 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## 2026-10-08 D108 커튼빛·양감 보완
 완료: source광학유지·sun15/az0/haze.00018/layer1.2후보,같은6구도·ON/OFF·정역6moving actual24쌍. high50/fullresTAA,terrain1.5×/archiveKEEP,main미변경. 원본광선기여확인/79modulebuildPASS/fixed120GPUquery범위. 품질TUNE·nearface/far반복/역광암부보완. 다음이룩사용자리뷰→globe지역/하강인계와실제wheel/서고가림검증;Story/BC/D080별도. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_beam_review_2026-10-08.md;gallery verification/a-takram-beam-20261008/gallery.html.
+
+## D109 실제 휠과 다음 인계 계약
+[ECG_A_takram_wheel_and_handoff_2026-10-08.md](ECG_A_takram_wheel_and_handoff_2026-10-08.md) → verification/a-takram-wheel-20261008/gallery.html / F075 / D109. 실제wheel정역정착PASS, 먼시점구름/성능안정성TUNE. 다음거리별cloud표현과same-renderer globe/DEM/서고후보통합. D108커튼빛기준유지·기본main미교체.

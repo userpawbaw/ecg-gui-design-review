@@ -1839,3 +1839,20 @@ D107 단독태양/연무시험은원하는광선에미달. 사용자이후보완
 sun15°/az0/hazeExponent.00018·두께1.2에서p.345/.365커튼광선이보이고shaftsOFF는연무만남음. shadowOFF에서지형밝아짐. 동일6구도기준/후보와정역6moving frame 실제24쌍. manifest verification/a-takram-beam-20261008/manifest.json. GPUwholecomposer순차120sample은두조건대략8.3–9.3ms p50,성능차확정아님. finalconsole0/context정상.
 ### 놓쳤다면
 원본자산동일성을구도/고도광학동등성으로혼동하고자체beam이나GPU반복수만늘렸을것이다. 이번룩은TUNE이며광선기여확인을최종레퍼런스동등품질/실제wheel/전체main안정성으로확대하지않는다.
+
+## F-075. 실제 휠 하강은 정착하지만 근경 광학을 먼 시점까지 확대하면 별도 튜닝이 필요하다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [관찰] |
+| 근거 | D109 · verification/a-takram-wheel-20261008/manifest.json · native10쌍 |
+
+실제 browser wheel 정역 입력은 현재/목표값이 일치하고 패널스크롤은카메라를움직이지않았다. range step.0001로목표전값에멈추는현상은snap기준.00011로수정. .235에서근경weather54구름이작은반복얼룩으로보였고GPUquery16–39의시간변동이커D108 fixed120query와성능비교불가. 입력PASS를전체globe인계/안정성PASS로확대하지않는다. 거리별담당표현·전이와단일renderer인계가남음. CASE-007/D109/ECG_A_takram_wheel_and_handoff_2026-10-08.md.
+### 발단
+[대화] 사용자가 계속 진행을 요청해 D108 자동 이동 다음 실제 wheel 경로를 확인했다.
+### 먼저 의심한 것과 배제 방법
+[소스] 진행 range의 소수 step과 감쇠 정착 임계값을 대조했다. panel wheel이 카메라로 전달되는지 실제 입력과 DOM scrollTop으로 확인했다.
+### 결정적 근거
+[실제렌더] native10쌍에서현재/목표정착,정역wheelCount와contextLostfalse확인. p.235먼반복구름과GPU시간변동은같은manifest에남김. D-109 및 보고서 참조.
+### 놓쳤다면
+입력 성공을 품질·성능·전체globe인계 성공으로 혼동하거나 초반 질감 악화를 기본 화면에 통합했을 것이다.

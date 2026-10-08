@@ -1226,7 +1226,7 @@
     "gallery": "verification/a-takram-hardware-20261008/gallery.html",
     "terrainHeightScale": 1.5,
     "mainReplaced": false,
-    "remoteSave": "D106 local edits pending; D105 previously verified at 8d20f37",
+    "remoteSave": "D106 implementation 4ad1edd2722bca43cdd4635c8b26920bcf8cdc49 pushed; ls-remote and FETCH_HEAD fidelity readback verified",
     "next": "User quality review fullres50/contrast1.6; minimum beam aperture/sun-camera/haze-receiver trial and terrain lighting tune before continuous globe handoff",
     "limits": [
       "Original system-freeze root cause unresolved; bounded test does not prove long-term stability",

@@ -2763,3 +2763,34 @@ D108 정역 검증은 코드가 진행 값을 움직인 시험이었다. 실제 
 스크롤에따라두께를키우거나새구름을갑자기띄우는것은연속성이약함. 단순안개전면막은지도를가리고근경양감을잃음. ultra100영상에서도문제가남아해상도증가만으로해결을단정하지않음.
 ### 되돌려야 하는 조건
 같은coverage연속인계가스택/성능상과도하면처음부터보이던별도전환구름을사용. footprint이동/이중광학/그림자카메라추종/자글거림이남으면해당후보TUNE. 보고서 ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md.
+
+## D-111. 하강 noise와 그림자 영역을 같은 광학 후보에서 분리 시험한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화][소스] 구현 전 |
+| 상태 | D110 순서 사용자 진행 승인 |
+| CASE | CASE-007 |
+
+### 갈림길
+ultra100% 영상에서도 남는 noise와 그림자카메라추종느낌을분리해야한다.
+### 검토한 선택지
+바로renderer통합/전체ultra상향, 개별groundShadow/BSM margin·jitter/march간격대조, 모든jitter제거.
+### 고른 것과 근거
+같은DEM/camera/sun/커튼룩에서baseline,groundShadowOFF,margin20km,shadowJitterOFF,촘촘march(minStep10/perspective1.003),그림자범위200km를별도대조. 실값을metadata로기록. 전역채택전동일구도와정역확인. source shadowMaps.margin는공식객체설정으로접근하며외부shader를수정하지않는다.
+### 버린 것과 이유
+원인확정없이denoiser/alpha누적강화·모든jitterOFF로결과를덮지않는다. 사용자가긍정한커튼빛/terrain1.5×/TAA유지. main/원경인계는결함검토후다음단계.
+### 되돌려야 하는 조건
+banding/빛소실/그림자이동/추가GPU부담/컨텍스트오류시candidateTUNE또는기준복귀. 정착PNG만으로motionnoise해결을선언하지않는다.
+
+### D111 추가 분리 축 — 구현 전
+[소스]ShadowResolveMaterial의temporalAlpha기본.01을확인. camera-relative cascade 갱신시history반응지연가설을분리하기위해shadow.temporalPassOFF와resolveMaterial.uniforms.temporalAlpha.1을추가한다. pinned공개readonly객체의uniform번안시험이며shader코드수정없음/안정API보장아님. noise비용과motion분리판정. 첫저장에서camelCase shotID가localendpoint조건에거부되어12쌍만저장됨. lowercaseID+실패throw로수정,최종새round에서24쌍재검증한다. 초기partial보존.
+
+### D111 움직임 증거 — 구현 전
+정착PNG의noise차이는motion해결증거가아니므로동일renderer.canvas.captureStream/MediaRecorder로8초정역카메라를localWebM으로저장한다. baseline/fast/march이동을비교하고녹화encoding비용이섞이는GPU값은성능표에사용하지않는다. localendpoint원점/loopback/크기/경로검증유지. rendererlost·저장실패는성공으로처리하지않는다.
+
+### D111 분리시험 결과
+실제8설정×3구도24native와기준/빠른이력/촘촘march의8秒renderer動画3개저장. sameviewport942×672/high50/cloud-buffer471×336/60GPUquery구도별/RTX/context正常. shadowOFF는terrain밝기변화,margin/far/jitter/alpha정착차이작음. marchGPU8ms대→10–11ms대·뚜렷개선부족으로미채택. noise/shadow원인해결미확정/TUNE,baseline보존. gallery verification/a-takram-defect-20261008/gallery.html/report ECG_A_cloud_defect_isolation_2026-10-08.md. native영상은자동카메라경로이며realwheel영상과구별.
+
+### D111 구름 TAA 단독 후보 — 구현 전
+그림자측옵션으로volume자글거림개선이명확하지않아pinnedCloudsResolveMaterial의current-frame temporalAlpha .1→.05 단독후보를추가한다. varianceGamma2유지,shadowalpha.01유지,동일full-bufferTAA. 목표는확률noise누적완화이며motionghosting증가가능. 3정착구도+동일8초영상에서기준과대조,검증전기본채택안함. 비용증가만큰march대체시험이다.

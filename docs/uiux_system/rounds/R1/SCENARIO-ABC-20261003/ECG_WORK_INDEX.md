@@ -246,3 +246,6 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D110 영상 피드백과 원경 cloud 인계
 [ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md](ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md): 빛커튼 분위기긍정, 자글/그림자/원경 TUNE. 다음 하강결함분리시험→같은footprint원경mask/근경volume6구도→단일renderer통합. 제안상태/코드수정없음. D109입력PASS와광학품질을구별.
+
+## D111 하강 결함 분리와 실제 영상
+[ECG_A_cloud_defect_isolation_2026-10-08.md](ECG_A_cloud_defect_isolation_2026-10-08.md) → verification/a-takram-defect-20261008/gallery.html / F077 / O021 / D111. 24fixed와3actualWebM,후보미채택·noise/shadow해결미확정. 다음worldpoint/광학noise분리·source필터와별도원경same-footprint6구도. D110범위와기존KEEP유지.

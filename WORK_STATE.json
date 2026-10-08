@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D110 user-video review: preserve curtain-light mood; isolate cloud temporal noise and camera-dependent shadow behavior, then same-footprint distant-mask/near-volume six-pose handoff before single-renderer integration.",
+  "next_action": "D111 isolation complete but movement noise/shadows unresolved: next world-point shadow tracking and cloud-only temporal/spatial filter review; separately same-footprint distant-cloud six-pose planning before main integration.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1219,15 +1219,15 @@
     ]
   },
   "north_cloud_takram_2026_10_08": {
-    "status": "D110_VIDEO_REVIEWED_CURTAIN_MOOD_POSITIVE_NOISE_SHADOW_DISTANT_HANDOFF_TUNE",
-    "decision": "D109",
-    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md",
-    "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-interactive-20261008",
-    "gallery": "verification/a-takram-wheel-20261008/gallery.html",
+    "status": "D111_ISOLATION_CAPTURE_PASS_NOISE_SHADOW_FIX_UNCONFIRMED_TUNE",
+    "decision": "D111",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_defect_isolation_2026-10-08.md",
+    "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-defect-interactive-20261008",
+    "gallery": "verification/a-takram-defect-20261008/gallery.html",
     "terrainHeightScale": 1.5,
     "mainReplaced": false,
     "remoteSave": "D109 2366ecfd3af0ff3241a05a3cbe28b935a1b7a4a6 pushed and FETCH_HEAD manifest readback verified.",
-    "next": "D110 user-video review: preserve curtain-light mood; isolate cloud temporal noise and camera-dependent shadow behavior, then same-footprint distant-mask/near-volume six-pose handoff before single-renderer integration.",
+    "next": "D111 isolation complete but movement noise/shadows unresolved: next world-point shadow tracking and cloud-only temporal/spatial filter review; separately same-footprint distant-cloud six-pose planning before main integration.",
     "opticalTrialD108": {
       "nativePairs": 24,
       "samePosePairs": 6,
@@ -1304,6 +1304,28 @@
       "shadowCauseConfirmed": false,
       "recommendedHandoff": "same world footprint distant mask / near volume",
       "rendererChanged": false
+    },
+    "isolationD111": {
+      "fixedPairs": 27,
+      "actualRendererVideos": 4,
+      "manifest": "verification/a-takram-defect-20261008/manifest.json",
+      "displaySize": [
+        942,
+        672
+      ],
+      "cloudBufferNominal": [
+        471,
+        336
+      ],
+      "movementNoiseFixed": false,
+      "cameraDependentShadowFixed": false,
+      "newCandidateAdopted": false,
+      "mainChanged": false,
+      "videoPath": "automated .265-.365-.265 in8s, not real wheel",
+      "firstPartialCapture": "takram-defect-20261008",
+      "finalCapture": "takram-defect-final-20261008",
+      "cloudAlphaCandidate": 0.05,
+      "baselineCloudAlpha": 0.1
     }
   }
 }

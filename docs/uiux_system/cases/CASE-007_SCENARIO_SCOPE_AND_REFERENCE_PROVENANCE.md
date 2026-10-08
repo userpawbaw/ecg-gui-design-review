@@ -218,3 +218,6 @@ GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 �
 
 ### D110 사용자 영상이 요구한 재검토 [대화]
 사용자: “빛 커튼 분위기 좋네”, “자글거리는 문제는 남아있긴 하고”. AI기여:사용자ultra100영상설정을기존high50와구별하고sourcecascade/stochasticnoise를대조. 판단변화:휠입력PASS이후바로통합보다하강결함분리와same-footprint원경인계를우선. D110/F076/ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md. 영상프레임만으로원인을확정하지않는다.
+
+### D111 [대화][소스][실제렌더] 후속 분리시험
+사용자진행승인→AI8설정대조/정착24사진+실제8초영상3개→shadowOFF기여·촘촘march비용확인→명확한해결미확정으로baseline유지. native동작증거와시각해결을구별하고sourceAPI実값을metadata로검증. O021저장누락복구/F077/D111참조. 다음worldpoint조도/volume-onlymotion과원경인계를분리해지속.

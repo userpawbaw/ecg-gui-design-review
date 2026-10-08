@@ -418,3 +418,16 @@ EffectPass.setEffects와 recompile로 cloud를 제외하고 aerial overlay/shado
 
 ### D106 후속 검증 — 2026-10-08
 사용자 새로고침 후 RTX3070/timer 회복을 실제로 확인했다. source와 최신 north high 세 조건×6구도, 별도 옵션 대조를 저장했고 새context loss/warn/error는 미관찰. 이 범위의 회복 확인으로 진행을 재개했으나 원래 컴퓨터 전체 중단 원인이 해결됐다고 결론 내리지 않는다. 장기/연속scroll/targetPC 검증은 남아 있다. D106/F072 및 ECG_A_takram_hardware_recheck_2026-10-08.md가 현재 기준이다.
+
+## O-021. camelCase shotID 거부가 분리시험 저장 누락을 만들었다
+
+2026-10-08 [코드][브라우저][캡처] · D111 / F077 / CASE-007.
+
+### 증상
+shadowOff/jitterOff의저장API가invalid capture로거부돼첫분리round는12쌍만저장.
+### 원인과 영향
+localendpoint는lowercaseID만허용하고saveFrame은실패시return해batch가계속되었다. 완료된옵션변화는캡처완료가아님.
+### 조치
+ID를lowercase로정규화하고API실패시throw. 초기partialround보존,새finalround에서24쌍/hash/실제metadata검증.
+### 재발 방지와 자동화 상태
+batch완료문구에의존하지않고예상artifact수와설정metadata/API응답을검증. packaging은24고정쌍과3WebM완료trace를assert. endpoint검증을느슨하게하지않음.

@@ -1872,3 +1872,24 @@ sun15°/az0/hazeExponent.00018·두께1.2에서p.345/.365커튼광선이보이�
 [소스]pinnedCloudsEffect는고정sun방향과camera-frustum cascade shadow를사용. wrapper maxFar100km/실제cascade texel snap/margin0/fade존재. source issue40은큰ray step+stochastic offsetnoise를논의, issue50은zoomout artifact유사사례. 동일원인증명아님. 그림자범위/재투영과alias를각기OFF/ON대조하도록추천.
 ### 놓쳤다면
 입력PASS·ultra해상도증가를광학결함해결로오해하거나같은구름연속성없이두꺼운전환구름을소환했을것이다. 원경mask↔같은footprint volume추천과별도두꺼운구름/얕은층대안을D110보고서에기록.
+
+## F-077. 촘촘한 볼륨 샘플링의 비용 증가와 그림자 기여는 확인했지만 이동 결함 해결은 미확정이다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [소스][실제렌더][관찰] |
+| 연결 | D-111 / CASE-007 |
+
+### 발단
+D110영상피드백후사용자가분리시험진행승인.
+### 먼저 의심한 것과 배제 방법
+shadowOFF/margin/far/jitter/march/alpha/temporalOFF를별도대조,실값metadata와3구도정착사진. baseline/fast/march8초실제renderer녹화로정지화면의한계를보완.
+### 결정적 근거
+24native/3WebM,60query각구도. shadowOFF의지형밝기변화확인. marchp50기준8.15/8.26/7.79ms대비11.42/11.47/10.06ms,시각개선분명하지않음. 실행splitLambda.6은constructor-default.5와구별. manifest verification/a-takram-defect-20261008/manifest.json.
+### 놓쳤다면
+ultra/iteration증가와옵션존재만으로해결선언하거나정착사진을motionnoise해결증거로확대했을것이다. 후보미채택/원인미확정으로유지,worldpoint조도·cloud-only노이즈와same-footprint원경설계를다음단계로기록.
+
+[대화] 사용자 D110 권고 순서 진행 승인. [코드][캡처] D111 실제 옵션 metadata와 native24쌍/3영상에서 관찰한 결과이며 이동 잡음 해결 판정은 보류했다.
+
+### D111 최종 추가 후보
+[코드][캡처] clouds resolve alpha.05 단독 후보의3정착구도와8초영상추가. 최종27정착쌍/4actualWebM. 기준cloud alpha.1/그림자alpha.01과구별,영상상잡음감소/잔상tradeoff는검토후판정하며아직해결/기본채택하지않음.

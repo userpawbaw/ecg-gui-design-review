@@ -691,3 +691,12 @@ D108 원격834a35d content readback 확인 후 lab실제wheel계속진행. 코�
 
 ## 2026-10-08 D110 사용자 영상 검토
 사용자파일MP4 23.65秒/1776×824,ffmpeg로3秒간격8프레임분석. ultra100/upscaleOFF/SMAAOFF/.43/54/windOFF확인,high50증거와구별. pinnedcascade/shadowcoverage와stochasticnoise자료조사. 우선순서:하강결함분리→same-footprint원경cloud인계→단일renderer/서고. 영상원본과추출스크린샷은로컬분석자료보존,원격에는출처hash/분석문서만저장. 코드수정없음. F076/D110.
+
+## 2026-10-08 D111 checkpoint
+4198server중단재개,원래userUI ultra100/windON/contrast1.4조회후분리round실행. high50/942×672명시,8옵션24native와canvas3WebM/trace저장,ffmpegdecode대표8프레임씩확인. camera자동경로영상과realwheel구별. 첫camelCaseID저장거부12partial보존→lowercase/throw수정→final24확인. build79/pass;motionnoise/shadow해결미확정,main/default미교체. F077/D111/O021/CASE007/보고서/manifest로다음worldpoint+cloud-only검토기록.
+
+### D111 최종 보완
+clouds resolveMaterial alpha.05 단독후보3정착+8초영상추가로27fixed/4WebM. source코드/후보실값manifest,기본baseline유지·motion해결확정안함.
+
+### D111 UI 최종 확인
+갤러리27이미지/4video,모든video readyState4/942×672/errornull,재생길이8.007/7.985/8.014/7.982초확인. 최초서버중단때의HMR/fetch오류로그는과거오류로구별,새라운드실제저장완료와분리. 캡처·영상버튼상호중복방지추가,광학값변경없음/최종build79 PASS. finalpackage source hash는이guard추가후코드이며이전촬영bytes증명아님.

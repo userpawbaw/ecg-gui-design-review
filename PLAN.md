@@ -479,3 +479,9 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 
 ## 2026-10-08 D110 사용자 영상 리뷰/원경 인계 추천
 빛커튼분위기긍정유지, 자글거림/지형그림자/원경cloud인계TUNE. 23.65초사용자영상8프레임과pinned source/issue40·50대조. 다음하강noise와shadow기여분리→same-footprint원경6구도→단일renderer통합. renderer변경없음/새룩채택전. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md.
+
+## 2026-10-08 D111 하강 결함 분리
+완료:8setting×3정착구도24native+3actual8초WebM/최종build79 PASS. 그림자OFF기여와march비용증가확인,명확한motion결함해결미확정/TUNE/후보미채택. 다음worldpoint조도추적·cloud-onlymotionnoise분리및source필터검토,별도same-footprint원경6구도설계후통합. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_defect_isolation_2026-10-08.md; gallery verification/a-takram-defect-20261008/gallery.html.
+
+### D111 최종 카운트
+구름TAA current-alpha.1→.05 단독후보추가로최종27fixed/4nativeWebM. 원래24/3은초기시험이력. 비용상승march미채택,cloud5%후보TUNE/잔상검토필요.

@@ -495,3 +495,6 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 
 ## 2026-10-08 D112 동일 기상장6구도/가림후보
 사용자그림자보류·다음단계진행승인. 같은weather/ECEF/DEM으로광역→지역→접근→커튼→edge→가림6구도실제제작. 원경별/인쇄cloud제거,초기raystep거리번안,macro9×fine6고정weatherRT/shape기본복원/detail거리감쇠. 여러실패candidate native를보존,최신6정착+24초actualWebM/forwardwheel .2136정착. 원경띠내점질감/지도광학TUNE,가림표본PASS를전체품질승인으로확대하지않음. 기본main/Story/서고통합미완,그림자보류유지. 다음same-weather원경coverageproxy→근경volume보완후archiveKEEP연결. F078/D112/O022/CASE007. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_same_footprint_handoff_2026-10-08.md; gallery verification/a-cloud-handoff-20261008/gallery.html. finalbuild80module/records244PASS,다른usercapture6파일/개인영상추출프레임보존.
+
+## 2026-10-08 D113 원경 구름 재설계 연구
+D112타원분포 부정피드백 기록. 사진3장/현재코드/공식제작자료·에셋·작성자forum대조. 추천은위성형coverage+thin/thick/tau/height분리+국소volume인계. 이번엔문서만, 품질/성능/사용자채택미검증. 다음p.18/.235분포대조→국소광학→6구도인계→motion→서고. 기존near그림자결함튜닝보류. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_orbital_cloud_hybrid_research_2026-10-08.md.

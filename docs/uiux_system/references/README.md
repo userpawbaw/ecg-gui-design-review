@@ -72,3 +72,5 @@
 
 
 - [REF-015](REF-015_TAKRAM_CLOUD_OPTICAL_CHAIN.md): Takram 완성 optical chain 실제 재현, 같은 north와 albedo/radiance 계약·시각TUNE 구분.
+
+- REF-014 EFX-014-05: D113 궤도사진기준 위성형coverage/국소relief/volume인계·방향shadow. 연구/추천만, 기존TUNE실험과구분.

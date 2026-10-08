@@ -29,6 +29,7 @@ Epic: Unreal volume material+cloud+sky atmosphere. Nubis: Houdini Atlas/Decima v
 | Nubis PDF70/85/144/151/163 | J4–J6 조형/미세층/빈틈 | EFX-014-02 |
 | Takram Rendering path/Limitations | C2–C4 웹품질·빛합성 | EFX-014-03 |
 | SpaceEngine layers/역사적근접실패 | J0–J4 거리LOD 인계 | EFX-014-04 |
+| NASA cloud-only / Guerrilla PDF74 / Skybolt coverage hull / 사용자 사진3장 | D113 원경 얇은층·국소 양감·같은 위치 인계 | EFX-014-05 |
 
 ## 6. 효과 카드
 
@@ -119,3 +120,20 @@ Epic: Unreal volume material+cloud+sky atmosphere. Nubis: Houdini Atlas/Decima v
 ## 10. 열린 질문
 
 새목업의samecloud continuity,실제고품질goldscene,같은좌표far/local인계,skyocclusion/대기합성방식,목표GPU와motion검증. 이번reference조사는목업/asset/runtime채택이아니다.
+
+### EFX-014-05 궤도 위성형 구름과 국소 입체의 같은 위치 인계
+**선정 이유**: 사용자 궤도사진3장과 타원분포 부정 평가, 국소양감·같은방향shadow 요구.
+**지각**: 넓게찢긴얇은층 사이 일부두꺼운군집만 명암·그림자로떠보이고 확대시같은군집옆면이보임.
+**입력 모델**: 스크롤 위치 / 카메라 거리 / 시야각. 시간wind는초기OFF후별도.
+**판별 근거**: 사용자정지이미지는움직임증거아님. D112camera/GLSL은코드확인. 아래hybrid는설계후보.
+**구현 메커니즘**: NASAcloud-only형태seed→지리coverage/tau/topheight→구면thin/reliefproxy + 같은ECEFnearvolume. premultipliedradiance/transmittance 인계, separatephysicallayers는depth합성. 지면point→sunray→cloudshell교차로shadow.
+**파라미터**: 기존p.18/.235/.300/.365/.387/.410비교구도. proxy2px미만/2–8px전환/8px이상volume는실측전설계값. 기존sun15°에서height8km의평면shadow거리약29.9km는검산이며구면에는ray교차필요.
+**타임라인**: fixedC/tau/H; scroll로두께성장없음. 인계범위는실제projectedsize/거리/각도대조후결정, 미확정.
+**에셋**: NASAcloud-only2048×1024및고해상도crop후보, 현재earth_clouds/local_weather파일우선확인. alpha/height/opticaldepth는서로다른자료. 원본사진luminance를density로직접사용하지않음.
+**성능 기법**: mip/crop/filteredtau/원경2.5D, 국소volume. 4096×2048RGBA8+mips약42.7MiB는자료예산, wholeGPU비용아님. GPU개선실측없음.
+**접근성·폴백**: 정지review부터. 제품reduced-motion연결미완. D080cloud-free/AI영상대안보존.
+**근거**: [이미지][코드][문헌][추론]. NASA https://visibleearth.nasa.gov/images/57747/blue-marble-clouds/77558l ; 제작 https://science.nasa.gov/blogs/earth-matters/2011/10/06/crafting-the-blue-marble/ ; Guerrilla2015공식PDF49/74쪽 https://d3d3g8mu99pzk9.cloudfront.net/AndrewSchneider/The-Real-time-Volumetric-Cloudscapes-of-Horizon-Zero-Dawn.pdf ; Epic공식 https://dev.epicgames.com/documentation/en-us/unreal-engine/volumetric-cloud-component-in-unreal-engine ; Skybolt작성자코드 https://github.com/Prograda/Skybolt/blob/master/Assets/Core/Shaders/Clouds.h ; 개발자직접설명 https://discourse.threejs.org/t/how-to-cast-shadows-from-an-outer-sphere-to-an-inner-sphere/53732 . 단일동일기술을전부사용한다는주장아님.
+**재현 요구사항**: 기존Three/WebGL2/AGX/Takram유지, farproxyshader+UVbake/opticalcalibration필요. 난이도중상; 새엔진이식없음.
+**수용 기준**: 타원윤곽없음/thin-thick차이/같은sun명암과shadow/같은군집확대/역scrollnoise·잔상사용자review. 자동alpha수치만으로PASS안함.
+**ECG 번안**: 지구→사람측정공간도입. 비교panel파형/단위/데이터계약미변경.
+**재현 상태**: none — 연구·추천설계만, D112전volume시험과별도. D113/F079 상세 ECG_A_orbital_cloud_hybrid_research_2026-10-08.md.

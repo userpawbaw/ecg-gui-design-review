@@ -711,3 +711,7 @@ clouds resolveMaterial alpha.05 단독후보3정착+8초영상추가로27fixed/4
 ## 2026-10-08 D112 동일 기상장6구도/가림후보
 사용자그림자보류·다음단계진행승인. 같은weather/ECEF/DEM으로광역→지역→접근→커튼→edge→가림6구도실제제작. 원경별/인쇄cloud제거,초기raystep거리번안,macro9×fine6고정weatherRT/shape기본복원/detail거리감쇠. 여러실패candidate native를보존,최신6정착+24초actualWebM/forwardwheel .2136정착. 원경띠내점질감/지도광학TUNE,가림표본PASS를전체품질승인으로확대하지않음. 기본main/Story/서고통합미완,그림자보류유지. 다음same-weather원경coverageproxy→근경volume보완후archiveKEEP연결. F078/D112/O022/CASE007. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_same_footprint_handoff_2026-10-08.md; gallery verification/a-cloud-handoff-20261008/gallery.html. finalbuild80module/records244PASS,다른usercapture6파일/개인영상추출프레임보존.
 - D112 최종 갤러리 브라우저 확인: native 이미지 6/6 로딩(942×672), 실제 이동 영상 readyState=4 / error=null / 23.983초. 검토용 탭 유지. 원경 질감 TUNE 및 그림자 보류 유지.
+
+## 2026-10-08 D113 연구 체크포인트
+사용자궤도사진3장과D112native원경대조, 코드의세타원envelope원인확인. NASAcloud-only/분리합성, GuerrillaPDFshape·thin2D/volume, Epic산란/BSM, Takramplannedspace/issue50, Skyboltcoveragehull, three.js작성자shadow설명검토. 보고서/REF014 EFX01405/F079/D113/CASE007/색인·state갱신. 새코드·mockup·runtime/perf시험없음. 기존6usercapture/개인영상추출물보존. 다음위성형분포후보부터검토.
+- 검증: npm run records:check PASS — 246 F/D/O/R 및 CASE/출처/색인. git diff --check PASS. 코드 변경 없음으로 build/runtime 재시험 생략; 품질·성능 미검증을 유지.

@@ -1916,3 +1916,22 @@ ultra/iteration증가와옵션존재만으로해결선언하거나정착사진�
 같은 DEM1.5×/ECEF/고정sun/layers에서6구도연결. source raystep=minStep+(perspectiveScale-1)*rayNear 근거로 먼구름샘플건너뜀을줄임. shape0/원경haze0대조에서흰막가설수정. macro9×fine6으로원본세부주기54유지하며같은weatherRT사용. .41정착overlay최저alpha.96대/95%불투명표본100%로가림내부gate확보. 원경밴드내잔여speckle/지도광학과중간구간속도는TUNE,그림자추가튜닝보류. manifest verification/a-cloud-handoff-20261008/manifest.json.
 ### 놓쳤다면
 미세shape를전부생략해균일막을만들거나마지막가림성공을전체구름퀄리티승인으로확대했을것이다. 최신6구도와native영상으로검토하고원경표현은후속보완한다. 기본main/서고/Story채택은별도이다.
+
+## F-079. 원경 타원 구름은 분포 마스크 문제이며 사진의 국소 양감은 별도 공간 자료로 옮겨야 한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화][이미지][코드][문헌] |
+| 연결 | D-113 / F-078 / CASE-007 |
+| 상태 | 코드 원인 확인 / hybrid 해결 품질 미검증 |
+
+### 발단
+사용자: “불규칙하기보단 타원 덩어리 느낌이라 별로”. 궤도 사진3장을 제시하며 웹 구름층에 일부만 선명도·양감·그림자를 적용하는 방법 제안.
+### 먼저 의심한 것과 배제 방법
+해상도/노이즈만 문제로 보는 가설을 코드와 native p.18 대조. bakeHandoffWeather의 세 타원 length(d/scale) envelope가 큰 형태를 직접 결정한다. source 세부나repeat를 개선해도 이 윤곽은 남는다.
+### 결정적 근거
+사진은 넓은 얇은층·끊어진 띠·선택된 두꺼운 군집·큰 여백이 함께 있다. Guerrilla2015 PDF74의 얇은2D/두꺼운volume 구분, NASAcloud-only/분리합성, Takram planned global coverage/space views, Skybolt base/detail/lowres density분리와 대조했다. 사진RGB만으로 고도·밀도는 확정할 수 없다. 구름 내부 명암과 지면 투영shadow는 별도 경로이다.
+### 조치와 검토한 대안
+원경 위성형coverage+tau/top-height proxy, 국소 nearvolume를 같은ECEF로 정합하는 후보 추천. 전구간volume/오프라인pass도 보존. D112 타원분포는 교체대상, 기존근경커튼·DEM·가림증거 보존. 연구보고서 ECG_A_orbital_cloud_hybrid_research_2026-10-08.md. 렌더러 변경/채택 없음.
+### 놓쳤다면
+타원mask에 더 밝은빛/선명도/작은솜뭉치를 추가해 모양 문제를 반복하거나, 사진밝기를 높이로 바꿔 바다반사와 구름산란을 혼동했을 것이다.

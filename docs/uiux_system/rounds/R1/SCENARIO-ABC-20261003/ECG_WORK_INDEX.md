@@ -259,3 +259,6 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## 2026-10-08 D112 동일 기상장6구도/가림후보
 사용자그림자보류·다음단계진행승인. 같은weather/ECEF/DEM으로광역→지역→접근→커튼→edge→가림6구도실제제작. 원경별/인쇄cloud제거,초기raystep거리번안,macro9×fine6고정weatherRT/shape기본복원/detail거리감쇠. 여러실패candidate native를보존,최신6정착+24초actualWebM/forwardwheel .2136정착. 원경띠내점질감/지도광학TUNE,가림표본PASS를전체품질승인으로확대하지않음. 기본main/Story/서고통합미완,그림자보류유지. 다음same-weather원경coverageproxy→근경volume보완후archiveKEEP연결. F078/D112/O022/CASE007. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_same_footprint_handoff_2026-10-08.md; gallery verification/a-cloud-handoff-20261008/gallery.html. finalbuild80module/records244PASS,다른usercapture6파일/개인영상추출프레임보존.
+
+## D113 원경 위성형 구름 연구
+- [궤도 구름 분석·hybrid 후보·제작 순서](ECG_A_orbital_cloud_hybrid_research_2026-10-08.md): 이번사진3장의형태·국소양감·shadow분리/타원코드원인/공식자료/자료계약. 연구완료·구현전. 다음분포→광학→인계→motion→서고.

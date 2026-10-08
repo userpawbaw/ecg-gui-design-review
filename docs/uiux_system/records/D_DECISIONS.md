@@ -2834,3 +2834,23 @@ D111 이후 사용자 자글거림 잠정 개선 관찰, 그림자 추가 튜닝
 
 ### D112 원경 shape 제거 가설 철회
 [캡처] 원경haze density0 단독변경에도veil/alpha.75가남아haze원인확정가설을채택하지않는다. [소스] weather.density의coverageFilterWidth.6은weather0에도층높이에따라미소양의밀도를만든다. 원래shape erosion은그희박한영역을다시깎으므로shapeAmount0으로빼면균일막이남을수있다. shapeAmount1 유지로복원하고원경은shapeDetailAmount만감쇠한다. 다른sampling/기상장/구름밀도/그림자변경없음,실제대조후판정. 제거했던shape는지형적응LOD필수기능과구분하며이전실패증거보존.
+
+## D-113. 궤도 구름을 위성형 분포·국소 입체·근경 volume로 나누는 후보를 조사한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화][코드][문헌] |
+| 상태 | 연구 완료 / 추천 후보 / 구현 및 최종 채택 전 |
+| 연결 | F-079 / D-112 |
+| CASE | CASE-007 |
+
+### 갈림길
+원경에 타원덩어리를 남기는 D112기상장을 유지하며 quality만 올릴 것인가, 위성형분포와 국소입체를 분리할 것인가.
+### 검토한 선택지
+A전구간volume+새weather, B위성cloud-only형태+tau/topheight proxy+국소Takramvolume, C오프라인다층/영상. 사용자 요청은 조사/아이디어검토이며 자동제품교체 승인이 아니다.
+### 고른 것과 근거
+B를 추천 후보로 설계한다. 얇은층/두꺼운군집을 자료부터 분리하고 같은C/tau/H/worldSun을 far/near에 공유한다. NASA별도구름에셋/Guerrilla얇은2D층/Skyboltbase-detail분리/Takram우주지원한계를 조사. 실제GPU/전환품질은 아직미검증. 이번작업은 문서만 작성한다.
+### 버린 것과 이유
+타원3개에noise만추가하는안, 전체shapeAmount0, scroll로구름두께성장, 무관한VDB로지역교체는 이전결함을 반복한다. 모든구름을normalmap만으로대체하면 통과/옆면광학이부족하다. 후보C는기각하지않고별도대안으로보존.
+### 되돌려야 하는 조건
+far/near의형태·투과·밝기정합이불가능하거나 역scroll점프/과도비용이남으면 A/C와비교. 실제룩사용자리뷰전 최종채택없음. 기존near그림자추적보류는유지하며 이번원경shadow요청은설계만반영.

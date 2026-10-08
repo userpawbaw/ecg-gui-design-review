@@ -23,7 +23,7 @@ import {beatPhase,type Loop} from '../intro/beats';
 export type Cond='pli'|'bw'|'ma';
 export type NoiseData={cond:Cond,fs:number,loop:Loop,input:Float32Array,output:Float32Array,clean:Float32Array};
 export type NoiseDom={gl:HTMLCanvasElement,grid:HTMLCanvasElement,sweep:HTMLCanvasElement,overlay:HTMLCanvasElement,cells:HTMLElement[]};
-export type NoiseOptions={frozenT:number|null,reduced:boolean,onEnd?:()=>void};
+export type NoiseOptions={frozenT:number|null,reduced:boolean,onEnd?:()=>void,last?:boolean};
 type Story={figure_anchor:number[],morphs:string[],fist_s:number[],ra_arc_m:number,sternum_v:number,heart_approx:number[],
  electrodes:Record<'RA'|'LA'|'LL',{v:number,p:number[],n:number[]}>,cams:Record<string,{type:string,loc:number[],rot_euler:number[],lens?:number,sensor_width?:number,ortho_scale?:number}>};
 
@@ -58,7 +58,8 @@ export function clenchStarts(input:Float32Array,clean:Float32Array,fs:number){  
  return starts;
 }
 
-export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOptions){
+export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOptions){
+ let data=data0;
  const U=(f:string)=>new URL(`./assets/${f}`,import.meta.url).href;
  const story:Story=await (await fetch(U('story.json'))).json();
  const A=story.figure_anchor;
@@ -134,7 +135,7 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
  // P-b field (pli): nested translucent shells around the archive's power line (rig_v3.glb PowerLine, room-fixed path);
  // they grow from the cable until they wrap the figure, then fade as the difference shows at RA (inflow-field-v3 in the web)
  const shells:{m:THREE.Mesh,u:{uK:{value:number}}}[]=[];let cablePts:THREE.Vector3[]=[];
- if(data.cond==='pli'){
+ {                                                                // loaded once; shown only in the power-line scene
   const rg=await loader.loadAsync(new URL('../intro/assets/rig_v3.glb',import.meta.url).href);rg.scene.updateMatrixWorld(true);
   let pl:THREE.Mesh|null=null;rg.scene.traverse(o=>{if(o.name.startsWith('PowerLine')&&(o as THREE.Mesh).isMesh)pl=o as THREE.Mesh;});
   if(pl){const m=pl as THREE.Mesh,pa=m.geometry.getAttribute('position'),ua=m.geometry.getAttribute('uv');const B=80,acc=Array.from({length:B},()=>({p:new THREE.Vector3(),n:0}));let umax=0;
@@ -153,9 +154,8 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
  if(cablePts.length){reach=Infinity;const mw=figure.group.matrixWorld,q=new THREE.Vector3();
   for(let i=0;i<P0.count;i+=37){q.fromBufferAttribute(P0,i).applyMatrix4(mw);for(const c of cablePts)reach=Math.min(reach,q.distanceTo(c));}}
  // camera from story.json ('ma' for pli/ma, 'side' for bw — the person's right, D-054)
- const camDef=story.cams[data.cond==='bw'?'side':'ma'];
- const camLoc=toThree(camDef.loc,A),e=camDef.rot_euler,eul=new THREE.Euler(e[0],e[1],e[2],'ZYX');   // Blender XYZ euler = Rz·Ry·Rx = three order ZYX
- const fwdB=new THREE.Vector3(0,0,-1).applyEuler(eul),camLook=toThree([camDef.loc[0]+fwdB.x,camDef.loc[1]+fwdB.y,camDef.loc[2]+fwdB.z],A);
+ const camFrom=(name:string)=>{const d=story.cams[name],e=d.rot_euler,eul=new THREE.Euler(e[0],e[1],e[2],'ZYX');   // Blender XYZ euler = Rz·Ry·Rx = three order ZYX
+  const f=new THREE.Vector3(0,0,-1).applyEuler(eul);return{def:d,loc:toThree(d.loc,A),look:toThree([d.loc[0]+f.x,d.loc[1]+f.y,d.loc[2]+f.z],A)};};
  const camera=new THREE.PerspectiveCamera(60,1,.05,60);camera.up.set(0,1,0);
  // second pass (IDEA-R1-NOISE §10): per-scene camera path that settles on the first pass's composition. Keys are
  // (time, position, look, horizontal fov); between keys the view direction turns about the look point (orbit-like) and
@@ -165,12 +165,17 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
  const V3=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
  const H0=heartWorld.clone(),Fo=origin.clone();
  const STRIP=V3(-.97,.05,-3.62),DESK=V3(-2.35,1.0,-3.55);         // archive power strip / desk (Blender archive frame → three)
- let finalPos=camLoc.clone(),finalLook=camLook.clone(),finalH=hfovOf(camDef.lens??16);
- if(camDef.type==='ortho'){                                       // B-b side view: the stills' orthographic camera becomes a long
-  const fwd=camLook.clone().sub(camLoc).normalize(),pivot=camLoc.clone().addScaledVector(fwd,Math.abs(camDef.loc[0]));   // lens far away
-  finalLook=pivot.clone().add(V3(0,.05,0));finalPos=pivot.clone().addScaledVector(fwd,-4.5).add(V3(0,.9,0));finalH=2*Math.atan((camDef.ortho_scale??1.9)/2/4.5);}   // a little from above: the near armrest no longer crosses the body
+ function finalFor(cond:Cond){
+  const c=camFrom(cond==='bw'?'side':'ma');
+  if(c.def.type!=='ortho')return{pos:c.loc,look:c.look,h:hfovOf(c.def.lens??16)};
+  // B-b side view: the stills' orthographic camera becomes a long lens far away, a little from above (the near armrest)
+  const fwd=c.look.clone().sub(c.loc).normalize(),pivot=c.loc.clone().addScaledVector(fwd,Math.abs(c.def.loc[0]));
+  return{pos:pivot.clone().addScaledVector(fwd,-4.5).add(V3(0,.9,0)),look:pivot.clone().add(V3(0,.05,0)),h:2*Math.atan((c.def.ortho_scale??1.9)/2/4.5)};
+ }
  const maDef=story.cams.ma,maE=maDef.rot_euler,maF=new THREE.Vector3(0,0,-1).applyEuler(new THREE.Euler(maE[0],maE[1],maE[2],'ZYX'));
  const maPos=toThree(maDef.loc,A),maLook=toThree([maDef.loc[0]+maF.x,maDef.loc[1]+maF.y,maDef.loc[2]+maF.z],A),maH=hfovOf(maDef.lens??16);
+ function keysFor(cond:Cond):Key[]{
+ const {pos:finalPos,look:finalLook,h:finalH}=finalFor(cond);
  const K:Record<Cond,Key[]>={
   pli:[{t:0,pos:H0.clone().add(V3(0,.05,.75)),look:H0,hfov:.42},
    {t:3,pos:H0.clone().add(V3(.1,.1,.95)),look:H0,hfov:.85},
@@ -182,9 +187,10 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
    {t:18.6,pos:finalPos,look:finalLook,hfov:finalH,ease:'whip'}],                               // whip zoom on a beat
   bw:[{t:0,pos:maPos,look:maLook,hfov:maH},{t:4,pos:finalPos,look:finalLook,hfov:finalH}],         // 90° orbit to the side view
   ma:[{t:0,pos:Fo.clone().add(V3(-1.3,1.0,.6)),look:H0,hfov:.9},{t:4,pos:finalPos,look:finalLook,hfov:finalH},
-   {t:31,pos:finalPos,look:finalLook,hfov:finalH},{t:35,pos:Fo.clone().add(V3(.9,3.2,2.4)),look:Fo.clone().add(V3(-.6,.4,-.4)),hfov:hfovOf(22)}]};   // end: crane up over the archive → Lab   // down to the arm, low angle
- const END={pli:35,bw:33,ma:35}[data.cond];let ended=false;
- const keys=K[data.cond],TP={pli:19,bw:11,ma:11}[data.cond];      // panel (right curtain + wave) from TP
+   {t:31,pos:finalPos,look:finalLook,hfov:finalH},{t:35,pos:Fo.clone().add(V3(.9,3.2,2.4)),look:Fo.clone().add(V3(-.6,.4,-.4)),hfov:hfovOf(22)}]};   // end: crane up over the archive → Lab
+ return K[cond];}
+ let END=0,ended=false,keys:Key[]=[],TP=0,last=!!opt.last;
+ const cur={look:new THREE.Vector3(),h:1};                        // the camera's current look point / fov (scene hand-over)
  const ez=(k:number)=>k<.5?4*k*k*k:1-(-2*k+2)**3/2,whip=(k:number)=>1-(1-k)**4;
  const tmpD=new THREE.Vector3();
  function camAt(t:number,breathOff=0){
@@ -195,7 +201,7 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
   const qa=new THREE.Quaternion(),q=new THREE.Quaternion().setFromUnitVectors(da.clone().normalize(),db.clone().normalize());
   tmpD.copy(da).normalize().applyQuaternion(qa.slerp(q,k)).multiplyScalar(dist);
   camera.position.copy(look).add(tmpD);camera.position.y+=breathOff;camera.lookAt(look.x,look.y+breathOff,look.z);
-  const h=THREE.MathUtils.lerp(a.hfov,b.hfov,k);camera.fov=deg(2*Math.atan(Math.tan(h/2)/camera.aspect));
+  const h=THREE.MathUtils.lerp(a.hfov,b.hfov,k);cur.look.copy(look);cur.h=h;camera.fov=deg(2*Math.atan(Math.tan(h/2)/camera.aspect));
   camera.near=dist>2.5?Math.max(.05,dist-.8):.03;                // long views skip the stacks between camera and figure
   camera.updateProjectionMatrix();camera.updateMatrixWorld();
  }
@@ -203,13 +209,13 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
  const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
  composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);
  // M-b shallow focus (§10.4): focus rides the wave — fist → shoulder → RA
- const bokeh=data.cond==='ma'?new BokehPass(scene,camera,{focus:1,aperture:.006,maxblur:.008}):null;if(bokeh)composer.addPass(bokeh);
+ const bokeh=new BokehPass(scene,camera,{focus:1,aperture:0,maxblur:.008});composer.addPass(bokeh);bokeh.enabled=false;
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.5,.35,.8);composer.addPass(bloom);composer.addPass(new OutputPass());
  const grade=createGrade();composer.addPass(grade);
  // wave panel (stored samples, intro sweep rules) + 4-cell processing strip above it
  const grid=createGrid(dom.grid);
- const sweep=createSweep(dom.sweep,{gridHot:grid.hot,fs:data.fs,loop:data.loop,input:{values:data.input,color:[255,188,121],glow:.45,core:.78,white:.35},output:{values:data.output,color:[103,231,195]},mvPerBox:3.6});
- const mix=createBeatMix(4);
+ const mkSweep=()=>createSweep(dom.sweep,{gridHot:grid.hot,fs:data.fs,loop:data.loop,input:{values:data.input,color:[255,188,121],glow:.45,core:.78,white:.35},output:{values:data.output,color:[103,231,195]},mvPerBox:3.6});
+ let sweep=mkSweep(),mix=createBeatMix(4);
  const og=dom.overlay.getContext('2d')!;
  let W=0,H=0,panelMid=0;
  const sternumPx=()=>{const p=skin(VID.sternum).project(camera);return{x:(p.x*.5+.5)*W,y:(-p.y*.5+.5)*H};};
@@ -217,41 +223,51 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
   W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio||1,1.25);
   renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);bloom.resolution.set(W*pr/2,H*pr/2);
   arch.setPx(H,pr);grade.uniforms.uAspect.value=W/H;
-  camera.aspect=W/H;camAt(1e9);                                  // panel layout is measured on the settled composition
+  // panel layout is measured on the settled composition (TP), then the camera goes back where it was (scene hand-over)
+  const keep={p:camera.position.clone(),q:camera.quaternion.clone(),fov:camera.fov,near:camera.near,look:cur.look.clone(),h:cur.h};
+  camera.aspect=W/H;camAt(TP);
   // B-b: the panel's 0 mV sits at the exhaled chest height (layout only); other scenes centre it
   setMorphs(0,0);figure.group.updateMatrixWorld(true);panelMid=data.cond==='bw'?sternumPx().y:.5*H;
   const half=.2*H,b={l:.64*W,r:.97*W,t:panelMid-half,b:panelMid+half},mv=mvPerBoxFor(b,2.5);sweep.resize(b,mv);grid.resize(b,2.5,mv);
   dom.overlay.width=W*pr;dom.overlay.height=H*pr;og.setTransform(pr,0,0,pr,0,0);
   const strip=dom.cells[0]?.parentElement;if(strip)Object.assign(strip.style,{left:b.l+'px',top:Math.max(12,b.t-46)+'px',width:(b.r-b.l)+'px'});
+  camera.position.copy(keep.p);camera.quaternion.copy(keep.q);camera.fov=keep.fov;camera.near=keep.near;camera.updateProjectionMatrix();camera.updateMatrixWorld();cur.look.copy(keep.look);cur.h=keep.h;
  }
- resize();addEventListener('resize',resize);
-
- // stored-trace timings
- const T=data.input.length/data.fs;
- const bw=data.cond==='bw'?breathFromBaseline(data.input,data.fs):null;
- const clenches=data.cond==='ma'?clenchStarts(data.input,data.clean,data.fs):[];
+ // stored-trace timings (per scene)
+ let T=0,bw:ReturnType<typeof breathFromBaseline>|null=null,clenches:number[]=[],PROC=0;
  const breathFixed=(t:number)=>{const u=t%5;return u<2?ss(0,2,u):1-ss(2,5,u);};              // D-053: 2 per 10 s
  const fistAt=(t:number)=>{for(const c of clenches){const d=t-c;if(d<0||d>CLOSE+HOLD+OPEN)continue;return d<CLOSE?ss(0,CLOSE,d):d<CLOSE+HOLD?1:1-ss(CLOSE+HOLD,CLOSE+HOLD+OPEN,d);}return 0;};
  const waveAt=(t:number)=>{let best=-1;for(const c of clenches){const d=t-c-.3;if(d>=0&&d<1.6)best=d;}return best;};   // wave starts as the fist tightens
- const PROC=TP+3;                                                    // the processing strip starts after the inflow is shown
-
- const t0=performance.now();let frozen=opt.frozenT,frame=0;
+ let t0=performance.now(),frozen=opt.frozenT,frame=0;
+ /** Start a scene on the same stage: the camera path begins where the previous scene's camera is (no cut, no reload). */
+ function setScene(d:NoiseData,o:{last?:boolean}={}){
+  const handover=keys.length>0;data=d;last=!!o.last;ended=false;
+  T=data.input.length/data.fs;bw=data.cond==='bw'?breathFromBaseline(data.input,data.fs):null;
+  clenches=data.cond==='ma'?clenchStarts(data.input,data.clean,data.fs):[];
+  END={pli:35,bw:33,ma:35}[data.cond];TP={pli:19,bw:11,ma:11}[data.cond];PROC=TP+3;   // panel (right curtain + wave) from TP; strip after the inflow
+  keys=keysFor(data.cond);
+  if(handover)keys[0]={t:0,pos:camera.position.clone(),look:cur.look.clone(),hfov:cur.h};
+  bokeh.enabled=data.cond==='ma';shells.forEach(({m})=>{m.visible=false;});
+  sweep=mkSweep();mix=createBeatMix(4);t0=performance.now();if(frozen!==null)frozen=0;resize();
+ }
+ setScene(data0,{last:opt.last});addEventListener('resize',resize);
  const clock=()=>frozen??(performance.now()-t0)/1000;
  function update(){
   const t=clock(),tl=((t%T)+T)%T;frame++;
   // motion
   const breath=bw?bw.breath[Math.min(bw.breath.length-1,Math.floor(tl*data.fs))]:breathFixed(t);
   const fist=data.cond==='ma'&&t>2?fistAt(tl):0;
-  const panelK=ss(TP,TP+.6,t);camAt(t,bw&&t>4?.015*(2*breath-1):0);    // camera before anything is projected
+  const panelK=ss(TP,TP+.6,t)*(last?1:1-ss(END-1.2,END,t));            // the curtain lifts before the next scene
+  camAt(t,bw&&t>4?.015*(2*breath-1):0);    // camera before anything is projected
   setMorphs(breath,fist);placeElectrodes();
   // inflow markers
   let common=0,ringK=0,leadK=0,front=-1,waveK=0;
   if(data.cond==='pli'){const p=t-16.6;common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p));ringK=ss(1.4,2.2,p);leadK=ss(1.6,2.4,p);}   // field reaches the body as the crane ends
   if(data.cond==='ma'&&t>4){const d=waveAt(tl);if(d>=0){front=(ss(0,1.2,d)*1.15-.05)*story.ra_arc_m;waveK=12;ringK=ss(1.05,1.3,d)*(1-ss(1.3,1.6,d)*.6);leadK=ringK;}}
-  if(shells.length){const grow=ss(13,16.6,t),fade=1-.9*ss(17,18.2,t),rOut=.06+grow*(reach+.12);   // around the cable → wraps the body
+  if(shells.length&&data.cond==='pli'){const grow=ss(13,16.6,t),fade=1-.9*ss(17,18.2,t),rOut=.06+grow*(reach+.12);   // around the cable → wraps the body
    shells.forEach(({m,u},i)=>{const r=Math.max(.01,rOut*(i+1)/3);m.visible=t>12.6&&fade>.02;m.geometry.dispose();
     m.geometry=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(cablePts),160,r,24);u.uK.value=ss(12.6,13.6,t)*fade;});}
-  if(bokeh){const fistP=skin(VID.fist),raP=skin(VID.RA),k=front<0?0:clamp(front/story.ra_arc_m);
+  if(bokeh.enabled){const fistP=skin(VID.fist),raP=skin(VID.RA),k=front<0?0:clamp(front/story.ra_arc_m);
    const target=fistP.lerp(raP,k*k*(3-2*k));(bokeh.uniforms as Record<string,{value:number}>).focus.value=camera.position.distanceTo(target);
    (bokeh.uniforms as Record<string,{value:number}>).aperture.value=t<4?.0005:.006;}
   bu.uCommon.value=common;bu.uFront.value=front;bu.uWaveK.value=waveK;
@@ -269,12 +285,12 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
    og.lineCap='round';for(const [w,col] of [[7,'rgba(120,80,40,.5)'],[3,'rgba(255,196,120,.9)'],[1,'rgba(255,240,210,1)']] as const){og.strokeStyle=col;og.lineWidth=w;og.beginPath();og.moveTo(c.x,c.y);og.lineTo(hx,hy);og.stroke();}
    og.fillStyle='rgba(255,205,140,1)';og.beginPath();og.arc(c.x,c.y,4,0,7);og.fill();}
   og.globalAlpha=1;
-  const out=ss(END-1.2,END,t);if(out>0){og.fillStyle=`rgba(0,0,0,${out})`;og.fillRect(0,0,W,H);}      // scene ends in black → next scene / Lab
+  const out=last?ss(END-1.2,END,t):0;if(out>0){og.fillStyle=`rgba(0,0,0,${out})`;og.fillRect(0,0,W,H);}      // only the last scene ends in black (→ Lab)
   if(t>=END&&!ended&&frozen===null){ended=true;opt.onEnd?.();}
   arch.update(t,frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,.6);
   grade.uniforms.uTime.value=t;composer.render();
  }
  gsap.ticker.add(update);
- return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,figure,arch,
+ return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,get cond(){return data.cond;},figure,arch,
   dispose(){gsap.ticker.remove(update);removeEventListener('resize',resize);renderer.dispose();composer.dispose();arch.dispose();figure.dispose();}};
 }

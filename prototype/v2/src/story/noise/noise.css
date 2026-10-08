@@ -9,3 +9,4 @@
 .ns-title b{font-size:clamp(22px,2.4vw,34px);font-weight:600;letter-spacing:-.01em}
 .ns-title small{font:500 11px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;color:rgba(239,233,223,.6)}
 .ns-notice{position:absolute;left:64%;right:3%;bottom:4%;margin:0;font:400 11px/1.5 'IBM Plex Mono',monospace;color:rgba(239,233,223,.5)}
+.ns-title{animation:ns-in .9s ease-out both}@keyframes ns-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}

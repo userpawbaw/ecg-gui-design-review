@@ -23,7 +23,7 @@ import {beatPhase,type Loop} from '../intro/beats';
 export type Cond='pli'|'bw'|'ma';
 export type NoiseData={cond:Cond,fs:number,loop:Loop,input:Float32Array,output:Float32Array,clean:Float32Array};
 export type NoiseDom={gl:HTMLCanvasElement,grid:HTMLCanvasElement,sweep:HTMLCanvasElement,overlay:HTMLCanvasElement,cells:HTMLElement[]};
-export type NoiseOptions={frozenT:number|null,reduced:boolean};
+export type NoiseOptions={frozenT:number|null,reduced:boolean,onEnd?:()=>void};
 type Story={figure_anchor:number[],morphs:string[],fist_s:number[],ra_arc_m:number,sternum_v:number,heart_approx:number[],
  electrodes:Record<'RA'|'LA'|'LL',{v:number,p:number[],n:number[]}>,cams:Record<string,{type:string,loc:number[],rot_euler:number[],lens?:number,sensor_width?:number,ortho_scale?:number}>};
 
@@ -181,7 +181,9 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
    {t:17,pos:Fo.clone().add(V3(.73,2.27,1.65)),look:Fo.clone().add(V3(-.35,.55,-.25)),hfov:hfovOf(24)},   // crane up, wide
    {t:18.6,pos:finalPos,look:finalLook,hfov:finalH,ease:'whip'}],                               // whip zoom on a beat
   bw:[{t:0,pos:maPos,look:maLook,hfov:maH},{t:4,pos:finalPos,look:finalLook,hfov:finalH}],         // 90° orbit to the side view
-  ma:[{t:0,pos:Fo.clone().add(V3(-1.3,1.0,.6)),look:H0,hfov:.9},{t:4,pos:finalPos,look:finalLook,hfov:finalH}]};   // down to the arm, low angle
+  ma:[{t:0,pos:Fo.clone().add(V3(-1.3,1.0,.6)),look:H0,hfov:.9},{t:4,pos:finalPos,look:finalLook,hfov:finalH},
+   {t:31,pos:finalPos,look:finalLook,hfov:finalH},{t:35,pos:Fo.clone().add(V3(.9,3.2,2.4)),look:Fo.clone().add(V3(-.6,.4,-.4)),hfov:hfovOf(22)}]};   // end: crane up over the archive → Lab   // down to the arm, low angle
+ const END={pli:35,bw:33,ma:35}[data.cond];let ended=false;
  const keys=K[data.cond],TP={pli:19,bw:11,ma:11}[data.cond];      // panel (right curtain + wave) from TP
  const ez=(k:number)=>k<.5?4*k*k*k:1-(-2*k+2)**3/2,whip=(k:number)=>1-(1-k)**4;
  const tmpD=new THREE.Vector3();
@@ -267,6 +269,8 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
    og.lineCap='round';for(const [w,col] of [[7,'rgba(120,80,40,.5)'],[3,'rgba(255,196,120,.9)'],[1,'rgba(255,240,210,1)']] as const){og.strokeStyle=col;og.lineWidth=w;og.beginPath();og.moveTo(c.x,c.y);og.lineTo(hx,hy);og.stroke();}
    og.fillStyle='rgba(255,205,140,1)';og.beginPath();og.arc(c.x,c.y,4,0,7);og.fill();}
   og.globalAlpha=1;
+  const out=ss(END-1.2,END,t);if(out>0){og.fillStyle=`rgba(0,0,0,${out})`;og.fillRect(0,0,W,H);}      // scene ends in black → next scene / Lab
+  if(t>=END&&!ended&&frozen===null){ended=true;opt.onEnd?.();}
   arch.update(t,frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,.6);
   grade.uniforms.uTime.value=t;composer.render();
  }

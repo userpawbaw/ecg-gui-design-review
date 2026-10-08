@@ -243,3 +243,6 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D109 실제 휠과 다음 인계 계약
 [ECG_A_takram_wheel_and_handoff_2026-10-08.md](ECG_A_takram_wheel_and_handoff_2026-10-08.md) → verification/a-takram-wheel-20261008/gallery.html / F075 / D109. 실제wheel정역정착PASS, 먼시점구름/성능안정성TUNE. 다음거리별cloud표현과same-renderer globe/DEM/서고후보통합. D108커튼빛기준유지·기본main미교체.
+
+## D110 영상 피드백과 원경 cloud 인계
+[ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md](ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md): 빛커튼 분위기긍정, 자글/그림자/원경 TUNE. 다음 하강결함분리시험→같은footprint원경mask/근경volume6구도→단일renderer통합. 제안상태/코드수정없음. D109입력PASS와광학품질을구별.

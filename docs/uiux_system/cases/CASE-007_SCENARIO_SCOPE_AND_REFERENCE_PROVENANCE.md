@@ -215,3 +215,6 @@ GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 �
 
 ### D109 실제 wheel 증거 경계
 사용자계속진행→D108 automated progress증거를실제wheel과구별→labwheel/정착/panel분리→10native확인. .235먼구름·짧은GPUquery변동은전체경로인계의다음문제로남긴다. 입력PASS≠시각채택/안정성/전체main통합. F075/D109/ECG_A_takram_wheel_and_handoff_2026-10-08.md 참조.
+
+### D110 사용자 영상이 요구한 재검토 [대화]
+사용자: “빛 커튼 분위기 좋네”, “자글거리는 문제는 남아있긴 하고”. AI기여:사용자ultra100영상설정을기존high50와구별하고sourcecascade/stochasticnoise를대조. 판단변화:휠입력PASS이후바로통합보다하강결함분리와same-footprint원경인계를우선. D110/F076/ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md. 영상프레임만으로원인을확정하지않는다.

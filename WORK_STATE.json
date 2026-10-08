@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D109 actual wheel verified in lab; next distance-aware cloud representation then same-renderer globe/DEM/descent/archive candidate handoff. Visual TUNE and unstable short GPU timing remain; Story/BC separate.",
+  "next_action": "D110 user-video review: preserve curtain-light mood; isolate cloud temporal noise and camera-dependent shadow behavior, then same-footprint distant-mask/near-volume six-pose handoff before single-renderer integration.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1219,15 +1219,15 @@
     ]
   },
   "north_cloud_takram_2026_10_08": {
-    "status": "D109_WHEEL_INPUT_PASS_VISUAL_PERFORMANCE_TUNE_MAIN_HANDOFF_PENDING",
+    "status": "D110_VIDEO_REVIEWED_CURTAIN_MOOD_POSITIVE_NOISE_SHADOW_DISTANT_HANDOFF_TUNE",
     "decision": "D109",
-    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_wheel_and_handoff_2026-10-08.md",
+    "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md",
     "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-wheel-interactive-20261008",
     "gallery": "verification/a-takram-wheel-20261008/gallery.html",
     "terrainHeightScale": 1.5,
     "mainReplaced": false,
-    "remoteSave": "D108 834a35d4e26c28ff4ce75cbce2bb09ec3f07a37a remote HEAD and FETCH_HEAD manifest content readback verified. D109 save checkpoint follows.",
-    "next": "User curtain-light candidate review; next chosen look globe/regional/cloud handoff and real wheel/archive occlusion check. FullresTAA keep; cloud faces/far repetition/backlit terrain remain TUNE",
+    "remoteSave": "D109 2366ecfd3af0ff3241a05a3cbe28b935a1b7a4a6 pushed and FETCH_HEAD manifest readback verified.",
+    "next": "D110 user-video review: preserve curtain-light mood; isolate cloud temporal noise and camera-dependent shadow behavior, then same-footprint distant-mask/near-volume six-pose handoff before single-renderer integration.",
     "opticalTrialD108": {
       "nativePairs": 24,
       "samePosePairs": 6,
@@ -1295,6 +1295,15 @@
       "stablePerformancePass": false,
       "mainIntegrated": false,
       "initialFarCloudTexture": "TUNE"
+    },
+    "videoFeedbackD110": {
+      "analysis": "verification/a-cloud-feedback-video-20261008/analysis.json",
+      "curtainMood": "user positive",
+      "wholeLookAdopted": false,
+      "noiseCauseConfirmed": false,
+      "shadowCauseConfirmed": false,
+      "recommendedHandoff": "same world footprint distant mask / near volume",
+      "rendererChanged": false
     }
   }
 }

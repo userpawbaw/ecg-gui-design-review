@@ -688,3 +688,6 @@ D108 최종QA: Vite79modules build PASS / records234 PASS / native24쌍 검증 �
 
 ## 2026-10-08 D109 재개 체크포인트
 D108 원격834a35d content readback 확인 후 lab실제wheel계속진행. 코드감쇠·입력분리·range정착수정, native10쌍/패널240→0/브라우저warn-error없음/최종79modulebuild검증. 초기sandboxEPERM동일npm build escalation해결. p.235먼구름과GPU변동미해결·TUNE, 전체main인계미완. F075/D109와보고서/manifest에다음단계기록. 사용자capture6파일보존.
+
+## 2026-10-08 D110 사용자 영상 검토
+사용자파일MP4 23.65秒/1776×824,ffmpeg로3秒간격8프레임분석. ultra100/upscaleOFF/SMAAOFF/.43/54/windOFF확인,high50증거와구별. pinnedcascade/shadowcoverage와stochasticnoise자료조사. 우선순서:하강결함분리→same-footprint원경cloud인계→단일renderer/서고. 영상원본과추출스크린샷은로컬분석자료보존,원격에는출처hash/분석문서만저장. 코드수정없음. F076/D110.

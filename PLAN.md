@@ -476,3 +476,6 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 
 ## 2026-10-08 D109 실제 휠 연결
 완료: 실제wheel정역입력/시간감쇠/step정착보완/panel스크롤분리/native10쌍/최종79modulebuildPASS. input/runtime범위PASS, .235먼구름질감·GPU변동시각/성능TUNE. 다음거리별구름LOD→같은renderer광학모듈→globe/DEM/서고가림후보통합. 기준 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_wheel_and_handoff_2026-10-08.md, gallery verification/a-takram-wheel-20261008/gallery.html. 기본main/Story/BC·사용자6capture보존.
+
+## 2026-10-08 D110 사용자 영상 리뷰/원경 인계 추천
+빛커튼분위기긍정유지, 자글거림/지형그림자/원경cloud인계TUNE. 23.65초사용자영상8프레임과pinned source/issue40·50대조. 다음하강noise와shadow기여분리→same-footprint원경6구도→단일renderer통합. renderer변경없음/새룩채택전. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_video_feedback_and_lod_plan_2026-10-08.md.

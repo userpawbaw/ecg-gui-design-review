@@ -1856,3 +1856,19 @@ sun15°/az0/hazeExponent.00018·두께1.2에서p.345/.365커튼광선이보이�
 [실제렌더] native10쌍에서현재/목표정착,정역wheelCount와contextLostfalse확인. p.235먼반복구름과GPU시간변동은같은manifest에남김. D-109 및 보고서 참조.
 ### 놓쳤다면
 입력 성공을 품질·성능·전체globe인계 성공으로 혼동하거나 초반 질감 악화를 기본 화면에 통합했을 것이다.
+
+## F-076. ultra100% 사용자 영상에서도 남는 하강 결함은 거리별 표현과 그림자 검증을 분리해야 한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화][소스][영상 프레임 관찰] |
+| 연결 | D-110 / CASE-007 |
+
+### 발단
+사용자는 빛 커튼 분위기를 긍정했으나 하강 자글거림과 지형 그림자의 카메라추종같은느낌을영상으로제시하고광역구름인계방식을질문.
+### 먼저 의심한 것과 배제 방법
+[영상 프레임 관찰]23.65초영상에서3초간격8프레임추출. ultra/100%/upscaleOFF/SMAAOFF/.43/54/windOFF확인. 기존high50와동일조건아님. 해상도부족만의원인으로단정배제, 압축영상이므로원인확정은미수행.
+### 결정적 근거
+[소스]pinnedCloudsEffect는고정sun방향과camera-frustum cascade shadow를사용. wrapper maxFar100km/실제cascade texel snap/margin0/fade존재. source issue40은큰ray step+stochastic offsetnoise를논의, issue50은zoomout artifact유사사례. 동일원인증명아님. 그림자범위/재투영과alias를각기OFF/ON대조하도록추천.
+### 놓쳤다면
+입력PASS·ultra해상도증가를광학결함해결로오해하거나같은구름연속성없이두꺼운전환구름을소환했을것이다. 원경mask↔같은footprint volume추천과별도두꺼운구름/얕은층대안을D110보고서에기록.

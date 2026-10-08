@@ -7,10 +7,12 @@ import {CloudsEffect} from '@takram/three-clouds';
 import {DataTextureLoader,Ellipsoid,Geodetic,parseUint8Array,STBNLoader} from '@takram/three-geospatial';
 import {DitheringEffect,LensFlareEffect} from '@takram/three-geospatial-effects';
 import {createNorthernArrival} from './arrival-north';
+import {OrbitalCloudEffect} from './cloud-orbital';
 import {handoffCamera,handoffFrames,cloudCoverProbe,bakeHandoffWeather} from './cloud-handoff';
 
 const params=new URLSearchParams(location.search);
-const handoff=params.get('handoff')==='1';
+const orbital=params.get('orbital')==='1';
+const handoff=orbital||params.get('handoff')==='1';
 let macroWeather:ReturnType<typeof bakeHandoffWeather>|null=null;
 let handoffStage:ReturnType<typeof handoffCamera>|null=null,coverMeasure:ReturnType<ReturnType<typeof cloudCoverProbe>>=null;
 if(handoff){document.title='A · 북유럽–구름 연속 인계 후보';}
@@ -28,6 +30,8 @@ const look=dom<HTMLSelectElement>('look'),coverage=dom<HTMLInputElement>('covera
 const safetyScale=document.createElement('option');safetyScale.value='.25';safetyScale.textContent='25% · 진단용';cloudScale.add(safetyScale);
 const clusterLabel=document.createElement('label');clusterLabel.innerHTML='응집 대비 <input id="cluster" aria-label="응집 대비" type="number" min="1" max="3" step=".1" value="1">';settings.append(clusterLabel);
 const cluster=dom<HTMLInputElement>('cluster');
+const orbitalSelect=document.createElement('select');orbitalSelect.onchange=()=>gpuTimes.length=0;orbitalSelect.setAttribute('aria-label','궤도 구름 표현');orbitalSelect.innerHTML='<option value="coverage">위성 분포 · 평면 명암</option><option value="relief" selected>위성 분포 · 국소 입체 명암</option>';
+if(orbital){const label=document.createElement('label');label.textContent='궤도 구름 표현 ';label.append(orbitalSelect);settings.prepend(label);document.title='A · 위성 분포 궤도 구름 시험';}
 // D107: independent art-direction controls; original/main defaults stay intact.
 const optics=document.createElement('details');optics.innerHTML='<summary>빛·분포 보완 시험</summary>'+[
  ['weatherX','날씨 위치 X',0,0,1,.01],['weatherY','날씨 위치 Y',0,0,1,.01],['sunElevation','태양 고도',16.1,5,60,1],['sunAzimuth','태양 방위',43.75,-180,180,1],['hazeFalloff','연무 고도 감쇠',.001,.0001,.002,.00005],['layerDepth','구름 두께 배율',1,.6,1.4,.1],['layerDensity','구름 밀도 배율',1,.5,1.5,.1]
@@ -35,12 +39,12 @@ const optics=document.createElement('details');optics.innerHTML='<summary>빛·�
 const weatherX=dom<HTMLInputElement>('weatherX'),sunElevation=dom<HTMLInputElement>('sunElevation'),sunAzimuth=dom<HTMLInputElement>('sunAzimuth'),hazeFalloff=dom<HTMLInputElement>('hazeFalloff');
 const weatherY=dom<HTMLInputElement>('weatherY'),layerDepth=dom<HTMLInputElement>('layerDepth'),layerDensity=dom<HTMLInputElement>('layerDensity');
 const shadowLabel=document.createElement('label');shadowLabel.innerHTML='<input id="groundShadow" type="checkbox" aria-label="지형 구름 그림자" checked> 지형 구름 그림자';optics.append(shadowLabel);
-const groundShadow=dom<HTMLInputElement>('groundShadow');groundShadow.onchange=()=>{aerial.shadow=enabled.checked&&groundShadow.checked?clouds.atmosphereShadow:null;gpuTimes.length=0;};
+const groundShadow=dom<HTMLInputElement>('groundShadow');groundShadow.onchange=()=>{aerial.shadow=enabled.checked&&!orbital&&groundShadow.checked?clouds.atmosphereShadow:null;gpuTimes.length=0;};
 const recipeLabel=document.createElement('label');recipeLabel.innerHTML='조명 후보 <select id="recipe" aria-label="조명 후보"><option value="baseline">이전 기준 · TAA</option><option value="curtain">커튼 광선 · 고도 연무</option></select>';settings.prepend(recipeLabel);
 const recipe=dom<HTMLSelectElement>('recipe');
 if(handoff){
- const label=document.createElement('label');label.innerHTML='연결 구도 <select id="handoffFrame" aria-label="연결 구도">'+handoffFrames.map(f=>`<option value="${f.p}">${f.name}</option>`).join('')+'</select>';settings.prepend(label);
- const select=dom<HTMLSelectElement>('handoffFrame');select.value='0.3';select.onchange=()=>{wheelDriving=false;inputSource='handoff-pose';progress.value=select.value;gpuTimes.length=0;};
+ const label=document.createElement('label');label.innerHTML='연결 구도 <select id="handoffFrame" aria-label="연결 구도">'+(orbital?handoffFrames.slice(0,2):handoffFrames).map(f=>`<option value="${f.p}">${f.name}</option>`).join('')+'</select>';settings.prepend(label);
+ const select=dom<HTMLSelectElement>('handoffFrame');select.value=orbital?'0.18':'0.3';select.onchange=()=>{wheelDriving=false;inputSource='handoff-pose';progress.value=select.value;gpuTimes.length=0;};
 }
 
 const diagnosticUI=document.createElement('details');diagnosticUI.innerHTML='<summary>하강 결함 분리 시험</summary><label>분리 설정 <select id="diagnostic" aria-label="하강 분리 설정"><option value="baseline">기준</option><option value="shadowOff">지형 그림자 OFF</option><option value="margin">그림자 깊이 여유 20km</option><option value="jitterOff">그림자 jitter OFF</option><option value="march">촘촘한 볼륨 샘플</option><option value="far">그림자 범위 200km</option></select></label><button id="diagnosticSet">분리 구도 저장</button>';
@@ -57,13 +61,13 @@ function applyDiagnostic(){
  clouds.clouds.minStepSize=diagnostic.value==='march'?10:quality.value==='ultra'?10:quality.value==='low'?100:50;
  clouds.clouds.perspectiveStepScale=diagnostic.value==='march'?1.003:1.01;
  groundShadow.checked=diagnostic.value!=='shadowOff';
- aerial.shadow=enabled.checked&&groundShadow.checked?clouds.atmosphereShadow:null;gpuTimes.length=0;
+ aerial.shadow=enabled.checked&&!orbital&&groundShadow.checked?clouds.atmosphereShadow:null;gpuTimes.length=0;
 }
 diagnostic.onchange=applyDiagnostic;
 function applyRecipe(value:string){
  recipe.value=value;coverage.value='.42';weatherRepeat.value=handoff?'9':'54';cluster.value='1.6';weatherX.value=weatherY.value='0';
  sunElevation.value=value==='curtain'?'15':'16.1';sunAzimuth.value=value==='curtain'?'0':'43.75';hazeFalloff.value=value==='curtain'?'.00018':'.001';layerDepth.value=value==='curtain'?'1.2':'1';layerDensity.value='1';
- groundShadow.checked=shafts.checked=true;clouds.lightShafts=true;aerial.shadow=enabled.checked?clouds.atmosphereShadow:null;applyWeather();applyOptics();applyDiagnostic();
+ groundShadow.checked=shafts.checked=true;clouds.lightShafts=true;aerial.shadow=enabled.checked&&!orbital?clouds.atmosphereShadow:null;applyWeather();applyOptics();applyDiagnostic();
 }
 recipe.onchange=()=>applyRecipe(recipe.value);
 function applyOptics(){
@@ -108,7 +112,7 @@ const basicLow=document.createElement('option');basicLow.value='basic300';basicL
 const renderer=new THREE.WebGLRenderer({depth:false,logarithmicDepthBuffer:false,antialias:false});
 renderer.setPixelRatio(1);renderer.setSize(innerWidth,innerHeight);
 const measureCover=cloudCoverProbe(renderer);
-if(handoff){progress.min='.18';progress.max='.41';}
+if(handoff){progress.min='.18';progress.max=orbital?'.235':'.41';}
 renderer.toneMapping=THREE.NoToneMapping;renderer.toneMappingExposure=10;
 document.body.appendChild(renderer.domElement);
 const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,10,1e6);
@@ -124,6 +128,7 @@ const sourceSun=getSunDirectionECEF(new Date('2000-06-01T10:00:00Z'),new THREE.V
 const aerial=new AerialPerspectiveEffect(camera);aerial.sky=true;aerial.sunLight=true;aerial.skyLight=true;
 const clouds=new CloudsEffect(camera);clouds.coverage=.4;clouds.qualityPreset='high';
 clouds.events.addEventListener('change',e=>{
+ if(orbital)return;
  if(e.property==='atmosphereOverlay')aerial.overlay=clouds.atmosphereOverlay;
  if(e.property==='atmosphereShadow')aerial.shadow=groundShadow.checked?clouds.atmosphereShadow:null;
  if(e.property==='atmosphereShadowLength')aerial.shadowLength=clouds.atmosphereShadowLength;
@@ -137,6 +142,7 @@ class OpticalPass extends EffectPass {
  hasCloud(){return this.effects.includes(clouds);}
 }
 const opticalPass=new OpticalPass(camera,clouds,aerial);composer.addPass(opticalPass);
+const orbitalEffect=new OrbitalCloudEffect();if(orbital)composer.addPass(new EffectPass(camera,orbitalEffect));
 const lens=new LensFlareEffect(),tone=new ToneMappingEffect({mode:ToneMappingMode.AGX}),dither=new DitheringEffect(),smaa=new SMAAEffect();
 composer.addPass(new EffectPass(camera,lens,tone));
 const smaaPass=new EffectPass(camera,smaa);smaaPass.enabled=false;composer.addPass(smaaPass);
@@ -144,10 +150,10 @@ composer.addPass(new EffectPass(camera,dither));
 aa.onchange=()=>{smaaPass.enabled=aa.checked;gpuTimes.length=0;};
 function setCloudEnabled(){
  // CloudsEffect has no enabled property. The author's R3F scene conditionally mounts it.
- opticalPass.configure(enabled.checked?[clouds,aerial]:[aerial]);
- aerial.overlay=enabled.checked?clouds.atmosphereOverlay:null;
- aerial.shadow=enabled.checked&&groundShadow.checked?clouds.atmosphereShadow:null;
- aerial.shadowLength=enabled.checked?clouds.atmosphereShadowLength:null;
+ opticalPass.configure(enabled.checked&&!orbital?[clouds,aerial]:[aerial]);
+ aerial.overlay=enabled.checked&&!orbital?clouds.atmosphereOverlay:null;
+ aerial.shadow=enabled.checked&&!orbital&&groundShadow.checked?clouds.atmosphereShadow:null;
+ aerial.shadowLength=enabled.checked&&!orbital?clouds.atmosphereShadowLength:null;
  gpuTimes.length=0;
 }
 
@@ -235,12 +241,12 @@ cluster.oninput=applyWeather;
 look.onchange=()=>setPose(activePose);
 shafts.onchange=()=>{clouds.lightShafts=shafts.checked;gpuTimes.length=0;};
 cloudScale.onchange=()=>{clouds.resolutionScale=Number(cloudScale.value);gpuTimes.length=0;};
-function state(){return{handoff:handoff?{stage:handoffStage,cover:coverMeasure,weatherFixed:!wind.checked,macroWeather:macroWeather?{anchor:macroWeather.anchor,sourceRepeat:macroWeather.sourceRepeat,macroRepeat:macroWeather.macroRepeat,role:macroWeather.role}:null,embeddedCloud:false,sourceMip:true,archiveIntegrated:false}:null,ready,contextLost:gl.isContextLost(),mode:activePose,source:'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
+function state(){return{orbital:orbital?{source:'NASA cloud_combined_2048.jpg',sourceSha256:'daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793',mode:orbitalSelect.value,sourcePlacement:{geoAnchor:[.523333333,.842388889],sourceCentre:[.64,.78],scale:2},artisticPlacement:true,technique:'two spherical height proxies with finite-difference slope lighting; no measured height or multiple scattering',shadow:false,nearHandoff:false,range:[.18,.235]}:null,handoff:handoff?{stage:handoffStage,cover:coverMeasure,weatherFixed:!wind.checked,macroWeather:macroWeather?{anchor:macroWeather.anchor,sourceRepeat:macroWeather.sourceRepeat,macroRepeat:macroWeather.macroRepeat,role:macroWeather.role}:null,embeddedCloud:false,sourceMip:true,archiveIntegrated:false}:null,ready,contextLost:gl.isContextLost(),mode:activePose,source:orbital?'NASA shape-seeded orbital proxy, not measured cloud volume':'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
  capturePhase,diagnostic:{name:diagnostic.value,shadowMargin:clouds.shadowMaps.margin,shadowFar:clouds.shadow.maxFar,shadowJitter:clouds.shadow.temporalJitter,shadowTemporal:clouds.shadow.temporalPass,shadowAlpha:clouds.shadowPass.resolveMaterial.uniforms.temporalAlpha.value,cloudAlpha:clouds.cloudsPass.resolveMaterial.uniforms.temporalAlpha.value,cascades:clouds.shadow.cascadeCount,mapSize:clouds.shadow.mapSize.toArray(),splitLambda:clouds.shadow.splitLambda,minStep:clouds.clouds.minStepSize,perspectiveStep:clouds.clouds.perspectiveStepScale},input:{source:inputSource,wheelCount,lastWheelPixels:wheelDelta,target:wheelDriving?wheelTarget:Number(progress.value),current:Number(progress.value),settled:!wheelDriving||Math.abs(wheelTarget-Number(progress.value))<.00011,reducedMotion},
  opticalTrial:{weatherX:clouds.localWeatherOffset.x,weatherY:clouds.localWeatherOffset.y,sunElevation:Number(sunElevation.value),sunAzimuth:Number(sunAzimuth.value),hazeExponent:clouds.clouds.hazeExponent,hazeDensityScale:clouds.clouds.hazeDensityScale,layerDepth:Number(layerDepth.value),layerDensity:Number(layerDensity.value),groundShadow:groundShadow.checked,groundShadowLinked:!!aerial.shadow},
  sourceLocation:activePose.startsWith('basic')?[30,35,activePose==='basic300'?300:3500]:activePose.startsWith('north')?[8.4,61.63,'camera metres in localCamera ×1000']:[0,67,activePose==='source500'?500:3500],sourceDate:activePose.startsWith('basic')?'2026-01-02T07:00:00Z':activePose.startsWith('north')?'fixed north scene sun vector':'2000-06-01T10:00:00Z',camera:camera.position.toArray(),localCamera:lastCamera,
  worldToECEF:aerial.worldToECEFMatrix.toArray(),sun:aerial.sunDirection.toArray(),layers:clouds.cloudLayers.map(l=>({altitude:l.altitude,height:l.height,densityScale:l.densityScale,shapeDetailAmount:l.shapeDetailAmount,weatherExponent:l.weatherExponent})),
- quality:quality.value,look:look.value,coverage:clouds.coverage,localWeatherRepeat:clouds.localWeatherRepeat.toArray(),localWeatherOffset:clouds.localWeatherOffset.toArray(),resolutionScale:clouds.resolutionScale,lightShafts:clouds.lightShafts,shadowMaxFar:clouds.shadow.maxFar,shadowLengthLinked:!!aerial.shadowLength,temporal:clouds.temporalUpscale,temporalUpscale:clouds.temporalUpscale,temporalAntialiasing:enabled.checked,clouds:enabled.checked,cloudPassAttached:opticalPass.hasCloud(),smaa:aa.checked,wind:wind.checked,
+ quality:quality.value,look:look.value,coverage:clouds.coverage,localWeatherRepeat:clouds.localWeatherRepeat.toArray(),localWeatherOffset:clouds.localWeatherOffset.toArray(),resolutionScale:clouds.resolutionScale,lightShafts:clouds.lightShafts,shadowMaxFar:clouds.shadow.maxFar,shadowLengthLinked:!!aerial.shadowLength,temporal:clouds.temporalUpscale,temporalUpscale:clouds.temporalUpscale,temporalAntialiasing:enabled.checked&&!orbital,clouds:enabled.checked,cloudPassAttached:opticalPass.hasCloud(),smaa:aa.checked,wind:wind.checked,
  terrain:north?.state().terrain,terrainLighting:'candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged',renderSize:[renderer.domElement.width,renderer.domElement.height],gpu:{available:!!timer,count:gpuTimes.length,p50:percentile(.5),p95:percentile(.95)},frames};}
 quality.onchange=()=>{clouds.qualityPreset=quality.value as any;clouds.temporalUpscale=temporal.checked;clouds.lightShafts=shafts.checked;clouds.resolutionScale=Number(cloudScale.value);applyOptics();applyDiagnostic();gpuTimes.length=0;};
 temporal.onchange=()=>{clouds.temporalUpscale=temporal.checked;gpuTimes.length=0;};enabled.onchange=setCloudEnabled;
@@ -254,7 +260,7 @@ pose.onchange=async()=>{pose.disabled=true;try{if(pose.value.startsWith('north')
 async function saveFrame(){
  if(!ready||gl.isContextLost()){error.textContent='렌더가 준비되지 않았거나 GPU 컨텍스트가 끊겨 정상 프레임을 저장할 수 없습니다.';return;}
  draw();
- if(handoff)coverMeasure=measureCover(clouds.atmosphereOverlay?.map??null);
+ if(handoff&&!orbital)coverMeasure=measureCover(clouds.atmosphereOverlay?.map??null);
  let shot=activePose+(activePose.startsWith('north')?'-'+Math.round(Number(progress.value)*1000):'')+'-'+look.value+'-r'+weatherRepeat.value+'-c'+Math.round(Number(coverage.value)*100)+'-e'+Math.round(Number(cluster.value)*10)+'-q'+quality.value+'-s'+Math.round(Number(cloudScale.value)*100)+(temporal.checked?'-upscale':'-fullres')+(enabled.checked?'-cloud':'-off')+(shafts.checked?'-shafts':'-nosh')+(aa.checked?'-smaa':'-noaa')+(params.get('reviewRound')?.startsWith('takram-parameters')?`-x${Math.round(Number(weatherX.value)*100)}-el${Math.round(Number(sunElevation.value)*100)}-az${Math.round(Number(sunAzimuth.value)*100)}-hz${Math.round(Number(hazeFalloff.value)*1e6)}`:'');
  if(params.get('reviewRound')?.startsWith('takram-parameters'))shot='p'+Math.round(Number(progress.value)*1000)+'-c'+Math.round(Number(coverage.value)*100)+'-x'+Math.round(Number(weatherX.value)*100)+'-el'+Math.round(Number(sunElevation.value)*100)+'-az'+Math.round(Number(sunAzimuth.value)*100)+'-hz'+Math.round(Number(hazeFalloff.value)*1e6)+(shafts.checked?'-on':'-off');
  if(params.get('reviewRound')?.startsWith('takram-beam'))shot='p'+Math.round(Number(progress.value)*1000)+'-x'+Math.round(Number(weatherX.value)*100)+'-y'+Math.round(Number(weatherY.value)*100)+'-az'+Math.round(Number(sunAzimuth.value))+'-el'+Math.round(Number(sunElevation.value))+'-h'+Math.round(Number(hazeFalloff.value)*1e6)+'-d'+Math.round(Number(layerDepth.value)*10)+'-n'+Math.round(Number(layerDensity.value)*10)+(shafts.checked?'-on':'-off')+(groundShadow.checked?'-gs':'-nogs');
@@ -262,6 +268,7 @@ async function saveFrame(){
  if(params.get('reviewRound')?.startsWith('takram-wheel'))shot='wheel-'+wheelCount+'-p'+Math.round(Number(progress.value)*10000)+'-'+inputSource;
  if(handoff)shot='handoff-p'+Math.round(Number(progress.value)*10000)+'-'+capturePhase;
  if(params.get('reviewRound')?.startsWith('takram-defect'))shot=diagnostic.value.toLowerCase()+'-p'+Math.round(Number(progress.value)*10000)+'-'+capturePhase;
+ if(orbital)shot='orbital-'+orbitalSelect.value+'-p'+Math.round(Number(progress.value)*10000);
  const e=gl.getExtension('WEBGL_debug_renderer_info');
  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),url:location.href}})});
  if(!response.ok){error.textContent=await response.text();throw Error(error.textContent);}save.textContent='프레임 저장 완료';
@@ -314,11 +321,14 @@ captureSet.onclick=async()=>{
  const framesFor=async(n:number)=>{for(let i=0;i<n;i++)await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));};
  try{
   await ensureNorth();setPose('north300');
-  for(const p of handoff?handoffFrames.map(f=>f.p):[.265,.285,.300,.320,.345,.365]){
+  for(const mode of orbital?['coverage','relief']:[orbitalSelect.value]){
+  orbitalSelect.value=mode;
+  for(const p of orbital?[.18,.235]:handoff?handoffFrames.map(f=>f.p):[.265,.285,.300,.320,.345,.365]){
    if(!ready||gl.isContextLost())throw new Error('GPU 컨텍스트 오류로 기준 캡처를 중단했습니다.');
    progress.value=String(p);captureSet.textContent=`기준 저장 · ${p}`;await framesFor(timer?60:16);gpuTimes.length=0;
    for(let i=0;i<(timer?180:16)&&gpuTimes.length<120;i++)await framesFor(1);
    await saveFrame();
+  }
   }
   captureSet.textContent='기준 구도 저장 완료';
  }finally{captureSet.disabled=save.disabled=pose.disabled=motionReview.disabled=motionVideo.disabled=diagnosticSet.disabled=false;}
@@ -367,7 +377,7 @@ function draw(){
   camera.position.copy(localCamera.position).multiplyScalar(1000);camera.quaternion.copy(localCamera.quaternion);
   camera.near=localCamera.near*1000;camera.far=localCamera.far*1000;camera.fov=localCamera.fov;camera.updateProjectionMatrix();
  }else controls.update();
- camera.updateMatrixWorld();clouds.localWeatherVelocity.set(wind.checked ? .001 : 0,0);
+ camera.updateMatrixWorld();if(orbital)orbitalEffect.sync(camera,northToECEF,aerial.sunDirection,orbitalSelect.value,enabled.checked);clouds.localWeatherVelocity.set(wind.checked ? .001 : 0,0);
  if(timer){
   if(gl.getParameter(timer.GPU_DISJOINT_EXT)){pending.forEach(q=>gl.deleteQuery(q));pending.length=0;gpuTimes.length=0;}
   else while(pending.length&&gl.getQueryParameter(pending[0],gl.QUERY_RESULT_AVAILABLE)){const q=pending.shift()!;gpuTimes.push(gl.getQueryParameter(q,gl.QUERY_RESULT)/1e6);gl.deleteQuery(q);if(gpuTimes.length>300)gpuTimes.shift();}
@@ -375,7 +385,7 @@ function draw(){
  }
  composer.render();
  if(query){gl.endQuery(timer.TIME_ELAPSED_EXT);pending.push(query);query=null;}
- frames++;if(frames%30===0)status.textContent=`${activePose} · ${renderer.domElement.width}×${renderer.domElement.height} · ${quality.value}\nGPU composer ${percentile(.5)?.toFixed(2)??'—'}ms / ${gpuTimes.length} samples · ${clouds.temporalUpscale?'4×4 업스케일':'전체 해상도 TAA'} · ${enabled.checked?'구름 ON':'구름 OFF'}\n${activePose.startsWith('north')?'동일 DEM 1.5× · 광학 정합 검토':'원본 Vanilla 광학 chain · 구름 관찰 카메라'}\n${inputSource} · p${Number(progress.value).toFixed(4)} → ${(wheelDriving?wheelTarget:Number(progress.value)).toFixed(4)} · 휠 ${wheelCount}`;
+ frames++;if(orbital&&frames%30===0){status.textContent=`NASA 2048×1024 · ${orbitalSelect.value==='relief'?'국소 입체 명암':'평면 명암'} · 원경 시험\nGPU composer ${percentile(.5)?.toFixed(2)??'—'}ms · ${renderer.domElement.width}×${renderer.domElement.height}\n${inputSource} · p${Number(progress.value).toFixed(4)} · 휠 ${wheelCount}\n근접 볼륨 / 그림자 / 서고 연결은 다음 단계`;return;}if(frames%30===0)status.textContent=`${activePose} · ${renderer.domElement.width}×${renderer.domElement.height} · ${quality.value}\nGPU composer ${percentile(.5)?.toFixed(2)??'—'}ms / ${gpuTimes.length} samples · ${clouds.temporalUpscale?'4×4 업스케일':'전체 해상도 TAA'} · ${enabled.checked?'구름 ON':'구름 OFF'}\n${activePose.startsWith('north')?'동일 DEM 1.5× · 광학 정합 검토':'원본 Vanilla 광학 chain · 구름 관찰 카메라'}\n${inputSource} · p${Number(progress.value).toFixed(4)} → ${(wheelDriving?wheelTarget:Number(progress.value)).toFixed(4)} · 휠 ${wheelCount}`;
 }
 async function init(){
  const [lut,w,t,s,d,b]=await Promise.all([
@@ -388,12 +398,19 @@ async function init(){
  if(handoff){macroWeather=bakeHandoffWeather(renderer,clouds.localWeatherTexture!,northToECEF);clouds.localWeatherTexture=macroWeather.target.texture;}clouds.turbulenceTexture=textureSetup(t);
  clouds.shapeTexture=textureSetup(s,true) as THREE.Data3DTexture;clouds.shapeDetailTexture=textureSetup(d,true) as THREE.Data3DTexture;
  clouds.stbnTexture=aerial.stbnTexture=b;
- if(params.get('pose')?.startsWith('north'))await ensureNorth();
+ if(orbital)await orbitalEffect.load(new URL('../../../assets/research/cloud-reference-20261008/nasa-cloud-only-2048.jpg',import.meta.url).href);
+ if(params.get('pose')?.startsWith('north')||orbital)await ensureNorth();
  // Geometry/light transform uses metre local coordinates; optical ECEF transform carries only rotation+translation.
  quality.value=params.get('quality')||'high';clouds.qualityPreset=quality.value as any;
  const requestedCluster=Number(params.get('cluster')||'1');cluster.value=String(Number.isFinite(requestedCluster)?THREE.MathUtils.clamp(requestedCluster,1,3):1);
  temporal.checked=params.get('upscale')==='1';clouds.temporalUpscale=temporal.checked;clouds.lightShafts=shafts.checked;aa.checked=true;smaaPass.enabled=true;cloudScale.value=params.get('scale')||'.75';clouds.resolutionScale=Number(cloudScale.value);
- ready=true;setPose(params.get('pose')||'basic300');if(params.get('recipe')==='curtain')applyRecipe('curtain');if(['baseline','shadowOff','margin','jitterOff','march','far','fast','noHistory','cloudFilter'].includes(params.get('diagnostic')||'')){diagnostic.value=params.get('diagnostic')!;applyDiagnostic();}renderer.setAnimationLoop(draw);
+ ready=true;setPose(params.get('pose')||'basic300');if(params.get('recipe')==='curtain')applyRecipe('curtain');if(['baseline','shadowOff','margin','jitterOff','march','far','fast','noHistory','cloudFilter'].includes(params.get('diagnostic')||'')){diagnostic.value=params.get('diagnostic')!;applyDiagnostic();}if(orbital){
+ setCloudEnabled();progress.value='.18';motionReview.hidden=motionVideo.hidden=diagnosticUI.hidden=true;
+ dom('panel').querySelector('strong')!.textContent='궤도 구름 · 위성 분포 시험';
+ for(const c of [pose,quality,temporal,wind,look,coverage,weatherRepeat,cloudScale,cluster,shafts,weatherX,weatherY,hazeFalloff,layerDepth,layerDensity,groundShadow])c.parentElement!.style.display='none';
+ const note=dom('panel').querySelectorAll('small');note[note.length-1].textContent='NASA 2K 형태 seed · 고도/밀도는 연출 근사. 광역 → 지역 확대만 구현. 근접 결·그림자·하강 인계는 다음 단계.';
+ captureSet.textContent='두 구도 × 명암 비교 저장';
+ }renderer.setAnimationLoop(draw);
 }
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);});
 init().catch(e=>{error.textContent=String(e.stack||e);console.error(e);});

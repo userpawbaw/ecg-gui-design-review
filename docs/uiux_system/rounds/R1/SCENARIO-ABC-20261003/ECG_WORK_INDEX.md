@@ -262,3 +262,6 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D113 원경 위성형 구름 연구
 - [궤도 구름 분석·hybrid 후보·제작 순서](ECG_A_orbital_cloud_hybrid_research_2026-10-08.md): 이번사진3장의형태·국소양감·shadow분리/타원코드원인/공식자료/자료계약. 연구완료·구현전. 다음분포→광학→인계→motion→서고.
+
+## D114 위성 분포 원경 실제 시험
+[두 구도 구현·초기 실패·자체 TUNE·후속 순서](ECG_A_orbital_cloud_proxy_trial_2026-10-09.md) → verification/a-orbital-cloud-20261009/gallery.html. native4+realwheel정착2. 타원제거/위성전선고정배치, 2K확대결·입체대비미달. 다음자료/crop→국소광학→같은footprint인계→서고. 전체채택없음.

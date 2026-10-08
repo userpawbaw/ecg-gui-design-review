@@ -107,3 +107,6 @@ D078/F049: 구도·양감 사용자KEEP. J5v5 질감후보 검토 먼저, 이후
 
 ### 2026-10-06 제작 피드백1차·거리/영역별 구름 우회 — D081/F052/O012
 사용자피드백1/2. 스크롤고장fixedstage hit경로재현/수정/realwheel서고도달. 우주시점부터평면·이상질감문제를전역volume추가튜닝으로해결하지못해거리별설계제안에따라중단. far texture/mid2.5D/near통과군집필요부피추천, 새LOD혼합미구현. 다음우주시점만appearance확인→확대영역/국소조형/인계검증→사용자2차. 2차실패시D080두fallback제작비교. 상세 ECG_A_cloud_distance_representation_plan_2026-10-06.md.
+
+### 2026-10-09 D114 원경 분포 gate 구현
+상세 ECG_A_orbital_cloud_proxy_trial_2026-10-09.md. 두구도/두명암/실제wheel정역정착6native,자체TUNE·사용자룩채택전. 다음고해상도지역cloud자료확보→국소광학/원경shadow→same-footprintnear인계→서고. 기존near그림자보류유지. 이번실패/내부보정은사용자피드백횟수로세지않음.

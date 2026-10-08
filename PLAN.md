@@ -1,3 +1,7 @@
+# Current A checkpoint — 2026-10-09 D114/F080
+
+Orbital satellite-shape proxy implemented in two views (p.18/.235), coverage/relief native4 + real wheel settled2. Self verdict TUNE: oval mask removed, 2K close texture/relief insufficient. Review verification/a-orbital-cloud-20261009/gallery.html. Next source-resolution/crop gate → local optical/shadow → same-footprint near handoff → archive. Near shadow defect tuning remains user-deferred; main unchanged and candidate not adopted. See ECG_A_orbital_cloud_proxy_trial_2026-10-09.md.
+
 # Current A checkpoint — 2026-10-07 D090/F058
 
 User rejects smooth low/cloud terrain and asks detailed regional map/3D asset; high needs polar edge/night/scattering quality. Audited slant distances and detail loss; researched official tools/data plus ready terrain models. Next acquire detailed local map/terrain/ready asset and compare fully lit high/low/entry hero frames before web handoff. Geography may be artistic in Intro; ECG comparison remains strict. Runtime unchanged, feedback1/2.

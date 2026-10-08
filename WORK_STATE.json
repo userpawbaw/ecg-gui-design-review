@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D113 orbital cloud hybrid research complete. D112 oval distribution rejected for refinement. Next satellite-shaped thin/thick coverage review at p.18/.235, then local optical/shadow prototype, same-footprint volume handoff and motion review, then archive connection. Near shadow investigation remains user-deferred; no renderer changes in D113.",
+  "next_action": "D114 orbital two-view proxy trial implemented; self TUNE, user visual review pending. Next detailed regional cloud-only source/crop acquisition then local optical/shadow prototype, same-footprint near handoff, motion review and archive. Existing near shadow defect tuning user-deferred. Main unchanged; candidate not adopted.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1356,5 +1356,20 @@
       "wheelContinuousFloatFix": "O022",
       "build": "80 modules PASS"
     }
+  },
+  "orbitalProxyD114": {
+    "decision": "D114",
+    "finding": "F080",
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_orbital_cloud_proxy_trial_2026-10-09.md",
+    "manifest": "verification/a-orbital-cloud-20261009/manifest.json",
+    "nativeFixed": 4,
+    "realWheelSettled": 2,
+    "selfVerdict": "TUNE: 2K expanded texture and local relief insufficient",
+    "userVisualVerdict": null,
+    "nearHandoff": false,
+    "archiveIntegrated": false,
+    "mainIntegrated": false,
+    "candidateAdopted": false,
+    "nearShadowTuningDeferred": true
   }
 }

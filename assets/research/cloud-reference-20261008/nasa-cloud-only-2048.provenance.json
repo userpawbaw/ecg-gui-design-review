@@ -1,0 +1,21 @@
+{
+  "source": "NASA Blue Marble cloud-only",
+  "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57747/cloud_combined_2048.jpg",
+  "pageHistorical": "https://visibleearth.nasa.gov/images/57747/blue-marble-clouds/77558l",
+  "pageStatus": "redirects to NASA Earth Observatory generic page on 2026-10-08",
+  "dimensions": [
+    2048,
+    1024
+  ],
+  "sha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+  "bytes": 829367,
+  "operation": "byte-identical copy of restored registry nasa-clouds-2048 original",
+  "useStage": "internal concept review",
+  "attribution": "NASA / Visible Earth",
+  "notEvidenceFor": [
+    "current weather",
+    "measured density",
+    "measured height"
+  ],
+  "higherResolution": "not acquired; one inferred 21600 TIFF URL returned 404; do not claim high-resolution source"
+}

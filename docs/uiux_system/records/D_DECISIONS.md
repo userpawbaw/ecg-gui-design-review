@@ -2854,3 +2854,26 @@ B를 추천 후보로 설계한다. 얇은층/두꺼운군집을 자료부터 �
 타원3개에noise만추가하는안, 전체shapeAmount0, scroll로구름두께성장, 무관한VDB로지역교체는 이전결함을 반복한다. 모든구름을normalmap만으로대체하면 통과/옆면광학이부족하다. 후보C는기각하지않고별도대안으로보존.
 ### 되돌려야 하는 조건
 far/near의형태·투과·밝기정합이불가능하거나 역scroll점프/과도비용이남으면 A/C와비교. 실제룩사용자리뷰전 최종채택없음. 기존near그림자추적보류는유지하며 이번원경shadow요청은설계만반영.
+
+## D-114. 위성 구름 분포의 원경 proxy를 두 고정 구도에서 먼저 제작한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-08 [대화][코드] |
+| 상태 | 사용자 진행 승인 / 구현 전 |
+| 연결 | D-113 / F-079 |
+| CASE | CASE-007 |
+
+### 갈림길
+D113 추천을 바로전체인계로확장할지, 원경분포와국소relief를먼저고정할지.
+### 검토한 선택지
+기존타원volume유지, 실제NASAcloud-only기존에셋을원경구면proxy로표현, 새거대에셋/오프라인영상제작.
+### 고른 것과 근거
+기존registry nasa-clouds-2048 및그파생earth_clouds.jpg를우선사용해p.18/.235 coverage/국소relief 두모드로제작. 사진luminance는coverage형태seed이며높이/tau는생성근사임을표기. 원경별도opt-in으로Takramvolume대체, 동일DEM/sun/camera, near그림자튜닝보류. 이번gate는2구도분포·국소조명이며same-fieldnear인계/서고통합은후속.
+### 버린 것과 이유
+NASA출처페이지가리디렉트되어새다운로드URL추측이나거대자료추가보다로컬등록자료검증우선. 같은타원mask의noise만증가하는안은F079에따라교체대상. 단순지형RGB에흰색인쇄/매scroll새구름생성은하지않는다.
+### 되돌려야 하는 조건
+실제2구도에자연스러운띠/틈/thin-thick계층이읽히지않거나relief가딱딱한면처럼보이면TUNE. 파생2k의확대부족도별도기록. 분포채택전near연결을완료라고하지않는다.
+
+### D114 구현 후 갱신 — 2026-10-09
+두 구도×2명암 native4 + 실제wheel정역정착2 구현/저장. NASA2K원본 hash일치 복구, 광역원본 투영은 넓은흰막으로미달→광량/얇은층 기여 보정→위성전선 고정아트배치로 띠/여백선택. sourcePlacement를metadata에명시. 국소경사명암은구면proxy 근사이며 높이측정/다중산란/near인계없음. 확대질감·입체대비TUNE,최종채택없음. 초기4native보존. 상세 ECG_A_orbital_cloud_proxy_trial_2026-10-09.md / verification/a-orbital-cloud-20261009/manifest.json. D113의원경shadow설계와근경보류를유지. 고해상도원본현재미확보,자료확보→국소광학→same-footprint인계→서고순서유지.

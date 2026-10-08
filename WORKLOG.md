@@ -715,3 +715,8 @@ clouds resolveMaterial alpha.05 단독후보3정착+8초영상추가로27fixed/4
 ## 2026-10-08 D113 연구 체크포인트
 사용자궤도사진3장과D112native원경대조, 코드의세타원envelope원인확인. NASAcloud-only/분리합성, GuerrillaPDFshape·thin2D/volume, Epic산란/BSM, Takramplannedspace/issue50, Skyboltcoveragehull, three.js작성자shadow설명검토. 보고서/REF014 EFX01405/F079/D113/CASE007/색인·state갱신. 새코드·mockup·runtime/perf시험없음. 기존6usercapture/개인영상추출물보존. 다음위성형분포후보부터검토.
 - 검증: npm run records:check PASS — 246 F/D/O/R 및 CASE/출처/색인. git diff --check PASS. 코드 변경 없음으로 build/runtime 재시험 생략; 품질·성능 미검증을 유지.
+
+## 2026-10-09 D114 위성 분포 원경 후보
+D113추천첫gate를사용자승인후두구도proxy로제작. NASA2K기존등록원본복구/해시일치,광역첫흰막 native4보존→radiance/alpha/고정위성전선배치 보정. thin12.5km/thick8.5km 구면proxy와finite-difference명암을Takram지형대기후합성. 실제최종4PNG/JSON+wheel정역2정착,RTX3070/942×672/contextLostfalse/런타임error없음. 2K확대흐림/입체명암부족은자체TUNE로분명히표시. 고해상도cloud원본미확보(옛NASA페이지redirect/추정TIFF404); 자료/crop→국소광학→같은분포near인계→서고후속. 기본main/Story미교체,near그림자보류유지. F080/D114/CASE007/색인·PLAN·WORK_STATE갱신. provenance/manifest/gallery로근거추적. 코드URL만바이트동일researchcopy로옮긴후최종빌드하며capturenative광학값변경없음.
+
+검증 마감: spike Vite build81 modules PASS, records:check248 PASS, diff --check PASS. 갤러리6/6 실제이미지942×672 로딩확인,검토탭유지. 자산 원본 hash 일치와 런타임 저장/휠입력 증거는 품질KEEP/near인계완료를 의미하지 않는다.

@@ -1,0 +1,415 @@
+{
+  "decision": "D114",
+  "finding": "F080",
+  "source": {
+    "source": "NASA Blue Marble cloud-only",
+    "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57747/cloud_combined_2048.jpg",
+    "pageHistorical": "https://visibleearth.nasa.gov/images/57747/blue-marble-clouds/77558l",
+    "pageStatus": "redirects to NASA Earth Observatory generic page on 2026-10-08",
+    "dimensions": [
+      2048,
+      1024
+    ],
+    "sha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+    "bytes": 829367,
+    "operation": "byte-identical copy of restored registry nasa-clouds-2048 original",
+    "useStage": "internal concept review",
+    "attribution": "NASA / Visible Earth",
+    "notEvidenceFor": [
+      "current weather",
+      "measured density",
+      "measured height"
+    ],
+    "higherResolution": "not acquired; one inferred 21600 TIFF URL returned 404; do not claim high-resolution source"
+  },
+  "fixedPairs": 4,
+  "realWheelSettled": 2,
+  "visualVerdict": "TUNE: shape changed, regional texture and relief insufficient",
+  "candidateAdopted": false,
+  "mainIntegrated": false,
+  "nearHandoff": false,
+  "shadowImplemented": false,
+  "nearShadowTuning": "user deferred",
+  "codeSha256": {
+    "prototype/spikes/a-climb/cloud-lab.ts": "1257b9aa9585d86409cf9d0609fa5107e93ee417ee113108fbadf7a15c363cf7",
+    "prototype/spikes/a-climb/cloud-orbital.ts": "af08adca80af50b584940417eab20e9bdb005ae4ed1e26f9749396e11dbd4e7c"
+  },
+  "frames": [
+    {
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-coverage-p1800.png",
+      "pngSha256": "7cffa41d3bbf1b9c1c490959a3e0941243c88b99877597c0cf96149735bb9a2c",
+      "json": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-coverage-p1800.json",
+      "jsonSha256": "2fdf92a66d469b94131189b6159a97322871bb92cdb2c5c8ebe5ec7646e330e3",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "p": 0.18,
+      "orbital": {
+        "source": "NASA cloud_combined_2048.jpg",
+        "sourceSha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+        "mode": "coverage",
+        "sourcePlacement": {
+          "geoAnchor": [
+            0.523333333,
+            0.842388889
+          ],
+          "sourceCentre": [
+            0.64,
+            0.78
+          ],
+          "scale": 2
+        },
+        "artisticPlacement": true,
+        "technique": "two spherical height proxies with finite-difference slope lighting; no measured height or multiple scattering",
+        "shadow": false,
+        "nearHandoff": false,
+        "range": [
+          0.18,
+          0.235
+        ]
+      },
+      "camera": [
+        220000,
+        820000,
+        650000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "pose",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.18,
+        "current": 0.18,
+        "settled": true,
+        "reducedMotion": false
+      },
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 3.757056,
+        "p95": 7.27552
+      },
+      "renderSize": [
+        942,
+        672
+      ]
+    },
+    {
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-coverage-p2350.png",
+      "pngSha256": "112480481ed75a279e6f46e215703faa2e2b0fcc2ded5a2b821a59090c6ede97",
+      "json": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-coverage-p2350.json",
+      "jsonSha256": "2eff762e091d34d4d39acaa6db0f26e442ff2d708a1b2578a3b39c0f2f139520",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "p": 0.235,
+      "orbital": {
+        "source": "NASA cloud_combined_2048.jpg",
+        "sourceSha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+        "mode": "coverage",
+        "sourcePlacement": {
+          "geoAnchor": [
+            0.523333333,
+            0.842388889
+          ],
+          "sourceCentre": [
+            0.64,
+            0.78
+          ],
+          "scale": 2
+        },
+        "artisticPlacement": true,
+        "technique": "two spherical height proxies with finite-difference slope lighting; no measured height or multiple scattering",
+        "shadow": false,
+        "nearHandoff": false,
+        "range": [
+          0.18,
+          0.235
+        ]
+      },
+      "camera": [
+        55000,
+        100000,
+        150000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "pose",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.235,
+        "current": 0.235,
+        "settled": true,
+        "reducedMotion": false
+      },
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 5.04832,
+        "p95": 10.481664
+      },
+      "renderSize": [
+        942,
+        672
+      ]
+    },
+    {
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-relief-p1800.png",
+      "pngSha256": "6a5eadb74b9a923781a5ee0b01790efea45e65b5d96a82fe326b277c07c54947",
+      "json": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-relief-p1800.json",
+      "jsonSha256": "ddd1a5cdfe85d6a06a83702a86517b2d9c141bcc3243229bc380388ce3fbfccd",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "p": 0.18,
+      "orbital": {
+        "source": "NASA cloud_combined_2048.jpg",
+        "sourceSha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+        "mode": "relief",
+        "sourcePlacement": {
+          "geoAnchor": [
+            0.523333333,
+            0.842388889
+          ],
+          "sourceCentre": [
+            0.64,
+            0.78
+          ],
+          "scale": 2
+        },
+        "artisticPlacement": true,
+        "technique": "two spherical height proxies with finite-difference slope lighting; no measured height or multiple scattering",
+        "shadow": false,
+        "nearHandoff": false,
+        "range": [
+          0.18,
+          0.235
+        ]
+      },
+      "camera": [
+        220000,
+        820000,
+        650000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "pose",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.18,
+        "current": 0.18,
+        "settled": true,
+        "reducedMotion": false
+      },
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 4.529152,
+        "p95": 7.38304
+      },
+      "renderSize": [
+        942,
+        672
+      ]
+    },
+    {
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-relief-p1968.png",
+      "pngSha256": "c187a984ba90362c0cdfe4aa3650450b176accdfa86dcf92b90ee1e50c5cfd11",
+      "json": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-relief-p1968.json",
+      "jsonSha256": "ee79de6efefc6f8e44f3dc6afb554fe8ae6607c6436d58cf46eb0a31e76c2a3d",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "p": 0.1968,
+      "orbital": {
+        "source": "NASA cloud_combined_2048.jpg",
+        "sourceSha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+        "mode": "relief",
+        "sourcePlacement": {
+          "geoAnchor": [
+            0.523333333,
+            0.842388889
+          ],
+          "sourceCentre": [
+            0.64,
+            0.78
+          ],
+          "scale": 2
+        },
+        "artisticPlacement": true,
+        "technique": "two spherical height proxies with finite-difference slope lighting; no measured height or multiple scattering",
+        "shadow": false,
+        "nearHandoff": false,
+        "range": [
+          0.18,
+          0.235
+        ]
+      },
+      "camera": [
+        183220.16264462806,
+        659506.1642674679,
+        538545.9474079638
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "wheel",
+        "wheelCount": 2,
+        "lastWheelPixels": -672,
+        "target": 0.1968,
+        "current": 0.1968,
+        "settled": true,
+        "reducedMotion": false
+      },
+      "gpu": {
+        "available": true,
+        "count": 300,
+        "p50": 5.557248,
+        "p95": 8.080384
+      },
+      "renderSize": [
+        942,
+        672
+      ]
+    },
+    {
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-relief-p2136.png",
+      "pngSha256": "d0cd8a410d6b635ba0eca14c018497989db2efec617e8860876b37336e09d934",
+      "json": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-relief-p2136.json",
+      "jsonSha256": "6d89f112d24c92533d7a5f8234aee64d05d0eccf69d14cc732d0ede60c906d24",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "p": 0.2136,
+      "orbital": {
+        "source": "NASA cloud_combined_2048.jpg",
+        "sourceSha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+        "mode": "relief",
+        "sourcePlacement": {
+          "geoAnchor": [
+            0.523333333,
+            0.842388889
+          ],
+          "sourceCentre": [
+            0.64,
+            0.78
+          ],
+          "scale": 2
+        },
+        "artisticPlacement": true,
+        "technique": "two spherical height proxies with finite-difference slope lighting; no measured height or multiple scattering",
+        "shadow": false,
+        "nearHandoff": false,
+        "range": [
+          0.18,
+          0.235
+        ]
+      },
+      "camera": [
+        110500.2102479338,
+        342182.73562734755,
+        318182.4552967691
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "wheel",
+        "wheelCount": 1,
+        "lastWheelPixels": 1344,
+        "target": 0.2136,
+        "current": 0.2136,
+        "settled": true,
+        "reducedMotion": false
+      },
+      "gpu": {
+        "available": true,
+        "count": 300,
+        "p50": 4.847616,
+        "p95": 8.12032
+      },
+      "renderSize": [
+        942,
+        672
+      ]
+    },
+    {
+      "png": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-relief-p2350.png",
+      "pngSha256": "4a55b482d2951ecd1616b6f9fac35fa8a87aaaa7a4510cbef4b62ac32376621e",
+      "json": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-final-20261009/orbital-relief-p2350.json",
+      "jsonSha256": "3083016d1414a0cac683ed2fa5d206ebed2bc47d2223a82d0946cd399a907dc0",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "p": 0.235,
+      "orbital": {
+        "source": "NASA cloud_combined_2048.jpg",
+        "sourceSha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+        "mode": "relief",
+        "sourcePlacement": {
+          "geoAnchor": [
+            0.523333333,
+            0.842388889
+          ],
+          "sourceCentre": [
+            0.64,
+            0.78
+          ],
+          "scale": 2
+        },
+        "artisticPlacement": true,
+        "technique": "two spherical height proxies with finite-difference slope lighting; no measured height or multiple scattering",
+        "shadow": false,
+        "nearHandoff": false,
+        "range": [
+          0.18,
+          0.235
+        ]
+      },
+      "camera": [
+        55000,
+        100000,
+        150000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "pose",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.235,
+        "current": 0.235,
+        "settled": true,
+        "reducedMotion": false
+      },
+      "gpu": {
+        "available": true,
+        "count": 120,
+        "p50": 5.332992,
+        "p95": 7.960576
+      },
+      "renderSize": [
+        942,
+        672
+      ]
+    }
+  ],
+  "initialTrialPreserved": "verification/a-cloud-sculpt-20261006/native-captures/takram-orbital-20261008",
+  "captureCodeNote": "Runtime source URL subsequently relocated to the tracked byte-identical research copy; shader/optical settings unchanged after final captures. GPU figures are short native composer queries, not FPS/soak proof.",
+  "captureSource": "actual native WebGL canvas; no generated stills",
+  "checks": {
+    "build": "81 modules PASS",
+    "records": "248 F/D/O/R PASS",
+    "diffCheck": "PASS",
+    "browserImages": "6/6 complete 942x672",
+    "runtimeErrors": 0
+  }
+}

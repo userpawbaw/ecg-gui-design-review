@@ -249,3 +249,9 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D111 하강 결함 분리와 실제 영상
 [ECG_A_cloud_defect_isolation_2026-10-08.md](ECG_A_cloud_defect_isolation_2026-10-08.md) → verification/a-takram-defect-20261008/gallery.html / F077 / O021 / D111. 24fixed와3actualWebM,후보미채택·noise/shadow해결미확정. 다음worldpoint/광학noise분리·source필터와별도원경same-footprint6구도. D110범위와기존KEEP유지.
+
+
+### 2026-10-08 D111 사용자 리뷰 / 다음 순서 갱신
+[대화] 사용자: “자글거림은 좀 나아진 것 같기도 한데.” “그림자는 엄청 거슬리는 문제는 일단 아니긴 해. 보류하자.”
+자글거림은 잠정 개선 관찰이며 해결/전체 룩 KEEP/alpha .05 기본 채택으로 확대하지 않는다. 그림자 world-point 추적 및 추가 튜닝은 사용자 재개 요청까지 보류한다. 현재 그림자를 끄거나 제거하지 않는다.
+다음은 D110의 같은 구름군 인계 설계: 북유럽 광역 → 지역 확대 → 구름 접근 → 측면/아래 커튼빛 → 가장자리 통과 → 서고 가림의 최소 6구도. 동일 지형·구름 footprint와 카메라 경로를 먼저 고정하고, 원경 mask와 근경 volume의 단계적 기여 및 단일 renderer 후보 통합을 진행한다. 갑작스러운 구름 생성/지형 교체/이중 밝기 누적을 검증한다. 움직임 자글거림·TAA 잔상·GPU는 이 인계 후보의 실제 정역 리뷰에서 계속 확인한다. 이 체크포인트는 기록만 갱신하며 새 구현/런타임 검증은 수행하지 않았다.

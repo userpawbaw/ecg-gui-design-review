@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D111 isolation complete but movement noise/shadows unresolved: next world-point shadow tracking and cloud-only temporal/spatial filter review; separately same-footprint distant-cloud six-pose planning before main integration.",
+  "next_action": "User deferred cloud ground-shadow investigation; next plan six same-footprint distant-to-near cloud views, then single-renderer globe/DEM/descent/archive candidate. Noise improvement tentative; no fix or candidate adoption confirmed.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1219,7 +1219,7 @@
     ]
   },
   "north_cloud_takram_2026_10_08": {
-    "status": "D111_ISOLATION_CAPTURE_PASS_NOISE_SHADOW_FIX_UNCONFIRMED_TUNE",
+    "status": "D111_USER_REVIEW_SHADOW_DEFERRED_NEXT_SAME_FOOTPRINT_HANDOFF_TUNE",
     "decision": "D111",
     "review": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_defect_isolation_2026-10-08.md",
     "preview": "http://127.0.0.1:4198/cloud-lab.html?pose=north300&quality=high&scale=.5&cluster=1.6&recipe=curtain&reviewRound=takram-defect-interactive-20261008",
@@ -1325,7 +1325,9 @@
       "firstPartialCapture": "takram-defect-20261008",
       "finalCapture": "takram-defect-final-20261008",
       "cloudAlphaCandidate": 0.05,
-      "baselineCloudAlpha": 0.1
+      "baselineCloudAlpha": 0.1,
+      "userFeedback": "Noise may be improved; not confirmed fixed. Ground shadow investigation deferred by user.",
+      "shadowInvestigationDeferred": true
     }
   }
 }

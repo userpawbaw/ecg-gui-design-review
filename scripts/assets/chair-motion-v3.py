@@ -274,12 +274,16 @@ def render(g):
     for lab, st in (('open', state('close', 0.0)), ('fist', state('close', 1.0))):
         apply(*st); bpy.context.view_layer.update()
         print(f'   body vs chair ({lab}):', pc.scene_collisions(o, chair_objs, reach=.06))
-    if os.environ.get('SAVE_NPY'):                                   # deform-check-v3 input: the open-hand story pose
-        import numpy as _np
-        apply(*state('close', 0.0)); bpy.context.view_layer.update()
-        _ev = o.evaluated_get(bpy.context.evaluated_depsgraph_get()); _me = _ev.to_mesh()
-        _np.save(os.environ['SAVE_NPY'], _np.array([(o.matrix_world @ v.co)[:] for v in _me.vertices], _np.float32)); _ev.to_mesh_clear()
-        print('   npy →', os.environ['SAVE_NPY']); return
+    if os.environ.get('SAVE_NPY'):                                   # deform-check-v3 input + the pose as bone matrices (for
+        import numpy as _np, json as _json                           # moving it onto another rig): open hand and fist
+        base = os.environ['SAVE_NPY'].removesuffix('.npy')
+        for lab, k_ in (('open', 0.0), ('fist', 1.0)):
+            apply(*state('close', k_)); bpy.context.view_layer.update()
+            _ev = o.evaluated_get(bpy.context.evaluated_depsgraph_get()); _me = _ev.to_mesh()
+            _np.save(f'{base}_{lab}.npy', _np.array([(o.matrix_world @ v.co)[:] for v in _me.vertices], _np.float32)); _ev.to_mesh_clear()
+            _json.dump({b.name: [list(r) for r in (rig.matrix_world @ b.matrix)] for b in rig.pose.bones if b.name.startswith(('ORG-', 'DEF-'))},
+                       open(f'{base}_{lab}_bones.json', 'w', encoding='utf-8'))
+        print('   npy + bones →', base); return
     if os.environ.get('STILLS_ONLY'):
         tag = os.environ.get('STILL_TAG', '')
         for lab, st in (('open', state('close', 0.0)), ('mid', state('close', .55)), ('fist', state('close', 1.0))):

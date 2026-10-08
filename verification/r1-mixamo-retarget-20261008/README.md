@@ -66,3 +66,16 @@ ranking: compare candidates with the close-ups. It needs contact allow-lists and
 Ladder export faces +y (180° from the sitting file) — yaw to fix when placing it in the archive.
 
 Decision (user): continue with the auto-rig; the direct route stops here (script kept for reference).
+
+## 2026-10-08 (later) — story chair pose + fist on the auto-rig (user: "의자 자세랑 주먹 테스트 렌더해서 비교해줘")
+`story_chair_fist_rigify_vs_autorig.jpg`, columns: Rigify open · auto-rig open · Rigify fist · auto-rig fist; rows: 3/4, right side,
+three hand close-ups (each centred on its own hand).
+- How: `chair-motion-v3.py` (`SAVE_NPY`) writes the story pose as Rigify bone world matrices (open, fist);
+  `scripts/assets/pose-to-mixamo-v3.py` gives each Mixamo bone the same world rotation from rest, the pelvis the same
+  translation, then a 2-bone IK puts each wrist back on the Rigify wrist (copied angles alone left the right hand ~5 cm
+  off, because the Mixamo elbow is ~5 cm higher). No Mixamo motion is used, only the auto-rig's skeleton and weights.
+- Flipped triangles (micro crumples): body 279 → 20 (open), 326 → 55 (fist); right hand 0 in all four.
+- By eye: the body is the same pose; the auto-rig hip/belly fold is smoother. The fist reads the same overall; the Rigify fist
+  has slightly crisper knuckles because Rigify has palm (metacarpal) bones and Mixamo does not. Small lumps on the back of the
+  auto-rig fist are the price.
+- Not done: breath keys on the auto-rig, the fist sequence's mid frames, chair contact check, web export.

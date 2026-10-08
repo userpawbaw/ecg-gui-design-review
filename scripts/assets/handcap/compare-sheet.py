@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw
 from scipy.ndimage import median_filter
 
 video, angles, rdir, out = sys.argv[1:5]; tc = float(sys.argv[5]) if len(sys.argv) > 5 else 27.9
-D = json.load(open(angles)); F = D['frames']; fps = D['fps']; t = np.array([f['t'] for f in F])
+D = json.load(open(angles, encoding='utf-8')); F = D['frames']; fps = D['fps']; t = np.array([f['t'] for f in F])
 fing = ['index', 'middle', 'ring', 'pinky']
 A = {f: median_filter(np.array([x[f] for x in F]), size=(5, 1)) for f in fing}
 g = np.mean([A[f][:, 1] for f in fing], 0)

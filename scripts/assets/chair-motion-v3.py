@@ -283,6 +283,12 @@ def render(g):
                 sc.camera = cam; sc.render.filepath = os.path.join(OUT, f'still_{name}_{lab}{tag}.png'); bpy.ops.render.render(write_still=True)
         print('   stills →', OUT); return
 
+    if os.environ.get('EXPORT_STORY'):                               # brief 3: web export (story-export-v3.py)
+        import importlib.util as _iu, types
+        _sp = _iu.spec_from_file_location('story_export', os.path.join(ROOT, 'scripts', 'assets', 'story-export-v3.py'))
+        _m = _iu.module_from_spec(_sp); _sp.loader.exec_module(_m)
+        _m.run(dict(g=g, cams=cams, base=base, cm=types.SimpleNamespace(breath_at=breath_at, breath_bones=breath_bones)))
+        return
     if os.environ.get('INFLOW'):                                     # D-054 inflow-marker check stills (inflow-preview-v3.py)
         import importlib.util as _iu, types
         _sp = _iu.spec_from_file_location('inflow', os.path.join(ROOT, 'scripts', 'assets', 'inflow-preview-v3.py'))

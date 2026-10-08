@@ -113,17 +113,18 @@ function contourMaterial(slice=false){
 // the body's morph targets (breath, grip).
 const h5Vert=/* glsl */`
 #include <morphtarget_pars_vertex>
-attribute float aSlice;varying float vS;varying vec3 vN,vW;
+attribute float aSlice,aInD,aInM;varying float vS,vInD,vInM;varying vec3 vN,vW;
 void main(){
  #include <begin_vertex>
  #include <morphtarget_vertex>
- vS=aSlice;vec4 w=modelMatrix*vec4(transformed,1.);vW=w.xyz;vN=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*w;
+ vS=aSlice;vInD=aInD;vInM=aInM;vec4 w=modelMatrix*vec4(transformed,1.);vW=w.xyz;vN=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*w;
 }`;
 const h5Frag=/* glsl */`
 uniform vec3 uSkin,uLine,uSunCol,uSunTo;uniform float uOpacity,uFlash,uFeet,uDensity,uScan,uScanOn,uRefDist,uSunOn,uExposure;
 uniform vec3 uHeart;uniform float uWaveT,uWaveAmp;
 uniform sampler2D tLight;uniform mat4 uLightVP;
-varying vec3 vN,vW;varying float vS;
+uniform float uCommon,uFront,uWaveK;                             // Story inflow markers (D-054): 0 = off (intro)
+varying vec3 vN,vW;varying float vS,vInD,vInM;
 float ringAt(float c,float dens){float d=c*dens,fw=max(fwidth(d),1e-4);float e=min(fract(d),1.-fract(d));return 1.-smoothstep(.5*fw,1.6*fw,e);}
 void main(){
  vec3 n=normalize(vN);if(!gl_FrontFacing)n=-n;
@@ -154,13 +155,17 @@ void main(){
  vec3 glow=vec3(1.,.36,.42)*hlg*(1.1+.9*uFlash)*reveal*uOpacity;
  col*=1.-.5*hlg;                                              // the surface's own white gives way to the heart's light
  float ao=clamp(a+scanLine*uOpacity*.6,0.,1.);
- gl_FragColor=vec4(col*uExposure+(uLine*scanLine*uOpacity*1.5+glow)/max(ao,.05),ao);
+ // D-054 inflow red (inflow-preview-v3 add_red): P-b common mode over the whole body + M-b wave from the forearm to RA
+ float wx=(vInD-uFront)/.045,wave=exp(-wx*wx)*vInM*exp(-vInD/.9)*uWaveK;
+ vec3 red=vec3(1.,.19,.28)*(uCommon*.9+wave)*.3*uOpacity;
+ gl_FragColor=vec4(col*uExposure+(uLine*scanLine*uOpacity*1.5+glow+red)/max(ao,.05),ao);
 }`;
 function h5Material(){
  return new THREE.ShaderMaterial({vertexShader:h5Vert,fragmentShader:h5Frag,transparent:true,depthWrite:false,depthFunc:THREE.LessEqualDepth,side:THREE.DoubleSide,
   uniforms:{uSkin:{value:new THREE.Color('#d9dde3')},uLine:{value:new THREE.Color('#f4f1ea')},uSunCol:{value:new THREE.Color('#ffd09a')},uSunTo:{value:new THREE.Vector3(0,-1,0)},
    uExposure:{value:.42},uRefDist:{value:0},uSunOn:{value:0},tLight:{value:null},uLightVP:{value:new THREE.Matrix4()},uOpacity:{value:0},uFlash:{value:0},uFeet:{value:FEET_Y},
-   uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0}}});
+   uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},
+   uCommon:{value:0},uFront:{value:-1},uWaveK:{value:0}}});
 }
 
 function rimMaterial(color:string,pow:number,fill:number,deform:boolean){
@@ -172,6 +177,7 @@ function rimMaterial(color:string,pow:number,fill:number,deform:boolean){
 export function createFigure(body:THREE.BufferGeometry,heart:THREE.BufferGeometry,data:FigureData,look:'v1'|'v2'|'h5'='v2',morphNames:string[]=[]){
  const group=new THREE.Group();group.position.set(0,FEET_Y,0);
  const slice=body.getAttribute('_slice');if(slice)body.setAttribute('aSlice',slice);   // seated body: bone-axis coordinate (H3b)
+ const inD=body.getAttribute('_inflow_d'),inM=body.getAttribute('_inflow_m');if(inD&&inM){body.setAttribute('aInD',inD);body.setAttribute('aInM',inM);}   // Story M-b wave
  const bodyMat=look==='h5'?h5Material():look==='v2'?contourMaterial(!!slice):rimMaterial('#9fb4d8',2.8,0,false);
  const bodyMesh=new THREE.Mesh(body,bodyMat);group.add(bodyMesh);
  // H5: depth pre-pass (same vertex stage incl. morph) so the frosted surface shows only its nearest layer; it runs after

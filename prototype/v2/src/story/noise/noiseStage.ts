@@ -1,0 +1,206 @@
+// Story noise scenes, first pass (brief 3 IMPL_BRIEF_STORY_NOISE_WEB_2026-10-08, D-053/D-054, IDEA-R1-NOISE §10).
+// One seated figure on GreenChair_01 at the archive's measurement spot; per noise only the inflow marker and the motion
+// that makes the noise change. Fixed composition (camera moves are the second pass). Vanilla module mounted by React (D-028):
+// one GSAP ticker drives the WebGL scene and the Canvas 2D wave panel from one playback clock t.
+// Data contract: the panel draws stored samples only (input / stored output of d0-*--5, cross-faded per beat as in the intro);
+// breath (bw) and clench (ma) timings are computed from the stored traces (F-030); the red markers are illustration, not data.
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import gsap from 'gsap';
+import {createArchive} from '../intro/archive';
+import {createFigure} from '../intro/figure';
+import {createGrade} from '../intro/space';
+import {createSweep} from '../intro/sweep';
+import {createGrid,createBeatMix,mvPerBoxFor} from '../intro/waveUi';
+import {beatPhase,type Loop} from '../intro/beats';
+
+export type Cond='pli'|'bw'|'ma';
+export type NoiseData={cond:Cond,fs:number,loop:Loop,input:Float32Array,output:Float32Array,clean:Float32Array};
+export type NoiseDom={gl:HTMLCanvasElement,grid:HTMLCanvasElement,sweep:HTMLCanvasElement,overlay:HTMLCanvasElement,cells:HTMLElement[]};
+export type NoiseOptions={frozenT:number|null,reduced:boolean};
+type Story={figure_anchor:number[],morphs:string[],fist_s:number[],ra_arc_m:number,sternum_v:number,heart_approx:number[],
+ electrodes:Record<'RA'|'LA'|'LL',{v:number,p:number[],n:number[]}>,cams:Record<string,{type:string,loc:number[],rot_euler:number[],lens?:number,sensor_width?:number,ortho_scale?:number}>};
+
+const SPOT={x:-.7505,y:3.0995,yaw:-.0106};                       // build_archive.py r2 chair_fit (measurement spot, archive frame)
+const RED=new THREE.Color('#ff3048');
+const clamp=(x:number,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const ss=(a:number,b:number,t:number)=>{const k=clamp((t-a)/(b-a));return k*k*(3-2*k);};
+const CLOSE=.56,HOLD=.45,OPEN=.39;                               // D-053: the video's clench timing (s)
+
+/** Blender figure frame (z up) → three (y up) inside the archive: p_arch = spot + Rz(yaw)(p − anchor), then (x, z, −y). */
+function toThree(p:number[]|THREE.Vector3,anchor:number[]){
+ const v=Array.isArray(p)?p:[p.x,p.y,p.z],dx=v[0]-anchor[0],dy=v[1]-anchor[1],c=Math.cos(SPOT.yaw),s=Math.sin(SPOT.yaw);
+ const ax=SPOT.x+c*dx-s*dy,ay=SPOT.y+s*dx+c*dy;return new THREE.Vector3(ax,v[2],-ay);
+}
+
+/** F-030 timings from the stored traces. */
+export function breathFromBaseline(x:Float32Array,fs:number){        // 1 s moving average, normalised 0..1 (inhale = rise)
+ const k=Math.round(fs),out=new Float32Array(x.length);let acc=0;
+ for(let i=0;i<x.length;i++){acc+=x[i];if(i>=k)acc-=x[i-k];out[i]=acc/Math.min(i+1,k);}
+ // centre the window (the stills used a centred average)
+ const c=new Float32Array(x.length);for(let i=0;i<x.length;i++)c[i]=out[Math.min(x.length-1,i+(k>>1))];
+ let lo=Infinity,hi=-Infinity;for(const v of c){lo=Math.min(lo,v);hi=Math.max(hi,v);}
+ return{base:c,breath:c.map(v=>(v-lo)/(hi-lo||1))};
+}
+export function clenchStarts(input:Float32Array,clean:Float32Array,fs:number){   // noise 0.5 s RMS above threshold → clench
+ const n=input.length,w=Math.round(.5*fs),e=new Float32Array(n);let acc=0;
+ for(let i=0;i<n;i++){const d=input[i]-clean[i];acc+=d*d;if(i>=w){const o=input[i-w]-clean[i-w];acc-=o*o;}e[i]=Math.sqrt(Math.max(0,acc)/Math.min(i+1,w));}
+ let lo=Infinity,hi=-Infinity;for(const v of e){lo=Math.min(lo,v);hi=Math.max(hi,v);}
+ const thr=lo+.35*(hi-lo),starts:number[]=[];let busyUntil=-1;
+ for(let i=1;i<n;i++){const t=i/fs-.25;                              // the RMS window lags by half its length
+  if(e[i]>=thr&&e[i-1]<thr&&t>=busyUntil){starts.push(Math.max(0,t));busyUntil=t+CLOSE+HOLD+OPEN;}}   // overlaps merge
+ return starts;
+}
+
+export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOptions){
+ const U=(f:string)=>new URL(`./assets/${f}`,import.meta.url).href;
+ const story:Story=await (await fetch(U('story.json'))).json();
+ const A=story.figure_anchor;
+ const loader=new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+ const renderer=new THREE.WebGLRenderer({canvas:dom.gl,antialias:true,powerPreference:'high-performance'});
+ renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x000000,1);
+ const scene=new THREE.Scene();
+ const arch=await createArchive();scene.add(arch.room,arch.dust);arch.setFade(1);arch.renderSunDepth(renderer);
+ // chair: plain PBR lit by a soft warm key + fill that stand in for the baked room light (the room's r1 bake has no chair)
+ const chair=(await loader.loadAsync(U('chair_v3_story.glb'))).scene;
+ scene.add(chair);
+ scene.add(new THREE.HemisphereLight(0xffe2c4,0x2a1d14,.55));
+ const key=new THREE.DirectionalLight(0xffd6a8,1.3);key.position.set(-2.5,3.2,-1.5);scene.add(key);
+ // figure
+ const g=await loader.loadAsync(U('body_v3_story.glb'));let mesh:THREE.Mesh|null=null;g.scene.traverse(o=>{if((o as THREE.Mesh).isMesh&&!mesh)mesh=o as THREE.Mesh;});
+ const bm=mesh as unknown as THREE.Mesh,body=bm.geometry,dict=bm.morphTargetDictionary??{};
+ // meshopt quantised the positions under a node transform: bake it into the geometry and its (relative) morph deltas
+ g.scene.updateMatrixWorld(true);{const M=bm.matrixWorld.clone(),L3=new THREE.Matrix4().extractRotation(M),lin=M.clone().setPosition(0,0,0);
+  const deq=(a:THREE.BufferAttribute|THREE.InterleavedBufferAttribute)=>{const f=new THREE.Float32BufferAttribute(a.count*3,3);for(let i=0;i<a.count;i++)f.setXYZ(i,a.getX(i),a.getY(i),a.getZ(i));return f;};
+  body.setAttribute('position',deq(body.getAttribute('position')));body.setAttribute('normal',deq(body.getAttribute('normal')));
+  body.morphAttributes.position=(body.morphAttributes.position??[]).map(a=>deq(a).applyMatrix4(lin));
+  body.applyMatrix4(M);void L3;}
+ const morphNames=Object.keys(dict).sort((a,b)=>dict[a]-dict[b]);
+ const heartGeo=await (async()=>{const h=await loader.loadAsync(new URL('../intro/assets/heart.glb',import.meta.url).href);let m:THREE.Mesh|null=null;h.scene.traverse(o=>{if((o as THREE.Mesh).isMesh&&!m)m=o as THREE.Mesh;});return (m as unknown as THREE.Mesh).geometry;})();
+ const hb=story.heart_approx;
+ const figure=createFigure(body,heartGeo,{height:1.3,heart:[hb[0],hb[2],-hb[1]],silhouette:[]},'h5',morphNames);
+ // glb vertices are three(figure frame) → put the figure frame's anchor on the spot
+ const origin=toThree(A,A),anchor3=new THREE.Vector3(A[0],A[2],-A[1]);
+ figure.group.position.copy(origin).sub(anchor3.clone().applyAxisAngle(new THREE.Vector3(0,1,0),SPOT.yaw));figure.group.rotation.y=SPOT.yaw;
+ figure.line.visible=false;scene.add(figure.group);
+ chair.position.copy(figure.group.position);chair.rotation.y=SPOT.yaw;   // chair glb shares the figure frame
+ figure.group.updateMatrixWorld(true);
+ const heartWorld=new THREE.Vector3(hb[0],hb[2],-hb[1]).applyMatrix4(figure.group.matrixWorld);
+ figure.heartWorld.copy(heartWorld);
+ const bu=figure.bodyMat.uniforms;bu.uHeart.value.copy(heartWorld);bu.uFeet.value=0;bu.uRefDist.value=2.6;bu.uSunOn.value=1;
+ bu.tLight.value=arch.lightRT.depthTexture;bu.uLightVP.value=arch.lightVP;bu.uSunTo.value=arch.sunTo;figure.setBodyOpacity(1);
+ bu.uScan.value=-1;bu.uScanOn.value=0;figure.heartMat.uniforms.uOpacity.value=1;   // fully revealed (the intro scan is not used here)
+ // meshopt reorders vertices: find the electrode / sternum vertices by position (figure frame → three: x, z, −y)
+ const P0=body.getAttribute('position');
+ const nearest=(q:THREE.Vector3)=>{let bi=0,bd=Infinity;for(let i=0;i<P0.count;i++){const dx=P0.getX(i)-q.x,dy=P0.getY(i)-q.y,dz=P0.getZ(i)-q.z,d=dx*dx+dy*dy+dz*dz;if(d<bd){bd=d;bi=i;}}return bi;};
+ const VID:Record<string,number>={};
+ for(const k of ['RA','LA','LL'] as const){const p=story.electrodes[k].p;VID[k]=nearest(new THREE.Vector3(p[0],p[2],-p[1]));}
+ {const ra=story.electrodes.RA.p;let bi=-1,bz=-Infinity;for(let i=0;i<P0.count;i++){if(Math.abs(P0.getX(i))<.015&&Math.abs(P0.getY(i)-(ra[2]-.06))<.015&&P0.getZ(i)>bz){bz=P0.getZ(i);bi=i;}}VID.sternum=bi;}
+ const infl=morphNames.map(()=>0);
+ const setMorphs=(breath:number,fist:number)=>{             // fist 0..1 → neighbouring sampled shapes (PIP still leads MCP)
+  const fs_=story.fist_s,mi=figure.bodyMesh.morphTargetInfluences!;mi.fill(0);
+  const b=morphNames.indexOf('breath');if(b>=0)mi[b]=breath;
+  if(fist>0){let j=0;while(j<fs_.length-1&&fist>fs_[j])j++;
+   const lo=j===0?0:fs_[j-1],w=(fist-lo)/(fs_[j]-lo),name=(s:number)=>'fist'+Math.round(s*100);
+   const ih=morphNames.indexOf(name(fs_[j]));if(ih>=0)mi[ih]=w;
+   if(j>0){const il=morphNames.indexOf(name(fs_[j-1]));if(il>=0)mi[il]=1-w;}}
+  for(let i=0;i<infl.length;i++)infl[i]=mi[i];
+ };
+ // electrodes follow the morphed skin: base + Σ w·delta for three vertices (glTF morphs are relative)
+ const pos=body.getAttribute('position'),deltas=body.morphAttributes.position??[],nrm=body.getAttribute('normal');
+ const skin=(v:number)=>{const p=new THREE.Vector3().fromBufferAttribute(pos,v);deltas.forEach((d,i)=>{if(infl[i])p.addScaledVector(new THREE.Vector3().fromBufferAttribute(d,v),infl[i]);});return p.applyMatrix4(figure.group.matrixWorld);};
+ const foam=new THREE.MeshStandardMaterial({color:0xd8d4cc,roughness:.85});
+ const ringMat=new THREE.MeshBasicMaterial({color:RED.clone(),transparent:true,opacity:0,toneMapped:false});
+ const leadMat=new THREE.MeshBasicMaterial({color:RED.clone(),transparent:true,opacity:0,toneMapped:false});
+ const discs=(['RA','LA','LL'] as const).map(k=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(.019,.019,.003,24),foam);scene.add(m);return{k,m};});
+ const ring=new THREE.Mesh(new THREE.TorusGeometry(.024,.0024,8,40),ringMat);scene.add(ring);
+ let lead:THREE.Mesh|null=null;
+ const nWorld=(v:number)=>new THREE.Vector3().fromBufferAttribute(nrm,v).applyQuaternion(figure.group.quaternion).normalize();
+ function placeElectrodes(){
+  for(const {k,m} of discs){const v=VID[k],p=skin(v),n=nWorld(v);m.position.copy(p).addScaledVector(n,.002);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),n);
+   if(k==='RA'){ring.position.copy(p).addScaledVector(n,.004);ring.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),n);
+    const c=new THREE.CatmullRomCurve3([p.clone().addScaledVector(n,.006),p.clone().addScaledVector(n,.03).add(new THREE.Vector3(0,-.08,0)),
+     p.clone().multiply(new THREE.Vector3(1,1,1)).add(new THREE.Vector3((origin.x-p.x)*.6,-.26,0)).addScaledVector(n,.05)]);
+    lead?.geometry.dispose();if(!lead){lead=new THREE.Mesh(new THREE.TubeGeometry(c,24,.0018,6),leadMat);scene.add(lead);}else lead.geometry=new THREE.TubeGeometry(c,24,.0018,6);}}
+ }
+ // camera from story.json ('ma' for pli/ma, 'side' for bw — the person's right, D-054)
+ const camDef=story.cams[data.cond==='bw'?'side':'ma'];
+ const camLoc=toThree(camDef.loc,A),e=camDef.rot_euler,eul=new THREE.Euler(e[0],e[1],e[2],'ZYX');   // Blender XYZ euler = Rz·Ry·Rx = three order ZYX
+ const fwdB=new THREE.Vector3(0,0,-1).applyEuler(eul),camLook=toThree([camDef.loc[0]+fwdB.x,camDef.loc[1]+fwdB.y,camDef.loc[2]+fwdB.z],A);
+ const persp=new THREE.PerspectiveCamera(60,1,.05,60),ortho=new THREE.OrthographicCamera(-1,1,1,-1,.6,30);
+ const camera:THREE.PerspectiveCamera|THREE.OrthographicCamera=camDef.type==='ortho'?ortho:persp;
+ camera.position.copy(camLoc);camera.up.set(0,1,0);camera.lookAt(camLook);
+ if(camDef.type==='ortho'){ortho.near=Math.max(.05,camLoc.distanceTo(origin)-.45);ortho.far=30;}   // skip the archive desk in front (inflow stills: clip start)
+ // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
+ const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
+ composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);
+ const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.5,.35,.8);composer.addPass(bloom);composer.addPass(new OutputPass());
+ const grade=createGrade();composer.addPass(grade);
+ // wave panel (stored samples, intro sweep rules) + 4-cell processing strip above it
+ const grid=createGrid(dom.grid);
+ const sweep=createSweep(dom.sweep,{gridHot:grid.hot,fs:data.fs,loop:data.loop,input:{values:data.input,color:[255,188,121],glow:.45,core:.78,white:.35},output:{values:data.output,color:[103,231,195]},mvPerBox:3.6});
+ const mix=createBeatMix(4);
+ const og=dom.overlay.getContext('2d')!;
+ let W=0,H=0,panelMid=0;
+ const sternumPx=()=>{const p=skin(VID.sternum).project(camera);return{x:(p.x*.5+.5)*W,y:(-p.y*.5+.5)*H};};
+ function resize(){
+  W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio||1,1.25);
+  renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);bloom.resolution.set(W*pr/2,H*pr/2);
+  arch.setPx(H,pr);grade.uniforms.uAspect.value=W/H;
+  if(camDef.type==='ortho'){const s=(camDef.ortho_scale??1.9)/2,a=W/H;ortho.left=-s;ortho.right=s;ortho.top=s/a;ortho.bottom=-s/a;ortho.updateProjectionMatrix();}
+  else{const hf=2*Math.atan((camDef.sensor_width??36)/2/(camDef.lens??16));persp.fov=2*Math.atan(Math.tan(hf/2)/(W/H))*180/Math.PI;persp.aspect=W/H;persp.updateProjectionMatrix();}
+  camera.updateMatrixWorld();
+  // B-b: the panel's 0 mV sits at the exhaled chest height (layout only); other scenes centre it
+  setMorphs(0,0);figure.group.updateMatrixWorld(true);panelMid=data.cond==='bw'?sternumPx().y:.5*H;
+  const half=.2*H,b={l:.64*W,r:.97*W,t:panelMid-half,b:panelMid+half},mv=mvPerBoxFor(b,2.5);sweep.resize(b,mv);grid.resize(b,2.5,mv);
+  dom.overlay.width=W*pr;dom.overlay.height=H*pr;og.setTransform(pr,0,0,pr,0,0);
+  const strip=dom.cells[0]?.parentElement;if(strip)Object.assign(strip.style,{left:b.l+'px',top:Math.max(12,b.t-46)+'px',width:(b.r-b.l)+'px'});
+ }
+ resize();addEventListener('resize',resize);
+
+ // stored-trace timings
+ const T=data.input.length/data.fs;
+ const bw=data.cond==='bw'?breathFromBaseline(data.input,data.fs):null;
+ const clenches=data.cond==='ma'?clenchStarts(data.input,data.clean,data.fs):[];
+ const breathFixed=(t:number)=>{const u=t%5;return u<2?ss(0,2,u):1-ss(2,5,u);};              // D-053: 2 per 10 s
+ const fistAt=(t:number)=>{for(const c of clenches){const d=t-c;if(d<0||d>CLOSE+HOLD+OPEN)continue;return d<CLOSE?ss(0,CLOSE,d):d<CLOSE+HOLD?1:1-ss(CLOSE+HOLD,CLOSE+HOLD+OPEN,d);}return 0;};
+ const waveAt=(t:number)=>{let best=-1;for(const c of clenches){const d=t-c-.3;if(d>=0&&d<1.6)best=d;}return best;};   // wave starts as the fist tightens
+ const PROC=data.cond==='pli'?4:2;                                   // the processing strip starts after the inflow is shown
+
+ const t0=performance.now();let frozen=opt.frozenT,frame=0;
+ const clock=()=>frozen??(performance.now()-t0)/1000;
+ function update(){
+  const t=clock(),tl=((t%T)+T)%T;frame++;
+  // motion
+  const breath=bw?bw.breath[Math.min(bw.breath.length-1,Math.floor(tl*data.fs))]:breathFixed(t);
+  const fist=data.cond==='ma'?fistAt(tl):0;
+  setMorphs(breath,fist);placeElectrodes();
+  // inflow markers
+  let common=0,ringK=0,leadK=0,front=-1,waveK=0;
+  if(data.cond==='pli'){common=.7*ss(0,1.2,t)*(1-.85*ss(1.4,2.2,t));ringK=ss(1.4,2.2,t);leadK=ss(1.6,2.4,t);}
+  if(data.cond==='ma'){const d=waveAt(tl);if(d>=0){front=(ss(0,1.2,d)*1.15-.05)*story.ra_arc_m;waveK=12;ringK=ss(1.05,1.3,d)*(1-ss(1.3,1.6,d)*.6);leadK=ringK;}}
+  bu.uCommon.value=common;bu.uFront.value=front;bu.uWaveK.value=waveK;
+  ringMat.opacity=ringK;leadMat.opacity=leadK;
+  // heart + sweep on the same clock
+  const ph=beatPhase(data.loop,data.fs,t);figure.beat(ph,1);
+  const procOn=t>PROC;mix.update(procOn?1:0,ph.prev,t,opt.reduced);
+  sweep.draw({t,startAbs:0,mix:mix.value,alpha:1,reduced:opt.reduced,ring:null,comet:null,flash:mix.flash,gridAlpha:1});
+  const filled=Math.round(mix.goal*4);dom.cells.forEach((c,i)=>c.classList.toggle('on',i<filled));
+  // overlay: right ~40 % darkened to 70 % (left → right ramp) + B-b thread
+  og.clearRect(0,0,W,H);const gr=og.createLinearGradient(.58*W,0,.66*W,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,.7)');
+  og.fillStyle=gr;og.fillRect(.58*W,0,.42*W,H);
+  if(bw){const c=sternumPx(),hx=sweep.slotX(Math.floor(t*data.fs)),base=bw.base[Math.min(bw.base.length-1,Math.floor(tl*data.fs))],hy=sweep.yOf(base);
+   og.lineCap='round';for(const [w,col] of [[7,'rgba(120,80,40,.5)'],[3,'rgba(255,196,120,.9)'],[1,'rgba(255,240,210,1)']] as const){og.strokeStyle=col;og.lineWidth=w;og.beginPath();og.moveTo(c.x,c.y);og.lineTo(hx,hy);og.stroke();}
+   og.fillStyle='rgba(255,205,140,1)';og.beginPath();og.arc(c.x,c.y,4,0,7);og.fill();}
+  arch.update(t,frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,.6);
+  grade.uniforms.uTime.value=t;composer.render();
+ }
+ gsap.ticker.add(update);
+ return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,figure,arch,
+  dispose(){gsap.ticker.remove(update);removeEventListener('resize',resize);renderer.dispose();composer.dispose();arch.dispose();figure.dispose();}};
+}

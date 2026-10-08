@@ -75,7 +75,7 @@ for name, (zf, tgt) in LEVELS.items():
     print(f'   {name:12} z={zf:.2f}H girth {g0:.1f} cm  quiet +{rows[-1]["quiet_key_cm"]:.2f}  deep +{rows[-1]["deep_key_cm"]:.2f} (target {tgt})')
 print('   amplitudes (m, max radial push per region)', [round(a, 4) for a in amps], ' max vertex move', round(float(np.linalg.norm(D, axis=1).max()) * 1000, 1), 'mm')
 np.savez_compressed(os.path.join(SRC, 'breath_deep_v3.npz'), offsets=D.astype(np.float32), amps=np.array(amps))
-json.dump({'rows': rows, 'amps_m': amps, 'front_back_ratio': .35}, open(os.path.join(OUT, 'breath_girth.json'), 'w'), indent=1, ensure_ascii=False)
+json.dump({'rows': rows, 'amps_m': amps, 'front_back_ratio': .35}, open(os.path.join(OUT, 'breath_girth.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 
 # ---- side silhouette overlay: exhale (Basis) vs deep inhale, rest pose, orthographic from the person's right ----
 sk = o.shape_key_add(name='breath_deep'); sk.data.foreach_set('co', (B + D).astype(np.float32).ravel())

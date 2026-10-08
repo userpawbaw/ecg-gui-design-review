@@ -112,7 +112,7 @@ def electrodes(bpy, Vector, o, fj):
 
 
 def stored_trace(root, sid, key='input'):
-    j = json.load(open(os.path.join(root, 'prototype', 'v2', 'public', 'archive.json')))
+    j = json.load(open(os.path.join(root, 'prototype', 'v2', 'public', 'archive.json'), encoding='utf-8'))
     s = [a for a in j['scenes'] if a['id'] == sid][0]
     x = np.frombuffer(base64.b64decode(s['traces'][key]), dtype='<i2').astype(float) * s['scale']
     return x, j['fs']
@@ -126,7 +126,7 @@ def run(L):
     from bpy_extras.object_utils import world_to_camera_view as w2c
     OUT = os.path.join(ROOT, 'verification', 'r1-inflow-20261007'); os.makedirs(OUT, exist_ok=True)
     FR = os.environ.get('FRAMES_DIR', '/tmp/inflow-frames'); os.makedirs(FR, exist_ok=True)
-    fj = json.load(open(os.path.join(ROOT, 'prototype', 'v2', 'src', 'story', 'intro', 'assets', 'figure.json')))['poses_v3']['chair']
+    fj = json.load(open(os.path.join(ROOT, 'prototype', 'v2', 'src', 'story', 'intro', 'assets', 'figure.json'), encoding='utf-8'))['poses_v3']['chair']
     total = arc_attribute(bpy, o, rig, fj['electrodes']['RA']['v'])
     common, front = add_red(bpy, o.data.materials[0])
     W, H = sc.render.resolution_x, sc.render.resolution_y

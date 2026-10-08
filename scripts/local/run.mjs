@@ -60,7 +60,7 @@ function doctor(){
  say('\n다음: npm run story   (R1 Story 실행)\n');
 }
 
-function story(){ensureV2Data();const v2=join(root,'prototype/v2');ensureDeps(v2);say('\nR1 Story: http://127.0.0.1:5173/  (Lab부터: ?route=lab, 단계 이동: ?step=3)  — 멈추려면 Ctrl+C\n');run('npm',['run','dev','--','--open'],{cwd:v2});}
+function story(){ensureV2Data();const v2=join(root,'prototype/v2');ensureDeps(v2);say('\nR1 Story: http://127.0.0.1:5173/  (Lab부터: ?route=lab, 단계 이동: ?step=3, 잡음 장면: ?story=noise&cond=pli|bw|ma)  — 멈추려면 Ctrl+C\n');run('npm',['run','dev','--','--open'],{cwd:v2});}
 function storyCheck(){
  ensureV2Data();const v2=join(root,'prototype/v2');ensureDeps(v2);
  run('npm',['run','build'],{cwd:v2});

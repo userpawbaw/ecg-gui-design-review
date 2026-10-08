@@ -19,7 +19,7 @@ def _load(n, f):
 rf = _load('rf', 'rigify-fit-v3.py'); pc = _load('pc', 'pose-check-v3.py')
 OUT = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].endswith('.py') else os.path.join(ROOT, 'verification', 'r1-fist-20261006')
 os.makedirs(OUT, exist_ok=True)
-PROF = json.load(open(os.path.join(ROOT, 'assets', 'processed', 'handcap', 'fist_profile_v1.json')))
+PROF = json.load(open(os.path.join(ROOT, 'assets', 'processed', 'handcap', 'fist_profile_v1.json'), encoding='utf-8'))
 S = np.array(PROF['s'])
 bpy.ops.wm.open_mainfile(filepath=os.path.join(ROOT, 'assets', 'source', 'blender-human-base-meshes', 'figure_v3_rig_cache.blend'))
 o, rig = bpy.data.objects['body_v3'], bpy.data.objects['rig']; P = rf.Poser(rig); SIDE = 'R'
@@ -410,7 +410,7 @@ for direction in ('close', 'open'):
         report['frames'].append({'dir': direction, 's': round(float(s), 2), 'FAIL': nf, 'WARN': nw, 'issues': bad})
         if bad: print(f'   {direction} s={s:.2f}: ' + '; '.join(bad))
 print(f'   fist sequence frames {len(report["frames"])}: FAIL {fails}')
-json.dump(report, open(os.path.join(ROOT, 'verification', 'pose-check', 'fist.json' if MODE == 'study' else 'fist_chair.json'), 'w'), ensure_ascii=False, indent=1)
+json.dump(report, open(os.path.join(ROOT, 'verification', 'pose-check', 'fist.json' if MODE == 'study' else 'fist_chair.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 if fails and not os.environ.get('POSE_ALLOW_FAIL'):
     print('   FIST GATE FAIL — no renders'); sys.stdout.flush(); os._exit(1)
 

@@ -1,0 +1,11 @@
+.ns-root{position:fixed;inset:0;background:#000;overflow:hidden;z-index:50;font-family:'Pretendard','IBM Plex Mono',sans-serif;color:#efe9df}
+.ns-root canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ns-overlay,.ns-grid,.ns-sweep{pointer-events:none}
+.ns-strip{position:absolute;display:flex;gap:6px;align-items:center;pointer-events:none}
+.ns-strip i{flex:0 0 auto;width:34px;height:6px;border-radius:2px;border:1px solid rgba(103,231,195,.55);background:transparent;transition:background .16s}
+.ns-strip i.on{background:rgba(103,231,195,.85);box-shadow:0 0 8px rgba(103,231,195,.6)}
+.ns-strip span{margin-left:10px;font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;color:rgba(239,233,223,.72)}
+.ns-title{position:absolute;left:64%;top:6%;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+.ns-title b{font-size:clamp(22px,2.4vw,34px);font-weight:600;letter-spacing:-.01em}
+.ns-title small{font:500 11px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;color:rgba(239,233,223,.6)}
+.ns-notice{position:absolute;left:64%;right:3%;bottom:4%;margin:0;font:400 11px/1.5 'IBM Plex Mono',monospace;color:rgba(239,233,223,.5)}

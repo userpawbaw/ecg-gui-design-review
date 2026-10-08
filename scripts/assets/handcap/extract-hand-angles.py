@@ -43,7 +43,7 @@ def main(video, model, out):
             rec.update(angles(W)); rec['hand'] = r.handedness[0][0].category_name; rec['score'] = round(r.handedness[0][0].score, 3)
             rec['img'] = L[:, :2].round(4).tolist(); rec['world'] = W.round(5).tolist()
         frames.append(rec); i += 1
-    json.dump({'fps': fps, 'size': [int(cap.get(3)), int(cap.get(4))], 'frames': frames}, open(out, 'w'))
+    json.dump({'fps': fps, 'size': [int(cap.get(3)), int(cap.get(4))], 'frames': frames}, open(out, 'w', encoding='utf-8'))
     print('frames', i, 'fps', round(fps, 2), 'detected', sum('index' in f for f in frames), flush=True)
     det.close(); os._exit(0)
 

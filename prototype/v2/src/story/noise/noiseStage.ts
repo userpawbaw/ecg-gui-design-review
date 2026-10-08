@@ -11,6 +11,7 @@ import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
 import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {BokehPass} from 'three/addons/postprocessing/BokehPass.js';
 import gsap from 'gsap';
 import {createArchive} from '../intro/archive';
 import {createFigure} from '../intro/figure';
@@ -101,6 +102,8 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
  const VID:Record<string,number>={};
  for(const k of ['RA','LA','LL'] as const){const p=story.electrodes[k].p;VID[k]=nearest(new THREE.Vector3(p[0],p[2],-p[1]));}
  {const ra=story.electrodes.RA.p;let bi=-1,bz=-Infinity;for(let i=0;i<P0.count;i++){if(Math.abs(P0.getX(i))<.015&&Math.abs(P0.getY(i)-(ra[2]-.06))<.015&&P0.getZ(i)>bz){bz=P0.getZ(i);bi=i;}}VID.sternum=bi;}
+ {const mw=figure.group.matrixWorld,q=new THREE.Vector3(),cp=toThree(story.cams.ma.loc,A);let bi=0,bd=Infinity;
+  for(let i=0;i<P0.count;i++){q.fromBufferAttribute(P0,i).applyMatrix4(mw);const d=q.distanceTo(cp);if(d<bd){bd=d;bi=i;}}VID.fist=bi;}   // the fist is the body point nearest the low camera
  const infl=morphNames.map(()=>0);
  const setMorphs=(breath:number,fist:number)=>{             // fist 0..1 → neighbouring sampled shapes (PIP still leads MCP)
   const fs_=story.fist_s,mi=figure.bodyMesh.morphTargetInfluences!;mi.fill(0);
@@ -128,6 +131,27 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
      p.clone().multiply(new THREE.Vector3(1,1,1)).add(new THREE.Vector3((origin.x-p.x)*.6,-.26,0)).addScaledVector(n,.05)]);
     lead?.geometry.dispose();if(!lead){lead=new THREE.Mesh(new THREE.TubeGeometry(c,24,.0018,6),leadMat);scene.add(lead);}else lead.geometry=new THREE.TubeGeometry(c,24,.0018,6);}}
  }
+ // P-b field (pli): nested translucent shells around the archive's power line (rig_v3.glb PowerLine, room-fixed path);
+ // they grow from the cable until they wrap the figure, then fade as the difference shows at RA (inflow-field-v3 in the web)
+ const shells:{m:THREE.Mesh,u:{uK:{value:number}}}[]=[];let cablePts:THREE.Vector3[]=[];
+ if(data.cond==='pli'){
+  const rg=await loader.loadAsync(new URL('../intro/assets/rig_v3.glb',import.meta.url).href);rg.scene.updateMatrixWorld(true);
+  let pl:THREE.Mesh|null=null;rg.scene.traverse(o=>{if(o.name.startsWith('PowerLine')&&(o as THREE.Mesh).isMesh)pl=o as THREE.Mesh;});
+  if(pl){const m=pl as THREE.Mesh,pa=m.geometry.getAttribute('position'),ua=m.geometry.getAttribute('uv');const B=80,acc=Array.from({length:B},()=>({p:new THREE.Vector3(),n:0}));let umax=0;
+   for(let i=0;i<pa.count;i++)umax=Math.max(umax,ua.getX(i));
+   for(let i=0;i<pa.count;i++){const b=Math.min(B-1,Math.floor(ua.getX(i)/umax*B)),v=new THREE.Vector3().fromBufferAttribute(pa,i).applyMatrix4(m.matrixWorld);acc[b].p.add(v);acc[b].n++;}
+   cablePts=acc.filter(a=>a.n).map(a=>a.p.divideScalar(a.n));
+   const curve=new THREE.CatmullRomCurve3(cablePts);
+   for(let i=0;i<3;i++){const u={uK:{value:0},uA:{value:1-.25*i}};
+    const mat=new THREE.ShaderMaterial({uniforms:u,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
+     vertexShader:'varying vec3 vN,vV;void main(){vec4 w=modelMatrix*vec4(position,1.);vN=normalize(mat3(modelMatrix)*normal);vV=normalize(cameraPosition-w.xyz);gl_Position=projectionMatrix*viewMatrix*w;}',
+     fragmentShader:'uniform float uK,uA;varying vec3 vN,vV;void main(){float f=1.-abs(dot(normalize(vN),vV));gl_FragColor=vec4(vec3(1.,.19,.28)*pow(f,1.6)*.55*uK*uA,1.);}'});
+    const sh=new THREE.Mesh(new THREE.TubeGeometry(curve,160,1,24),mat);sh.visible=false;scene.add(sh);shells.push({m:sh,u});}}
+ }
+ // nearest distance cable → body (sets how far the field must grow)
+ let reach=.64;
+ if(cablePts.length){reach=Infinity;const mw=figure.group.matrixWorld,q=new THREE.Vector3();
+  for(let i=0;i<P0.count;i+=37){q.fromBufferAttribute(P0,i).applyMatrix4(mw);for(const c of cablePts)reach=Math.min(reach,q.distanceTo(c));}}
  // camera from story.json ('ma' for pli/ma, 'side' for bw — the person's right, D-054)
  const camDef=story.cams[data.cond==='bw'?'side':'ma'];
  const camLoc=toThree(camDef.loc,A),e=camDef.rot_euler,eul=new THREE.Euler(e[0],e[1],e[2],'ZYX');   // Blender XYZ euler = Rz·Ry·Rx = three order ZYX
@@ -144,15 +168,16 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
  let finalPos=camLoc.clone(),finalLook=camLook.clone(),finalH=hfovOf(camDef.lens??16);
  if(camDef.type==='ortho'){                                       // B-b side view: the stills' orthographic camera becomes a long
   const fwd=camLook.clone().sub(camLoc).normalize(),pivot=camLoc.clone().addScaledVector(fwd,Math.abs(camDef.loc[0]));   // lens far away
-  finalLook=pivot.clone().add(V3(0,.05,0));finalPos=pivot.clone().addScaledVector(fwd,-4.5);finalH=2*Math.atan((camDef.ortho_scale??1.9)/2/4.5);}
+  finalLook=pivot.clone().add(V3(0,.05,0));finalPos=pivot.clone().addScaledVector(fwd,-4.5).add(V3(0,.9,0));finalH=2*Math.atan((camDef.ortho_scale??1.9)/2/4.5);}   // a little from above: the near armrest no longer crosses the body
  const maDef=story.cams.ma,maE=maDef.rot_euler,maF=new THREE.Vector3(0,0,-1).applyEuler(new THREE.Euler(maE[0],maE[1],maE[2],'ZYX'));
  const maPos=toThree(maDef.loc,A),maLook=toThree([maDef.loc[0]+maF.x,maDef.loc[1]+maF.y,maDef.loc[2]+maF.z],A),maH=hfovOf(maDef.lens??16);
  const K:Record<Cond,Key[]>={
-  pli:[{t:0,pos:H0.clone().add(V3(0,.03,.42)),look:H0,hfov:.6},
+  pli:[{t:0,pos:H0.clone().add(V3(0,.05,.75)),look:H0,hfov:.42},
    {t:3,pos:H0.clone().add(V3(.1,.1,.95)),look:H0,hfov:.85},
    {t:7,pos:Fo.clone().add(V3(1.25,1.15,1.35)),look:H0.clone().lerp(DESK,.55),hfov:.95},          // orbit: desk + computer behind
    {t:10,pos:STRIP.clone().add(V3(-.6,.32,.5)),look:STRIP,hfov:.9},                               // down along the power line (from the person's right: the chair hid it)
-   {t:13,pos:STRIP.clone().add(V3(.16,.12,.36)),look:STRIP,hfov:.7},                              // the strip, close
+   {t:13,pos:STRIP.clone().add(V3(-.34,.14,.22)),look:STRIP,hfov:.7},                            // the strip, close
+   {t:15,pos:STRIP.clone().add(V3(-.55,1.3,.85)),look:STRIP.clone().add(V3(.25,.25,.15)),hfov:.95},              // crane rises beside the cable first (not through the body)
    {t:17,pos:Fo.clone().add(V3(.73,2.27,1.65)),look:Fo.clone().add(V3(-.35,.55,-.25)),hfov:hfovOf(24)},   // crane up, wide
    {t:18.6,pos:finalPos,look:finalLook,hfov:finalH,ease:'whip'}],                               // whip zoom on a beat
   bw:[{t:0,pos:maPos,look:maLook,hfov:maH},{t:4,pos:finalPos,look:finalLook,hfov:finalH}],         // 90° orbit to the side view
@@ -175,6 +200,8 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
  // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
  const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
  composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);
+ // M-b shallow focus (§10.4): focus rides the wave — fist → shoulder → RA
+ const bokeh=data.cond==='ma'?new BokehPass(scene,camera,{focus:1,aperture:.006,maxblur:.008}):null;if(bokeh)composer.addPass(bokeh);
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.5,.35,.8);composer.addPass(bloom);composer.addPass(new OutputPass());
  const grade=createGrade();composer.addPass(grade);
  // wave panel (stored samples, intro sweep rules) + 4-cell processing strip above it
@@ -219,6 +246,12 @@ export async function createNoiseStage(dom:NoiseDom,data:NoiseData,opt:NoiseOpti
   let common=0,ringK=0,leadK=0,front=-1,waveK=0;
   if(data.cond==='pli'){const p=t-16.6;common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p));ringK=ss(1.4,2.2,p);leadK=ss(1.6,2.4,p);}   // field reaches the body as the crane ends
   if(data.cond==='ma'&&t>4){const d=waveAt(tl);if(d>=0){front=(ss(0,1.2,d)*1.15-.05)*story.ra_arc_m;waveK=12;ringK=ss(1.05,1.3,d)*(1-ss(1.3,1.6,d)*.6);leadK=ringK;}}
+  if(shells.length){const grow=ss(13,16.6,t),fade=1-.9*ss(17,18.2,t),rOut=.06+grow*(reach+.12);   // around the cable → wraps the body
+   shells.forEach(({m,u},i)=>{const r=Math.max(.01,rOut*(i+1)/3);m.visible=t>12.6&&fade>.02;m.geometry.dispose();
+    m.geometry=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(cablePts),160,r,24);u.uK.value=ss(12.6,13.6,t)*fade;});}
+  if(bokeh){const fistP=skin(VID.fist),raP=skin(VID.RA),k=front<0?0:clamp(front/story.ra_arc_m);
+   const target=fistP.lerp(raP,k*k*(3-2*k));(bokeh.uniforms as Record<string,{value:number}>).focus.value=camera.position.distanceTo(target);
+   (bokeh.uniforms as Record<string,{value:number}>).aperture.value=t<4?.0005:.006;}
   bu.uCommon.value=common;bu.uFront.value=front;bu.uWaveK.value=waveK;
   ringMat.opacity=ringK;leadMat.opacity=leadK;
   // heart + sweep on the same clock

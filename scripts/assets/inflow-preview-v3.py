@@ -182,6 +182,35 @@ def run(L):
         _f = _iu.module_from_spec(_sp); _sp.loader.exec_module(_f)
         _f.run(dict(g=g, sc=sc, cams=cams, ip=types.SimpleNamespace(add_red=add_red), red=(common, front),
                     with_electrodes=with_electrodes, sheet=sheet))
+    if 'clip' in ONLY:                                           # short clips of the three markers (user 2026-10-08 "영상으로 보여줘")
+        import subprocess
+        FPS = int(os.environ.get('CLIP_FPS', 8)); wk = o.data.materials[0].node_tree.nodes['wave_k'].outputs[0]
+        def ss(a, b, t): return float(np.clip((t - a) / (b - a), 0, 1) ** 2 * (3 - 2 * np.clip((t - a) / (b - a), 0, 1)))
+        def frame(path, render):
+            if not os.path.exists(path): render().save(path)
+        def mp4(tag, n):
+            out = os.path.join(OUT, f'clip_{tag}.mp4')
+            subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', os.path.join(FR, f'clip_{tag}_%03d.png'),
+                            '-vf', 'format=yuv420p', '-c:v', 'libx264', '-crf', '20', out], check=True); print('   clip →', out)
+        # P-b 3 s: common mode rises (0–1.2 s), then the difference at RA (1.4–2.2 s) while the body fades back
+        n = 3 * FPS
+        for i in range(n):
+            t = i / FPS; ring, lead = with_electrodes(t, 0.0)
+            c = .7 * ss(0, 1.2, t) * (1 - .85 * ss(1.4, 2.2, t))
+            common.default_value, ring.default_value, lead.default_value = c, .6 * ss(0, 1.2, t) + 13 * ss(1.4, 2.2, t), 9 * ss(1.6, 2.4, t)
+            frame(os.path.join(FR, f'clip_pli_{i:03d}.png'), lambda: panel(shot('ma', '_clip')))
+        mp4('pli', n); common.default_value = 0
+        # M-b 3 s: one clench at 0.2 s (video timing: close .56, hold .45, open .39), the wave climbs 0.5–1.7 s
+        wk.default_value = 12.0
+        for i in range(n):
+            t = i / FPS
+            fist = ss(.2, .76, t) if t < 1.21 else 1 - ss(1.21, 1.6, t)
+            ring, lead = with_electrodes(t, fist)
+            front.default_value = (ss(.5, 1.7, t) * 1.15 - .05) * total
+            ring.default_value = 13 * ss(1.55, 1.8, t) * (1 - ss(2.4, 3.0, t)); lead.default_value = 9 * ss(1.65, 1.95, t) * (1 - ss(2.4, 3.0, t))
+            frame(os.path.join(FR, f'clip_ma_{i:03d}.png'), lambda: panel(shot('ma', '_clip')))
+        mp4('ma', n); front.default_value = -1; wk.default_value = 5.0
+        ring.default_value = lead.default_value = 0
     if 'tune' in ONLY:                                           # strength comparison (user 2026-10-07 "세기 조정")
         wk = o.data.materials[0].node_tree.nodes['wave_k'].outputs[0]
         ring, lead = with_electrodes(0.0, 0.0); fr = []
@@ -224,9 +253,13 @@ def run(L):
     y0 = ex_y                                                    # panel layout only: 0 mV at the exhaled chest height
     k_px = min((y0 - .12 * H) / max(float(x.max()), 1e-3), (.95 * H - y0) / max(-float(x.min()), 1e-3))   # whole stored trace fits
     print(f'   B-b panel: 0 mV at y {y0:.0f} px, {k_px:.0f} px/mV (stored range {x.min():+.2f}..{x.max():+.2f} mV)')
-    for i, t in enumerate((1.1, 2.5, 4.6, 6.0)):                 # stored baseline extremes (IDEA-R1-NOISE §6.2): ↓ ↑ ↓ ↑
+    BWCLIP = 'clip' in ONLY; CF = int(os.environ.get('CLIP_FPS', 8))
+    times = [1.1 + j / CF for j in range(int(3.5 * CF))] if BWCLIP else (1.1, 2.5, 4.6, 6.0)   # clip: 1.1–4.6 s, ↓ ↑ ↓
+    for i, t in enumerate(times):                                # stills: stored baseline extremes (IDEA-R1-NOISE §6.2): ↓ ↑ ↓ ↑
         bb = breath_bw(t); cx, cy = chest_px(bb)
-        im = panel(shot('side', f'bw_{i}')); d = ImageDraw.Draw(im)
+        fpath = os.path.join(FR, f'clip_bw_{i:03d}.png')
+        if BWCLIP and os.path.exists(fpath): continue
+        im = panel(shot('side', '_clip' if BWCLIP else f'bw_{i}')); d = ImageDraw.Draw(im)
         px0, px1, py0, py1 = int(.64 * W), int(.97 * W), int(.25 * H), int(.75 * H)
         n = int(t * fs) if t > 0 else 1; win = int(4 * fs)                           # sweep: the last 4 s up to t
         i0 = max(0, n - win); seg = x[i0:n]
@@ -242,5 +275,9 @@ def run(L):
         d.ellipse([cx - 5, cy - 5, cx + 5, cy + 5], fill=(255, 205, 140))                # chest point: its rise reads against the tick
         d.text((px0, int(.06 * H)), 'stored input  d0-bw_synth −5 dB  (synthetic noise · illustrative)', fill=(200, 200, 205))
         fr.append((f'B-b {i}  t={t:.1f} s  breath {bb:.2f}  baseline {base_lp[n - 1]:+.2f} mV  chest {ex_y - cy:+.0f} px', im))
-    sheet(fr, os.path.join(OUT, 'inflow_bw.jpg'))
+        if BWCLIP: im.save(fpath); fr = []
+    if BWCLIP:
+        mp4('bw', len(times))
+    else:
+        sheet(fr, os.path.join(OUT, 'inflow_bw.jpg'))
     print('   inflow stills →', OUT)

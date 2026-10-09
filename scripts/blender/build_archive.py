@@ -33,8 +33,11 @@ ap.add_argument('--export-rig', default='', help='v3 only: write the electrodes,
 ap.add_argument('--intro2', action='store_true', help='REVIEW-R1-WEB-20261008 I-4/I-5: Mixamo auto-rig figures — climber on the ladder (rungs re-spaced to the source motion) + floor-sitter with electrodes right of the ladder')
 ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--bsamples', type=int, default=128)
+ap.add_argument('--art', default='', choices=['', 'r3'], help='D-058 art test: ceiling hatch over the back of the aisle, side ladder up into it (rigid move of the r2 ladder + climber), sun through the hatch onto the back shelves, haze only in the hatch beam, cream sun, no bulbs')
+ap.add_argument('--palette', default='archive', choices=['archive', 'pastel'], help='D-058: archive = original dark book/wood colours; pastel = light pastel books, pale wood, light boxes (REF-002 comparison)')
 args = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 if args.intro2: args.fig = 'v3'; args.pose = 'ar_floor'
+if args.art == 'r3': args.light = 'r2'                           # r3 builds on the r2 light round (hero corridor replaced by the hatch beam)
 if args.pose: args.fig = 'v3'
 rng = random.Random(args.seed)
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -81,6 +84,17 @@ M_OUTLET = mat('outlet', srgb('#ece8de'), 0.45)
 M_CABLE = mat('cable', srgb('#202020'), 0.6)
 PALETTE = [('#7a3b2e', 4), ('#2f4a5a', 4), ('#5a6b48', 3), ('#8a6a3a', 3), ('#3b3030', 3), ('#b89b72', 3), ('#d9cfb8', 3),
            ('#6e2f2f', 2), ('#24343f', 2), ('#a8653c', 2), ('#cfc2a0', 2), ('#4d5e6b', 2), ('#e6dcc4', 2)]
+if args.palette == 'pastel':                                  # D-058: high value, low-mid saturation (REF-002: pastel 22-25 % of the frame)
+    PALETTE = [('#e8a48c', 4), ('#a9bccb', 4), ('#efe4cf', 4), ('#b9c4a8', 3), ('#d8c3a0', 3), ('#d98c74', 2), ('#8fa3b3', 2),
+               ('#f3ece0', 3), ('#c47b5a', 2), ('#7f9e9a', 2), ('#e6c9a8', 2), ('#5a4a42', 1)]
+    M_BOX = mat('archive_box', srgb('#e2cfae'), 0.85); M_BOX2 = mat('archive_box_grey', srgb('#cfcbc2'), 0.85)
+    M_BEAM = mat('beam', srgb('#b49878'), 0.75)
+    def lighten(m, val, sat):                                    # textured woods/walls: scale value and saturation of the base colour
+        nt = m.node_tree; b = nt.nodes['Principled BSDF']; ln = b.inputs['Base Color'].links
+        if not ln: return
+        hs = nt.nodes.new('ShaderNodeHueSaturation'); hs.inputs['Value'].default_value = val; hs.inputs['Saturation'].default_value = sat
+        nt.links.new(ln[0].from_socket, hs.inputs['Color']); nt.links.new(hs.outputs['Color'], b.inputs['Base Color'])
+    lighten(M_WOOD, 1.45, .55); lighten(M_FLOOR, 1.25, .7); lighten(M_WALL, 1.1, .6)
 BOOK_MATS = [mat(f'book_{i}', srgb(h), 0.72) for i, (h, _) in enumerate(PALETTE)]
 BOOK_W = [w for _, w in PALETTE]
 
@@ -128,7 +142,18 @@ XW, Y0, Y1, H = 3.6, -5.0, 5.0, 5.0          # half width, front/back, ceiling h
 box('Floor', (2 * XW, Y1 - Y0, 0.1), (0, (Y0 + Y1) / 2, -0.05), M_FLOOR, tile=3.0)
 box('BackWall', (2 * XW, 0.15, H), (0, Y1 + 0.075, H / 2), M_WALL, tile=2.0)
 box('WallR', (0.15, Y1 - Y0, H), (XW + 0.075, (Y0 + Y1) / 2, H / 2), M_WALL, tile=2.0)
-box('Ceiling', (2 * XW, Y1 - Y0, 0.15), (0, (Y0 + Y1) / 2, H + 0.075), M_WALL, tile=2.0)
+HATCH = (0.15, 1.35, 2.6, 3.75)                                 # D-058 r3: x0, x1, y0, y1 of the ceiling hatch (between beams, clear of the pendant)
+if args.art == 'r3':
+    hx0, hx1, hy0, hy1 = HATCH
+    box('Ceiling', (2 * XW, hy0 - Y0, 0.15), (0, (Y0 + hy0) / 2, H + 0.075), M_WALL, tile=2.0)
+    box('Ceiling', (2 * XW, Y1 - hy1, 0.15), (0, (hy1 + Y1) / 2, H + 0.075), M_WALL, tile=2.0)
+    box('Ceiling', (hx0 + XW, hy1 - hy0, 0.15), ((hx0 - XW) / 2, (hy0 + hy1) / 2, H + 0.075), M_WALL, tile=2.0)
+    box('Ceiling', (XW - hx1, hy1 - hy0, 0.15), ((hx1 + XW) / 2, (hy0 + hy1) / 2, H + 0.075), M_WALL, tile=2.0)
+    for (sx, sy, cx, cy) in ((hx1 - hx0 + .12, .06, (hx0 + hx1) / 2, hy0 - .03), (hx1 - hx0 + .12, .06, (hx0 + hx1) / 2, hy1 + .03),
+                             (.06, hy1 - hy0, hx0 - .03, (hy0 + hy1) / 2), (.06, hy1 - hy0, hx1 + .03, (hy0 + hy1) / 2)):
+        box('APR_hatch_trim', (sx, sy, 0.22), (cx, cy, H - 0.04), M_BEAM, grain=True)   # the hatch mouth: a crisp edge for the light
+else:
+    box('Ceiling', (2 * XW, Y1 - Y0, 0.15), (0, (Y0 + Y1) / 2, H + 0.075), M_WALL, tile=2.0)
 # left wall with three high windows (z 3.5–4.7), each with a frame and blinds that slice the sun
 WIN = [(-3.8, 0.9), (-2.2, 0.9), (-0.6, 0.9), (1.0, 0.9), (2.6, 0.9), (3.95, 1.0)]   # (centre y, width): gaps between stacks + one above the reading nook (sun onto the ladder)
 WZ0, WZ1 = 3.45, 4.7
@@ -141,6 +166,7 @@ SLATS = 20
 # D-049 r2: hero window over the nook (wide, uneven slats, one missing), two support windows (uneven), the rest closed
 # (slats near vertical and overlapping = dark anchors). r1 keeps the original uniform 20-slat blinds.
 WIN_ROLE = {3.95: 'hero', 1.0: 'support', -2.2: 'support'} if args.light == 'r2' else {}
+if args.art == 'r3': WIN_ROLE = {}                              # one source (review G): the hatch; the windows stay closed (dark anchors)
 def slat_layout(c, role):
     if role == 'hero':
         zs = [WZ0 + .07 + i * .105 + (.018 if i % 3 == 1 else 0) for i in range(12)]; zs.pop(5); return [(z, 38 + (14 if i == 7 else 0)) for i, z in enumerate(zs)]
@@ -167,7 +193,7 @@ for c, w in WIN:
 # ceiling beams across the aisle (foreground parallax while the camera descends)
 for i, y in enumerate(np.linspace(-4.4, 4.0, 6)):
     box('Beam', (2 * XW, 0.2, 0.32), (0, y, H - 0.16), M_BEAM, grain=True)
-    box('Purlin', (0.14, 1.4, 0.18), (0, y + 0.8, H - 0.09), M_BEAM, grain=True) if i < 5 else None
+    box('Purlin', (0.14, 1.4, 0.18), (0, y + 0.8, H - 0.09), M_BEAM, grain=True) if i < 5 and not (args.art == 'r3' and i == 4) else None
 
 # ---------------- stacks ----------------
 T = 0.03; SH = 4.2; SD = 0.25                  # board, stack height, half depth (double-sided)
@@ -183,7 +209,7 @@ def add_box_to(bm_, cx, cy, cz, w, d, h, mi, rot_y=0.0, rot_z=0.0):
     for f in {f for v in verts for f in v.link_faces}: f.material_index = mi
 
 N_BOOK = len(BOOK_MATS); MI_BOX, MI_BOX2, MI_LABEL, MI_PAPER, MI_BINDER = N_BOOK, N_BOOK + 1, N_BOOK + 2, N_BOOK + 3, N_BOOK + 4
-M_BINDER = mat('binder', srgb('#2d3e4a'), 0.6)
+M_BINDER = mat('binder', srgb('#9fb0bc' if args.palette == 'pastel' else '#2d3e4a'), 0.6)
 rolls_bm = bmesh.new()
 
 def fill_run(x0, x1, z, avail, face_y, dir_y):
@@ -273,6 +299,7 @@ cyl('LadderRail', 0.016, 2 * XW - 0.4, (0, BY - 0.08, 4.25), M_BRASS, rot=(0, ma
 
 # ---------------- library ladder (the figure sits on it) ----------------
 LAD_X, LAD_TOP, LAD_ANG = 0.55, 4.25, math.radians(14)
+if args.art == 'r3': LAD_TOP = H + 0.02                           # up into the hatch
 LAD_FOOT_Y = BY - 0.08 - LAD_TOP * math.tan(LAD_ANG)
 # intro2: the Mixamo climb's rung spacing fitted with its hand/foot contacts (0.2525 m along the stile, max error 23 mm;
 # the old 0.29 m left 79 mm) — the user allowed changing the ladder rather than the motion (2026-10-08)
@@ -293,10 +320,26 @@ def ladder():
             o = box('LadderRung', (0.48, 0.09, 0.03), (LAD_X, y, z), M_DARK, grain=True)
         objs.append(o); rungs.append((z, y))
     for dx in (-0.24, 0.24):
-        cyl('LadderWheel', 0.04, 0.03, (LAD_X + dx, LAD_FOOT_Y - 0.02, 0.04), M_BLACK, rot=(0, math.radians(90), 0))
-        box('LadderHook', (0.03, 0.1, 0.06), (LAD_X + dx, BY - 0.08, LAD_TOP), M_BRASS)
+        if args.art == 'r3':                                     # free-standing: rubber feet, no rail wheels or hooks
+            objs.append(box('LadderFoot', (0.06, 0.09, 0.03), (LAD_X + dx, LAD_FOOT_Y, 0.015), M_BLACK))
+            continue
+        objs.append(cyl('LadderWheel', 0.04, 0.03, (LAD_X + dx, LAD_FOOT_Y - 0.02, 0.04), M_BLACK, rot=(0, math.radians(90), 0)))
+        objs.append(box('LadderHook', (0.03, 0.1, 0.06), (LAD_X + dx, BY - 0.08, LAD_TOP), M_BRASS))
+    LADDER_OBJS[:] = objs
     return rungs
+LADDER_OBJS = []
 RUNGS = ladder()
+# D-058 r3: the ladder (and later the climber) moved rigidly: the top centre to the hatch's left rim, turned about the vertical so the
+# rungs run mostly in depth (seen at an angle from the aisle, the rails part and the rungs show as slats — REF-002), foot out to +x
+LAD_YAW = math.radians(float(os.environ.get('LAD_YAW', 72)))
+LAD_TOP_LOCAL = Vector((LAD_X, BY - 0.08, LAD_TOP))
+LAD_M = Matrix.Identity(4)
+if args.art == 'r3':
+    hx0, hx1, hy0, hy1 = HATCH
+    LAD_M = Matrix.Translation((hx0 + 0.06, (hy0 + hy1) / 2, LAD_TOP)) @ Matrix.Rotation(LAD_YAW, 4, 'Z') @ Matrix.Translation(-LAD_TOP_LOCAL)
+    bpy.context.view_layer.update()
+    for o in LADDER_OBJS: o.matrix_world = LAD_M @ o.matrix_world
+    print('r3 ladder: foot centre', tuple(round(v, 3) for v in (LAD_M @ Vector((LAD_X, LAD_FOOT_Y, 0)))), 'top', tuple(round(v, 3) for v in (LAD_M @ LAD_TOP_LOCAL)))
 
 # ---------------- reading nook: desk, CRT computer, ECG cart, outlet, cable ----------------
 def world_bbox(objs):
@@ -529,10 +572,18 @@ if args.intro2 and not args.nofig:
     CLIMB.location = Vector((gam, T_.y, T_.z)) - Vector((O_.x, 0, 0)) + Vector((O_.x, 0, 0)) * 0
     CLIMB.location.x = gam
     bpy.context.view_layer.update()
+    if args.art == 'r3':                                         # same rigid move as the ladder: the contacts keep their rung fit
+        CLIMB.matrix_world = LAD_M @ CLIMB.matrix_world; bpy.context.view_layer.update()
+    LAD_MI = LAD_M.inverted()
     for k, v in cj['contacts'].items():
-        w_ = CLIMB.matrix_world @ Vector(v); d_ = min(((w_.y - ry) ** 2 + (w_.z - rz) ** 2) ** .5 for rz, ry in RUNGS)
+        w_ = LAD_MI @ (CLIMB.matrix_world @ Vector(v)); d_ = min(((w_.y - ry) ** 2 + (w_.z - rz) ** 2) ** .5 for rz, ry in RUNGS)
         print(f'   contact {k}: world {tuple(round(x, 3) for x in w_)}, nearest rung axis {d_ * 1000:.0f} mm')
     print(f'climber on the ladder: pitch 18.5°, rung contact max error {best[0] * 1000:.0f} mm, location {tuple(round(v, 3) for v in CLIMB.location)}')
+    if args.art == 'r3':                                         # skill pose-anatomy step 7 for the climber: vs the room (the ladder is an intended contact)
+        import importlib.util as _ilu2
+        _s2 = _ilu2.spec_from_file_location('pc2', os.path.join(ROOT, 'scripts/assets/pose-check-v3.py')); pc2 = _ilu2.module_from_spec(_s2); _s2.loader.exec_module(pc2)
+        _c2 = pc2.scene_collisions(CLIMB, [o for o in scene.objects if o not in (CLIMB,) and o.type == 'MESH'], ignore=('Haze', 'VOL_', 'APR_', 'heart', 'El_', 'Lead', 'Trunk', 'Comm', 'Sig_', 'Power'))
+        print('climber collisions (mm):', {k: v for k, v in _c2.items()})
     CLIMB.data.materials.clear(); CLIMB.data.materials.append(rm)
 # ---------------- v3: ECG electrodes, lead wires, trunk to the cart, cable to the computer (D-048) ----------------
 def catmull(pts, n=10):
@@ -684,10 +735,12 @@ so = bpy.data.objects.new('sun', sun); scene.collection.objects.link(so)
 SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()   # across the gaps between stacks and over the nook onto the ladder and figure
 if args.light == 'r2':                                 # steeper: the hero window's beam crosses the ladder and lands at its foot (D-050 floor spot)
     SUN_TO = Vector((0.807, 0.07, -0.584)).normalized(); sun.angle = math.radians(0.55)
+if args.art == 'r3':                                   # through the hatch onto the back shelves (receiver), cream light (review D)
+    SUN_TO = Vector((0.22, 0.62, -0.75)).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', 9.0))
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
 w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4 if args.light == 'r1' else 0.9   # cool sky fill vs warm sun (r2: less fill = dark anchors)
-for y in (-1.8, 1.3):
+for y in (() if args.art == 'r3' else (-1.8, 1.3)):              # r3: one source — the bulbs stay off
     L = bpy.data.lights.new('bulb', 'POINT'); L.energy = 60; L.color = srgb('#ffb36b'); L.shadow_soft_size = 0.05
     lo_ = bpy.data.objects.new('bulb', L); lo_.location = (0, y, H - 1.45); scene.collection.objects.link(lo_)
 if args.light == 'r2':
@@ -702,11 +755,13 @@ if args.light == 'r2':
 # preview-only haze so the beams read in stills (the web uses ray-marched shafts instead)
 hz = box('Haze', (2 * XW - 0.1, Y1 - Y0 - 0.1, H - 0.1), (0, (Y0 + Y1) / 2, H / 2), mat('haze_dummy', (1, 1, 1)))
 hm = bpy.data.materials.new('haze'); hm.use_nodes = True; nt = hm.node_tree
-nt.nodes.remove(nt.nodes['Principled BSDF']); vol = nt.nodes.new('ShaderNodeVolumePrincipled'); vol.inputs['Density'].default_value = 0.022 if args.light == 'r1' else 0.006
+nt.nodes.remove(nt.nodes['Principled BSDF']); vol = nt.nodes.new('ShaderNodeVolumePrincipled'); vol.inputs['Density'].default_value = 0.022 if args.light == 'r1' else 0.0012 if args.art == 'r3' else 0.006
 nt.links.new(vol.outputs[0], nt.nodes['Material Output'].inputs['Volume']); hz.data.materials.clear(); hz.data.materials.append(hm)
 if args.light == 'r2':                                 # local density on the hero corridor only (manual §7: low global, local where the beam is)
     a_ = Vector((-XW + .1, 3.95, 4.05)); b_ = a_ + SUN_TO * 6.2
-    vc = box('VOL_hero_corridor', (6.2, 0.95, 0.9), (a_ + b_) / 2, mat('vol_dummy', (1, 1, 1)))
+    if args.art == 'r3':                               # the hatch beam: the one light curtain, among the other light types (user 2026-10-09)
+        hx0, hx1, hy0, hy1 = HATCH; a_ = Vector(((hx0 + hx1) / 2, (hy0 + hy1) / 2, H)) - SUN_TO * 0.3; b_ = a_ + SUN_TO * 6.2
+    vc = box('VOL_hero_corridor', (6.2, 0.95 if args.art != 'r3' else 1.05, 0.9 if args.art != 'r3' else 1.15), (a_ + b_) / 2, mat('vol_dummy', (1, 1, 1)))
     vc.rotation_euler = SUN_TO.to_track_quat('X', 'Z').to_euler()
     vm = bpy.data.materials.new('vol_hero'); vm.use_nodes = True; vn = vm.node_tree; vn.nodes.remove(vn.nodes['Principled BSDF'])
     vv = vn.nodes.new('ShaderNodeVolumePrincipled'); vv.inputs['Density'].default_value = 0.05
@@ -752,6 +807,8 @@ if args.pose and FIG is not None:                                 # D-050 shots:
                      'i3_floor': (tuple(AW + Vector((-.55, -1.7, .65))), tuple(AW + Vector((0, 0, .38))), 38)},
     }[args.pose]
     if args.pose in ('chair', 'desk', 'wall', 'climb'): SHOTS = dict(SHOTS)
+    if args.art == 'r3':                                         # D-058: frontal on the back shelves like REF-002; the side ladder crosses the frame
+        SHOTS = {'a1_front': ((0.85, -0.6, 1.6), (0.75, 4.7, 2.45), 50), 'a2_near': ((0.55, 1.25, 1.45), (0.8, 4.7, 2.2), 52)}
     if args.pose == 'climb' and 'hand_r' in fj:                  # second draft: muscle-artifact close-up — the gripping hand and RA together
         HR = FIG.location + FROT @ Vector(fj['hand_r']); RA = FIG.location + FROT @ Vector(fj['electrodes']['RA']['p'])
         mid = RA.lerp(HR, .5)                                    # behind-right and above the climber: gripping hand + chest (RA through the glass body)
@@ -797,6 +854,7 @@ if args.preview:
         scene.camera = c; tag = f'_{args.look}' if args.look != 'h3' else ''
         if args.fig == 'v3': tag += f'_v3_{args.signal}'
         if args.pose: tag = f'_{args.light}' + ('_clay' if args.clay else f'_{args.signal}')
+        if args.art: tag += f'_{args.art}_{args.palette}'
         scene.render.filepath = os.path.join(args.preview, name + tag + '.png')
         bpy.ops.render.render(write_still=True)
         print('rendered', name)

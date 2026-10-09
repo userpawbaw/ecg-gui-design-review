@@ -151,6 +151,7 @@ HATCH = tuple(float(v) for v in os.environ.get('HATCH', '0.0,1.6,2.47,3.88').spl
 HOLES = [HATCH]
 if args.art == 'r4':
     HOLES += [tuple(float(v) for v in h.split(',')) for h in os.environ.get('HOLES', '-1.9,-0.9,0.95,1.75;-2.5,-1.0,2.45,2.75;-2.5,-1.0,2.87,3.17;-2.5,-1.0,3.29,3.59;0.6,1.6,1.0,1.6').split(';') if h]
+    HOLES += [tuple(float(v) for v in h.split(',')) for h in os.environ.get('HOLES_ADD', '').split(';') if h]   # D-061 experiments (e.g. a floor-patch hole)
 if args.art in ('r3', 'r4'):
     hx0, hx1, hy0, hy1 = HATCH
     xs = sorted({-XW, XW, *[h[0] for h in HOLES], *[h[1] for h in HOLES]}); ys = sorted({Y0, Y1, *[h[2] for h in HOLES], *[h[3] for h in HOLES]})
@@ -896,7 +897,7 @@ if args.preview:
     rx, ry = map(int, args.res.split('x'))
     scene.render.engine = 'CYCLES'; scene.cycles.device = 'CPU'; scene.cycles.samples = args.samples; scene.cycles.use_denoising = True
     scene.render.resolution_x, scene.render.resolution_y = rx, ry; scene.view_settings.view_transform = 'AgX'; scene.view_settings.exposure = float(os.environ.get('EXPO', 0.8))
-    scene.cycles.max_bounces = 6 if args.art in ('r3', 'r4') else 4; scene.cycles.volume_bounces = 0
+    scene.cycles.max_bounces = int(os.environ.get('BOUNCES', 6)) if args.art in ('r3', 'r4') else 4; scene.cycles.diffuse_bounces = min(scene.cycles.max_bounces, int(os.environ.get('BOUNCES', 4))); scene.cycles.volume_bounces = 0   # Cycles caps diffuse at 4 by default (D-061)
     want = set(args.shots.split(',')) if args.shots else set(SHOTS)
     if args.signal != 'off' and not args.clay:                    # neon glow for the dash preview (the web uses its bloom pass)
         scene.use_nodes = True; ct = scene.node_tree; rl = ct.nodes.get('Render Layers') or ct.nodes.new('CompositorNodeRLayers')

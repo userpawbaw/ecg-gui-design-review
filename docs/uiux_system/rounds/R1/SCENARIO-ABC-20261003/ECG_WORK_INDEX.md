@@ -280,3 +280,7 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D119 — 구름 양·초기 지형 인계
 [분석](ECG_A_cloud_amount_handoff_2026-10-09.md) / verification/a-cloud-amount-20261009/gallery.html. S1 전체와 근경 구름 인계는 TUNE 유지.
+
+
+## D120 — 확대 목표 근처 구름
+[분석](ECG_A_cloud_placement_2026-10-09.md), verification/a-cloud-placement-20261009/gallery.html. 배치 후보 TUNE, 실제 near volume/S1 seam 미완.

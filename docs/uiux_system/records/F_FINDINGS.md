@@ -2033,3 +2033,23 @@ source vertex normal 코드가 존재한다는 사실만으로 postprocessing에
 구름은 여전히 2.5D proxy이고 국소 volume/원경 그림자 미완. 최종 지도 선명도·색 차이/전체 motion gate는 TUNE. 수동 slider 실험에서 대문자 shot 이름이 save validator에 거절돼 소문자 옵션과 명시 대조 버튼으로 보완, 10저장 확인. 기존 근경 그림자 보류 유지.
 ### 놓쳤다면
 coverage 숫자 증가가 이 경로의 화면 변화나 실제 구름 부피 증가라고 오인하거나 지형 seam을 구름으로 덮어 해결했다고 보고했을 것이다.
+
+
+## F-085. 구름 양보다 source 위치가 확대 목표 근처의 화면 점유를 결정한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-09 [코드][캡처][브라우저] |
+| 연결 | D-120 / CASE-007 |
+| 상태 | 고정 배치 후보 / TUNE |
+
+### 발단
+사용자가 구름을 확대하는 곳 근처에 요청.
+### 먼저 의심한 것과 배제 방법
+양 증량과 배치 불일치를 구별하고 동일 source .07 양의 2배치×2높이를 비교.
+### 결정적 근거
+4 실제 1280×720 캡처 camera/sun/source/coverage 동일 assert. ready true/contextLost false/terrain errors[]. near에서 광역 산맥 주변 띠와 확대 능선 위/옆 구름이 보임. shader의 geographic anchor/source centre는 p와 독립.
+### 조치와 검토한 대안
+실제 위치 select 추가; 기본 prior URL은 원위치. 근접 proxy는 납작한 광학 TUNE이며 volume/근경 Takram 인계 미완. verification/a-cloud-placement-20261009/manifest.json. 빌드82 modules PASS, 브라우저 console error 관찰 없음.
+### 놓쳤다면
+coverage를 계속 올려도 목표 지형 주변에 원본이 비어 있는 상황을 구름 품질/수량 문제로만 해석했을 것이다.

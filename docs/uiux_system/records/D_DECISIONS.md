@@ -2960,3 +2960,24 @@ S0 같은 구도에서 cloud ON/OFF·색·법선·geometry·depth 진단→S1 �
 밝기만 증가해 양감 완료 선언, 증량으로 지형 경계 가리기, 짧은 GPU 표본으로 FPS 보장 제외.
 ### 되돌려야 하는 조건
 흰 막/빈틈 소실/새 자글거림이면 증량을 낮춘다. S1 전체 seam 및 S2 국소 volume 광학/S4 인계는 여전히 미통과. 기존 near shadow 보류와 서고 KEEP 보존.
+
+
+## D-120. 확대 목표 근처의 구름 배치는 양과 독립적으로 같은 원본 UV를 옮긴다
+
+| | |
+|---|---|
+| 시점 | 2026-10-09 [코드][캡처] |
+| 상태 | 배치 후보 구현 / TUNE |
+| 연결 | D-119 / F-085 |
+| CASE | CASE-007 |
+
+### 갈림길
+양만 늘리기, 확대할 때 새 구름 생성, 같은 source의 고정 geographic 배치 이동.
+### 검토한 선택지
+기존 source centre(.64,.78)와 국소 원본 density seed(.671875,.8330078125) 대조.
+### 고른 것과 근거
+기존 구름군 UV를 고정 위치로 옮겨 두 카메라 높이에 동일하게 적용. 2구도×2배치4 실제 캡처. camera/sun/source/DEM/coverageBoost .07 동일. ECG_A_cloud_placement_2026-10-09.md. 기본 이전 URL은 원위치 유지, placement 검토 URL만 near 기본.
+### 버린 것과 이유
+스크롤 순간 구름 출현, 근경 volume가 완성됐다고 주장하는 안 제외.
+### 되돌려야 하는 조건
+산맥을 전부 가리거나 목표 접근 구도가 읽히지 않으면 source centre/coverage 별도 조절. 근경 optical quality/S1 seam/S4 연결은 미완. 기존 shadow 보류 보존.

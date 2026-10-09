@@ -9,6 +9,7 @@ uniform mat4 inverseProjection;
 uniform mat3 viewRotation, geographicRotation;
 uniform vec3 eye, sunLocal;
 uniform float relief, amount, coverageBoost;
+uniform vec2 sourceCentre;
 const float radius=6371000.;
 const vec3 centre=vec3(0.,-6371000.,0.);
 vec2 geoUV(vec3 n){
@@ -17,7 +18,7 @@ vec2 geoUV(vec3 n){
 }
 // Fixed artistic placement of a satellite front; not today's northern weather.
 float density(vec2 uv){
- vec2 source=(uv-vec2(.523333333,.842388889))*2.+vec2(.64,.78);
+ vec2 source=(uv-vec2(.523333333,.842388889))*2.+sourceCentre;
  if(rawSource<.5)return texture2D(cloudMap,source).r;
  float coarse=texture2D(cloudMap,vec2(source.x,1.-source.y)).r;
  vec2 crop=(source-vec2(.375,.5625))/vec2(.5,.375);
@@ -61,7 +62,7 @@ void mainImage(const in vec4 inputColor,const in vec2 uv,out vec4 outputColor){
 
 export class OrbitalCloudEffect extends Effect{
  constructor(){super('OrbitalCloudProxy',fragment,{blendFunction:BlendFunction.NORMAL,uniforms:new Map<string,THREE.Uniform>([
-  ['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
+  ['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
   ['viewRotation',new THREE.Uniform(new THREE.Matrix3())],['geographicRotation',new THREE.Uniform(new THREE.Matrix3())],
   ['eye',new THREE.Uniform(new THREE.Vector3())],['sunLocal',new THREE.Uniform(new THREE.Vector3())],
   ['relief',new THREE.Uniform(1)],['amount',new THREE.Uniform(1)],['coverageBoost',new THREE.Uniform(0)]
@@ -88,6 +89,7 @@ export class OrbitalCloudEffect extends Effect{
  }
  setDetail(value:string){this.uniforms.get('detailAmount')!.value=value==='8k'?1:0;}
  setCoverageBoost(value:number){this.uniforms.get('coverageBoost')!.value=THREE.MathUtils.clamp(value,0,.14);}
+ setPlacement(near:boolean){this.uniforms.get('sourceCentre')!.value.set(near?.671875:.64,near?.8330078125:.78);}
  sync(camera:THREE.PerspectiveCamera,toECEF:THREE.Matrix4,sunECEF:THREE.Vector3,mode:string,on:boolean){
   const basis=new THREE.Matrix3().setFromMatrix4(toECEF);
   this.uniforms.get('inverseProjection')!.value.copy(camera.projectionMatrixInverse);

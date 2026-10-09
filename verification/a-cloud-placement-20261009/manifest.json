@@ -1,0 +1,93 @@
+{
+  "decision": "D120",
+  "finding": "F085",
+  "verdict": "TUNE: placement closer to descent target; close cloud optical quality pending",
+  "conditions": "1280x720, same sun/camera/source/DEM/coverageBoost .07; placement only changes",
+  "sourceCentres": {
+    "original": [
+      0.64,
+      0.78
+    ],
+    "near": [
+      0.671875,
+      0.8330078125
+    ]
+  },
+  "gpu": [
+    {
+      "file": "placement-near-p1800.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 5.605376,
+        "p95": 8.461312
+      }
+    },
+    {
+      "file": "placement-near-p2350.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 6.176768,
+        "p95": 9.028608
+      }
+    },
+    {
+      "file": "placement-original-p1800.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 6.006784,
+        "p95": 10.43456
+      }
+    },
+    {
+      "file": "placement-original-p2350.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 6.670336,
+        "p95": 9.336832
+      }
+    }
+  ],
+  "limits": [
+    "short composer samples, not FPS comparison",
+    "fixed geographic footprint only; near Takram handoff not implemented",
+    "no new cloud volume or motion quality approval"
+  ],
+  "artifacts": [
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-placement-20261009/placement-near-p1800.json",
+      "sha256": "0c41df4322dc4df43acb8601539de605d0037c2f0c524d71db4e6938a813ddd9"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-placement-20261009/placement-near-p1800.png",
+      "sha256": "f58eab9f689e433896907a55d10276b8051ca81a10f243611225aaadd9f71a8a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-placement-20261009/placement-near-p2350.json",
+      "sha256": "4bf8ac93b0a6dabefadc5b422607304e506de2a48e8bd007aa147b1246eb6472"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-placement-20261009/placement-near-p2350.png",
+      "sha256": "fa915ec7684f00fc3b1406d4a5ed90bc43369daafcffc161b26cecfd1af2043f"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-placement-20261009/placement-original-p1800.json",
+      "sha256": "8fb01b752dc8fe7cf22d2a98fbbd7a393f848a2a0f91860c198170c18a115959"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-placement-20261009/placement-original-p1800.png",
+      "sha256": "977c83c37d37a9485bb7e2589c6e5718ef31588d53215b926a016287e2e0f17d"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-placement-20261009/placement-original-p2350.json",
+      "sha256": "473567830a7539bf0aecfad9cb4e5c0a62df2d9be30dcd08f4dac759b6ee5e34"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-placement-20261009/placement-original-p2350.png",
+      "sha256": "526803fa606e9c71fc2789c5b4db5d83374d54a1beb5030e9d5d1109827f14ca"
+    }
+  ]
+}

@@ -742,3 +742,7 @@ D118 종료 검사: spike Vite build PASS(82 modules), records:check PASS(256 re
 
 ## 2026-10-09 D119 구름 양·초기 색/FOV 인계
 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_amount_handoff_2026-10-09.md, verification/a-cloud-amount-20261009/gallery.html. 구름 3후보6 +색인계4 +자동8초 영상, same-view 조건 검증. 위성threshold 증량/parentAmount 색 인계/early FOV36 정합. TUNE, S1 seam 전체와 S2 volume/S4 인계 미완. 다음 normal/depth 분리와 저주파 색·최종 선명도 접합, 구름 국소 양감→동일 footprint 인계. 기존 near shadow 보류·서고 KEEP·unrelated DB/사용자 capture 유지.
+
+
+## 2026-10-09 D120 확대 목표 근처 구름 배치
+docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_placement_2026-10-09.md, verification/a-cloud-placement-20261009/gallery.html. 2구도×2배치4캡처, 같은 .07 양/camera/sun/source/DEM. geographic source 이동만 적용, 새 구름/volume 아님. 위치 후보 TUNE; 근경 optical/footprint volume 연결·S1 final seam 미완. 다음 현재 위치 기반 국소 구름 optical와 final 지형 접합. 기존 near shadow 보류/서고 KEEP 유지.

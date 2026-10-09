@@ -897,6 +897,7 @@ if args.preview:
     rx, ry = map(int, args.res.split('x'))
     scene.render.engine = 'CYCLES'; scene.cycles.device = 'CPU'; scene.cycles.samples = args.samples; scene.cycles.use_denoising = True
     scene.render.resolution_x, scene.render.resolution_y = rx, ry; scene.view_settings.view_transform = 'AgX'; scene.view_settings.exposure = float(os.environ.get('EXPO', 0.8))
+    if os.environ.get('LOOK'): scene.view_settings.look = os.environ['LOOK']   # D-061 tone-curve test (e.g. 'AgX - Punchy')
     scene.cycles.max_bounces = int(os.environ.get('BOUNCES', 6)) if args.art in ('r3', 'r4') else 4; scene.cycles.diffuse_bounces = min(scene.cycles.max_bounces, int(os.environ.get('BOUNCES', 4))); scene.cycles.volume_bounces = 0   # Cycles caps diffuse at 4 by default (D-061)
     want = set(args.shots.split(',')) if args.shots else set(SHOTS)
     if args.signal != 'off' and not args.clay:                    # neon glow for the dash preview (the web uses its bloom pass)

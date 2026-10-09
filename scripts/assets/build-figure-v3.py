@@ -86,7 +86,9 @@ def body_mesh():
 
 
 def slice_coord(o, rig):
-    """H3b ring coordinate: per vertex, the weighted distance along the deform-bone chain from the pelvis."""
+    """H3b ring coordinate: per vertex, the weighted distance along the deform-bone chain from the pelvis.
+    Superseded 2026-10-09 (F-037: parentless bones started at .80 -> whorls): after a full rebuild run scripts/assets/slice-field-v3.py,
+    which rewrites _SLICE_rest in the rig cache (kept here so old renders stay reproducible)."""
     bones = {b.name: b for b in rig.data.bones if b.use_deform}
     off = {}
     def offset(b):

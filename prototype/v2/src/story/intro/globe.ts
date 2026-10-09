@@ -1,10 +1,13 @@
 // Backlit globe — REF-001 EFX-001-02 reproduced from its recorded parameters (not its code or textures):
 // sphere + BackSide atmosphere shell ×1.04, fixed back-top sun (0.26, 1.39, −3), night side facing the camera,
 // fresnel rim masked by sun orientation and a top "reach". Textures: NASA Blue/Black Marble + clouds (public domain).
+// v2 (2026-10-09, user review of I-1): January Blue Marble (snowy north = bright polar band), GEBCO elevation for the relief,
+// Black Marble 2016 8k lights with a saturating curve, fewer clouds and none lit on the night face, sun raised to widen the
+// lit band; built by scripts/assets/build-globe-textures.py.
 // G2: the rim breathes ±5 % with the same R-peak clock as the heart (decorative timing of the stored record).
 import * as THREE from 'three';
 
-const SUN=new THREE.Vector3(.26,1.39,-3).normalize();
+const SUN=new THREE.Vector3(.26,1.85,-2.75).normalize();   // 2026-10-09: higher than REF's (.26,1.39,−3) so the lit polar band is as wide as in REF-001's frame
 const common=/* glsl */`
 uniform vec3 uSun;uniform float uOpacity,uPulse,uReach;
 uniform vec3 uDay,uTwilight;
@@ -19,45 +22,48 @@ void main(){vUv=uv;vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;vN=normalize(ma
  vE=normalize(mat3(modelMatrix)*normalize(vec3(normal.z,0.,-normal.x)+vec3(1e-5,0.,0.)));vNo=normal;
  gl_Position=projectionMatrix*viewMatrix*w;}`;
 
-export function createGlobe(tex:{day:THREE.Texture,night:THREE.Texture,clouds:THREE.Texture}){
+export function createGlobe(tex:{day:THREE.Texture,night:THREE.Texture,clouds:THREE.Texture,height:THREE.Texture}){
  const uniforms={uSun:{value:SUN.clone()},uOpacity:{value:1},uPulse:{value:0},uReach:{value:.635},
   uDay:{value:new THREE.Color('#a3afbd')},uTwilight:{value:new THREE.Color('#47649e')},
-  tDay:{value:tex.day},tNight:{value:tex.night},tClouds:{value:tex.clouds},uCloudShift:{value:0},
-  uBump:{value:6},uCloudShadow:{value:.5},uRimEdge:{value:4},uRelief:{value:4.5},uCapPow:{value:1.1},uCapGain:{value:2.8}};
+  tDay:{value:tex.day},tNight:{value:tex.night},tClouds:{value:tex.clouds},tHeight:{value:tex.height},uCloudShift:{value:0},
+  uBump:{value:9},uCloudH:{value:.35},uCloudLo:{value:.42},uCloudAmt:{value:.8},uCloudShadow:{value:.55},uRimEdge:{value:5},
+  uRelief:{value:5},uCapPow:{value:1.6},uCapGain:{value:1.7},uDayGain:{value:3.2},uCity:{value:1.05},uCityK:{value:6},uCityTint:{value:new THREE.Color(1.,.80,.52)},uNightSea:{value:new THREE.Color(.010,.016,.036)}};
  const surface=new THREE.ShaderMaterial({uniforms,vertexShader:vert,transparent:true,fragmentShader:/* glsl */`
   ${common}
-  uniform sampler2D tDay,tNight,tClouds;uniform float uCloudShift,uBump,uCloudShadow,uRimEdge,uRelief,uCapPow,uCapGain;
-  // I-1 (REVIEW-R1-WEB-20261008): relief under the backlit pole. Height = clouds (tops bulge) + land/ice brightness; its
-  // gradient bends the normal, so the grazing back-top sun shades every ridge and cloud edge as in REF-001's polar cap
-  float hAt(vec2 uv){vec3 d=texture2D(tDay,uv).rgb;float c=texture2D(tClouds,uv+vec2(uCloudShift,0.)).r;
-   return .75*smoothstep(.1,.9,c)+.25*smoothstep(.15,.7,dot(d,vec3(.3,.5,.2)));}
+  uniform sampler2D tDay,tNight,tClouds,tHeight;
+  uniform float uCloudShift,uBump,uCloudH,uCloudLo,uCloudAmt,uCloudShadow,uRimEdge,uRelief,uCapPow,uCapGain,uDayGain,uCity,uCityK;uniform vec3 uNightSea,uCityTint;
+  // fewer, denser clouds than the raw NASA composite (user 2026-10-09: "구름이 너무 많은 느낌")
+  float cloudAt(vec2 uv){return uCloudAmt*smoothstep(uCloudLo,.95,texture2D(tClouds,uv+vec2(uCloudShift,0.)).r);}
+  // relief height: GEBCO land/ice-sheet elevation (Greenland, Antarctica, ranges) + cloud tops. v1 used clouds + day
+  // brightness only, which left the polar cap flat (user 2026-10-09: "극지방의 요철은 거의 보이지 않아")
+  float hAt(vec2 uv){return texture2D(tHeight,uv).r+uCloudH*cloudAt(uv);}
   void main(){
    vec3 n0=normalize(vN),v=normalize(cameraPosition-vW);
    vec3 E=normalize(vE-dot(vE,n0)*n0),Nn=cross(n0,E);
-   vec2 px=vec2(3./2048.,3./1024.);   // ~3 texels: relief, not texel noise
+   vec2 px=vec2(2./4096.,2./2048.);
    float h0=hAt(vUv),hu=hAt(vUv+vec2(px.x,0.))-h0,hv=hAt(vUv+vec2(0.,px.y))-h0;
    vec3 n=normalize(n0-uBump*(hu*E+hv*Nn));
    float fres=1.-abs(dot(v,n0)),sunOri=dot(n0,uSun);
    vec3 day=texture2D(tDay,vUv).rgb;
-   float cl=texture2D(tClouds,vUv+vec2(uCloudShift,0.)).r;
-   // cloud shadow: the cloud a little toward the sun along the surface darkens the ground under it
+   float cl=cloudAt(vUv);
    vec3 sT=uSun-dot(uSun,n0)*n0;vec2 sUv=vec2(dot(sT,E),dot(sT,Nn))*.012;
-   float shade=1.-uCloudShadow*smoothstep(.2,.8,texture2D(tClouds,vUv+sUv+vec2(uCloudShift,0.)).r)*(1.-smoothstep(.15,.85,cl));
-   day=mix(day*shade,vec3(.92),smoothstep(.15,.85,cl)*.85);
-   // lit day side (Lambert on the bumped normal + a tight ocean glint near the terminator), roughness ≈ .3
-   float lam=max(dot(n,uSun),0.)*smoothstep(-.15,.2,sunOri);
+   float shade=1.-uCloudShadow*cloudAt(vUv+sUv)*(1.-cl);
+   vec3 surf=mix(day*shade,vec3(.93),cl);
+   // lit day side: Lambert on the bumped normal, soft terminator, ocean glint (roughness ~.3)
+   float lam=max(dot(n,uSun),0.)*smoothstep(-.12,.25,sunOri);
    float ocean=smoothstep(.02,.12,day.b-day.r)*(1.-cl);
-   vec3 h=normalize(uSun+v);float spec=pow(max(dot(n,h),0.),80.)*ocean*1.4;
-   vec3 lit=day*lam*2.6+vec3(spec);
-   // night side: city lights (Black Marble), slightly lifted so the dark face still reads as a sphere
-   vec3 night=texture2D(tNight,vUv).rgb;night=pow(night,vec3(2.4))*1.25*(1.-cl*.8)+vec3(.002,.003,.006);
-   vec3 col=mix(night*.95,lit,smoothstep(-.25,.5,sunOri));
-   // backlit cap: the light that used to be a flat added glow (fres², it washed the cap white) now lights the surface
-   // texture, shaded by the relief (slopes facing the sun brighter, away darker) — REF-001's polar cap shows its ice,
-   // coasts and cloud edges inside the bright limb; a thin edge glow stays on top
-   float cap=smoothstep(-.5,1.,sunOri)*pow(fres,uCapPow)*reachMask(n0)*(1.+uPulse);
+   vec3 hv3=normalize(uSun+v);float spec=pow(max(dot(n,hv3),0.),80.)*ocean*1.2;
+   vec3 lit=surf*lam*uDayGain+vec3(spec)*lam;
+   // night side: Black Marble 2016 lights only (land already black in the texture). A saturating curve lifts faint towns
+   // and caps the cities, so Europe reads as many similar points (REF-001) instead of a few blooming blobs; clouds only dim
+   // the lights (no moonlit cloud streaks on the dark face); a deep navy sea instead of black
+   float L=dot(texture2D(tNight,vUv).rgb,vec3(.4,.4,.2));
+   vec3 city=uCity*(1.-exp(-L*uCityK))*mix(uCityTint,vec3(1.),smoothstep(.25,.9,L))*(1.-cl*.85);   // warm towns, whiter cores
+   vec3 col=(city+uNightSea*(.6+.4*fres))*(1.-smoothstep(-.2,.15,sunOri))+lit;
+   // backlit limb: thin scatter that lights the surface texture (relief-shaded), confined near the day side
+   float cap=smoothstep(-.3,.6,sunOri)*pow(fres,uCapPow)*reachMask(n0)*(1.+uPulse);
    float rf=clamp(1.+uRelief*dot(n-n0,uSun),.25,2.2);
-   col+=atmoColor(sunOri)*cap*(day*1.9+.06)*rf*uCapGain;
+   col+=atmoColor(sunOri)*cap*(surf*1.6+.05)*rf*uCapGain;
    float rim=smoothstep(-.5,1.,sunOri)*pow(fres,uRimEdge)*reachMask(n0)*(1.+uPulse);
    col+=atmoColor(sunOri)*rim*1.6;
    gl_FragColor=vec4(col,uOpacity);

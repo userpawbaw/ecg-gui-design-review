@@ -42,7 +42,7 @@ const SWEEP_COLORS={input:[255,188,121] as [number,number,number],output:[103,23
 export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const urls={body:new URL('./assets/body.glb',import.meta.url).href,heart:new URL('./assets/heart.glb',import.meta.url).href,
   fig:new URL('./assets/figure.json',import.meta.url).href,day:new URL('./assets/earth_day.jpg',import.meta.url).href,
-  night:new URL('./assets/earth_night.jpg',import.meta.url).href,clouds:new URL('./assets/earth_clouds.jpg',import.meta.url).href,
+  night:new URL('./assets/earth_night.jpg',import.meta.url).href,clouds:new URL('./assets/earth_clouds.jpg',import.meta.url).href,height:new URL('./assets/earth_height.jpg',import.meta.url).href,
   floor:new URL('./assets/floor_light.png',import.meta.url).href,seatedV3:new URL('./assets/body_seated_v3.glb',import.meta.url).href,
   rig:new URL('./assets/rig_v3.glb',import.meta.url).href,
   // intro2 (I-4/I-5): Mixamo auto-rig of the story mesh — climber, then the floor-sitter with electrodes (rig_v3_floor)
@@ -57,8 +57,8 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const geomMorph=async(u:string)=>{const g=await gl.loadAsync(u);let out:THREE.Mesh|null=null;g.scene.traverse(o=>{if((o as THREE.Mesh).isMesh&&!out)out=o as THREE.Mesh;});if(!out)throw Error('no mesh in '+u);
   const m=out as THREE.Mesh,d=m.morphTargetDictionary??{};return{geo:m.geometry,morph:Object.keys(d).sort((a,b)=>d[a]-d[b])};};
  const geom=async(u:string)=>(await geomMorph(u)).geo;
- const [day,night,clouds,bodyGeo,heartGeo,fig,floorLm]=await Promise.all([tex(urls.day),tex(urls.night),tex(urls.clouds,false),geom(urls.body),geom(urls.heart),fetch(urls.fig).then(r=>r.json() as Promise<FigureData>),tex(urls.floor,false)]);
- const globe=createGlobe({day,night,clouds});scene.add(globe.group);
+ const [day,night,clouds,height,bodyGeo,heartGeo,fig,floorLm]=await Promise.all([tex(urls.day),tex(urls.night),tex(urls.clouds,false),tex(urls.height,false),geom(urls.body),geom(urls.heart),fetch(urls.fig).then(r=>r.json() as Promise<FigureData>),tex(urls.floor,false)]);
+ const globe=createGlobe({day,night,clouds,height});scene.add(globe.group);
  const style=opt.look??'archive';   // D-046 archive is the default (brief 1 T9); ?look=v2 keeps the grid world
  // D-046: the ECG record archive (baked room + shafts + dust); D-048: figure v3 (3-lead) seated mid-ladder, H5 frosted body
  const arch=style==='archive'?await createArchive():null;
@@ -215,6 +215,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   globe.spin.rotation.y=-Math.PI/1.4+(Math.PI/1.4-Math.PI/5)*gp+t*.025+spinExtra;
   const gScale=1.3+(.52-1.3)*gs;globe.group.scale.setScalar(gScale);
   const gOp=1-out2(seg(p,...MAP.globeFade));globe.uniforms.uOpacity.value=gOp;globe.group.visible=gOp>.002;
+  bloom.strength=.55-.3*gOp;bloom.radius=.35-.25*gOp;   // REF-001's limb glow is thin: the white January polar band must not bloom into a grey haze
   globe.uniforms.uPulse.value=.07*Math.exp(-ph.sincePrev/.18);          // G2: rim breathes with the record's R peaks
   globe.uniforms.uCloudShift.value=t*.0006;
 
@@ -327,7 +328,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  gsap.ticker.lagSmoothing(0);gsap.ticker.add(tick);
 
  return{
-  state,lenis,arch,rig,figure,
+  state,lenis,arch,rig,figure,globe,
   renderOnce(draw=true){frame(1/60,draw);},
   pause(v:boolean){paused=v;},
   set(o:{p?:number,t?:number|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;},
@@ -335,7 +336,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;mix.reset();},
   dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
-   globe.dispose();figure.dispose();climber?.dispose();space?.dispose();arch?.dispose();rig?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
+   globe.dispose();figure.dispose();climber?.dispose();space?.dispose();arch?.dispose();rig?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds,height].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
  };
 }
 export type Intro=Awaited<ReturnType<typeof createIntro>>;

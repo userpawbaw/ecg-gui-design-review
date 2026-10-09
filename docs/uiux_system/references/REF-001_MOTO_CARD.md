@@ -125,6 +125,8 @@ ScrollTrigger(.earth, pin, 2.5 × 화면높이, scrub 1):
 - 가장자리 빛은 fresnel⁴로 얇게.
 `prototype/v2/src/story/intro/globe.ts` (uBump 6, uRelief 4.5, uCloudShadow .5, uCapPow 1.1, uCapGain 2.8, uRimEdge 4). 비교: `verification/r1-globe-relief-20261009/`. 남은 차이: 실제 지형 높이(산맥·빙상 가장자리)는 없음 — NASA 지형 높이 지도(공공 영역)를 들이면 더 가까워질 수 있음.
 
+**갱신 2026-10-09 v2 (사용자 확인 후)**: 채널을 넣은 뒤에도 남은 차이는 입력 데이터에서 왔다 `[캡처]`. 레퍼런스의 하얀 극지 띠는 눈 덮인 북쪽 땅(겨울 지도)이다 → Blue Marble 1월판. 요철은 실제 고도(GEBCO_08), 밤 불빛은 Black Marble 2016 8k + 포화형 곡선, 해 (.26, 1.85, −2.75), 지구 구간 bloom 축소. `verification/r1-globe-relief-20261009/README.md` v2, playbook J-002 T5.
+
 **파라미터**:
 | 이름 | 값 | 출처 |
 |---|---|---|

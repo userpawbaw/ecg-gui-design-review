@@ -272,3 +272,7 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D117 재개 라우팅
 지형 사각 경계와 원경→근경 구름 작업 시작 시 [ECG_A_surface_cloud_next_gate_2026-10-09.md](ECG_A_surface_cloud_next_gate_2026-10-09.md)을 읽는다. S0/S1 우선, 근경 그림자 결함 보류 유지.
+
+
+## D118 최신 지형 검토
+[ECG_A_terrain_normal_alignment_2026-10-09.md](ECG_A_terrain_normal_alignment_2026-10-09.md) 및 verification/a-terrain-normal-20261009/gallery.html. S1 TUNE, 공유 normal 계약 수정 후보. 지도 경계와 early FOV 잔여를 먼저 검증하고 S2 이후로 진행.

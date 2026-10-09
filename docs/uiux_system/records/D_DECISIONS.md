@@ -2918,3 +2918,24 @@ S0 같은 구도에서 cloud ON/OFF·색·법선·geometry·depth 진단→S1 �
 구름으로 가려진 결과만으로 지형 완성 판정, 과거 부분 개선을 현재 경로의 완전 해결로 확대하는 방식은 제외한다. 기존 근경 그림자 보류와 별도 Story 단계 유지.
 ### 되돌려야 하는 조건
 진단에서 다른 원인/비용 제한이 확인되면 원인별 대조와 gate 수정 기록. 사용자 룩 리뷰 전 KEEP 없음. EXP-026 이관 자료는 D115 별도 미커밋 작업이므로 반례 F082와 통합 지침을 먼저 보존하고 DB revision 반영은 별도 이관 완료 후 진행한다.
+
+
+## D-118. 지형의 색·깊이·법선 패스를 같은 GPU 변형에 맞춰 대조한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-09 [코드][문헌][캡처] |
+| 상태 | 진단·수정 후보 구현 / 시각 TUNE |
+| 연결 | D-117 / F-083 |
+| CASE | CASE-007 |
+
+### 갈림길
+구름 가림/fade 확장부터 할지, 공유 NormalPass가 지형 변형 shader를 버리는 패스 계약부터 정합할지.
+### 검토한 선택지
+기존 shared normal 유지, polygonOffset만 복구, 각 source vertex 변형과 live uniform을 공유하는 normal material.
+### 고른 것과 근거
+설치 NormalPass 6.39.5 override와 실제 parent/coarseHeight shader 대조 후 legacy/offset/matched 및 조명OFF를 같은 구도로 시험. 첫28 정착 후 초기 인계 .15/.165를 추가한42 정착·실제 휠 정착2·8초 자동camera 영상. 법선 기여 변화는 확인, 지도 경계 완전 제거 아님. 상세 ECG_A_terrain_normal_alignment_2026-10-09.md. 수정은 terrainSeam opt-in, 승인 서고/기본 main PBR/근경 그림자 보류 유지.
+### 버린 것과 이유
+픽셀 차이가 있다는 것만으로 seam 해결 선언, 구름 ON에서만 가리는 방식, 단계 수만 늘려 패스 불일치를 유지하는 안은 제외.
+### 되돌려야 하는 조건
+새 법선 패스 비용·시각 오차가 커지면 source depth 재구성 대안과 비교. 지도 선명도/색 접합 및 early camera 시야각 switch는 별도 남은 gate. 전체 S1/S4 통과나 사용자 KEEP로 확대하지 않는다.

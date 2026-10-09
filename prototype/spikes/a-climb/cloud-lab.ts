@@ -1,7 +1,7 @@
 // D104/D105 · REF-015 EFX-015-01/02. Pinned Takram optical chain + Basic settings trial.
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import {EffectComposer,EffectPass,NormalPass,RenderPass,ToneMappingEffect,ToneMappingMode,SMAAEffect,type Effect} from 'postprocessing';
+import {EffectComposer,EffectPass,RenderPass,ToneMappingEffect,ToneMappingMode,SMAAEffect,type Effect} from 'postprocessing';
 import {AerialPerspectiveEffect,getSunDirectionECEF,PrecomputedTexturesLoader} from '@takram/three-atmosphere';
 import {CloudsEffect} from '@takram/three-clouds';
 import {DataTextureLoader,Ellipsoid,Geodetic,parseUint8Array,STBNLoader} from '@takram/three-geospatial';
@@ -9,9 +9,14 @@ import {DitheringEffect,LensFlareEffect} from '@takram/three-geospatial-effects'
 import {createNorthernArrival} from './arrival-north';
 import {OrbitalCloudEffect} from './cloud-orbital';
 import {handoffCamera,handoffFrames,cloudCoverProbe,bakeHandoffWeather} from './cloud-handoff';
+import {TerrainNormalPass} from './terrain-normal-pass';
 
 const params=new URLSearchParams(location.search);
 const detailTrial=params.get('cloudDetail')==='1';
+const seamReview=params.get('terrainSeam')==='1';
+const seamControl=document.createElement('label');seamControl.innerHTML='지형 패스 대조 <select aria-label="지형 패스 대조"><option value="matched">변형 법선·깊이 정합</option><option value="legacy">이전 공통 법선</option><option value="offset">깊이 보정만</option><option value="albedo">색만 · 조명 OFF</option></select>';
+const seamMode=seamControl.querySelector('select')!;
+if(seamReview)document.getElementById('panel')!.append(seamControl);
 const orbital=detailTrial||params.get('orbital')==='1';
 const handoff=orbital||params.get('handoff')==='1';
 let macroWeather:ReturnType<typeof bakeHandoffWeather>|null=null;
@@ -91,6 +96,21 @@ const save=dom<HTMLButtonElement>('save');
 const captureSet=document.createElement('button');captureSet.textContent='기준 구도 저장';save.after(captureSet);
 const motionReview=document.createElement('button');motionReview.textContent='정역 이동 검증';captureSet.after(motionReview);
 const motionVideo=document.createElement('button');motionVideo.textContent='8초 이동 영상 저장';motionReview.after(motionVideo);
+const seamSet=document.createElement('button');seamSet.textContent='지형 패스 6구도 대조 저장';if(seamReview)motionVideo.after(seamSet);
+const framesFor=async(n:number)=>{for(let i=0;i<n;i++)await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));};
+seamSet.onclick=async()=>{
+  seamSet.disabled=save.disabled=captureSet.disabled=motionVideo.disabled=true;const old=seamMode.value,cloudOn=enabled.checked;wheelDriving=false;
+ try{
+  for(const on of [false,true])for(const mode of ['legacy','offset','matched']){
+   seamMode.value=mode;enabled.checked=on;setCloudEnabled();
+   for(const p of [.15,.165,.18,.20,.22,.235]){progress.value=String(p);seamSet.textContent=`저장 ${mode} ${on?'ON':'OFF'} ${p}`;await framesFor(65);gpuTimes.length=0;await framesFor(40);await saveFrame();}
+  }
+  seamMode.value='albedo';enabled.checked=false;setCloudEnabled();
+  for(const p of [.15,.165,.18,.20,.22,.235]){progress.value=String(p);await framesFor(65);await saveFrame();}
+  seamSet.textContent='지형 대조 42프레임 저장 완료';
+ }catch(e){error.textContent=String(e);}
+ finally{seamMode.value=old;enabled.checked=cloudOn;setCloudEnabled();seamSet.disabled=save.disabled=captureSet.disabled=motionVideo.disabled=false;}
+};
 if(handoff)motionVideo.textContent='24초 연결 영상 저장';
 let capturePhase='fixed';
 // D109: physical wheel input changes a target; damping uses elapsed time, not frame rate.
@@ -115,7 +135,7 @@ const basicLow=document.createElement('option');basicLow.value='basic300';basicL
 const renderer=new THREE.WebGLRenderer({depth:false,logarithmicDepthBuffer:false,antialias:false});
 renderer.setPixelRatio(1);renderer.setSize(innerWidth,innerHeight);
 const measureCover=cloudCoverProbe(renderer);
-if(handoff){progress.min='.18';progress.max=orbital?'.235':'.41';}
+if(handoff){progress.min=seamReview?'.10':'.18';progress.max=orbital?'.235':'.41';}
 renderer.toneMapping=THREE.NoToneMapping;renderer.toneMappingExposure=10;
 document.body.appendChild(renderer.domElement);
 const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,10,1e6);
@@ -137,7 +157,8 @@ clouds.events.addEventListener('change',e=>{
  if(e.property==='atmosphereShadowLength')aerial.shadowLength=clouds.atmosphereShadowLength;
 });
 const composer=new EffectComposer(renderer,{frameBufferType:THREE.HalfFloatType,multisampling:0});
-const renderPass=new RenderPass(sourceScene,camera),normalPass=new NormalPass(sourceScene,camera);
+const renderPass=new RenderPass(sourceScene,camera),normalPass=new TerrainNormalPass(sourceScene,camera);
+normalPass.matched=seamReview;
 aerial.normalBuffer=normalPass.texture;
 composer.addPass(renderPass);composer.addPass(normalPass);
 class OpticalPass extends EffectPass {
@@ -272,8 +293,9 @@ async function saveFrame(){
  if(handoff)shot='handoff-p'+Math.round(Number(progress.value)*10000)+'-'+capturePhase;
  if(params.get('reviewRound')?.startsWith('takram-defect'))shot=diagnostic.value.toLowerCase()+'-p'+Math.round(Number(progress.value)*10000)+'-'+capturePhase;
  if(orbital)shot=(detailTrial?'detail-'+detailSelect.value:'orbital')+'-'+orbitalSelect.value+'-p'+Math.round(Number(progress.value)*10000);
+ if(seamReview)shot='seam-'+seamMode.value+'-p'+Math.round(Number(progress.value)*10000)+(enabled.checked?'-on':'-off');
  const e=gl.getExtension('WEBGL_debug_renderer_info');
- const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),url:location.href}})});
+ const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),terrainSeam:seamReview?{mode:seamMode.value,matchedNormals:normalPass.matched,depthOffset:seamMode.value!=='legacy',north:north?.state()}:null,url:location.href}})});
  if(!response.ok){error.textContent=await response.text();throw Error(error.textContent);}save.textContent='프레임 저장 완료';
 }
 save.onclick=saveFrame;
@@ -292,12 +314,12 @@ motionVideo.onclick=async()=>{
   recorder.start();motionVideo.textContent='정역 영상 녹화 중';const trace:{elapsed:number;p:number}[]=[];const start=performance.now(),duration=handoff&&!detailTrial?24000:8000,half=duration/2;let elapsed=0;
   do{
    if(gl.isContextLost())throw Error('GPU context lost');elapsed=Math.min(duration,performance.now()-start);
-   const startP=handoff?.18:.265,endP=detailTrial?.235:handoff?.410:.365;progress.value=String(elapsed<=half?startP+(endP-startP)*elapsed/half:endP-(endP-startP)*(elapsed-half)/half);trace.push({elapsed,p:Number(progress.value)});await step();
+   const startP=seamReview?.10:handoff?.18:.265,endP=detailTrial?.235:handoff?.410:.365;progress.value=String(elapsed<=half?startP+(endP-startP)*elapsed/half:endP-(endP-startP)*(elapsed-half)/half);trace.push({elapsed,p:Number(progress.value)});await step();
   }while(elapsed<duration);
   recorder.stop();await stopped;
   const blob=new Blob(chunks,{type:'video/webm'});
   const video=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=()=>reject(Error('Video read failed'));reader.readAsDataURL(blob);});
-  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-defect-video',shot:detailTrial?'video-detail-'+detailSelect.value:handoff?'video-handoff':'video-'+diagnostic.value.toLowerCase(),video,meta:{state:state(),url:location.href,motion:{completed:true,nominalMs:duration,mime,trace,encodingAffectsPerformance:true}}})});
+  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-defect-video',shot:seamReview?'video-seam-'+seamMode.value:detailTrial?'video-detail-'+detailSelect.value:handoff?'video-handoff':'video-'+diagnostic.value.toLowerCase(),video,meta:{state:state(),terrainSeam:seamReview?{mode:seamMode.value,matchedNormals:normalPass.matched}:null,url:location.href,motion:{completed:true,nominalMs:duration,mime,trace,encodingAffectsPerformance:true}}})});
   if(!response.ok)throw Error(await response.text());motionVideo.textContent='이동 영상 저장 완료';
  }catch(e){error.textContent=String(e);motionVideo.textContent='영상 저장 실패';}
  finally{if(recorder&&recorder.state!=='inactive')recorder.stop();stream?.getTracks().forEach(t=>t.stop());motionVideo.disabled=diagnosticSet.disabled=captureSet.disabled=save.disabled=pose.disabled=motionReview.disabled=diagnostic.disabled=false;}
@@ -357,11 +379,13 @@ motionReview.onclick=async()=>{
 };
 function draw(){
  if(!ready||gl.isContextLost())return;
+ normalPass.matched=seamReview&&seamMode.value!=='legacy'&&seamMode.value!=='offset';
+ if(seamReview){aerial.sunLight=aerial.skyLight=seamMode.value!=='albedo';}
  const now=performance.now(),elapsed=Math.min(.1,Math.max(0,(now-lastDrawTime)/1000));lastDrawTime=now;
  if(wheelDriving){const current=wheelCurrent,next=reducedMotion?wheelTarget:current+(wheelTarget-current)*(1-Math.exp(-elapsed/ .16));wheelCurrent=Math.abs(next-wheelTarget)<.00011?wheelTarget:next;progress.value=String(wheelCurrent);}
  if(activePose.startsWith('north')&&north){
   localCamera.aspect=camera.aspect;north.update(Math.min(.365,Number(progress.value)),2.4,true,localCamera);
-  if(handoff){handoffStage=handoffCamera(Number(progress.value),localCamera);
+  if(handoff){if(!seamReview||Number(progress.value)>=.18)handoffStage=handoffCamera(Number(progress.value),localCamera);
    // Source step starts at minStep + (perspectiveScale-1)*rayNear. At 1000km,
    // 1.01 skips a 0.8–1.4km slab. Keep near optics; continuously cap far overshoot.
    const farLod=THREE.MathUtils.smoothstep(localCamera.position.y,45,200);
@@ -373,10 +397,16 @@ function draw(){
   }
   // Existing and newly loaded LOD meshes must enter the optical pass as albedo,
   // not as already-lit PBR radiance. Retain texture and the source geometry/color handoff shader.
-  north.scene.traverse(o=>{if(!(o instanceof THREE.Mesh)||Array.isArray(o.material)||!(o.material instanceof THREE.MeshStandardMaterial))return;
-   const original=o.material;let albedo=albedoMaterials.get(original);
+  north.scene.traverse(o=>{if(!(o instanceof THREE.Mesh)||Array.isArray(o.material))return;
+   const original=(o.userData.opticalSource??o.material) as THREE.MeshStandardMaterial;
+   if(!(original instanceof THREE.MeshStandardMaterial))return;
+   o.userData.opticalSource=original;let albedo=albedoMaterials.get(original);
    if(!albedo){albedo=new THREE.MeshBasicMaterial({map:original.map,color:original.color,side:original.side,transparent:original.transparent,opacity:original.opacity,depthTest:original.depthTest,depthWrite:original.depthWrite});
     albedo.onBeforeCompile=(s,r)=>original.onBeforeCompile.call(original,s,r);albedo.customProgramCacheKey=()=>original.customProgramCacheKey()+'-takram-albedo';albedoMaterials.set(original,albedo);}
+   // LOD maps can finish loading after conversion; keep the live source map and depth contract.
+   albedo.map=original.map;
+   albedo.polygonOffset=seamReview&&seamMode.value!=='legacy'&&original.polygonOffset;
+   albedo.polygonOffsetFactor=original.polygonOffsetFactor;albedo.polygonOffsetUnits=original.polygonOffsetUnits;
    o.material=albedo;
   });
   lastCamera=localCamera.position.toArray() as [number,number,number];

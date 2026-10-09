@@ -238,3 +238,7 @@ GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 �
 
 ### 2026-10-09 D117 · 구름 품질과 지형 경계를 별도 검증
 사용자 “3d 렌더 지역이 사각형으로 경계가 뚜렷” → AI는 기존 부분 seam 개선과 현재 optical renderer를 구별 → 지형 TUNE 추가·cloud ON/OFF 진단 및 정역 통과 기준 우선. F082/D117. 세부 계획 ECG_A_surface_cloud_next_gate_2026-10-09.md. 이번 구현/원인 확정 없음; EXP026 반례 통합은 별도 D115 이관 후 보존된 원기록에서 진행.
+
+
+### 2026-10-09 D118 · shader 존재와 실제 패스 사용을 구분
+사용자 사각 경계 TUNE→AI가 parent shader를 검토→공통 normal override의 source morph 누락 발견→legacy/offset/matched/조명OFF 동일구도 비교→확대 조명 변화는 인정하되 색/해상도 경계와 early FOV잔여 때문에 S1 TUNE. F083/D118. 지형 shader 자체 존재는 optical normal 적용 증거가 아니며 실제 pass를 대조한다.

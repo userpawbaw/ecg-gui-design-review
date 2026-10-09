@@ -1993,3 +1993,23 @@ TUNE, 자료해상도/crop확보와국소광학을다음순서로분리. 새고�
 S0/S1을 국소 구름 광학보다 먼저 진행하도록 계획. cloud ON/OFF 정지+실제 휠 정역 비교가 필요하다. 계획 ECG_A_surface_cloud_next_gate_2026-10-09.md, 구현 미착수.
 ### 놓쳤다면
 구름 해상도 개선에 가려 지형의 경계 TUNE을 누락하거나 구름 가림을 근본 접합 해결로 오인했을 것이다.
+
+
+## F-083. 공통 법선 override는 지형 GPU morph를 버리지만 이를 고쳐도 지도 경계 전체 해결은 아니다
+
+| | |
+|---|---|
+| 시점 | 2026-10-09 [코드][캡처][브라우저] |
+| 연결 | D-118 / D-117 / CASE-007 |
+| 상태 | 패스 불일치 코드 확인 / 렌더 기여 확인 / 외형 TUNE |
+
+### 발단
+F082 지형 사각 경계의 S0/S1 진행 승인.
+### 먼저 의심한 것과 배제 방법
+geometry shader와 shared NormalPass, albedo 변환의 polygonOffset 누락, 색 소스 접합을 구별. legacy/offset/matched×6구도×cloud ON/OFF 및 조명OFF6 실제 저장. 같은 조건 assert로 데이터 차이를 통제했다.
+### 결정적 근거
+parent geometry는 sphere인 채 vertex에서 morph, 지역은 coarseHeight morph. shared MeshNormalMaterial은 이 callback을 보존하지 않았다. 수정 candidate에서 원래 vertex/uniform과 normal fragment를 조합. 42정착/실제 휠 정착2, readytrue/contextLostfalse/terrain errors[]/RTX3070. 확대 조명 변화는 관찰했지만 지도 선명도 경계는 남는다. 자료 verification/a-terrain-normal-20261009/manifest.json.
+### 조치와 검토한 대안
+opt-in 후보 유지, main 미통합/시각 TUNE. S0 패스 기여는 확인했으나 geometry/depth 전체 진단 완료 아님. 다음 실제 normal/depth 표면 및 저주파 색/해상도 경계 대조. 자동8초 영상의 early p.18 시야각 전환은 별도 미통과. 기존 near그림자 보류 유지.
+### 놓쳤다면
+source vertex normal 코드가 존재한다는 사실만으로 postprocessing에도 그 normal이 적용된다고 오인하거나 작은 RGB차이를 사각 경계 해결로 선언했을 것이다.

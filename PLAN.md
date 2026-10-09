@@ -510,3 +510,7 @@ D112타원분포 부정피드백 기록. 사진3장/현재코드/공식제작자
 
 ## 2026-10-09 D117 지형 경계 TUNE·다음 제작 게이트
 서버 재시작 후 사용자 새로고침한 실제 cloud-lab 확인. F082/D117, docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_surface_cloud_next_gate_2026-10-09.md. 지형 경계 원인 미확정; S0 레이어 분리→S1 접합→S2 국소광학→S3 새 원경 그림자→S4 동일 footprint 인계→S5 움직임/성능→S6 서고/사용자 리뷰. 이번 수정 구현 미착수. D115 별도 미커밋 DB/규칙 및 사용자 캡처 보존. 기존 근경 그림자 보류/구름2회 실패/fallback 유지.
+
+
+## 2026-10-09 D118 지형 패스 진단·후보
+F083/D118, docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_terrain_normal_alignment_2026-10-09.md, verification/a-terrain-normal-20261009/gallery.html. 28초기+42확장정착/실휠2/자동8초영상. 공유 NormalPass GPU morph 불일치·깊이 offset 누락 대조, opt-in 정합 구현. 확대 조명 변화/지도 경계 TUNE. S1 미통과, 다음 normal/depth 및 저주파색·선명도/FOV 연속 정합 후 재검증; S2/near/서고는 후속. 기존 근경 shadow 보류 유지. unrelated D115/사용자capture 보존.

@@ -1,0 +1,734 @@
+{
+  "decision": "D118",
+  "finding": "F083",
+  "verdict": "TUNE: optical pass mismatch corrected, map-quality boundary remains",
+  "fixed": 42,
+  "wheelSettled": 2,
+  "initialDiagnosticFixed": 28,
+  "sourceRoot": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009",
+  "conditionAssertions": "same camera/sun/render size/source placement/reveal across legacy/offset/matched",
+  "video": {
+    "nominalMs": 8000,
+    "trace": 482,
+    "scope": "automatic camera, not actual wheel video",
+    "remaining": "early camera fov switch at p.18 in expanded diagnostic path needs correction; not full motion PASS"
+  },
+  "gpu": [
+    {
+      "available": true,
+      "count": 65,
+      "p50": 3.045376,
+      "p95": 4.895744
+    },
+    {
+      "available": true,
+      "count": 133,
+      "p50": 4.005888,
+      "p95": 6.577152
+    },
+    {
+      "available": true,
+      "count": 201,
+      "p50": 4.568064,
+      "p95": 6.577152
+    },
+    {
+      "available": true,
+      "count": 270,
+      "p50": 4.895744,
+      "p95": 7.046144
+    },
+    {
+      "available": true,
+      "count": 300,
+      "p50": 5.354496,
+      "p95": 7.578624
+    },
+    {
+      "available": true,
+      "count": 300,
+      "p50": 4.996096,
+      "p95": 7.496704
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.566592,
+      "p95": 5.725184
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 2.651136,
+      "p95": 4.943872
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 4.985856,
+      "p95": 7.136256
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.56032,
+      "p95": 9.166848
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.412864,
+      "p95": 7.072768
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.106688,
+      "p95": 6.862848
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.49888,
+      "p95": 8.092672
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.585024,
+      "p95": 4.781056
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.680256,
+      "p95": 5.018624
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.479424,
+      "p95": 6.775808
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.52768,
+      "p95": 4.614144
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.472384,
+      "p95": 4.308992
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 4.002816,
+      "p95": 4.9408
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 4.627456,
+      "p95": 4.857856
+    },
+    {
+      "available": true,
+      "count": 300,
+      "p50": 5.331968,
+      "p95": 7.510016
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.270528,
+      "p95": 6.629376
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.624832,
+      "p95": 6.984704
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.87776,
+      "p95": 8.236032
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 6.495232,
+      "p95": 8.640512
+    },
+    {
+      "available": true,
+      "count": 300,
+      "p50": 4.839424,
+      "p95": 7.752704
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.273728,
+      "p95": 4.49536
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.375104,
+      "p95": 4.489216
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 4.3264,
+      "p95": 5.536768
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.56352,
+      "p95": 7.197696
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.995648,
+      "p95": 6.90688
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 4.493312,
+      "p95": 5.397504
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 2.816,
+      "p95": 4.178944
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 2.597888,
+      "p95": 3.776512
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.890048,
+      "p95": 7.768064
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 4.967424,
+      "p95": 7.515136
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.369856,
+      "p95": 7.15776
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.203968,
+      "p95": 7.845888
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.742592,
+      "p95": 7.832576
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 5.448704,
+      "p95": 7.05024
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.585024,
+      "p95": 4.291584
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 3.377152,
+      "p95": 4.610048
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 4.72576,
+      "p95": 5.707776
+    },
+    {
+      "available": true,
+      "count": 40,
+      "p50": 4.47488,
+      "p95": 5.694464
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p1500-off.json",
+      "bytes": 8104,
+      "sha256": "ce2f1df64a6885c8e409672e6619e1fdf5f1a1c5a5f1eee13c8c94e058ffa3b2"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p1500-off.png",
+      "bytes": 1556340,
+      "sha256": "bc3e8078296596e29f52a4f6ac975692663549d606421bb56d8ffba2008d53f9"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p1650-off.json",
+      "bytes": 8168,
+      "sha256": "0ea4ab5827fb9f53804a0db122d45fb7ae2f6aeebaf64fe602fbe12a6fa3de1a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p1650-off.png",
+      "bytes": 1723638,
+      "sha256": "3d659b383ae2bab7ffeb850ffc7009578c7b0730766ed310521debd353bd4639"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p1800-off.json",
+      "bytes": 8076,
+      "sha256": "0a768ace8dd32d52774167d63a299997f2e6e861e4320d6e85ca8a6d7b26246f"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p1800-off.png",
+      "bytes": 1887499,
+      "sha256": "1a4dec2aec0d645902683e8810bf109c2977fcefe4e0065b4d68f43008193d78"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p2000-off.json",
+      "bytes": 8213,
+      "sha256": "43b0de2c998c918f659fc656dd7ae4c7766bfc870a1e2ee5a56d3aa1fbefd41b"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p2000-off.png",
+      "bytes": 2041694,
+      "sha256": "b942c2c255a21f947bedabba6248d55217cdfa0946b943a63d557a618f30b603"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p2200-off.json",
+      "bytes": 8233,
+      "sha256": "8bd5f82f4e738fc378042b13194d54d5ddcd6681d942ffea0044d4e20238b317"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p2200-off.png",
+      "bytes": 2401100,
+      "sha256": "87e8284bb7a8c97f76759df9c934f328961783fdfa8c400eaddcc1c0596876b9"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p2350-off.json",
+      "bytes": 8160,
+      "sha256": "6463e052e22e7b507454c1f2964e828a7e8582d5d45be355fb9df8e8ba7d4584"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-albedo-p2350-off.png",
+      "bytes": 2363200,
+      "sha256": "d383928f9e9cca2f9a8fad5c829cf7fbd2eba92958589d2712d64c7d1441f43e"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1500-off.json",
+      "bytes": 8107,
+      "sha256": "de94d7a687732f2a3271857ca5c7d6d9db851b38a34170c33dd0c888b19b7f48"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1500-off.png",
+      "bytes": 1379051,
+      "sha256": "64f4da4caf61acfd59aaab6e57c0097f8ccabd3c61d93ae793b11291b4a8a2d4"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1500-on.json",
+      "bytes": 8105,
+      "sha256": "8cc682578a1fa0e8653407dfedcc6d0b859df2edf9ea76c509992ba9585a59fb"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1500-on.png",
+      "bytes": 1590757,
+      "sha256": "ac8c899e3796bf8287d49441b1a4f51d1d223c91a34c3ff0b37709ce1a191cf8"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1650-off.json",
+      "bytes": 8170,
+      "sha256": "89adceb4775b35c8f372d4ebb252cb46b4d3ed596a1b9f7be1da8dc38aac5a53"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1650-off.png",
+      "bytes": 1886056,
+      "sha256": "09d34b63d0562c61c4fb27d8ecd9c54b7eaf160f65dee11df8a287a510c45f3f"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1650-on.json",
+      "bytes": 8167,
+      "sha256": "ec2e28eb8dedc7a28c49e4769cc2fde11a5b4360b492ad7ad63f3331fe806132"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1650-on.png",
+      "bytes": 2031013,
+      "sha256": "24f824c8a51552ce86c277c37fc305a6923dba8d10766ccd9e4d51a8346e2c65"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1800-off.json",
+      "bytes": 8075,
+      "sha256": "5e5eaf91ea9e2b9996d382c5bd34a850b4c78b9bf6eeb2889a4d72569cfe7cad"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1800-off.png",
+      "bytes": 2015555,
+      "sha256": "634672f1b6ae6fd7b64a4263322802fdf088e6be574e90397fae988178e43699"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1800-on.json",
+      "bytes": 8076,
+      "sha256": "e08b1a6b535db5031653c3099dec3cc3682f05be3533cd9b96c86784ca307a46"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p1800-on.png",
+      "bytes": 2151313,
+      "sha256": "56b0984fc2ec759c9266f6e34efd1b12ac3dec23b108db74c7c178e8e517e4c5"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2000-off.json",
+      "bytes": 8211,
+      "sha256": "e99c64c21340a2c24a69a3a6a390cea8531165fde65b3038193285b190c3b244"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2000-off.png",
+      "bytes": 2138953,
+      "sha256": "b41d6e78877bbdf86e24f9291519ae0036dac345d10f583a70557418612eeb11"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2000-on.json",
+      "bytes": 8213,
+      "sha256": "57d5c61a8af8681935b88434eb6b0130f8055234bfaaff1c194e0e55ce3bda5c"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2000-on.png",
+      "bytes": 2240354,
+      "sha256": "8fbaa9c8a63fb3b690339d737776c2b1806aa5b963377171536115914e668146"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2200-off.json",
+      "bytes": 8234,
+      "sha256": "26a6d20fc078c556208348c07af65aca8f8ab69f9c7b6befb0ecaf0a50c9c1ec"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2200-off.png",
+      "bytes": 2455303,
+      "sha256": "217d7b0a998becdf63b47f87e3a5a3377a7a23586d76b698ad08fa66cb7d8a1a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2200-on.json",
+      "bytes": 8233,
+      "sha256": "f9fcfb9717c26d5906fca38276bd8f4e0b1bee6e7590ece0f76fb923fa4dca9c"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2200-on.png",
+      "bytes": 2510034,
+      "sha256": "c148b4a16e55c12e324afa504920aa621b80e697b79a12c9e8a4d1574309d554"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2350-off.json",
+      "bytes": 8160,
+      "sha256": "ae4e3f573e2f33cedd1bf4dcba2a08f629c9846704c9d593504428706d2be5b6"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2350-off.png",
+      "bytes": 2435364,
+      "sha256": "cfb09461e0e58b8460a09b7173e9379793bfffea56d30965ee36ed0ed52f5bdf"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2350-on.json",
+      "bytes": 8160,
+      "sha256": "0f976f27bc8f84a46af04750cea3e76e0bf33c11ed3d81042cb1578730203327"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-legacy-p2350-on.png",
+      "bytes": 2499734,
+      "sha256": "016a306ac08f171a6dd069f1a8d810e45805d7c144b758b94b33325093fe245b"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1500-off.json",
+      "bytes": 8103,
+      "sha256": "495eb2936f482f2501b24b3eed7f87460ede31603eda6eb81f2fc07be2afa317"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1500-off.png",
+      "bytes": 1379255,
+      "sha256": "f798f648b0ba1cb648ba949a422ccd15105b3527490b8bb24314d03116574ad2"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1500-on.json",
+      "bytes": 8104,
+      "sha256": "d4b512a02c54416d5924eb9de787b4b56623aab920f8d3a426b214cab212d404"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1500-on.png",
+      "bytes": 1590475,
+      "sha256": "ca7dc5d28a3cfb8c21cd9d9c7cec5b5f7135f0f80bb0624184361d13bfc964c5"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1620-on.json",
+      "bytes": 8190,
+      "sha256": "e50c25c0c1a8251245a5d2c04223ae60e73c9544cac79991330aecc258ee187c"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1620-on.png",
+      "bytes": 1963713,
+      "sha256": "a2b5cd925d9bf1684d81ca7d8f7f61bfb073bea55e63858d9515f42f96566ad5"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1650-off.json",
+      "bytes": 8168,
+      "sha256": "e0a09e9df0e92fd8495283dc0bd59f270c3715d45277ad1e077eb3a10368df7a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1650-off.png",
+      "bytes": 1885670,
+      "sha256": "2eb3c257f27caaf57a5b96d2d25ca53fcbc42ea9ba7d741577278e99b6c3d251"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1650-on.json",
+      "bytes": 8167,
+      "sha256": "f9aa5efb6d757e8a1fbbfcf10f0a554edf9e3d9b1dfc80aceb8863e38c6ccbe4"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1650-on.png",
+      "bytes": 2030753,
+      "sha256": "9eb07f29ae1bdb1dac7e7e118b81006892b02766d82bd6a269d032286a088139"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1800-off.json",
+      "bytes": 8075,
+      "sha256": "c36c7f16324e0c3aeeb512700b340ee571f7e27e98211f836024b8ebecab0b1a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1800-off.png",
+      "bytes": 2013574,
+      "sha256": "4059b81e1a52c265f9d39fc9de7c719cc986df1cf18d30f53ad392cdc55f5bd8"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1800-on.json",
+      "bytes": 8075,
+      "sha256": "c91ae59b443a056a324410a4746bef32001215fc883cc163c55e907ef49e2114"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1800-on.png",
+      "bytes": 2149628,
+      "sha256": "814295d7c4629a7554641be9f4c3bf7d54548726fc48ae66350217e7eb20c589"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1980-on.json",
+      "bytes": 8225,
+      "sha256": "8f8901774b2e7e35d7c5fb6e29145edeadebe85996cba967add7381d0dc01e69"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p1980-on.png",
+      "bytes": 2217887,
+      "sha256": "12687060309cb8038079a54b942f204f3204616f40fbf41d298534aa5639fa91"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2000-off.json",
+      "bytes": 8212,
+      "sha256": "18a46f9e2cecff0f826c2fadda237a84b5cef9c0f5c16757019bea62637239f9"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2000-off.png",
+      "bytes": 2135418,
+      "sha256": "980ee949c8e7cdc463524937251b9b00ee70dbf8df9c3fd038dfd8bc16a0d40e"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2000-on.json",
+      "bytes": 8212,
+      "sha256": "185aca17f7efb49720dc4166fbe3e9f7ad95c73ecd434905b18931ad2ee78b72"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2000-on.png",
+      "bytes": 2236838,
+      "sha256": "50730696dae7690832d6c616a6b3a18fd6d20b3d7653e28a156528ffbfbdbc53"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2200-off.json",
+      "bytes": 8231,
+      "sha256": "c9d52c9826f11a49154ffcbcb016855ec2db5002bc3543caf650891d50946a5d"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2200-off.png",
+      "bytes": 2450988,
+      "sha256": "adef47306bfa130e35014e21ceed6dd75898295caffeb578124d62329bba1fa6"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2200-on.json",
+      "bytes": 8231,
+      "sha256": "71f39f8fe92b4cf134c01daed0f2f881eb979d5b207420eddaa8d6556c6a6b0a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2200-on.png",
+      "bytes": 2505096,
+      "sha256": "813f4e9d99219a26deb18001d5bbacc576ab2891c6658e3c8ee25200c99c1079"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2350-off.json",
+      "bytes": 8159,
+      "sha256": "6eb363bbc444ff026a335910b3666ac9ecdb883c400e71a24a69594ad109c7d9"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2350-off.png",
+      "bytes": 2432759,
+      "sha256": "06ef57be917c3d5ddd71c2eb0dd9bbad369d98920929e8511a568dda0617d642"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2350-on.json",
+      "bytes": 8159,
+      "sha256": "6d9b9e76cd839e6e3c83007d1447727ee30939ed42107f917a7bd6c0f21c6d36"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-matched-p2350-on.png",
+      "bytes": 2496558,
+      "sha256": "0adef6220d2d5bf08ed4aba6b873167841bfcdc42c5d649a50f0b71202abc285"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1500-off.json",
+      "bytes": 8102,
+      "sha256": "73341f390b5b121579007faef1a6016d0e9766b8bce8a3aec694a384457849aa"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1500-off.png",
+      "bytes": 1379255,
+      "sha256": "f798f648b0ba1cb648ba949a422ccd15105b3527490b8bb24314d03116574ad2"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1500-on.json",
+      "bytes": 8104,
+      "sha256": "926bad95a88bb27072e69f2d1046bdef1d9ad242aa2110bc0693c47edc0b507e"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1500-on.png",
+      "bytes": 1590475,
+      "sha256": "ca7dc5d28a3cfb8c21cd9d9c7cec5b5f7135f0f80bb0624184361d13bfc964c5"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1650-off.json",
+      "bytes": 8168,
+      "sha256": "c4753ce722e4bf5392f7969bb29f1a30f14c399d251504bbf8bb2b5e3066188d"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1650-off.png",
+      "bytes": 1886022,
+      "sha256": "255949af7152ef59fbde3263db4beb861e67fbbc92762a3e764c0d4ca00cd63e"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1650-on.json",
+      "bytes": 8167,
+      "sha256": "5ef10c96dace5d5041b9b655d7c5b7ade263c84318f80e7b4d19df92433c0003"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1650-on.png",
+      "bytes": 2030969,
+      "sha256": "49ffcf790e28028203dc709828a2ffa341d9d69771cf0228b85455f5443deb68"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1800-off.json",
+      "bytes": 8075,
+      "sha256": "df3621520cf1b6ebd902abb0801f46f7c149ca882f3be9ef2de0b109cedf6e9c"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1800-off.png",
+      "bytes": 2015490,
+      "sha256": "e67cd0892ab113ce148cb9d1ccd3513bc001b8971049351cd58cbc72b89a0af9"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1800-on.json",
+      "bytes": 8075,
+      "sha256": "b22b572916a790cd749e61348e2c12bac70465db1516f163408dcec702b947cd"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p1800-on.png",
+      "bytes": 2151393,
+      "sha256": "4422513e734962c089f9864917bc84833b502d3e20a59bf460724fa4451f25c4"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2000-off.json",
+      "bytes": 8213,
+      "sha256": "b945cd595e25413b2009f0e66d291d5b8e70f5c3dd1da389ab80d71566e3f53d"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2000-off.png",
+      "bytes": 2138909,
+      "sha256": "2cade298980047b0a7ca78d0ccee2fff99df427af49b8e5b7c5e9cc244e97606"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2000-on.json",
+      "bytes": 8211,
+      "sha256": "5912fe253fef830bab6804c9eb8e0ec8cbc16caf9e6be5a8d04f03d119d20570"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2000-on.png",
+      "bytes": 2240257,
+      "sha256": "b4e6682714716c8f0952dee15bfd72e6f42e3240b7288dc93b2073f0ada370f7"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2200-off.json",
+      "bytes": 8233,
+      "sha256": "88fe392742599d682c51df122c4a6e329c69aa08d88efc38a938aa21356c772f"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2200-off.png",
+      "bytes": 2455299,
+      "sha256": "f43f75627a9e7902b18b9188e9893ee9f356876d8a084f0124988a703759e9bf"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2200-on.json",
+      "bytes": 8232,
+      "sha256": "18a564e57ce0d4adde8a94e4f78e811e2ae1a245ab6562a451d36169f13d1403"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2200-on.png",
+      "bytes": 2510037,
+      "sha256": "49f2032639676a2aadbe29197fbe8f924569acc7c837c3d47d5889cc637a34c7"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2350-off.json",
+      "bytes": 8159,
+      "sha256": "f5332c27ff811c4aa12ad85f1f341d52916cbba635ad13948b348fda285ed7fe"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2350-off.png",
+      "bytes": 2435174,
+      "sha256": "0e45bfdd58bd35e9fefae11a951d02322d099f645211dd2e1bab344762f0c680"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2350-on.json",
+      "bytes": 8158,
+      "sha256": "4519fa88ce907cb7e668abe2c8b9b1923c299f1e0ebdf389f8bd357972c0a913"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/seam-offset-p2350-on.png",
+      "bytes": 2499790,
+      "sha256": "18ce4bfc21f0ddea226280d3b6ec9aab508f6665529df2b884ee9d73f10c1f10"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/video-seam-matched.json",
+      "bytes": 40596,
+      "sha256": "0087b5e2c8ee9e35d9c3992a720747e45964f13653f622df3497c9a6d98bfc7a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/terrain-seam-wide-20261009/video-seam-matched.webm",
+      "bytes": 2838980,
+      "sha256": "8305fa7be2f341d47e7d2c2c23131a244f55219bc8266453dc1273369417eaa1"
+    }
+  ]
+}

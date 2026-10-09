@@ -3065,3 +3065,24 @@ parent shader 추가수정, globe source 접합과 depth/normal/aerial 분리, �
 parent detail 보충만으로 초기 경계 해결 선언, 전체 흐림으로 은폐, near volume 연결 완료 해석을 제외한다. 확정 원인/수정 완료는 아직 아니다.
 ### 되돌려야 하는 조건
 원경 선명도 저하·후반 자연스러운 화면 악화·veil pop·구름분포 이동이면 후보 되돌림. S1 통과 전 near/서고로 넘기지 않는다. 기존 shadow 보류/서고 KEEP/실패2/2 유지.
+
+
+## D-125. 동일 source 합성을 지역 LOD까지 공유하고 자동 구면 대기 보정을 분리한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [사용자][코드][캡처] |
+| 상태 | 구현·대조 완료 / TUNE |
+| 연결 | F-090 / D-124 / O-024 |
+| CASE | CASE-007 |
+
+### 갈림길
+초기source경계와전체veil을같은gain변경으로뭉칠지,각기검증할지.
+### 검토한 선택지
+edge-only source정합,패치전체저주파정합,기존automatic광학보정/actualgeometry.
+### 고른 것과 근거
+shared terrain-source 함수를 globe/parent/regionalLOD/near에 적용. mip6 RGB분모/globalmip1기준 .45–2.2비율로평균색을맞추고fine결유지. 동일source에서자동geometric보정OFF→초기veil급변개선. 대기조명산란유지. report ECG_A_source_optical_continuity_2026-10-10.md.
+### 버린 것과 이유
+edge-only후보효과작음·regional원색잔류후보는접합불일치라최종채택안함. 전체지도blur/구름가림으로은폐제외. first13/second16native보존. GLSL coherent 예약어실패후수정/전체재캡처.
+### 되돌려야 하는 조건
+색감왜곡·낮은해상도영역과품질gap·새seam/잔상/veil이면legacy/auto로대조. 21finalnative/actual8초/실wheel2/build83PASS이지만사용자채택미완. 기존shadow보류/서고KEEP/2회실패/fallback유지.

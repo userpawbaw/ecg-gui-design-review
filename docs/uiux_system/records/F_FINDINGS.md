@@ -2141,3 +2141,25 @@ ECG_A_user_video_seam_diagnosis_2026-10-10.md: S1a globe source 경계와 S1b �
 이번 영상·코드 분석만; renderer 변경 없음. source hash/frames verification/a-seam-user-video-20261010/manifest.json. compression/패널가림/프레임diagnostic 부재 한계.
 ### 놓쳤다면
 초기 구간에 적용되지 않는 parent detail shader만 반복 수정하거나, 연무 감소를 near volume의 자연스러운 인계로 오해했을 것이다.
+
+
+## F-090. 원경 veil 급변은 현 구성의 자동 대기 구면 보정 경로와 연관된다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [코드][런타임][캡처] |
+| 상태 | 독립 대조 확인 / 지도 접합 후보 TUNE |
+| 연결 | D-125 / F-089 / O-024 / CASE-007 |
+
+### 발단
+사용자 실제 영상에서 초기 지도 경계 및 .1584 연무 감소를 발견해 source와 optical 인계를 분리했다.
+### 먼저 의심한 것과 배제 방법
+같은 지도·카메라·태양에서 Takram correctGeometricError ON/OFF 대조. source만 바꿔도 auto veil이 남지만 보정OFF에서는초기부터 사라짐. source경계는 별개였다.
+### 결정적 근거
+16clear/5cloudnative+8초actualWebM/실wheel정역settled2. 기존 .1025–.15 auto veil, actual surface에서 개선. 공식 패키지0.19.1 fragment position/normal mix 및 vertex geometry altitude offset 감쇠 확인. 현구성원인에한정, library 일반결함선언아님.
+### 조치와 검토한 대안
+globe/parent/regional/near에 저주파RGB비율 정합과 source공유. edge-only 첫후보·regional원색잔류 두번째를final로채택안함. report ECG_A_source_optical_continuity_2026-10-10.md, verification/a-source-optical-20261010/manifest.json.
+### 비용 / 영향 범위
+추가 texture 조회/원색정합미보존/짧은GPU측정. opt-in만; main/near통합없음. 원경 품질차이/전체seam/장시간미검증 TUNE.
+### 놓쳤다면
+지도나구름에blur를더하면서 원인과관계없는손실을늘리고, 지역LOD쪽원색기여를남겨새경계를만들었을것이다.

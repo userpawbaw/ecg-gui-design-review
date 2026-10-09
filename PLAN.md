@@ -541,3 +541,7 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_detail_hold_cloud_light_2
 
 ## 2026-10-10 D124 사용자 영상 경계 검토
 19.43초 실제영상39표본/native8 대조. 초기 .1025/.1348 경계는parent시작.135전이며 globe source 접합도 조사 필요. .1584에서 전체veil 감소/역.1369에서복귀; aerial/depth/normal 후보미확정. 코드수정없음/TUNE. 다음S1a globe source분리→S1b .135–.18 optical 정역검증→S1통과후 near/서고. shadow보류/KEEP/실패2/2유지. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_user_video_seam_diagnosis_2026-10-10.md; evidence verification/a-seam-user-video-20261010/manifest.json.
+
+
+## 2026-10-10 D125 source·optical 연속성 후보
+공식Takram자동구면보정분리→현구성veil급변개선. sharedsource합성globe/parent/regional/near 적용,저주파RGB정합/fine보존. first13/second16후보보존. final21native+actual8초trace482+실wheel정역settled2. GLSL예약어오류O024수정후재캡처. TUNE,원경해상도gap/전체seam/사용자채택미완. main·near통합미실시/shadow보류/서고KEEP/2회실패유지. 다음사용자리뷰반영S1잔여→near동일footprint. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_source_optical_continuity_2026-10-10.md; verification/a-source-optical-20261010/gallery.html.

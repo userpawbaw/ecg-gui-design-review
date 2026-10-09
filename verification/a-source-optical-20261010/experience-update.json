@@ -1,0 +1,7 @@
+{
+  "source": "D125/F090/O024",
+  "status": "TUNE",
+  "recommendation": "When map and terrain change differently, isolate source reconstruction from atmosphere geometric correction. Match source in globe, parent and regional LOD; verify actual WebGL compilation and forward/reverse motion.",
+  "gap": "Not fully seamless, user adoption and near volume handoff pending",
+  "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_source_optical_continuity_2026-10-10.md"
+}

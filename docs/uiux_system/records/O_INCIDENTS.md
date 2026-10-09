@@ -461,3 +461,20 @@ wheelCurrent 연속float를슬라이더와분리해매frame감쇠,progress는표
 브라우저큰다운로드를반복하지않고공개GitHub미러의고정commit파일을30초shellGET으로확보,bytes/sha/8192×4096 확인. 공식출처와실제획득mirror를provenance에분리. 리셋된브라우저핸들재연결후native비교복구.
 ### 재발 방지와 자동화 상태
 권장조치는다운로드경로와파일실재검증을분리하고,대형브라우저API시간초과후같은방법을재시도하지않는것. 공통도구timeout내부수정/자동차단은미구현이며실제준수보장없음. 자료횟수/획득상태를작업기록에남긴다.
+
+
+## O-024. Vite 빌드 통과 후 GLSL 예약어로 지역 shader 컴파일이 실패했다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [런타임][코드] |
+| 연결 | D-125 / F-090 |
+
+### 증상
+Vite83modulePASS뒤regional shader가Fragment notcompiled, coherent Illegal use of reserved word를반환했다.
+### 원인
+coherent는GLSL예약어다. Vite는shader문자열의WebGL컴파일을검사하지않는다. 후보작업중HMR이진행캡처도다시초기화했다.
+### 조치
+sharedColour로이름변경. 최종후보전체고정구도재캡처→8초영상→실wheel2/nearLODnative확인. 과거console3error는보존하고수정후신규오류와구분한다. 중간실패capture를final증거로사용하지않음.
+### 재발 방지와 자동화 상태
+빌드후실제GLSL compilation/renderer로그/nearLOD보임검증을필수로유지. 실제캡처중source파일수정피하고끝난뒤에HMR. 자동GLSL테스트추가미실시,브라우저확인으로검증. report ECG_A_source_optical_continuity_2026-10-10.md.

@@ -262,3 +262,7 @@ GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 �
 
 ### 2026-10-10 D123
 사용자해상도역행관찰→colorPhase 원인분리→fullhold사각형악화반례→평균색과고주파detail분리. 별개cloud조명원인/후보독립대조. F088/D123. partial효과를reference품질달성으로오인하지않음.
+
+
+### 2026-10-10 D124–D125
+사용자 정역영상→초기경계는parent등장전 발견→source/optical분리→공식패키지구면보정ON/OFF대조→veil개선 확인. edge-only반례와regional원색잔류를거쳐공유source합성을LOD까지확장. F089/F090/O024. actual영상/native는부분개선증거,TUNE와품질gap유지.

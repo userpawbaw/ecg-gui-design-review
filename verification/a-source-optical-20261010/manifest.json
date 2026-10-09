@@ -1,0 +1,585 @@
+{
+  "decision": "D125",
+  "finding": "F090",
+  "incident": "O024",
+  "nativeFinalFrames": 21,
+  "clearFrames": 16,
+  "cloudFrames": 5,
+  "actualRendererVideo": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/video-seam-matched.webm",
+  "cameraSunComparison": "PASS identical source comparison pairs",
+  "result": "TUNE: veil jump improved; source seam softened; high-res/low-res distinction remains",
+  "mainIntegrated": false,
+  "nearHandoff": false,
+  "shadowDeferred": true,
+  "rejectedFirstFrames": 13,
+  "supersededSecondFrames": 16,
+  "frames": [
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-legacy-optical-auto-p1025-clear.png",
+      "sha256": "28fd55874d08efce7e2b2f595228da6802731d338e06630748c05bf874030e6f",
+      "p": 0.1025,
+      "sourceMatch": "legacy",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        947905.8837890625,
+        3691738.28125,
+        1397848.5107421875
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1025,
+        "current": 0.1025,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-legacy-optical-auto-p1348-clear.png",
+      "sha256": "fa426fd54fc2c509942bbe105d445af246f88a2ca586cae88a276621356e581f",
+      "p": 0.1348,
+      "sourceMatch": "legacy",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        655774.0475,
+        2539218.159999999,
+        1097713.0625
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1348,
+        "current": 0.1348,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-legacy-optical-auto-p1584-clear.png",
+      "sha256": "15eb1eb7b2cda9191914a6e1330f50f116ac5cb265b114e8d87d3d86449e4761",
+      "p": 0.1584,
+      "sourceMatch": "legacy",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        350913.8199999999,
+        1336481.9199999992,
+        784500.4999999999
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1584,
+        "current": 0.1584,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-legacy-optical-auto-p1800-clear.png",
+      "sha256": "cd979238be86996976c96fc4deeb59d23562ff7dab760ef333f8eff5de374c69",
+      "p": 0.18,
+      "sourceMatch": "legacy",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        220000,
+        820000,
+        650000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.18,
+        "current": 0.18,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p1025-clear.png",
+      "sha256": "772443237c055f522aecadcdffd28e9bffa28538a0a4aa76ce36cf3807f1eeeb",
+      "p": 0.1025,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": false,
+      "camera": [
+        947905.8837890625,
+        3691738.28125,
+        1397848.5107421875
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1025,
+        "current": 0.1025,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p1348-clear.png",
+      "sha256": "c3cc11a47bb92021db08f880940f483d2d01e53e2088b5ac4df6a57b8106923b",
+      "p": 0.1348,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": false,
+      "camera": [
+        655774.0475,
+        2539218.159999999,
+        1097713.0625
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1348,
+        "current": 0.1348,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p1348-cloud.png",
+      "sha256": "0b0fd5714d1484e5f37189b87a4f143a072658849e4049aa76d279dcef7da6f1",
+      "p": 0.1348,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": true,
+      "camera": [
+        655774.0475,
+        2539218.159999999,
+        1097713.0625
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "slider",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1348,
+        "current": 0.1348,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p1393-cloud.png",
+      "sha256": "91553e7e5c18189c4890ff4cae4f6e93045ca1b3975ef51b5a2a8f49c3c2349d",
+      "p": 0.1393,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": true,
+      "camera": [
+        594580.2719140624,
+        2297796.1412499994,
+        1034842.7451171874
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "wheel",
+        "wheelCount": 3,
+        "lastWheelPixels": -1080,
+        "target": 0.1393,
+        "current": 0.1393,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p1500-clear.png",
+      "sha256": "b9aecce80a5abe136e4ebb306b7f817e91544e8ba2170fddbb57589a395d70ca",
+      "p": 0.15,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": false,
+      "camera": [
+        450976.5625,
+        1731250,
+        887304.6875
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.15,
+        "current": 0.15,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p1584-clear.png",
+      "sha256": "6a60e5504ca63a8e269b355219f31005b7f975b7286514bd2cf853a5cc868005",
+      "p": 0.1584,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": false,
+      "camera": [
+        350913.8199999999,
+        1336481.9199999992,
+        784500.4999999999
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1584,
+        "current": 0.1584,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p1584-cloud.png",
+      "sha256": "b3c9a21e97df68ce04d617449ede19c6a61a30f9019bc86e50981d6703012ca9",
+      "p": 0.1584,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": true,
+      "camera": [
+        350913.8199999999,
+        1336481.9199999992,
+        784500.4999999999
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "slider",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1584,
+        "current": 0.1584,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p1663-cloud.png",
+      "sha256": "684ef8fa5addd51131f347d5382ff08e135e5a4eab5bea0f4670c11573755aa4",
+      "p": 0.1663,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": true,
+      "camera": [
+        276892.79808593745,
+        1044453.7787499998,
+        708451.5048828124
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "wheel",
+        "wheelCount": 2,
+        "lastWheelPixels": 1080,
+        "target": 0.1663,
+        "current": 0.1663,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p1800-clear.png",
+      "sha256": "f3397d62f6dd2319b9d4d23a07b4ae6417c1a76dca709a48b7029969b1427f95",
+      "p": 0.18,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": false,
+      "camera": [
+        220000,
+        820000,
+        650000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.18,
+        "current": 0.18,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p2350-clear.png",
+      "sha256": "9e32fe8eec63ac44bdb2a0d468cc32df871d83fcc938dbafe9eb5bd5f43a1a89",
+      "p": 0.235,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": false,
+      "camera": [
+        55000,
+        100000,
+        150000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.235,
+        "current": 0.235,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-actual-p2350-cloud.png",
+      "sha256": "c705ff70a038294137bdfe7aa8aa7532e8751044a21b8ec1a42cc907b6c38ebd",
+      "p": 0.235,
+      "sourceMatch": "matched",
+      "opticalCorrection": "actual",
+      "clouds": true,
+      "camera": [
+        55000,
+        100000,
+        150000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "slider",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.235,
+        "current": 0.235,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-auto-p1025-clear.png",
+      "sha256": "adeac0ad60c62c60143b0aea31b8c463819188f0a6c87eef0e1afd48b49de92d",
+      "p": 0.1025,
+      "sourceMatch": "matched",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        947905.8837890625,
+        3691738.28125,
+        1397848.5107421875
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1025,
+        "current": 0.1025,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-auto-p1348-clear.png",
+      "sha256": "35accf2f680c205cacd6fc33117e91f506100fa1d527e795fdb9983b361589ae",
+      "p": 0.1348,
+      "sourceMatch": "matched",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        655774.0475,
+        2539218.159999999,
+        1097713.0625
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1348,
+        "current": 0.1348,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-auto-p1500-clear.png",
+      "sha256": "c14db5f85d88312ee7a221c97f116a5efde937ac858bbf62e880f1f6030816a3",
+      "p": 0.15,
+      "sourceMatch": "matched",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        450976.5625,
+        1731250,
+        887304.6875
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.15,
+        "current": 0.15,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-auto-p1584-clear.png",
+      "sha256": "bab70f8484bc400e4b53ebe12b023e4f324ee7991b2e82b9ba088f0597ec28cf",
+      "p": 0.1584,
+      "sourceMatch": "matched",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        350913.8199999999,
+        1336481.9199999992,
+        784500.4999999999
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.1584,
+        "current": 0.1584,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-auto-p1800-clear.png",
+      "sha256": "920fcd2fb3ae996358950aefb240fd4890648dac300a7c12e34c26dc07ab69ed",
+      "p": 0.18,
+      "sourceMatch": "matched",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        220000,
+        820000,
+        650000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.18,
+        "current": 0.18,
+        "settled": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/source-optical-20261010/source-matched-optical-auto-p2350-clear.png",
+      "sha256": "9e32fe8eec63ac44bdb2a0d468cc32df871d83fcc938dbafe9eb5bd5f43a1a89",
+      "p": 0.235,
+      "sourceMatch": "matched",
+      "opticalCorrection": "auto",
+      "clouds": false,
+      "camera": [
+        55000,
+        100000,
+        150000
+      ],
+      "sun": [
+        -0.719136020091598,
+        -0.10619276842469857,
+        0.6867069830292358
+      ],
+      "input": {
+        "source": "source-optical-comparison",
+        "wheelCount": 0,
+        "lastWheelPixels": 0,
+        "target": 0.235,
+        "current": 0.235,
+        "settled": true,
+        "reducedMotion": false
+      }
+    }
+  ]
+}

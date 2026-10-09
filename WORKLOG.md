@@ -738,3 +738,7 @@ F083/D118, docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_terrain_normal
 D118 종료 검사: spike Vite build PASS(82 modules), records:check PASS(256 records / 50 cases / 160 source events), diff check PASS. EXP026 revision2 정본과 생성 guide/history는 로컬 갱신했으며 별도 D115 미커밋 DB 전체는 포함하지 않는다. 이번 사건/권장안 snapshot은 verification/a-terrain-normal-20261009/experience-update.json으로 보존. 브라우저13 gallery 이미지 및 video ready4 1280×720 errornull 확인.
 
 2026-10-09 구름 증량 가능 여부: cloud-orbital shader 밀도 threshold 변경으로 가능, 현재 coverage 슬라이더는 orbital proxy에 미연결. S2 후보·통과 기준 기록. 새 렌더나 GPU 실측 없음. S1 잔여를 구름으로 가리지 않는다.
+
+
+## 2026-10-09 D119 구름 양·초기 색/FOV 인계
+docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_amount_handoff_2026-10-09.md, verification/a-cloud-amount-20261009/gallery.html. 구름 3후보6 +색인계4 +자동8초 영상, same-view 조건 검증. 위성threshold 증량/parentAmount 색 인계/early FOV36 정합. TUNE, S1 seam 전체와 S2 volume/S4 인계 미완. 다음 normal/depth 분리와 저주파 색·최종 선명도 접합, 구름 국소 양감→동일 footprint 인계. 기존 near shadow 보류·서고 KEEP·unrelated DB/사용자 capture 유지.

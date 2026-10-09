@@ -276,3 +276,7 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D118 최신 지형 검토
 [ECG_A_terrain_normal_alignment_2026-10-09.md](ECG_A_terrain_normal_alignment_2026-10-09.md) 및 verification/a-terrain-normal-20261009/gallery.html. S1 TUNE, 공유 normal 계약 수정 후보. 지도 경계와 early FOV 잔여를 먼저 검증하고 S2 이후로 진행.
+
+
+## D119 — 구름 양·초기 지형 인계
+[분석](ECG_A_cloud_amount_handoff_2026-10-09.md) / verification/a-cloud-amount-20261009/gallery.html. S1 전체와 근경 구름 인계는 TUNE 유지.

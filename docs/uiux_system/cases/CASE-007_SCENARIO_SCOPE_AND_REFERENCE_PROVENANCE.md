@@ -242,3 +242,7 @@ GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 �
 
 ### 2026-10-09 D118 · shader 존재와 실제 패스 사용을 구분
 사용자 사각 경계 TUNE→AI가 parent shader를 검토→공통 normal override의 source morph 누락 발견→legacy/offset/matched/조명OFF 동일구도 비교→확대 조명 변화는 인정하되 색/해상도 경계와 early FOV잔여 때문에 S1 TUNE. F083/D118. 지형 shader 자체 존재는 optical normal 적용 증거가 아니며 실제 pass를 대조한다.
+
+
+### 2026-10-09 D119
+구름 증량은 위성 mask의 표시 기준 변경, volume 생성과 구별. 지형 초기 색 인계를 same-normal OFFcloud에서 분리 대조. 6+4캡처/자동8초 영상 범위, 전체 seam/근경/성능 보장 미완. F084/D119.

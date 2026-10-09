@@ -1,0 +1,217 @@
+{
+  "decision": "D119",
+  "finding": "F084",
+  "verdict": "TUNE",
+  "captures": 10,
+  "conditions": "942x672; same camera/sun/source/DEM per group",
+  "gpu": [
+    {
+      "file": "amount-0-p1500-matched-off.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.79552,
+        "p95": 5.0176
+      }
+    },
+    {
+      "file": "amount-0-p1500-matchedbase-off.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.563072,
+        "p95": 4.909056
+      }
+    },
+    {
+      "file": "amount-0-p1650-matched-off.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.115584,
+        "p95": 5.203968
+      }
+    },
+    {
+      "file": "amount-0-p1650-matchedbase-off.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.246656,
+        "p95": 3.85024
+      }
+    },
+    {
+      "file": "amount-0-p1800.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 3.651584,
+        "p95": 5.111808
+      }
+    },
+    {
+      "file": "amount-0-p2350.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 3.510272,
+        "p95": 5.28384
+      }
+    },
+    {
+      "file": "amount-14-p1800.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 3.503104,
+        "p95": 5.421056
+      }
+    },
+    {
+      "file": "amount-14-p2350.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 2.975744,
+        "p95": 4.742144
+      }
+    },
+    {
+      "file": "amount-7-p1800.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 2.404352,
+        "p95": 4.758528
+      }
+    },
+    {
+      "file": "amount-7-p2350.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 2.832384,
+        "p95": 4.586496
+      }
+    }
+  ],
+  "limits": [
+    "short compositor GPU samples, not frame/FPS promise",
+    "satellite threshold proxy, not cloud volume",
+    "S1 full seam gate still pending",
+    "auto video, not actual wheel video"
+  ],
+  "artifacts": [
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1500-matched-off.json",
+      "bytes": 8215,
+      "sha256": "09fa32126e31766469f59a6d4ee033982001ec575f67fad1ce13b05847617655"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1500-matched-off.png",
+      "bytes": 914197,
+      "sha256": "4cd48742b9cb01a48d501307dca1d86c36b8535196be2e0029a3cdb45425c456"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1500-matchedbase-off.json",
+      "bytes": 8222,
+      "sha256": "e48c625ab397b8a6f9181907855ab80c3ce63fe76a27cf1e4e0a8c14b6cbc6aa"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1500-matchedbase-off.png",
+      "bytes": 967227,
+      "sha256": "560e06af2084b4f6da54b651f77e63fd663fe444bc152940b88fbcc6cfd66d1e"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1650-matched-off.json",
+      "bytes": 8281,
+      "sha256": "b9df9a3f2af16bd4f867fa101294689d2dee4a033024444e3caabf4f0bb2e9c3"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1650-matched-off.png",
+      "bytes": 1241197,
+      "sha256": "0257e066c4f4ccfbb83f69e348d26abf84e5c0d9713f14070bff4a26668b6b8c"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1650-matchedbase-off.json",
+      "bytes": 8284,
+      "sha256": "bddc8f6f866ab2fe57589738800fc338f8b704f4dc714c2c6c359b0dd05615f4"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1650-matchedbase-off.png",
+      "bytes": 1375979,
+      "sha256": "7359f23e1f2cd73c2324eedeb2a7aa8003f164a3d7681a2c7ccacf9a9deee555"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1800.json",
+      "bytes": 8188,
+      "sha256": "ec650283b5ac06f3795d22234849766eb390fde12edce931a34972a12bf674c0"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p1800.png",
+      "bytes": 1473849,
+      "sha256": "bd2601993059ba48a9ecb79fe253d4757dab3f522e1a30a356b2b0f8bfd299d0"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p2350.json",
+      "bytes": 8275,
+      "sha256": "97066e4e9d0a545e353043fb60b54c208e676ce9a2b430ef148403eb147b63f9"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-0-p2350.png",
+      "bytes": 1722290,
+      "sha256": "3215903df9dd308f1c1ac813ae3a25da96b6baf0ca407887f998b0490f73ec88"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-14-p1800.json",
+      "bytes": 8191,
+      "sha256": "e44fe2ac48fea880ee7b09a063535acc680cd2709d310b3adbd8719dd41be5ef"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-14-p1800.png",
+      "bytes": 1495592,
+      "sha256": "d9215990282be44bde87198b39085ae7e25466a6863ca74653fea98db19cccc4"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-14-p2350.json",
+      "bytes": 8279,
+      "sha256": "fd5615c3968bb40a3e59b8a5fd0d56076d5d6a5fd9c438d2ddc57fbeb7cda366"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-14-p2350.png",
+      "bytes": 1732027,
+      "sha256": "a252a5038147474b238c9655ff1690ca93359dc4a4a48f163254377a92a8cc02"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-7-p1800.json",
+      "bytes": 8191,
+      "sha256": "334547b3464aecfff17397030858001cb5291f0bf9b2f282534a381f8b9a7783"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-7-p1800.png",
+      "bytes": 1484442,
+      "sha256": "3a3239cf08b1bf2744cbf6b33758d6be2793a54008dc251c616d4e93d640837f"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-7-p2350.json",
+      "bytes": 8279,
+      "sha256": "f946ea3cd2cfd336edceba35df7cd0d5c6e4fe77414c289975a6286a1e60f148"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/amount-7-p2350.png",
+      "bytes": 1727429,
+      "sha256": "b103fd38f810cef4b03d5a8d9a25e0853477feba79dd29f4d1b0c5b68857b7ca"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/video-seam-matched.json",
+      "bytes": 38299,
+      "sha256": "5d30830e0de823f3b97647d2a00a992537a691b0055ff3a357386917ece1200b"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-amount-20261009/video-seam-matched.webm",
+      "bytes": 2701670,
+      "sha256": "b6217c50ec82518bbc50db8012b241125091c0a75ab606f82f25558d11d1e714"
+    }
+  ]
+}

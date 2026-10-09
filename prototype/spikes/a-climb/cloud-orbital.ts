@@ -8,7 +8,7 @@ uniform float rawSource, detailAmount;
 uniform mat4 inverseProjection;
 uniform mat3 viewRotation, geographicRotation;
 uniform vec3 eye, sunLocal;
-uniform float relief, amount;
+uniform float relief, amount, coverageBoost;
 const float radius=6371000.;
 const vec3 centre=vec3(0.,-6371000.,0.);
 vec2 geoUV(vec3 n){
@@ -33,7 +33,7 @@ vec4 layer(vec3 ray,float h,float thick){
  float t=shell(ray,h);if(t<0.)return vec4(0.);
  vec3 n=normalize(eye+ray*t-centre);vec2 uv=geoUV(n);float d=density(uv);
  // Broad thin sheets remain translucent; only high coverage has an opaque top.
- float a=thick>.5?smoothstep(.48,.90,d)*.94:smoothstep(.10,.70,d)*.06;
+ float a=thick>.5?smoothstep(.48-coverageBoost,.90-coverageBoost*.5,d)*.94:smoothstep(.10-coverageBoost*.35,.70-coverageBoost*.35,d)*.06;
  vec3 geo=geographicRotation*n;
  vec3 e=normalize(vec3(-geo.y,geo.x,0.));vec3 north=normalize(cross(geo,e));
  float du=1./2048.,dv=1./1024.;
@@ -64,7 +64,7 @@ export class OrbitalCloudEffect extends Effect{
   ['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
   ['viewRotation',new THREE.Uniform(new THREE.Matrix3())],['geographicRotation',new THREE.Uniform(new THREE.Matrix3())],
   ['eye',new THREE.Uniform(new THREE.Vector3())],['sunLocal',new THREE.Uniform(new THREE.Vector3())],
-  ['relief',new THREE.Uniform(1)],['amount',new THREE.Uniform(1)]
+  ['relief',new THREE.Uniform(1)],['amount',new THREE.Uniform(1)],['coverageBoost',new THREE.Uniform(0)]
  ])});}
  async load(url:string){
   const texture=await new THREE.TextureLoader().loadAsync(url);
@@ -87,6 +87,7 @@ export class OrbitalCloudEffect extends Effect{
   this.uniforms.get('rawSource')!.value=1;
  }
  setDetail(value:string){this.uniforms.get('detailAmount')!.value=value==='8k'?1:0;}
+ setCoverageBoost(value:number){this.uniforms.get('coverageBoost')!.value=THREE.MathUtils.clamp(value,0,.14);}
  sync(camera:THREE.PerspectiveCamera,toECEF:THREE.Matrix4,sunECEF:THREE.Vector3,mode:string,on:boolean){
   const basis=new THREE.Matrix3().setFromMatrix4(toECEF);
   this.uniforms.get('inverseProjection')!.value.copy(camera.projectionMatrixInverse);

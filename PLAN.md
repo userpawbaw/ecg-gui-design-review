@@ -517,3 +517,7 @@ F083/D118, docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_terrain_normal
 
 ## 2026-10-09 구름 양 사용자 보완
 현재 orbital proxy의 밀도 표시 기준으로 구름 점유 면적을 늘릴 수 있음을 코드에서 확인했다. Takram coverage와 현재 proxy는 별도 경로. D117 S2에 현행/소폭/중간 증량 동일구도 대조와 성능·빈틈 유지 기준을 추가. 실제 증량 렌더/채택은 아직 하지 않았으며 S1 잔여 순서 유지.
+
+
+## 2026-10-09 D119 구름 양·초기 색/FOV 인계
+docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_amount_handoff_2026-10-09.md, verification/a-cloud-amount-20261009/gallery.html. 구름 3후보6 +색인계4 +자동8초 영상, same-view 조건 검증. 위성threshold 증량/parentAmount 색 인계/early FOV36 정합. TUNE, S1 seam 전체와 S2 volume/S4 인계 미완. 다음 normal/depth 분리와 저주파 색·최종 선명도 접합, 구름 국소 양감→동일 footprint 인계. 기존 near shadow 보류·서고 KEEP·unrelated DB/사용자 capture 유지.

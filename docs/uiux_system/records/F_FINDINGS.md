@@ -2053,3 +2053,25 @@ coverage 숫자 증가가 이 경로의 화면 변화나 실제 구름 부피 �
 실제 위치 select 추가; 기본 prior URL은 원위치. 근접 proxy는 납작한 광학 TUNE이며 volume/근경 Takram 인계 미완. verification/a-cloud-placement-20261009/manifest.json. 빌드82 modules PASS, 브라우저 console error 관찰 없음.
 ### 놓쳤다면
 coverage를 계속 올려도 목표 지형 주변에 원본이 비어 있는 상황을 구름 품질/수량 문제로만 해석했을 것이다.
+
+
+## F-086. 위성 구름의 높이 고정 표면은 해상도를 올려도 확대에서 납작함이 남는다
+
+| | |
+|---|---|
+| 시점 | 2026-10-09 [사용자][코드][캡처] |
+| 상태 | 광학 후보 TUNE |
+| 연결 | D-121 / CASE-007 |
+
+### 발단
+사용자 “좀 납작하게 보이긴 하네. 보완 진행해줘.”
+### 먼저 의심한 것과 배제 방법
+자료 해상도·배치는 D116/D120으로 분리되었으나 기존 layer는8500m 고정 intersection이고 slope만 변화. 이번 높이·가림 대조에서 camera/sun/source/amount 유지.
+### 결정적 근거
+4 native1280×720 같은 조건 assert, ready/context/terrain 정상. 군집 가장자리 솟음·그늘이 보이나 매끈하고 둥근 표면이 남는다. 자동8초 렌더 영상 저장, 전체 motion/targetPC 통과 증거 아님.
+### 조치와 검토한 대안
+높이 고정/높이 표면 select 추가. 처음 작은 군집까지 부푼 trial 보존 후 alpha 기존 동일/height threshold를 좁혔다. verification/a-cloud-mass-20261009/manifest.json.
+### 비용 / 영향 범위
+volume sample 아닌 10height intersection/4light lookup 추가, 별도 새texture 없음. 기존 thin층 유지. 단기 GPU 표본이며 전체FPS 보장 불가. 지형 그림자 재튜닝은 보류 유지.
+### 놓쳤다면
+해상도/법선만 계속 강화해 파형같은 구름 경계의 자글거림과 각인 질감만 늘렸을 수 있다.

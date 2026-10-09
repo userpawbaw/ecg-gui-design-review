@@ -2981,3 +2981,24 @@ S0 같은 구도에서 cloud ON/OFF·색·법선·geometry·depth 진단→S1 �
 스크롤 순간 구름 출현, 근경 volume가 완성됐다고 주장하는 안 제외.
 ### 되돌려야 하는 조건
 산맥을 전부 가리거나 목표 접근 구도가 읽히지 않으면 source centre/coverage 별도 조절. 근경 optical quality/S1 seam/S4 연결은 미완. 기존 shadow 보류 보존.
+
+
+## D-121. 납작한 위성 구름은 같은 분포의 높이 표면·광원 가림을 독립 대조한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-09 [사용자][자료][코드][캡처] |
+| 상태 | 구현 비교 / TUNE |
+| 연결 | D-120 / F-086 |
+| CASE | CASE-007 |
+
+### 갈림길
+법선 gain 증가, 전체 volume 교체, 같은 위성 분포의 높이 표면.
+### 검토한 선택지
+gain만 증가하면 높이·시차가 없다. 전체 volume는 분포/비용/노이즈를 동시에 변경하므로 후속. 이번 height-field는 궤도 확대에 한정한다.
+### 고른 것과 근거
+구현 전 ECG_A_cloud_mass_2026-10-09.md에 선택·gate 기록. 7–9.4km authored height, 10회 bracket 교차, 태양 방향4점 가림, explicit mip footprint. 실제 높이 측정/완전한 volume라고 하지 않는다. 기존 near 배치와 .07 양/camera/sun/DEM 유지. 2구도×2방식4캡처와 자동8초영상; first trial은 별도 보존.
+### 버린 것과 이유
+초기 낮은 높이 threshold/높은 alpha는 작은 군집까지 부풀려 새 coverage를 만들므로 최종에서 alpha를 기존과 동일화하고 두꺼운 군집만 높였다. 이전 trial은 삭제하지 않음.
+### 되돌려야 하는 조건
+둥근 플라스틱/돌 질감, 경계/깜박임/불연속, 지형 가림 또는 비용 급증이면 튜닝/되돌림. 매끈한 표면과 near Takram 인계는 미완. 기존 지형 그림자 보류 및2/2실패/fallback 보존.

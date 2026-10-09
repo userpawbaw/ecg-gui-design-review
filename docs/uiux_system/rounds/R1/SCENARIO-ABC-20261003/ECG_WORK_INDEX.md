@@ -284,3 +284,7 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D120 — 확대 목표 근처 구름
 [분석](ECG_A_cloud_placement_2026-10-09.md), verification/a-cloud-placement-20261009/gallery.html. 배치 후보 TUNE, 실제 near volume/S1 seam 미완.
+
+
+## D121 구름 높이·명암
+[검토](ECG_A_cloud_mass_2026-10-09.md), verification/a-cloud-mass-20261009/gallery.html. 높이표면 후보 TUNE/근경volume 미완.

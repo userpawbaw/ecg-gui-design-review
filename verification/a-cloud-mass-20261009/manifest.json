@@ -1,0 +1,121 @@
+{
+  "decision": "D121",
+  "finding": "F086",
+  "verdict": "TUNE: height and shaded clusters visible; smooth rounded surface remains; not full volumetric cloud",
+  "conditions": "1280x720 RTX3070; same .07 amount/near source centre/DEM1.5/camera/sun",
+  "model": {
+    "heightRangeMetres": [
+      7000,
+      9400
+    ],
+    "heightDensityThreshold": [
+      0.41,
+      0.94
+    ],
+    "alphaThreshold": [
+      0.41,
+      0.865
+    ],
+    "intersectionSteps": 10,
+    "lightSteps": 4,
+    "measuredVolume": false,
+    "fullMultipleScattering": false
+  },
+  "firstTrial": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-first-20261009",
+  "gpu": [
+    {
+      "file": "mass-flat-p1800.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 3.381248,
+        "p95": 4.473856
+      }
+    },
+    {
+      "file": "mass-flat-p2350.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 3.670016,
+        "p95": 4.89472
+      }
+    },
+    {
+      "file": "mass-mass-p1800.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 3.00544,
+        "p95": 5.004288
+      }
+    },
+    {
+      "file": "mass-mass-p2350.json",
+      "gpu": {
+        "available": true,
+        "count": 80,
+        "p50": 3.919872,
+        "p95": 6.063104
+      }
+    }
+  ],
+  "motion": {
+    "nominalMs": 8000,
+    "range": [
+      0.1,
+      0.235
+    ],
+    "automated": true,
+    "realWheel": false,
+    "visualStabilityApproved": false
+  },
+  "limits": [
+    "height-field proxy cannot support flying inside clouds",
+    "near Takram handoff and S1 final seam pending",
+    "ground shadow tuning remains user deferred",
+    "short samples not FPS guarantee"
+  ],
+  "artifacts": [
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/mass-flat-p1800.json",
+      "sha256": "09932d093c4292f41763190f9c03cb985c581e3bc7796660cb6702428c813a24"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/mass-flat-p1800.png",
+      "sha256": "f58eab9f689e433896907a55d10276b8051ca81a10f243611225aaadd9f71a8a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/mass-flat-p2350.json",
+      "sha256": "10704606dfc7ee0079ebe33314398fd38998c591c9587d6bb3721f745df13e22"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/mass-flat-p2350.png",
+      "sha256": "fa915ec7684f00fc3b1406d4a5ed90bc43369daafcffc161b26cecfd1af2043f"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/mass-mass-p1800.json",
+      "sha256": "f2df55adbf72986314b6edf667a8307f7cd91efab2926e5607a2c1da00e2fe53"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/mass-mass-p1800.png",
+      "sha256": "59f730c1ce3d7927b5e67dfe0f36c0a9ba147e67d2ede1c424d225f27943b768"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/mass-mass-p2350.json",
+      "sha256": "07d87e837ee60f1c09f8fb4e5b7cfeb6bfa4b0f6edf3be03d69e1e04968fcc91"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/mass-mass-p2350.png",
+      "sha256": "78dda7badef369d9aed6d1c8495a55ea368c9c8ad2cf2a8fab2f4a0ed0883b27"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/video-seam-matched.json",
+      "sha256": "297222963c0576804f4e100fb0a67413936bac5e267d98054398ac7230f414ba"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/cloud-mass-20261009/video-seam-matched.webm",
+      "sha256": "33f95462e981a567ee59f8236669a435db5b737839720e49b80efd2b3f033390"
+    }
+  ]
+}

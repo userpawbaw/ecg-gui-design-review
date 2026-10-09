@@ -525,3 +525,7 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_amount_handoff_2026
 
 ## 2026-10-09 D120 확대 목표 근처 구름 배치
 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_placement_2026-10-09.md, verification/a-cloud-placement-20261009/gallery.html. 2구도×2배치4캡처, 같은 .07 양/camera/sun/source/DEM. geographic source 이동만 적용, 새 구름/volume 아님. 위치 후보 TUNE; 근경 optical/footprint volume 연결·S1 final seam 미완. 다음 현재 위치 기반 국소 구름 optical와 final 지형 접합. 기존 near shadow 보류/서고 KEEP 유지.
+
+
+## 2026-10-09 D121 구름 높이·명암 보완
+docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_mass_2026-10-09.md / verification/a-cloud-mass-20261009/gallery.html. near배치/.07양 유지 4캡처+자동8초영상. heightfield/가림 근사 TUNE; 표면 둥글음·근경volume/S1 seam 미완. 기존shadow보류/서고KEEP/과거2/2와fallback 보존.

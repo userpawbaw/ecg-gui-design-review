@@ -34,6 +34,7 @@ ap.add_argument('--intro2', action='store_true', help='REVIEW-R1-WEB-20261008 I-
 ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--bsamples', type=int, default=128)
 ap.add_argument('--art', default='', choices=['', 'r3', 'r4'], help='r4 = D-059: r3 plus more light holes (skylight, roof-board gaps), r2 windows open for sky fill, larger sun disc for penumbra. D-058 art test: ceiling hatch over the back of the aisle, side ladder up into it (rigid move of the r2 ladder + climber), sun through the hatch onto the back shelves, haze only in the hatch beam, cream sun, no bulbs')
+ap.add_argument('--dress', action='store_true', help='D-060 set dressing on the back wall (review proposal 4): a drawer cabinet under the skylight patch, open cells with a framed print, block sculpture and lying book stacks under the hatch patch, painted cell backs, sparser shelves — broad light flat surfaces that catch and bounce the sun')
 ap.add_argument('--palette', default='archive', choices=['archive', 'pastel'], help='D-058: archive = original dark book/wood colours; pastel = light pastel books, pale wood, light boxes (REF-002 comparison)')
 args = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 if args.intro2: args.fig = 'v3'; args.pose = 'ar_floor'
@@ -302,9 +303,63 @@ BACK_Z = [0.08 + i * 0.38 for i in range(12)]
 for z in BACK_Z:
     box('BackShelf', (2 * XW - 0.3, 0.32, T), (0, BY + 0.14, z), M_WOOD)
 xs = list(np.linspace(-XW + 0.15, XW - 0.15, 6))
+# D-060 set dressing (review proposal 4, user 2026-10-09 "응" to the soft-shadow answer): soft shading needs broad light flat
+# surfaces that receive a sun patch and bounce it (cabinet fronts, painted cell backs, a print), depth (open cells, set-back items)
+# and plain areas where a gradient can read (book spines hide it). Cells are (column 0-4 left to right, shelf row 0-10 bottom up).
+DRESS = {}
+if args.dress:
+    DRESS = {(2, r): 'cabinet' for r in range(4)}                    # under the centre skylight patch (z 0.65-1.5)
+    DRESS.update({(3, 6): 'flat', (3, 7): 'print', (3, 8): 'sculpt', (1, 7): 'sculpt2', (1, 6): 'flat', (2, 8): 'open', (0, 5): 'print2', (4, 7): 'flat'})
+    rd = random.Random(60)
+    for ci in range(5):
+        for r in range(11):
+            if (ci, r) not in DRESS and rd.random() < .12: DRESS[(ci, r)] = 'sparse'
+    M_PAINT = mat('cell_paint', srgb('#ebe2d0' if args.palette == 'pastel' else '#d9ccb4'), 0.9)
+    M_DRAWER = mat('drawer_paint', srgb('#cdd5c4' if args.palette == 'pastel' else '#8f8170'), 0.8)
+    M_PLASTER = mat('plaster_white', srgb('#efe9de'), 0.85)
+    M_PRINT = [mat(f'print_{i}', srgb(h), 0.85) for i, h in enumerate(('#f2ebdc', '#d9805f', '#7f9e9a', '#2f4a5a', '#e3b55c'))]
+    def lying_stack(x, z, n):                                     # books lying flat, spines out, each a little offset
+        for k in range(n):
+            w = rd.uniform(.2, .27); h = rd.uniform(.025, .045); d = rd.uniform(.15, .2)
+            add_box_to(books_bm, x + rd.uniform(-.015, .015), BY + 0.27 - d / 2, z, w, d, h, rng.choices(range(N_BOOK), weights=BOOK_W)[0], rot_z=rd.uniform(-.04, .04)); z += h
+    def dress(kind, a, b, z, avail):
+        cx = (a + b) / 2; zc = z + avail / 2
+        box('DRS_cellback', (b - a - .002, .006, avail + .02), (cx, BY + .27, zc), M_PAINT)
+        if kind == 'flat':
+            lying_stack(a + .2, z, 4); lying_stack(b - .35, z, 2)
+            fill_run(a + .45, a + .85, z, avail, BY + 0.28, -1)
+        elif kind in ('print', 'print2'):
+            fw, fh = (.46, .32) if kind == 'print' else (.34, .3); fx = cx + (-.18 if kind == 'print' else .2)
+            lean = math.radians(-9); fy = BY + .2
+            box('DRS_frame', (fw, .02, fh), (fx, fy, z + fh / 2), M_WOOD, rot=(lean, 0, 0))
+            box('DRS_canvas', (fw - .05, .022, fh - .05), (fx, fy - .001, z + fh / 2), M_PRINT[0], rot=(lean, 0, 0))
+            for (dx, dz, sw, sh, mi) in ((-.08, .02, .12, .12, 1), (.07, -.03, .14, .07, 2), (.0, .08, .2, .025, 3), (.1, .06, .05, .05, 4)):
+                box('DRS_print', (sw * fw / .46, .024, sh * fh / .32), (fx + dx * fw / .46, fy - .002 + math.sin(lean) * -dz, z + fh / 2 + dz * math.cos(lean)), M_PRINT[mi], rot=(lean, 0, 0))
+            lying_stack(b - .32, z, 3) if kind == 'print' else lying_stack(a + .18, z, 3)
+        elif kind in ('sculpt', 'sculpt2'):
+            sx = cx + (.15 if kind == 'sculpt' else -.2)
+            box('DRS_block', (.12, .12, .12), (sx, BY + .12, z + .06), M_PLASTER)
+            box('DRS_block', (.08, .08, .08), (sx + .03, BY + .12, z + .16), M_PLASTER, rot=(0, 0, math.radians(30)))
+            bpy.ops.mesh.primitive_uv_sphere_add(radius=.045, location=(sx - .03, BY + .1, z + .245)); o = bpy.context.active_object; o.name = 'DRS_ball'; o.data.materials.append(M_PLASTER); bpy.ops.object.shade_smooth()
+            lying_stack(a + .15 if kind == 'sculpt' else b - .4, z, 3)
+        elif kind == 'open':
+            fill_run(a + T, a + .4, z, avail, BY + 0.28, -1)
+        elif kind == 'sparse':
+            fill_run(a + T, (a + b) / 2, z, avail, BY + 0.28, -1); lying_stack(b - .35, z, rd.randint(2, 5))
+    ca, cb = xs[2] + T / 2, xs[3] - T / 2; z0, z1 = BACK_Z[0], BACK_Z[4]
+    box('DRS_cabinet', (cb - ca, .33, z1 - z0), ((ca + cb) / 2, BY + .135, (z0 + z1) / 2), M_PAINT)
+    for row in range(4):                                          # 2 × 4 drawer fronts, 6 mm reveals, brass pulls
+        for col in range(2):
+            w_ = (cb - ca - .03) / 2; h_ = (z1 - z0 - .05) / 4
+            fx = ca + .01 + w_ / 2 + col * (w_ + .01); fz = z0 + .02 + h_ / 2 + row * (h_ + .003)
+            box('DRS_drawer', (w_ - .006, .02, h_ - .006), (fx, BY - .035, fz), M_DRAWER)
+            box('DRS_pull', (.09, .018, .014), (fx, BY - .05, fz + h_ * .18), M_BRASS)
 for zi, z in enumerate(BACK_Z[:-1]):
-    for a, b in zip(xs[:-1], xs[1:]):
+    for ci, (a, b) in enumerate(zip(xs[:-1], xs[1:])):
         if a < -1.4 and z < 1.2: continue          # reading nook: no low shelves behind the desk
+        kind = DRESS.get((ci, zi))
+        if kind == 'cabinet': continue
+        if kind: dress(kind, a + T, b - T, z + T / 2, BACK_Z[zi + 1] - z - T); continue
         fill_run(a + T, b - T, z + T / 2, BACK_Z[zi + 1] - z - T, BY + 0.28, -1)
 cyl('LadderRail', 0.016, 2 * XW - 0.4, (0, BY - 0.08, 4.25), M_BRASS, rot=(0, math.radians(90), 0))
 
@@ -867,7 +922,7 @@ if args.preview:
         scene.camera = c; tag = f'_{args.look}' if args.look != 'h3' else ''
         if args.fig == 'v3': tag += f'_v3_{args.signal}'
         if args.pose: tag = f'_{args.light}' + ('_clay' if args.clay else f'_{args.signal}')
-        if args.art: tag += f'_{args.art}_{args.palette}'
+        if args.art: tag += f'_{args.art}_{args.palette}' + ('_dress' if args.dress else '')
         scene.render.filepath = os.path.join(args.preview, name + tag + '.png')
         bpy.ops.render.render(write_still=True)
         print('rendered', name)

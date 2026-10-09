@@ -142,7 +142,7 @@ XW, Y0, Y1, H = 3.6, -5.0, 5.0, 5.0          # half width, front/back, ceiling h
 box('Floor', (2 * XW, Y1 - Y0, 0.1), (0, (Y0 + Y1) / 2, -0.05), M_FLOOR, tile=3.0)
 box('BackWall', (2 * XW, 0.15, H), (0, Y1 + 0.075, H / 2), M_WALL, tile=2.0)
 box('WallR', (0.15, Y1 - Y0, H), (XW + 0.075, (Y0 + Y1) / 2, H / 2), M_WALL, tile=2.0)
-HATCH = (0.15, 1.35, 2.6, 3.75)                                 # D-058 r3: x0, x1, y0, y1 of the ceiling hatch (between beams, clear of the pendant)
+HATCH = tuple(float(v) for v in os.environ.get('HATCH', '0.0,1.6,2.47,3.88').split(','))   # D-058 r3: x0, x1, y0, y1 (between the beams at y 2.32 / 4.0, clear of the pendant at x −0.7)                                 # D-058 r3: x0, x1, y0, y1 of the ceiling hatch (between beams, clear of the pendant)
 if args.art == 'r3':
     hx0, hx1, hy0, hy1 = HATCH
     box('Ceiling', (2 * XW, hy0 - Y0, 0.15), (0, (Y0 + hy0) / 2, H + 0.075), M_WALL, tile=2.0)
@@ -331,7 +331,7 @@ LADDER_OBJS = []
 RUNGS = ladder()
 # D-058 r3: the ladder (and later the climber) moved rigidly: the top centre to the hatch's left rim, turned about the vertical so the
 # rungs run mostly in depth (seen at an angle from the aisle, the rails part and the rungs show as slats — REF-002), foot out to +x
-LAD_YAW = math.radians(float(os.environ.get('LAD_YAW', 72)))
+LAD_YAW = math.radians(float(os.environ.get('LAD_YAW', 60)))
 LAD_TOP_LOCAL = Vector((LAD_X, BY - 0.08, LAD_TOP))
 LAD_M = Matrix.Identity(4)
 if args.art == 'r3':
@@ -457,7 +457,7 @@ place('vintage_suitcase', 0.9, -0.6, 0, 0.18, rot=1.5)
 place('drawer_cabinet', 3.0, 3.6, 0, 1.1, rot=math.radians(180))
 place('vintage_wooden_drawer_01', -3.0, 4.2, 0.77, 0.3, rot=0)
 place('power_box_01', -2.6, BY + 0.25, 1.6, 0.35, rot=math.radians(180))
-for y in (-1.8, 1.3):
+for y in ((-1.8,) if args.art == 'r3' else (-1.8, 1.3)):         # r3: the lamp at y 1.3 hung in front of the frontal shot
     place('hanging_industrial_lamp', 0, y, H - 1.4, 1.4)
 
 books = bpy.data.meshes.new('Shelved'); books_bm.to_mesh(books); books_bm.free()
@@ -736,10 +736,10 @@ SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()   # across the gaps between st
 if args.light == 'r2':                                 # steeper: the hero window's beam crosses the ladder and lands at its foot (D-050 floor spot)
     SUN_TO = Vector((0.807, 0.07, -0.584)).normalized(); sun.angle = math.radians(0.55)
 if args.art == 'r3':                                   # through the hatch onto the back shelves (receiver), cream light (review D)
-    SUN_TO = Vector((0.22, 0.62, -0.75)).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', 9.0))
+    SUN_TO = Vector((0.22, 0.62, -0.75)).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', 20.0))
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
-w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4 if args.light == 'r1' else 0.9   # cool sky fill vs warm sun (r2: less fill = dark anchors)
+w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4 if args.light == 'r1' else float(os.environ.get('SKY_E', 1.8)) if args.art == 'r3' else 0.9   # cool sky fill vs warm sun (r2: less fill = dark anchors)
 for y in (() if args.art == 'r3' else (-1.8, 1.3)):              # r3: one source — the bulbs stay off
     L = bpy.data.lights.new('bulb', 'POINT'); L.energy = 60; L.color = srgb('#ffb36b'); L.shadow_soft_size = 0.05
     lo_ = bpy.data.objects.new('bulb', L); lo_.location = (0, y, H - 1.45); scene.collection.objects.link(lo_)
@@ -827,8 +827,8 @@ if args.preview:
     os.makedirs(args.preview, exist_ok=True)
     rx, ry = map(int, args.res.split('x'))
     scene.render.engine = 'CYCLES'; scene.cycles.device = 'CPU'; scene.cycles.samples = args.samples; scene.cycles.use_denoising = True
-    scene.render.resolution_x, scene.render.resolution_y = rx, ry; scene.view_settings.view_transform = 'AgX'; scene.view_settings.exposure = 0.8
-    scene.cycles.max_bounces = 4; scene.cycles.volume_bounces = 0
+    scene.render.resolution_x, scene.render.resolution_y = rx, ry; scene.view_settings.view_transform = 'AgX'; scene.view_settings.exposure = float(os.environ.get('EXPO', 0.8))
+    scene.cycles.max_bounces = 6 if args.art == 'r3' else 4; scene.cycles.volume_bounces = 0
     want = set(args.shots.split(',')) if args.shots else set(SHOTS)
     if args.signal != 'off' and not args.clay:                    # neon glow for the dash preview (the web uses its bloom pass)
         scene.use_nodes = True; ct = scene.node_tree; rl = ct.nodes.get('Render Layers') or ct.nodes.new('CompositorNodeRLayers')

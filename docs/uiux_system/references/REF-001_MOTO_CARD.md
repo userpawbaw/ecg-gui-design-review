@@ -119,6 +119,12 @@ ScrollTrigger(.earth, pin, 2.5 × 화면높이, scrub 1):
   대기 구 알파 = remap(fresnel, .73→1, 1→0)³ × sunOri 마스크 × reach × opacity
   bump 텍스처 채널: b=구름(→ 흰색 합성), g=거칠기, r=지형 높이 → bumpMap
 ```
+**갱신 2026-10-09 (사용자 검토 I-1, REVIEW-R1-WEB-20261008)**: 우리 재현은 위 셰이더의 bumpMap 줄을 빠뜨렸다 `[코드]`. 그래서 역광을 받는 극지방이 고르게 하얀 띠로만 보였다(사용자: "극지방의 요철·부피감에 따른 그림자 느낌이 약함"). 지형 높이 텍스처가 없어서, 구름 + 낮 지도 밝기로 높이를 만들어 법선을 굽힌다(구름 꼭대기·얼음이 솟음). 그 밖에 바꾼 것:
+- 평평하게 더하던 fresnel² 빛을 표면 무늬(구름·얼음)에 곱하는 빛으로 바꿈(경사 방향에 따라 밝기 차).
+- 구름 그림자(태양 쪽으로 약간 옮긴 구름이 아래 땅을 어둡게).
+- 가장자리 빛은 fresnel⁴로 얇게.
+`prototype/v2/src/story/intro/globe.ts` (uBump 6, uRelief 4.5, uCloudShadow .5, uCapPow 1.1, uCapGain 2.8, uRimEdge 4). 비교: `verification/r1-globe-relief-20261009/`. 남은 차이: 실제 지형 높이(산맥·빙상 가장자리)는 없음 — NASA 지형 높이 지도(공공 영역)를 들이면 더 가까워질 수 있음.
+
 **파라미터**:
 | 이름 | 값 | 출처 |
 |---|---|---|

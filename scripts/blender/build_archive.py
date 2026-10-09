@@ -736,7 +736,7 @@ SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()   # across the gaps between st
 if args.light == 'r2':                                 # steeper: the hero window's beam crosses the ladder and lands at its foot (D-050 floor spot)
     SUN_TO = Vector((0.807, 0.07, -0.584)).normalized(); sun.angle = math.radians(0.55)
 if args.art == 'r3':                                   # through the hatch onto the back shelves (receiver), cream light (review D)
-    SUN_TO = Vector((0.22, 0.62, -0.75)).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', 20.0))
+    SUN_TO = Vector(tuple(float(v) for v in os.environ.get('SUN_DIR', '0.22,0.62,-0.75').split(','))).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', 20.0))
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
 w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4 if args.light == 'r1' else float(os.environ.get('SKY_E', 1.8)) if args.art == 'r3' else 0.9   # cool sky fill vs warm sun (r2: less fill = dark anchors)

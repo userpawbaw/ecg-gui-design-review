@@ -736,3 +736,5 @@ D113추천첫gate를사용자승인후두구도proxy로제작. NASA2K기존등�
 F083/D118, docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_terrain_normal_alignment_2026-10-09.md, verification/a-terrain-normal-20261009/gallery.html. 28초기+42확장정착/실휠2/자동8초영상. 공유 NormalPass GPU morph 불일치·깊이 offset 누락 대조, opt-in 정합 구현. 확대 조명 변화/지도 경계 TUNE. S1 미통과, 다음 normal/depth 및 저주파색·선명도/FOV 연속 정합 후 재검증; S2/near/서고는 후속. 기존 근경 shadow 보류 유지. unrelated D115/사용자capture 보존.
 
 D118 종료 검사: spike Vite build PASS(82 modules), records:check PASS(256 records / 50 cases / 160 source events), diff check PASS. EXP026 revision2 정본과 생성 guide/history는 로컬 갱신했으며 별도 D115 미커밋 DB 전체는 포함하지 않는다. 이번 사건/권장안 snapshot은 verification/a-terrain-normal-20261009/experience-update.json으로 보존. 브라우저13 gallery 이미지 및 video ready4 1280×720 errornull 확인.
+
+2026-10-09 구름 증량 가능 여부: cloud-orbital shader 밀도 threshold 변경으로 가능, 현재 coverage 슬라이더는 orbital proxy에 미연결. S2 후보·통과 기준 기록. 새 렌더나 GPU 실측 없음. S1 잔여를 구름으로 가리지 않는다.

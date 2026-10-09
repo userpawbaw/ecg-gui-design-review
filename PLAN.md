@@ -514,3 +514,6 @@ D112타원분포 부정피드백 기록. 사진3장/현재코드/공식제작자
 
 ## 2026-10-09 D118 지형 패스 진단·후보
 F083/D118, docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_terrain_normal_alignment_2026-10-09.md, verification/a-terrain-normal-20261009/gallery.html. 28초기+42확장정착/실휠2/자동8초영상. 공유 NormalPass GPU morph 불일치·깊이 offset 누락 대조, opt-in 정합 구현. 확대 조명 변화/지도 경계 TUNE. S1 미통과, 다음 normal/depth 및 저주파색·선명도/FOV 연속 정합 후 재검증; S2/near/서고는 후속. 기존 근경 shadow 보류 유지. unrelated D115/사용자capture 보존.
+
+## 2026-10-09 구름 양 사용자 보완
+현재 orbital proxy의 밀도 표시 기준으로 구름 점유 면적을 늘릴 수 있음을 코드에서 확인했다. Takram coverage와 현재 proxy는 별도 경로. D117 S2에 현행/소폭/중간 증량 동일구도 대조와 성능·빈틈 유지 기준을 추가. 실제 증량 렌더/채택은 아직 하지 않았으며 S1 잔여 순서 유지.

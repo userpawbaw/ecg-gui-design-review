@@ -1,0 +1,38 @@
+{
+  "source": "C:\\Users\\J1\\Videos\\Captures\\ChatGPT 2026-10-10 00-38-10.mp4",
+  "sha256": "e144b79780dea00f675addee7687cfdd6e5d81c147674363c7c6eb6548dfdf51",
+  "durationSeconds": 19.43,
+  "sourceSize": [
+    1792,
+    828
+  ],
+  "evidenceType": "user-recorded actual renderer; extracted frames, not generated mockups",
+  "samplingHz": 2,
+  "sampleFrames": 39,
+  "keyframes": [
+    {
+      "seconds": 0,
+      "progress": 0.1025
+    },
+    {
+      "seconds": 5,
+      "progress": 0.1348
+    },
+    {
+      "seconds": 12,
+      "progress": 0.1584
+    },
+    {
+      "seconds": 15.5,
+      "progress": 0.1369,
+      "direction": "reverse"
+    }
+  ],
+  "verdict": "TUNE; early texture seam and whole-frame optical change need separate isolation",
+  "implementationChanged": false,
+  "limitations": [
+    "video compression and cursor/panel occlusion",
+    "no per-frame renderer depth/normal/source diagnostics",
+    "GPU compositor label is not total target-PC performance"
+  ]
+}

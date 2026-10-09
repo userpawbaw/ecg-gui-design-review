@@ -3044,3 +3044,24 @@ gain만 증가하면 높이·시차가 없다. 전체 volume는 분포/비용/�
 원본색전체복원으로blur만해결하고사각형악화시키는안 제외. 기존조명없었다고설명/대비만으로reference품질도달 선언 제외. orbital은height-field 태양명암/4점가림이며 완전volume아님.
 ### 되돌려야 하는 조건
 강한detailnoise/사각형/잔상/암부면detailoff 또는lightingbase. 전체seam·구름형상/near인계TUNE, 지형그림자보류·서고KEEP·2/2/fallback유지.
+
+
+## D-124. 사용자 영상의 초기 지도 경계와 후반 광학 인계를 별도로 검증한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [사용자][영상][코드] |
+| 상태 | 분석 완료 / 수정 TUNE |
+| 연결 | F-089 / D-123 |
+| CASE | CASE-007 |
+
+### 갈림길
+추가 gain/detail 튜닝을 바로 반복할지, 영상의 단계별 현상을 먼저 분리할지.
+### 검토한 선택지
+parent shader 추가수정, globe source 접합과 depth/normal/aerial 분리, 구름 가림으로 은폐.
+### 고른 것과 근거
+초기 .1025/.1348는 parent mesh 시작 .135 전이다. S1a globe 고해상도 접합을 먼저 분리하고 S1b .135–.18 광학 정역이동 대조. 영상19.43초/39표본+native8/코드. 보고서 ECG_A_user_video_seam_diagnosis_2026-10-10.md.
+### 버린 것과 이유
+parent detail 보충만으로 초기 경계 해결 선언, 전체 흐림으로 은폐, near volume 연결 완료 해석을 제외한다. 확정 원인/수정 완료는 아직 아니다.
+### 되돌려야 하는 조건
+원경 선명도 저하·후반 자연스러운 화면 악화·veil pop·구름분포 이동이면 후보 되돌림. S1 통과 전 near/서고로 넘기지 않는다. 기존 shadow 보류/서고 KEEP/실패2/2 유지.

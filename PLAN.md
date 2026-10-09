@@ -537,3 +537,7 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_brightness_match_2026
 
 ## 2026-10-10 D123 지도 결·구름 조명 독립 보완
 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_detail_hold_cloud_light_2026-10-10.md / verification/a-detail-light-20261010/gallery.html. T6/L2캡처+자동8초. fullcolourhold반례보존/기각, detailratio최종TUNE. cloudfill/direct/가림대비후보TUNE. 후반geometry전환보존, seam/near인계미완, shadow보류.
+
+
+## 2026-10-10 D124 사용자 영상 경계 검토
+19.43초 실제영상39표본/native8 대조. 초기 .1025/.1348 경계는parent시작.135전이며 globe source 접합도 조사 필요. .1584에서 전체veil 감소/역.1369에서복귀; aerial/depth/normal 후보미확정. 코드수정없음/TUNE. 다음S1a globe source분리→S1b .135–.18 optical 정역검증→S1통과후 near/서고. shadow보류/KEEP/실패2/2유지. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_user_video_seam_diagnosis_2026-10-10.md; evidence verification/a-seam-user-video-20261010/manifest.json.

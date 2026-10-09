@@ -2119,3 +2119,25 @@ parent shader colorPhase=parentAmount가 height와source해상도를함께인계
 parent 추가high/blur lookup, 구름 추가pass없음. 8초자동영상/짧은GPU표본, 실제targetPC장시간증거아님. near지형shadow보류유지.
 ### 놓쳤다면
 해상도역행을원본지도품질부족으로오해해새에셋만바꾸거나, 기존조명이없었다고잘못진단했을것이다.
+
+
+## F-089. 사용자 영상의 초기 경계는 광역 3D 지형 등장 전에도 보인다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [사용자][영상][코드] |
+| 상태 | TUNE; 원인 분리 필요 |
+| 연결 | D-124 / D-123 / CASE-007 |
+
+### 발단
+사용자가 지도 재렌더 경계 지점에서 앞뒤 스크롤한 실제 19.43초 영상을 제공했다.
+### 먼저 의심한 것과 배제 방법
+새 3D patch 등장만을 원인으로 의심했으나 .1025/.1348 화면은 parent mesh 시작 .135 이전이다. 39표본/원본8프레임과 코드 확인. globe highsource 접합도 조사 필요.
+### 결정적 근거
+12초 p.1584에서 화면 전체 veil 감소, 역이동15.5초 p.1369에서 증가. .18 camera branch 전이므로 그 branch만으로 설명 불가. depth/normal/aerial 상호작용 후보, 확정 원인은 미검증.
+### 조치와 검토한 대안
+ECG_A_user_video_seam_diagnosis_2026-10-10.md: S1a globe source 경계와 S1b 광학 인계를 별도로 검증. 추가 blur/gain 튜닝만 반복하지 않는다.
+### 비용 / 영향 범위
+이번 영상·코드 분석만; renderer 변경 없음. source hash/frames verification/a-seam-user-video-20261010/manifest.json. compression/패널가림/프레임diagnostic 부재 한계.
+### 놓쳤다면
+초기 구간에 적용되지 않는 parent detail shader만 반복 수정하거나, 연무 감소를 near volume의 자연스러운 인계로 오해했을 것이다.

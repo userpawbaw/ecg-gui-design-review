@@ -2097,3 +2097,25 @@ volume sample 아닌 10height intersection/4light lookup 추가, 별도 새textu
 기존texture sample에scalar곱; 새지도/geometry/추가pass없음. 실제3D원색 유지. shadow튜닝보류.
 ### 놓쳤다면
 값만 낮추고 전체seam해결을 잘못 확정하거나 실제3D명암까지 낮췄을 것이다.
+
+
+## F-088. 경계 완화용 colorPhase가 해상도 역행을 만들며 전체 색 hold는 사각형을 다시 드러낸다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [사용자][코드][캡처] |
+| 상태 | 원인/반례 기록, 최종 후보 TUNE |
+| 연결 | D-123 / CASE-007 |
+
+### 발단
+사용자 고화질→흐림→자연스러운3D 인계 관찰. 따로 구름조명/밝은면그늘대비부족 질문.
+### 먼저 의심한 것과 배제 방법
+parent shader colorPhase=parentAmount가 height와source해상도를함께인계함. samecamera3구도2candidate 대조. source전체hold는 darksquare복귀 반례였음.
+### 결정적 근거
+8nativeactualcamera/sun/source/gain/DEM assert. 첫trial별도보존. 최종은 기존평균색+source detailratio, darksquare복귀를피하면서detail일부보충. fullhighres/seam해결/전체모션통과 아님. 후반geometryreveal·camera는미변경.
+### 조치와 검토한 대안
+지도와cloudlighting을독립메뉴/대조로분리. 구름기존태양법선·4점가림·fill존재; 후보fill감소/direct강화. 효과제한·매끈한height형상TUNE. verification/a-detail-light-20261010/manifest.json.
+### 비용 / 영향 범위
+parent 추가high/blur lookup, 구름 추가pass없음. 8초자동영상/짧은GPU표본, 실제targetPC장시간증거아님. near지형shadow보류유지.
+### 놓쳤다면
+해상도역행을원본지도품질부족으로오해해새에셋만바꾸거나, 기존조명이없었다고잘못진단했을것이다.

@@ -1,0 +1,820 @@
+{
+  "scope": "D123 own snapshot, unrelated D115 migration excluded",
+  "cases": [
+    {
+      "schemaVersion": 1,
+      "id": "EXP-026",
+      "title": "어두운 사각 지도 seam은 색·법선·재질 계약을 정합하기",
+      "category": "지형",
+      "tags": [
+        "지형",
+        "어두운"
+      ],
+      "status": "partial",
+      "problem": {
+        "goal": "지도 내부만 어둡고 사각 경계가 약하게 남는 문제",
+        "symptoms": [
+          "지도 내부만 어둡고 사각 경계가 약하게 남는 문제"
+        ]
+      },
+      "scope": {
+        "environment": [
+          "ECG Intro/Story A·B·C 시안; 2026-10-03~09 기록 기준",
+          "해당 사례의 장치·패키지·카메라·품질 설정은 연결된 원기록과 결과물 JSON을 따른다."
+        ],
+        "applies": [
+          "지도 내부만 어둡고 사각 경계가 약하게 남는 문제",
+          "같은 증상이라도 원인과 렌더 경로를 대조한 다음 적용한다."
+        ],
+        "excludes": [
+          "이 사례의 해결을 전체 도입부·Story 완성 또는 출품 승인으로 확대하지 않는다.",
+          "다른 PC·해상도·패키지 버전에는 당시 성능 수치와 설정을 그대로 보장하지 않는다."
+        ]
+      },
+      "recommendation": {
+        "strength": "conditional",
+        "action": "같은 edge 가중치로 cloud tint·map 혼합·surface normal·roughness/specular를 맞추고 변형 normal을 연속 연결한다. 효과가 작은 bump 추가는 되돌린다. postprocessing 공통 normal override가 변형 shader를 보존하는지 별도로 확인하고 색/깊이/법선에 같은 live uniform을 사용한다. 초기 parent 색도 geometry의 parentAmount에 연결하고 경계 혼합을 대조한다. 마지막 지도 색/선명도와 전체 normal/depth gate는 별도로 남긴다. 지도/3D 명도 차이는 source gain 대조로 분리한다. CloudON 개선이 제한적이면 대기·법선·깊이 seam이 모두 해결됐다고 하지 않는다. 평균색 인계와 source detail은 분리한다. 전체 highcolour hold가 사각형을 강화한 반례를 보존하고, detailratio 보충을 별도 TUNE 대조한다.",
+        "steps": [
+          {
+            "action": "같은 mask 가중치와 재질 계약을 비교한다.",
+            "reason": "사각형 모양 fade만 넓혀도 불일치가 다른 위치에 남는다."
+          },
+          {
+            "action": "정지 미세차와 실제 지각 개선을 구별한다.",
+            "reason": "RGB 차이가 작다는 것은 seam 개선이 입증됐다는 뜻이 아니다."
+          },
+          {
+            "action": "legacy/offset/matched와 직접·환경 조명 OFF를 같은 구도로 비교한다.",
+            "reason": "geometry 자체의 normal 수정이 조명 패스에도 적용됐다고 가정하지 않는다."
+          }
+        ],
+        "evidenceIds": [
+          "F-064",
+          "F-065",
+          "D-096",
+          "D-097",
+          "D-098",
+          "F-083",
+          "D-118",
+          "F-084",
+          "D-119",
+          "F-087",
+          "D-122",
+          "F-088",
+          "D-123"
+        ],
+        "recheck": [
+          "같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.",
+          "정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다."
+        ]
+      },
+      "quality": {
+        "target": "지도 내부만 어둡고 사각 경계가 약하게 남는 문제",
+        "achieved": "큰 경계는 줄어 사용자는 이 정도도 만족한다고 했지만 약한 seam이 남았다. bump 시험은 차이가 작아 복귀했다. 새 cloud-lab 후보에서 패스 불일치를 확인하고 조명 기여를 개선했다. 현재 후보에 대한 사용자 KEEP는 없다. 초기 색 전환 완화 후보를 분리 비교했다.",
+        "remaining": [
+          "서로 다른 지도 색/형상 차이까지 완전히 제거한 증거는 없다.",
+          "현재 opt-in 후보의 지도 선명도/색 경계, normal/depth 전체 진단, p.18 camera FOV 연속성과 전체 motion gate가 남는다.",
+          "최종 해상도·색 경계와 normal/depth 전체 진단"
+        ]
+      },
+      "cause": {
+        "certainty": "inferred",
+        "explanation": "globe와 parent의 map/cloud 혼합·normal·반사 계약이 달랐다. 잔여 seam의 단일 주원인은 범프 시험만으로 확정하지 못했다. 설치 postprocessing 6.39.5의 NormalPass 공통 재질 override가 지형 GPU morph를 보존하지 않는 것은 코드로 확인했지만 전체 잔여 seam의 단일 원인으로 확정하지 않는다.",
+        "evidenceIds": [
+          "F-064",
+          "F-065",
+          "D-096",
+          "D-097",
+          "D-098",
+          "F-083",
+          "D-118"
+        ]
+      },
+      "history": [
+        {
+          "seq": 1,
+          "mode": "executed",
+          "result": "improved",
+          "approach": "cloud tint/normal/roughness/specular 정합",
+          "observation": "큰 어두운 사각 경계가 줄었다. 처음 사라졌다고 단정한 보고는 사용자 반례로 정정했다.",
+          "decision": "부분 달성으로 기록한다.",
+          "evidenceIds": [
+            "D-096",
+            "F-064"
+          ]
+        },
+        {
+          "seq": 2,
+          "mode": "executed",
+          "result": "rejected",
+          "approach": "globe와 parent의 bump 추가 정합",
+          "observation": "실제 차이가 매우 작아 이전 만족 버전으로 복귀했다.",
+          "decision": "형상/normal/저주파 색 정합을 후속으로 남겼다.",
+          "evidenceIds": [
+            "D-097"
+          ]
+        },
+        {
+          "seq": 3,
+          "mode": "executed",
+          "result": "improved",
+          "approach": "실제 surface 변형에 맞춘 GPU normal",
+          "observation": "높이/조명 연속성을 보완했지만 색 접합·빠른 움직임은 별도 gate다.",
+          "decision": "완전 해결로 자동 승격하지 않는다.",
+          "evidenceIds": [
+            "D-098",
+            "F-065"
+          ]
+        },
+        {
+          "seq": 4,
+          "mode": "executed",
+          "result": "improved",
+          "approach": "공통 normal override 대신 source vertex morph/uniform을 공유하는 opt-in NormalPass와 polygonOffset 복구 대조",
+          "observation": "6구도42 정착에서 확대 조명 기여는 바뀌었지만 지도 선명도·색 경계는 남는다. 실휠 정착2와 자동8초 영상은 별도 증거다.",
+          "decision": "S1 TUNE 유지. normal/depth 진단과 저주파 색·선명도·early FOV 연속성은 후속 검증.",
+          "evidenceIds": [
+            "F-083",
+            "D-118"
+          ]
+        },
+        {
+          "seq": 5,
+          "mode": "executed",
+          "result": "improved",
+          "approach": "parentAmount 색 인계와 FOV/near 연속 규칙",
+          "observation": "같은 정합 법선에서 초기2구도4캡처 색 인계 완화; 최종 seam 완전 제거는 미완.",
+          "decision": "TUNE 유지. 현재 후보 사용자 KEEP/전체 motion/성능 보장 미확보.",
+          "evidenceIds": [
+            "F-084",
+            "D-119"
+          ]
+        },
+        {
+          "seq": 6,
+          "mode": "executed",
+          "result": "diagnostic",
+          "approach": "지도source1/.8/.65 gain 독립 대조",
+          "observation": "12 sameview 캡처: clear 명도작동/cloudON 경계개선제한. 전체seam미해결.",
+          "decision": "후보TUNE; 사용자채택미확정; 기존해결범위를확대하지않음",
+          "evidenceIds": [
+            "F-087",
+            "D-122"
+          ]
+        },
+        {
+          "seq": 7,
+          "mode": "executed",
+          "result": "diagnostic",
+          "approach": "Full colour hold 기각 후 source detailratio",
+          "observation": "색hold는 darksquare를 강화. 최종 colour인계유지+고주파보충 후보 부분효과TUNE.",
+          "decision": "독립대조 후보/최종채택미확정. 자연스러운geometry전환 보존.",
+          "evidenceIds": [
+            "F-088",
+            "D-123"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "F-064",
+          "kind": "event",
+          "reference": "F-064",
+          "quote": null
+        },
+        {
+          "id": "F-065",
+          "kind": "event",
+          "reference": "F-065",
+          "quote": null
+        },
+        {
+          "id": "D-096",
+          "kind": "event",
+          "reference": "D-096",
+          "quote": null
+        },
+        {
+          "id": "D-097",
+          "kind": "event",
+          "reference": "D-097",
+          "quote": null
+        },
+        {
+          "id": "D-098",
+          "kind": "event",
+          "reference": "D-098",
+          "quote": null
+        },
+        {
+          "id": "doc-1",
+          "kind": "document",
+          "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md",
+          "quote": null
+        },
+        {
+          "id": "doc-5",
+          "kind": "document",
+          "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md",
+          "quote": null
+        },
+        {
+          "id": "dialogue-1",
+          "kind": "dialogue",
+          "reference": "01a10541-5bc0-7a11-b2de-53322b29deb2:11114",
+          "quote": "약하게 남아있긴 한데, 이건 못 없애나? 이정도도 만족스럽긴 한데, 한번 검토해줘."
+        },
+        {
+          "id": "F-083",
+          "kind": "event",
+          "reference": "F-083",
+          "quote": null
+        },
+        {
+          "id": "D-118",
+          "kind": "event",
+          "reference": "D-118",
+          "quote": null
+        },
+        {
+          "id": "F-084",
+          "kind": "event",
+          "reference": "F-084",
+          "quote": null
+        },
+        {
+          "id": "D-119",
+          "kind": "event",
+          "reference": "D-119",
+          "quote": null
+        },
+        {
+          "id": "F-087",
+          "kind": "event",
+          "reference": "F-087",
+          "quote": null
+        },
+        {
+          "id": "D-122",
+          "kind": "event",
+          "reference": "D-122",
+          "quote": null
+        },
+        {
+          "id": "F-088",
+          "kind": "event",
+          "reference": "F-088",
+          "quote": null
+        },
+        {
+          "id": "D-123",
+          "kind": "event",
+          "reference": "D-123",
+          "quote": null
+        }
+      ],
+      "sourceRecordIds": [
+        "F-064",
+        "F-065",
+        "D-096",
+        "D-097",
+        "D-098",
+        "F-083",
+        "D-118",
+        "F-084",
+        "D-119",
+        "F-087",
+        "D-122",
+        "F-088",
+        "D-123"
+      ],
+      "resolutionEvidence": [],
+      "artifacts": [
+        {
+          "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_lighting_seam_review_2026-10-07.md",
+          "role": "report",
+          "description": "ECG_A_map_lighting_seam_review_2026-10-07.md"
+        },
+        {
+          "path": "verification/a-cloud-sculpt-20261006/native-captures/north-seam/manifest.json",
+          "role": "metadata",
+          "description": "당시 manifest.json; 품질 판단은 보고서 범위 참조"
+        },
+        {
+          "path": "verification/a-cloud-sculpt-20261006/native-captures/north-surface/north-0-15.png",
+          "role": "runtime_capture",
+          "description": "당시 north-0-15.png; 품질 판단은 보고서 범위 참조"
+        },
+        {
+          "path": "verification/a-cloud-sculpt-20261006/native-captures/north-seam/north-0-15.png",
+          "role": "runtime_capture",
+          "description": "당시 north-0-15.png; 품질 판단은 보고서 범위 참조"
+        },
+        {
+          "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_residual_seam_review_2026-10-07.md",
+          "role": "report",
+          "description": "ECG_A_residual_seam_review_2026-10-07.md"
+        },
+        {
+          "path": "verification/a-terrain-normal-20261009/manifest.json",
+          "role": "metadata",
+          "description": "42 fixed +2 real wheel settled +8sec automatic camera; TUNE"
+        },
+        {
+          "path": "verification/a-cloud-amount-20261009/manifest.json",
+          "role": "metadata",
+          "description": "6 cloud amount +4 color handoff; auto8sec; TUNE"
+        },
+        {
+          "path": "verification/a-map-gain-20261010/manifest.json",
+          "role": "metadata",
+          "description": "Map brightness only TUNE"
+        },
+        {
+          "path": "verification/a-detail-light-20261010/manifest.json",
+          "role": "metadata",
+          "description": "Independent detail/light trial; first fullhold rejected"
+        }
+      ],
+      "related": [
+        "EXP-024",
+        "EXP-025",
+        "EXP-027"
+      ],
+      "time": {
+        "value": null,
+        "unit": null,
+        "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+        "evidenceIds": []
+      },
+      "cost": {
+        "value": null,
+        "unit": null,
+        "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+        "evidenceIds": []
+      },
+      "review": {
+        "owner": "project-maintainer",
+        "reviewedOn": "2026-10-09",
+        "method": "D123 T6/L2 sameview actual captures + automatic8s; full visual quality not approved",
+        "verdict": "new_evidence_review",
+        "userAcceptance": "연결된 사용자 원문이 있는 범위만 수락/보류로 해석한다. 이번 DB 자체의 사용자 승인은 아직 받지 않았다.",
+        "limits": [
+          "당시 생성 정지 목업은 구현·ECG 데이터 정확성·실시간 성능 증거가 아니다.",
+          "전체 장기 재생·목표 전시 PC·터치 입력은 이관 작업에서 재검증하지 않았다."
+        ]
+      },
+      "next": {
+        "owner": "project-maintainer",
+        "action": "S1 normal/depth 시각화와 지도 저주파 색·선명도 접합 및 early camera FOV 연속 정합 후 정역 재검증",
+        "doneWhen": "같은 기준 구도의 전후 증거와 적용 범위가 명시되고, 남은 차이에 대해 KEEP/TUNE/REJECT 또는 보류 판단이 기록된다."
+      },
+      "revision": 5,
+      "revisionHistory": [
+        {
+          "revision": 1,
+          "date": "2026-10-09",
+          "reason": "기존 시행착오를 권장 방법·상세 이력·근거로 분리하여 최초 이관했다.",
+          "evidenceIds": [
+            "F-064",
+            "F-065",
+            "D-096",
+            "D-097",
+            "D-098"
+          ],
+          "previousRecommendation": null
+        },
+        {
+          "revision": 2,
+          "date": "2026-10-09",
+          "reason": "지형 shader normal 존재와 postprocessing 실제 normal pass 적용을 구분하는 새 반례 및 부분 개선 추가",
+          "evidenceIds": [
+            "F-083",
+            "D-118"
+          ],
+          "previousRecommendation": "{\"strength\":\"conditional\",\"action\":\"같은 edge 가중치로 cloud tint·map 혼합·surface normal·roughness/specular를 맞추고 변형 normal을 연속 연결한다. 효과가 작은 bump 추가는 되돌린다.\",\"steps\":[{\"action\":\"같은 mask 가중치와 재질 계약을 비교한다.\",\"reason\":\"사각형 모양 fade만 넓혀도 불일치가 다른 위치에 남는다.\"},{\"action\":\"정지 미세차와 실제 지각 개선을 구별한다.\",\"reason\":\"RGB 차이가 작다는 것은 seam 개선이 입증됐다는 뜻이 아니다.\"}],\"evidenceIds\":[\"F-064\",\"F-065\",\"D-096\",\"D-097\",\"D-098\"],\"recheck\":[\"같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.\",\"정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다.\"]}"
+        },
+        {
+          "revision": 3,
+          "date": "2026-10-09",
+          "reason": "사용자 구름 증량 진행 요청 및 초기 지형 색 인계 부분 개선 근거 추가",
+          "evidenceIds": [
+            "F-084",
+            "D-119"
+          ],
+          "previousRecommendation": "{\"strength\":\"conditional\",\"action\":\"같은 edge 가중치로 cloud tint·map 혼합·surface normal·roughness/specular를 맞추고 변형 normal을 연속 연결한다. 효과가 작은 bump 추가는 되돌린다. postprocessing 공통 normal override가 변형 shader를 보존하는지 별도로 확인하고 색/깊이/법선에 같은 live uniform을 사용한다.\",\"steps\":[{\"action\":\"같은 mask 가중치와 재질 계약을 비교한다.\",\"reason\":\"사각형 모양 fade만 넓혀도 불일치가 다른 위치에 남는다.\"},{\"action\":\"정지 미세차와 실제 지각 개선을 구별한다.\",\"reason\":\"RGB 차이가 작다는 것은 seam 개선이 입증됐다는 뜻이 아니다.\"},{\"action\":\"legacy/offset/matched와 직접·환경 조명 OFF를 같은 구도로 비교한다.\",\"reason\":\"geometry 자체의 normal 수정이 조명 패스에도 적용됐다고 가정하지 않는다.\"}],\"evidenceIds\":[\"F-064\",\"F-065\",\"D-096\",\"D-097\",\"D-098\",\"F-083\",\"D-118\"],\"recheck\":[\"같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.\",\"정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다.\"]}"
+        },
+        {
+          "revision": 4,
+          "date": "2026-10-10",
+          "reason": "사용자 지도쪽 명도 감소 대안 시험",
+          "evidenceIds": [
+            "F-087",
+            "D-122"
+          ],
+          "previousRecommendation": "{\"strength\":\"conditional\",\"action\":\"같은 edge 가중치로 cloud tint·map 혼합·surface normal·roughness/specular를 맞추고 변형 normal을 연속 연결한다. 효과가 작은 bump 추가는 되돌린다. postprocessing 공통 normal override가 변형 shader를 보존하는지 별도로 확인하고 색/깊이/법선에 같은 live uniform을 사용한다. 초기 parent 색도 geometry의 parentAmount에 연결하고 경계 혼합을 대조한다. 마지막 지도 색/선명도와 전체 normal/depth gate는 별도로 남긴다.\",\"steps\":[{\"action\":\"같은 mask 가중치와 재질 계약을 비교한다.\",\"reason\":\"사각형 모양 fade만 넓혀도 불일치가 다른 위치에 남는다.\"},{\"action\":\"정지 미세차와 실제 지각 개선을 구별한다.\",\"reason\":\"RGB 차이가 작다는 것은 seam 개선이 입증됐다는 뜻이 아니다.\"},{\"action\":\"legacy/offset/matched와 직접·환경 조명 OFF를 같은 구도로 비교한다.\",\"reason\":\"geometry 자체의 normal 수정이 조명 패스에도 적용됐다고 가정하지 않는다.\"}],\"evidenceIds\":[\"F-064\",\"F-065\",\"D-096\",\"D-097\",\"D-098\",\"F-083\",\"D-118\",\"F-084\",\"D-119\"],\"recheck\":[\"같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.\",\"정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다.\"]}"
+        },
+        {
+          "revision": 5,
+          "date": "2026-10-10",
+          "reason": "사용자 해상도역행 및 구름명암 별도 피드백",
+          "evidenceIds": [
+            "F-088",
+            "D-123"
+          ],
+          "previousRecommendation": "{\"strength\":\"conditional\",\"action\":\"같은 edge 가중치로 cloud tint·map 혼합·surface normal·roughness/specular를 맞추고 변형 normal을 연속 연결한다. 효과가 작은 bump 추가는 되돌린다. postprocessing 공통 normal override가 변형 shader를 보존하는지 별도로 확인하고 색/깊이/법선에 같은 live uniform을 사용한다. 초기 parent 색도 geometry의 parentAmount에 연결하고 경계 혼합을 대조한다. 마지막 지도 색/선명도와 전체 normal/depth gate는 별도로 남긴다. 지도/3D 명도 차이는 source gain 대조로 분리한다. CloudON 개선이 제한적이면 대기·법선·깊이 seam이 모두 해결됐다고 하지 않는다.\",\"steps\":[{\"action\":\"같은 mask 가중치와 재질 계약을 비교한다.\",\"reason\":\"사각형 모양 fade만 넓혀도 불일치가 다른 위치에 남는다.\"},{\"action\":\"정지 미세차와 실제 지각 개선을 구별한다.\",\"reason\":\"RGB 차이가 작다는 것은 seam 개선이 입증됐다는 뜻이 아니다.\"},{\"action\":\"legacy/offset/matched와 직접·환경 조명 OFF를 같은 구도로 비교한다.\",\"reason\":\"geometry 자체의 normal 수정이 조명 패스에도 적용됐다고 가정하지 않는다.\"}],\"evidenceIds\":[\"F-064\",\"F-065\",\"D-096\",\"D-097\",\"D-098\",\"F-083\",\"D-118\",\"F-084\",\"D-119\",\"F-087\",\"D-122\"],\"recheck\":[\"같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.\",\"정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다.\"]}"
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "EXP-046",
+      "title": "광역 구름 확대 자료는 같은 원본·지역 crop·같은 카메라로 비교하기",
+      "category": "에셋",
+      "tags": [
+        "8K",
+        "2K",
+        "crop",
+        "R8",
+        "해상도",
+        "10.7MiB"
+      ],
+      "status": "partial",
+      "problem": {
+        "goal": "2K 구름 확대의 흐릿한 결을 실제 고해상도 자료로 보완하기",
+        "symptoms": [
+          "2K 구름 확대의 흐릿한 결을 실제 고해상도 자료로 보완하기"
+        ]
+      },
+      "scope": {
+        "environment": [
+          "ECG Intro/Story A·B·C 시안; 2026-10-03~09 기록 기준",
+          "해당 사례의 장치·패키지·카메라·품질 설정은 연결된 원기록과 결과물 JSON을 따른다."
+        ],
+        "applies": [
+          "2K 구름 확대의 흐릿한 결을 실제 고해상도 자료로 보완하기",
+          "같은 증상이라도 원인과 렌더 경로를 대조한 다음 적용한다."
+        ],
+        "excludes": [
+          "이 사례의 해결을 전체 도입부·Story 완성 또는 출품 승인으로 확대하지 않는다.",
+          "다른 PC·해상도·패키지 버전에는 당시 성능 수치와 설정을 그대로 보장하지 않는다."
+        ]
+      },
+      "recommendation": {
+        "strength": "conditional",
+        "action": "실제8K cloud-only 원본을 확보한 뒤 같은 원본2K축소와 필요한 지역R8 crop을 같은 카메라·빛·opacity로 대조한다. 단순 업스케일을 고해상도 상세로 보고하지 않는다. 구름 양은 같은 위성 source의 표시 threshold 후보로 먼저 비교하며, 새 volume 생성이나 실제 점유율 수치로 부르지 않는다. 목표 근처에 구름이 없으면 양과 별도로 source UV 고정 배치를 대조한다. 확대에서 납작하면 해상도/법선gain과 실제 높이·광원 가림을 분리 대조한다. Height-field는 내부 통과용 volume로 간주하지 않는다. 조명 적용 여부를 코드로 확인하고, fill/key/자기가림 대비는 같은 분포·높이·광원에서 대조한다. Light contrast만으로 height-field 형상의 한계가 해결됐다고 하지 않는다.",
+        "steps": [
+          {
+            "action": "동일8K원본을2K로 축소해 비교군을 만든다.",
+            "reason": "다른 원본의 contrast 차이를 해상도 효과로 오인하지 않기 위해서다."
+          },
+          {
+            "action": "필요 지역만R8와mip로 GPU에 올린다.",
+            "reason": "약10.7MiB는 texture 계산 예산이며 실측 총GPU메모리가 아니다."
+          }
+        ],
+        "evidenceIds": [
+          "F-081",
+          "D-116",
+          "O-023",
+          "F-084",
+          "D-119",
+          "F-085",
+          "D-120",
+          "F-086",
+          "D-121",
+          "F-088",
+          "D-123"
+        ],
+        "recheck": [
+          "같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.",
+          "정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다."
+        ]
+      },
+      "quality": {
+        "target": "2K 구름 확대의 흐릿한 결을 실제 고해상도 자료로 보완하기",
+        "achieved": "실제8K미러와 지역 crop을 확보해4native/8초자동왕복 영상에서 작은 결을 늘렸다. 양감·국소 광학은 계속 TUNE이다. 기존 source의 구름 주변 결 증량 후보를 실제 렌더했다.",
+        "remaining": [
+          "국소 top-height/tau/산란·그림자·근경 인계·서고 통합은 미완이다.",
+          "공식 파일과 미러의 암호학적 동일성은 미검증이다.",
+          "국소 volume 양감·동일 footprint 근경 인계"
+        ]
+      },
+      "cause": {
+        "certainty": "inferred",
+        "explanation": "2K전지구의 texel 한계와 볼륨 명암 부족은 서로 다른 문제다. 해상도 확보로 새로 보이는 세부와 광학을 혼동하지 않는다.",
+        "evidenceIds": [
+          "F-081",
+          "D-116",
+          "O-023"
+        ]
+      },
+      "history": [
+        {
+          "seq": 1,
+          "mode": "executed",
+          "result": "improved",
+          "approach": "8192×4096 원본과 지역R8 crop 확보",
+          "observation": "같은 sourcePlacement/camera/sun으로4프레임을 대조해 작은 결이 늘었다.",
+          "decision": "2K자료 부족 개선 범위로 기록한다.",
+          "evidenceIds": [
+            "D-116",
+            "F-081"
+          ]
+        },
+        {
+          "seq": 2,
+          "mode": "executed",
+          "result": "diagnostic",
+          "approach": "8초 자동 camera 정역 녹화",
+          "observation": "실제renderer video이지만 실제wheel입력 영상은 아니다. 납작한 ribbon/명암 부족이 남았다.",
+          "decision": "볼륨 완성·최종 채택으로 처리하지 않는다.",
+          "evidenceIds": [
+            "D-116",
+            "F-081"
+          ]
+        },
+        {
+          "seq": 3,
+          "mode": "executed",
+          "result": "improved",
+          "approach": "위성 mask 표시 threshold 0/.07/.14",
+          "observation": "두 구도6캡처에서 군집 주변 결 확장; 큰 근경 volume 추가는 아님.",
+          "decision": "TUNE 유지. 현재 후보 사용자 KEEP/전체 motion/성능 보장 미확보.",
+          "evidenceIds": [
+            "F-084",
+            "D-119"
+          ]
+        },
+        {
+          "seq": 4,
+          "mode": "executed",
+          "result": "improved",
+          "approach": "같은 위성 source centre 고정 이동",
+          "observation": "2높이×2배치4캡처에서 산맥 근처 구름이 읽힘; 가까운 질감은 납작한 proxy TUNE",
+          "decision": "배치 후보 유지; volume/전체 모션 gate는 별도 미완",
+          "evidenceIds": [
+            "F-085",
+            "D-120"
+          ]
+        },
+        {
+          "seq": 5,
+          "mode": "executed",
+          "result": "improved",
+          "approach": "같은 위성 mask 높이표면·sun 가림 대조",
+          "observation": "4캡처에서 높이/그늘이 보이나 둥글고 매끈한 표면은 TUNE. 첫 trial은 작은군집까지 부풀어 threshold 보정.",
+          "decision": "height-field 후보 유지/사용자채택 미확정; full volume/near handoff 별도",
+          "evidenceIds": [
+            "F-086",
+            "D-121"
+          ]
+        },
+        {
+          "seq": 6,
+          "mode": "executed",
+          "result": "diagnostic",
+          "approach": "동일형상 fill/key/가림 대비",
+          "observation": "현재조명존재확인/대비증가 제한적. 둥근 매끈한 형상 TUNE.",
+          "decision": "독립대조 후보/최종채택미확정. 자연스러운geometry전환 보존.",
+          "evidenceIds": [
+            "F-088",
+            "D-123"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "F-081",
+          "kind": "event",
+          "reference": "F-081",
+          "quote": null
+        },
+        {
+          "id": "D-116",
+          "kind": "event",
+          "reference": "D-116",
+          "quote": null
+        },
+        {
+          "id": "O-023",
+          "kind": "event",
+          "reference": "O-023",
+          "quote": null
+        },
+        {
+          "id": "doc-1",
+          "kind": "document",
+          "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_detail_trial_2026-10-09.md",
+          "quote": null
+        },
+        {
+          "id": "F-084",
+          "kind": "event",
+          "reference": "F-084",
+          "quote": null
+        },
+        {
+          "id": "D-119",
+          "kind": "event",
+          "reference": "D-119",
+          "quote": null
+        },
+        {
+          "id": "F-085",
+          "kind": "event",
+          "reference": "F-085",
+          "quote": null
+        },
+        {
+          "id": "D-120",
+          "kind": "event",
+          "reference": "D-120",
+          "quote": null
+        },
+        {
+          "id": "F-086",
+          "kind": "event",
+          "reference": "F-086",
+          "quote": null
+        },
+        {
+          "id": "D-121",
+          "kind": "event",
+          "reference": "D-121",
+          "quote": null
+        },
+        {
+          "id": "F-088",
+          "kind": "event",
+          "reference": "F-088",
+          "quote": null
+        },
+        {
+          "id": "D-123",
+          "kind": "event",
+          "reference": "D-123",
+          "quote": null
+        }
+      ],
+      "sourceRecordIds": [
+        "F-081",
+        "D-116",
+        "O-023",
+        "F-084",
+        "D-119",
+        "F-085",
+        "D-120",
+        "F-086",
+        "D-121",
+        "F-088",
+        "D-123"
+      ],
+      "resolutionEvidence": [],
+      "artifacts": [
+        {
+          "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_detail_trial_2026-10-09.md",
+          "role": "report",
+          "description": "ECG_A_cloud_detail_trial_2026-10-09.md"
+        },
+        {
+          "path": "verification/a-cloud-detail-20261009/gallery.html",
+          "role": "gallery",
+          "description": "당시 gallery.html; 품질 판단은 보고서 범위 참조"
+        },
+        {
+          "path": "verification/a-cloud-amount-20261009/manifest.json",
+          "role": "metadata",
+          "description": "6 cloud amount +4 color handoff; auto8sec; TUNE"
+        },
+        {
+          "path": "verification/a-cloud-placement-20261009/manifest.json",
+          "role": "metadata",
+          "description": "4 same-view placement captures; TUNE"
+        },
+        {
+          "path": "verification/a-cloud-mass-20261009/manifest.json",
+          "role": "metadata",
+          "description": "Height field/light occlusion trial TUNE"
+        },
+        {
+          "path": "verification/a-detail-light-20261010/manifest.json",
+          "role": "metadata",
+          "description": "Independent detail/light trial; first fullhold rejected"
+        }
+      ],
+      "related": [
+        "EXP-021",
+        "EXP-023",
+        "EXP-037",
+        "EXP-047"
+      ],
+      "time": {
+        "value": null,
+        "unit": null,
+        "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+        "evidenceIds": []
+      },
+      "cost": {
+        "value": null,
+        "unit": null,
+        "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+        "evidenceIds": []
+      },
+      "review": {
+        "owner": "project-maintainer",
+        "reviewedOn": "2026-10-09",
+        "method": "D123 T6/L2 sameview actual captures + automatic8s; full visual quality not approved",
+        "verdict": "new_evidence_review",
+        "userAcceptance": "연결된 사용자 원문이 있는 범위만 수락/보류로 해석한다. 이번 DB 자체의 사용자 승인은 아직 받지 않았다.",
+        "limits": [
+          "당시 생성 정지 목업은 구현·ECG 데이터 정확성·실시간 성능 증거가 아니다.",
+          "전체 장기 재생·목표 전시 PC·터치 입력은 이관 작업에서 재검증하지 않았다."
+        ]
+      },
+      "next": {
+        "owner": "project-maintainer",
+        "action": "국소 top-height/tau/산란·그림자·근경 인계·서고 통합은 미완이다.",
+        "doneWhen": "같은 기준 구도의 전후 증거와 적용 범위가 명시되고, 남은 차이에 대해 KEEP/TUNE/REJECT 또는 보류 판단이 기록된다."
+      },
+      "revision": 5,
+      "revisionHistory": [
+        {
+          "revision": 1,
+          "date": "2026-10-09",
+          "reason": "기존 시행착오를 권장 방법·상세 이력·근거로 분리하여 최초 이관했다.",
+          "evidenceIds": [
+            "F-081",
+            "D-116",
+            "O-023"
+          ],
+          "previousRecommendation": null
+        },
+        {
+          "revision": 2,
+          "date": "2026-10-09",
+          "reason": "사용자 구름 증량 진행 요청 및 초기 지형 색 인계 부분 개선 근거 추가",
+          "evidenceIds": [
+            "F-084",
+            "D-119"
+          ],
+          "previousRecommendation": "{\"strength\":\"conditional\",\"action\":\"실제8K cloud-only 원본을 확보한 뒤 같은 원본2K축소와 필요한 지역R8 crop을 같은 카메라·빛·opacity로 대조한다. 단순 업스케일을 고해상도 상세로 보고하지 않는다.\",\"steps\":[{\"action\":\"동일8K원본을2K로 축소해 비교군을 만든다.\",\"reason\":\"다른 원본의 contrast 차이를 해상도 효과로 오인하지 않기 위해서다.\"},{\"action\":\"필요 지역만R8와mip로 GPU에 올린다.\",\"reason\":\"약10.7MiB는 texture 계산 예산이며 실측 총GPU메모리가 아니다.\"}],\"evidenceIds\":[\"F-081\",\"D-116\",\"O-023\"],\"recheck\":[\"같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.\",\"정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다.\"]}"
+        },
+        {
+          "revision": 3,
+          "date": "2026-10-09",
+          "reason": "사용자 확대 목표 근처 배치 요청을 양과 독립 진단",
+          "evidenceIds": [
+            "F-085",
+            "D-120"
+          ],
+          "previousRecommendation": "{\"strength\":\"conditional\",\"action\":\"실제8K cloud-only 원본을 확보한 뒤 같은 원본2K축소와 필요한 지역R8 crop을 같은 카메라·빛·opacity로 대조한다. 단순 업스케일을 고해상도 상세로 보고하지 않는다. 구름 양은 같은 위성 source의 표시 threshold 후보로 먼저 비교하며, 새 volume 생성이나 실제 점유율 수치로 부르지 않는다.\",\"steps\":[{\"action\":\"동일8K원본을2K로 축소해 비교군을 만든다.\",\"reason\":\"다른 원본의 contrast 차이를 해상도 효과로 오인하지 않기 위해서다.\"},{\"action\":\"필요 지역만R8와mip로 GPU에 올린다.\",\"reason\":\"약10.7MiB는 texture 계산 예산이며 실측 총GPU메모리가 아니다.\"}],\"evidenceIds\":[\"F-081\",\"D-116\",\"O-023\",\"F-084\",\"D-119\"],\"recheck\":[\"같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.\",\"정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다.\"]}"
+        },
+        {
+          "revision": 4,
+          "date": "2026-10-09",
+          "reason": "사용자 납작함 후속 보완",
+          "evidenceIds": [
+            "F-086",
+            "D-121"
+          ],
+          "previousRecommendation": "{\"strength\":\"conditional\",\"action\":\"실제8K cloud-only 원본을 확보한 뒤 같은 원본2K축소와 필요한 지역R8 crop을 같은 카메라·빛·opacity로 대조한다. 단순 업스케일을 고해상도 상세로 보고하지 않는다. 구름 양은 같은 위성 source의 표시 threshold 후보로 먼저 비교하며, 새 volume 생성이나 실제 점유율 수치로 부르지 않는다. 목표 근처에 구름이 없으면 양과 별도로 source UV 고정 배치를 대조한다.\",\"steps\":[{\"action\":\"동일8K원본을2K로 축소해 비교군을 만든다.\",\"reason\":\"다른 원본의 contrast 차이를 해상도 효과로 오인하지 않기 위해서다.\"},{\"action\":\"필요 지역만R8와mip로 GPU에 올린다.\",\"reason\":\"약10.7MiB는 texture 계산 예산이며 실측 총GPU메모리가 아니다.\"}],\"evidenceIds\":[\"F-081\",\"D-116\",\"O-023\",\"F-084\",\"D-119\",\"F-085\",\"D-120\"],\"recheck\":[\"같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.\",\"정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다.\"]}"
+        },
+        {
+          "revision": 5,
+          "date": "2026-10-10",
+          "reason": "사용자 해상도역행 및 구름명암 별도 피드백",
+          "evidenceIds": [
+            "F-088",
+            "D-123"
+          ],
+          "previousRecommendation": "{\"strength\":\"conditional\",\"action\":\"실제8K cloud-only 원본을 확보한 뒤 같은 원본2K축소와 필요한 지역R8 crop을 같은 카메라·빛·opacity로 대조한다. 단순 업스케일을 고해상도 상세로 보고하지 않는다. 구름 양은 같은 위성 source의 표시 threshold 후보로 먼저 비교하며, 새 volume 생성이나 실제 점유율 수치로 부르지 않는다. 목표 근처에 구름이 없으면 양과 별도로 source UV 고정 배치를 대조한다. 확대에서 납작하면 해상도/법선gain과 실제 높이·광원 가림을 분리 대조한다. Height-field는 내부 통과용 volume로 간주하지 않는다.\",\"steps\":[{\"action\":\"동일8K원본을2K로 축소해 비교군을 만든다.\",\"reason\":\"다른 원본의 contrast 차이를 해상도 효과로 오인하지 않기 위해서다.\"},{\"action\":\"필요 지역만R8와mip로 GPU에 올린다.\",\"reason\":\"약10.7MiB는 texture 계산 예산이며 실측 총GPU메모리가 아니다.\"}],\"evidenceIds\":[\"F-081\",\"D-116\",\"O-023\",\"F-084\",\"D-119\",\"F-085\",\"D-120\",\"F-086\",\"D-121\"],\"recheck\":[\"같은 구도·시간·입력 조건의 기준과 변경 후를 대조하고 실제 오류 및 장치 상태를 확인한다.\",\"정지 화면과 정·역 이동을 분리해서 확인하며, 사용자 품질 판단과 자동검사 결과를 각각 기록한다.\"]}"
+        }
+      ]
+    }
+  ],
+  "newEvents": [
+    {
+      "id": "F-088",
+      "title": "경계 완화용 colorPhase가 해상도 역행을 만들며 전체 색 hold는 사각형을 다시 드러낸다",
+      "kind": "F",
+      "source": "docs/uiux_system/records/F_FINDINGS.md",
+      "baseline": "working-ledger-snapshot; commit provenance retained by Git when saved",
+      "lineStart": 2102,
+      "lineEnd": 2121,
+      "body": "## F-088. 경계 완화용 colorPhase가 해상도 역행을 만들며 전체 색 hold는 사각형을 다시 드러낸다\n\n| | |\n|---|---|\n| 시점 | 2026-10-10 [사용자][코드][캡처] |\n| 상태 | 원인/반례 기록, 최종 후보 TUNE |\n| 연결 | D-123 / CASE-007 |\n\n### 발단\n사용자 고화질→흐림→자연스러운3D 인계 관찰. 따로 구름조명/밝은면그늘대비부족 질문.\n### 먼저 의심한 것과 배제 방법\nparent shader colorPhase=parentAmount가 height와source해상도를함께인계함. samecamera3구도2candidate 대조. source전체hold는 darksquare복귀 반례였음.\n### 결정적 근거\n8nativeactualcamera/sun/source/gain/DEM assert. 첫trial별도보존. 최종은 기존평균색+source detailratio, darksquare복귀를피하면서detail일부보충. fullhighres/seam해결/전체모션통과 아님. 후반geometryreveal·camera는미변경.\n### 조치와 검토한 대안\n지도와cloudlighting을독립메뉴/대조로분리. 구름기존태양법선·4점가림·fill존재; 후보fill감소/direct강화. 효과제한·매끈한height형상TUNE. verification/a-detail-light-20261010/manifest.json.\n### 비용 / 영향 범위\nparent 추가high/blur lookup, 구름 추가pass없음. 8초자동영상/짧은GPU표본, 실제targetPC장시간증거아님. near지형shadow보류유지.\n### 놓쳤다면\n해상도역행을원본지도품질부족으로오해해새에셋만바꾸거나, 기존조명이없었다고잘못진단했을것이다.",
+      "sha256": "2b9adf036287f286b52d5708991401dcb5bc6107d07111b72cae782002616bbb"
+    },
+    {
+      "id": "D-123",
+      "title": "해상도 인계의 평균색과 세부 결을 분리하고 구름 조명을 별도 대조한다",
+      "kind": "D",
+      "source": "docs/uiux_system/records/D_DECISIONS.md",
+      "baseline": "working-ledger-snapshot; commit provenance retained by Git when saved",
+      "lineStart": 3048,
+      "lineEnd": 3066,
+      "body": "## D-123. 해상도 인계의 평균색과 세부 결을 분리하고 구름 조명을 별도 대조한다\n\n| | |\n|---|---|\n| 시점 | 2026-10-10 [사용자][코드][캡처] |\n| 상태 | 지도/구름 각 TUNE |\n| 연결 | F-088 / D-119 / D-122 |\n| CASE | CASE-007 |\n\n### 갈림길\n사용자 고화질→흐림 역행 및 자연스러운 후반전환 유지, 별개로 구름조명 질문/대비부족 지적.\n### 검토한 선택지\n기존인계, 전체high색hold, 평균색인계+detailratio. 구름은 같은광원에서 fill/key/가림대비만 변경.\n### 고른 것과 근거\n구현전 ECG_A_detail_hold_cloud_light_2026-10-10.md. 전체highcolourhold 첫trial은 dark square 부각하여REJECT하고 firstcapture보존. 최종parentAmount colour인계는 그대로 두고, highsource luminance/mip4 luma 비율 .6–1.7를 인계손실만큼 보충. 카메라/geometryreveal/DEM 유지. T3구도×2방식6capture, L근경2lightingcapture, 자동8초.\n### 버린 것과 이유\n원본색전체복원으로blur만해결하고사각형악화시키는안 제외. 기존조명없었다고설명/대비만으로reference품질도달 선언 제외. orbital은height-field 태양명암/4점가림이며 완전volume아님.\n### 되돌려야 하는 조건\n강한detailnoise/사각형/잔상/암부면detailoff 또는lightingbase. 전체seam·구름형상/near인계TUNE, 지형그림자보류·서고KEEP·2/2/fallback유지.",
+      "sha256": "3475b4ca75de21b5d45c696117b09530b26dedc818cf1c6778a32c7f1700b0bd"
+    }
+  ]
+}

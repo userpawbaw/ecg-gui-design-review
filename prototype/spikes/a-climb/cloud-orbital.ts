@@ -10,7 +10,7 @@ uniform mat3 viewRotation, geographicRotation;
 uniform vec3 eye, sunLocal;
 uniform float relief, amount, coverageBoost;
 uniform vec2 sourceCentre;
-uniform float massMode, pixelAngle;
+uniform float massMode, pixelAngle, lightContrast;
 const float radius=6371000.;
 const vec3 centre=vec3(0.,-6371000.,0.);
 vec2 geoUV(vec3 n){
@@ -90,9 +90,11 @@ vec4 massLayer(vec3 ray){
   float buried=cloudHeight(lightPoint,footprint)-(length(lightPoint-centre)-radius);
   tau+=smoothstep(-80.,550.,buried)*.5;
  }
- float facing=max(0.,dot(normal,sunLocal));float transmission=exp(-tau);
+ float facing=max(0.,dot(normal,sunLocal));float transmission=exp(-tau*mix(1.,1.65,lightContrast));
  float day=smoothstep(-.04,.16,dot(n,sunLocal));
- vec3 lit=vec3(.25,.28,.33)+vec3(.73,.70,.65)*facing*transmission;
+ vec3 fill=mix(vec3(.25,.28,.33),vec3(.12,.15,.20),lightContrast);
+ vec3 key=mix(vec3(.73,.70,.65),vec3(1.13,1.07,.97),lightContrast);
+ vec3 lit=fill+key*facing*transmission;
  vec3 light=mix(vec3(.045,.065,.09),lit,day);
  light=mix(light,vec3(.30,.40,.53),(1.-exp(-t/2200000.))*.35);
  return vec4(light*.065,alpha*amount);
@@ -108,7 +110,7 @@ void mainImage(const in vec4 inputColor,const in vec2 uv,out vec4 outputColor){
 
 export class OrbitalCloudEffect extends Effect{
  constructor(){super('OrbitalCloudProxy',fragment,{blendFunction:BlendFunction.NORMAL,uniforms:new Map<string,THREE.Uniform>([
-  ['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
+  ['lightContrast',new THREE.Uniform(0)],['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
   ['viewRotation',new THREE.Uniform(new THREE.Matrix3())],['geographicRotation',new THREE.Uniform(new THREE.Matrix3())],
   ['eye',new THREE.Uniform(new THREE.Vector3())],['sunLocal',new THREE.Uniform(new THREE.Vector3())],
   ['relief',new THREE.Uniform(1)],['amount',new THREE.Uniform(1)],['coverageBoost',new THREE.Uniform(0)]
@@ -136,6 +138,7 @@ export class OrbitalCloudEffect extends Effect{
  setDetail(value:string){this.uniforms.get('detailAmount')!.value=value==='8k'?1:0;}
  setCoverageBoost(value:number){this.uniforms.get('coverageBoost')!.value=THREE.MathUtils.clamp(value,0,.14);}
  setPlacement(near:boolean){this.uniforms.get('sourceCentre')!.value.set(near?.671875:.64,near?.8330078125:.78);}
+ setLightContrast(on:boolean){this.uniforms.get('lightContrast')!.value=on?1:0;}
  setMass(on:boolean,height:number,camera:THREE.PerspectiveCamera){this.uniforms.get('massMode')!.value=on?1:0;this.uniforms.get('pixelAngle')!.value=2*Math.tan(THREE.MathUtils.degToRad(camera.fov)*.5)/height;}
  sync(camera:THREE.PerspectiveCamera,toECEF:THREE.Matrix4,sunECEF:THREE.Vector3,mode:string,on:boolean){
   const basis=new THREE.Matrix3().setFromMatrix4(toECEF);

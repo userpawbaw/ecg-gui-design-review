@@ -292,3 +292,7 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D122 지도 명도 대조
 [검토](ECG_A_map_brightness_match_2026-10-10.md), verification/a-map-gain-20261010/gallery.html. cloudON seam미완/TUNE.
+
+
+## D123 지도 결 / 구름 조명
+[검토](ECG_A_detail_hold_cloud_light_2026-10-10.md), verification/a-detail-light-20261010/gallery.html. 독립대조T6/L2, fullhold첫trial기각/보존.

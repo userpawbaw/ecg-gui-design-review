@@ -3023,3 +3023,24 @@ gain만 증가하면 높이·시차가 없다. 전체 volume는 분포/비용/�
 지도gain을 화면80% 밝기로 설명하거나 구름가림을 seam해결로 판정하는 안 제외.
 ### 되돌려야 하는 조건
 새 어두운 경계/암부/색불일치면gain1. 법선·대기·깊이 잔여seam미완. 사용자캡처와 별도D115 미커밋변경 보존. 기존shadow보류 유지.
+
+
+## D-123. 해상도 인계의 평균색과 세부 결을 분리하고 구름 조명을 별도 대조한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [사용자][코드][캡처] |
+| 상태 | 지도/구름 각 TUNE |
+| 연결 | F-088 / D-119 / D-122 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 고화질→흐림 역행 및 자연스러운 후반전환 유지, 별개로 구름조명 질문/대비부족 지적.
+### 검토한 선택지
+기존인계, 전체high색hold, 평균색인계+detailratio. 구름은 같은광원에서 fill/key/가림대비만 변경.
+### 고른 것과 근거
+구현전 ECG_A_detail_hold_cloud_light_2026-10-10.md. 전체highcolourhold 첫trial은 dark square 부각하여REJECT하고 firstcapture보존. 최종parentAmount colour인계는 그대로 두고, highsource luminance/mip4 luma 비율 .6–1.7를 인계손실만큼 보충. 카메라/geometryreveal/DEM 유지. T3구도×2방식6capture, L근경2lightingcapture, 자동8초.
+### 버린 것과 이유
+원본색전체복원으로blur만해결하고사각형악화시키는안 제외. 기존조명없었다고설명/대비만으로reference품질도달 선언 제외. orbital은height-field 태양명암/4점가림이며 완전volume아님.
+### 되돌려야 하는 조건
+강한detailnoise/사각형/잔상/암부면detailoff 또는lightingbase. 전체seam·구름형상/near인계TUNE, 지형그림자보류·서고KEEP·2/2/fallback유지.

@@ -1,0 +1,354 @@
+{
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "orbital": {
+      "source": "Solar System Scope listed cloud asset, pinned public mirror",
+      "sourceSha256": "c792eca228989d36ebb45d3ea6ff1198be5e21a25d70d2fbcb2124ffd14ba7f5",
+      "coverageBoost": 0.07,
+      "coverageMeaning": "display threshold offset, not measured cloud fraction",
+      "detailTrial": {
+        "mode": "8k",
+        "sourceSize": [
+          8192,
+          4096
+        ],
+        "cropSize": [
+          4096,
+          1536
+        ],
+        "globalSize": [
+          2048,
+          1024
+        ],
+        "cropUV": [
+          0.375,
+          0.5625,
+          0.5,
+          0.375
+        ],
+        "nominalR8MipMiB": 10.667
+      },
+      "mode": "relief",
+      "massModel": {
+        "preset": "mass",
+        "lighting": "contrast",
+        "heightRangeMetres": [
+          7000,
+          9400
+        ],
+        "intersectionSteps": 10,
+        "lightSteps": 4,
+        "measuredVolume": false
+      },
+      "sourcePlacement": {
+        "geoAnchor": [
+          0.523333333,
+          0.842388889
+        ],
+        "sourceCentre": [
+          0.671875,
+          0.8330078125
+        ],
+        "preset": "near",
+        "scale": 2
+      },
+      "artisticPlacement": true,
+      "technique": "satellite authored height-field, explicit mip footprint, sun-direction self-occlusion; not measured volume",
+      "shadow": false,
+      "nearHandoff": false,
+      "range": [
+        0.18,
+        0.235
+      ]
+    },
+    "handoff": {
+      "stage": {
+        "stage": "지역 확대",
+        "next": "구름 접근",
+        "mix": 0,
+        "archiveCutAllowed": false
+      },
+      "cover": null,
+      "weatherFixed": true,
+      "macroWeather": {
+        "anchor": [
+          0.507843778219943,
+          0.993624243657135
+        ],
+        "sourceRepeat": 54,
+        "macroRepeat": 9,
+        "role": "fixed macro bands × borrowed local weather; all camera heights"
+      },
+      "embeddedCloud": false,
+      "sourceMip": true,
+      "archiveIntegrated": false
+    },
+    "ready": true,
+    "contextLost": false,
+    "mode": "north300",
+    "source": "NASA shape-seeded orbital proxy, not measured cloud volume",
+    "p": 0.235,
+    "capturePhase": "fixed",
+    "diagnostic": {
+      "name": "baseline",
+      "shadowMargin": 0,
+      "shadowFar": 100000,
+      "shadowJitter": true,
+      "shadowTemporal": true,
+      "shadowAlpha": 0.01,
+      "cloudAlpha": 0.1,
+      "cascades": 3,
+      "mapSize": [
+        512,
+        512
+      ],
+      "splitLambda": 0.6,
+      "minStep": 50,
+      "perspectiveStep": 1.01
+    },
+    "input": {
+      "source": "detail-light-comparison",
+      "wheelCount": 0,
+      "lastWheelPixels": 0,
+      "target": 0.235,
+      "current": 0.235,
+      "settled": true,
+      "reducedMotion": false
+    },
+    "opticalTrial": {
+      "weatherX": 0,
+      "weatherY": 0,
+      "sunElevation": 15,
+      "sunAzimuth": 0,
+      "hazeExponent": 0.00018,
+      "hazeDensityScale": 0.00002134872948205834,
+      "layerDepth": 1.2,
+      "layerDensity": 1,
+      "groundShadow": true,
+      "groundShadowLinked": false
+    },
+    "sourceLocation": [
+      8.4,
+      61.63,
+      "camera metres in localCamera ×1000"
+    ],
+    "sourceDate": "fixed north scene sun vector",
+    "camera": [
+      55000,
+      100000,
+      150000
+    ],
+    "localCamera": [
+      55,
+      100,
+      150
+    ],
+    "worldToECEF": [
+      -0.14608302856241162,
+      0.9892723329629883,
+      0,
+      0,
+      0.4700661645077798,
+      0.0694133320501771,
+      0.879897488528429,
+      0,
+      0.8704582412447932,
+      0.12853808994869273,
+      -0.4751635609780734,
+      0,
+      3005946.305815795,
+      443879.53187203227,
+      5589039.74196397,
+      1
+    ],
+    "sun": [
+      -0.719136020091598,
+      -0.10619276842469857,
+      0.6867069830292358
+    ],
+    "layers": [
+      {
+        "altitude": 8000,
+        "height": 780,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 0.7116243160686113,
+        "weatherExponent": 1.6
+      },
+      {
+        "altitude": 8250,
+        "height": 1440,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 0.7116243160686113,
+        "weatherExponent": 1.6
+      },
+      {
+        "altitude": 14750,
+        "height": 500,
+        "densityScale": 0.003,
+        "shapeDetailAmount": 0,
+        "weatherExponent": 1
+      },
+      {
+        "altitude": 0,
+        "height": 0,
+        "densityScale": 0.2,
+        "shapeDetailAmount": 1,
+        "weatherExponent": 1
+      }
+    ],
+    "quality": "high",
+    "look": "ref54",
+    "coverage": 0.42,
+    "localWeatherRepeat": [
+      9,
+      9
+    ],
+    "localWeatherOffset": [
+      0,
+      0
+    ],
+    "resolutionScale": 0.75,
+    "lightShafts": true,
+    "shadowMaxFar": 100000,
+    "shadowLengthLinked": false,
+    "temporal": false,
+    "temporalUpscale": false,
+    "temporalAntialiasing": false,
+    "clouds": true,
+    "cloudPassAttached": false,
+    "smaa": true,
+    "wind": false,
+    "terrain": {
+      "visibleTiles": 64,
+      "drawTriangles": 401052,
+      "residentGpuBytes": 18092112,
+      "queued": 0,
+      "pending": 0,
+      "fullSurfaceTriangles": 812800,
+      "fullTiledTriangles": 847090,
+      "heightGain": 1.5,
+      "maxErrorPixels": 1.140201974365416,
+      "highTextures": true,
+      "errors": [],
+      "detailReveal": 0.9362767410104686,
+      "coarseReady": 64
+    },
+    "terrainLighting": "candidate albedo input + Takram Lambert sun/sky/BSM; main PBR unchanged",
+    "renderSize": [
+      1280,
+      720
+    ],
+    "gpu": {
+      "available": true,
+      "count": 60,
+      "p50": 2.809856,
+      "p95": 4.337664
+    },
+    "frames": 2185
+  },
+  "terrainSeam": {
+    "mode": "matched",
+    "matchedNormals": true,
+    "depthOffset": true,
+    "north": {
+      "detailHold": 1,
+      "mapGain": 0.8,
+      "model": "North anchored kilometre sphere + 1.5x regional LOD",
+      "atmosphere": false,
+      "cloud": false,
+      "cloudCoverReady": true,
+      "terrainShadowMap": false,
+      "cloudPath": {
+        "ready": true,
+        "render": "three actual VDB sources, sorted shared volume field",
+        "screenBake": false,
+        "scalarAndShadowBytes": 15098880,
+        "sourceHashes": [
+          "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+          "c91381781adc353f26a25d6cb6c9e254f47b89db04d2e99d289ae0e7d545945c",
+          "05bdc59f23d4888cb0d1d06f7d087e91b3312d91ac2259181b165289dc692d96"
+        ],
+        "counts": [
+          4,
+          16,
+          60
+        ],
+        "activeGroups": 0,
+        "fieldLevel": 3,
+        "screenLods": [
+          0,
+          0,
+          80
+        ],
+        "steps": [
+          160,
+          48,
+          20
+        ],
+        "target": [
+          1,
+          1
+        ],
+        "wind": [
+          0,
+          0,
+          0
+        ],
+        "quality": "high",
+        "progress": 0.235,
+        "sharedDepthRenders": 1,
+        "sharedVolumeDraws": 1,
+        "sorting": "back-to-front centers; no interpenetrating-volume solver",
+        "shadow": "two fixed receiver-plane transmittance caches"
+      },
+      "cloudModel": "thin global shell + 4/16/60 shared actual VDB field",
+      "mapDimensions": [
+        2526,
+        4096
+      ],
+      "depthNear": 8,
+      "terrain": {
+        "visibleTiles": 64,
+        "drawTriangles": 401052,
+        "residentGpuBytes": 18092112,
+        "queued": 0,
+        "pending": 0,
+        "fullSurfaceTriangles": 812800,
+        "fullTiledTriangles": 847090,
+        "heightGain": 1.5,
+        "maxErrorPixels": 1.140201974365416,
+        "highTextures": true,
+        "errors": [],
+        "detailReveal": 0.9362767410104686,
+        "coarseReady": 64
+      },
+      "parentTerrain": {
+        "detailHold": 1,
+        "mapGain": 0.8,
+        "source": "AWS Mapzen Terrain Tiles z7",
+        "bounds": [
+          0,
+          56,
+          16,
+          68
+        ],
+        "triangles": 131072,
+        "reveal": 1,
+        "detail": 0.9362767410104686,
+        "normalModel": "GPU derivatives of actual deformed surface + analytic sphere contact",
+        "cpuGeometryUpdatesPerFrame": 0
+      },
+      "progress": 0.235,
+      "anchor": [
+        61.63,
+        8.4
+      ],
+      "sunDirection": [
+        -0.6642786286868113,
+        0.2776089791526973,
+        -0.694022447881743
+      ]
+    }
+  },
+  "url": "http://127.0.0.1:4198/cloud-lab.html?cloudDetail=1&orbital=1&handoff=1&terrainSeam=1&pose=north300&recipe=curtain&reviewRound=detail-light-20261010"
+}

@@ -1,0 +1,197 @@
+{
+  "decision": "D123",
+  "finding": "F088",
+  "terrainVerdict": "TUNE: bounded source-detail transfer; full high-colour hold rejected for stronger dark square",
+  "cloudVerdict": "TUNE: lower fill and direct/self-occlusion contrast; height-field limitations remain",
+  "captureCount": 8,
+  "conditions": "1280x720 RTX3070; camera/sun/source/DEM1.5/mapGain.8 fixed; two lanes isolated",
+  "terrain": {
+    "geometryRevealPreserved": true,
+    "colorPhasePreserved": true,
+    "method": "high luminance / mip4 low-frequency ratio, .6-1.7 bounded, weighted by disappearing source contribution",
+    "autoScreenFit": false
+  },
+  "cloud": {
+    "baseFill": [
+      0.25,
+      0.28,
+      0.33
+    ],
+    "candidateFill": [
+      0.12,
+      0.15,
+      0.2
+    ],
+    "baseKey": [
+      0.73,
+      0.7,
+      0.65
+    ],
+    "candidateKey": [
+      1.13,
+      1.07,
+      0.97
+    ],
+    "selfOcclusionGain": 1.65,
+    "trueMultipleScattering": false
+  },
+  "firstRejectedTrial": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-first-20261010",
+  "motion": {
+    "nominalMs": 8000,
+    "automated": true,
+    "fullMotionPass": false
+  },
+  "gpu": [
+    {
+      "file": "detail-hold-light-base-p1500.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 1.585152,
+        "p95": 2.317312
+      }
+    },
+    {
+      "file": "detail-hold-light-base-p1650.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.09408,
+        "p95": 4.016128
+      }
+    },
+    {
+      "file": "detail-hold-light-base-p1800.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.13504,
+        "p95": 4.247552
+      }
+    },
+    {
+      "file": "detail-hold-light-base-p2350.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.528256,
+        "p95": 4.22912
+      }
+    },
+    {
+      "file": "detail-hold-light-contrast-p2350.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.809856,
+        "p95": 4.337664
+      }
+    },
+    {
+      "file": "detail-legacy-light-base-p1500.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 1.611776,
+        "p95": 2.25792
+      }
+    },
+    {
+      "file": "detail-legacy-light-base-p1650.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.368512,
+        "p95": 3.618816
+      }
+    },
+    {
+      "file": "detail-legacy-light-base-p1800.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.313216,
+        "p95": 3.529728
+      }
+    }
+  ],
+  "limits": [
+    "full seam removal and native texture detail not restored uniformly",
+    "not real meteorological volume; rounded cloud shape remains",
+    "near ground shadow user deferred; near Takram handoff unfinished"
+  ],
+  "artifacts": [
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-base-p1500.json",
+      "sha256": "316803c86f6d4160f17db375ea3d05798a2f2ad38b21cbd1e69ff19eb0ef44c7"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-base-p1500.png",
+      "sha256": "83728e7f6a5c2d6dfbb282c883d8ca929ace8b0df190c9c3afa877af9d1d4ec0"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-base-p1650.json",
+      "sha256": "b18c7463ea7c541723ee7e44d53a625143505ca05c312d0933ea9ea838e51d93"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-base-p1650.png",
+      "sha256": "620ec15648916245061c78fb5813a47dd1afea76e758b14c6b644ea346653ece"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-base-p1800.json",
+      "sha256": "ac4a4c5413fb7f865f387b4dceab8818d28586fe4e106067f1f110020a8a7461"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-base-p1800.png",
+      "sha256": "f74e27f96d74836afe3e5b3a7dccef66f7101af22a74fe7a0a6f32201d66cb39"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-base-p2350.json",
+      "sha256": "625b00f06f8fbd46cbc18a5d6308f73d04f10467fe69a34e5237746fd5604332"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-base-p2350.png",
+      "sha256": "19415c4189c7594e771c22de654bf3c67ae0c1f8f9e86178af7113a7d6ef9caf"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-contrast-p2350.json",
+      "sha256": "d7af68deadfca8431f1ecf23e49eb090da2599866c4b384187ba6b2891a2796d"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-hold-light-contrast-p2350.png",
+      "sha256": "e0723aaa84ba92de2cdd4ee213b1d9eec8f834437fa23b606559c84e35b767db"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-legacy-light-base-p1500.json",
+      "sha256": "6cc292c6b95c163e0b5dbacdf73f324896ace9a64a4a535d0a4935feec749e9d"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-legacy-light-base-p1500.png",
+      "sha256": "1b375fdea97607774173e00121f1ffccc7e7066d882c3e583b630f8179a7c3ac"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-legacy-light-base-p1650.json",
+      "sha256": "a0fa6321e7ef3ef8a2d9e8eba4c63535203f92779ca299d3f63d1ce13b5f3b1f"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-legacy-light-base-p1650.png",
+      "sha256": "8297519efe7a42e109c9477213316139058d2ac360e261f5fd8ff57653e19c9d"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-legacy-light-base-p1800.json",
+      "sha256": "f65fe30090e1ed0a0331f202ae7203da028cd05cd0a8a94f7b750773a68789dd"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/detail-legacy-light-base-p1800.png",
+      "sha256": "5b6d8ef72c65b8843915558e9027f75034c5ce0198cf0dd8a24abdad5a91a83e"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/video-seam-matched.json",
+      "sha256": "d360ae7e460ab69201abbd5541e3751e1b56d760c7fda6a339c5363115ab25a4"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/detail-light-20261010/video-seam-matched.webm",
+      "sha256": "d2c7e610e3bbd751c3608e3966ca3d2d48cfa6b51df5e5d3d3e86dbe878a9d2e"
+    }
+  ]
+}

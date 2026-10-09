@@ -582,7 +582,7 @@ if args.intro2 and not args.nofig:
     if args.art == 'r3':                                         # skill pose-anatomy step 7 for the climber: vs the room (the ladder is an intended contact)
         import importlib.util as _ilu2
         _s2 = _ilu2.spec_from_file_location('pc2', os.path.join(ROOT, 'scripts/assets/pose-check-v3.py')); pc2 = _ilu2.module_from_spec(_s2); _s2.loader.exec_module(pc2)
-        _c2 = pc2.scene_collisions(CLIMB, [o for o in scene.objects if o not in (CLIMB,) and o.type == 'MESH'], ignore=('Haze', 'VOL_', 'APR_', 'heart', 'El_', 'Lead', 'Trunk', 'Comm', 'Sig_', 'Power'))
+        _c2 = pc2.scene_collisions(CLIMB, [o for o in scene.objects if o not in (CLIMB,) and o.type == 'MESH'], ignore=('Haze', 'VOL_', 'APR_', 'heart', 'El_', 'Lead', 'Trunk', 'Comm', 'Sig_', 'Power'), reach=.09)   # reach ≈ 2 × stile thickness (pose-check docstring)
         print('climber collisions (mm):', {k: v for k, v in _c2.items()})
     CLIMB.data.materials.clear(); CLIMB.data.materials.append(rm)
 # ---------------- v3: ECG electrodes, lead wires, trunk to the cart, cable to the computer (D-048) ----------------
@@ -808,7 +808,7 @@ if args.pose and FIG is not None:                                 # D-050 shots:
     }[args.pose]
     if args.pose in ('chair', 'desk', 'wall', 'climb'): SHOTS = dict(SHOTS)
     if args.art == 'r3':                                         # D-058: frontal on the back shelves like REF-002; the side ladder crosses the frame
-        SHOTS = {'a1_front': ((0.85, -0.6, 1.6), (0.75, 4.7, 2.45), 50), 'a2_near': ((0.55, 1.25, 1.45), (0.8, 4.7, 2.2), 52)}
+        SHOTS = {'a1_front': ((0.15, 0.95, 1.6), (0.75, 4.7, 2.75), 52), 'a2_near': ((0.55, 1.25, 1.45), (0.8, 4.7, 2.2), 52)}
     if args.pose == 'climb' and 'hand_r' in fj:                  # second draft: muscle-artifact close-up — the gripping hand and RA together
         HR = FIG.location + FROT @ Vector(fj['hand_r']); RA = FIG.location + FROT @ Vector(fj['electrodes']['RA']['p'])
         mid = RA.lerp(HR, .5)                                    # behind-right and above the climber: gripping hand + chest (RA through the glass body)

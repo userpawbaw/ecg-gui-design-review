@@ -268,3 +268,7 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D116 확대 결의 원본·지역 R8 대조
 [구름 원본 확보·같은2K/지역8K 대조·후속](ECG_A_cloud_detail_trial_2026-10-09.md) → verification/a-cloud-detail-20261009/gallery.html. 실제native4/8초영상. 작은결개선관찰·전체TUNE. 공식출처와미러바이트분리,자료gate후국소광학/near/서고별도. D115경험DB작업미커밋보존.
+
+
+## D117 재개 라우팅
+지형 사각 경계와 원경→근경 구름 작업 시작 시 [ECG_A_surface_cloud_next_gate_2026-10-09.md](ECG_A_surface_cloud_next_gate_2026-10-09.md)을 읽는다. S0/S1 우선, 근경 그림자 결함 보류 유지.

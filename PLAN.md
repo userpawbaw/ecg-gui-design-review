@@ -506,3 +506,7 @@ D098wholeRGBplate suddenpop/terrain교체로 사용자REJECT, 전체cloudfeedbac
 
 ## 2026-10-08 D113 원경 구름 재설계 연구
 D112타원분포 부정피드백 기록. 사진3장/현재코드/공식제작자료·에셋·작성자forum대조. 추천은위성형coverage+thin/thick/tau/height분리+국소volume인계. 이번엔문서만, 품질/성능/사용자채택미검증. 다음p.18/.235분포대조→국소광학→6구도인계→motion→서고. 기존near그림자결함튜닝보류. 상세 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_orbital_cloud_hybrid_research_2026-10-08.md.
+
+
+## 2026-10-09 D117 지형 경계 TUNE·다음 제작 게이트
+서버 재시작 후 사용자 새로고침한 실제 cloud-lab 확인. F082/D117, docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_surface_cloud_next_gate_2026-10-09.md. 지형 경계 원인 미확정; S0 레이어 분리→S1 접합→S2 국소광학→S3 새 원경 그림자→S4 동일 footprint 인계→S5 움직임/성능→S6 서고/사용자 리뷰. 이번 수정 구현 미착수. D115 별도 미커밋 DB/규칙 및 사용자 캡처 보존. 기존 근경 그림자 보류/구름2회 실패/fallback 유지.

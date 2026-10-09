@@ -26,3 +26,7 @@
 자료해상도gate는실제획득·대조까지수행. 다음은두꺼운군집의높이/tau자료와국소산란/그림자기여를별도대조하고,그후채택된분포를nearTakramvolume와정합한다. 이번volume통과/서고연결미구현,main/Story미교체. 사용자룩KEEP미확정,near그림자추가튜닝보류유지. 과거구름제작2/2실패/fallback결정은그대로보존하며이번내부시험은새사용자피드백횟수로세지않는다.
 
 최종검증: Vite81 modules PASS / diffcheck PASS / 격리된 HEAD+이번D116/F081/O023 기록snapshot251 PASS. 별도D115미커밋기록과경험DB는검사·commit범위에서제외하고보존. 브라우저사진4/4 1280×720,영상readyState4/errornull/7.971초로확인·탭유지. 정착/8초증거로자글거림완전해결·전체구름룩채택을주장하지않는다.
+
+
+## D117 다음 순서 갱신
+사용자 지형 사각 경계 TUNE 추가. 다음 실행 순서는 S0 원인 분리→S1 지형 접합→구름 광학·동일 footprint 전이이다. [세부 작업·통과 기준](ECG_A_surface_cloud_next_gate_2026-10-09.md)을 먼저 따른다. 이번은 계획/페이지 복구이며 새 rendering 수정은 미착수.

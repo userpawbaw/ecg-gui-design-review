@@ -725,3 +725,8 @@ D113추천첫gate를사용자승인후두구도proxy로제작. NASA2K기존등�
 공식Solar8K목록확인→shell403/브라우저약976초timeout/kernelreset(O023)→공개Siqister/files commit2ed70f... 에서11.6MB8K획득/sha·dimensions확인. 같은원본2K다운샘플과지역8KR8crop로카메라/sun/shape/opacity고정4native,실제8초정역camera/WebM456trace/decode확인. 1280×720/RTX3070/contextLostfalse. 작은결개선관찰·flatproxy양감/조명TUNE. source·provenance·bytes고정,crop/global texture약10.7MiB명목값과실측총성능구별. D116/F081/CASE007/report/PLAN/state/색인갱신. D115DB미커밋·6usercapture·개인영상추출프레임보존. 다음국소광학→near같은footprint→서고,near그림자결함튜닝보류.
 
 최종검증: Vite81 modules PASS / diffcheck PASS / 격리된 HEAD+이번D116/F081/O023 기록snapshot251 PASS. 별도D115미커밋기록과경험DB는검사·commit범위에서제외하고보존. 브라우저사진4/4 1280×720,영상readyState4/errornull/7.971초로확인·탭유지. 정착/8초증거로자글거림완전해결·전체구름룩채택을주장하지않는다.
+
+
+## 2026-10-09 D117 지형 경계 TUNE·다음 제작 게이트
+서버 재시작 후 사용자 새로고침한 실제 cloud-lab 확인. F082/D117, docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_surface_cloud_next_gate_2026-10-09.md. 지형 경계 원인 미확정; S0 레이어 분리→S1 접합→S2 국소광학→S3 새 원경 그림자→S4 동일 footprint 인계→S5 움직임/성능→S6 서고/사용자 리뷰. 이번 수정 구현 미착수. D115 별도 미커밋 DB/규칙 및 사용자 캡처 보존. 기존 근경 그림자 보류/구름2회 실패/fallback 유지.
+검증: 기록 구조254 PASS. 전체 records:check의 경험DB 생성물 EXP004/016/017/index stale 경고는 별도 D115 미커밋 작업 범위이며 이번 renderer 품질 판정과 분리한다. 새 구현 테스트는 수행하지 않았다.

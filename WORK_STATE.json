@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D116 real 8K source/crop two-view comparison and actual8s camera video complete, self TUNE. Next local mass/optical thickness/height/shadow contribution, same-footprint near handoff, archive. Existing near shadow defect tuning user-deferred; main unchanged; final visual adoption not decided.",
+  "next_action": "D117: terrain rectangular boundary TUNE; next S0 layer diagnosis and S1 continuous terrain seam gate, then local cloud optics and same-footprint near handoff. See docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_surface_cloud_next_gate_2026-10-09.md. Implementation not started; near shadow defect tuning remains user-deferred.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",

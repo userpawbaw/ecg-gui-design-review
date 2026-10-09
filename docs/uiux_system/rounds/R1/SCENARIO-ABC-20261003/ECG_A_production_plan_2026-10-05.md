@@ -113,3 +113,7 @@ D078/F049: 구도·양감 사용자KEEP. J5v5 질감후보 검토 먼저, 이후
 
 ### 2026-10-09 D116 실제 상세 구름 자료 gate
 8K미러원본확보,같은원본2K와필요crop8K/R8만GPU적재,4native/8초실제영상. 확대결개선은관찰이나부피/빛은TUNE. 상세 ECG_A_cloud_detail_trial_2026-10-09.md. 다음국소양감·opticalthickness·같은방향원경shadow→nearfootprint정합→서고; 기존near그림자결함튜닝보류유지.
+
+
+## D117 다음 제작 순서
+ECG_A_surface_cloud_next_gate_2026-10-09.md의 S0~S6가 현재 지형·구름 작업의 상세 게이트다. 사각 지형 경계를 독립 TUNE으로 추가하고 지형 진단/접합부터 진행한다. 구현 통과 전 현재 룩 KEEP 없음.

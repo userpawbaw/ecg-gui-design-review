@@ -1,0 +1,239 @@
+{
+  "decision": "D122",
+  "finding": "F087",
+  "verdict": "TUNE: map-only gain works; cloud-on seam improvement limited, not eliminated",
+  "gains": [
+    1,
+    0.8,
+    0.65
+  ],
+  "meaning": "linear source albedo gain, not screen luminance percent",
+  "scope": "globe map and parent global fallback; macro/region 3D albedo unchanged; reveal smoothstep .10-.15",
+  "conditions": "12 same-view captures, RTX3070 1280x720; 3 cloud views and .165 cloud off",
+  "motion": {
+    "automated": true,
+    "nominalMs": 8000,
+    "fullMotionPass": false
+  },
+  "gpu": [
+    {
+      "file": "gain-100-p1500-cloud.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.737152,
+        "p95": 3.851264
+      }
+    },
+    {
+      "file": "gain-100-p1650-clear.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 3.132416,
+        "p95": 4.583424
+      }
+    },
+    {
+      "file": "gain-100-p1650-cloud.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.77504,
+        "p95": 4.5056
+      }
+    },
+    {
+      "file": "gain-100-p1800-cloud.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 3.492864,
+        "p95": 5.271552
+      }
+    },
+    {
+      "file": "gain-65-p1500-cloud.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.803712,
+        "p95": 4.601856
+      }
+    },
+    {
+      "file": "gain-65-p1650-clear.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 3.54816,
+        "p95": 5.577728
+      }
+    },
+    {
+      "file": "gain-65-p1650-cloud.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 3.672064,
+        "p95": 5.59616
+      }
+    },
+    {
+      "file": "gain-65-p1800-cloud.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 3.4048,
+        "p95": 5.6832
+      }
+    },
+    {
+      "file": "gain-80-p1500-cloud.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 2.798592,
+        "p95": 4.196352
+      }
+    },
+    {
+      "file": "gain-80-p1650-clear.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 3.721216,
+        "p95": 5.95968
+      }
+    },
+    {
+      "file": "gain-80-p1650-cloud.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 3.536896,
+        "p95": 5.8368
+      }
+    },
+    {
+      "file": "gain-80-p1800-cloud.json",
+      "gpu": {
+        "available": true,
+        "count": 60,
+        "p50": 3.679232,
+        "p95": 5.440512
+      }
+    }
+  ],
+  "limits": [
+    "aerial scattering/depth/normal residual not corrected",
+    "gain80 provisional not user KEEP",
+    "ground shadow deferred"
+  ],
+  "artifacts": [
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-100-p1500-cloud.json",
+      "sha256": "b0e29e5401098b216cb659669f6b52d70618cfb872fff01c9e7eb114a5669c7a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-100-p1500-cloud.png",
+      "sha256": "d31b69f1507db6705ca71531fc6ca8d4496168810ec2b8a3bf2b281bd750907f"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-100-p1650-clear.json",
+      "sha256": "c10deea971549f3be2f208ae43116ef6d50301546c7d433f9d0b6547c5e4e305"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-100-p1650-clear.png",
+      "sha256": "2eee931613c7c72c8f1e092ebfc15b6904b62c3202b1097ac7bb5a9040d7f357"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-100-p1650-cloud.json",
+      "sha256": "0e9bb3e1dc6376ced0b8b757bdd99e23d3041a58bad45a158817de311c157b78"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-100-p1650-cloud.png",
+      "sha256": "38afe79a51896a6131099f022e71e7db7022fdecffbe6510810e678e95c39917"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-100-p1800-cloud.json",
+      "sha256": "95f43e2471079981ce132ce6dafc4594c9811fba619fe84e53ab0a45275b857e"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-100-p1800-cloud.png",
+      "sha256": "59f730c1ce3d7927b5e67dfe0f36c0a9ba147e67d2ede1c424d225f27943b768"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-65-p1500-cloud.json",
+      "sha256": "8f25bc8463d9ac61e188ecf09c27dfd9704fec6508356e5e5d1341bfd8bbe75c"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-65-p1500-cloud.png",
+      "sha256": "6fec9b8b1c803a77670552e7a2ba37622f53e6bbb3a6f9fab154d25df986aa93"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-65-p1650-clear.json",
+      "sha256": "4fe5a18a185fe44ef87fd20cff2d82b816fed83c2c2dcb67b067665b998ca8cf"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-65-p1650-clear.png",
+      "sha256": "899a392db31da85488e89ea869b47bb4f438a2bb34c3d4a4b4f6f20cf0023885"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-65-p1650-cloud.json",
+      "sha256": "931a44dff01217bef2b3c3cce360b50052dd7d29d71e7a6a42f8606ba620274a"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-65-p1650-cloud.png",
+      "sha256": "d2f1dd0f6c99fc57bdadaa7cbbb07e7a842411824bd3bee34ade48602b07892d"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-65-p1800-cloud.json",
+      "sha256": "0725ea1ead85fe8fd857cc955b2642b6b553cb22f2c8ec6d88d9b8e20b0d56fe"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-65-p1800-cloud.png",
+      "sha256": "ef285f44589fba8be114c7fbddc1dac01695416f1aae49c8b13ada7673ed8665"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-80-p1500-cloud.json",
+      "sha256": "45bb3914d8f61ed9a7bc43ec1a0411fd8b470e0586c5f032e36d335eddbaf9ba"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-80-p1500-cloud.png",
+      "sha256": "8d3b2e6135cb1130de8e20c628e3c548c277efe04c5735a683ec82b000767909"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-80-p1650-clear.json",
+      "sha256": "80335dfe810a9acb7144f7f2fd9fbd8d915549852917a0a860781ec878b953d0"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-80-p1650-clear.png",
+      "sha256": "450dbf1510cd9544e176ce824ddf1ad3c425b3b62b5ca9c69487b5e5e8cca713"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-80-p1650-cloud.json",
+      "sha256": "f61b0ee52e418c378563b5ab9bfeaa54142747ba512fc1702a6358ac8cfab655"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-80-p1650-cloud.png",
+      "sha256": "8297519efe7a42e109c9477213316139058d2ac360e261f5fd8ff57653e19c9d"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-80-p1800-cloud.json",
+      "sha256": "ea658e5b4292f4246c0498335238d6c7131d90436eece39685be9d4289111163"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/gain-80-p1800-cloud.png",
+      "sha256": "5b6d8ef72c65b8843915558e9027f75034c5ce0198cf0dd8a24abdad5a91a83e"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/video-seam-matched.json",
+      "sha256": "400bb4df6656c602579d03677fa503f3cf9123d54f2d941b6410d66ddc551354"
+    },
+    {
+      "path": "verification/a-cloud-sculpt-20261006/native-captures/map-gain-20261010/video-seam-matched.webm",
+      "sha256": "af8415b1b77403072bf4ef0aa30c7d186440d44d6cbbe67725acc79dc685c596"
+    }
+  ]
+}

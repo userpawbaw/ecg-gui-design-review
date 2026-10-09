@@ -288,3 +288,7 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D121 구름 높이·명암
 [검토](ECG_A_cloud_mass_2026-10-09.md), verification/a-cloud-mass-20261009/gallery.html. 높이표면 후보 TUNE/근경volume 미완.
+
+
+## D122 지도 명도 대조
+[검토](ECG_A_map_brightness_match_2026-10-10.md), verification/a-map-gain-20261010/gallery.html. cloudON seam미완/TUNE.

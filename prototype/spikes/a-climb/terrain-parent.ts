@@ -30,8 +30,8 @@ export async function createTerrainParent(macro:THREE.Texture,broad:THREE.Textur
  }
  for(const [name,array,itemSize] of [['terrainDelta',deltas,3],['surfaceU',du,3],['surfaceV',dv,3],['deltaU',deltaU,3],['deltaV',deltaV,3],['detailGradient',detailGrad,2],['sphereContact',contact,4],['dropWeight',regionWeights,1]] as const)geometry.setAttribute(name,new THREE.BufferAttribute(array,itemSize));
  geometry.computeVertexNormals();geometry.computeBoundingBox();geometry.boundingBox!.expandByScalar(8);geometry.boundingSphere=geometry.boundingBox!.getBoundingSphere(new THREE.Sphere());
- const embeddedCloud={value:1},colorHandoff={value:0};const amount={value:0},detail={value:0},mat=new THREE.MeshPhysicalMaterial({map:macro,roughness:1,specularIntensity:.16,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
- mat.onBeforeCompile=s=>{Object.assign(s.uniforms,{parentAmount:amount,detailAmount:detail,parentBroad:{value:broad},parentDay:{value:day},parentPacked:{value:packed},parentEmbeddedCloud:embeddedCloud,parentColorHandoff:colorHandoff});
+ const embeddedCloud={value:1},colorHandoff={value:0},mapGain={value:1};const amount={value:0},detail={value:0},mat=new THREE.MeshPhysicalMaterial({map:macro,roughness:1,specularIntensity:.16,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
+ mat.onBeforeCompile=s=>{Object.assign(s.uniforms,{parentAmount:amount,detailAmount:detail,parentBroad:{value:broad},parentDay:{value:day},parentPacked:{value:packed},parentEmbeddedCloud:embeddedCloud,parentColorHandoff:colorHandoff,parentMapGain:mapGain});
   s.vertexShader=s.vertexShader.replace('#include <common>',`#include <common>
    attribute vec3 terrainDelta,surfaceU,surfaceV,deltaU,deltaV;attribute vec2 detailGradient;attribute vec4 sphereContact;attribute float dropWeight;uniform float parentAmount,detailAmount;
   `).replace('#include <beginnormal_vertex>',`#include <beginnormal_vertex>
@@ -41,9 +41,9 @@ export async function createTerrainParent(macro:THREE.Texture,broad:THREE.Textur
   `).replace('#include <begin_vertex>',`#include <begin_vertex>
    transformed+=parentAmount*terrainDelta;transformed.y-=4.*detailAmount*dropWeight;
   `);
-  s.fragmentShader=s.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D parentBroad,parentDay,parentPacked;uniform float parentEmbeddedCloud,parentColorHandoff,parentAmount;').replace('#include <map_fragment>',`#include <map_fragment>
+  s.fragmentShader=s.fragmentShader.replace('#include <common>','#include <common>\nuniform sampler2D parentBroad,parentDay,parentPacked;uniform float parentEmbeddedCloud,parentColorHandoff,parentAmount,parentMapGain;').replace('#include <map_fragment>',`#include <map_fragment>
    vec2 ll=vec2(vMapUv.x*16.,56.+vMapUv.y*12.),guv=(ll+vec2(180.,90.))/vec2(360.,180.);float edge=min(min(vMapUv.x,vMapUv.y),min(1.-vMapUv.x,1.-vMapUv.y));
-   vec3 globalColor=texture2D(parentDay,guv).rgb;float colorPhase=mix(1.,parentAmount,parentColorHandoff);float macroBlend=smoothstep(0.,mix(.12,.22,parentColorHandoff),edge)*colorPhase;
+   vec3 globalColor=texture2D(parentDay,guv).rgb*parentMapGain;float colorPhase=mix(1.,parentAmount,parentColorHandoff);float macroBlend=smoothstep(0.,mix(.12,.22,parentColorHandoff),edge)*colorPhase;
    vec2 r=(ll-vec2(7.1,61.))/vec2(2.6,1.2);float re=min(min(r.x,r.y),min(1.-r.x,1.-r.y));float regionBlend=smoothstep(0.,.18,re)*colorPhase;
    vec3 mappedColor=mix(globalColor,diffuseColor.rgb,macroBlend);
    float cloudMask=texture2D(parentPacked,guv).b*(1.-max(regionBlend,macroBlend));
@@ -56,5 +56,5 @@ export async function createTerrainParent(macro:THREE.Texture,broad:THREE.Textur
   `);
  };
  const mesh=new THREE.Mesh(geometry,mat);mesh.name='Northern coarse parent terrain';mesh.renderOrder=1;mesh.receiveShadow=true;
- return {mesh,sample,normal,macro,bounds:b,setColorHandoff(on:boolean){colorHandoff.value=on?1:0;},setEmbeddedCloud(on:boolean){embeddedCloud.value=on?1:0;},set(p:number,d:number){amount.value=p;detail.value=d;mesh.visible=p>0;},state:()=>({source:m.source,bounds:b,triangles:256*256*2,reveal:amount.value,detail:detail.value,normalModel:'GPU derivatives of actual deformed surface + analytic sphere contact',cpuGeometryUpdatesPerFrame:0}),dispose(){geometry.dispose();mat.dispose();}};
+ return {mesh,sample,normal,macro,bounds:b,setMapGain(value:number){mapGain.value=value;},setColorHandoff(on:boolean){colorHandoff.value=on?1:0;},setEmbeddedCloud(on:boolean){embeddedCloud.value=on?1:0;},set(p:number,d:number){amount.value=p;detail.value=d;mesh.visible=p>0;},state:()=>({mapGain:mapGain.value,source:m.source,bounds:b,triangles:256*256*2,reveal:amount.value,detail:detail.value,normalModel:'GPU derivatives of actual deformed surface + analytic sphere contact',cpuGeometryUpdatesPerFrame:0}),dispose(){geometry.dispose();mat.dispose();}};
 }

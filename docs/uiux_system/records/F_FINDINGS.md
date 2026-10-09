@@ -2075,3 +2075,25 @@ coverage를 계속 올려도 목표 지형 주변에 원본이 비어 있는 상
 volume sample 아닌 10height intersection/4light lookup 추가, 별도 새texture 없음. 기존 thin층 유지. 단기 GPU 표본이며 전체FPS 보장 불가. 지형 그림자 재튜닝은 보류 유지.
 ### 놓쳤다면
 해상도/법선만 계속 강화해 파형같은 구름 경계의 자글거림과 각인 질감만 늘렸을 수 있다.
+
+
+## F-087. 지도 원색 명도 보정은 가능하지만 구름·대기 위의 잔여 seam을 모두 지우지는 못한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [코드][캡처][사용자] |
+| 상태 | 대조 TUNE |
+| 연결 | D-122 / CASE-007 |
+
+### 발단
+사용자: 3D밖 고해상도 지도를 어둡게 맞추는 대안 제안.
+### 먼저 의심한 것과 배제 방법
+지도 원색과 대기/법선/깊이 기여 분리; sameview3gain×3구름구도+1clear구도.
+### 결정적 근거
+12 native 캡처 동일camera/sun/cloud/model assert, 정상ready/context. clear에서 지도 감소 보임; cloudON 변화는 작고 잔여경계 존재. 인과 확정은 source gain만이며 대기/normal 추가기여는 코드·화면에 근거한 추론.
+### 조치와 검토한 대안
+지도gain select/검토페이지/8초자동영상 제공. 원색gain이고 측정screenluminance 자동fit아님. verification/a-map-gain-20261010/manifest.json. Vite82 PASS/renderer error관찰없음.
+### 비용 / 영향 범위
+기존texture sample에scalar곱; 새지도/geometry/추가pass없음. 실제3D원색 유지. shadow튜닝보류.
+### 놓쳤다면
+값만 낮추고 전체seam해결을 잘못 확정하거나 실제3D명암까지 낮췄을 것이다.

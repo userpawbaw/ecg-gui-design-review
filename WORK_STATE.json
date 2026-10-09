@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D121 height-field orbital cloud TUNE; review mass comparison before near Takram footprint handoff. Rounded smooth surfaces and S1 final seam remain; ground shadow deferred. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_mass_2026-10-09.md",
+  "next_action": "D122 map-only gain TUNE; review 1/.8/.65. Remaining seam is not fully removed; diagnose aerial/normal/depth separately if further work approved. Near cloud handoff unfinished, ground shadow deferred. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_brightness_match_2026-10-10.md",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",

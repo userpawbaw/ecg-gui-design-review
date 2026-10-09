@@ -529,3 +529,7 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_placement_2026-10-0
 
 ## 2026-10-09 D121 구름 높이·명암 보완
 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_mass_2026-10-09.md / verification/a-cloud-mass-20261009/gallery.html. near배치/.07양 유지 4캡처+자동8초영상. heightfield/가림 근사 TUNE; 표면 둥글음·근경volume/S1 seam 미완. 기존shadow보류/서고KEEP/과거2/2와fallback 보존.
+
+
+## 2026-10-10 D122 지도–지형 명도 대조
+docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_map_brightness_match_2026-10-10.md / verification/a-map-gain-20261010/gallery.html. 12캡처+자동8초; mapgain1/.8/.65. 지형원색유지/지도만감소. cloudON 잔여seam미완/TUNE. 기존shadow보류·서고KEEP·과거2/2/fallback 보존.

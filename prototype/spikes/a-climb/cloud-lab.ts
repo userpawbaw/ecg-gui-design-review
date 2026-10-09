@@ -53,6 +53,11 @@ const massLabel=document.createElement('label');massLabel.textContent='구름 �
 const massSet=document.createElement('button');massSet.textContent='구름 양감 2후보 저장';if(orbital)settings.prepend(massSet);
 if(params.get('reviewRound')==='cloud-mass-20261009'){cloudPlacement.value='near';cloudAmount.value='.07';cloudMass.value='mass';}
 cloudMass.onchange=()=>gpuTimes.length=0;
+const mapGain=document.createElement('select');mapGain.setAttribute('aria-label','주변 지도 명도');mapGain.innerHTML='<option value="1">기존 지도</option><option value=".8">지도 80%</option><option value=".65">지도 65%</option>';
+const mapGainLabel=document.createElement('label');mapGainLabel.textContent='주변 지도 명도 ';mapGainLabel.append(mapGain);if(seamReview)settings.prepend(mapGainLabel);
+const mapGainSet=document.createElement('button');mapGainSet.textContent='지도 명도 3후보 저장';if(seamReview)settings.prepend(mapGainSet);
+if(params.get('reviewRound')==='map-gain-20261010'){cloudPlacement.value='near';cloudAmount.value='.07';cloudMass.value='mass';mapGain.value='.8';}
+mapGain.onchange=()=>gpuTimes.length=0;
 if(detailTrial){const label=document.createElement('label');label.textContent='구름 자료 해상도 ';label.append(detailSelect);settings.prepend(label);}
 // D107: independent art-direction controls; original/main defaults stay intact.
 const optics=document.createElement('details');optics.innerHTML='<summary>빛·분포 보완 시험</summary>'+[
@@ -311,11 +316,18 @@ async function saveFrame(){
  if(params.get('reviewRound')==='cloud-amount-20261009')shot='amount-'+Math.round(Number(cloudAmount.value)*100)+'-p'+Math.round(Number(progress.value)*10000)+(seamMode.value!=='matched'||!enabled.checked?'-'+seamMode.value+(enabled.checked?'-on':'-off'):'');
  if(params.get('reviewRound')==='cloud-placement-20261009')shot='placement-'+cloudPlacement.value+'-p'+Math.round(Number(progress.value)*10000);
  if(params.get('reviewRound')==='cloud-mass-20261009')shot='mass-'+cloudMass.value+'-p'+Math.round(Number(progress.value)*10000);
+ if(params.get('reviewRound')==='map-gain-20261010')shot='gain-'+Math.round(Number(mapGain.value)*100)+'-p'+Math.round(Number(progress.value)*10000)+(enabled.checked?'-cloud':'-clear');
  const e=gl.getExtension('WEBGL_debug_renderer_info');
  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),terrainSeam:seamReview?{mode:seamMode.value,matchedNormals:normalPass.matched,depthOffset:seamMode.value!=='legacy',north:north?.state()}:null,url:location.href}})});
  if(!response.ok){error.textContent=await response.text();throw Error(error.textContent);}save.textContent='프레임 저장 완료';
 }
 save.onclick=saveFrame;
+mapGainSet.onclick=async()=>{
+ const old={p:progress.value,gain:mapGain.value,cloud:enabled.checked};mapGainSet.disabled=true;wheelDriving=false;inputSource='map-gain-comparison';
+ try{for(const p of [.15,.165,.18])for(const gain of ['1','.8','.65']){progress.value=String(p);mapGain.value=gain;enabled.checked=true;setCloudEnabled();await framesFor(70);gpuTimes.length=0;await framesFor(60);await saveFrame();}
+ progress.value='.165';enabled.checked=false;setCloudEnabled();for(const gain of ['1','.8','.65']){mapGain.value=gain;await framesFor(70);gpuTimes.length=0;await framesFor(60);await saveFrame();}mapGainSet.textContent='지도 명도 저장 완료';}
+ catch(e){error.textContent=String(e);}finally{progress.value=old.p;mapGain.value=old.gain;enabled.checked=old.cloud;setCloudEnabled();mapGainSet.disabled=false;}
+};
 massSet.onclick=async()=>{
  const old={p:progress.value,mass:cloudMass.value};massSet.disabled=true;wheelDriving=false;inputSource='mass-comparison';
  try{for(const p of [.18,.235])for(const mass of ['flat','mass']){progress.value=String(p);cloudMass.value=mass;await framesFor(70);gpuTimes.length=0;await framesFor(80);await saveFrame();}massSet.textContent='구름 양감 저장 완료';}
@@ -427,7 +439,7 @@ function draw(){
  const now=performance.now(),elapsed=Math.min(.1,Math.max(0,(now-lastDrawTime)/1000));lastDrawTime=now;
  if(wheelDriving){const current=wheelCurrent,next=reducedMotion?wheelTarget:current+(wheelTarget-current)*(1-Math.exp(-elapsed/ .16));wheelCurrent=Math.abs(next-wheelTarget)<.00011?wheelTarget:next;progress.value=String(wheelCurrent);}
  if(activePose.startsWith('north')&&north){
-  north.setEffects({colorHandoff:seamReview&&seamMode.value==='matched'});localCamera.aspect=camera.aspect;north.update(Math.min(.365,Number(progress.value)),2.4,true,localCamera);
+  north.setEffects({mapGain:THREE.MathUtils.lerp(1,Number(mapGain.value),THREE.MathUtils.smoothstep(Number(progress.value),.10,.15)),colorHandoff:seamReview&&seamMode.value==='matched'});localCamera.aspect=camera.aspect;north.update(Math.min(.365,Number(progress.value)),2.4,true,localCamera);
   if(handoff){if(!seamReview||Number(progress.value)>=.18)handoffStage=handoffCamera(Number(progress.value),localCamera);
    else{localCamera.fov=36;localCamera.near=Math.max(.05,localCamera.position.y*.025);localCamera.updateProjectionMatrix();}
    // Source step starts at minStep + (perspectiveScale-1)*rayNear. At 1000km,

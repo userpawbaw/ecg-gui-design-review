@@ -26,3 +26,24 @@ Measured on the recording frame (0:15, 1912×946, `light_anatomy.jpg`; stops = l
 Ours r5 on the same scale: several separate pools from five holes and a directional sun (no falloff), the same mid-cyan level
 everywhere else (no shade zone vs pool), lit colour b* 8–14. The white figure is the largest bright blob at room scale.
 Not measured: the original light rig itself (lamp types, sizes, powers) — inferred from the frame only.
+
+## Follow-up 2026-10-09 — access re-check and offline-render inference
+
+Access: the proxy CONNECT to web.archive.org succeeds (HTTP 200 Connection Established); the reset comes at the TLS client hello,
+from the far side (archive.org and web-static.archive.org answer 200). So it is not the environment's network level; the Internet
+Archive refuses this cloud egress. The user's CDX list (12 URLs, Aug 12 – Sep 19 2026) holds the HTML, fonts, `index-BZFBO0Ol.js`
+(the same hash read on 2026-09-25) and `index-CLH3rn1-.css` — but no `.glb` / `.ktx2`: the 3D scene and its baked textures were never
+archived. The two uploaded files are the Wayback wrapper pages (the script itself sits in the inner frame), so they add nothing.
+The original light rig cannot be read from any reachable source; what follows is inferred from the frame.
+
+More measurements on the 0:15 frame (`ref_crop` region; L* sampled every 3–4 px):
+- Sun-type edges are crisp near their occluder: the drawer-front band's top edge goes 30 → 49 → 77 L* within ~6 px; the diagonal end of
+  the same band softens over ~12 px (longer throw). Crisp-edge scale σ* = 0.8 px (at 720 p) on the drawer, cube and lower-shelf
+  patches; ours r5 cabinet patch 2.8 px (the 2° sun disc of D-059).
+- The wall lit beside the ladder falls from L* 88 to 57 over ~100 px to the right inside the same light — a parallel sun gives a
+  uniform patch on a flat wall, so the key is a near light (small radius → crisp shadows, distance → falloff), e.g. a spot / small
+  area lamp just outside the hatch rather than a sun object [inference].
+- Grain (std of L* high-pass on flat surfaces): REF 0.4 (wall) – 1.0 (drawer front); ours 2.6 (cabinet) – 5.4 (cell back, wood
+  grain + sampling noise). REF surfaces are near-flat albedo with almost no texture; the light gradient is the only signal on them.
+- Highlights: 0.22 % of pixels at the top of the range (ours 0.10 %); highlights roll off rather than clip — LDR KTX2 bakes must
+  have been tone-mapped (Filmic/AgX-type) before being stored, since the materials are unlit [inference].

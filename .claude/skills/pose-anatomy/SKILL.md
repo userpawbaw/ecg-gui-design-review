@@ -5,6 +5,11 @@ description: Pose a rigged human figure (Blender / Rigify, the R1 archive figure
 
 # Pose anatomy — natural human poses with a feedback loop
 
+**Read first (experience playbook):** `docs/playbook/P-001_RIG_HUMAN_MESH.md` (rig = Mixamo auto-rig of our mesh),
+`P-002_TRANSFER_POSE.md` (moving poses between rigs), `P-003_HUMAN_LOOK.md` (figure look / head), `P-004_POSE_SKIN_QA.md`
+(gates before showing). Why: `docs/playbook/journeys/J-001_HUMAN_FIGURE_TO_AUTORIG.md`. As of 2026-10-08 (D-056) Rigify is the
+pose-authoring tool; the skin shown is the Mixamo auto-rig's (`scripts/assets/pose-to-mixamo-v3.py`).
+
 Origin: user 2026-10-05 — "관절이나 발목 위치 이런 부분에 대해 자체 피드백 루프가 없는 것 같아 … 어디까지 꺾일 수 있는지, 일반적인 자세는 무엇인지 … 다른 객체와 충돌, 관절 가동 범위 등을 검토할 수 있어야 하고, 참고할 만한 자세를 인터넷에서 검색해서 레퍼런스로 삼는 작업도 좋아 보여."
 Searched 2026-10-05: existing public skills cover rigging basics (joint types, hierarchy) or motion-clip inspection (ground contact, foot sliding, twist), but none gives numeric ROM limits plus static-pose plausibility for a posed still. This skill fills that gap. Numbers: `references/rom.md` (sources there).
 

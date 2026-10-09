@@ -119,3 +119,7 @@ Chat memory는 이 구조의 **인덱스**로만 사용한다. exact 승인 상�
 - `docs/uiux_system/14_SUPERDESIGN_GENERATION_LAYER.md`: NATIVE_DIRECTOR / CONCRETIZER 실행.
 - `docs/uiux_system/15_SUPERDESIGN_USAGE_EXAMPLES.md`: 짧은 사용자 trigger 예시.
 - `.claude/skills/dual-creative-director/SKILL.md`: Claude wrapper; 다른 환경은 16번을 직접 따른다.
+
+## 경험 플레이북 (2026-10-09, D-057)
+
+작업 전에 `../playbook/README.md`의 권장 카드(P-*)를 먼저 본다. 카드의 근거는 여정(J-*)이 시행착오 순서대로 F/D/O/R을 꿰어 보여 준다. 형식·검사: `../playbook/01_FORMAT.md`, `npm run playbook:check`.

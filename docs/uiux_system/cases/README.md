@@ -28,3 +28,7 @@ CASE 문서는 F/D/O/R 운영 기록을 복사하는 파일이 아니라, 사용
 - [CASE-004 발췌](CASE-004_TRANSCRIPT_EXCERPTS.md) — primary handoff 발췌와 원문 부재 표시
 
 D/R은 CASE 연결 또는 `10_RECORD_KEEPING.md`에 따른 구체적 비연결 사유를 가진다. Dual Director 실행 시스템은 별도 승인 대기다.
+
+## 2026-10-09
+
+- [CASE-007](CASE-007_EXPERIENCE_PLAYBOOK.md) — 리깅 시행착오를 계기로 경험을 권장 카드 + 여정 두 층의 플레이북으로 바꾼 과정(D-057). 산출물 `docs/playbook/`

@@ -107,7 +107,7 @@ if args.art == 'r6':                                          # D-062 (F-040): R
     pal = args.palette == 'pastel'
     flatten(M_WOOD, '#dccbb0' if pal else '#8a6a48', float(os.environ.get('TEX_KEEP', .15)))
     flatten(M_WALL, '#e8dfcf' if pal else '#bfb39e', float(os.environ.get('TEX_KEEP', .15)))
-    flatten(M_FLOOR, '#cdb699' if pal else '#7a5c40', .4)
+    flatten(M_FLOOR, os.environ.get('FLOOR_COL', '#a89075' if pal else '#6a4f36'), .4)
 BOOK_MATS = [mat(f'book_{i}', srgb(h), 0.72) for i, (h, _) in enumerate(PALETTE)]
 BOOK_W = [w for _, w in PALETTE]
 
@@ -815,20 +815,20 @@ SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()   # across the gaps between st
 if args.light == 'r2':                                 # steeper: the hero window's beam crosses the ladder and lands at its foot (D-050 floor spot)
     SUN_TO = Vector((0.807, 0.07, -0.584)).normalized(); sun.angle = math.radians(0.55)
 if args.art in ('r3', 'r4', 'r5', 'r6'):                                   # through the hatch onto the back shelves (receiver), cream light (review D)
-    SUN_TO = Vector(tuple(float(v) for v in os.environ.get('SUN_DIR', '0.22,0.62,-0.75').split(','))).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', {'r5': 26.0, 'r6': 12.0}.get(args.art, 20.0)))
+    SUN_TO = Vector(tuple(float(v) for v in os.environ.get('SUN_DIR', '0.22,0.62,-0.75').split(','))).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', {'r5': 26.0, 'r6': 22.0}.get(args.art, 20.0)))
 if args.art in ('r4', 'r5', 'r6'):                      # D-059: a larger sun disc so every hole's edge gets a penumbra (≈ 3.5 cm per metre of throw at 2°)
     sun.angle = math.radians(float(os.environ.get('SUN_ANG', 0.5 if args.art == 'r6' else 2.0)))   # r6 (F-040): crisp like REF, sigma 0.8 px
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 if args.art == 'r6':                                   # D-062 (F-040): the REF key is a near small lamp (crisp edges + falloff inside one light)
     hx0, hx1, hy0, hy1 = HATCH; hc = Vector(((hx0 + hx1) / 2, (hy0 + hy1) / 2, H))
     KEY_D = float(os.environ.get('KEY_D', 2.2))                  # metres back along the light direction from the hatch centre
-    KEY_TO = Vector(tuple(float(v) for v in os.environ.get('KEY_DIR', '0.3,0.5,-0.81').split(','))).normalized()
-    K = bpy.data.lights.new('key', 'SPOT'); K.energy = float(os.environ.get('KEY_E', 5500)); K.color = srgb(os.environ.get('KEY_COL', '#ffe8d0'))
+    KEY_TO = Vector(tuple(float(v) for v in os.environ.get('KEY_DIR', '0.45,0.5,-0.74').split(','))).normalized()
+    K = bpy.data.lights.new('key', 'SPOT'); K.energy = float(os.environ.get('KEY_E', 5500)); K.color = srgb(os.environ.get('KEY_COL', '#fff0e2'))
     K.shadow_soft_size = float(os.environ.get('KEY_R', 0.06)); K.spot_size = math.radians(110); K.spot_blend = 0.3
     ko = bpy.data.objects.new('key', K); ko.location = hc - KEY_TO * KEY_D; ko.rotation_euler = KEY_TO.to_track_quat('-Z', 'Y').to_euler(); scene.collection.objects.link(ko)
     print('r6 key at', tuple(round(v, 2) for v in ko.location), 'energy', K.energy)
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
-w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4 if args.light == 'r1' else float(os.environ.get('SKY_E', {'r4': 2.4, 'r5': 0.8, 'r6': 0.8}.get(args.art, 1.8))) if args.art in ('r3', 'r4', 'r5', 'r6') else 0.9   # cool sky fill vs warm sun (r2: less fill = dark anchors)
+w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4 if args.light == 'r1' else float(os.environ.get('SKY_E', {'r4': 2.4, 'r5': 0.8, 'r6': 0.5}.get(args.art, 1.8))) if args.art in ('r3', 'r4', 'r5', 'r6') else 0.9   # cool sky fill vs warm sun (r2: less fill = dark anchors)
 for y in (() if args.art in ('r3', 'r4', 'r5', 'r6') else (-1.8, 1.3)):              # r3: one source — the bulbs stay off
     L = bpy.data.lights.new('bulb', 'POINT'); L.energy = 60; L.color = srgb('#ffb36b'); L.shadow_soft_size = 0.05
     lo_ = bpy.data.objects.new('bulb', L); lo_.location = (0, y, H - 1.45); scene.collection.objects.link(lo_)
@@ -916,7 +916,7 @@ if args.preview:
     os.makedirs(args.preview, exist_ok=True)
     rx, ry = map(int, args.res.split('x'))
     scene.render.engine = 'CYCLES'; scene.cycles.device = 'CPU'; scene.cycles.samples = args.samples; scene.cycles.use_denoising = True
-    scene.render.resolution_x, scene.render.resolution_y = rx, ry; scene.view_settings.view_transform = 'AgX'; scene.view_settings.exposure = float(os.environ.get('EXPO', 0.9 if args.art in ('r5', 'r6') else 0.8))
+    scene.render.resolution_x, scene.render.resolution_y = rx, ry; scene.view_settings.view_transform = 'AgX'; scene.view_settings.exposure = float(os.environ.get('EXPO', {'r5': 0.9, 'r6': 0.15}.get(args.art, 0.8)))
     if os.environ.get('LOOK', 'AgX - Punchy' if args.art in ('r5', 'r6') else ''): scene.view_settings.look = os.environ.get('LOOK', 'AgX - Punchy')   # D-061 tone-curve test (e.g. 'AgX - Punchy')
     scene.cycles.max_bounces = int(os.environ.get('BOUNCES', 6)) if args.art in ('r3', 'r4', 'r5', 'r6') else 4; scene.cycles.diffuse_bounces = min(scene.cycles.max_bounces, int(os.environ.get('BOUNCES', 4))); scene.cycles.volume_bounces = 0   # Cycles caps diffuse at 4 by default (D-061)
     want = set(args.shots.split(',')) if args.shots else set(SHOTS)

@@ -112,7 +112,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D125 source/optical candidate TUNE: review initial map seam/colour and forward-reverse motion; finish remaining S1 source-resolution transition before same-footprint near-volume handoff. 21 final native frames + 8sec actual video + 2 real-wheel settled samples. Shadow deferred, archive KEEP.",
+  "next_action": "D126 white cloud-top candidate TUNE: review middle white versus stronger highlights, shadow grooves and snow balance. D125 terrain source-resolution gap remains; then same-footprint near volume handoff. Shadow deferred; archive KEEP.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -1409,6 +1409,14 @@
     "frames": 21,
     "candidateAdopted": false,
     "nearHandoff": false,
+    "shadowDeferred": true
+  },
+  "cloudWhiteD126": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_white_highlight_2026-10-10.md",
+    "manifest": "verification/a-cloud-white-20261010/manifest.json",
+    "frames": 6,
+    "selfVerdict": "middle white recommended TUNE",
+    "candidateAdopted": false,
     "shadowDeferred": true
   }
 }

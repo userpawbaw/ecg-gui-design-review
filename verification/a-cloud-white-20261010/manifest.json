@@ -1,0 +1,55 @@
+{
+  "decision": "D126",
+  "finding": "F091",
+  "frames": [
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-white-20261010/white-contrast-p1584.png",
+      "mode": "contrast",
+      "p": 0.1584,
+      "sha256": "f3285d3272e10d55cea4a730a9924d903a1ceccbd7edc4811e992f05041e0c59"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-white-20261010/white-white-p1584.png",
+      "mode": "white",
+      "p": 0.1584,
+      "sha256": "b23c284f0e5fc4d5b8a6497d1693daac5a7caa95965d6c1355d6c47cd1329a0b"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-white-20261010/white-white-strong-p1584.png",
+      "mode": "white-strong",
+      "p": 0.1584,
+      "sha256": "1e2b07223f05bd956df96f24319c64d0420a0118cced612035a816369bb74ede"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-white-20261010/white-contrast-p2350.png",
+      "mode": "contrast",
+      "p": 0.235,
+      "sha256": "caa663b7f1f3e1f3169329667761fb6581474cadb38c95abf39aaaf655e85c40"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-white-20261010/white-white-p2350.png",
+      "mode": "white",
+      "p": 0.235,
+      "sha256": "c616fc9376df1e813c3b24a39ff84268a24c390368cc5d42e248b5c75c7ad659"
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-white-20261010/white-white-strong-p2350.png",
+      "mode": "white-strong",
+      "p": 0.235,
+      "sha256": "027df5d6e61a38febfe9369b0564b19841705424cae4bc7b7872df029cc0399c"
+    }
+  ],
+  "sameCameraSunPlacementHeight": "PASS",
+  "selfVerdict": "TUNE: white .5 recommended; stronger white can reduce bright lobe detail",
+  "metrics": {
+    "changedPixelCount": 322946,
+    "changedPixelsMedianRGBBefore": 129.0,
+    "changedPixelsMedianRGBAfter": 183.33333333333334,
+    "unchangedPixelFraction": 0.5754806857638889,
+    "meaning": "brightened-pixel sample, not measured physical luminance or a cloud-only semantic mask"
+  },
+  "newTextures": false,
+  "additionalPasses": 0,
+  "mainIntegrated": false,
+  "shadowDeferred": true
+}

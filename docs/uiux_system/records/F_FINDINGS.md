@@ -2163,3 +2163,25 @@ globe/parent/regional/near에 저주파RGB비율 정합과 source공유. edge-on
 추가 texture 조회/원색정합미보존/짧은GPU측정. opt-in만; main/near통합없음. 원경 품질차이/전체seam/장시간미검증 TUNE.
 ### 놓쳤다면
 지도나구름에blur를더하면서 원인과관계없는손실을늘리고, 지역LOD쪽원색기여를남겨새경계를만들었을것이다.
+
+
+## F-091. 구름 윗면 회색은 직접광까지 일괄 낮춘 radiance 배율의 영향이다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [사용자][코드][캡처] |
+| 상태 | 흰 윗면 후보 TUNE |
+| 연결 | D-126 / CASE-007 |
+
+### 발단
+사용자 “빛을 받는 부분인데도 명암 대비가 잘 보이지 않아”, 지도 눈처럼 흰 면 요청.
+### 먼저 의심한 것과 배제 방법
+asset 회색/조명없음 대신 현재 massLayer fill+key*facing*transmission 후 .065전체배율 확인. 동일조명방향/형상에서 직접광계수만 변경해대조.
+### 결정적 근거
+2구도3후보6native. 중간계수 .5325에서 흰 윗면/어두운골 분리, 강한1.0에서 bright detail 감소. camera/sun/placement/height 동일 assert. 광학 완전volume/scattering증거는아님.
+### 조치와 검토한 대안
+환경광/지도노출증량없이 직접광 radiance 분리. 중간white 추천TUNE, stronger보존. report ECG_A_cloud_white_highlight_2026-10-10.md; verification/a-cloud-white-20261010/manifest.json.
+### 비용 / 영향 범위
+새에셋/pass/raystep없음,scalar광학연산. 기존contrast/기본main유지,near통합미완,그림자보류/지도gap 유지.
+### 놓쳤다면
+광원·asset을다시바꾸면서도같은회색radiance제한을남기거나그늘까지전부밝게만들었을것이다.

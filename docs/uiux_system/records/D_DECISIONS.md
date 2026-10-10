@@ -3086,3 +3086,24 @@ shared terrain-source 함수를 globe/parent/regionalLOD/near에 적용. mip6 RG
 edge-only후보효과작음·regional원색잔류후보는접합불일치라최종채택안함. 전체지도blur/구름가림으로은폐제외. first13/second16native보존. GLSL coherent 예약어실패후수정/전체재캡처.
 ### 되돌려야 하는 조건
 색감왜곡·낮은해상도영역과품질gap·새seam/잔상/veil이면legacy/auto로대조. 21finalnative/actual8초/실wheel2/build83PASS이지만사용자채택미완. 기존shadow보류/서고KEEP/2회실패/fallback유지.
+
+
+## D-126. 구름의 직접광 radiance만 높여 흰 윗면과 그늘을 분리한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [사용자][코드][캡처] |
+| 상태 | 구현·대조 완료 / 중간 white 추천 TUNE |
+| 연결 | F-091 / D-123 / D-125 |
+| CASE | CASE-007 |
+
+### 갈림길
+전체노출/환경광을올릴지,직접광면만증량할지.
+### 검토한 선택지
+기존 .065/중간 .5325/강한1.0 직접광 radiance, fill/night/haze는 .065유지.
+### 고른 것과 근거
+massLayer에만direct배율독립. 2구도3후보6native 같은camera/sun/source/heightassert. 중간white가윗면흰색과어두운골분리,강한안은bright결감소. 기존contrast 및main기본유지. report ECG_A_cloud_white_highlight_2026-10-10.md.
+### 버린 것과 이유
+전체지도노출·환경광증량/구름색white고정/Bloom은 지도및그늘도바뀌고양감손실우려로제외. 더강한후보는비교보존/최종추천안아님.
+### 되돌려야 하는 조건
+흰날림·fine형상소실·그늘밝아짐/원경눈과균형불량이면contrast또는중간이하. 사용자채택미완/TUNE,near인계미완/기존shadow보류/서고KEEP/구름실패2/2유지.

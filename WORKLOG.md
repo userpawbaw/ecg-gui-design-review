@@ -766,3 +766,7 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_detail_hold_cloud_light_2
 
 ## 2026-10-10 D125 source·optical 연속성 후보
 공식Takram자동구면보정분리→현구성veil급변개선. sharedsource합성globe/parent/regional/near 적용,저주파RGB정합/fine보존. first13/second16후보보존. final21native+actual8초trace482+실wheel정역settled2. GLSL예약어오류O024수정후재캡처. TUNE,원경해상도gap/전체seam/사용자채택미완. main·near통합미실시/shadow보류/서고KEEP/2회실패유지. 다음사용자리뷰반영S1잔여→near동일footprint. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_source_optical_continuity_2026-10-10.md; verification/a-source-optical-20261010/gallery.html.
+
+
+## 2026-10-10 D126 구름 흰 윗면
+사용자회색윗면지적→directradiance만분리/중간·강한후보. final2구도3후보6native/camera-sun-height동일assert,shadererror없음. 중간white추천TUNE,강한brightdetail손실. 지도노출/fill/형상유지/main기본미변경. 다음사용자흰면·그늘·표면결리뷰→기존S1잔여/near인계순서. shadow보류/KEEP/실패2/2유지. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_white_highlight_2026-10-10.md; verification/a-cloud-white-20261010/gallery.html.

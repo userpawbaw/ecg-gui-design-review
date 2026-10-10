@@ -60,7 +60,7 @@ if(params.get('reviewRound')==='map-gain-20261010'){cloudPlacement.value='near';
 mapGain.onchange=()=>gpuTimes.length=0;
 const detailHold=document.createElement('select');detailHold.setAttribute('aria-label','지도 디테일 인계');detailHold.innerHTML='<option value="legacy">이전 해상도 인계</option><option value="hold">고해상도 유지</option>';
 const detailHoldLabel=document.createElement('label');detailHoldLabel.textContent='지도 디테일 인계 ';detailHoldLabel.append(detailHold);if(seamReview)settings.prepend(detailHoldLabel);
-const cloudLight=document.createElement('select');cloudLight.setAttribute('aria-label','구름 명암');cloudLight.innerHTML='<option value="base">기존 조명</option><option value="contrast">직접광·그늘 대비</option>';
+const cloudLight=document.createElement('select');cloudLight.setAttribute('aria-label','구름 명암');cloudLight.innerHTML='<option value="base">기존 조명</option><option value="contrast">직접광·그늘 대비</option><option value="white">흰 윗면 · 직접광 강화</option><option value="white-strong">더 밝은 흰 윗면</option>';
 const cloudLightLabel=document.createElement('label');cloudLightLabel.textContent='구름 명암 ';cloudLightLabel.append(cloudLight);if(orbital)settings.prepend(cloudLightLabel);
 const detailLightSet=document.createElement('button');detailLightSet.textContent='디테일·조명 독립 대조 저장';if(seamReview)settings.prepend(detailLightSet);
 if(params.get('reviewRound')==='detail-light-20261010'){cloudPlacement.value='near';cloudAmount.value='.07';cloudMass.value='mass';mapGain.value='.8';detailHold.value='hold';cloudLight.value='contrast';}
@@ -73,6 +73,8 @@ const correctionLabel=document.createElement('label');correctionLabel.textConten
 const continuitySet=document.createElement('button');continuitySet.textContent='지도·대기 접합 대조 저장';if(seamReview)settings.prepend(continuitySet);
 if(params.get('reviewRound')==='source-optical-20261010'){cloudPlacement.value='near';cloudAmount.value='.07';cloudMass.value='mass';mapGain.value='.8';detailHold.value='hold';cloudLight.value='contrast';sourceMatch.value='matched';opticalCorrection.value='actual';}
 
+const whiteHighlightSet=document.createElement('button');whiteHighlightSet.textContent='구름 흰 윗면 3후보 저장';if(orbital)settings.prepend(whiteHighlightSet);
+if(params.get('reviewRound')==='cloud-white-20261010'){cloudPlacement.value='near';cloudAmount.value='.07';cloudMass.value='mass';mapGain.value='.8';detailHold.value='hold';sourceMatch.value='matched';opticalCorrection.value='actual';cloudLight.value='white';}
 // D107: independent art-direction controls; original/main defaults stay intact.
 const optics=document.createElement('details');optics.innerHTML='<summary>빛·분포 보완 시험</summary>'+[
  ['weatherX','날씨 위치 X',0,0,1,.01],['weatherY','날씨 위치 Y',0,0,1,.01],['sunElevation','태양 고도',16.1,5,60,1],['sunAzimuth','태양 방위',43.75,-180,180,1],['hazeFalloff','연무 고도 감쇠',.001,.0001,.002,.00005],['layerDepth','구름 두께 배율',1,.6,1.4,.1],['layerDensity','구름 밀도 배율',1,.5,1.5,.1]
@@ -333,11 +335,17 @@ async function saveFrame(){
  if(params.get('reviewRound')==='map-gain-20261010')shot='gain-'+Math.round(Number(mapGain.value)*100)+'-p'+Math.round(Number(progress.value)*10000)+(enabled.checked?'-cloud':'-clear');
  if(params.get('reviewRound')==='detail-light-20261010')shot='detail-'+detailHold.value+'-light-'+cloudLight.value+'-p'+Math.round(Number(progress.value)*10000);
  if(params.get('reviewRound')==='source-optical-20261010')shot='source-'+sourceMatch.value+'-optical-'+opticalCorrection.value+'-p'+Math.round(Number(progress.value)*10000)+(enabled.checked?'-cloud':'-clear');
+ if(params.get('reviewRound')==='cloud-white-20261010')shot='white-'+cloudLight.value+'-p'+Math.round(Number(progress.value)*10000);
  const e=gl.getExtension('WEBGL_debug_renderer_info');
  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),terrainSeam:seamReview?{mode:seamMode.value,matchedNormals:normalPass.matched,depthOffset:seamMode.value!=='legacy',north:north?.state()}:null,url:location.href}})});
  if(!response.ok){error.textContent=await response.text();throw Error(error.textContent);}save.textContent='프레임 저장 완료';
 }
 save.onclick=saveFrame;
+whiteHighlightSet.onclick=async()=>{
+ const old={p:progress.value,light:cloudLight.value};whiteHighlightSet.disabled=true;wheelDriving=false;inputSource='white-highlight-comparison';
+ try{for(const p of [.1584,.235])for(const light of ['contrast','white','white-strong']){progress.value=String(p);cloudLight.value=light;await framesFor(55);gpuTimes.length=0;await framesFor(35);await saveFrame();}whiteHighlightSet.textContent='구름 흰 윗면 대조 완료';}
+ catch(e){error.textContent=String(e);}finally{progress.value=old.p;cloudLight.value=old.light;whiteHighlightSet.disabled=false;}
+};
 continuitySet.onclick=async()=>{
  const old={p:progress.value,source:sourceMatch.value,optical:opticalCorrection.value,cloud:enabled.checked};continuitySet.disabled=true;wheelDriving=false;inputSource='source-optical-comparison';
  try{
@@ -501,7 +509,7 @@ function draw(){
   camera.position.copy(localCamera.position).multiplyScalar(1000);camera.quaternion.copy(localCamera.quaternion);
   camera.near=localCamera.near*1000;camera.far=localCamera.far*1000;camera.fov=localCamera.fov;camera.updateProjectionMatrix();
  }else controls.update();
- camera.updateMatrixWorld();if(orbital){orbitalEffect.setLightContrast(cloudLight.value==='contrast');orbitalEffect.setMass(cloudMass.value==='mass',renderer.domElement.height,camera);orbitalEffect.setDetail(detailSelect.value);orbitalEffect.setCoverageBoost(Number(cloudAmount.value));orbitalEffect.setPlacement(cloudPlacement.value==='near');orbitalEffect.sync(camera,northToECEF,aerial.sunDirection,orbitalSelect.value,enabled.checked);}clouds.localWeatherVelocity.set(wind.checked ? .001 : 0,0);
+ camera.updateMatrixWorld();if(orbital){orbitalEffect.setLightContrast(cloudLight.value!=='base');orbitalEffect.setWhiteHighlight(cloudLight.value==='white'?.5:cloudLight.value==='white-strong'?1:0);orbitalEffect.setMass(cloudMass.value==='mass',renderer.domElement.height,camera);orbitalEffect.setDetail(detailSelect.value);orbitalEffect.setCoverageBoost(Number(cloudAmount.value));orbitalEffect.setPlacement(cloudPlacement.value==='near');orbitalEffect.sync(camera,northToECEF,aerial.sunDirection,orbitalSelect.value,enabled.checked);}clouds.localWeatherVelocity.set(wind.checked ? .001 : 0,0);
  if(timer){
   if(gl.getParameter(timer.GPU_DISJOINT_EXT)){pending.forEach(q=>gl.deleteQuery(q));pending.length=0;gpuTimes.length=0;}
   else while(pending.length&&gl.getQueryParameter(pending[0],gl.QUERY_RESULT_AVAILABLE)){const q=pending.shift()!;gpuTimes.push(gl.getQueryParameter(q,gl.QUERY_RESULT)/1e6);gl.deleteQuery(q);if(gpuTimes.length>300)gpuTimes.shift();}

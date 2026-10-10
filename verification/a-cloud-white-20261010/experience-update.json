@@ -1,0 +1,7 @@
+{
+  "source": "F091/D126",
+  "status": "TUNE",
+  "recommendation": "Separate direct radiance from fill/haze before changing exposure or asset. Compare same-camera highlight strength and bright surface detail.",
+  "gap": "proxy optics, user adoption and near handoff pending",
+  "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_white_highlight_2026-10-10.md"
+}

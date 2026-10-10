@@ -1,0 +1,129 @@
+{
+  "decision": "D127",
+  "finding": "F092",
+  "status": "TUNE",
+  "frames": [
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/relief-0-p1584-fixed.png",
+      "mode": 0,
+      "p": 0.1584,
+      "sha256": "b23c284f0e5fc4d5b8a6497d1693daac5a7caa95965d6c1355d6c47cd1329a0b",
+      "gpu": {
+        "available": true,
+        "count": 35,
+        "p50": 4.393984,
+        "p95": 5.138432
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/relief-1-p1584-fixed.png",
+      "mode": 1,
+      "p": 0.1584,
+      "sha256": "21bff793987effb831c87a939ceeaa89aae348ae7647103c3760805d9b68f3ed",
+      "gpu": {
+        "available": true,
+        "count": 35,
+        "p50": 5.675008,
+        "p95": 5.77024
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/relief-2-p1584-fixed.png",
+      "mode": 2,
+      "p": 0.1584,
+      "sha256": "e12a2a7078e15e8bb0c79bb7a29aa77cd9193b2d08e887f824845ec9a58e06e7",
+      "gpu": {
+        "available": true,
+        "count": 35,
+        "p50": 5.755904,
+        "p95": 5.818368
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/relief-0-p1800-fixed.png",
+      "mode": 0,
+      "p": 0.18,
+      "sha256": "b9488acd6d6380f517fc988528eeae0b3cba1de10ef5759d774db5be30a42c53",
+      "gpu": {
+        "available": true,
+        "count": 35,
+        "p50": 6.070272,
+        "p95": 7.258112
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/relief-1-p1800-fixed.png",
+      "mode": 1,
+      "p": 0.18,
+      "sha256": "b0d92a5f551b6f7e524f0f43540ddf886be264c0d907e82b7ff96f7f6a981714",
+      "gpu": {
+        "available": true,
+        "count": 35,
+        "p50": 6.043648,
+        "p95": 7.871488
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/relief-2-p1800-fixed.png",
+      "mode": 2,
+      "p": 0.18,
+      "sha256": "679befea9a33227350df9c74ff4c7a55840b57418ca9376bbb3f78f74ff620dd",
+      "gpu": {
+        "available": true,
+        "count": 35,
+        "p50": 6.02624,
+        "p95": 8.1408
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/relief-0-p2350-fixed.png",
+      "mode": 0,
+      "p": 0.235,
+      "sha256": "9c3300b4d05587aa49d6292311bb1bd5f2d74660cdd56c75fbac845dffe261de",
+      "gpu": {
+        "available": true,
+        "count": 35,
+        "p50": 3.938304,
+        "p95": 5.09952
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/relief-1-p2350-fixed.png",
+      "mode": 1,
+      "p": 0.235,
+      "sha256": "239cee1cec08631d30e727bc1bca8ca80c106f10728e83abf4fca203497e2d6a",
+      "gpu": {
+        "available": true,
+        "count": 17,
+        "p50": 7.197696,
+        "p95": 9.472
+      }
+    },
+    {
+      "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/relief-2-p2350-fixed.png",
+      "mode": 2,
+      "p": 0.235,
+      "sha256": "13184dccd11b08da5bb61d6bd52eeb62e6272daab796bc7e6a2b1a7f34c0addd",
+      "gpu": {
+        "available": true,
+        "count": 35,
+        "p50": 7.308288,
+        "p95": 8.2944
+      }
+    }
+  ],
+  "sameViewAssertions": "camera, sun, sourceMatch, opticalCorrection, placement equal within each pose",
+  "rejectedTrials": [
+    "cloud-relief-first-20261010",
+    "cloud-relief-second-20261010"
+  ],
+  "newTextures": 0,
+  "measuredVolume": false,
+  "motion": {
+    "file": "verification/a-cloud-sculpt-20261006/native-captures/cloud-relief-20261010/video-seam-matched.webm",
+    "completed": true,
+    "nominalMs": 8000,
+    "traceSamples": 483,
+    "input": "automatic camera path"
+  }
+}

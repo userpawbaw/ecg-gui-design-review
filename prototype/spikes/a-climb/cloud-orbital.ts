@@ -10,7 +10,7 @@ uniform mat3 viewRotation, geographicRotation;
 uniform vec3 eye, sunLocal;
 uniform float relief, amount, coverageBoost;
 uniform vec2 sourceCentre;
-uniform float massMode, pixelAngle, lightContrast, whiteHighlight;
+uniform float massMode, pixelAngle, lightContrast, whiteHighlight, localRelief;
 const float radius=6371000.;
 const vec3 centre=vec3(0.,-6371000.,0.);
 vec2 geoUV(vec3 n){
@@ -63,9 +63,21 @@ float filteredDensity(vec2 uv,float footprint){
  float fine=textureLod(cloudDetailMap,vec2(crop.x,1.-crop.y),max(0.,log2(footprint/2450.))).r;
  return mix(coarse,fine,detailAmount*smoothstep(0.,.05,edge));
 }
+float focusWeight(vec2 uv){
+ // Fixed geographic focus, never camera/screen anchored. Only detail strength fades.
+ vec2 offset=(uv-vec2(.523333333,.842388889))*vec2(6.2831853*cos((uv.y-.5)*3.14159265),3.14159265)*radius;
+ return 1.-smoothstep(90000.,330000.,length(offset));
+}
 float cloudHeight(vec3 point,float footprint){
- float d=filteredDensity(geoUV(normalize(point-centre)),footprint);
+ vec2 uv=geoUV(normalize(point-centre));float d=filteredDensity(uv,footprint);
  return 7000.+2400.*smoothstep(.48-coverageBoost,.94,d);
+}
+float lightingHeight(vec3 point,float footprint){
+ vec2 uv=geoUV(normalize(point-centre));
+ float fine=filteredDensity(uv,max(footprint,1800.));
+ float broad=filteredDensity(uv,max(footprint,7000.));
+ // Shading relief only: preserve the existing silhouette and ray intersection.
+ return 7000.+2200.*broad+min(localRelief,2.)*3800.*(fine-broad);
 }
 vec4 massLayer(vec3 ray){
  float front=shell(ray,9400.),back=shell(ray,7000.);
@@ -80,9 +92,15 @@ vec4 massLayer(vec3 ray){
  float d=filteredDensity(geoUV(n),footprint);
  float alpha=smoothstep(.48-coverageBoost,.90-coverageBoost*.5,d)*.94;
  vec3 east=normalize(cross(vec3(0.,0.,1.),n));vec3 north=normalize(cross(n,east));
- float delta=max(3000.,footprint);
+ float focus=focusWeight(geoUV(n))*min(localRelief,1.);
+ float delta=max(mix(3000.,1800.,focus),footprint);
  float dx=(cloudHeight(point+east*delta,footprint)-cloudHeight(point-east*delta,footprint))/(2.*delta);
  float dy=(cloudHeight(point+north*delta,footprint)-cloudHeight(point-north*delta,footprint))/(2.*delta);
+ if(focus>.01){
+  float ldx=(lightingHeight(point+east*delta,footprint)-lightingHeight(point-east*delta,footprint))/(2.*delta);
+  float ldy=(lightingHeight(point+north*delta,footprint)-lightingHeight(point-north*delta,footprint))/(2.*delta);
+  dx=mix(dx,ldx*2.4,focus);dy=mix(dy,ldy*2.4,focus);
+ }
  vec3 normal=normalize(n-east*dx-north*dy);
  float tau=0.;
  for(int i=1;i<=4;i++){
@@ -90,11 +108,19 @@ vec4 massLayer(vec3 ray){
   float buried=cloudHeight(lightPoint,footprint)-(length(lightPoint-centre)-radius);
   tau+=smoothstep(-80.,550.,buried)*.5;
  }
+ if(focus>.01){
+  float localTau=0.;float shadingTop=lightingHeight(point,footprint);
+  for(int i=1;i<=6;i++){
+   float distance=float(i)*900.;vec3 lightPoint=point+sunLocal*distance;
+   float buried=lightingHeight(lightPoint,footprint)-shadingTop-distance*dot(n,sunLocal);
+   localTau+=smoothstep(-80.,320.,buried)*.20;
+  }
+  tau=mix(tau,localTau,focus);
+ }
  float facing=max(0.,dot(normal,sunLocal));float transmission=exp(-tau*mix(1.,1.65,lightContrast));
  float day=smoothstep(-.04,.16,dot(n,sunLocal));
  vec3 fill=mix(vec3(.25,.28,.33),vec3(.12,.15,.20),lightContrast);
  vec3 key=mix(vec3(.73,.70,.65),vec3(1.13,1.07,.97),lightContrast);
- vec3 lit=fill+key*facing*transmission;
  // Direct radiance increases independently: shadow fill and ground exposure stay fixed.
  vec3 radiance=fill*.065+key*facing*transmission*mix(.065,1.0,whiteHighlight);
  vec3 light=mix(vec3(.045,.065,.09)*.065,radiance,day);
@@ -112,7 +138,7 @@ void mainImage(const in vec4 inputColor,const in vec2 uv,out vec4 outputColor){
 
 export class OrbitalCloudEffect extends Effect{
  constructor(){super('OrbitalCloudProxy',fragment,{blendFunction:BlendFunction.NORMAL,uniforms:new Map<string,THREE.Uniform>([
-  ['whiteHighlight',new THREE.Uniform(0)],['lightContrast',new THREE.Uniform(0)],['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
+  ['localRelief',new THREE.Uniform(0)],['whiteHighlight',new THREE.Uniform(0)],['lightContrast',new THREE.Uniform(0)],['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
   ['viewRotation',new THREE.Uniform(new THREE.Matrix3())],['geographicRotation',new THREE.Uniform(new THREE.Matrix3())],
   ['eye',new THREE.Uniform(new THREE.Vector3())],['sunLocal',new THREE.Uniform(new THREE.Vector3())],
   ['relief',new THREE.Uniform(1)],['amount',new THREE.Uniform(1)],['coverageBoost',new THREE.Uniform(0)]
@@ -141,6 +167,7 @@ export class OrbitalCloudEffect extends Effect{
  setCoverageBoost(value:number){this.uniforms.get('coverageBoost')!.value=THREE.MathUtils.clamp(value,0,.14);}
  setPlacement(near:boolean){this.uniforms.get('sourceCentre')!.value.set(near?.671875:.64,near?.8330078125:.78);}
  setWhiteHighlight(value:number){this.uniforms.get('whiteHighlight')!.value=THREE.MathUtils.clamp(value,0,1);}
+ setLocalRelief(value:number){this.uniforms.get('localRelief')!.value=THREE.MathUtils.clamp(value,0,2);}
  setLightContrast(on:boolean){this.uniforms.get('lightContrast')!.value=on?1:0;}
  setMass(on:boolean,height:number,camera:THREE.PerspectiveCamera){this.uniforms.get('massMode')!.value=on?1:0;this.uniforms.get('pixelAngle')!.value=2*Math.tan(THREE.MathUtils.degToRad(camera.fov)*.5)/height;}
  sync(camera:THREE.PerspectiveCamera,toECEF:THREE.Matrix4,sunECEF:THREE.Vector3,mode:string,on:boolean){

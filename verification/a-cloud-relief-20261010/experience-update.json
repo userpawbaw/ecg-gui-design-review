@@ -1,0 +1,207 @@
+{
+  "canonicalCase": {
+    "schemaVersion": 1,
+    "id": "EXP-051",
+    "title": "흰 구름 윗면의 결은 실루엣과 조명 굴곡을 분리해 보완하기",
+    "category": "구름",
+    "tags": [
+      "국소 명암",
+      "위성 구름",
+      "gradient",
+      "shading relief",
+      "흰 윗면"
+    ],
+    "status": "partial",
+    "problem": {
+      "goal": "확대 주변 일부 구름의 흰 윗면과 어두운 골이 선명하게 읽힘",
+      "symptoms": [
+        "윗면 밝기 증량 후에도 작은 명암 결이 약함"
+      ]
+    },
+    "scope": {
+      "environment": [
+        "Three0.186.1/WebGL2/Takram0.19.1 atmosphere + custom 2.5D orbital effect; RTX3070 1280×720",
+        "D127 opt-in reviewRound cloud-relief-20261010, p.1584/.18/.235"
+      ],
+      "applies": [
+        "고해상도 위성 footprint는 확보했지만 밝은 윗면 결이 약한 height-field proxy",
+        "같은 카메라/광원에서 작은 후보 비교가 가능한 장면"
+      ],
+      "excludes": [
+        "이 사례의 해결을 전체 도입부·Story 완성 또는 출품 승인으로 확대하지 않는다.",
+        "다른 PC·해상도·패키지 버전에는 당시 성능 수치와 설정을 그대로 보장하지 않는다."
+      ]
+    },
+    "recommendation": {
+      "strength": "candidate",
+      "action": "밝기만 더 올리기 전에 큰 실루엣과 조명용 높이를 분리하고, 목표 주변의 gradient·자기 가림을 연속적으로 추가해 비교한다.",
+      "steps": [
+        {
+          "action": "기존 분포·높이·불투명도 고정",
+          "reason": "높이 자체 detail 증폭은 뾰족한 지형 형태를 만들 수 있다."
+        },
+        {
+          "action": "동일 위성 fine/broad의 조명 굴곡을 국소 geographic mask로 적용",
+          "reason": "큰 빈틈을 보존하며 확대 주변에만 필요한 명암을 만든다."
+        },
+        {
+          "action": "기존/중간/강한 동일구도와 정역영상을 비교",
+          "reason": "선명함과 자연스러운 결, 자글거림을 따로 평가한다."
+        }
+      ],
+      "evidenceIds": [
+        "F-092",
+        "D-127"
+      ],
+      "recheck": [
+        "마스크 윤곽/새 군집 생성/돌 같은 결/자글거림/흰날림",
+        "실제 volume 내부 통과에는 이 shading-only 근사를 그대로 쓰지 않는다."
+      ]
+    },
+    "quality": {
+      "target": "확대 주변 일부 구름의 흰 윗면과 어두운 골이 선명하게 읽힘",
+      "achieved": "9final native에서 일부 명암 분리 부분 개선; 중간추천 TUNE",
+      "remaining": [
+        "실사 섬유 결·완전 volume/모든프레임 shimmering·사용자 채택·near 인계 미완",
+        "지도 source 경계 잔여와 기존 지면 그림자 보류 유지"
+      ]
+    },
+    "cause": {
+      "certainty": "inferred",
+      "explanation": "높이 transfer plateau와 넓은 gradient 표본이 디테일 약화에 기여; 전체 사진 품질 차이의 유일 원인으로 확정하지 않음",
+      "evidenceIds": [
+        "F-092"
+      ]
+    },
+    "history": [
+      {
+        "seq": 1,
+        "mode": "executed",
+        "result": "rejected",
+        "approach": "실제 높이와 slope detail 증폭",
+        "observation": "9장에 뾰족한 지형 같은 형태",
+        "decision": "실루엣 유지로 변경",
+        "evidenceIds": [
+          "F-092"
+        ]
+      },
+      {
+        "seq": 2,
+        "mode": "executed",
+        "result": "rejected",
+        "approach": "좁은 geographic focus/약한 shading-only relief",
+        "observation": "9장에 마지막 확대 명암 차이 작음",
+        "decision": "기여 범위/gradient 보완",
+        "evidenceIds": [
+          "F-092"
+        ]
+      },
+      {
+        "seq": 3,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "최종 geographic90–330km shading relief/6회 local sunlight 가림",
+        "observation": "9장+8초 자동 영상; 일부 골/흰능선 개선, 실사 결 미달",
+        "decision": "중간추천TUNE; 사용자채택별도",
+        "evidenceIds": [
+          "F-092",
+          "D-127"
+        ]
+      },
+      {
+        "seq": 4,
+        "mode": "considered",
+        "result": "not_tested",
+        "approach": "동일 footprint 추가 volume층",
+        "observation": null,
+        "decision": "최종국소명암미달때재검토",
+        "evidenceIds": [
+          "D-127"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "F-092",
+        "kind": "event",
+        "reference": "F-092",
+        "quote": null
+      },
+      {
+        "id": "D-127",
+        "kind": "event",
+        "reference": "D-127",
+        "quote": null
+      },
+      {
+        "id": "report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_local_detail_2026-10-10.md",
+        "quote": null
+      }
+    ],
+    "sourceRecordIds": [
+      "F-092",
+      "D-127"
+    ],
+    "resolutionEvidence": [],
+    "artifacts": [
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_local_detail_2026-10-10.md",
+        "role": "report",
+        "description": "세 시험과 국소 명암의 범위/미달 기록"
+      },
+      {
+        "path": "verification/a-cloud-relief-20261010/gallery.html",
+        "role": "gallery",
+        "description": "실제 renderer9장·동일crop·8초영상 비교"
+      }
+    ],
+    "related": [
+      "EXP-037",
+      "EXP-027"
+    ],
+    "time": {
+      "value": null,
+      "unit": null,
+      "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+      "evidenceIds": []
+    },
+    "cost": {
+      "value": null,
+      "unit": null,
+      "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+      "evidenceIds": []
+    },
+    "review": {
+      "owner": "project-maintainer",
+      "reviewedOn": "2026-10-10",
+      "method": "사용자 첨부5장/코드/최종9native와 기각18native 및 자동8초keyframe 비교; 전체motion완전검증아님",
+      "verdict": "new_evidence_review",
+      "userAcceptance": "새 후보 사용자 채택 전; 기존 near 그림자 보류 및 서고 KEEP 유지",
+      "limits": [
+        "당시 생성 정지 목업은 구현·ECG 데이터 정확성·실시간 성능 증거가 아니다.",
+        "전체 장기 재생·목표 전시 PC·터치 입력은 이관 작업에서 재검증하지 않았다."
+      ]
+    },
+    "next": {
+      "owner": "project-maintainer",
+      "action": "p.235 국소 명암의 자연스러움 사용자 리뷰 후 기존S1잔여/동일footprint near인계",
+      "doneWhen": "같은 기준 구도의 전후 증거와 적용 범위가 명시되고, 남은 차이에 대해 KEEP/TUNE/REJECT 또는 보류 판단이 기록된다."
+    },
+    "revision": 1,
+    "revisionHistory": [
+      {
+        "revision": 1,
+        "date": "2026-10-10",
+        "reason": "macro 분포 문제가 아닌 흰 윗면 국소 조명 결의 별도 원인/시험을 신규 사례로 기록",
+        "evidenceIds": [
+          "F-092",
+          "D-127"
+        ],
+        "previousRecommendation": null
+      }
+    ]
+  },
+  "note": "Canonical local DB updated; DB foundation remains separate uncommitted user work. This packet preserves this new case with the scoped milestone commit."
+}

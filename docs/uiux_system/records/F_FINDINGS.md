@@ -2185,3 +2185,24 @@ asset 회색/조명없음 대신 현재 massLayer fill+key*facing*transmission �
 새에셋/pass/raystep없음,scalar광학연산. 기존contrast/기본main유지,near통합미완,그림자보류/지도gap 유지.
 ### 놓쳤다면
 광원·asset을다시바꾸면서도같은회색radiance제한을남기거나그늘까지전부밝게만들었을것이다.
+
+## F-092. 흰 구름의 국소 결은 조명용 gradient와 큰 실루엣을 분리해 보완할 수 있다
+
+| | |
+|---|---|
+| 시점 | 2026-10-10 [사용자][코드][캡처] |
+| 상태 | 부분 개선 TUNE / 사용자 채택 전 |
+| 연결 | D-127 / F-091 / CASE-007 |
+
+### 발단
+사용자 마지막 첨부 화면의 확대 주변 구름에 일부 선명한 명암을 요청; 추가 층도 허용.
+### 먼저 의심한 것과 배제 방법
+직접광만 증량하기보다 높이 transfer의 plateau와 최소3km gradient를 확인. 첫 실제 높이 변경은 뾰족한 지형 형태라기각, 두번째 약한 shading-only는차이작음. 큰 높이·불투명도를유지한조명용높이결을세번째로대조.
+### 결정적 근거
+first9/second9보존, final3구도3후보9native/camera-sun-placement동일. 일부 흰 능선/어두운 골 분리 개선하나 실사 부드러운 결/완전 volume 미달. 자동8초영상은 같은분포 확대 표본이며 모든프레임shimmering해결보증아님.
+### 조치와 검토한 대안
+geographic90–330km연속focus, 위성원본의fine-broad lighting gradient 및6회sunlight가림. 중간추천TUNE, strong딱딱한결위험. 추가volume층은미시험대안. report ECG_A_cloud_local_detail_2026-10-10.md; verification/a-cloud-relief-20261010/manifest.json.
+### 비용 / 영향 범위
+추가texture/pass없음,texture조회증가. 기존nearshadow보류/서고KEEP/실패2/2/main기본유지. 전체PC성능/near인계미검증.
+### 놓쳤다면
+밝기를계속올려윗면을날리거나,실루엣을과장해서사진같은구름대신돌같은형태를강화했을것이다.

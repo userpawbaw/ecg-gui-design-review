@@ -549,3 +549,8 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_detail_hold_cloud_light_2
 
 ## 2026-10-10 D126 구름 흰 윗면
 사용자회색윗면지적→directradiance만분리/중간·강한후보. final2구도3후보6native/camera-sun-height동일assert,shadererror없음. 중간white추천TUNE,강한brightdetail손실. 지도노출/fill/형상유지/main기본미변경. 다음사용자흰면·그늘·표면결리뷰→기존S1잔여/near인계순서. shadow보류/KEEP/실패2/2유지. docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_white_highlight_2026-10-10.md; verification/a-cloud-white-20261010/gallery.html.
+
+
+## 2026-10-10 D127 국소 구름 디테일
+D127/F092: 위성 footprint와 큰 형태를 유지하며 geographic focus의 조명 gradient/self-occlusion만 보완. first9뾰족한형태기각/second9효과약함보존/final9+8초자동영상. 중간추천TUNE, 실사부드러운결/전체motion/near인계/사용자채택미완. shadow보류/서고KEEP/실패2/2유지.
+보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_local_detail_2026-10-10.md; gallery verification/a-cloud-relief-20261010/gallery.html. 다음 p.235부분명암/딱딱한결 및 정역shimmering 리뷰→S1잔여/동일footprint near인계.

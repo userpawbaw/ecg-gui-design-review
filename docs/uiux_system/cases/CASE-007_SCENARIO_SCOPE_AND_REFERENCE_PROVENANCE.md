@@ -266,3 +266,7 @@ GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 �
 
 ### 2026-10-10 D124–D125
 사용자 정역영상→초기경계는parent등장전 발견→source/optical분리→공식패키지구면보정ON/OFF대조→veil개선 확인. edge-only반례와regional원색잔류를거쳐공유source합성을LOD까지확장. F089/F090/O024. actual영상/native는부분개선증거,TUNE와품질gap유지.
+
+
+### 2026-10-10 D126–D127
+사용자 회색 윗면 및 확대 일부 명암 요청→direct radiance 분리→height detail가 뾰족한 지형처럼 된 반례→큰 실루엣과 shading relief 분리. first9/second9 보존, final9와8초자동영상. F091/F092, 국소 명암 partial/TUNE·사진 결 gap 유지. EXP-051 로컬 정본/동기화 완료, 별도 미커밋 DB foundation 보존; 이번 커밋의 verification/a-cloud-relief-20261010/experience-update.json에 신규 사례 snapshot 보존.

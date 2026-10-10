@@ -1418,5 +1418,16 @@
     "selfVerdict": "middle white recommended TUNE",
     "candidateAdopted": false,
     "shadowDeferred": true
+  },
+  "cloudLocalDetailD127": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_local_detail_2026-10-10.md",
+    "manifest": "verification/a-cloud-relief-20261010/manifest.json",
+    "frames": 9,
+    "rejectedTrialFrames": 18,
+    "motion": "8 second automatic .10-.235-.10",
+    "verdict": "TUNE: medium shading-only detail recommended; photographic texture gap",
+    "candidateAdopted": false,
+    "nearHandoff": false,
+    "shadowDeferred": true
   }
 }

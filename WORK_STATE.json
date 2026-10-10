@@ -40,7 +40,14 @@
     "timezone": "Asia/Seoul",
     "verified": "Automation update succeeded on 2026-09-16: repository-wide lock instructions removed; remote-SHA refresh, Git conflict checks and resource-scoped duplicate avoidance retained."
   },
-  "active_jobs": [],
+  "active_jobs": [
+    {
+      "resource": "archive light/art stills: scripts/blender/build_archive.py (--art r3..r6, --dress), verification/r1-archive-art-*, docs/uiux_system/rounds/R1/REVIEW-R1-ARCHIVE-ART-20261009.md",
+      "owner": "separate archive-light session (handoff docs/uiux_system/handoffs/HANDOFF_ARCHIVE_LIGHT_2026-10-10.md)",
+      "since": "2026-10-10",
+      "note": "Story work continues in the R1 session; it does not edit these files. Records (D/F/PLAN/WORKLOG) are shared: check the latest number before committing."
+    }
+  ],
   "concurrency": {
     "mode": "git_and_resource_scoped",
     "policy_version": "1.2",

@@ -2248,3 +2248,24 @@ report ECG_A_cloud_practitioner_notes_2026-10-11.md에 기존/새자료와 읽�
 이번 research만. 외부팩미다운로드/신규render없음/runtime미변경/성능unknown. 그림자보류/서고KEEP/실패2/2/fallback유지.
 ### 놓쳤다면
 PNG픽셀수만올리거나완성에셋으로오해한저해상도NVDF를그대로사용해같은부드러운돌기·자글거림을반복했을것이다.
+
+## F-095. 이번 VDB의 작은 step과 denoise OFF만으로 사진 같은 결은 확보되지 않았다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [대화][코드][실험] |
+| 상태 | offline 원본 진단 / 목표 결 TUNE |
+| 연결 | D-130 / F-094 / CASE-007 |
+
+### 발단
+사용자 하나씩 진행 승인. source 확보 이후 sampling/denoise가 결을 지우는지 먼저 확인.
+### 먼저 의심한 것과 배제 방법
+cloud06 동일source/camera/빛/밀도/최대96samples/seed7, .35/.175 step × OFF/ON. adaptive=true 동일기본값이므로 픽셀별고정96/동일noisybuffer필터시험으로과장하지않음.
+### 결정적 근거
+4native1024² 및 동일384crop. OFF입자는ON에서줄고큰돌기·골은유지. 작은step에서도사진섬유결은충분히나타나지않고렌더비용은증가. denoise만의원인으로확정불가. report ECG_A_cloud_sampling_audit_2026-10-12.md; verification/a-cloud-sampling-20261012/manifest.json.
+### 조치와 검토한 대안
+기존 .35/ON을다음조형대조기준으로추천. 작은billow/wisp density결 제작이나다른원본비교는후속단계. 이번actualweb코드미변경/품질최종채택아님.
+### 비용 / 영향 범위
+offline4조건실행시간manifest기록. webframe/VRAM/스크롤/targetPC미검증. 그림자보류/서고KEEP/실패2/2유지.
+### 놓쳤다면
+입자noise를구름섬유결로오인하거나비슷한형태에sampling비용만계속늘렸을것이다. 원본과광학각기여비중은추가시험전unknown으로유지.

@@ -786,3 +786,7 @@ report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_texture_sour
 ## 2026-10-11 D129 제작자 노트 재탐색
 F094/D129: 업계노트/공식노드/포럼직원답변 재탐색. source gate 이후 profile/billow/wisp density와 sampling·denoise·거리 mip 분리시험 권장. research only, 신규render/runtime/팩확보/성능검증없음. D128TUNE/그림자보류/서고KEEP/실패2/2유지.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md
+
+## 2026-10-12 D130 구름 sampling 진단
+F095/D130: 동일cloud06 close crop1024², step .35/.175 × denoise OFF/ON 4native 비교. 입자노이즈/큰형태는분리되나사진섬유결TUNE. 다음국소density결시험, actualweb미변경/성능미검증/그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sampling_audit_2026-10-12.md

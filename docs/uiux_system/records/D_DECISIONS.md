@@ -3167,3 +3167,23 @@ D128source gate유지+밀도결/sampling분리. 동일source crop에서denoise/s
 RGBsharpen/normal증폭만으로없는미세형태복원주장제외. 공개Nubis팩은고해상도완성cloud아님. 전구간동일noise/모든step대량증량/고정beauty단독인계는품질·비용위험으로미채택.
 ### 되돌려야 하는 조건
 번안density의결이돌처럼보이거나일관된footprint/빛/motion을유지못하면다른원본/atlas대조. 원본샘플TUNE/사용자최종채택전. 그림자보류·서고KEEP·실패2/2·기존fallback유지.
+
+## D-130. 동일 구름 원본에서 샘플 간격과 denoise를 먼저 분리한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [대화][코드][문헌] |
+| 상태 | 동일 원본 렌더 대조 전 결정 |
+| 연결 | D-129 / F-094 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자가 하나씩 진행 승인. 원본 형태를 먼저 바꿀지, D128 렌더에서 미세결이 지워지는지부터 검사할지.
+### 검토한 선택지
+더 큰 PNG/새 noise/새 source/동일 source sampling 및 denoise 독립 대조.
+### 고른 것과 근거
+cloud06 동일65도/태양15도/최대96samples/seed7. step rate .35/.175 × denoise OFF/ON 4조건. 1024² ortho5 중심 crop으로 D128의2048² ortho10과 동일 projected pixel scale을 유지한다. camera footprint는 좁아지므로 전체구름/이전 이미지 직접동일구도비교는아님. source/색공간/광원/밀도 고정. 실행factory adaptive=true/threshold≈.01 별도readback으로보완; 픽셀별고정96아님.
+### 버린 것과 이유
+이 단계에서새noise/조형변경/조명증량은원인분리를방해하므로제외. sampling만높이면없는결이복원된다는가설미채택.
+### 되돌려야 하는 조건
+OFF의grain을형태결로오인하지않는다. 작은step에서도안보이는결은원본조형검사로진행. 4조건은asset-level결과이며webmotion/GPU성능/지형인계증거아님. shadow보류/서고KEEP/실패2/2유지.

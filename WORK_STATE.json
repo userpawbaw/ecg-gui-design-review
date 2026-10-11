@@ -1446,5 +1446,14 @@
     "status": "research reviewed / proposed trial not tested",
     "candidateAdopted": false,
     "shadowDeferred": true
+  },
+  "cloudSamplingD130": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sampling_audit_2026-10-12.md",
+    "manifest": "verification/a-cloud-sampling-20261012/manifest.json",
+    "offlineFrames": 4,
+    "status": "TUNE; next density detail trial",
+    "actualSceneChanged": false,
+    "candidateAdopted": false,
+    "shadowDeferred": true
   }
 }

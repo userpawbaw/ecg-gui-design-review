@@ -1,0 +1,7 @@
+{
+  "renderer": "4.5.3 LTS",
+  "adaptiveSampling": true,
+  "adaptiveThreshold": 0.009999999776482582,
+  "denoiser": "OPENIMAGEDENOISE",
+  "scope": "same installed bpy factory defaults read back separately; sampling audit did not override these settings"
+}

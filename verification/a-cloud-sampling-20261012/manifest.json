@@ -1,0 +1,81 @@
+{
+  "status": "native offline sampling audit; fixed close crop, not live northern scene",
+  "renderer": "4.5.3 LTS",
+  "engine": "Cycles",
+  "samples": 96,
+  "volumeBounces": 6,
+  "size": [
+    1024,
+    1024
+  ],
+  "sunElevationDegrees": 15,
+  "sunEnergy": 6,
+  "skyStrength": 0.08,
+  "transparent": true,
+  "sunDirection": [
+    0.0,
+    -0.9659258127212524,
+    0.258819043636322
+  ],
+  "frames": [
+    {
+      "file": "cloud_06-step0.35-denoise0.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.35,
+      "denoising": false,
+      "seconds": 158.45522665977478,
+      "sha256": "21d08e4aeba5796b3d1962473acd903c0dc46ab4393772e5c5d33ca8180745de"
+    },
+    {
+      "file": "cloud_06-step0.35-denoise1.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.35,
+      "denoising": true,
+      "seconds": 165.01302528381348,
+      "sha256": "2ce386958369224c01c78b2265f26f4d645375db508de88a06ca87032648f607"
+    },
+    {
+      "file": "cloud_06-step0.175-denoise0.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.175,
+      "denoising": false,
+      "seconds": 301.52227306365967,
+      "sha256": "8da744f07c3eab076764575acba6732c2daf83eb0625d35b1f02e31d54ff16c9"
+    },
+    {
+      "file": "cloud_06-step0.175-denoise1.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.175,
+      "denoising": true,
+      "seconds": 305.99670124053955,
+      "sha256": "14691ad6103abded84cc6f1706f5e01157c63f2d2293ed3916159342ce7f0ed1"
+    }
+  ],
+  "limitations": [
+    "fixed baked lighting; not relightable normal atlas",
+    "single isolated cloud, not kilometre-scale weather or geographic handoff",
+    "denoising may soften fine wisps; needs original-density comparison",
+    "camera elevation probes are asset previews; no validated multi-view interpolation"
+  ],
+  "seed": 7,
+  "orthoScale": 5,
+  "factorySettingsReadback": {
+    "renderer": "4.5.3 LTS",
+    "adaptiveSampling": true,
+    "adaptiveThreshold": 0.009999999776482582,
+    "denoiser": "OPENIMAGEDENOISE",
+    "scope": "same installed bpy factory defaults read back separately; sampling audit did not override these settings"
+  }
+}

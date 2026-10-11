@@ -1,0 +1,16 @@
+{
+  "scope": "offline native files/source hash/dimensions; visual quality and live runtime separate",
+  "frames": 4,
+  "sameSource": true,
+  "size": [
+    1024,
+    1024
+  ],
+  "crop": [
+    320,
+    300,
+    704,
+    684
+  ],
+  "runtimeChanged": false
+}

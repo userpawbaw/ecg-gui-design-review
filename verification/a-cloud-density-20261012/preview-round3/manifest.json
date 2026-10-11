@@ -1,0 +1,105 @@
+{
+  "status": "procedural density asset trial, not actual northern scene",
+  "renderer": "4.5.3 LTS",
+  "engine": "Cycles",
+  "samples": 16,
+  "denoising": true,
+  "volumeBounces": 6,
+  "stepRate": 0.35,
+  "size": [
+    384,
+    384
+  ],
+  "sunElevationDegrees": 15,
+  "sunEnergy": 6,
+  "skyStrength": 0.08,
+  "transparent": true,
+  "sunDirection": [
+    0.0,
+    -0.9659258127212524,
+    0.258819043636322
+  ],
+  "frames": [
+    {
+      "file": "baseline.png",
+      "kind": "baseline",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.35,
+      "denoising": true,
+      "seconds": 6.8468194007873535,
+      "sha256": "1b0949388aab2e531612113d922db2ce12b2b78c6e81ed94f67e547dadaf2f46"
+    },
+    {
+      "file": "billow.png",
+      "kind": "billow",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.35,
+      "denoising": true,
+      "seconds": 5.094022035598755,
+      "sha256": "208ac91a8e7c92c8a9a98117e0fc8444ad5512a56b340d822991f56072bbc2d4",
+      "preparedDensity": "verification/a-cloud-density-20261012/density/billow.vdb",
+      "preparedDensitySha256": "003f85ec1220e567b821bf88f1be9b7a21f4ee3a178325b1adb925fbd35011c4",
+      "fixedGeometryBounds": [
+        [
+          -167.5,
+          -207.5,
+          -103.5
+        ],
+        [
+          151.5,
+          255.5,
+          55.5
+        ]
+      ],
+      "normalizationScale": 0.01511879049676026,
+      "volumeSpace": "OBJECT"
+    },
+    {
+      "file": "billow-wisp.png",
+      "kind": "billow-wisp",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.35,
+      "denoising": true,
+      "seconds": 5.077760457992554,
+      "sha256": "a2e3c82b91588fb41c2771f67d86a6e81dd97fa07d105f1882d4f77f70063990",
+      "preparedDensity": "verification/a-cloud-density-20261012/density/billow-wisp.vdb",
+      "preparedDensitySha256": "8722ad35b1a0cafb679da3497bd89d6e71af8499d4b26baa435b52cc1bb86320",
+      "fixedGeometryBounds": [
+        [
+          -167.5,
+          -207.5,
+          -103.5
+        ],
+        [
+          151.5,
+          255.5,
+          55.5
+        ]
+      ],
+      "normalizationScale": 0.01511879049676026,
+      "volumeSpace": "OBJECT"
+    }
+  ],
+  "limitations": [
+    "native density-grid deformation, not Houdini/Nubis implementation",
+    "thin internal density breakup only; no new wisps outside source bounds",
+    "opacity/mass may change; same source envelope is not identical optical thickness",
+    "offline fixed view/light, no live motion or runtime performance proof"
+  ],
+  "adaptiveSampling": true,
+  "adaptiveThreshold": 0.009999999776482582,
+  "denoiser": "OPENIMAGEDENOISE",
+  "seed": 7,
+  "orthoScale": 5,
+  "model": "prepared native VDB density deformation; original bounds used for fixed normalization; original material",
+  "preparedDensityManifest": "verification/a-cloud-density-20261012/density/manifest.json"
+}

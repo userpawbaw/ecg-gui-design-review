@@ -1,0 +1,446 @@
+{
+  "canonicalCase": {
+    "schemaVersion": 1,
+    "id": "EXP-051",
+    "title": "흰 구름 윗면의 결은 실루엣과 조명 굴곡을 분리해 보완하기",
+    "category": "구름",
+    "tags": [
+      "국소 명암",
+      "위성 구름",
+      "gradient",
+      "shading relief",
+      "흰 윗면"
+    ],
+    "status": "partial",
+    "problem": {
+      "goal": "확대 주변 일부 구름의 흰 윗면과 어두운 골이 선명하게 읽힘",
+      "symptoms": [
+        "윗면 밝기 증량 후에도 작은 명암 결이 약함"
+      ]
+    },
+    "scope": {
+      "environment": [
+        "Three0.186.1/WebGL2/Takram0.19.1 atmosphere + custom 2.5D orbital effect; RTX3070 1280×720",
+        "D127 opt-in reviewRound cloud-relief-20261010, p.1584/.18/.235"
+      ],
+      "applies": [
+        "고해상도 위성 footprint는 확보했지만 밝은 윗면 결이 약한 height-field proxy",
+        "같은 카메라/광원에서 작은 후보 비교가 가능한 장면"
+      ],
+      "excludes": [
+        "이 사례의 해결을 전체 도입부·Story 완성 또는 출품 승인으로 확대하지 않는다.",
+        "다른 PC·해상도·패키지 버전에는 당시 성능 수치와 설정을 그대로 보장하지 않는다."
+      ]
+    },
+    "recommendation": {
+      "strength": "candidate",
+      "action": "명암과 source결을 구별한다. D131 보유VDB의 작은 density warp는 사진섬유결 미달이라 실제web적용을 권하지 않는다. 별도 선명source 및 광학기여를 대조한 뒤 국소patch를 진행한다.",
+      "steps": [
+        {
+          "action": "현재density warp 후보는 실제web에 채택하지 않고 source/광학기여 대조",
+          "reason": "작은윤곽변화만으로 사진섬유결 목표가 달성되지 않았고 기존 회색면/edgegrain이 남는다."
+        },
+        {
+          "action": "전지구 해상도가 아닌 지역texel 및 원본 결부터 확인",
+          "reason": "조명 gradient를 늘려도 원본에 없는 섬유결은 복원되지 않는다."
+        },
+        {
+          "action": "큰 조형과 billow/wisp 밀도 결 및 sampling을 분리 대조",
+          "reason": "산업자료는 단순 RGB 선명화가 아닌 profile 침식과 거리 필터를 사용한다. 현행 스택 결과는 미검증."
+        },
+        {
+          "action": "기존 분포·높이·불투명도 고정",
+          "reason": "높이 자체 detail 증폭은 뾰족한 지형 형태를 만들 수 있다."
+        },
+        {
+          "action": "동일 위성 fine/broad의 조명 굴곡을 국소 geographic mask로 적용",
+          "reason": "큰 빈틈을 보존하며 확대 주변에만 필요한 명암을 만든다."
+        },
+        {
+          "action": "기존/중간/강한 동일구도와 정역영상을 비교",
+          "reason": "선명함과 자연스러운 결, 자글거림을 따로 평가한다."
+        }
+      ],
+      "evidenceIds": [
+        "F-092",
+        "D-127",
+        "F-093",
+        "D-128",
+        "F-094",
+        "D-129",
+        "F-095",
+        "D-130",
+        "F-096",
+        "D-131"
+      ],
+      "recheck": [
+        "마스크 윤곽/새 군집 생성/돌 같은 결/자글거림/흰날림",
+        "실제 volume 내부 통과에는 이 shading-only 근사를 그대로 쓰지 않는다."
+      ]
+    },
+    "quality": {
+      "target": "확대 주변 일부 구름의 흰 윗면과 어두운 골이 선명하게 읽힘",
+      "achieved": "9final native에서 일부 명암 분리 부분 개선; 중간추천 TUNE; 후속 사용자 반례로 source-first권장 수정, 투명2K원본샘플3장/작은lobes확인; D130 동일source sampling/denoise4조건 진단 완료, 큰형태결은유지/섬유결목표TUNE",
+      "remaining": [
+        "실사 섬유 결·완전 volume/모든프레임 shimmering·사용자 채택·near 인계 미완",
+        "지도 source 경계 잔여와 기존 지면 그림자 보류 유지",
+        "별도선명국소층 실제배치/톤매핑·alpha·edgegrain·고정빛·multi-view 인계 미검증",
+        "D131 실제밀도변형도 사진섬유결미달/효과작음;더선명한원본과광학기여대조 필요",
+        "OpenVDB13→Blender VDB225/224버전경고 조건부;경고없는 호환성 및 numeric 변환 미검증"
+      ]
+    },
+    "cause": {
+      "certainty": "inferred",
+      "explanation": "높이 transfer plateau와 넓은 gradient 표본이 디테일 약화에 기여; 전체 사진 품질 차이의 유일 원인으로 확정하지 않음",
+      "evidenceIds": [
+        "F-092"
+      ]
+    },
+    "history": [
+      {
+        "seq": 1,
+        "mode": "executed",
+        "result": "rejected",
+        "approach": "실제 높이와 slope detail 증폭",
+        "observation": "9장에 뾰족한 지형 같은 형태",
+        "decision": "실루엣 유지로 변경",
+        "evidenceIds": [
+          "F-092"
+        ]
+      },
+      {
+        "seq": 2,
+        "mode": "executed",
+        "result": "rejected",
+        "approach": "좁은 geographic focus/약한 shading-only relief",
+        "observation": "9장에 마지막 확대 명암 차이 작음",
+        "decision": "기여 범위/gradient 보완",
+        "evidenceIds": [
+          "F-092"
+        ]
+      },
+      {
+        "seq": 3,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "최종 geographic90–330km shading relief/6회 local sunlight 가림",
+        "observation": "9장+8초 자동 영상; 일부 골/흰능선 개선, 실사 결 미달",
+        "decision": "중간추천TUNE; 사용자채택별도",
+        "evidenceIds": [
+          "F-092",
+          "D-127"
+        ]
+      },
+      {
+        "seq": 4,
+        "mode": "considered",
+        "result": "not_tested",
+        "approach": "동일 footprint 추가 volume층",
+        "observation": null,
+        "decision": "최종국소명암미달때재검토",
+        "evidenceIds": [
+          "D-127"
+        ]
+      },
+      {
+        "seq": 5,
+        "mode": "feedback",
+        "result": "improved",
+        "approach": "사용자가 명암과 별개로 선명한texture 결을 요구",
+        "observation": "D127명암보완으로texture목표달성을보장할수없음",
+        "decision": "source gate를앞에추가",
+        "evidenceIds": [
+          "F-093"
+        ]
+      },
+      {
+        "seq": 6,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "실제JangaFX01/06 VDB 투명2K/65°·35° asset probe",
+        "observation": "3native에lobes/골은더읽히나grain/짙은그늘/사진결미달TUNE",
+        "decision": "국소patch 적용전원본시험기록;실제scene완료아님",
+        "evidenceIds": [
+          "F-093",
+          "D-128"
+        ]
+      },
+      {
+        "seq": 7,
+        "mode": "considered",
+        "result": "not_tested",
+        "approach": "업계노트 재독 기반 국소 밀도 결/샘플링 분리 및 거리 LOD 번안",
+        "observation": null,
+        "decision": "source gate 유지; 미실행 시험으로 기록",
+        "evidenceIds": [
+          "F-094",
+          "D-129"
+        ]
+      },
+      {
+        "seq": 8,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "동일 cloud06 1024² close crop, step .35/.175 × denoise OFF/ON",
+        "observation": "입자노이즈와 큰 형태결 구분. 사진섬유결 목표미달TUNE;sampling/denoise단독원인으로확정하지않음",
+        "decision": "다음국소density결시험;실시간기본미변경",
+        "evidenceIds": [
+          "F-095",
+          "D-130"
+        ]
+      },
+      {
+        "seq": 9,
+        "mode": "executed",
+        "result": "failed",
+        "approach": "shader침식/gain 두preview기각 후 native VDB field warp; 새native2장과 기존baseline재사용",
+        "observation": "작은윤곽·골 변화는있으나사진섬유결미달TUNE;후보차이작음;버전경고조건부",
+        "decision": "web적용미추천; 별도source/광학대조후patch",
+        "evidenceIds": [
+          "F-096",
+          "D-131"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "F-092",
+        "kind": "event",
+        "reference": "F-092",
+        "quote": null
+      },
+      {
+        "id": "D-127",
+        "kind": "event",
+        "reference": "D-127",
+        "quote": null
+      },
+      {
+        "id": "report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_local_detail_2026-10-10.md",
+        "quote": null
+      },
+      {
+        "id": "F-093",
+        "kind": "event",
+        "reference": "F-093",
+        "quote": null
+      },
+      {
+        "id": "D-128",
+        "kind": "event",
+        "reference": "D-128",
+        "quote": null
+      },
+      {
+        "id": "texture-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_texture_source_review_2026-10-11.md",
+        "quote": null
+      },
+      {
+        "id": "F-094",
+        "kind": "event",
+        "reference": "F-094",
+        "quote": null
+      },
+      {
+        "id": "D-129",
+        "kind": "event",
+        "reference": "D-129",
+        "quote": null
+      },
+      {
+        "id": "practitioner-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md",
+        "quote": null
+      },
+      {
+        "id": "F-095",
+        "kind": "event",
+        "reference": "F-095",
+        "quote": null
+      },
+      {
+        "id": "D-130",
+        "kind": "event",
+        "reference": "D-130",
+        "quote": null
+      },
+      {
+        "id": "sampling-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sampling_audit_2026-10-12.md",
+        "quote": null
+      },
+      {
+        "id": "F-096",
+        "kind": "event",
+        "reference": "F-096",
+        "quote": null
+      },
+      {
+        "id": "D-131",
+        "kind": "event",
+        "reference": "D-131",
+        "quote": null
+      },
+      {
+        "id": "density-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_density_detail_2026-10-12.md",
+        "quote": null
+      }
+    ],
+    "sourceRecordIds": [
+      "F-092",
+      "D-127",
+      "F-093",
+      "D-128",
+      "F-094",
+      "D-129",
+      "F-095",
+      "D-130",
+      "F-096",
+      "D-131"
+    ],
+    "resolutionEvidence": [],
+    "artifacts": [
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_local_detail_2026-10-10.md",
+        "role": "report",
+        "description": "세 시험과 국소 명암의 범위/미달 기록"
+      },
+      {
+        "path": "verification/a-cloud-relief-20261010/gallery.html",
+        "role": "gallery",
+        "description": "실제 renderer9장·동일crop·8초영상 비교"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_texture_source_review_2026-10-11.md",
+        "role": "report",
+        "description": "source자료/해상도/후속국소패치기준"
+      },
+      {
+        "path": "verification/a-cloud-texture-assets-20261011/gallery.html",
+        "role": "gallery",
+        "description": "nativeoffline원본결;actual북유럽scene아님"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md",
+        "role": "report",
+        "description": "기존/새 자료 구분, 구현 세부 및 국소 밀도 시험 권장"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sampling_audit_2026-10-12.md",
+        "role": "report",
+        "description": "sampling/denoise 독립 조건 및 실제 범위"
+      },
+      {
+        "path": "verification/a-cloud-sampling-20261012/gallery.html",
+        "role": "gallery",
+        "description": "동일밀도4조건 실제offline close crop"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_density_detail_2026-10-12.md",
+        "role": "report",
+        "description": "3preview의기각및native실제밀도변형/OBJECTspace점검"
+      },
+      {
+        "path": "verification/a-cloud-density-20261012/gallery.html",
+        "role": "gallery",
+        "description": "새native2장+baseline재사용 및 preview3라운드"
+      }
+    ],
+    "related": [
+      "EXP-037",
+      "EXP-027"
+    ],
+    "time": {
+      "value": null,
+      "unit": null,
+      "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+      "evidenceIds": []
+    },
+    "cost": {
+      "value": null,
+      "unit": null,
+      "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+      "evidenceIds": []
+    },
+    "review": {
+      "owner": "project-maintainer",
+      "reviewedOn": "2026-10-12",
+      "method": "3preview라운드, 실제VDBwarp2native, 기존baseline재사용/source파생hash; 이미지TUNE/실시간미변경",
+      "verdict": "new_evidence_review",
+      "userAcceptance": "D131 사용자검토전; 사진섬유결미달로web채택권장안아님",
+      "limits": [
+        "당시 생성 정지 목업은 구현·ECG 데이터 정확성·실시간 성능 증거가 아니다.",
+        "전체 장기 재생·목표 전시 PC·터치 입력은 이관 작업에서 재검증하지 않았다."
+      ]
+    },
+    "next": {
+      "owner": "project-maintainer",
+      "action": "더선명한별도source와광학기여대조; source결통과후같은footprint국소patch",
+      "doneWhen": "같은 기준 구도의 전후 증거와 적용 범위가 명시되고, 남은 차이에 대해 KEEP/TUNE/REJECT 또는 보류 판단이 기록된다."
+    },
+    "revision": 5,
+    "revisionHistory": [
+      {
+        "revision": 1,
+        "date": "2026-10-10",
+        "reason": "macro 분포 문제가 아닌 흰 윗면 국소 조명 결의 별도 원인/시험을 신규 사례로 기록",
+        "evidenceIds": [
+          "F-092",
+          "D-127"
+        ],
+        "previousRecommendation": null
+      },
+      {
+        "revision": 2,
+        "date": "2026-10-11",
+        "reason": "사용자 원본texture 결 반례로 shading-only 우선 권장을 source-first로 보완",
+        "evidenceIds": [
+          "F-093",
+          "D-128"
+        ],
+        "previousRecommendation": "밝기만 더 올리기 전에 큰 실루엣과 조명용 높이를 분리하고, 목표 주변의 gradient·자기 가림을 연속적으로 추가해 비교한다."
+      },
+      {
+        "revision": 3,
+        "date": "2026-10-11",
+        "reason": "제작자 노트 재탐색으로 source 확보 이후 밀도 결/거리 sampling 방법을 구체화; 실행 미검증",
+        "evidenceIds": [
+          "F-094",
+          "D-129"
+        ],
+        "previousRecommendation": "명암 보완과 texture 원본 확보를 분리한다. kilometre texel의 global map은 원경층으로 유지하고, 확대 군집용 별도 cloud source의 결을 먼저 검토한 뒤 geographic patch/거리별 인계를 비교한다."
+      },
+      {
+        "revision": 4,
+        "date": "2026-10-12",
+        "reason": "D130 sampling/denoise 대조 실행, 목표 결 미달을 유지하며 다음 density결 시험 지정",
+        "evidenceIds": [
+          "F-095",
+          "D-130"
+        ],
+        "previousRecommendation": "명암 보완과 texture 원본 확보를 분리한다. kilometre texel의 global map은 원경층으로 유지하고, 확대 군집용 별도 cloud source의 결을 먼저 검토한 뒤 geographic patch/거리별 인계를 비교한다. 원본 확보 뒤에는 큰 profile·billow/wisp density결·sampling/denoise를 분리 대조하고 동일 footprint의 거리별 detail을 설계한다."
+      },
+      {
+        "revision": 5,
+        "date": "2026-10-12",
+        "reason": "밀도변형시험도목표결미달;미세변형반복보다source/광학대조권장",
+        "evidenceIds": [
+          "F-096",
+          "D-131"
+        ],
+        "previousRecommendation": "명암 보완과 texture 원본 확보를 분리한다. kilometre texel의 global map은 원경층으로 유지하고, 확대 군집용 별도 cloud source의 결을 먼저 검토한 뒤 geographic patch/거리별 인계를 비교한다. 원본 확보 뒤에는 큰 profile·billow/wisp density결·sampling/denoise를 분리 대조하고 동일 footprint의 거리별 detail을 설계한다. D130 동일 소스 4조건에서 sampling/denoise만으로 사진결 확보는 미달; 다음 국소 density 형태결 시험을 진행한다."
+      }
+    ]
+  },
+  "reportSha256": "327412850cff919062d28604e8d9168025fa9ce3eb378716a9c6db4122d6b30b",
+  "actualSceneChanged": false,
+  "generatedVdbLocation": "local-only; regenerate via prepare-cloud-density-detail.py"
+}

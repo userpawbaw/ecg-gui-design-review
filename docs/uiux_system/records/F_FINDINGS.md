@@ -2269,3 +2269,24 @@ cloud06 동일source/camera/빛/밀도/최대96samples/seed7, .35/.175 step × O
 offline4조건실행시간manifest기록. webframe/VRAM/스크롤/targetPC미검증. 그림자보류/서고KEEP/실패2/2유지.
 ### 놓쳤다면
 입자noise를구름섬유결로오인하거나비슷한형태에sampling비용만계속늘렸을것이다. 원본과광학각기여비중은추가시험전unknown으로유지.
+
+## F-096. 보유 VDB의 작은 밀도 재배치는 섬유 결 개선에 한계가 남는다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [코드][실험][문헌] |
+| 상태 | native asset TUNE / web 적용 미추천 |
+| 연결 | D-131 / F-095 / CASE-007 |
+
+### 발단
+사용자 작은돌기·골·가는결 제작 진행 승인.
+### 먼저 의심한 것과 배제 방법
+shaderdensity침식과noisegain은384preview에서효과약함. 원본좌표크기454와normalize7로밀도감소를의심했지만실제OBJECT densityspace확인;65배증량가정미채택. 이후원본density를변위된좌표에서읽는VDB생성.
+### 결정적 근거
+3preview라운드보존, 최종1024² baseline재사용+새2native/source파생hash. 총밀도비율.99567/.99279로core보호, 작은윤곽·골차이는있으나사진섬유결목표미달/후보차이작음. report ECG_A_cloud_density_detail_2026-10-12.md; verification/a-cloud-density-20261012/manifest.json.
+### 조치와 검토한 대안
+현재field후보TUNE/web적용미추천. 새선명원본및광학대조를다음후보로유지. 원본밖wisps생성/volume동적통과는미구현.
+### 비용 / 영향 범위
+새native약151/156초,실시간frame/VRAM미측정. VDB225≤224경고존재하나density/FLOAT로드true/error빈문자확인. warning없는compatibilityPASS아님. shadow보류/서고KEEP/실패2/2유지.
+### 놓쳤다면
+미세한밀도변형을목업질감도달로과장하거나,OBJECT보정확인없이축소크기에반비례하는밀도증량을해버렸을것이다.

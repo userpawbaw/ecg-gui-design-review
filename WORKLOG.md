@@ -794,3 +794,7 @@ F095/D130: 동일cloud06 close crop1024², step .35/.175 × denoise OFF/ON 4nati
 D130 remote publication: auto-review rejected git push twice, including after destination/payload readback. Explicit user upload approval required; no bypass. Local e08671c preserved, gallery/comparison/manifest HTTP200, native source hashes and record checks PASS.
 
 2026-10-12 D130 upload approval received: user explicitly approved this result upload. e08671c payload and da7843b checkpoint pushed to existing codex/abc-light-design-20261004; remote SHA readback matched. Earlier auto-review rejection preserved as history, publication block resolved.
+
+## 2026-10-12 D131 구름 density결 시험
+F096/D131: 3preview라운드 보존, 실제VDBwarp 새native2장+baseline재사용. 작은윤곽차이/사진섬유결TUNE 및web적용미추천. 다른source/광학대조다음, 버전경고조건부/그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_density_detail_2026-10-12.md

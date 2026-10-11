@@ -3187,3 +3187,26 @@ cloud06 동일65도/태양15도/최대96samples/seed7. step rate .35/.175 × den
 이 단계에서새noise/조형변경/조명증량은원인분리를방해하므로제외. sampling만높이면없는결이복원된다는가설미채택.
 ### 되돌려야 하는 조건
 OFF의grain을형태결로오인하지않는다. 작은step에서도안보이는결은원본조형검사로진행. 4조건은asset-level결과이며webmotion/GPU성능/지형인계증거아님. shadow보류/서고KEEP/실패2/2유지.
+
+## D-131. 같은 VDB의 국소 밀도에 작은 침식과 방향성 결을 시험한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [대화][코드][문헌] |
+| 상태 | 밀도 후보 제작 전 결정 |
+| 연결 | D-130 / F-095 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 다음 단계 진행 승인. sampling진단이후 새source교체/원본VDB밀도번안/조명추가 중 결정.
+### 검토한 선택지
+기존밀도, 국소중간규모noise침식, 침식과방향성있는외곽결, 신규소스. D129 Billowy/Wispy 역할분리 원리를현행Blender3D density shader로번안한다. Houdini/Nubis그대로이식은아님.
+### 고른 것과 근거
+동일cloud06/camera65/sun15/max96/step.35/seed7/1024². baseline은D130 ON원본파일을재사용하고새2후보는같은조건native렌더. low-density mask로두꺼운core를보호;3Dnoise로density를변경하므로빛과alpha에동시에영향. 큰envelope를목표로유지하되침식시광학질량/일부외곽이달라질수있음을검토한다.
+### 버린 것과 이유
+이미지sharpen/검은골RGB그리기/전체광원증량은밀도결원인대조와다르므로제외. 첫native전에낮은해상도preview로node와과도한파괴를확인. 원본volume범위밖새wisps생성은이번shader시험미지원.
+### 되돌려야 하는 조건
+검은연기/돌처럼보임,전역분포파괴/입자grain/밝은결소실이면약화혹은원본복귀. 실제북유럽구도/거리LOD/하강인계/성능은이번정지asset시험으로통과처리하지않음. 그림자보류/서고KEEP/실패2/2유지.
+
+### 실행 중 판단 보완 / F096
+첫density침식과noisegain preview는효과약함으로보존. 3라운드째원본density를좌표변위로재표본화한VDB로전환. 두새native와D130baseline대조에서작은윤곽·골변화는있으나사진섬유결미달TUNE/web적용미추천. source광학vs조형기여는완전히분리하지않았으므로원본만이원인으로확정하지않음. 세부/compatibility는 ECG_A_cloud_density_detail_2026-10-12.md와F096에연결.

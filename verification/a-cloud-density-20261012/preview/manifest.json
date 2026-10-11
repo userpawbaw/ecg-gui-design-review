@@ -1,0 +1,72 @@
+{
+  "status": "procedural density asset trial, not actual northern scene",
+  "renderer": "4.5.3 LTS",
+  "engine": "Cycles",
+  "samples": 16,
+  "denoising": true,
+  "volumeBounces": 6,
+  "stepRate": 0.35,
+  "size": [
+    384,
+    384
+  ],
+  "sunElevationDegrees": 15,
+  "sunEnergy": 6,
+  "skyStrength": 0.08,
+  "transparent": true,
+  "sunDirection": [
+    0.0,
+    -0.9659258127212524,
+    0.258819043636322
+  ],
+  "frames": [
+    {
+      "file": "baseline.png",
+      "kind": "baseline",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.35,
+      "denoising": true,
+      "seconds": 7.345258474349976,
+      "sha256": "1e5f62977083a762f50a2a53afa3fc7b030c3b13e142e1391042791f8bdb6403"
+    },
+    {
+      "file": "billow.png",
+      "kind": "billow",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.35,
+      "denoising": true,
+      "seconds": 8.8711678981781,
+      "sha256": "d64357fe0d86216e6b2326b2976c02eddf4fe77078b7dd69abd751a09ae60a54"
+    },
+    {
+      "file": "billow-wisp.png",
+      "kind": "billow-wisp",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.35,
+      "denoising": true,
+      "seconds": 12.20608639717102,
+      "sha256": "b08576142c4584ec1522205aed0035fd8f6ba9c9c8e6020ef1b29b9e5d8f486b"
+    }
+  ],
+  "limitations": [
+    "world-fixed 3D density noise, not Houdini Billowy/Wispy implementation",
+    "thin internal density breakup only; no new wisps outside source bounds",
+    "opacity/mass may change; same source envelope is not identical optical thickness",
+    "offline fixed view/light, no live motion or runtime performance proof"
+  ],
+  "adaptiveSampling": true,
+  "adaptiveThreshold": 0.009999999776482582,
+  "denoiser": "OPENIMAGEDENOISE",
+  "seed": 7,
+  "orthoScale": 5,
+  "model": "d1=max(0,d-.022*(1-min(d/.18,1))*noise5); wisp=d1*(1+1.2*mask*(2*anisotropicNoise4-1))"
+}

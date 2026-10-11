@@ -1,0 +1,67 @@
+{
+  "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+  "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+  "sourceBounds": [
+    [
+      47,
+      117,
+      11
+    ],
+    [
+      356,
+      571,
+      163
+    ]
+  ],
+  "sourceVoxelSize": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "sourceDensityRange": [
+    0.0020008087158203125,
+    0.6591796875
+  ],
+  "fieldDims": [
+    310,
+    455,
+    153
+  ],
+  "method": "trilinear original-density sampling at bounded 3D value-noise displaced positions; dense cores protected; original support mask",
+  "seed": 615,
+  "macroCellVoxels": 14,
+  "macroAmplitudeVoxels": 5,
+  "wispCellVoxels": [
+    24,
+    8,
+    6
+  ],
+  "wispAmplitudeVoxels": [
+    4,
+    2,
+    2
+  ],
+  "outputs": [
+    {
+      "kind": "billow",
+      "file": "billow.vdb",
+      "sha256": "003f85ec1220e567b821bf88f1be9b7a21f4ee3a178325b1adb925fbd35011c4",
+      "sumDensityRatio": 0.9956669211387634,
+      "maxDensity": 0.6591796875,
+      "activeVoxels": 4852961
+    },
+    {
+      "kind": "billow-wisp",
+      "file": "billow-wisp.vdb",
+      "sha256": "8722ad35b1a0cafb679da3497bd89d6e71af8499d4b26baa435b52cc1bb86320",
+      "sumDensityRatio": 0.9927892684936523,
+      "maxDensity": 0.6591796875,
+      "activeVoxels": 4828922
+    }
+  ],
+  "limits": [
+    "not Houdini/Nubis implementation",
+    "no new wisps outside original broad footprint",
+    "scalar mass ratio is not final optical depth or shape approval"
+  ]
+}

@@ -798,3 +798,5 @@ D130 remote publication: auto-review rejected git push twice, including after de
 ## 2026-10-12 D131 구름 density결 시험
 F096/D131: 3preview라운드 보존, 실제VDBwarp 새native2장+baseline재사용. 작은윤곽차이/사진섬유결TUNE 및web적용미추천. 다른source/광학대조다음, 버전경고조건부/그림자보류/서고KEEP/실패2/2유지.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_density_detail_2026-10-12.md
+
+D131: native/gallery/source hashes/records checks completed locally; gallery and four displayed images HTTP200. Commit3b4e533 retained. Auto-review rejected push because prior approval was scoped to D130; D131 remote publication pending explicit approval. No workaround or retry beyond stated scope.

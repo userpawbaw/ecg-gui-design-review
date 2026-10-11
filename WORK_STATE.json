@@ -1473,6 +1473,12 @@
     "actualSceneChanged": false,
     "candidateAdopted": false,
     "shadowDeferred": true,
-    "vdbCompatibility": "225/224 warning; density FLOAT loaded with no error_message"
+    "vdbCompatibility": "225/224 warning; density FLOAT loaded with no error_message",
+    "remotePublication": {
+      "status": "awaiting_explicit_upload_approval",
+      "localCommit": "3b4e533",
+      "reason": "auto-review interprets prior approval as D130 only; new D131 bounded payload requires approval",
+      "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004"
+    }
   }
 }

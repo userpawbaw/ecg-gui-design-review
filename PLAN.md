@@ -554,3 +554,8 @@ docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_detail_hold_cloud_light_2
 ## 2026-10-10 D127 국소 구름 디테일
 D127/F092: 위성 footprint와 큰 형태를 유지하며 geographic focus의 조명 gradient/self-occlusion만 보완. first9뾰족한형태기각/second9효과약함보존/final9+8초자동영상. 중간추천TUNE, 실사부드러운결/전체motion/near인계/사용자채택미완. shadow보류/서고KEEP/실패2/2유지.
 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_local_detail_2026-10-10.md; gallery verification/a-cloud-relief-20261010/gallery.html. 다음 p.235부분명암/딱딱한결 및 정역shimmering 리뷰→S1잔여/동일footprint near인계.
+
+
+## 2026-10-11 D128 선명 구름 source
+F093/D128: source-first texture검토/보유JangaFXVDB2K투명샘플3장. 기존명암보완TUNE유지, texture결/edgegrain/고정빛/gpu및지리적patch인계별도. actualweb코드미변경. 다음source결확보→국소선명층6구도/정역motion; shadow보류/서고KEEP/실패2/2/fallback유지.
+report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_texture_source_review_2026-10-11.md;gallery verification/a-cloud-texture-assets-20261011/gallery.html.

@@ -1,0 +1,57 @@
+{
+  "status": "native offline asset probes; not actual northern scene or runtime performance evidence",
+  "renderer": "4.5.3 LTS",
+  "engine": "Cycles",
+  "samples": 96,
+  "denoising": true,
+  "volumeBounces": 6,
+  "stepRate": 0.35,
+  "size": [
+    2048,
+    2048
+  ],
+  "sunElevationDegrees": 15,
+  "sunEnergy": 6,
+  "skyStrength": 0.08,
+  "transparent": true,
+  "sunDirection": [
+    0.0,
+    -0.9659258127212524,
+    0.258819043636322
+  ],
+  "frames": [
+    {
+      "file": "cloud_01-e65-2k.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_01_variant_0000.vdb",
+      "sourceSha256": "c91381781adc353f26a25d6cb6c9e254f47b89db04d2e99d289ae0e7d545945c",
+      "cameraElevation": 65,
+      "orthoScale": 10,
+      "seconds": 131.67445588111877,
+      "sha256": "8164781f638c0b53230adbbf6cf21da6535158aac60db8c8beae9210922093b9"
+    },
+    {
+      "file": "cloud_06-e65-2k.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 10,
+      "seconds": 186.09231281280518,
+      "sha256": "0ba766b243ed90d563fc158336b621c587cc7d5f330bb9f2834ceed20a5aeb15"
+    },
+    {
+      "file": "cloud_06-e35-2k.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 35,
+      "orthoScale": 10,
+      "seconds": 141.1000258922577,
+      "sha256": "776b24ed5b872a7d2a96bb4e68b8d22f5e8e0fac77be726c42c3bbc7082da79d"
+    }
+  ],
+  "limitations": [
+    "fixed baked lighting; not relightable normal atlas",
+    "single isolated cloud, not kilometre-scale weather or geographic handoff",
+    "denoising may soften fine wisps; needs original-density comparison",
+    "camera elevation probes are asset previews; no validated multi-view interpolation"
+  ]
+}

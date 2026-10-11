@@ -1,0 +1,30 @@
+{
+  "scope": "offline image dimensions/alpha/hash; no live scene or performance proof",
+  "frames": [
+    {
+      "file": "cloud_01-e65-2k.png",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "nonzeroAlphaPixels": 543538
+    },
+    {
+      "file": "cloud_06-e65-2k.png",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "nonzeroAlphaPixels": 761610
+    },
+    {
+      "file": "cloud_06-e35-2k.png",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "nonzeroAlphaPixels": 610621
+    }
+  ],
+  "verdict": "TUNE: clearer lobes and grooves; edge grain/denoised fine wisps remain"
+}

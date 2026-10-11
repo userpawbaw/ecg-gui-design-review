@@ -2206,3 +2206,24 @@ geographic90–330km연속focus, 위성원본의fine-broad lighting gradient 및
 추가texture/pass없음,texture조회증가. 기존nearshadow보류/서고KEEP/실패2/2/main기본유지. 전체PC성능/near인계미검증.
 ### 놓쳤다면
 밝기를계속올려윗면을날리거나,실루엣을과장해서사진같은구름대신돌같은형태를강화했을것이다.
+
+## F-093. 전지구8K의 해상도와 확대 국소 구름의 세부 결 해상도는 다르다
+
+| | |
+|---|---|
+| 시점 | 2026-10-11 [사용자][코드][공식자료][에셋렌더] |
+| 상태 | 원본 texel 한계 확인 / 별도 에셋샘플 TUNE |
+| 연결 | D-128 / F-092 / CASE-007 |
+
+### 발단
+사용자 “지금 텍스쳐는 흐릿한 부분에 알맞고”, 사진처럼 디테일한 선명 부분도 필요하다고 지적. D127 명암 보완을 텍스처 목표 달성으로 해석하면 안 됨.
+### 먼저 의심한 것과 배제 방법
+명암·filter만 조정하는 대신 source8192×4096/globalmapping2배를 확인. 북유럽의 구면길이 근사상 동서1.16km/남북2.44km texel, 필터/normal증폭만으로 새 섬유결 복원 불가. 보유 JangaFX 원본10VDB와 공식 CloudPack/SideFX impostor/Epic layout-detail분리 재확인.
+### 결정적 근거
+기존시안은kilometre소스의형태근사, 투명2K구름01/06 원본샘플은개별구름에해상도집중. lobes/골은더읽히나edgegrain/denoise미세결손실·짙은그늘TUNE. normalized단일구름preview를actual북유럽scene/성능증거로확대하지않음.
+### 조치와 검토한 대안
+현재흐린원경층 유지, 별도국소선명texture/volume source확보 우선. 사진cutout/새preset/실시간volume전체교체는검토만. report ECG_A_cloud_texture_source_review_2026-10-11.md; verification/a-cloud-texture-assets-20261011/manifest.json.
+### 비용 / 영향 범위
+이번Cyclesoffline샘플이며runtime코드미변경.2KRGBA8+mip한장21.33MiB는계산예산/전체GPU비용미측정. shader증량단독권장→texture원본gate우선으로EXP051후속수정. 기존shadow보류/서고KEEP/실패2/2/fallback유지.
+### 놓쳤다면
+명암후보를반복하면서동일저주파소스의둥근형태만선명하게만들고,8K파일이므로이미국소detail이충분하다는오판을유지했을것이다.

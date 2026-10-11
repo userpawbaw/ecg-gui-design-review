@@ -270,3 +270,6 @@ GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 �
 
 ### 2026-10-10 D126–D127
 사용자 회색 윗면 및 확대 일부 명암 요청→direct radiance 분리→height detail가 뾰족한 지형처럼 된 반례→큰 실루엣과 shading relief 분리. first9/second9 보존, final9와8초자동영상. F091/F092, 국소 명암 partial/TUNE·사진 결 gap 유지. EXP-051 로컬 정본/동기화 완료, 별도 미커밋 DB foundation 보존; 이번 커밋의 verification/a-cloud-relief-20261010/experience-update.json에 신규 사례 snapshot 보존.
+
+### 2026-10-11 D128 / F093
+사용자가 명암과 원본texture결을구별→8Kglobal의kilometretexel한계→공식VDB/현재impostorbaker/layout-detail분리대조→별도2Kasset샘플. 원본결gate를앞세워EXP051revision2수정, source원본시험을actualscene완성으로혼동하지않음. 기존D127TUNE/near그림자보류/서고KEEP/실패2/2보존.

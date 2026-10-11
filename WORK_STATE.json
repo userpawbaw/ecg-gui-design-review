@@ -1429,5 +1429,14 @@
     "candidateAdopted": false,
     "nearHandoff": false,
     "shadowDeferred": true
+  },
+  "cloudTextureD128": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_texture_source_review_2026-10-11.md",
+    "manifest": "verification/a-cloud-texture-assets-20261011/manifest.json",
+    "nativeOfflineFrames": 3,
+    "actualSceneChanged": false,
+    "status": "TUNE asset source, geographic patch and texture integration pending",
+    "candidateAdopted": false,
+    "shadowDeferred": true
   }
 }

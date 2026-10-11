@@ -806,3 +806,5 @@ D131: native/gallery/source hashes/records checks completed locally; gallery and
 ## 2026-10-12 D132 원본·광학두께 비교
 D132/F097: 보유10원본 조사,06/08 density1/4 및08 g.35/0 대조. native새4장+기존baseline재사용. 광학두께의명암효과확인/사진섬유결미달TUNE. 실제web미변경;다음더고해상도원본과공식example재현. 그림자보류/서고KEEP/실패2/2유지.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_source_optics_2026-10-12.md
+
+D132 publication verified: 551269a payload pushed under standing cloud upload authorization, remote SHA matched. Gallery and ten related resources HTTP200; records285/knowledge51cases182original PASS. UI open request queued, actual browser motion not verified. Native asset result TUNE; next higher-resolution source + producer example comparison.

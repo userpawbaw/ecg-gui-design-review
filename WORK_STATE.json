@@ -1510,6 +1510,12 @@
     "candidateAdopted": false,
     "status": "TUNE; optical contrast improvement is not photographic fiber detail",
     "shadowDeferred": true,
-    "next": "higher-resolution source + producer example reproduction before geographic patch"
+    "next": "higher-resolution source + producer example reproduction before geographic patch",
+    "remotePublication": {
+      "status": "published_verified",
+      "verifiedPayloadHead": "551269a6618767563fd49a08278040a3a85d5bb3",
+      "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004",
+      "authorization": "cloudUploadAuthorization: current and subsequent cloud work"
+    }
   }
 }

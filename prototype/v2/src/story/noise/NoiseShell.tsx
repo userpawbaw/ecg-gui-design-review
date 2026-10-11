@@ -25,7 +25,7 @@ function sceneData(bank:Bank,cond:Cond){
 
 export function NoiseShell({bank,conds,onLab}:{bank:Bank,conds?:Cond[],onLab?:(t:LabTarget)=>void}){
  const q=new URLSearchParams(location.search);
- const order=useMemo<Cond[]>(()=>conds??[(['pli','bw','ma'].includes(q.get('cond')||'')?q.get('cond'):'pli') as Cond],[]);
+ const order=useMemo<Cond[]>(()=>conds??(q.get('cond')==='all'?['pli','bw','ma']:[(['pli','bw','ma'].includes(q.get('cond')||'')?q.get('cond'):'pli') as Cond]),[]);   // cond=all: the three scenes in a row (QA)
  const scenes=useMemo(()=>order.map(c=>sceneData(bank,c)),[bank,order]);
  const [i,setI]=useState(0),iRef=useRef(0),[ui,setUi]=useState<WaveUi>({atEnd:false,overlay:false,phase:'wait'});
  const gl=useRef<HTMLCanvasElement>(null),grid=useRef<HTMLCanvasElement>(null),sweep=useRef<HTMLCanvasElement>(null),overlay=useRef<HTMLCanvasElement>(null),strip=useRef<HTMLDivElement>(null);

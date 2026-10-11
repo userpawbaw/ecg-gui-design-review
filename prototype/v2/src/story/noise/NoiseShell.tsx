@@ -6,7 +6,7 @@ import {decode} from '../../engine';
 import type {Bank} from '../../data';
 import {detectR} from '../intro/beats';
 import {rankScene} from '../storyData';
-import {createNoiseStage,type Cond,type NoiseData} from './noiseStage';
+import {createNoiseStage,type Cond,type NoiseData,type WaveUi} from './noiseStage';
 import './noise.css';
 
 const SCENE:Record<Cond,{id:string,ko:string,en:string,synthetic:boolean}>={
@@ -27,7 +27,7 @@ export function NoiseShell({bank,conds,onLab}:{bank:Bank,conds?:Cond[],onLab?:(t
  const q=new URLSearchParams(location.search);
  const order=useMemo<Cond[]>(()=>conds??[(['pli','bw','ma'].includes(q.get('cond')||'')?q.get('cond'):'pli') as Cond],[]);
  const scenes=useMemo(()=>order.map(c=>sceneData(bank,c)),[bank,order]);
- const [i,setI]=useState(0),iRef=useRef(0);
+ const [i,setI]=useState(0),iRef=useRef(0),[ui,setUi]=useState<WaveUi>({atEnd:false,overlay:false,phase:'wait'});
  const gl=useRef<HTMLCanvasElement>(null),grid=useRef<HTMLCanvasElement>(null),sweep=useRef<HTMLCanvasElement>(null),overlay=useRef<HTMLCanvasElement>(null),strip=useRef<HTMLDivElement>(null);
  const stageRef=useRef<Awaited<ReturnType<typeof createNoiseStage>>|null>(null);
  // next scene on the same stage (camera continues), or Lab after the last one
@@ -41,19 +41,29 @@ export function NoiseShell({bank,conds,onLab}:{bank:Bank,conds?:Cond[],onLab?:(t
   let dead=false;
   const frozen=q.has('t')?Number(q.get('t')):null,reduced=q.get('reduced')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches;
   createNoiseStage({gl:gl.current!,grid:grid.current!,sweep:sweep.current!,overlay:overlay.current!,cells:[...strip.current!.querySelectorAll<HTMLElement>('i')]},
-   scenes[0].data,{frozenT:frozen,reduced,last:order.length===1,onEnd:()=>advance.current()})
-   .then(s=>{if(dead){s.dispose();return;}stageRef.current=s;(window as unknown as {__noise:unknown}).__noise={set:s.set,renderOnce:s.renderOnce,next:()=>advance.current(),get cond(){return s.cond;},ready:true};});
+   scenes[0].data,{frozenT:frozen,reduced,last:order.length===1,onEnd:()=>advance.current(),onUi:setUi})
+   .then(s=>{if(dead){s.dispose();return;}stageRef.current=s;(window as unknown as {__noise:unknown}).__noise={set:s.set,renderOnce:s.renderOnce,next:()=>advance.current(),get cond(){return s.cond;},ready:true,
+    check:(o?:{dt?:number,all?:boolean,pathOnly?:boolean})=>s.selfCheck((o?.all?(['pli','bw','ma'] as Cond[]).map(c=>sceneData(bank,c).data):scenes.map(x=>x.data)),o)};});
   return()=>{dead=true;stageRef.current?.dispose();stageRef.current=null;};
  },[]);
- // skip: one wheel gesture / → / space / Enter ends the current scene (same path as its natural end)
- useEffect(()=>{if(!onLab)return;let lastSkip=0;const go=()=>{const n=performance.now();if(n-lastSkip<900)return;lastSkip=n;advance.current();};
-  const k=(e:KeyboardEvent)=>{if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();go();}};
-  let acc=0;const w=(e:WheelEvent)=>{acc+=e.deltaY;if(acc>120){acc=0;go();}};
-  addEventListener('keydown',k);addEventListener('wheel',w,{passive:true});return()=>{removeEventListener('keydown',k);removeEventListener('wheel',w);};},[onLab]);
+ // S-06/S-07 (REVIEW-R1-STORY-20261011): the wheel and the arrow keys move the input ↔ output cross-fade; the scene changes
+ // only through the button. Wheel lines/pages are scaled to pixels so every device scrolls the same distance.
+ useEffect(()=>{
+  const st=()=>stageRef.current;
+  const w=(e:WheelEvent)=>{const k=e.deltaMode===1?40:e.deltaMode===2?innerHeight:1;st()?.scroll(e.deltaY*k);};
+  const key=(e:KeyboardEvent)=>{const d={ArrowDown:90,PageDown:300,ArrowUp:-90,PageUp:-300}[e.key];if(d!==undefined){e.preventDefault();st()?.scroll(d);}};
+  addEventListener('wheel',w,{passive:true});addEventListener('keydown',key);return()=>{removeEventListener('wheel',w);removeEventListener('keydown',key);};},[]);
+ const next=()=>{setUi(u=>({...u,atEnd:false}));stageRef.current?.leave();};
+ const toggle=()=>{stageRef.current?.toggleOverlay();};
  const cur=scenes[i],info=SCENE[order[i]];
  return <div className="ns-root">
   <canvas ref={gl} className="ns-gl"/><canvas ref={overlay} className="ns-overlay"/><canvas ref={grid} className="ns-grid"/><canvas ref={sweep} className="ns-sweep"/>
-  <div ref={strip} className="ns-strip" aria-label="박동마다 한 겹 처리"><i/><i/><i/><i/><span>박동마다 한 겹 · {cur.winner}</span></div>
+  <div ref={strip} className="ns-strip" aria-label="입력에서 출력으로 처리 단계"><i/><i/><i/><i/><span>{ui.overlay?'겹쳐 보기 · 입력 + 출력':ui.phase==='auto'?'박동마다 한 겹 · '+cur.winner:'입력 → 출력 · '+cur.winner}</span></div>
+  <div className={'ns-actions'+(ui.atEnd?' on':'')} aria-hidden={!ui.atEnd}>
+   <p className="ns-hint">{ui.overlay?'두 신호를 겹쳐 보는 중 · 스크롤은 멈춤':'스크롤을 올리면 잡음 섞인 입력으로 돌아감'}</p>
+   <button type="button" className="ns-btn ghost" onClick={toggle} tabIndex={ui.atEnd?0:-1}>{ui.overlay?'한 신호로 보기':'두 신호 겹쳐 보기'}</button>
+   <button type="button" className="ns-btn" onClick={next} tabIndex={ui.atEnd?0:-1}>{i+1<order.length?'다음 장면 →':onLab?'실험실로 →':'처음으로'}</button>
+  </div>
   <div className="ns-title" key={order[i]}><b>{info.ko}</b><small>{info.en} · INPUT −5 dB · {cur.s.record}</small></div>
   <p className="ns-notice">{info.synthetic?'합성 잡음 · 설명용 연출 · ':''}저장된 입력과 잡음 제거 출력 · 사람의 움직임·빨간 표시는 설명용 · 실제 장치 연결 없음</p>
  </div>;

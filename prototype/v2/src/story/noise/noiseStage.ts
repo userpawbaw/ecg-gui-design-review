@@ -17,13 +17,17 @@ import {createArchive} from '../intro/archive';
 import {createFigure} from '../intro/figure';
 import {createGrade} from '../intro/space';
 import {createSweep} from '../intro/sweep';
-import {createGrid,createBeatMix,mvPerBoxFor} from '../intro/waveUi';
+import {createGrid,mvPerBoxFor} from '../intro/waveUi';
+import {createWaveMode} from './waveMode';
+import {emissionTimes,shell} from './fieldPulse';
 import {beatPhase,type Loop} from '../intro/beats';
+import {createChecker} from './storyCheck';
 
 export type Cond='pli'|'bw'|'ma';
 export type NoiseData={cond:Cond,fs:number,loop:Loop,input:Float32Array,output:Float32Array,clean:Float32Array};
 export type NoiseDom={gl:HTMLCanvasElement,grid:HTMLCanvasElement,sweep:HTMLCanvasElement,overlay:HTMLCanvasElement,cells:HTMLElement[]};
-export type NoiseOptions={frozenT:number|null,reduced:boolean,onEnd?:()=>void,last?:boolean};
+export type WaveUi={atEnd:boolean,overlay:boolean,phase:string};
+export type NoiseOptions={frozenT:number|null,reduced:boolean,onEnd?:()=>void,last?:boolean,onUi?:(u:WaveUi)=>void};
 type Story={figure_anchor:number[],morphs:string[],fist_s:number[],ra_arc_m:number,sternum_v:number,heart_approx:number[],
  electrodes:Record<'RA'|'LA'|'LL',{v:number,p:number[],n:number[]}>,cams:Record<string,{type:string,loc:number[],rot_euler:number[],lens?:number,sensor_width?:number,ortho_scale?:number}>};
 
@@ -132,27 +136,41 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
      p.clone().multiply(new THREE.Vector3(1,1,1)).add(new THREE.Vector3((origin.x-p.x)*.6,-.26,0)).addScaledVector(n,.05)]);
     lead?.geometry.dispose();if(!lead){lead=new THREE.Mesh(new THREE.TubeGeometry(c,24,.0018,6),leadMat);scene.add(lead);}else lead.geometry=new THREE.TubeGeometry(c,24,.0018,6);}}
  }
- // P-b field (pli): nested translucent shells around the archive's power line (rig_v3.glb PowerLine, room-fixed path);
- // they grow from the cable until they wrap the figure, then fade as the difference shows at RA (inflow-field-v3 in the web)
- const shells:{m:THREE.Mesh,u:{uK:{value:number}}}[]=[];let cablePts:THREE.Vector3[]=[];
- {                                                                // loaded once; shown only in the power-line scene
-  const rg=await loader.loadAsync(new URL('../intro/assets/rig_v3.glb',import.meta.url).href);rg.scene.updateMatrixWorld(true);
-  let pl:THREE.Mesh|null=null;rg.scene.traverse(o=>{if(o.name.startsWith('PowerLine')&&(o as THREE.Mesh).isMesh)pl=o as THREE.Mesh;});
-  if(pl){const m=pl as THREE.Mesh,pa=m.geometry.getAttribute('position'),ua=m.geometry.getAttribute('uv');const B=80,acc=Array.from({length:B},()=>({p:new THREE.Vector3(),n:0}));let umax=0;
-   for(let i=0;i<pa.count;i++)umax=Math.max(umax,ua.getX(i));
-   for(let i=0;i<pa.count;i++){const b=Math.min(B-1,Math.floor(ua.getX(i)/umax*B)),v=new THREE.Vector3().fromBufferAttribute(pa,i).applyMatrix4(m.matrixWorld);acc[b].p.add(v);acc[b].n++;}
-   cablePts=acc.filter(a=>a.n).map(a=>a.p.divideScalar(a.n));
-   const curve=new THREE.CatmullRomCurve3(cablePts);
-   for(let i=0;i<3;i++){const u={uK:{value:0},uA:{value:1-.25*i}};
-    const mat=new THREE.ShaderMaterial({uniforms:u,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
-     vertexShader:'varying vec3 vN,vV;void main(){vec4 w=modelMatrix*vec4(position,1.);vN=normalize(mat3(modelMatrix)*normal);vV=normalize(cameraPosition-w.xyz);gl_Position=projectionMatrix*viewMatrix*w;}',
-     fragmentShader:'uniform float uK,uA;varying vec3 vN,vV;void main(){float f=1.-abs(dot(normalize(vN),vV));gl_FragColor=vec4(vec3(1.,.19,.28)*pow(f,1.6)*.55*uK*uA,1.);}'});
-    const sh=new THREE.Mesh(new THREE.TubeGeometry(curve,160,1,24),mat);sh.visible=false;scene.add(sh);shells.push({m:sh,u});}}
+ // P-b field (pli), S-05 (REVIEW-R1-STORY-20261011): sphere shells centred on the power strip, emitted on eighth notes
+ // (4 + 5 rest, twice; fieldPulse.ts) and fading as they travel out — illustration of the strip's 60 Hz field, not a measurement
+ const STRIP_C=new THREE.Vector3(-.95,.035,-3.62);               // power strip centre (archive frame → three), on the floor
+ const shellMat=(u:{uA:{value:number}})=>new THREE.ShaderMaterial({uniforms:u,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
+  vertexShader:'varying vec3 vN,vV;void main(){vec4 w=modelMatrix*vec4(position,1.);vN=normalize(mat3(modelMatrix)*normal);vV=normalize(cameraPosition-w.xyz);gl_Position=projectionMatrix*viewMatrix*w;}',
+  // rim (fresnel) for the shell's edge, a faint body so the inside reads as a volume, front faces a touch brighter
+  fragmentShader:'uniform float uA;varying vec3 vN,vV;void main(){float c=abs(dot(normalize(vN),vV)),f=1.-c;float rim=pow(f,2.4)*.95+pow(f,7.)*.9,body=.06;gl_FragColor=vec4(vec3(1.,.27,.38)*(rim+body)*(gl_FrontFacing?1.:.55)*uA,1.);}'});
+ const shells=Array.from({length:8},()=>{const u={uA:{value:0}};const m=new THREE.Mesh(new THREE.SphereGeometry(1,72,36),shellMat(u));m.visible=false;m.position.copy(STRIP_C);m.renderOrder=3;scene.add(m);return{m,u};});
+ // nearest distance strip → body (the field must pass the figure)
+ let reach=Infinity;{const mw=figure.group.matrixWorld,q=new THREE.Vector3();for(let i=0;i<P0.count;i+=17){q.fromBufferAttribute(P0,i).applyMatrix4(mw);reach=Math.min(reach,q.distanceTo(STRIP_C));}}
+ const R_MAX=Math.max(1.6,reach*2.2),EMIT=emissionTimes(13.0);
+ let T_CONTACT=EMIT[0];for(let a=0;a<3;a+=.01){const st=shell(EMIT[0]+a,EMIT[0],R_MAX);if(st&&st.r>=reach){T_CONTACT=EMIT[0]+a;break;}}   // first shell meets the body
+ // S-04 (plan IDEA-R1-NOISE §8.3): at the strip close-up a speech-bubble board pops up with an AC sine and "교류 60 Hz".
+ // The sine scrolls at a symbolic speed (a real 60 Hz would strobe at 60 fps) — said in the small line.
+ function drawBubble(t:number){
+  const pop=ss(10.7,11.0,t),out=1-ss(12.9,13.3,t),k=pop*out;if(k<=.003)return;
+  const a=STRIP_C.clone().add(new THREE.Vector3(0,.07,0)).project(camera);if(a.z>1)return;
+  const ax=(a.x*.5+.5)*W,ay=(-a.y*.5+.5)*H,bw=Math.min(300,.2*W),bh=bw*.52,bx=ax+.05*W,by=ay-bh-.1*H;
+  const over=1+.12*Math.sin(Math.PI*clamp((t-10.7)/.42))*(1-ss(10.95,11.15,t));   // one overshoot (0.3 s pop)
+  og.save();og.globalAlpha=k;og.translate(bx,by+bh);og.scale(pop*over,pop*over);og.translate(-bx,-(by+bh));
+  og.fillStyle='rgba(16,13,12,.86)';og.strokeStyle='rgba(255,214,170,.85)';og.lineWidth=1.4;
+  og.beginPath();og.roundRect(bx,by,bw,bh,12);og.moveTo(bx+22,by+bh);og.lineTo(ax+2,ay-4);og.lineTo(bx+46,by+bh);og.closePath();og.fill();og.stroke();
+  // sine: drawn left → right, then scrolls slowly
+  const draw=ss(11.0,11.8,t),pad=18,sx=bx+pad,sw=bw-2*pad,sy=by+bh*.42,amp=bh*.18;
+  og.beginPath();for(let i=0;i<=120*draw;i++){const u=i/120,x=sx+u*sw,y=sy-amp*Math.sin(2*Math.PI*(2*u-.35*t));i?og.lineTo(x,y):og.moveTo(x,y);}
+  og.strokeStyle='rgba(255,98,112,1)';og.lineWidth=2.4;og.shadowColor='rgba(255,60,80,.9)';og.shadowBlur=10;og.stroke();og.shadowBlur=0;
+  og.strokeStyle='rgba(255,214,170,.25)';og.lineWidth=1;og.beginPath();og.moveTo(sx,sy);og.lineTo(sx+sw,sy);og.stroke();
+  og.fillStyle='#fff3e6';og.font=`600 ${Math.round(bh*.2)}px Pretendard, sans-serif`;og.textBaseline='alphabetic';og.fillText('교류 60 Hz',sx,by+bh-pad*.9);
+  og.fillStyle='rgba(255,233,210,.6)';og.font=`500 ${Math.round(bh*.085)}px 'IBM Plex Mono', monospace`;og.fillText('AC · 물결 속도는 상징',sx+bw*.47,by+bh-pad*.9);
+  og.restore();
  }
- // nearest distance cable → body (sets how far the field must grow)
- let reach=.64;
- if(cablePts.length){reach=Infinity;const mw=figure.group.matrixWorld,q=new THREE.Vector3();
-  for(let i=0;i<P0.count;i+=37){q.fromBufferAttribute(P0,i).applyMatrix4(mw);for(const c of cablePts)reach=Math.min(reach,q.distanceTo(c));}}
+
+ // S-03: the detailed strip replaces the baked box (scripts/assets/power-strip-v1.py; same spot)
+ arch.room.traverse(o=>{if(/^(PowerStrip|StripHole|StripSwitch|Plug)/.test(o.name))o.visible=false;});
+ const strip=(await loader.loadAsync(U('power_strip.glb'))).scene;scene.add(strip);
  // camera from story.json ('ma' for pli/ma, 'side' for bw — the person's right, D-054)
  const camFrom=(name:string)=>{const d=story.cams[name],e=d.rot_euler,eul=new THREE.Euler(e[0],e[1],e[2],'ZYX');   // Blender XYZ euler = Rz·Ry·Rx = three order ZYX
   const f=new THREE.Vector3(0,0,-1).applyEuler(eul);return{def:d,loc:toThree(d.loc,A),look:toThree([d.loc[0]+f.x,d.loc[1]+f.y,d.loc[2]+f.z],A)};};
@@ -162,6 +180,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // the distance / look / fov ease, so pull-backs, orbits, tracking and the crane read as one continuous move.
  type Key={t:number,pos:THREE.Vector3,look:THREE.Vector3,hfov:number,ease?:'whip'};
  const deg=(r:number)=>r*180/Math.PI,hfovOf=(lens:number)=>2*Math.atan(18/lens);
+ figure.group.updateMatrixWorld(true);const figSphere=new THREE.Box3().setFromObject(figure.bodyMesh).getBoundingSphere(new THREE.Sphere());
  const V3=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
  const H0=heartWorld.clone(),Fo=origin.clone();
  const STRIP=V3(-.97,.05,-3.62),DESK=V3(-2.35,1.0,-3.55);         // archive power strip / desk (Blender archive frame → three)
@@ -170,7 +189,9 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   if(c.def.type!=='ortho')return{pos:c.loc,look:c.look,h:hfovOf(c.def.lens??16)};
   // B-b side view: the stills' orthographic camera becomes a long lens far away, a little from above (the near armrest)
   const fwd=c.look.clone().sub(c.loc).normalize(),pivot=c.loc.clone().addScaledVector(fwd,Math.abs(c.def.loc[0]));
-  return{pos:pivot.clone().addScaledVector(fwd,-4.5).add(V3(0,.9,0)),look:pivot.clone().add(V3(0,.05,0)),h:2*Math.atan((c.def.ortho_scale??1.9)/2/4.5)};
+  // S-09: inside the room (2.4 m, above the desk and monitor) — the 4.5 m position was behind the wall, so the orbit to it
+  // crossed the stack row and the desk (story-check 2026-10-11). Same framing width as the stills' ortho scale.
+  const D=2.4;return{pos:pivot.clone().addScaledVector(fwd,-D).add(V3(0,.62,0)),look:pivot.clone().add(V3(0,.05,0)),h:2*Math.atan((c.def.ortho_scale??1.9)/2/D)};
  }
  const maDef=story.cams.ma,maE=maDef.rot_euler,maF=new THREE.Vector3(0,0,-1).applyEuler(new THREE.Euler(maE[0],maE[1],maE[2],'ZYX'));
  const maPos=toThree(maDef.loc,A),maLook=toThree([maDef.loc[0]+maF.x,maDef.loc[1]+maF.y,maDef.loc[2]+maF.z],A),maH=hfovOf(maDef.lens??16);
@@ -180,16 +201,18 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   pli:[{t:0,pos:H0.clone().add(V3(0,.05,.75)),look:H0,hfov:.42},
    {t:3,pos:H0.clone().add(V3(.1,.1,.95)),look:H0,hfov:.85},
    {t:7,pos:Fo.clone().add(V3(1.25,1.15,1.35)),look:H0.clone().lerp(DESK,.55),hfov:.95},          // orbit: desk + computer behind
-   {t:10,pos:STRIP.clone().add(V3(-.6,.32,.5)),look:STRIP,hfov:.9},                               // down along the power line (from the person's right: the chair hid it)
-   {t:13,pos:STRIP.clone().add(V3(-.34,.14,.22)),look:STRIP,hfov:.7},                            // the strip, close
-   {t:15,pos:STRIP.clone().add(V3(-.55,1.3,.85)),look:STRIP.clone().add(V3(.25,.25,.15)),hfov:.95},              // crane rises beside the cable first (not through the body)
+   {t:10,pos:STRIP.clone().add(V3(.5,.45,-.5)),look:STRIP,hfov:.9},                                // down to the strip from behind-right (open floor; S-02/S-09: the old path went between chair and desk)
+   {t:13,pos:STRIP.clone().add(V3(.28,.17,-.24)),look:STRIP,hfov:.7},                             // the strip, close (bubble + first shells)
+   {t:15,pos:STRIP.clone().add(V3(.45,1.45,-.5)),look:STRIP.clone().add(V3(.1,.3,.2)),hfov:.95},                  // crane rises straight up behind the strip (clear of chair and figure)
    {t:17,pos:Fo.clone().add(V3(.73,2.27,1.65)),look:Fo.clone().add(V3(-.35,.55,-.25)),hfov:hfovOf(24)},   // crane up, wide
    {t:18.6,pos:finalPos,look:finalLook,hfov:finalH,ease:'whip'}],                               // whip zoom on a beat
   bw:[{t:0,pos:maPos,look:maLook,hfov:maH},{t:4,pos:finalPos,look:finalLook,hfov:finalH}],         // 90° orbit to the side view
   ma:[{t:0,pos:Fo.clone().add(V3(-1.3,1.0,.6)),look:H0,hfov:.9},{t:4,pos:finalPos,look:finalLook,hfov:finalH},
    {t:31,pos:finalPos,look:finalLook,hfov:finalH},{t:35,pos:Fo.clone().add(V3(.9,3.2,2.4)),look:Fo.clone().add(V3(-.6,.4,-.4)),hfov:hfovOf(22)}]};   // end: crane up over the archive → Lab
  return K[cond];}
- let END=0,ended=false,keys:Key[]=[],TP=0,last=!!opt.last;
+ // S-07: a scene ends only on the explicit button. HOLD = key time of the settled composition; after leave() the camera
+ // plays the outro keys (if any) and the scene hands over after OUTLEN (curtain lift, or black into Lab for the last one)
+ let HOLD=0,OUTLEN=1.2,leaveT=-1,ended=false,keys:Key[]=[],TP=0,last=!!opt.last;
  const cur={look:new THREE.Vector3(),h:1};                        // the camera's current look point / fov (scene hand-over)
  const ez=(k:number)=>k<.5?4*k*k*k:1-(-2*k+2)**3/2,whip=(k:number)=>1-(1-k)**4;
  const tmpD=new THREE.Vector3();
@@ -202,7 +225,9 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   tmpD.copy(da).normalize().applyQuaternion(qa.slerp(q,k)).multiplyScalar(dist);
   camera.position.copy(look).add(tmpD);camera.position.y+=breathOff;camera.lookAt(look.x,look.y+breathOff,look.z);
   const h=THREE.MathUtils.lerp(a.hfov,b.hfov,k);cur.look.copy(look);cur.h=h;camera.fov=deg(2*Math.atan(Math.tan(h/2)/camera.aspect));
-  camera.near=dist>2.5?Math.max(.05,dist-.8):.03;                // long views skip the stacks between camera and figure
+  // long views skip the stacks between camera and figure — but the near plane must never cut the figure (S-02: the 0:10
+  // "camera inside the body" was this plane slicing the body), so it stops 15 cm short of the figure's bounding sphere
+  camera.near=dist>2.5?Math.max(.05,Math.min(dist-.8,camera.position.distanceTo(figSphere.center)-figSphere.radius-.15)):.03;
   camera.updateProjectionMatrix();camera.updateMatrixWorld();
  }
  // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
@@ -215,7 +240,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // wave panel (stored samples, intro sweep rules) + 4-cell processing strip above it
  const grid=createGrid(dom.grid);
  const mkSweep=()=>createSweep(dom.sweep,{gridHot:grid.hot,fs:data.fs,loop:data.loop,input:{values:data.input,color:[255,188,121],glow:.45,core:.78,white:.35},output:{values:data.output,color:[103,231,195]},mvPerBox:3.6});
- let sweep=mkSweep(),mix=createBeatMix(4);
+ let sweep=mkSweep();const wave=createWaveMode();let lastT=0,ui='';
  const og=dom.overlay.getContext('2d')!;
  let W=0,H=0,panelMid=0;
  const sternumPx=()=>{const p=skin(VID.sternum).project(camera);return{x:(p.x*.5+.5)*W,y:(-p.y*.5+.5)*H};};
@@ -238,45 +263,55 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const breathFixed=(t:number)=>{const u=t%5;return u<2?ss(0,2,u):1-ss(2,5,u);};              // D-053: 2 per 10 s
  const fistAt=(t:number)=>{for(const c of clenches){const d=t-c;if(d<0||d>CLOSE+HOLD+OPEN)continue;return d<CLOSE?ss(0,CLOSE,d):d<CLOSE+HOLD?1:1-ss(CLOSE+HOLD,CLOSE+HOLD+OPEN,d);}return 0;};
  const waveAt=(t:number)=>{let best=-1;for(const c of clenches){const d=t-c-.3;if(d>=0&&d<1.6)best=d;}return best;};   // wave starts as the fist tightens
+ /** Pose of the figure and the camera's breath offset at scene time t (shared by the frame update and the self-check). */
+ const BREATH_WEAK=.3;
+ // S-10 legibility in the side view (bw): ?legib=0 none, 1 cyan outline, 2 denser body, 3 both (default 3, user to choose)
+ const LEGIB=Number(new URLSearchParams(location.search).get('legib')??3);
+ function poseAt(t:number){
+  const tl=((t%T)+T)%T,breath=bw?bw.breath[Math.min(bw.breath.length-1,Math.floor(tl*data.fs))]:breathFixed(t);
+  // S-12 / A-02: outside the baseline-wander scene the breath stays visible but small (≤ 1/3), so it does not suggest a
+  // baseline wander the shown noise does not have
+  return{breath:bw?breath:breath*BREATH_WEAK,fist:data.cond==='ma'&&t>2?fistAt(tl):0,breathOff:bw&&t>4?.015*(2*breath-1):0};
+ }
  let t0=performance.now(),frozen=opt.frozenT,frame=0;
  /** Start a scene on the same stage: the camera path begins where the previous scene's camera is (no cut, no reload). */
  function setScene(d:NoiseData,o:{last?:boolean}={}){
-  const handover=keys.length>0;data=d;last=!!o.last;ended=false;
+  const handover=keys.length>0;data=d;last=!!o.last;ended=false;leaveT=-1;
   T=data.input.length/data.fs;bw=data.cond==='bw'?breathFromBaseline(data.input,data.fs):null;
   clenches=data.cond==='ma'?clenchStarts(data.input,data.clean,data.fs):[];
-  END={pli:35,bw:33,ma:35}[data.cond];TP={pli:19,bw:11,ma:11}[data.cond];PROC=TP+3;   // panel (right curtain + wave) from TP; strip after the inflow
+  HOLD={pli:18.6,bw:4,ma:31}[data.cond];OUTLEN=data.cond==='ma'?4:1.2;TP={pli:19,bw:11,ma:11}[data.cond];PROC=TP+3;   // panel (right curtain + wave) from TP; strip after the inflow
   keys=keysFor(data.cond);
   if(handover)keys[0]={t:0,pos:camera.position.clone(),look:cur.look.clone(),hfov:cur.h};
   bokeh.enabled=data.cond==='ma';shells.forEach(({m})=>{m.visible=false;});
-  sweep=mkSweep();mix=createBeatMix(4);t0=performance.now();if(frozen!==null)frozen=0;resize();
+  sweep=mkSweep();wave.reset();ui='';t0=performance.now();if(frozen!==null)frozen=0;resize();
  }
  setScene(data0,{last:opt.last});addEventListener('resize',resize);
  const clock=()=>frozen??(performance.now()-t0)/1000;
  function update(){
   const t=clock(),tl=((t%T)+T)%T;frame++;
   // motion
-  const breath=bw?bw.breath[Math.min(bw.breath.length-1,Math.floor(tl*data.fs))]:breathFixed(t);
-  const fist=data.cond==='ma'&&t>2?fistAt(tl):0;
-  const panelK=ss(TP,TP+.6,t)*(last?1:1-ss(END-1.2,END,t));            // the curtain lifts before the next scene
-  camAt(t,bw&&t>4?.015*(2*breath-1):0);    // camera before anything is projected
+  const {breath,fist,breathOff}=poseAt(t);
+  const panelK=ss(TP,TP+.6,t)*(last||leaveT<0?1:1-ss(leaveT,leaveT+1.2,t));   // the curtain lifts before the next scene
+  camAt(leaveT<0?Math.min(t,HOLD):HOLD+(t-leaveT),breathOff);    // camera before anything is projected
   setMorphs(breath,fist);placeElectrodes();
   // inflow markers
   let common=0,ringK=0,leadK=0,front=-1,waveK=0;
-  if(data.cond==='pli'){const p=t-16.6;common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p));ringK=ss(1.4,2.2,p);leadK=ss(1.6,2.4,p);}   // field reaches the body as the crane ends
+  if(data.cond==='pli'){const p=t-T_CONTACT;common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p));ringK=ss(1.4,2.2,p);leadK=ss(1.6,2.4,p);}   // field reaches the body as the crane ends
   if(data.cond==='ma'&&t>4){const d=waveAt(tl);if(d>=0){front=(ss(0,1.2,d)*1.15-.05)*story.ra_arc_m;waveK=12;ringK=ss(1.05,1.3,d)*(1-ss(1.3,1.6,d)*.6);leadK=ringK;}}
-  if(shells.length&&data.cond==='pli'){const grow=ss(13,16.6,t),fade=1-.9*ss(17,18.2,t),rOut=.06+grow*(reach+.12);   // around the cable → wraps the body
-   shells.forEach(({m,u},i)=>{const r=Math.max(.01,rOut*(i+1)/3);m.visible=t>12.6&&fade>.02;m.geometry.dispose();
-    m.geometry=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(cablePts),160,r,24);u.uK.value=ss(12.6,13.6,t)*fade;});}
+  shells.forEach(({m,u},i)=>{const st=data.cond==='pli'?shell(t,EMIT[i],R_MAX):null;m.visible=!!st&&st.a>.004;if(st){m.scale.setScalar(st.r);u.uA.value=st.a*.85;}});
   if(bokeh.enabled){const fistP=skin(VID.fist),raP=skin(VID.RA),k=front<0?0:clamp(front/story.ra_arc_m);
    const target=fistP.lerp(raP,k*k*(3-2*k));(bokeh.uniforms as Record<string,{value:number}>).focus.value=camera.position.distanceTo(target);
    (bokeh.uniforms as Record<string,{value:number}>).aperture.value=t<4?.0005:.006;}
   bu.uCommon.value=common;bu.uFront.value=front;bu.uWaveK.value=waveK;
+  {const k=data.cond==='bw'?ss(1,4,t):0;bu.uEdgeK.value=LEGIB&1?k:0;bu.uDense.value=LEGIB&2?.35*k:0;}   // eases in with the orbit (no pop)
   ringMat.opacity=ringK;leadMat.opacity=leadK;
   // heart + sweep on the same clock
   const ph=beatPhase(data.loop,data.fs,t);figure.beat(ph,1);
-  const procOn=t>PROC;mix.update(procOn?1:0,ph.prev,t,opt.reduced);
-  sweep.draw({t,startAbs:0,mix:mix.value,alpha:panelK,reduced:opt.reduced,ring:null,comet:null,flash:mix.flash,gridAlpha:1});
-  const filled=Math.round(mix.goal*4);dom.cells.forEach((c,i)=>c.classList.toggle('on',i<filled));
+  const dtF=Math.min(.1,Math.max(0,t-lastT));lastT=t;
+  wave.update({procOn:t>PROC,prevR:ph.prev,t,dt:dtF,reduced:opt.reduced});
+  sweep.draw({t,startAbs:0,mix:wave.mix,alpha:panelK,reduced:opt.reduced,ring:null,comet:null,flash:wave.flash,gridAlpha:1,weights:wave.weights()});
+  const filled=wave.quarters;dom.cells.forEach((c,i)=>c.classList.toggle('on',i<filled));
+  const u=`${wave.atEnd&&leaveT<0}|${wave.phase==='overlay'}|${wave.phase}`;if(u!==ui){ui=u;opt.onUi?.({atEnd:wave.atEnd&&leaveT<0,overlay:wave.phase==='overlay',phase:wave.phase});}
   dom.grid.style.opacity=String(panelK);const sp=dom.cells[0]?.parentElement;if(sp)sp.style.opacity=String(panelK);
   // overlay: right ~40 % darkened to 70 % (left → right ramp) + B-b thread
   og.clearRect(0,0,W,H);const gr=og.createLinearGradient(.58*W,0,.66*W,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,.7)');
@@ -284,13 +319,47 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   if(bw&&panelK>.01){const c=sternumPx(),hx=sweep.slotX(Math.floor(t*data.fs)),base=bw.base[Math.min(bw.base.length-1,Math.floor(tl*data.fs))],hy=sweep.yOf(base);
    og.lineCap='round';for(const [w,col] of [[7,'rgba(120,80,40,.5)'],[3,'rgba(255,196,120,.9)'],[1,'rgba(255,240,210,1)']] as const){og.strokeStyle=col;og.lineWidth=w;og.beginPath();og.moveTo(c.x,c.y);og.lineTo(hx,hy);og.stroke();}
    og.fillStyle='rgba(255,205,140,1)';og.beginPath();og.arc(c.x,c.y,4,0,7);og.fill();}
-  og.globalAlpha=1;
-  const out=last?ss(END-1.2,END,t):0;if(out>0){og.fillStyle=`rgba(0,0,0,${out})`;og.fillRect(0,0,W,H);}      // only the last scene ends in black (→ Lab)
-  if(t>=END&&!ended&&frozen===null){ended=true;opt.onEnd?.();}
+  og.globalAlpha=1;if(data.cond==='pli')drawBubble(t);
+  const out=last&&leaveT>=0?ss(leaveT+OUTLEN-1.2,leaveT+OUTLEN,t):0;if(out>0){og.fillStyle=`rgba(0,0,0,${out})`;og.fillRect(0,0,W,H);}      // only the last scene ends in black (→ Lab)
+  if(leaveT>=0&&t>=leaveT+OUTLEN&&!ended){ended=true;opt.onEnd?.();}
   arch.update(t,frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,.6);
   grade.uniforms.uTime.value=t;composer.render();
  }
+ /** REVIEW-R1-STORY-20261011 §5: run the geometry checks over the scene sequence as the viewer sees it (camera hand-over
+  included). Returns per-scene worst values and every failing sample. QA only (window.__noise.check()). */
+ function selfCheck(seq:NoiseData[],o:{dt?:number,minClear?:number,pathOnly?:boolean}={}){
+  const dt=o.dt??.1,minClear=o.minClear??.08;gsap.ticker.remove(update);
+  const extra=[...discs.map(d=>d.m),ring,...(lead?[lead]:[])],hide=[arch.dust,...shells.map(x=>x.m)];
+  const ck=createChecker({renderer,scene,camera,body:figure.bodyMesh,heart:figure.heartMesh,hide,named:[chair,...arch.room.children]});
+  const report:{cond:Cond,heart:{state:string,out:number,n:number}[],minClear:number,minClearT:number,inBody:number[],near:{t:number,d:number}[],occl:{t:number,subject:string,by:string}[],path:number[][],sliced:number[]}[]=[];
+  keys=[];
+  seq.forEach((d,k)=>{
+   setScene(d,{last:k===seq.length-1});const r={cond:d.cond,heart:[] as {state:string,out:number,n:number}[],minClear:Infinity,minClearT:0,inBody:[] as number[],near:[] as {t:number,d:number}[],occl:[] as {t:number,subject:string,by:string}[],path:[] as number[][],sliced:[] as number[]};
+   if(!o.pathOnly)for(const b of [0,.5,1])for(const f of d.cond==='ma'?[0,1]:[0]){setMorphs(b,f);figure.group.updateMatrixWorld(true);const h=ck.heartOutside();r.heart.push({state:`breath ${b} fist ${f}`,...h});}
+   const tEnd=keys[keys.length-1].t;
+   for(let t=0;t<=tEnd+1e-6;t+=dt){
+    const ps=poseAt(t);camAt(t,ps.breathOff);setMorphs(ps.breath,ps.fist);placeElectrodes();scene.updateMatrixWorld(true);
+    {let md=Infinity;const mw=figure.bodyMesh.matrixWorld,q=new THREE.Vector3();for(let i=0;i<P0.count;i+=23){q.fromBufferAttribute(P0,i).applyMatrix4(mw);md=Math.min(md,q.distanceTo(camera.position));}
+     if(camera.near>md-.02)r.sliced.push(+t.toFixed(2));}                 // ② near plane cutting the figure
+    if(o.pathOnly){r.path.push([+t.toFixed(2),...camera.position.toArray().map(v=>+v.toFixed(3)),-1,+camera.near.toFixed(2)]);continue;}
+    if(ck.cameraInBody())r.inBody.push(+t.toFixed(2));
+    const cl=ck.clearance(camera.position);if(cl<r.minClear){r.minClear=cl;r.minClearT=+t.toFixed(2);}
+    if(camera.near<.5&&cl<minClear)r.near.push({t:+t.toFixed(2),d:+cl.toFixed(3)});
+    r.path.push([+t.toFixed(2),...camera.position.toArray().map(v=>+v.toFixed(3)),+cl.toFixed(3),+camera.near.toFixed(2)]);
+    const subj:[string,THREE.Vector3][]=[['heart',heartWorld]];if(d.cond==='pli'&&t>8&&t<15)subj.push(['strip',STRIP]);
+    for(const [nm,p] of subj){const oc=ck.occluded(p,[figure.group,...extra]);if(oc?.occ)r.occl.push({t:+t.toFixed(2),subject:nm,by:oc.by});}
+   }
+   report.push(r);
+  });
+  ck.dispose();setScene(seq[0],{last:seq.length===1});gsap.ticker.add(update);
+  // floor plan helpers: room objects within 3.5 m of the figure (x/z boxes), the figure, the strip
+  const boxes:{name:string,min:number[],max:number[]}[]=[];arch.room.updateMatrixWorld(true);
+  arch.room.traverse(o=>{if(!(o as THREE.Mesh).isMesh)return;const b=new THREE.Box3().setFromObject(o);if(b.isEmpty())return;const c=b.getCenter(new THREE.Vector3());
+   if(c.distanceTo(origin)<3.5&&b.getSize(new THREE.Vector3()).length()<4)boxes.push({name:o.name||o.parent?.name||'',min:b.min.toArray(),max:b.max.toArray()});});
+  return{scenes:report,boxes,figure:origin.toArray(),heart:heartWorld.toArray(),strip:STRIP_C.toArray()};
+ }
  gsap.ticker.add(update);
- return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,get cond(){return data.cond;},figure,arch,
+ return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,selfCheck,
+  scroll:(dy:number)=>wave.scroll(dy),toggleOverlay:()=>wave.toggleOverlay(),leave:()=>{if(leaveT<0)leaveT=clock();},get cond(){return data.cond;},figure,arch,
   dispose(){gsap.ticker.remove(update);removeEventListener('resize',resize);renderer.dispose();composer.dispose();arch.dispose();figure.dispose();}};
 }

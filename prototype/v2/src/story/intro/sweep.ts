@@ -16,6 +16,7 @@ export type SweepView={
  comet:{x0:number,y0:number,x1:number,y1:number,k:number,a:number}|null, // light streak heart → sweep head
  flash?:number,                  // T2: brief brightening of the whole trace when an R peak releases a cross-fade step
  gridAlpha?:number,              // G3: grid visibility (the grid itself is drawn once by waveUi)
+ weights?:{input:number,output:number,blurIn:number,blurOut:number},   // Story overlay (S-08): independent trace weights
 };
 export const WINDOW_S=2.5,GAP_S=.12,ERASE_S=.3,GLOW_TAU=.2;
 
@@ -99,8 +100,9 @@ let mvPerBox=opts.mvPerBox;
       g.drawImage(opts.gridHot,x0*sc,0,w*sc,opts.gridHot.height,x0,0,w,H);}
      g.globalAlpha=1;g.globalCompositeOperation='source-over';
     }
-    layer(opts.input,headAbs,v.startAbs,Math.min(1,v.alpha*(1-m)*fl),blurMax*m,1);
-    const hx=layer(opts.output,headAbs,v.startAbs,Math.min(1,v.alpha*m*fl),blurMax*(1-m),1.15);
+    const w=v.weights??{input:1-m,output:m,blurIn:m,blurOut:1-m};
+    layer(opts.input,headAbs,v.startAbs,Math.min(1,v.alpha*w.input*fl),blurMax*w.blurIn,1);
+    const hx=layer(opts.output,headAbs,v.startAbs,Math.min(1,v.alpha*w.output*fl),blurMax*w.blurOut,1.15);
     // head marker: small hot point at the newest sample (position marker only)
     const cur=m<.5?opts.input:opts.output,x=hx??xOfSlot(((headAbs%count)+count)%count),y=yOf(cur.values[idx(headAbs)]);
     const rg=g.createRadialGradient(x,y,0,x,y,18);rg.addColorStop(0,`rgba(255,255,255,${.75*v.alpha})`);rg.addColorStop(1,'rgba(255,255,255,0)');

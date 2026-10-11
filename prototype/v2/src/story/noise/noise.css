@@ -10,3 +10,12 @@
 .ns-title small{font:500 11px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;color:rgba(239,233,223,.6)}
 .ns-notice{position:absolute;left:64%;right:3%;bottom:4%;margin:0;font:400 11px/1.5 'IBM Plex Mono',monospace;color:rgba(239,233,223,.5)}
 .ns-title{animation:ns-in .9s ease-out both}@keyframes ns-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ns-actions{position:absolute;left:64%;right:3%;bottom:11%;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;align-items:center;opacity:0;transform:translateY(6px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
+.ns-actions.on{opacity:1;transform:none;pointer-events:auto}
+.ns-hint{flex:1 1 100%;margin:0 0 2px;text-align:right;font:400 11px/1.4 'IBM Plex Mono',monospace;color:rgba(239,233,223,.55)}
+.ns-btn{font:500 14px/1 'Pretendard',sans-serif;letter-spacing:.01em;padding:11px 18px;border-radius:999px;border:1px solid rgba(103,231,195,.7);background:rgba(103,231,195,.16);color:#eafff8;cursor:pointer;transition:background .2s,border-color .2s}
+.ns-btn:hover{background:rgba(103,231,195,.3)}
+.ns-btn.ghost{border-color:rgba(255,188,121,.6);background:rgba(255,188,121,.08);color:#ffe9d2}
+.ns-btn.ghost:hover{background:rgba(255,188,121,.2)}
+.ns-btn:focus-visible{outline:2px solid #eafff8;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.ns-actions{transition:none}}

@@ -125,6 +125,7 @@ uniform vec3 uSkin,uLine,uSunCol,uSunTo;uniform float uOpacity,uFlash,uFeet,uDen
 uniform vec3 uHeart;uniform float uWaveT,uWaveAmp;
 uniform sampler2D tLight;uniform mat4 uLightVP;
 uniform float uCommon,uFront,uWaveK;                             // Story inflow markers (D-054): 0 = off (intro)
+uniform vec3 uEdgeCol;uniform float uEdgeK,uDense;              // Story S-10 legibility: glowing silhouette, denser body (0 = off)
 varying vec3 vN,vW;varying float vS,vInD,vInM;
 float ringAt(float c,float dens){float d=c*dens,fw=max(fwidth(d),1e-4);float e=min(fract(d),1.-fract(d));return 1.-smoothstep(.5*fw,1.6*fw,e);}
 void main(){
@@ -147,6 +148,7 @@ void main(){
  float dh=distance(vW,uHeart),hl=exp(-dh*dh/.018);
  float band=exp(-pow((dh-uWaveT*1.5)/.05,2.))*exp(-uWaveT/.32)*uWaveAmp;col+=uLine*band*.5;
  float a=mix(.7,.95,pow(fres,1.4))*(1.-.5*hl);                    // thin centre, dense edge; thinner over the heart
+ a=mix(a,.96,uDense);
  // uScanDir 1: visible above the scan line (appear top-down); −1: visible below it (vanish from the top, the reverse of
  // appearing — REVIEW-R1-WEB-20261008 I-5 ②)
  float reveal=uScanDir>0.?smoothstep(uScan-.004,uScan+.012,y):1.-smoothstep(uScan-.012,uScan+.004,y);
@@ -161,6 +163,7 @@ void main(){
  // D-054 inflow red (inflow-preview-v3 add_red): P-b common mode over the whole body + M-b wave from the forearm to RA
  float wx=(vInD-uFront)/.045,wave=exp(-wx*wx)*vInM*exp(-vInD/.9)*uWaveK;
  vec3 red=vec3(1.,.19,.28)*(uCommon*.9+wave)*.3*uOpacity;
+ red+=uEdgeCol*(pow(fres,3.2)*1.4+pow(fres,9.)*1.2)*uEdgeK*reveal*uOpacity;   // S-10 outline (emitted, survives the blend)
  gl_FragColor=vec4(col*uExposure+(uLine*scanLine*uOpacity*1.5+glow+red)/max(ao,.05),ao);
 }`;
 function h5Material(){
@@ -168,7 +171,7 @@ function h5Material(){
   uniforms:{uSkin:{value:new THREE.Color('#d9dde3')},uLine:{value:new THREE.Color('#f4f1ea')},uSunCol:{value:new THREE.Color('#ffd09a')},uSunTo:{value:new THREE.Vector3(0,-1,0)},
    uExposure:{value:.42},uRefDist:{value:0},uSunOn:{value:0},tLight:{value:null},uLightVP:{value:new THREE.Matrix4()},uOpacity:{value:0},uFlash:{value:0},uFeet:{value:FEET_Y},
    uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uScanDir:{value:1},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},
-   uCommon:{value:0},uFront:{value:-1},uWaveK:{value:0}}});
+   uCommon:{value:0},uFront:{value:-1},uWaveK:{value:0},uEdgeCol:{value:new THREE.Color('#6ff3ff')},uEdgeK:{value:0},uDense:{value:0}}});
 }
 
 function rimMaterial(color:string,pow:number,fill:number,deform:boolean){

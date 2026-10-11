@@ -1,0 +1,61 @@
+{
+  "scope": "native file/source hashes and dimensions; not browser motion or realtime GPU performance",
+  "nativeFrames": 5,
+  "newNativeRenders": 4,
+  "reusedBaseline": 1,
+  "surveyFrames": 10,
+  "metrics": [
+    {
+      "file": "cloud_06-d1-g0.35.png",
+      "opaquePixelCount": 490716,
+      "displayRgbLumaP10P50P90": [
+        0.236478431372549,
+        0.5426125490196078,
+        0.6812517647058823
+      ],
+      "meanAlpha": 0.5488598206463982
+    },
+    {
+      "file": "cloud_06-d4-g0.35.png",
+      "opaquePixelCount": 603142,
+      "displayRgbLumaP10P50P90": [
+        0.12418901960784313,
+        0.41376705882352943,
+        0.6851733333333333
+      ],
+      "meanAlpha": 0.595588280172909
+    },
+    {
+      "file": "cloud_08-d1-g0.35.png",
+      "opaquePixelCount": 430753,
+      "displayRgbLumaP10P50P90": [
+        0.22498117647058824,
+        0.5790235294117646,
+        0.6930164705882352
+      ],
+      "meanAlpha": 0.49209311616187007
+    },
+    {
+      "file": "cloud_08-d4-g0.35.png",
+      "opaquePixelCount": 528866,
+      "displayRgbLumaP10P50P90": [
+        0.11717960784313725,
+        0.523838431372549,
+        0.6969380392156862
+      ],
+      "meanAlpha": 0.5544962265912224
+    },
+    {
+      "file": "cloud_08-d4-g0.png",
+      "opaquePixelCount": 528851,
+      "displayRgbLumaP10P50P90": [
+        0.13231529411764706,
+        0.5784572549019608,
+        0.7369874509803922
+      ],
+      "meanAlpha": 0.5544958152023016
+    }
+  ],
+  "metricWarning": "display RGB luma proxy over alpha>.9; different opaque masks, not a fidelity score",
+  "runtimeChanged": false
+}

@@ -1,0 +1,140 @@
+{
+  "status": "offline source/optical probes; not live geographic scene",
+  "renderer": "4.5.3 LTS",
+  "size": [
+    1024,
+    1024
+  ],
+  "maxSamples": 96,
+  "adaptiveSampling": true,
+  "adaptiveThreshold": 0.009999999776482582,
+  "denoiser": "OPENIMAGEDENOISE",
+  "stepRate": 0.35,
+  "volumeBounces": 6,
+  "seed": 7,
+  "sunElevation": 15,
+  "sunEnergy": 6,
+  "sunDirection": [
+    0.0,
+    -0.9659258127212524,
+    0.258819043636322
+  ],
+  "skyStrength": 0.08,
+  "cameraElevation": 65,
+  "orthoScale": 5.0,
+  "viewTransform": "AgX",
+  "normalization": "longest source bbox extent normalized to 7; source physical metres unknown",
+  "frames": [
+    {
+      "file": "cloud_06-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "cameraElevation": 65,
+      "orthoScale": 5.0,
+      "stepRate": 0.35,
+      "denoising": true,
+      "seconds": 165.01302528381348,
+      "sha256": "2ce386958369224c01c78b2265f26f4d645375db508de88a06ca87032648f607",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "reusedFrom": "verification/a-cloud-sampling-20261012/cloud_06-step0.35-denoise1.png"
+    },
+    {
+      "file": "cloud_06-d4-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "densityMultiplier": 4,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -167.5,
+          -207.5,
+          -103.5
+        ],
+        [
+          151.5,
+          255.5,
+          55.5
+        ]
+      ],
+      "scale": 0.01511879049676026,
+      "volumeSpace": "OBJECT",
+      "seconds": 111.29847550392151,
+      "sha256": "53f7182b7196f28bf45dd830dc83ac1677a156fae71b9ce9679e544e1a3ebdd6"
+    },
+    {
+      "file": "cloud_08-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_08_variant_0000.vdb",
+      "sourceSha256": "991826cf4c7515d15b49299b6e9e878a0f92f817adacd3ef2df05ec6dd2c7ce9",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -111.5,
+          -199.5,
+          -103.5
+        ],
+        [
+          127.5,
+          247.5,
+          63.5
+        ]
+      ],
+      "scale": 0.015659955257270694,
+      "volumeSpace": "OBJECT",
+      "seconds": 152.84730648994446,
+      "sha256": "2b56e5910d425469c4415bf7643002a9c0c73b884fedb8c8fff34b0e7a4bcfaa"
+    },
+    {
+      "file": "cloud_08-d4-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_08_variant_0000.vdb",
+      "sourceSha256": "991826cf4c7515d15b49299b6e9e878a0f92f817adacd3ef2df05ec6dd2c7ce9",
+      "densityMultiplier": 4,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -111.5,
+          -199.5,
+          -103.5
+        ],
+        [
+          127.5,
+          247.5,
+          63.5
+        ]
+      ],
+      "scale": 0.015659955257270694,
+      "volumeSpace": "OBJECT",
+      "seconds": 98.86550712585449,
+      "sha256": "39cb9304998ca6cba2637a4c2828c713edf8065f9775db6f4679b702985ae9b4"
+    },
+    {
+      "file": "cloud_08-d4-g0.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_08_variant_0000.vdb",
+      "sourceSha256": "991826cf4c7515d15b49299b6e9e878a0f92f817adacd3ef2df05ec6dd2c7ce9",
+      "densityMultiplier": 4,
+      "anisotropy": 0,
+      "bounds": [
+        [
+          -111.5,
+          -199.5,
+          -103.5
+        ],
+        [
+          127.5,
+          247.5,
+          63.5
+        ]
+      ],
+      "scale": 0.015659955257270694,
+      "volumeSpace": "OBJECT",
+      "seconds": 93.05735301971436,
+      "sha256": "cef4b09e028859fa7c0b100ed44ac02fc22633d37f054475720d170c1db17d03"
+    }
+  ],
+  "limitations": [
+    "isolated fixed-light asset; no live motion or GPU frame timing",
+    "different sources have different normalized shape/optical paths; not resolution-only comparison",
+    "density multiplier changes optical thickness and opacity, not source spatial resolution"
+  ]
+}

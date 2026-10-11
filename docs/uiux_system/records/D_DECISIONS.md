@@ -3210,3 +3210,26 @@ OFF의grain을형태결로오인하지않는다. 작은step에서도안보이는
 
 ### 실행 중 판단 보완 / F096
 첫density침식과noisegain preview는효과약함으로보존. 3라운드째원본density를좌표변위로재표본화한VDB로전환. 두새native와D130baseline대조에서작은윤곽·골변화는있으나사진섬유결미달TUNE/web적용미추천. source광학vs조형기여는완전히분리하지않았으므로원본만이원인으로확정하지않음. 세부/compatibility는 ECG_A_cloud_density_detail_2026-10-12.md와F096에연결.
+
+## D-132. 보유 원본 선별과 광학두께를 분리 비교한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [대화][문헌][코드] |
+| 상태 | 제작 전 결정 / source-optical asset 시험 |
+| 연결 | D-131 / F-096 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 다음 스텝 승인. 작은 warp 반복 대신 별도 원본과 광학 설정을 대조해야 한다.
+### 검토한 선택지
+보유10VDB 선별, 신규 Disney 고해상도3GB 원본, 기존06의 density/anisotropy 독립 비교, RGB sharpening.
+### 고른 것과 근거
+보유10종을384²/32최대samples 동일camera65/sun15로 먼저 조사. 형상이 더 잘 읽히는 원본 하나를 선택해06과1024²/96최대samples에서 density1/4 대조. 선택원본density4에서 anisotropy.35/0 추가 독립 비교. density4는 광학두께 가설의 실험값이며 source단위→metre 보정이나 권장물리값이 아니다.06 density1은D130 baseline 재사용. 모든native는같은빛/카메라/step/denoise. source별longestbbox7정규화로형상차이는남으며해상도만의비교아님.
+### 버린 것과 이유
+밀도warp재반복 및RGB골그리기는원인분리안됨. 신규3GB다운로드는보유원본과광학분리로판단근거확보후필요시진행. 기존원본10개중선별은새고해상도source확보와구별한다.
+### 되돌려야 하는 조건
+density증량으로흰날림/불투명덩어리/세부손실이면기각.새source도섬유결미달이면web적용보류하고더고해상도원본시험.실시간/GPU/지도접합/사용자채택과별도.그림자보류/서고KEEP/실패2/2유지.
+
+### 실행 결과 / F097
+보유10원본 조사후08선별. 새native4와기존baseline재사용1에서density4는작은능선/골명암강화,g0는밝은면추가변화.사진섬유결은미달/돌같은면gap/TUNE;4배실제web채택보류.신규고해상도source및공식example재현다음.보고서 ECG_A_cloud_source_optics_2026-10-12.md.

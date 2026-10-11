@@ -1,0 +1,264 @@
+{
+  "status": "offline source/optical probes; not live geographic scene",
+  "renderer": "4.5.3 LTS",
+  "size": [
+    384,
+    384
+  ],
+  "maxSamples": 32,
+  "adaptiveSampling": true,
+  "adaptiveThreshold": 0.009999999776482582,
+  "denoiser": "OPENIMAGEDENOISE",
+  "stepRate": 0.35,
+  "volumeBounces": 6,
+  "seed": 7,
+  "sunElevation": 15,
+  "sunEnergy": 6,
+  "sunDirection": [
+    0.0,
+    -0.9659258127212524,
+    0.258819043636322
+  ],
+  "skyStrength": 0.08,
+  "cameraElevation": 65,
+  "orthoScale": 10.0,
+  "viewTransform": "AgX",
+  "normalization": "longest source bbox extent normalized to 7; source physical metres unknown",
+  "frames": [
+    {
+      "file": "cloud_01-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_01_variant_0000.vdb",
+      "sourceSha256": "c91381781adc353f26a25d6cb6c9e254f47b89db04d2e99d289ae0e7d545945c",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -159.5,
+          -231.5,
+          -103.5
+        ],
+        [
+          111.5,
+          295.5,
+          71.5
+        ]
+      ],
+      "scale": 0.013282732447817837,
+      "volumeSpace": "OBJECT",
+      "seconds": 5.695487976074219,
+      "sha256": "f38e4825b0406005a50ad75748ea4c788c87fd76ad58751f4649e6f5669184fc"
+    },
+    {
+      "file": "cloud_02-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_02_variant_0000.vdb",
+      "sourceSha256": "219e9afa0396388da334bf47f25f323ba21b06cfa98d2d5490a483a1a140318e",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -191.5,
+          -223.5,
+          -103.5
+        ],
+        [
+          143.5,
+          263.5,
+          71.5
+        ]
+      ],
+      "scale": 0.014373716632443531,
+      "volumeSpace": "OBJECT",
+      "seconds": 4.553440093994141,
+      "sha256": "0ee24462fad9652abaa109b32537dbab55d9c671a5643de651c0b5943df19f9d"
+    },
+    {
+      "file": "cloud_03-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_03_variant_0000.vdb",
+      "sourceSha256": "33e789b91dc050801e32f9c8cabe8392434dbe992db009bcb34d2c0df78b51be",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -191.5,
+          -231.5,
+          -103.5
+        ],
+        [
+          143.5,
+          255.5,
+          71.5
+        ]
+      ],
+      "scale": 0.014373716632443531,
+      "volumeSpace": "OBJECT",
+      "seconds": 3.5168440341949463,
+      "sha256": "7142ba9e3a982d964153478caaddbb8c7fdcfebdef868983e4f68fd35f73b374"
+    },
+    {
+      "file": "cloud_04-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_04_variant_0000.vdb",
+      "sourceSha256": "c7ae50d9be4537284f9ada2e700ce8b54aa08aadb2719a54368c37032a3b3e26",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -167.5,
+          -223.5,
+          -103.5
+        ],
+        [
+          151.5,
+          247.5,
+          47.5
+        ]
+      ],
+      "scale": 0.014861995753715499,
+      "volumeSpace": "OBJECT",
+      "seconds": 3.782524347305298,
+      "sha256": "b510ccffcd74da0d7959b1e8e15af89957e4f1aafcf4d5c6b8a24999b52686c0"
+    },
+    {
+      "file": "cloud_05-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_05_variant_0000.vdb",
+      "sourceSha256": "00800bd41f090702352c99de8f079aa70cefd6f8ea76f4fd7624059ee5b193bb",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -175.5,
+          -231.5,
+          -103.5
+        ],
+        [
+          159.5,
+          231.5,
+          63.5
+        ]
+      ],
+      "scale": 0.01511879049676026,
+      "volumeSpace": "OBJECT",
+      "seconds": 4.621412515640259,
+      "sha256": "31bbcbf01cac8f9537c33084c01daf4f66586b5f1eaa7d0720d1d981d2d55936"
+    },
+    {
+      "file": "cloud_06-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_06_variant_0000.vdb",
+      "sourceSha256": "3c416cd2ca163e5bbc87911975806312d65b1e39a9ef83f2cd74f152efeadbee",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -167.5,
+          -207.5,
+          -103.5
+        ],
+        [
+          151.5,
+          255.5,
+          55.5
+        ]
+      ],
+      "scale": 0.01511879049676026,
+      "volumeSpace": "OBJECT",
+      "seconds": 4.628601789474487,
+      "sha256": "c43fd329eaa0ebb136da1cc9eec0bbd8d5c2ebf79a150e04772be55c1a9e23b1"
+    },
+    {
+      "file": "cloud_07-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_07_variant_0000.vdb",
+      "sourceSha256": "400fd5fd53208e45041dfa22b4d9701fb8aa27c09fdf51b051d2c0098ea0d40b",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -151.5,
+          -207.5,
+          -103.5
+        ],
+        [
+          159.5,
+          271.5,
+          79.5
+        ]
+      ],
+      "scale": 0.014613778705636743,
+      "volumeSpace": "OBJECT",
+      "seconds": 4.650427579879761,
+      "sha256": "2aa5bc2c077110e1888885e4c2c0a073ebcbe8adb797a3fee76c68e4a29877d4"
+    },
+    {
+      "file": "cloud_08-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_08_variant_0000.vdb",
+      "sourceSha256": "991826cf4c7515d15b49299b6e9e878a0f92f817adacd3ef2df05ec6dd2c7ce9",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -111.5,
+          -199.5,
+          -103.5
+        ],
+        [
+          127.5,
+          247.5,
+          63.5
+        ]
+      ],
+      "scale": 0.015659955257270694,
+      "volumeSpace": "OBJECT",
+      "seconds": 3.773850440979004,
+      "sha256": "4ae68deb89b615859cd9f9fba596f4eb348df2e46dc7a84c183ec8d34463fc57"
+    },
+    {
+      "file": "cloud_09-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_09_variant_0000.vdb",
+      "sourceSha256": "5bb542eb0d7d863ce1aae894f47a095559d9cccb996b3ef231f65a4960201b5e",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -135.5,
+          -215.5,
+          -103.5
+        ],
+        [
+          143.5,
+          247.5,
+          79.5
+        ]
+      ],
+      "scale": 0.01511879049676026,
+      "volumeSpace": "OBJECT",
+      "seconds": 4.105832099914551,
+      "sha256": "e230ce0a84887fa5a984adb9057c7913b1c05607d39785e4367291cb9a7484a5"
+    },
+    {
+      "file": "cloud_10-d1-g0.35.png",
+      "source": "assets/source/jangafx-cloud-pack/unpacked/CloudPack/CloudPackVDB/cloud_10_variant_0000.vdb",
+      "sourceSha256": "05bdc59f23d4888cb0d1d06f7d087e91b3312d91ac2259181b165289dc692d96",
+      "densityMultiplier": 1,
+      "anisotropy": 0.35,
+      "bounds": [
+        [
+          -175.5,
+          -239.5,
+          -103.5
+        ],
+        [
+          119.5,
+          279.5,
+          55.5
+        ]
+      ],
+      "scale": 0.01348747591522158,
+      "volumeSpace": "OBJECT",
+      "seconds": 3.5412347316741943,
+      "sha256": "b4d9ce00ee7998d66bba641fa1c1ca10e892fc07207c35ac0116f0cb0e737986"
+    }
+  ],
+  "limitations": [
+    "isolated fixed-light asset; no live motion or GPU frame timing",
+    "different sources have different normalized shape/optical paths; not resolution-only comparison",
+    "density multiplier changes optical thickness and opacity, not source spatial resolution"
+  ]
+}

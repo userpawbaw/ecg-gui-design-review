@@ -1487,8 +1487,29 @@
     "userQuote": "이번 및 후속 구름 작업 업로드 승인",
     "repository": "https://github.com/userpawbaw/ecg-gui-design-review.git",
     "branch": "codex/abc-light-design-20261004",
-    "scope": ["current D131 and subsequent cloud comparison code", "directly rendered samples", "review records"],
-    "excluded": ["personal attachments", "personal videos", "secrets", "VDB binaries"],
+    "scope": [
+      "current D131 and subsequent cloud comparison code",
+      "directly rendered samples",
+      "review records"
+    ],
+    "excluded": [
+      "personal attachments",
+      "personal videos",
+      "secrets",
+      "VDB binaries"
+    ],
     "instruction": "Reuse this explicit authorization for uploads within this destination and scope; upload approval does not imply visual adoption or release approval."
+  },
+  "cloudSourceOpticsD132": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_source_optics_2026-10-12.md",
+    "manifest": "verification/a-cloud-source-optics-20261012/manifest.json",
+    "surveyFrames": 10,
+    "nativeNewFrames": 4,
+    "reusedBaseline": 1,
+    "actualSceneChanged": false,
+    "candidateAdopted": false,
+    "status": "TUNE; optical contrast improvement is not photographic fiber detail",
+    "shadowDeferred": true,
+    "next": "higher-resolution source + producer example reproduction before geographic patch"
   }
 }

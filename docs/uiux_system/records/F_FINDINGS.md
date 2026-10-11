@@ -2290,3 +2290,24 @@ shaderdensity침식과noisegain은384preview에서효과약함. 원본좌표크�
 새native약151/156초,실시간frame/VRAM미측정. VDB225≤224경고존재하나density/FLOAT로드true/error빈문자확인. warning없는compatibilityPASS아님. shadow보류/서고KEEP/실패2/2유지.
 ### 놓쳤다면
 미세한밀도변형을목업질감도달로과장하거나,OBJECT보정확인없이축소크기에반비례하는밀도증량을해버렸을것이다.
+
+## F-097. 광학두께를 높이면 구름 명암은 읽히지만 섬유 결 확보와는 다르다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [코드][실험][문헌] |
+| 상태 | 국소 명암 부분 개선 / 사진결 TUNE |
+| 연결 | D-132 / F-096 / CASE-007 |
+
+### 발단
+사용자 선명source와빛·산란분리 다음스텝진행승인.
+### 먼저 의심한 것과 배제 방법
+source06자체결부족만이원인인지와광학두께부족을분리.보유10VDB동일384뷰조사→08선별,06/08 density1/4동일1024뷰와08 density4 g.35/0대조. baseline만D130재사용;새native4.
+### 결정적 근거
+같은source에서density4는작은능선/골명암을강화한다.따라서원본만의원인으로확정할수없다.08교체만으로사진섬유결개선확보불가. g0는밝은면을조금강화하지만새결생성아님.동일crop/SHA/조건은verification/a-cloud-source-optics-20261012/manifest.json 및ECG_A_cloud_source_optics_2026-10-12.md.단단한면/alphaedge입자gap남음.
+### 조치와 검토한 대안
+4배즉시web채택보류/TUNE.기존팩warp나sampling반복보다별도고해상도source와공식example조건재현다음. Disney3GB는공식자료확인만/실제다운로드·로드없음.
+### 비용 / 영향 범위
+native4장offline시간기록.사용자liveGPU/스크롤품질/지도인계증거아님. density multiplier는sourceunit→metre보정이아니며opacity도변경.그림자보류/서고KEEP/실패2/2유지.
+### 놓쳤다면
+광학적으로가려진결을원본해상도부족으로만오해하거나명암개선을사진섬유결목표달성으로과장했을것이다.

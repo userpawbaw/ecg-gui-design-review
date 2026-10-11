@@ -802,3 +802,7 @@ F096/D131: 3preview라운드 보존, 실제VDBwarp 새native2장+baseline재사�
 D131: native/gallery/source hashes/records checks completed locally; gallery and four displayed images HTTP200. Commit3b4e533 retained. Auto-review rejected push because prior approval was scoped to D130; D131 remote publication pending explicit approval. No workaround or retry beyond stated scope.
 
 2026-10-12 D131 upload approval resolved: user explicitly approved "이번 및 후속 구름 작업 업로드 승인". D131 payload 3b4e533 and checkpoint b184b29 pushed to existing userpawbaw/ecg-gui-design-review / codex/abc-light-design-20261004, remote SHA readback matched. Durable authorization in WORK_STATE covers current and subsequent cloud comparison code, directly rendered samples and review records at this destination; excludes personal attachments/videos, secrets and VDB binaries. Reuse authorization within scope. Visual result remains TUNE, not recommended for web adoption; next work is sharper source / optical comparison.
+
+## 2026-10-12 D132 원본·광학두께 비교
+D132/F097: 보유10원본 조사,06/08 density1/4 및08 g.35/0 대조. native새4장+기존baseline재사용. 광학두께의명암효과확인/사진섬유결미달TUNE. 실제web미변경;다음더고해상도원본과공식example재현. 그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_source_optics_2026-10-12.md

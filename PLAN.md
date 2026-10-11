@@ -571,3 +571,7 @@ F095/D130: 동일cloud06 close crop1024², step .35/.175 × denoise OFF/ON 4nati
 ## 2026-10-12 D131 구름 density결 시험
 F096/D131: 3preview라운드 보존, 실제VDBwarp 새native2장+baseline재사용. 작은윤곽차이/사진섬유결TUNE 및web적용미추천. 다른source/광학대조다음, 버전경고조건부/그림자보류/서고KEEP/실패2/2유지.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_density_detail_2026-10-12.md
+
+## 2026-10-12 D132 원본·광학두께 비교
+D132/F097: 보유10원본 조사,06/08 density1/4 및08 g.35/0 대조. native새4장+기존baseline재사용. 광학두께의명암효과확인/사진섬유결미달TUNE. 실제web미변경;다음더고해상도원본과공식example재현. 그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_source_optics_2026-10-12.md

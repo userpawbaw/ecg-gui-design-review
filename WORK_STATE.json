@@ -1456,10 +1456,11 @@
     "candidateAdopted": false,
     "shadowDeferred": true,
     "remotePublication": {
-      "status": "awaiting_explicit_user_upload_approval",
-      "reason": "auto review rejected git push twice; existing remote and bounded payload verified but explicit upload approval required",
+      "status": "published_verified",
+      "reason": "User explicitly approved this result upload on 2026-10-12; push completed and remote branch SHA read back",
       "localCommit": "e08671c74e1bd82e62f33cb9a86fbaf029798913",
-      "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004"
+      "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004",
+      "verifiedPayloadHead": "da7843b"
     }
   }
 }

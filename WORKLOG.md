@@ -792,3 +792,5 @@ F095/D130: 동일cloud06 close crop1024², step .35/.175 × denoise OFF/ON 4nati
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sampling_audit_2026-10-12.md
 
 D130 remote publication: auto-review rejected git push twice, including after destination/payload readback. Explicit user upload approval required; no bypass. Local e08671c preserved, gallery/comparison/manifest HTTP200, native source hashes and record checks PASS.
+
+2026-10-12 D130 upload approval received: user explicitly approved this result upload. e08671c payload and da7843b checkpoint pushed to existing codex/abc-light-design-20261004; remote SHA readback matched. Earlier auto-review rejection preserved as history, publication block resolved.

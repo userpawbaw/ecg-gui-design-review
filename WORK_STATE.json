@@ -1475,10 +1475,20 @@
     "shadowDeferred": true,
     "vdbCompatibility": "225/224 warning; density FLOAT loaded with no error_message",
     "remotePublication": {
-      "status": "awaiting_explicit_upload_approval",
+      "status": "published_verified",
       "localCommit": "3b4e533",
-      "reason": "auto-review interprets prior approval as D130 only; new D131 bounded payload requires approval",
+      "reason": "User explicitly approved current and subsequent cloud work uploads on 2026-10-12; D131 payload and approval checkpoint pushed and remote SHA verified",
+      "verifiedPayloadHead": "b184b29",
       "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004"
     }
+  },
+  "cloudUploadAuthorization": {
+    "approvedOn": "2026-10-12",
+    "userQuote": "이번 및 후속 구름 작업 업로드 승인",
+    "repository": "https://github.com/userpawbaw/ecg-gui-design-review.git",
+    "branch": "codex/abc-light-design-20261004",
+    "scope": ["current D131 and subsequent cloud comparison code", "directly rendered samples", "review records"],
+    "excluded": ["personal attachments", "personal videos", "secrets", "VDB binaries"],
+    "instruction": "Reuse this explicit authorization for uploads within this destination and scope; upload approval does not imply visual adoption or release approval."
   }
 }

@@ -137,3 +137,7 @@ Epic: Unreal volume material+cloud+sky atmosphere. Nubis: Houdini Atlas/Decima v
 **수용 기준**: 타원윤곽없음/thin-thick차이/같은sun명암과shadow/같은군집확대/역scrollnoise·잔상사용자review. 자동alpha수치만으로PASS안함.
 **ECG 번안**: 지구→사람측정공간도입. 비교panel파형/단위/데이터계약미변경.
 **재현 상태**: none — 연구·추천설계만, D112전volume시험과별도. D113/F079 상세 ECG_A_orbital_cloud_hybrid_research_2026-10-08.md.
+
+## D129 제작 노트 보충
+F094/D129: 업계노트/공식노드/포럼직원답변 재탐색. source gate 이후 profile/billow/wisp density와 sampling·denoise·거리 mip 분리시험 권장. research only, 신규render/runtime/팩확보/성능검증없음. D128TUNE/그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md

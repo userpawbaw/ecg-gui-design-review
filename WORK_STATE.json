@@ -1438,5 +1438,13 @@
     "status": "TUNE asset source, geographic patch and texture integration pending",
     "candidateAdopted": false,
     "shadowDeferred": true
+  },
+  "cloudPractitionerResearchD129": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md",
+    "researchOnly": true,
+    "runtimeChanged": false,
+    "status": "research reviewed / proposed trial not tested",
+    "candidateAdopted": false,
+    "shadowDeferred": true
   }
 }

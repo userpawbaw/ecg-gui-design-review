@@ -296,3 +296,7 @@ RTX 회복 확인, 같은north six poses의 upscale/fullres/대비1.6 대조 완
 
 ## D123 지도 결 / 구름 조명
 [검토](ECG_A_detail_hold_cloud_light_2026-10-10.md), verification/a-detail-light-20261010/gallery.html. 독립대조T6/L2, fullhold첫trial기각/보존.
+
+## D129 제작 노트 보충
+F094/D129: 업계노트/공식노드/포럼직원답변 재탐색. source gate 이후 profile/billow/wisp density와 sampling·denoise·거리 mip 분리시험 권장. research only, 신규render/runtime/팩확보/성능검증없음. D128TUNE/그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md

@@ -273,3 +273,7 @@ GPU 회복은 사용자 환경의 재개 조건이었다. 시간 업스케일 �
 
 ### 2026-10-11 D128 / F093
 사용자가 명암과 원본texture결을구별→8Kglobal의kilometretexel한계→공식VDB/현재impostorbaker/layout-detail분리대조→별도2Kasset샘플. 원본결gate를앞세워EXP051revision2수정, source원본시험을actualscene완성으로혼동하지않음. 기존D127TUNE/near그림자보류/서고KEEP/실패2/2보존.
+
+## 2026-10-11 D129 제작자 노트 재탐색
+F094/D129: 업계노트/공식노드/포럼직원답변 재탐색. source gate 이후 profile/billow/wisp density와 sampling·denoise·거리 mip 분리시험 권장. research only, 신규render/runtime/팩확보/성능검증없음. D128TUNE/그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md

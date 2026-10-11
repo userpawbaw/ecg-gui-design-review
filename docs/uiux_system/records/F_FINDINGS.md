@@ -2227,3 +2227,24 @@ geographic90–330km연속focus, 위성원본의fine-broad lighting gradient 및
 이번Cyclesoffline샘플이며runtime코드미변경.2KRGBA8+mip한장21.33MiB는계산예산/전체GPU비용미측정. shader증량단독권장→texture원본gate우선으로EXP051후속수정. 기존shadow보류/서고KEEP/실패2/2/fallback유지.
 ### 놓쳤다면
 명암후보를반복하면서동일저주파소스의둥근형태만선명하게만들고,8K파일이므로이미국소detail이충분하다는오판을유지했을것이다.
+
+## F-094. 구름 세부 결은 원본 형태·밀도 침식·거리 필터를 함께 설계한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-11 [사용자][공식자료][제작자발표][코드] |
+| 상태 | 문헌/코드 분석 완료 · 실행 품질 미검증 |
+| 연결 | F-093 / D-129 / CASE-007 |
+
+### 발단
+사용자가 선명한 texture 결 부족을 짚은 뒤 업계 제작자 노트/공식 포럼 구현 디테일 재탐색 요청.
+### 먼저 의심한 것과 배제 방법
+새 고해상도 이미지 확보만으로 충분한지 검토. Nubis³92–119쪽과 제작자 공개팩 설명은 저해상도 profile에서 billow/wisp를 런타임 침식으로 만든다고 명시; SideFX 공식노드는 조형·외곽 섬유·출력 해상도 한계를 분리한다. D128 원본/denoise 원인 비중은 아직 미확정.
+### 결정적 근거
+SideFX 공식포럼 직원 old_school 2013-08-22 답변의 hero/전경/중경/배경 frustum해상도 배분 및 Gaussian detail 손실. Frostbite 구현연구 §4.5.2 density경계침식, §5.5.2 sunlight샘플, §6.1 재투영/새픽셀처리. 당시엔진값을현행WebGL값으로복사하지않음.
+### 조치와 검토한 대안
+report ECG_A_cloud_practitioner_notes_2026-10-11.md에 기존/새자료와 읽기제한구분. 보유VDB번안/Disney/Nubis입력/Houdini신규/atlas비교; 원본결·sampling·광학분리시험 우선. 추가globalnoise/밝기증량만으로텍스처개선선언제외.
+### 비용 / 영향 범위
+이번 research만. 외부팩미다운로드/신규render없음/runtime미변경/성능unknown. 그림자보류/서고KEEP/실패2/2/fallback유지.
+### 놓쳤다면
+PNG픽셀수만올리거나완성에셋으로오해한저해상도NVDF를그대로사용해같은부드러운돌기·자글거림을반복했을것이다.

@@ -782,3 +782,7 @@ D127 최종 검증: build83module PASS; records275/knowledge51cases172original P
 ## 2026-10-11 D128 선명 구름 source
 F093/D128: source-first texture검토/보유JangaFXVDB2K투명샘플3장. 기존명암보완TUNE유지, texture결/edgegrain/고정빛/gpu및지리적patch인계별도. actualweb코드미변경. 다음source결확보→국소선명층6구도/정역motion; shadow보류/서고KEEP/실패2/2/fallback유지.
 report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_texture_source_review_2026-10-11.md;gallery verification/a-cloud-texture-assets-20261011/gallery.html.
+
+## 2026-10-11 D129 제작자 노트 재탐색
+F094/D129: 업계노트/공식노드/포럼직원답변 재탐색. source gate 이후 profile/billow/wisp density와 sampling·denoise·거리 mip 분리시험 권장. research only, 신규render/runtime/팩확보/성능검증없음. D128TUNE/그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md

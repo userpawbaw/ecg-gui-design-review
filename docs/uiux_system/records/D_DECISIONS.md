@@ -3147,3 +3147,23 @@ JangaFX 보유 원본 VDB의 투명 2K 샘플부터 제작하여 에셋 자체�
 전체 sharpen 및 기존 mip 강제0은 결을 복원하지 못하며 aliasing 위험. 작은 구름 모델을 대륙 크기로 확대하는 것은 스케일 오류라 제외. 사진cutout은 고정 명암/원근/바탕제거 난점 때문에 이번 첫 에셋시험에서 제외. 전체 실시간volume교체는 이번 소형 에셋시험 범위 아님.
 ### 되돌려야 하는 조건
 native2K 샘플에도 부드러운 미세 결이 부족하거나 atlas의 고정빛/원근가림이 부적합하면 다른 VDB/고품질photo/국소실시간volume 비교. 이번 에셋 렌더는 실제 북유럽화면/성능/통합 증거 아님. 그림자보류/서고KEEP/실패2/2/fallback 유지.
+
+## D-129. 선명 구름의 다음 시험은 밀도 결과 샘플링을 분리한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-11 [대화][문헌][제작자발표] |
+| 상태 | 연구 기반 후속 시험 권장 · 구현/채택 전 |
+| 연결 | F-094 / D-128 |
+| CASE | CASE-007 |
+
+### 갈림길
+사진같은선명군집을위해완성고해상도소스만도입할지, 보유density에국소billow/wisp결을제작할지, 현행heightnormal/밝기만늘릴지.
+### 검토한 선택지
+JangaFX보유VDB번안/Disney고해상도밀도/NubisNVDF+노이즈/Houdini새조형/고정beauty atlas. report ECG_A_cloud_practitioner_notes_2026-10-11.md의공식자료/업계노트대조.
+### 고른 것과 근거
+D128source gate유지+밀도결/sampling분리. 동일source crop에서denoise/step을분리한후기존·billowy·wispy3후보를비교하고, 기존위성footprint내국소패치로만번안하는후속권장. 가까운단계는같은density를사용한volume/연속detail LOD. 연구요청범위이므로이번렌더나runtime코드제작은미실행.
+### 버린 것과 이유
+RGBsharpen/normal증폭만으로없는미세형태복원주장제외. 공개Nubis팩은고해상도완성cloud아님. 전구간동일noise/모든step대량증량/고정beauty단독인계는품질·비용위험으로미채택.
+### 되돌려야 하는 조건
+번안density의결이돌처럼보이거나일관된footprint/빛/motion을유지못하면다른원본/atlas대조. 원본샘플TUNE/사용자최종채택전. 그림자보류·서고KEEP·실패2/2·기존fallback유지.

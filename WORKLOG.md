@@ -826,3 +826,5 @@ D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤
 D134 record formatting repair: F099 ledger evidence tags added after immutable event snapshot ingestion; original ingested snapshot kept unchanged. No observation or recommendation changed.
 
 D134 verification: native3/noisy3 source+outputSHA and dimensions PASS, HTTP11 resources PASS, app browser11/11 image load and screenshot PASS. Records290 / knowledge51cases187original structural PASS. Photographic detail TUNE; optical convergence and actual northern runtime remain unproven.
+
+D134 publication verified: 28d1759 payload remote SHA and raw manifest Git blob matched; local JSON equal (Git LF vs working CRLF explains initial byte-hash mismatch). Authorized code/native/records only; source binaries/supplied beauty excluded. Sandbox Git credential launch failed; host push under standing approval succeeded.

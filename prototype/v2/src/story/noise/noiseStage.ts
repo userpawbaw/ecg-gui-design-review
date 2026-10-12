@@ -18,6 +18,7 @@ import {createFigure} from '../intro/figure';
 import {createGrade} from '../intro/space';
 import {createSweep} from '../intro/sweep';
 import {createGrid,mvPerBoxFor} from '../intro/waveUi';
+import {createFistDrive} from './fistDrive';
 import {createWaveMode} from './waveMode';
 import {emissionTimes,shell} from './fieldPulse';
 import {beatPhase,type Loop} from '../intro/beats';
@@ -35,7 +36,6 @@ const SPOT={x:-.7505,y:3.0995,yaw:-.0106};                       // build_archiv
 const RED=new THREE.Color('#ff3048');
 const clamp=(x:number,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const ss=(a:number,b:number,t:number)=>{const k=clamp((t-a)/(b-a));return k*k*(3-2*k);};
-const CLOSE=.56,HOLD=.45,OPEN=.39;                               // D-053: the video's clench timing (s)
 
 /** Blender figure frame (z up) → three (y up) inside the archive: p_arch = spot + Rz(yaw)(p − anchor), then (x, z, −y). */
 function toThree(p:number[]|THREE.Vector3,anchor:number[]){
@@ -51,15 +51,6 @@ export function breathFromBaseline(x:Float32Array,fs:number){        // 1 s movi
  const c=new Float32Array(x.length);for(let i=0;i<x.length;i++)c[i]=out[Math.min(x.length-1,i+(k>>1))];
  let lo=Infinity,hi=-Infinity;for(const v of c){lo=Math.min(lo,v);hi=Math.max(hi,v);}
  return{base:c,breath:c.map(v=>(v-lo)/(hi-lo||1))};
-}
-export function clenchStarts(input:Float32Array,clean:Float32Array,fs:number){   // noise 0.5 s RMS above threshold → clench
- const n=input.length,w=Math.round(.5*fs),e=new Float32Array(n);let acc=0;
- for(let i=0;i<n;i++){const d=input[i]-clean[i];acc+=d*d;if(i>=w){const o=input[i-w]-clean[i-w];acc-=o*o;}e[i]=Math.sqrt(Math.max(0,acc)/Math.min(i+1,w));}
- let lo=Infinity,hi=-Infinity;for(const v of e){lo=Math.min(lo,v);hi=Math.max(hi,v);}
- const thr=lo+.35*(hi-lo),starts:number[]=[];let busyUntil=-1;
- for(let i=1;i<n;i++){const t=i/fs-.25;                              // the RMS window lags by half its length
-  if(e[i]>=thr&&e[i-1]<thr&&t>=busyUntil){starts.push(Math.max(0,t));busyUntil=t+CLOSE+HOLD+OPEN;}}   // overlaps merge
- return starts;
 }
 
 export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOptions){
@@ -206,8 +197,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  function finalFor(cond:Cond){
   const c=camFrom(cond==='bw'?'side':'ma');
   // K-06 (user 2026-10-12): the ma framing at fist height, fist and heart filling the frame. The 10/8 recording shows it
-  // ~12 % tighter than a 16:9 canvas does (narrower browser canvas); ?macam=b keeps the camera and narrows the lens to match
-  const zoom=cond==='ma'&&new URLSearchParams(location.search).get('macam')==='b'?.88:1;
+  // ~12 % tighter than a 16:9 canvas does (narrower browser canvas); the default keeps the camera and narrows the lens to match
+  const zoom=cond==='ma'&&new URLSearchParams(location.search).get('macam')!=='a'?.88:1;   // B is the default (user 2026-10-12); ?macam=a = the full 16:9 lens
   if(c.def.type!=='ortho')return{pos:c.loc,look:c.look,h:hfovOf(c.def.lens??16)*zoom};
   // B-b side view: the stills' orthographic camera becomes a long lens far away, a little from above (the near armrest)
   const fwd=c.look.clone().sub(c.loc).normalize(),pivot=c.loc.clone().addScaledVector(fwd,Math.abs(c.def.loc[0]));
@@ -285,27 +276,29 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   camera.position.copy(keep.p);camera.quaternion.copy(keep.q);camera.fov=keep.fov;camera.near=keep.near;camera.updateProjectionMatrix();camera.updateMatrixWorld();cur.look.copy(keep.look);cur.h=keep.h;
  }
  // stored-trace timings (per scene)
- let T=0,bw:ReturnType<typeof breathFromBaseline>|null=null,clenches:number[]=[],PROC=0;
+ let T=0,bw:ReturnType<typeof breathFromBaseline>|null=null,drive:ReturnType<typeof createFistDrive>|null=null,PROC=0;
  const breathFixed=(t:number)=>{const u=t%5;return u<2?ss(0,2,u):1-ss(2,5,u);};              // D-053: 2 per 10 s
- const fistAt=(t:number)=>{for(const c of clenches){const d=t-c;if(d<0||d>CLOSE+HOLD+OPEN)continue;return d<CLOSE?ss(0,CLOSE,d):d<CLOSE+HOLD?1:1-ss(CLOSE+HOLD,CLOSE+HOLD+OPEN,d);}return 0;};
- const waveAt=(t:number)=>{let best=-1;for(const c of clenches){const d=t-c-.3;if(d>=0&&d<1.6)best=d;}return best;};   // wave starts as the fist tightens
+ // S-14 (user 2026-10-12): fist and red marker follow the stored muscle noise itself (fistDrive.ts) — the fist closes at a
+ // constant speed while a burst lasts and opens when it subsides; the red band climbs the forearm while the noise lasts,
+ // as bright as the noise is loud. (The old clench-start timing also broke when the S-07 scene HOLD shadowed the fist HOLD.)
+ const RELAUNCH=.7;
  /** Pose of the figure and the camera's breath offset at scene time t (shared by the frame update and the self-check). */
- const BREATH_WEAK=Number(new URLSearchParams(location.search).get('breathk')??.3);   // S-12: breath outside bw (QA: ?breathk=1 is the 10/8 strength)
+ const BREATH_WEAK=Number(new URLSearchParams(location.search).get('breathk')??.5);   // S-12: breath outside bw, ×0.5 (user 2026-10-12: ×0.3 hard to see; QA: ?breathk=1 is the 10/8 strength)
  // S-10 legibility in the side view (bw): ?legib=0 none, 1 cyan outline, 2 denser body, 3 both (default 3, user to choose)
  const LEGIB=Number(new URLSearchParams(location.search).get('legib')??3);
  const CHEST=Number(new URLSearchParams(location.search).get('chest')??.8);   // S-13 chest window strength (QA: ?chest=0..1)
  function poseAt(t:number){
   const tl=((t%T)+T)%T,breath=bw?bw.breath[Math.min(bw.breath.length-1,Math.floor(tl*data.fs))]:breathFixed(t);
-  // S-12 / A-02: outside the baseline-wander scene the breath stays visible but small (≤ 1/3), so it does not suggest a
+  // S-12 / A-02: outside the baseline-wander scene the breath stays visible but small (×0.5), so it does not suggest a
   // baseline wander the shown noise does not have
-  return{breath:bw?breath:breath*BREATH_WEAK,fist:data.cond==='ma'&&t>2?fistAt(tl):0,breathOff:bw&&t>4?.015*(2*breath-1):0};
+  return{breath:bw?breath:breath*BREATH_WEAK,fist:data.cond==='ma'&&t>2&&drive?drive.fist(tl):0,breathOff:bw&&t>4?.015*(2*breath-1):0};
  }
  let t0=performance.now(),frozen=opt.frozenT,frame=0;
  /** Start a scene on the same stage: the camera path begins where the previous scene's camera is (no cut, no reload). */
  function setScene(d:NoiseData,o:{last?:boolean}={}){
   const handover=keys.length>0;data=d;last=!!o.last;ended=false;leaveT=-1;
   T=data.input.length/data.fs;bw=data.cond==='bw'?breathFromBaseline(data.input,data.fs):null;
-  clenches=data.cond==='ma'?clenchStarts(data.input,data.clean,data.fs):[];
+  drive=data.cond==='ma'?createFistDrive(data.input,data.clean,data.fs):null;
   HOLD={pli:18.6,bw:4,ma:31}[data.cond];OUTLEN=data.cond==='ma'?4:1.2;TP={pli:19,bw:11,ma:11}[data.cond];PROC=TP+3;   // panel (right curtain + wave) from TP; strip after the inflow
   keys=keysFor(data.cond);
   if(handover)keys[0]={t:0,pos:camera.position.clone(),look:cur.look.clone(),hfov:cur.h};
@@ -324,7 +317,9 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   // inflow markers
   let common=0,ringK=0,leadK=0,front=-1,waveK=0;
   if(data.cond==='pli'){const p=t-T_CONTACT;common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p));ringK=ss(1.4,2.2,p);leadK=ss(1.6,2.4,p);}   // field reaches the body as the crane ends
-  if(data.cond==='ma'&&t>4){const d=waveAt(tl);if(d>=0){front=(ss(0,1.2,d)*1.15-.05)*story.ra_arc_m;waveK=12;ringK=ss(1.05,1.3,d)*(1-ss(1.3,1.6,d)*.6);leadK=ringK;}}
+  if(data.cond==='ma'&&t>4&&drive){const b=drive.burstAt(tl),lv=Math.min(1,drive.level(tl)*1.6);
+   if(b){const k=b.active?b.since%RELAUNCH:b.since-Math.floor(b.len/RELAUNCH)*RELAUNCH;   // relaunch while the noise lasts; the last climb finishes
+    if(k<RELAUNCH){front=(ss(0,.6,k)*1.15-.05)*story.ra_arc_m;waveK=12*lv;ringK=ss(.45,.55,k)*(1-ss(.55,RELAUNCH,k)*.6)*lv;leadK=ringK;}}}
   shells.forEach(({m,u},i)=>{const st=data.cond==='pli'?shell(t,EMIT[i],R_MAX):null;m.visible=!!st&&st.a>.004;if(st){m.scale.setScalar(st.r);const inside=camera.position.distanceTo(STRIP_C)/st.r;u.uA.value=st.a*.85*(inside<1?.06+.94*ss(.82,1,inside):1);}});   // camera inside a shell: only a faint wash, so the outer edges stay the read (2026-10-12 capture review)
   if(bokeh.enabled){const fistP=skin(VID.fist),raP=skin(VID.RA),k=front<0?0:clamp(front/story.ra_arc_m);
    const target=fistP.lerp(raP,k*k*(3-2*k));(bokeh.uniforms as Record<string,{value:number}>).focus.value=camera.position.distanceTo(target);
@@ -359,10 +354,10 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   const dt=o.dt??.1,minClear=o.minClear??.08,maxFg=o.maxFg??.05;gsap.ticker.remove(update);
   const extra=[...discs.map(d=>d.m),ring,...(lead?[lead]:[])],hide=[arch.dust,...shells.map(x=>x.m)];
   const ck=createChecker({renderer,scene,camera,body:figure.bodyMesh,heart:figure.heartMesh,hide,named:[chair,...arch.room.children]});
-  const report:{cond:Cond,heart:{state:string,out:number,n:number}[],minClear:number,minClearT:number,inBody:number[],near:{t:number,d:number}[],occl:{t:number,subject:string,by:string}[],fg:{t:number,frac:number}[],path:number[][],sliced:number[]}[]=[];
+  const report:{cond:Cond,heart:{state:string,out:number,n:number}[],minClear:number,minClearT:number,inBody:number[],near:{t:number,d:number}[],occl:{t:number,subject:string,by:string}[],fg:{t:number,frac:number}[],path:number[][],sliced:number[],sync?:number}[]=[];
   keys=[];
   seq.forEach((d,k)=>{
-   setScene(d,{last:k===seq.length-1});const r={cond:d.cond,heart:[] as {state:string,out:number,n:number}[],minClear:Infinity,minClearT:0,inBody:[] as number[],near:[] as {t:number,d:number}[],occl:[] as {t:number,subject:string,by:string}[],fg:[] as {t:number,frac:number}[],path:[] as number[][],sliced:[] as number[]};
+   setScene(d,{last:k===seq.length-1});const r={cond:d.cond,heart:[] as {state:string,out:number,n:number}[],minClear:Infinity,minClearT:0,inBody:[] as number[],near:[] as {t:number,d:number}[],occl:[] as {t:number,subject:string,by:string}[],fg:[] as {t:number,frac:number}[],path:[] as number[][],sliced:[] as number[],sync:undefined as number|undefined};
    if(!o.pathOnly&&!o.viewOnly)for(const b of [0,.5,1])for(const f of d.cond==='ma'?[0,1]:[0]){setMorphs(b,f);figure.group.updateMatrixWorld(true);const h=ck.heartOutside();r.heart.push({state:`breath ${b} fist ${f}`,...h});}
    const tEnd=keys[keys.length-1].t;
    for(let t=0;t<=tEnd+1e-6;t+=dt){
@@ -380,6 +375,10 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
      if(oc.occ)r.occl.push({t:+t.toFixed(2),subject:nm,by:oc.by});}
     if(fg>maxFg)r.fg.push({t:+t.toFixed(2),frac:+fg.toFixed(3)});                         // ④ foreground intrusion
    }
+   // ⑪ (O-011) motion ↔ signal sync: in the muscle scene the fist must follow the stored noise envelope
+   if(d.cond==='ma'&&drive){const xs:number[]=[],ys:number[]=[];for(let t=4;t<=tEnd;t+=.05){const tl=((t%T)+T)%T;xs.push(poseAt(t).fist);ys.push(drive.level(tl));}
+    const m=(a:number[])=>a.reduce((u,v)=>u+v,0)/a.length,mx=m(xs),my=m(ys);let sxy=0,sxx=0,syy=0;xs.forEach((x,i)=>{sxy+=(x-mx)*(ys[i]-my);sxx+=(x-mx)**2;syy+=(ys[i]-my)**2;});
+    r.sync=+(sxy/Math.sqrt(Math.max(1e-12,sxx*syy))).toFixed(3);}
    report.push(r);
   });
   ck.dispose();setScene(seq[0],{last:seq.length===1});gsap.ticker.add(update);
@@ -392,6 +391,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  gsap.ticker.add(update);
  return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,selfCheck,
   scroll:(dy:number)=>wave.scroll(dy),toggleOverlay:()=>wave.toggleOverlay(),leave:()=>{if(leaveT<0)leaveT=clock();},get cond(){return data.cond;},figure,arch,
+  /** QA: the muscle-noise bursts the fist follows (loop seconds) and the stored loop length */
+  bursts:()=>({T,bursts:drive?.bursts??[]}),
   /** QA: camera state and what lies under a screen point (NDC), by object and material name */
   around(x:number,y:number,z:number,rad:number){const c=new THREE.Vector3(x,y,z),q=new THREE.Vector3(),lo=new THREE.Vector3(1e9,1e9,1e9),hi=lo.clone().negate();arch.room.updateMatrixWorld(true);
    arch.room.traverse(o=>{const m=o as THREE.Mesh;if(!m.isMesh)return;const P=m.geometry.getAttribute('position');for(let i=0;i<P.count;i++){q.fromBufferAttribute(P,i).applyMatrix4(m.matrixWorld);if(q.distanceTo(c)<rad){lo.min(q);hi.max(q);}}});

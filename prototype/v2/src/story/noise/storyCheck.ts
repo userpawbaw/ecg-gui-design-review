@@ -3,6 +3,7 @@
 // ① heart containment — every (sampled) heart vertex inside the body, by ray parity against the morphed body
 // ② clearance        — distance from the camera to the nearest surface, from six 90° distance renders around it
 // ③ occlusion        — from the real camera, is anything nearer than the subject at the subject's pixel
+// ④ foreground       — share of the frame covered by things much nearer than the subject (crane past a lamp)
 // Debug/QA only: nothing here changes what is drawn in a normal run.
 import * as THREE from 'three';
 
@@ -53,25 +54,27 @@ export function createChecker(c:CheckCtx){
    return m;
   });
  }
- /** ③ is something nearer than the subject at its pixel? Subject meshes (the figure) are hidden for this render. */
- function occluded(subject:THREE.Vector3,exclude:THREE.Object3D[]){
-  const cam=c.camera,ndc=subject.clone().project(cam);
-  if(ndc.z>1||Math.abs(ndc.x)>.95||Math.abs(ndc.y)>.95)return null;        // not on screen → not judged
-  const want=cam.position.distanceTo(subject);
-  const r=withOverride(()=>{
+ /** ③ is something nearer than the subject at its pixel? ④ how much of the frame is foreground much nearer than the subject
+  (fg: share of pixels nearer than `frac` × subject distance, e.g. a lamp shade swinging through a crane shot — added after the
+  2026-10-11 capture review found one the pixel test missed). Subject meshes (the figure) are hidden for this render. */
+ function occluded(subject:THREE.Vector3,exclude:THREE.Object3D[],frac=.7){
+  const cam=c.camera,ndc=subject.clone().project(cam),want=cam.position.distanceTo(subject);
+  withOverride(()=>{
    const vis=exclude.map(o=>o.visible);exclude.forEach(o=>{o.visible=false;});
    distMat.uniforms.uRef.value.copy(cam.position);c.renderer.setRenderTarget(viewRT);c.renderer.clear();c.renderer.render(c.scene,cam);
    c.renderer.readRenderTargetPixels(viewRT,0,0,192,108,viewBuf);exclude.forEach((o,i)=>{o.visible=vis[i];});
-   const x=Math.min(191,Math.max(0,Math.round((ndc.x*.5+.5)*191))),y=Math.min(107,Math.max(0,Math.round((ndc.y*.5+.5)*107)));
-   let near=Infinity;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xx=Math.min(191,Math.max(0,x+dx)),yy=Math.min(107,Math.max(0,y+dy));near=Math.min(near,viewBuf[(yy*192+xx)*4]);}
-   return near;
   });
-  if(!(r<want-.03))return{occ:false,by:'',gap:want-r};
+  let fgN=0;for(let i=0;i<viewBuf.length;i+=4){const v=viewBuf[i];if(v>0&&v<want*frac)fgN++;}
+  const fg=fgN/(192*108);
+  if(ndc.z>1||Math.abs(ndc.x)>.95||Math.abs(ndc.y)>.95)return{occ:false,by:'',gap:NaN,fg,onScreen:false};   // subject off screen → occlusion not judged
+  const x=Math.min(191,Math.max(0,Math.round((ndc.x*.5+.5)*191))),y=Math.min(107,Math.max(0,Math.round((ndc.y*.5+.5)*107)));
+  let r=Infinity;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xx=Math.min(191,Math.max(0,x+dx)),yy=Math.min(107,Math.max(0,y+dy));r=Math.min(r,viewBuf[(yy*192+xx)*4]);}
+  if(!(r<want-.03))return{occ:false,by:'',gap:want-r,fg,onScreen:true};
   // name the blocker (rare): ray against the named, non-merged objects
   ray.set(cam.position,subject.clone().sub(cam.position).normalize());ray.far=want;
   const hit=ray.intersectObjects(c.named,true)[0];let n=hit?.object as THREE.Object3D|undefined,name='room';
   while(n){if(n.name){name=n.name;break;}n=n.parent??undefined;}
-  return{occ:true,by:hit?name:'room (merged books/shell)',gap:want-r};
+  return{occ:true,by:hit?name:'room (merged books/shell)',gap:want-r,fg,onScreen:true};
  }
  /** ① heart vertices outside the body (sampled every `stride`), for the current morph state. */
  function heartOutside(stride=9){

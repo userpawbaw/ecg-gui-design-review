@@ -42,8 +42,8 @@ export function NoiseShell({bank,conds,onLab}:{bank:Bank,conds?:Cond[],onLab?:(t
   const frozen=q.has('t')?Number(q.get('t')):null,reduced=q.get('reduced')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches;
   createNoiseStage({gl:gl.current!,grid:grid.current!,sweep:sweep.current!,overlay:overlay.current!,cells:[...strip.current!.querySelectorAll<HTMLElement>('i')]},
    scenes[0].data,{frozenT:frozen,reduced,last:order.length===1,onEnd:()=>advance.current(),onUi:setUi})
-   .then(s=>{if(dead){s.dispose();return;}stageRef.current=s;(window as unknown as {__noise:unknown}).__noise={set:s.set,renderOnce:s.renderOnce,next:()=>advance.current(),get cond(){return s.cond;},ready:true,
-    check:(o?:{dt?:number,all?:boolean,pathOnly?:boolean})=>s.selfCheck((o?.all?(['pli','bw','ma'] as Cond[]).map(c=>sceneData(bank,c).data):scenes.map(x=>x.data)),o)};});
+   .then(s=>{if(dead){s.dispose();return;}stageRef.current=s;(window as unknown as {__noise:unknown}).__noise={set:s.set,renderOnce:s.renderOnce,next:()=>advance.current(),get cond(){return s.cond;},ready:true,probe:s.probe,around:s.around,leave:s.leave,
+    check:(o?:{dt?:number,all?:boolean,pathOnly?:boolean,viewOnly?:boolean,maxFg?:number})=>s.selfCheck((o?.all?(['pli','bw','ma'] as Cond[]).map(c=>sceneData(bank,c).data):scenes.map(x=>x.data)),o)};});
   return()=>{dead=true;stageRef.current?.dispose();stageRef.current=null;};
  },[]);
  // S-06/S-07 (REVIEW-R1-STORY-20261011): the wheel and the arrow keys move the input ↔ output cross-fade; the scene changes

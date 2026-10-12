@@ -94,7 +94,8 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  // --- post: bloom only on bright parts (threshold), never on the Canvas 2D data layer ---
  // P2: light shafts (scene-linear, before bloom) and grade/vignette/grain (after the output transform)
  // archive: the composer's buffers carry depth so the shaft pass can ray-march to the scene surface
- const composer=arch?new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)})):new EffectComposer(renderer);
+ // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
+ const composer=arch?new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)})):new EffectComposer(renderer);
  composer.addPass(new RenderPass(scene,camera));
  if(arch)composer.addPass(arch.vol);
  const shafts=space?createShafts(renderer,camera,[figure.group.children[0],figure.heartMesh]):null;if(shafts)composer.addPass(shafts.pass);

@@ -248,7 +248,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   camera.updateProjectionMatrix();camera.updateMatrixWorld();
  }
  // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
- const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
+ // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
+ const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
  composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);
  // M-b shallow focus (§10.4): focus rides the wave — fist → shoulder → RA
  const bokeh=new BokehPass(scene,camera,{focus:1,aperture:0,maxblur:.008});composer.addPass(bokeh);bokeh.enabled=false;
@@ -285,8 +286,9 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  /** Pose of the figure and the camera's breath offset at scene time t (shared by the frame update and the self-check). */
  const BREATH_WEAK=Number(new URLSearchParams(location.search).get('breathk')??.5);   // S-12: breath outside bw, ×0.5 (user 2026-10-12: ×0.3 hard to see; QA: ?breathk=1 is the 10/8 strength)
  // S-10 legibility in the side view (bw): ?legib=0 none, 1 cyan outline, 2 denser body, 3 both (default 3, user to choose)
- const LEGIB=Number(new URLSearchParams(location.search).get('legib')??3);
- const CHEST=Number(new URLSearchParams(location.search).get('chest')??.8);   // S-13 chest window strength (QA: ?chest=0..1)
+ const LEGIB=Number(new URLSearchParams(location.search).get('legib')??1);   // S-15: outline only by default (the denser body was whiter and hid the heart)
+ const CHEST=Number(new URLSearchParams(location.search).get('chest')??.8);
+ const BW_EXPO=Number(new URLSearchParams(location.search).get('bwexpo')??.45),BW_RAY=Number(new URLSearchParams(location.search).get('bwray')??.9),BW_EDGE=Number(new URLSearchParams(location.search).get('bwedge')??.6);   // S-15 (QA: ?bwexpo= ?bwray=)   // S-13 chest window strength (QA: ?chest=0..1)
  function poseAt(t:number){
   const tl=((t%T)+T)%T,breath=bw?bw.breath[Math.min(bw.breath.length-1,Math.floor(tl*data.fs))]:breathFixed(t);
   // S-12 / A-02: outside the baseline-wander scene the breath stays visible but small (×0.5), so it does not suggest a
@@ -325,7 +327,9 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
    const target=fistP.lerp(raP,k*k*(3-2*k));(bokeh.uniforms as Record<string,{value:number}>).focus.value=camera.position.distanceTo(target);
    (bokeh.uniforms as Record<string,{value:number}>).aperture.value=t<4?.0005:.006;}
   bu.uCommon.value=common;bu.uFront.value=front;bu.uWaveK.value=waveK;
-  {const k=data.cond==='bw'?ss(1,4,t):0;bu.uEdgeK.value=LEGIB&1?k:0;bu.uDense.value=LEGIB&2?.35*k:0;}
+  {const k=data.cond==='bw'?ss(1,4,t):0;bu.uEdgeK.value=LEGIB&1?BW_EDGE*k:0;bu.uDense.value=LEGIB&2?.35*k:0;
+   // S-15 (user 2026-10-12): side view — body darker ("너무 밝은 느낌") and see-through along the heart → camera line
+   bu.uExposure.value=.42*(1-(1-BW_EXPO)*k);bu.uRay.value=BW_RAY*k;}
   bu.uChest.value=CHEST;   // eases in with the orbit (no pop)
   ringMat.opacity=ringK;leadMat.opacity=leadK;
   // heart + sweep on the same clock

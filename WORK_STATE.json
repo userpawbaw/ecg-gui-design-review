@@ -1557,5 +1557,23 @@
       "authorization": "cloudUploadAuthorization",
       "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004"
     }
+  },
+  "disneyAtlasD135": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_atlas_2026-10-12.md",
+    "manifest": "verification/a-disney-atlas-20261012/atlas-manifest.json",
+    "runtimeManifest": "verification/a-disney-atlas-20261012/runtime-manifest.json",
+    "nativeCandidates": 3,
+    "rejectedNative": 6,
+    "runtimeSnapshots": 8,
+    "rejectedRuntime": 8,
+    "runtime": "opt-in cloud-lab disneyAtlas=1",
+    "mainIntroAdopted": false,
+    "candidateAdopted": false,
+    "status": "alpha/hash/build/runtime snapshots PASS; aesthetic TUNE; not runtime3Dvolume",
+    "nearTraversal": false,
+    "shadowDeferred": true,
+    "nominalRGBA8MipMiB": 12,
+    "gpuScope": "local1280x720 short24sample diagnostics; not targetPC/FPS/VRAM",
+    "next": "실제궤도구도에서국소atlas의군집위치·규모·위성층색정합을먼저검토한다. source원형의높이/sky를그대로붙여품질을보장하지않는다. fixed-lightimpostor의평면감/각도ghost/반복형태는별도gate;유지되면같은footprint와거리별인계를시험하고near통과는3D깊이후보로분리한다."
   }
 }

@@ -8,11 +8,16 @@ import {DataTextureLoader,Ellipsoid,Geodetic,parseUint8Array,STBNLoader} from '@
 import {DitheringEffect,LensFlareEffect} from '@takram/three-geospatial-effects';
 import {createNorthernArrival} from './arrival-north';
 import {OrbitalCloudEffect} from './cloud-orbital';
+import {DisneyAtlasEffect} from './cloud-disney-atlas';
 import {handoffCamera,handoffFrames,cloudCoverProbe,bakeHandoffWeather} from './cloud-handoff';
 import {TerrainNormalPass} from './terrain-normal-pass';
 
 const params=new URLSearchParams(location.search);
 const detailTrial=params.get('cloudDetail')==='1';
+const disneyTrial=params.get('disneyAtlas')==='1';
+const disneyEnabled=document.createElement('input');disneyEnabled.type='checkbox';disneyEnabled.checked=true;disneyEnabled.setAttribute('aria-label','Disney 국소 구름');
+if(disneyTrial){const label=document.createElement('label');label.append(disneyEnabled,' Disney 국소 구름 · 고정빛 후보');document.getElementById('panel')!.prepend(label);}
+const disneyShots=document.createElement('button');disneyShots.textContent='Disney 국소 구름 8구도 저장';if(disneyTrial)document.getElementById('panel')!.prepend(disneyShots);
 const seamReview=params.get('terrainSeam')==='1';
 const seamControl=document.createElement('label');seamControl.innerHTML='지형 패스 대조 <select aria-label="지형 패스 대조"><option value="matched">변형 법선·깊이 정합</option><option value="matchedbase">정합 법선 · 이전 색 인계</option><option value="legacy">이전 공통 법선</option><option value="offset">깊이 보정만</option><option value="albedo">색만 · 조명 OFF</option></select>';
 const seamMode=seamControl.querySelector('select')!;
@@ -174,7 +179,7 @@ const basicLow=document.createElement('option');basicLow.value='basic300';basicL
 const renderer=new THREE.WebGLRenderer({depth:false,logarithmicDepthBuffer:false,antialias:false});
 renderer.setPixelRatio(1);renderer.setSize(innerWidth,innerHeight);
 const measureCover=cloudCoverProbe(renderer);
-if(handoff){progress.min=seamReview?'.10':'.18';progress.max=orbital?'.235':'.41';}
+if(handoff){progress.min=seamReview?'.10':'.18';progress.max=disneyTrial?'.29':orbital?'.235':'.41';}
 renderer.toneMapping=THREE.NoToneMapping;renderer.toneMappingExposure=10;
 document.body.appendChild(renderer.domElement);
 const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,10,1e6);
@@ -208,6 +213,7 @@ const opticalPass=new OpticalPass(camera,clouds,aerial);composer.addPass(optical
 const orbitalEffect=new OrbitalCloudEffect();if(orbital)composer.addPass(new EffectPass(camera,orbitalEffect));
 const lens=new LensFlareEffect(),tone=new ToneMappingEffect({mode:ToneMappingMode.AGX}),dither=new DitheringEffect(),smaa=new SMAAEffect();
 composer.addPass(new EffectPass(camera,lens,tone));
+const disneyEffect=new DisneyAtlasEffect();if(disneyTrial)composer.addPass(new EffectPass(camera,disneyEffect));
 const smaaPass=new EffectPass(camera,smaa);smaaPass.enabled=false;composer.addPass(smaaPass);
 composer.addPass(new EffectPass(camera,dither));
 aa.onchange=()=>{smaaPass.enabled=aa.checked;gpuTimes.length=0;};
@@ -304,7 +310,7 @@ cluster.oninput=applyWeather;
 look.onchange=()=>setPose(activePose);
 shafts.onchange=()=>{clouds.lightShafts=shafts.checked;gpuTimes.length=0;};
 cloudScale.onchange=()=>{clouds.resolutionScale=Number(cloudScale.value);gpuTimes.length=0;};
-function state(){return{orbital:orbital?{source:detailTrial?'Solar System Scope listed cloud asset, pinned public mirror':'NASA cloud_combined_2048.jpg',sourceSha256:detailTrial?'c792eca228989d36ebb45d3ea6ff1198be5e21a25d70d2fbcb2124ffd14ba7f5':'daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793',coverageBoost:Number(cloudAmount.value),coverageMeaning:'display threshold offset, not measured cloud fraction',detailTrial:detailTrial?{mode:detailSelect.value,sourceSize:[8192,4096],cropSize:[4096,1536],globalSize:[2048,1024],cropUV:[.375,.5625,.5,.375],nominalR8MipMiB:10.667}:null,mode:orbitalSelect.value,massModel:{preset:cloudMass.value,lighting:cloudLight.value,localRelief:Number(localRelief.value),heightRangeMetres:[7000,9400],intersectionSteps:10,lightSteps:4,localLightSteps:Number(localRelief.value)>0?6:0,localDetailMeaning:"shading relief only, not measured volume or silhouette displacement",focusRadiusMetres:[90000,330000],measuredVolume:false},sourcePlacement:{geoAnchor:[.523333333,.842388889],sourceCentre:cloudPlacement.value==='near'?[.671875,.8330078125]:[.64,.78],preset:cloudPlacement.value,scale:2},artisticPlacement:true,technique:cloudMass.value==='mass'?'satellite authored height-field, explicit mip footprint, sun-direction self-occlusion; not measured volume':'two spherical height proxies with finite-difference slope lighting; no measured height or multiple scattering',shadow:false,nearHandoff:false,range:[.18,.235]}:null,handoff:handoff?{stage:handoffStage,cover:coverMeasure,weatherFixed:!wind.checked,macroWeather:macroWeather?{anchor:macroWeather.anchor,sourceRepeat:macroWeather.sourceRepeat,macroRepeat:macroWeather.macroRepeat,role:macroWeather.role}:null,embeddedCloud:false,sourceMip:true,archiveIntegrated:false}:null,sourceMatch:sourceMatch.value,opticalCorrection:opticalCorrection.value,geometricCorrectionAmount:aerial.uniforms.get('geometricErrorCorrectionAmount')?.value,ready,contextLost:gl.isContextLost(),mode:activePose,source:orbital?'NASA shape-seeded orbital proxy, not measured cloud volume':'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
+function state(){return{disneyAtlas:disneyTrial?{...disneyEffect.state(),enabled:disneyEnabled.checked}:null,orbital:orbital?{source:detailTrial?'Solar System Scope listed cloud asset, pinned public mirror':'NASA cloud_combined_2048.jpg',sourceSha256:detailTrial?'c792eca228989d36ebb45d3ea6ff1198be5e21a25d70d2fbcb2124ffd14ba7f5':'daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793',coverageBoost:Number(cloudAmount.value),coverageMeaning:'display threshold offset, not measured cloud fraction',detailTrial:detailTrial?{mode:detailSelect.value,sourceSize:[8192,4096],cropSize:[4096,1536],globalSize:[2048,1024],cropUV:[.375,.5625,.5,.375],nominalR8MipMiB:10.667}:null,mode:orbitalSelect.value,massModel:{preset:cloudMass.value,lighting:cloudLight.value,localRelief:Number(localRelief.value),heightRangeMetres:[7000,9400],intersectionSteps:10,lightSteps:4,localLightSteps:Number(localRelief.value)>0?6:0,localDetailMeaning:"shading relief only, not measured volume or silhouette displacement",focusRadiusMetres:[90000,330000],measuredVolume:false},sourcePlacement:{geoAnchor:[.523333333,.842388889],sourceCentre:cloudPlacement.value==='near'?[.671875,.8330078125]:[.64,.78],preset:cloudPlacement.value,scale:2},artisticPlacement:true,technique:cloudMass.value==='mass'?'satellite authored height-field, explicit mip footprint, sun-direction self-occlusion; not measured volume':'two spherical height proxies with finite-difference slope lighting; no measured height or multiple scattering',shadow:false,nearHandoff:false,range:[.18,.235]}:null,handoff:handoff?{stage:handoffStage,cover:coverMeasure,weatherFixed:!wind.checked,macroWeather:macroWeather?{anchor:macroWeather.anchor,sourceRepeat:macroWeather.sourceRepeat,macroRepeat:macroWeather.macroRepeat,role:macroWeather.role}:null,embeddedCloud:false,sourceMip:true,archiveIntegrated:false}:null,sourceMatch:sourceMatch.value,opticalCorrection:opticalCorrection.value,geometricCorrectionAmount:aerial.uniforms.get('geometricErrorCorrectionAmount')?.value,ready,contextLost:gl.isContextLost(),mode:activePose,source:orbital?'NASA shape-seeded orbital proxy, not measured cloud volume':'Takram clouds0.7.6 procedural weather, not JangaFX VDB',p:activePose.startsWith('north')?Number(progress.value):null,
  capturePhase,diagnostic:{name:diagnostic.value,shadowMargin:clouds.shadowMaps.margin,shadowFar:clouds.shadow.maxFar,shadowJitter:clouds.shadow.temporalJitter,shadowTemporal:clouds.shadow.temporalPass,shadowAlpha:clouds.shadowPass.resolveMaterial.uniforms.temporalAlpha.value,cloudAlpha:clouds.cloudsPass.resolveMaterial.uniforms.temporalAlpha.value,cascades:clouds.shadow.cascadeCount,mapSize:clouds.shadow.mapSize.toArray(),splitLambda:clouds.shadow.splitLambda,minStep:clouds.clouds.minStepSize,perspectiveStep:clouds.clouds.perspectiveStepScale},input:{source:inputSource,wheelCount,lastWheelPixels:wheelDelta,target:wheelDriving?wheelTarget:Number(progress.value),current:Number(progress.value),settled:!wheelDriving||Math.abs(wheelTarget-Number(progress.value))<.00011,reducedMotion},
  opticalTrial:{weatherX:clouds.localWeatherOffset.x,weatherY:clouds.localWeatherOffset.y,sunElevation:Number(sunElevation.value),sunAzimuth:Number(sunAzimuth.value),hazeExponent:clouds.clouds.hazeExponent,hazeDensityScale:clouds.clouds.hazeDensityScale,layerDepth:Number(layerDepth.value),layerDensity:Number(layerDensity.value),groundShadow:groundShadow.checked,groundShadowLinked:!!aerial.shadow},
  sourceLocation:activePose.startsWith('basic')?[30,35,activePose==='basic300'?300:3500]:activePose.startsWith('north')?[8.4,61.63,'camera metres in localCamera ×1000']:[0,67,activePose==='source500'?500:3500],sourceDate:activePose.startsWith('basic')?'2026-01-02T07:00:00Z':activePose.startsWith('north')?'fixed north scene sun vector':'2000-06-01T10:00:00Z',camera:camera.position.toArray(),localCamera:lastCamera,
@@ -342,10 +348,12 @@ async function saveFrame(){
  if(params.get('reviewRound')==='cloud-white-20261010')shot='white-'+cloudLight.value+'-p'+Math.round(Number(progress.value)*10000);
  if(params.get('reviewRound')==='cloud-relief-20261010')shot='relief-'+localRelief.value+'-p'+Math.round(Number(progress.value)*10000)+'-'+capturePhase;
  const e=gl.getExtension('WEBGL_debug_renderer_info');
+ if(disneyTrial)shot='disney-'+(disneyEnabled.checked?'on':'off')+'-p'+Math.round(Number(progress.value)*10000);
  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-audit',shot,image:renderer.domElement.toDataURL('image/png'),meta:{renderer:e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):null,state:state(),terrainSeam:seamReview?{mode:seamMode.value,matchedNormals:normalPass.matched,depthOffset:seamMode.value!=='legacy',north:north?.state()}:null,url:location.href}})});
  if(!response.ok){error.textContent=await response.text();throw Error(error.textContent);}save.textContent='프레임 저장 완료';
 }
 save.onclick=saveFrame;
+disneyShots.onclick=async()=>{const old={p:progress.value,on:disneyEnabled.checked};disneyShots.disabled=true;wheelDriving=false;try{for(const p of [.18,.21,.235])for(const on of [false,true]){progress.value=String(p);disneyEnabled.checked=on;await framesFor(24);gpuTimes.length=0;await framesFor(24);await saveFrame();}for(const p of [.265,.285]){progress.value=String(p);disneyEnabled.checked=true;await framesFor(24);await saveFrame();}disneyShots.textContent='Disney 8구도 저장 완료';}catch(e){error.textContent=String(e);}finally{progress.value=old.p;disneyEnabled.checked=old.on;disneyShots.disabled=false;}};
 localReliefSet.onclick=async()=>{
  const old={p:progress.value,relief:localRelief.value};localReliefSet.disabled=true;wheelDriving=false;inputSource='local-relief-comparison';
  try{for(const p of [.1584,.18,.235])for(const value of ['0','1','2']){progress.value=String(p);localRelief.value=value;await framesFor(55);gpuTimes.length=0;await framesFor(35);await saveFrame();}localReliefSet.textContent='국소 구름 대조 완료';}
@@ -424,7 +432,8 @@ motionVideo.onclick=async()=>{
   recorder.stop();await stopped;
   const blob=new Blob(chunks,{type:'video/webm'});
   const video=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=()=>reject(Error('Video read failed'));reader.readAsDataURL(blob);});
-  const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-defect-video',shot:seamReview?'video-seam-'+seamMode.value:detailTrial?'video-detail-'+detailSelect.value:handoff?'video-handoff':'video-'+diagnostic.value.toLowerCase(),video,meta:{state:state(),terrainSeam:seamReview?{mode:seamMode.value,matchedNormals:normalPass.matched}:null,url:location.href,motion:{completed:true,nominalMs:duration,mime,trace,encodingAffectsPerformance:true}}})});
+  if(disneyTrial)shot='disney-'+(disneyEnabled.checked?'on':'off')+'-p'+Math.round(Number(progress.value)*10000);
+ const response=await fetch('/__cloud_review_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({round:params.get('reviewRound')||'takram-defect-video',shot:seamReview?'video-seam-'+seamMode.value:detailTrial?'video-detail-'+detailSelect.value:handoff?'video-handoff':'video-'+diagnostic.value.toLowerCase(),video,meta:{state:state(),terrainSeam:seamReview?{mode:seamMode.value,matchedNormals:normalPass.matched}:null,url:location.href,motion:{completed:true,nominalMs:duration,mime,trace,encodingAffectsPerformance:true}}})});
   if(!response.ok)throw Error(await response.text());motionVideo.textContent='이동 영상 저장 완료';
  }catch(e){error.textContent=String(e);motionVideo.textContent='영상 저장 실패';}
  finally{if(recorder&&recorder.state!=='inactive')recorder.stop();stream?.getTracks().forEach(t=>t.stop());motionVideo.disabled=diagnosticSet.disabled=captureSet.disabled=save.disabled=pose.disabled=motionReview.disabled=diagnostic.disabled=false;}
@@ -519,7 +528,7 @@ function draw(){
   camera.position.copy(localCamera.position).multiplyScalar(1000);camera.quaternion.copy(localCamera.quaternion);
   camera.near=localCamera.near*1000;camera.far=localCamera.far*1000;camera.fov=localCamera.fov;camera.updateProjectionMatrix();
  }else controls.update();
- camera.updateMatrixWorld();if(orbital){orbitalEffect.setLocalRelief(Number(localRelief.value));orbitalEffect.setLightContrast(cloudLight.value!=='base');orbitalEffect.setWhiteHighlight(cloudLight.value==='white'?.5:cloudLight.value==='white-strong'?1:0);orbitalEffect.setMass(cloudMass.value==='mass',renderer.domElement.height,camera);orbitalEffect.setDetail(detailSelect.value);orbitalEffect.setCoverageBoost(Number(cloudAmount.value));orbitalEffect.setPlacement(cloudPlacement.value==='near');orbitalEffect.sync(camera,northToECEF,aerial.sunDirection,orbitalSelect.value,enabled.checked);}clouds.localWeatherVelocity.set(wind.checked ? .001 : 0,0);
+ camera.updateMatrixWorld();if(orbital){orbitalEffect.setLocalRelief(Number(localRelief.value));orbitalEffect.setLightContrast(cloudLight.value!=='base');orbitalEffect.setWhiteHighlight(cloudLight.value==='white'?.5:cloudLight.value==='white-strong'?1:0);orbitalEffect.setMass(cloudMass.value==='mass',renderer.domElement.height,camera);orbitalEffect.setDetail(detailSelect.value);orbitalEffect.setCoverageBoost(Number(cloudAmount.value));orbitalEffect.setPlacement(cloudPlacement.value==='near');orbitalEffect.sync(camera,northToECEF,aerial.sunDirection,orbitalSelect.value,enabled.checked);}if(disneyTrial)disneyEffect.sync(camera,Number(progress.value),enabled.checked&&disneyEnabled.checked);clouds.localWeatherVelocity.set(wind.checked ? .001 : 0,0);
  if(timer){
   if(gl.getParameter(timer.GPU_DISJOINT_EXT)){pending.forEach(q=>gl.deleteQuery(q));pending.length=0;gpuTimes.length=0;}
   else while(pending.length&&gl.getQueryParameter(pending[0],gl.QUERY_RESULT_AVAILABLE)){const q=pending.shift()!;gpuTimes.push(gl.getQueryParameter(q,gl.QUERY_RESULT)/1e6);gl.deleteQuery(q);if(gpuTimes.length>300)gpuTimes.shift();}
@@ -543,6 +552,7 @@ async function init(){
  if(detailTrial)await orbitalEffect.loadRegion(new URL('../../../assets/research/orbital-cloud-20261009/global-2k.r8',import.meta.url).href,new URL('../../../assets/research/orbital-cloud-20261009/north-front-8k.r8',import.meta.url).href);
  else if(orbital)await orbitalEffect.load(new URL('../../../assets/research/cloud-reference-20261008/nasa-cloud-only-2048.jpg',import.meta.url).href);
  if(params.get('pose')?.startsWith('north')||orbital)await ensureNorth();
+ if(disneyTrial)await disneyEffect.load();
  // Geometry/light transform uses metre local coordinates; optical ECEF transform carries only rotation+translation.
  quality.value=params.get('quality')||'high';clouds.qualityPreset=quality.value as any;
  const requestedCluster=Number(params.get('cluster')||'1');cluster.value=String(Number.isFinite(requestedCluster)?THREE.MathUtils.clamp(requestedCluster,1,3):1);
@@ -555,7 +565,9 @@ async function init(){
  captureSet.textContent=detailTrial?'두 구도 × 해상도 비교 저장':'두 구도 × 명암 비교 저장';
  if(detailTrial){motionVideo.hidden=false;motionVideo.textContent='8초 원경 정역 영상 저장';}
  if(detailTrial)note[note.length-1].textContent='8K 미러 자료 · 같은 원본의 2K 대조. 지역 R8 + mipmaps. 고도/밀도는 근사이며 근경 인계는 다음 단계.';
- }renderer.setAnimationLoop(draw);
+ }if(disneyTrial){dom('panel').querySelectorAll('small').forEach(n=>n.textContent='Disney 고정빛 · 세 관찰각 RGBA 후보. 실제 볼륨/구름 통과/그림자 없음. .245~.285에서 제거되며 주 도입부 채택 전입니다.');cloudPlacement.value='near';cloudMass.value='mass';cloudAmount.value='.07';cloudLight.value='white';detailHold.value='hold';sourceMatch.value='matched';mapGain.value='.8';dom('panel').querySelector('strong')!.textContent='Disney 국소 구름 · 궤도 시험';}
+ if(disneyTrial){const panel=dom('panel');const advanced=document.createElement('details');const summary=document.createElement('summary');summary.textContent='기존 조명·지도 설정';advanced.append(summary);const keep=new Set<Element>([disneyShots,disneyEnabled.parentElement!,panel.querySelector('strong')!,progress.parentElement!,save]);for(const child of Array.from(panel.children)){if(!keep.has(child)&&child.tagName!=='SMALL')advanced.append(child);}panel.querySelectorAll('small').forEach((n,i)=>{if(i>0)n.remove();});advanced.style.maxHeight='40vh';advanced.style.overflow='auto';panel.append(advanced);}
+ renderer.setAnimationLoop(draw);
 }
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);});
 init().catch(e=>{error.textContent=String(e.stack||e);console.error(e);});

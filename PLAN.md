@@ -587,3 +587,8 @@ D133/F098/O025: DisneyZIP2.97GB/hash확보,quarter/half와6/64bounce실제native
 D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤곽 보존을 조금 개선했으나 사진섬유결 확보는 미달. fixed128의 b64→128은 더 밝고 부드러운 면을 만들었으며 깊이 상한이 아직 결과에 영향을 준다. 따라서 광학 수렴 완료로 선언할 수 없다. noisy pass의 점들은 여전히 노이즈가 많고 source detail로 세지 않는다. native3장+같은 경로 noisy3장, 실제 web 미변경/TUNE.
 샘플·depth 수치를 계속 증량해 사진결을 해결한다고 가정하지 않는다. 현재 b128 결과를 채택 전 후보로 유지하고, 같은 source를 실제 궤도 화면의 구름 크기와 빛 방향에 맞춘 소형 국소 atlas로 시험한다. 확대 주변의 명암/결/footprint와 거리별 인계는 따로 검토하며, 근접 사진결·완전 광학수렴은 TUNE로 남긴다.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_convergence_2026-10-12.md
+
+## 2026-10-12 D135 국소atlas실제구도시험
+D135/F100/O026: Disneyquarter source 고정빛3각도atlas를 실제북유럽lab두군집에추가. 바닥alpha실패와푸른탑join기각보존후Y.28/중립sky/bank규모튜닝. 최종native3+기각6,실제runtime8+기각8/휠정역입력확인. 명암/높이개선이나회색·별개덩어리감/사진결TUNE. opt-in만/주도입부미채택/near통과미구현.
+실제궤도구도에서국소atlas의군집위치·규모·위성층색정합을먼저검토한다. source원형의높이/sky를그대로붙여품질을보장하지않는다. fixed-lightimpostor의평면감/각도ghost/반복형태는별도gate;유지되면같은footprint와거리별인계를시험하고near통과는3D깊이후보로분리한다.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_atlas_2026-10-12.md

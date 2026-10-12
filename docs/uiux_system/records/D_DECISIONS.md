@@ -3281,3 +3281,32 @@ quarter 원본 고정, FOV27 / EV1 / HG.877 / density4 / 같은 seed와 빛에�
 D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤곽 보존을 조금 개선했으나 사진섬유결 확보는 미달. fixed128의 b64→128은 더 밝고 부드러운 면을 만들었으며 깊이 상한이 아직 결과에 영향을 준다. 따라서 광학 수렴 완료로 선언할 수 없다. noisy pass의 점들은 여전히 노이즈가 많고 source detail로 세지 않는다. native3장+같은 경로 noisy3장, 실제 web 미변경/TUNE.
 샘플·depth 수치를 계속 증량해 사진결을 해결한다고 가정하지 않는다. 현재 b128 결과를 채택 전 후보로 유지하고, 같은 source를 실제 궤도 화면의 구름 크기와 빛 방향에 맞춘 소형 국소 atlas로 시험한다. 확대 주변의 명암/결/footprint와 거리별 인계는 따로 검토하며, 근접 사진결·완전 광학수렴은 TUNE로 남긴다.
 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_convergence_2026-10-12.md
+
+## D-135. Disney 고정빛 atlas를 실제 궤도 구도에 국소 배치해 시험한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [대화][코드] |
+| 상태 | 제작 전 결정 |
+| 연결 | D-134 / F-099 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 “좋아. 시험해보자.” 승인. 원형 VDB realtime 로딩 / 단일 평면 overhead / 제한된 camera 경로용 다각도 fixed-light atlas 중 선택.
+### 검토한 선택지
+직접 raymarch는 source와 multiple scattering 계산/예산 미검증. 단일 overhead는 다시 납작한 면을 만들 수 있다. sourcequarter를 같은 태양 방향으로 여러 관찰 고도에서 offline 렌더하여 view elevation에 따라 atlas를 연속 혼합한다.
+### 고른 것과 근거
+45/32/20도 관찰각 native RGBA3장, Cycles128bounce/96samples, 현재 curtain 태양15도/북향 고정. opt-in disneyAtlas=1 lab에서 기존 위성 구름 위에 목표 인근 두 군집만 배치. billboard impostor이며 실제 runtime3D volume이 아니다. 고정 footprint·mipmap·연속 angle blend; 원경/확대 구도 OFF/ON 비교 및 정역 스크롤 증거.
+### 버린 것과 이유
+전체 globe 교체/실시간fullVDB/개인사진cutout 사용 제외. baked AgX를 tone mapping 뒤에 합성해 이중 tone mapping을 피함. 그림자는 보류를 유지. near 통과는 atlas로 위장하지 않고 시험범위에서 제외.
+### 되돌려야 하는 조건
+각도혼합 ghost/평면감/반복 pattern/빛 방향 충돌이면 TUNE 또는 REJECT, 즉시 주 도입부 채택 금지. 구도45→32 범위에서 먼저 평가하고 near로 넘어가며 fade로 제거되는 한계 명시. source/atlas 출처와 비용 및 alpha 경계 확인. 서고KEEP/실패2/2 유지.
+
+
+### D135 적용 중 튜닝 결정 [캡처][코드]
+첫실제join은푸른탑처럼솟아주변sheet와이질적. native3/실제8frame를rejected-tower / rejected-tower-runtime에보존. sourcegrid는그대로두고Yscale.28로관측스케일용낮은bank, skyRGB(.23,.23,.25)로bluefill중립화. 고도압축/주변광연출근사이므로동일원형source재현주장금지. sun15도/북향유지. 조명·높이가바뀌는결합튜닝이며원인별단일변수대조는아님. 소형atlasjoin시험의범위에서결과만비교.
+
+### 실행 결과 / F100/O026
+D135/F100/O026: Disneyquarter source 고정빛3각도atlas를 실제북유럽lab두군집에추가. 바닥alpha실패와푸른탑join기각보존후Y.28/중립sky/bank규모튜닝. 최종native3+기각6,실제runtime8+기각8/휠정역입력확인. 명암/높이개선이나회색·별개덩어리감/사진결TUNE. opt-in만/주도입부미채택/near통과미구현.
+실제궤도구도에서국소atlas의군집위치·규모·위성층색정합을먼저검토한다. source원형의높이/sky를그대로붙여품질을보장하지않는다. fixed-lightimpostor의평면감/각도ghost/반복형태는별도gate;유지되면같은footprint와거리별인계를시험하고near통과는3D깊이후보로분리한다.
+보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_atlas_2026-10-12.md

@@ -1,0 +1,45 @@
+{
+  "nativeAcceptedCandidates": 3,
+  "rejectedNativeFrames": 6,
+  "runtimeSnapshots": 8,
+  "rejectedRuntimeSnapshots": 8,
+  "alphaCorners": "PASS",
+  "sourceNativeRuntimeHashes": "PASS",
+  "dimensions": "PASS",
+  "http200": [
+    "gallery.html",
+    "atlas-manifest.json",
+    "runtime-manifest.json",
+    "runtime/disney-off-p1800.png",
+    "runtime/disney-on-p1800.png",
+    "runtime/disney-off-p2100.png",
+    "runtime/disney-on-p2100.png",
+    "runtime/disney-off-p2350.png",
+    "runtime/disney-on-p2350.png",
+    "runtime/disney-on-p2650.png",
+    "runtime/disney-on-p2850.png",
+    "native/atlas-e45-ev1.png",
+    "native/atlas-e32-ev1.png",
+    "native/atlas-e20-ev1.png"
+  ],
+  "hostViteBuild": "PASS",
+  "mainIntroAdopted": false,
+  "scope": "static local runtime evidence; not 3D traversal or aesthetic approval",
+  "wheelInput": {
+    "forwardAndReverseInput": "PASS",
+    "sliderDirectionChanged": true,
+    "screenshots": [
+      "wheel-forward.png",
+      "wheel-reverse.png"
+    ],
+    "continuousMotionQuality": "not proven"
+  },
+  "browserImages": {
+    "loaded": 12,
+    "total": 12,
+    "nonzeroDimensions": true,
+    "screenshot": "browser-gallery.png"
+  },
+  "browserConsoleErrors": [],
+  "viewportRestored": true
+}

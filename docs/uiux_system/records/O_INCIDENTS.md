@@ -494,3 +494,20 @@ Blender4.5.3 volume_import의objectrotation은기본X+90°였다.원형XML은Y-u
 cloud.rotation_euler=(0,0,0) 명시후512preview재렌더. 기각원형/manifest는verification/a-disney-cloud-20261012/rejected-import-axis/에보존.중간probe는grids.load전grid조회IndexError도났지만rotation증거는이미출력됨;정식metadata는nativeOpenVDB로읽음.
 ### 재발 방지와 자동화 상태
 원형VDB/카메라좌표를번안할때import뒤matrixworld/rotation/scale를readback하고공식beauty와형상방향대조.이번script에는rotation복원과manifestrecord추가.전체importer회귀테스트/다른에셋축보장은미구현.
+
+
+## O-026. Orthographic 구름 atlas에 렌더 바닥이 섞였다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [캡처][코드] |
+| 연결 | D-135 / CASE-007 |
+
+### 증상
+첫45도 atlas에 회색 전체frame 바닥이 보였다. film_transparent가 켜져 있어도 지면 geometry는 카메라에 보인다.
+### 원인
+D133 원형예제에서 번안한 diffuse ground가 orthographic 하향 카메라의 광선에 잡혔다. background 투명과 scene geometry 투명은 다르다.
+### 조치
+기존native3장과manifest를 rejected-floor에 보존, ground.visible_camera=False로 camera beauty에서만 제외. 간접광 참여 유지. RGBA alpha 외곽0을 검사한 뒤 다시 패키징.
+### 재발 방지와 자동화 상태
+atlas 포장 전에 alpha범위/외곽투명성/불투명rect 여부를 검사. 표본 제작 전에 source좌표/카메라투영뿐 아니라 receiver의 카메라 visibility 확인. CPU/GPU/근접 통과 성능 gate와 구별.

@@ -1,0 +1,158 @@
+{
+  "frames": [
+    {
+      "file": "runtime/disney-off-p1800.png",
+      "meta": "runtime/disney-off-p1800.json",
+      "sha256": "09baf952d261c75d2a0690bf608d12ca914640eac44b09686fabc6466e9bacc7",
+      "p": 0.18,
+      "mode": "off",
+      "amount": 0,
+      "gpu": {
+        "available": true,
+        "count": 24,
+        "p50": 4.376576,
+        "p95": 6.986752
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "runtime/disney-on-p1800.png",
+      "meta": "runtime/disney-on-p1800.json",
+      "sha256": "9b6e920af06b3cfdedff1e8a434f4f0b50a8cb637548cafd31b460bfe93a80c4",
+      "p": 0.18,
+      "mode": "on",
+      "amount": 1,
+      "gpu": {
+        "available": true,
+        "count": 24,
+        "p50": 5.265408,
+        "p95": 7.589888
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "runtime/disney-off-p2100.png",
+      "meta": "runtime/disney-off-p2100.json",
+      "sha256": "d55f356c63e3d874da63f2cc25e64ad2ba9ace4ea7e8a3d77f1240b33ef07c3e",
+      "p": 0.21,
+      "mode": "off",
+      "amount": 0,
+      "gpu": {
+        "available": true,
+        "count": 24,
+        "p50": 5.31968,
+        "p95": 8.282112
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "runtime/disney-on-p2100.png",
+      "meta": "runtime/disney-on-p2100.json",
+      "sha256": "4146b98b1eba34db65f030853119c0aa85c5c67ecd1f0c84e6d707bd3263d407",
+      "p": 0.21,
+      "mode": "on",
+      "amount": 1,
+      "gpu": {
+        "available": true,
+        "count": 24,
+        "p50": 5.233664,
+        "p95": 7.658496
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "runtime/disney-off-p2350.png",
+      "meta": "runtime/disney-off-p2350.json",
+      "sha256": "9c3300b4d05587aa49d6292311bb1bd5f2d74660cdd56c75fbac845dffe261de",
+      "p": 0.235,
+      "mode": "off",
+      "amount": 0,
+      "gpu": {
+        "available": true,
+        "count": 24,
+        "p50": 4.990976,
+        "p95": 7.660544
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "runtime/disney-on-p2350.png",
+      "meta": "runtime/disney-on-p2350.json",
+      "sha256": "f0aee55a02204c54ff78033ddb401d47769afe8991f89ddb592b82cf832bcaee",
+      "p": 0.235,
+      "mode": "on",
+      "amount": 1,
+      "gpu": {
+        "available": true,
+        "count": 24,
+        "p50": 5.215232,
+        "p95": 7.68512
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "runtime/disney-on-p2650.png",
+      "meta": "runtime/disney-on-p2650.json",
+      "sha256": "990f24eb87234e7b5366602c41cd7031a8328770eefcc9ce0f83b037cde68c81",
+      "p": 0.265,
+      "mode": "on",
+      "amount": 0.499999999999999,
+      "gpu": {
+        "available": true,
+        "count": 52,
+        "p50": 5.485568,
+        "p95": 7.825408
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "runtime/disney-on-p2850.png",
+      "meta": "runtime/disney-on-p2850.json",
+      "sha256": "d3c48843eded8a0009ea15b719580077cc3c47850e6519c6fc6a84cef92839d9",
+      "p": 0.285,
+      "mode": "on",
+      "amount": 0,
+      "gpu": {
+        "available": true,
+        "count": 79,
+        "p50": 5.530624,
+        "p95": 7.825408
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "scope": "8 static runtime snapshots, local app browser1280x720, GPU brief24sample diagnostics only; not target-PC/FPS/VRAM gate",
+  "mainIntroAdopted": false
+}

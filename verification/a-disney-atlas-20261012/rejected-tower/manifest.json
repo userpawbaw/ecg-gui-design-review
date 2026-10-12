@@ -1,0 +1,394 @@
+{
+  "frames": [
+    {
+      "file": "atlas-e45-ev1.png",
+      "level": "quarter",
+      "source": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_quarter.vdb",
+      "sourceSha256": "279efd7566f4f8f3d05a1cb4529b7e903d64a6b4e91c2edce5824b9b5c9f722a",
+      "sha256": "94b557fc2be57b96933447c703cad97f3b8035895be52ef30dc7c317ea649f65",
+      "seconds": 109.50422763824463,
+      "size": [
+        1024,
+        768
+      ],
+      "maxSamples": 96,
+      "adaptiveSampling": true,
+      "adaptiveThreshold": 0.009999999776482582,
+      "denoiser": "OPENIMAGEDENOISE",
+      "volumeBounces": 128,
+      "maxBounces": 128,
+      "stepRate": 0.35,
+      "densityMultiplier": 4,
+      "anisotropy": 0.877,
+      "albedo": [
+        1,
+        1,
+        1
+      ],
+      "volumeSpace": "OBJECT",
+      "objectScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "bounds": [
+        [
+          -220.0,
+          -73.33332824707031,
+          -300.0
+        ],
+        [
+          -220.0,
+          -73.33332824707031,
+          212.5
+        ],
+        [
+          -220.0,
+          219.16665649414062,
+          212.5
+        ],
+        [
+          -220.0,
+          219.16665649414062,
+          -300.0
+        ],
+        [
+          199.16665649414062,
+          -73.33332824707031,
+          -300.0
+        ],
+        [
+          199.16665649414062,
+          -73.33332824707031,
+          212.5
+        ],
+        [
+          199.16665649414062,
+          219.16665649414062,
+          212.5
+        ],
+        [
+          199.16665649414062,
+          219.16665649414062,
+          -300.0
+        ]
+      ],
+      "camera": {
+        "origin": [
+          -20.0,
+          1277.08154296875,
+          1162.08154296875
+        ],
+        "target": [
+          -20.0,
+          75.0,
+          -40.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "horizontalFov": null,
+        "projection": "orthographic"
+      },
+      "sun": {
+        "direction": [
+          0.0,
+          -0.258819043636322,
+          0.9659258127212524
+        ],
+        "rgbIrradianceApproximation": [
+          2.6,
+          2.496,
+          2.34
+        ]
+      },
+      "skyRgb": [
+        0.03,
+        0.07,
+        0.23
+      ],
+      "renderer": "4.5.3 LTS",
+      "device": "GPU",
+      "viewTransform": "AgX",
+      "limitations": [
+        "Cycles translation, not original Mitsuba integrator or Hyperion",
+        "source example uses maxDepth1000000/sampleCount1024; this trial uses bounded depth and adaptive max samples",
+        "RGB sunlight is a translated approximation; radiometric/spectral equivalence not established",
+        "transparent sky + AgX rather than original EXR display pipeline",
+        "offline asset; no live geographic scene or GPU frame performance evidence",
+        "lighting/camera changed for fixed north-scene curtain direction; no original example reproduction"
+      ],
+      "atlasElevationDegrees": 45.0,
+      "projection": "orthographic",
+      "orthoWidthSourceUnits": 1150,
+      "displayExposureEv": 1.0,
+      "objectRotationEuler": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "file": "atlas-e32-ev1.png",
+      "level": "quarter",
+      "source": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_quarter.vdb",
+      "sourceSha256": "279efd7566f4f8f3d05a1cb4529b7e903d64a6b4e91c2edce5824b9b5c9f722a",
+      "sha256": "0b7e936bf243c0a76ab3847ffc61179ab24028e9c41626223a84795ddb896f38",
+      "seconds": 82.00649666786194,
+      "size": [
+        1024,
+        768
+      ],
+      "maxSamples": 96,
+      "adaptiveSampling": true,
+      "adaptiveThreshold": 0.009999999776482582,
+      "denoiser": "OPENIMAGEDENOISE",
+      "volumeBounces": 128,
+      "maxBounces": 128,
+      "stepRate": 0.35,
+      "densityMultiplier": 4,
+      "anisotropy": 0.877,
+      "albedo": [
+        1,
+        1,
+        1
+      ],
+      "volumeSpace": "OBJECT",
+      "objectScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "bounds": [
+        [
+          -220.0,
+          -73.33332824707031,
+          -300.0
+        ],
+        [
+          -220.0,
+          -73.33332824707031,
+          212.5
+        ],
+        [
+          -220.0,
+          219.16665649414062,
+          212.5
+        ],
+        [
+          -220.0,
+          219.16665649414062,
+          -300.0
+        ],
+        [
+          199.16665649414062,
+          -73.33332824707031,
+          -300.0
+        ],
+        [
+          199.16665649414062,
+          -73.33332824707031,
+          212.5
+        ],
+        [
+          199.16665649414062,
+          219.16665649414062,
+          212.5
+        ],
+        [
+          199.16665649414062,
+          219.16665649414062,
+          -300.0
+        ]
+      ],
+      "camera": {
+        "origin": [
+          -20.0,
+          975.8627319335938,
+          1401.6817626953125
+        ],
+        "target": [
+          -20.0,
+          75.0,
+          -40.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "horizontalFov": null,
+        "projection": "orthographic"
+      },
+      "sun": {
+        "direction": [
+          0.0,
+          -0.258819043636322,
+          0.9659258127212524
+        ],
+        "rgbIrradianceApproximation": [
+          2.6,
+          2.496,
+          2.34
+        ]
+      },
+      "skyRgb": [
+        0.03,
+        0.07,
+        0.23
+      ],
+      "renderer": "4.5.3 LTS",
+      "device": "GPU",
+      "viewTransform": "AgX",
+      "limitations": [
+        "Cycles translation, not original Mitsuba integrator or Hyperion",
+        "source example uses maxDepth1000000/sampleCount1024; this trial uses bounded depth and adaptive max samples",
+        "RGB sunlight is a translated approximation; radiometric/spectral equivalence not established",
+        "transparent sky + AgX rather than original EXR display pipeline",
+        "offline asset; no live geographic scene or GPU frame performance evidence",
+        "lighting/camera changed for fixed north-scene curtain direction; no original example reproduction"
+      ],
+      "atlasElevationDegrees": 32.0,
+      "projection": "orthographic",
+      "orthoWidthSourceUnits": 1150,
+      "displayExposureEv": 1.0,
+      "objectRotationEuler": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "file": "atlas-e20-ev1.png",
+      "level": "quarter",
+      "source": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_quarter.vdb",
+      "sourceSha256": "279efd7566f4f8f3d05a1cb4529b7e903d64a6b4e91c2edce5824b9b5c9f722a",
+      "sha256": "8066d9c11d6b8489a21a6e01561af14904e5aba39e3e0cf1617488f82da397c6",
+      "seconds": 65.25615739822388,
+      "size": [
+        1024,
+        768
+      ],
+      "maxSamples": 96,
+      "adaptiveSampling": true,
+      "adaptiveThreshold": 0.009999999776482582,
+      "denoiser": "OPENIMAGEDENOISE",
+      "volumeBounces": 128,
+      "maxBounces": 128,
+      "stepRate": 0.35,
+      "densityMultiplier": 4,
+      "anisotropy": 0.877,
+      "albedo": [
+        1,
+        1,
+        1
+      ],
+      "volumeSpace": "OBJECT",
+      "objectScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "bounds": [
+        [
+          -220.0,
+          -73.33332824707031,
+          -300.0
+        ],
+        [
+          -220.0,
+          -73.33332824707031,
+          212.5
+        ],
+        [
+          -220.0,
+          219.16665649414062,
+          212.5
+        ],
+        [
+          -220.0,
+          219.16665649414062,
+          -300.0
+        ],
+        [
+          199.16665649414062,
+          -73.33332824707031,
+          -300.0
+        ],
+        [
+          199.16665649414062,
+          -73.33332824707031,
+          212.5
+        ],
+        [
+          199.16665649414062,
+          219.16665649414062,
+          212.5
+        ],
+        [
+          199.16665649414062,
+          219.16665649414062,
+          -300.0
+        ]
+      ],
+      "camera": {
+        "origin": [
+          -20.0,
+          656.4342651367188,
+          1557.4774169921875
+        ],
+        "target": [
+          -20.0,
+          75.0,
+          -40.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "horizontalFov": null,
+        "projection": "orthographic"
+      },
+      "sun": {
+        "direction": [
+          0.0,
+          -0.258819043636322,
+          0.9659258127212524
+        ],
+        "rgbIrradianceApproximation": [
+          2.6,
+          2.496,
+          2.34
+        ]
+      },
+      "skyRgb": [
+        0.03,
+        0.07,
+        0.23
+      ],
+      "renderer": "4.5.3 LTS",
+      "device": "GPU",
+      "viewTransform": "AgX",
+      "limitations": [
+        "Cycles translation, not original Mitsuba integrator or Hyperion",
+        "source example uses maxDepth1000000/sampleCount1024; this trial uses bounded depth and adaptive max samples",
+        "RGB sunlight is a translated approximation; radiometric/spectral equivalence not established",
+        "transparent sky + AgX rather than original EXR display pipeline",
+        "offline asset; no live geographic scene or GPU frame performance evidence",
+        "lighting/camera changed for fixed north-scene curtain direction; no original example reproduction"
+      ],
+      "atlasElevationDegrees": 20.0,
+      "projection": "orthographic",
+      "orthoWidthSourceUnits": 1150,
+      "displayExposureEv": 1.0,
+      "objectRotationEuler": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ]
+}

@@ -2354,3 +2354,25 @@ D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤
 native3장+같은 렌더 noisy pass3장. render seconds는 manifest; source 로딩/다운로드 포함 총시간이나 realtime frame 예산 아님. 실제 web 미변경, 사용자 품질 검토 전 TUNE. 그림자 보류/서고KEEP/실패2/2 유지.
 ### 놓쳤다면
 noisy pass의 작은 점을 원본 texture라고 부르거나, 표본수를 계속 늘리면 사진결을 자동 확보한다는 결론을 내렸을 것이다.
+
+
+## F-100. 좋은 구름 원본도 궤도 스케일의 높이와 주변광을 따로 맞춰야 한다
+
+| | |
+|---|---|
+| 상태 | 잠정 / opt-in 시험 |
+| 발견 | 2026-10-12 [캡처][코드] · D135 |
+| 영향 | source 확보와 실제 장면 정합을 분리 |
+
+### 발단 — 무엇이 이상해 보였나
+Disney native 원본을 실제 지도에 붙이자 푸른 탑처럼 솟아 주변 얕은 위성 구름과 어울리지 않았다.
+### 먼저 의심한 것과 배제 방법
+배경 alpha 오류는 O026에서 별도로 수정했다. 투명배경 복원 후에도 큰 수직 높이와 bluefill이 남았고 rejected-tower-runtime8frame에서 확인했다. 원본단위를 실제km로 가정하지 않고 장면스케일용Y.28압축과 중립skyRGB로 후보를 다시 만들었다.
+### 결정적 근거
+같은 quarter sourcegrid를 사용하되 높이/주변광을 결합 튜닝한 새 native3장과 동일 p.18/.21/.235의 OFF/ON 및 .265/.285 제거 snapshot. 결합튜닝이므로 높이와광원중단독원인효과를확정하지않는다. 직접bitmapalpha와source/native/runtimehash검사. source report ECG_A_disney_cloud_atlas_2026-10-12.md / verification/a-disney-atlas-20261012/atlas-manifest.json.
+### 조치와 검토한 대안
+제한된 궤도용 fixed-light 다각도impostor를 실제 군집크기로 시험한다. 스크롤위치로 새 구름을 생성하지 않고 두 고정anchor를 사용. 독립sprite 반복형태/각도혼합ghost/깊이가 없는 평면감은 사용자검토전TUNE. mainIntro채택/near통과/그림자검증으로확대하지않는다.
+### 비용 / 영향 범위
+native후보3장+기각6장, runtime후보8+기각8.3texture RGBA8+mip명목12MiB는전체VRAM실측아님.짧은GPUcomposer 표본은1280×720현재로컬브라우저진단만이며FPS/targetPC/soak통과아님.서고KEEP/그림자보류/실패2/2유지.
+### 놓쳤다면
+source가좋으면그대로축소한atlas도목표reference와자동일치한다고오인하거나runtime의원통형/푸른형태를해상도문제로계속분류했을것이다.

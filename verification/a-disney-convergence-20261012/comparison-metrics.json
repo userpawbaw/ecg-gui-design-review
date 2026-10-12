@@ -1,0 +1,10 @@
+{
+  "samples": {
+    "displayRgbMeanAbsoluteDifference": 0.007779381072149077,
+    "note": "AgX +1EV RGB display diagnostic, not radiometric convergence or aesthetic score"
+  },
+  "depth": {
+    "displayRgbMeanAbsoluteDifference": 0.04677449339769,
+    "note": "AgX +1EV RGB display diagnostic, not radiometric convergence or aesthetic score"
+  }
+}

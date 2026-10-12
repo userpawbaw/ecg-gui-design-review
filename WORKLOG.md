@@ -814,3 +814,15 @@ D133/F098/O025: DisneyZIP2.97GB/hash확보,quarter/half와6/64bounce실제native
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_source_2026-10-12.md
 
 D133 publication verified: 0411831 payload pushed under standing cloud upload authorization, remote SHA matched. Records288/knowledge51cases185original PASS. Static gallery HTTP and app-browser15/15 images PASS; source renderer/native results TUNE, no actual northern scene change. First sandbox server timeout resolved by stopping only our new process and hostlocalhost4198 restart. No ZIP/VDB/supplied beauty/personal media uploaded. Next same-source light transport/sampling convergence before local atlas.
+
+## 2026-10-12 D134 동일 원본 샘플·광학 시험
+사용자 다음 단계 진행 승인. 같은 Disneyquarter 원본에서 fixed32/128와 b64/128 대조 및 동일 noisy pass 보존 진행 중. 새 source나 실제 northern web 씬 변경 없음. 결과 보고서 ECG_A_disney_cloud_convergence_2026-10-12.md. 공식 문서 본문 접근 실패는 검색 발췌와 구별해 기록. 완료 후 미세결/노이즈/비용 판정과 static gallery 검증 예정.
+
+## 2026-10-12 D134 실행 결과
+D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤곽 보존을 조금 개선했으나 사진섬유결 확보는 미달. fixed128의 b64→128은 더 밝고 부드러운 면을 만들었으며 깊이 상한이 아직 결과에 영향을 준다. 따라서 광학 수렴 완료로 선언할 수 없다. noisy pass의 점들은 여전히 노이즈가 많고 source detail로 세지 않는다. native3장+같은 경로 noisy3장, 실제 web 미변경/TUNE.
+샘플·depth 수치를 계속 증량해 사진결을 해결한다고 가정하지 않는다. 현재 b128 결과를 채택 전 후보로 유지하고, 같은 source를 실제 궤도 화면의 구름 크기와 빛 방향에 맞춘 소형 국소 atlas로 시험한다. 확대 주변의 명암/결/footprint와 거리별 인계는 따로 검토하며, 근접 사진결·완전 광학수렴은 TUNE로 남긴다.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_convergence_2026-10-12.md
+
+D134 record formatting repair: F099 ledger evidence tags added after immutable event snapshot ingestion; original ingested snapshot kept unchanged. No observation or recommendation changed.
+
+D134 verification: native3/noisy3 source+outputSHA and dimensions PASS, HTTP11 resources PASS, app browser11/11 image load and screenshot PASS. Records290 / knowledge51cases187original structural PASS. Photographic detail TUNE; optical convergence and actual northern runtime remain unproven.

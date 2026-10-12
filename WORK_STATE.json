@@ -1538,5 +1538,17 @@
       "authorization": "cloudUploadAuthorization",
       "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004"
     }
+  },
+  "disneyConvergenceD134": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_convergence_2026-10-12.md",
+    "manifest": "verification/a-disney-convergence-20261012/manifest.json",
+    "nativeFrames": 3,
+    "sameRenderNoisyPasses": 3,
+    "sourceChanged": false,
+    "actualSceneChanged": false,
+    "candidateAdopted": false,
+    "status": "static diagnostic PASS / photographic quality TUNE / convergence not proven",
+    "shadowDeferred": true,
+    "next": "샘플·depth 수치를 계속 증량해 사진결을 해결한다고 가정하지 않는다. 현재 b128 결과를 채택 전 후보로 유지하고, 같은 source를 실제 궤도 화면의 구름 크기와 빛 방향에 맞춘 소형 국소 atlas로 시험한다. 확대 주변의 명암/결/footprint와 거리별 인계는 따로 검토하며, 근접 사진결·완전 광학수렴은 TUNE로 남긴다."
   }
 }

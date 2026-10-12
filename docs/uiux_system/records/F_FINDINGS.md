@@ -2332,3 +2332,25 @@ ZIP2,968,485,941B/SHA확보,half188,358,293activevoxel metadata. 같은half에�
 native5장및수정preview1/기각preview1기록.fullVDB는ZIP보유만/미로드;최고half. nativeGPU완료는webframe/VRAM/near인계/targetPC통과아님.그림자보류/서고KEEP/실패2/2유지.
 ### 놓쳤다면
 더고해상도source교체만계속하거나검고거친광학결과를density조형결함으로오인했을것이다. 공식예제와renderer·RR·spectral/display차이는미검증으로남긴다.
+
+## F-099. 샘플 수와 산란 상한 증량은 사진결 확보와 구별해야 한다
+
+| | |
+|---|---|
+| 상태 | 잠정 / native static 대조 |
+| 발견 | 2026-10-12 [캡처][코드] · D134 |
+| 영향 | 새 source 없이 빛 전달과 noisy/OIDN의 기여를 구별 |
+
+### 발단 — 무엇이 이상해 보였나
+D133 source를 바꾸고 산란 상한을 늘려도 공식 beauty의 미세결과 밝기 차이가 남았다.
+### 먼저 의심한 것과 배제 방법
+노이즈 제거의 뭉침 / 경로 재산란 부족 / 표본수 부족을 따로 의심했다. 같은 quarter source와 camera/light/density/phase/display에서 fixed32/128 샘플, fixed128의 b64/128 상한을 분리 비교했다. noisy pass는 동일 경로의 렌더 전후.
+### 결정적 근거
+D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤곽 보존을 조금 개선했으나 사진섬유결 확보는 미달. fixed128의 b64→128은 더 밝고 부드러운 면을 만들었으며 깊이 상한이 아직 결과에 영향을 준다. 따라서 광학 수렴 완료로 선언할 수 없다. noisy pass의 점들은 여전히 노이즈가 많고 source detail로 세지 않는다. native3장+같은 경로 noisy3장, 실제 web 미변경/TUNE.
+보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_convergence_2026-10-12.md, verification/a-disney-convergence-20261012/manifest.json 및 비교 crop. display RGB 차이 수치는 수렴 증명이나 품질 점수가 아니다. 공식 Hyperion 원형과 동일 renderer/광학 단위는 미확인.
+### 조치와 검토한 대안
+샘플·depth 수치를 계속 증량해 사진결을 해결한다고 가정하지 않는다. 현재 b128 결과를 채택 전 후보로 유지하고, 같은 source를 실제 궤도 화면의 구름 크기와 빛 방향에 맞춘 소형 국소 atlas로 시험한다. 확대 주변의 명암/결/footprint와 거리별 인계는 따로 검토하며, 근접 사진결·완전 광학수렴은 TUNE로 남긴다.
+### 비용 / 영향 범위
+native3장+같은 렌더 noisy pass3장. render seconds는 manifest; source 로딩/다운로드 포함 총시간이나 realtime frame 예산 아님. 실제 web 미변경, 사용자 품질 검토 전 TUNE. 그림자 보류/서고KEEP/실패2/2 유지.
+### 놓쳤다면
+noisy pass의 작은 점을 원본 texture라고 부르거나, 표본수를 계속 늘리면 사진결을 자동 확보한다는 결론을 내렸을 것이다.

@@ -293,3 +293,8 @@ D132/F097: 보유10원본 조사,06/08 density1/4 및08 g.35/0 대조. native새
 ## 2026-10-12 D133 Disney원본·광학대조
 D133/F098/O025: DisneyZIP2.97GB/hash확보,quarter/half와6/64bounce실제native대조+확대쌍.64bounce가돌같은어두운면을완화;원본해상도만의문제로단정불가. import90도축기각보존/수정. source확보PASS/번안렌더TUNE/공식Hyperion품질및실제web미달. 다음같은source광학·sampling수렴검토후국소atlas. 그림자보류/서고KEEP/실패2/2유지.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_source_2026-10-12.md
+
+## 2026-10-12 D134 실행 결과
+D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤곽 보존을 조금 개선했으나 사진섬유결 확보는 미달. fixed128의 b64→128은 더 밝고 부드러운 면을 만들었으며 깊이 상한이 아직 결과에 영향을 준다. 따라서 광학 수렴 완료로 선언할 수 없다. noisy pass의 점들은 여전히 노이즈가 많고 source detail로 세지 않는다. native3장+같은 경로 noisy3장, 실제 web 미변경/TUNE.
+샘플·depth 수치를 계속 증량해 사진결을 해결한다고 가정하지 않는다. 현재 b128 결과를 채택 전 후보로 유지하고, 같은 source를 실제 궤도 화면의 구름 크기와 빛 방향에 맞춘 소형 국소 atlas로 시험한다. 확대 주변의 명암/결/footprint와 거리별 인계는 따로 검토하며, 근접 사진결·완전 광학수렴은 TUNE로 남긴다.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_convergence_2026-10-12.md

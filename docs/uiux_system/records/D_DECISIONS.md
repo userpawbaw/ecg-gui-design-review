@@ -3256,3 +3256,28 @@ Disney공식VDB full및lower-resolution, 기존JangaFX증폭,2D사진bake. 공�
 
 ### 실행 결과 / F098/O025
 DisneyZIP획득/hash/CRC/metadata/원형XML확인. import90도축충돌기각보존후원형좌표복원. quarter/halfnative 및half6/64bounces대조에서광학상한이돌같은어두운면에큰영향.전체뷰source해상도차이는작아closeFOV27EV1동일쌍추가.원본확보PASS/공식Hyperion재현·실제web미달TUNE;같은source광학·샘플수렴후국소atlas검토.세부보고서 ECG_A_disney_cloud_source_2026-10-12.md.
+
+## D-134. Disney 동일 원본의 샘플 수와 산란 상한을 분리 비교한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [대화][실험계획] |
+| 상태 | 제작 전 결정 |
+| 연결 | D-133 / F-098 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 다음 단계 진행 승인. 같은 원본의 광학 수렴 / 새 원본 반복 / 즉시 웹 적용 중 선택.
+### 검토한 선택지
+quarter 원본 고정, FOV27 / EV1 / HG.877 / density4 / 같은 seed와 빛에서 fixed32 vs128 samples, 64 vs128 bounces 대조. 각 렌더의 noisy pass와 OIDN을 함께 보존. 기존 adaptive96 결과는 참고만 사용.
+### 고른 것과 근거
+새 source 없이 3개 native: s32b64, s128b64, s128b128. 샘플 대조와 산란 상한 대조에서 한 변수만 변경. noisy pass는 같은 경로 샘플의 denoiser 전후 비교이며 별도 독립 렌더로 세지 않는다. 미세결 개선과 노이즈/비용을 함께 판정.
+### 버린 것과 이유
+전체 VDB 로딩과 즉시 realtime 적용은 아직 사진결 gate 미달. 노출만 올려 디테일 개선이라고 주장하는 방식 제외. 최종 수렴 증명을 위해 무한히 렌더하지 않음.
+### 되돌려야 하는 조건
+128 samples에서 noisy pass가 불안정하면 수렴 완료 주장 금지; 미세결이 늘지 않으면 depth/sample 증가를 사진결 해결책으로 채택하지 않고 국소 atlas 적합성만 평가. 실제 웹과 움직임은 후속 gate. 그림자 보류/서고 KEEP/실패2/2 유지.
+
+### 실행 결과 / F099
+D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤곽 보존을 조금 개선했으나 사진섬유결 확보는 미달. fixed128의 b64→128은 더 밝고 부드러운 면을 만들었으며 깊이 상한이 아직 결과에 영향을 준다. 따라서 광학 수렴 완료로 선언할 수 없다. noisy pass의 점들은 여전히 노이즈가 많고 source detail로 세지 않는다. native3장+같은 경로 noisy3장, 실제 web 미변경/TUNE.
+샘플·depth 수치를 계속 증량해 사진결을 해결한다고 가정하지 않는다. 현재 b128 결과를 채택 전 후보로 유지하고, 같은 source를 실제 궤도 화면의 구름 크기와 빛 방향에 맞춘 소형 국소 atlas로 시험한다. 확대 주변의 명암/결/footprint와 거리별 인계는 따로 검토하며, 근접 사진결·완전 광학수렴은 TUNE로 남긴다.
+보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_convergence_2026-10-12.md

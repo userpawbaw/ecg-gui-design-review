@@ -1,0 +1,29 @@
+{
+  "nativeFrames": 3,
+  "sameRenderNoisyPasses": 3,
+  "sourceAndOutputHashes": "PASS",
+  "dimensions": "PASS",
+  "http200": [
+    "gallery.html",
+    "manifest.json",
+    "samples-comparison.png",
+    "depth-comparison.png",
+    "denoise-comparison.png",
+    "quarter-s32-b64-fov27-ev1.png",
+    "quarter-s32-b64-fov27-ev1-noisy-0001.png",
+    "quarter-s128-b64-fov27-ev1.png",
+    "quarter-s128-b64-fov27-ev1-noisy-0001.png",
+    "quarter-s128-b128-fov27-ev1.png",
+    "quarter-s128-b128-fov27-ev1-noisy-0001.png"
+  ],
+  "actualSceneChanged": false,
+  "convergenceProven": false,
+  "scope": "static offline render comparison only",
+  "appBrowserImages": {
+    "loaded": 11,
+    "total": 11,
+    "nonzeroNaturalDimensions": true,
+    "page": "gallery.html",
+    "screenshot": "browser-review.png"
+  }
+}

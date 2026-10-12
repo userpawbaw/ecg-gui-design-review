@@ -1584,6 +1584,15 @@
       ],
       "authorization": "cloudUploadAuthorization",
       "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004"
-    }
+    },
+    "userFeedback": "다른구름과질감이달라어색함;재질정합TUNE/미채택"
+  },
+  "cloudBlendD136": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_material_coherence_2026-10-12.md",
+    "status": "proposal / not executed / not validated",
+    "next": "same coverage + base lighting + bounded core detail, then middle-frequency edge bridge",
+    "candidateAdopted": false,
+    "mainIntroAdopted": false,
+    "shadowDeferred": true
   }
 }

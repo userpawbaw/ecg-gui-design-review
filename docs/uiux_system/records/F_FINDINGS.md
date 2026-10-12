@@ -2376,3 +2376,25 @@ Disney native 원본을 실제 지도에 붙이자 푸른 탑처럼 솟아 주�
 native후보3장+기각6장, runtime후보8+기각8.3texture RGBA8+mip명목12MiB는전체VRAM실측아님.짧은GPUcomposer 표본은1280×720현재로컬브라우저진단만이며FPS/targetPC/soak통과아님.서고KEEP/그림자보류/실패2/2유지.
 ### 놓쳤다면
 source가좋으면그대로축소한atlas도목표reference와자동일치한다고오인하거나runtime의원통형/푸른형태를해상도문제로계속분류했을것이다.
+
+
+## F-101. 국소 구름의 선명도 향상은 주변 구름과의 재질 정합을 보장하지 않는다
+
+| | |
+|---|---|
+| 상태 | 확정 / 사용자평가, 원인기여는잠정 |
+| 발견 | 2026-10-12 [사용자평가][캡처][코드] |
+| 영향 | 독립RGBA군집의추가보다공통footprint·조명과detail계층연결을우선 |
+
+### 발단 — 무엇이 이상해 보였나
+D135이후사용자가다른구름과질감이너무달라어색하다고평가했다.
+### 먼저 의심한 것과 배제 방법
+색차이만의문제인지검토. 실제p.235capture에서주변softsheet와독립 과립형 굴곡/실루엣차이를확인. 기존shader는height-field태양명암으로tone전,Disney는고정빛AgXbeauty를tone후합성. 개별기여를측정하지않아단독원인은확정안함.
+### 결정적 근거
+사용자 “다른 구름과 질감이 너무 달라서 어색한 감이 있네.” native품질진단PASS와별개로전체재질정합TUNE. D135capture/cloud-disney-atlas.ts/cloud-orbital.ts. Epic공식자료의layout/height-profile와별도noise/detail구조는분리설계참고이며이혼합효과의직접검증아님.
+### 조치와 검토한 대안
+D136 Asharedcoverage/coredetail→B중간결/경계연결→C공통density시험순서권장. 전역blur/단순색gain만으로통과선언안함. 모든새후보미실행/효과미검증.
+### 비용 / 영향 범위
+이번은보고서/계획만,code나native재렌더없음. D135광학·footprint·근접volume한계유지.
+### 놓쳤다면
+선명한원본확보와짧은GPU검증을씬전체미감승인으로오인하고이질적군집을주intro에채택했을것이다.

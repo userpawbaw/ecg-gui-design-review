@@ -3310,3 +3310,23 @@ D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤
 D135/F100/O026: Disneyquarter source 고정빛3각도atlas를 실제북유럽lab두군집에추가. 바닥alpha실패와푸른탑join기각보존후Y.28/중립sky/bank규모튜닝. 최종native3+기각6,실제runtime8+기각8/휠정역입력확인. 명암/높이개선이나회색·별개덩어리감/사진결TUNE. opt-in만/주도입부미채택/near통과미구현.
 실제궤도구도에서국소atlas의군집위치·규모·위성층색정합을먼저검토한다. source원형의높이/sky를그대로붙여품질을보장하지않는다. fixed-lightimpostor의평면감/각도ghost/반복형태는별도gate;유지되면같은footprint와거리별인계를시험하고near통과는3D깊이후보로분리한다.
 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_atlas_2026-10-12.md
+
+## D-136. 큰 구름 형태를 공유하고 국소 미세결을 연결하는 시험을 권장한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [대화][문헌][코드] |
+| 상태 | 제안 / 미실행 |
+| 연결 | D-135 / F-100 / F-101 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자: “다른 구름과 질감이 너무 달라서 어색한 감이 있네. 자연스럽게 녹이는 아이디어가 필요하겠어.” 새독립cloud의배치/blur반복과공통footprintdetail혼합사이.
+### 검토한 선택지
+A같은위성mask·기존조명에Disney국소detail추가,B중간결·경계연결,C공통density로far/near동시연결. Epic공식layout/profile/noise/detail분리원칙참고;다른엔진의직접동일구현주장금지.
+### 고른 것과 근거
+A→B의저비용순차시험권장. 완성RGBA를덩어리째더붙이기보다sharedlarge-scale분포와조명에boundedhigh-frequencydetail추가. 원경mip/연속거리기중치.실제density/normal재구성은별도C후보. 보고서 ECG_A_cloud_material_coherence_2026-10-12.md.
+### 버린 것과 이유
+전체blur만늘리면요청된선명한결을잃음.색만맞추면굴곡크기와독립silhouette차이는남음.한프레임위주opaqueatlasfade로다른footprint연결은정역ghost위험.
+### 되돌려야 하는 조건
+고주파잔차가사진결이아닌noise/구워진광원반응을강조하거나pixel정역자글거림을만들면채택안함. A/B는미실행/효과미검증. 동일weather/density후보C또는보류fallback검토.그림자보류/서고KEEP/실패2/2유지.

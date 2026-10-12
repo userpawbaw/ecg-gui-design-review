@@ -835,3 +835,7 @@ D135/F100/O026: Disneyquarter source 고정빛3각도atlas를 실제북유럽lab
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_atlas_2026-10-12.md
 
 D135 publication verified: ac5a0c6 payload remote SHA, atlas manifest and runtime effect Git blobs matched. Native/runtime alpha/hash/dimensions, hostVitebuild, local8snapshots/12galleryimages and wheel direction input PASS; photographic texture/placement coherence/fullmotion/near3D/targetPC TUNE. Records293 / knowledge51cases190original structural PASS. SourceZIP/VDB/suppliedbeauty/personalmedia excluded.
+
+## 2026-10-12 D136 재질연결후속계획
+D136/F101: 사용자D135질감이질성feedback반영. 같은위성분포·기본조명에국소미세결을추가하고중간결/경계로연결하는A→B권장. Epic공식layout/profile/detail분리문헌과현재shader/capture분석. 새후보미실행/효과미검증/주intro미채택/TUNE;그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_material_coherence_2026-10-12.md

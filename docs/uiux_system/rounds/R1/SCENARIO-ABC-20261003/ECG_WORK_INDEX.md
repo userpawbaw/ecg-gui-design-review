@@ -326,3 +326,7 @@ D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤
 D135/F100/O026: Disneyquarter source 고정빛3각도atlas를 실제북유럽lab두군집에추가. 바닥alpha실패와푸른탑join기각보존후Y.28/중립sky/bank규모튜닝. 최종native3+기각6,실제runtime8+기각8/휠정역입력확인. 명암/높이개선이나회색·별개덩어리감/사진결TUNE. opt-in만/주도입부미채택/near통과미구현.
 실제궤도구도에서국소atlas의군집위치·규모·위성층색정합을먼저검토한다. source원형의높이/sky를그대로붙여품질을보장하지않는다. fixed-lightimpostor의평면감/각도ghost/반복형태는별도gate;유지되면같은footprint와거리별인계를시험하고near통과는3D깊이후보로분리한다.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_atlas_2026-10-12.md
+
+## 2026-10-12 D136 재질연결후속계획
+D136/F101: 사용자D135질감이질성feedback반영. 같은위성분포·기본조명에국소미세결을추가하고중간결/경계로연결하는A→B권장. Epic공식layout/profile/detail분리문헌과현재shader/capture분석. 새후보미실행/효과미검증/주intro미채택/TUNE;그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_material_coherence_2026-10-12.md

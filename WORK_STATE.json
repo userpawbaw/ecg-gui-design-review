@@ -1574,6 +1574,16 @@
     "shadowDeferred": true,
     "nominalRGBA8MipMiB": 12,
     "gpuScope": "local1280x720 short24sample diagnostics; not targetPC/FPS/VRAM",
-    "next": "실제궤도구도에서국소atlas의군집위치·규모·위성층색정합을먼저검토한다. source원형의높이/sky를그대로붙여품질을보장하지않는다. fixed-lightimpostor의평면감/각도ghost/반복형태는별도gate;유지되면같은footprint와거리별인계를시험하고near통과는3D깊이후보로분리한다."
+    "next": "실제궤도구도에서국소atlas의군집위치·규모·위성층색정합을먼저검토한다. source원형의높이/sky를그대로붙여품질을보장하지않는다. fixed-lightimpostor의평면감/각도ghost/반복형태는별도gate;유지되면같은footprint와거리별인계를시험하고near통과는3D깊이후보로분리한다.",
+    "remotePublication": {
+      "status": "published_verified",
+      "verifiedPayloadHead": "ac5a0c684b44533194891257e3a7e20fa4879485",
+      "remoteContentMatched": [
+        "verification/a-disney-atlas-20261012/atlas-manifest.json",
+        "prototype/spikes/a-climb/cloud-disney-atlas.ts"
+      ],
+      "authorization": "cloudUploadAuthorization",
+      "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004"
+    }
   }
 }

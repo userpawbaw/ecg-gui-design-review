@@ -833,3 +833,5 @@ D134 publication verified: 28d1759 payload remote SHA and raw manifest Git blob 
 D135/F100/O026: Disneyquarter source 고정빛3각도atlas를 실제북유럽lab두군집에추가. 바닥alpha실패와푸른탑join기각보존후Y.28/중립sky/bank규모튜닝. 최종native3+기각6,실제runtime8+기각8/휠정역입력확인. 명암/높이개선이나회색·별개덩어리감/사진결TUNE. opt-in만/주도입부미채택/near통과미구현.
 실제궤도구도에서국소atlas의군집위치·규모·위성층색정합을먼저검토한다. source원형의높이/sky를그대로붙여품질을보장하지않는다. fixed-lightimpostor의평면감/각도ghost/반복형태는별도gate;유지되면같은footprint와거리별인계를시험하고near통과는3D깊이후보로분리한다.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_atlas_2026-10-12.md
+
+D135 publication verified: ac5a0c6 payload remote SHA, atlas manifest and runtime effect Git blobs matched. Native/runtime alpha/hash/dimensions, hostVitebuild, local8snapshots/12galleryimages and wheel direction input PASS; photographic texture/placement coherence/fullmotion/near3D/targetPC TUNE. Records293 / knowledge51cases190original structural PASS. SourceZIP/VDB/suppliedbeauty/personalmedia excluded.

@@ -1517,5 +1517,20 @@
       "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004",
       "authorization": "cloudUploadAuthorization: current and subsequent cloud work"
     }
+  },
+  "disneyCloudD133": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_source_2026-10-12.md",
+    "manifest": "verification/a-disney-cloud-20261012/manifest.json",
+    "acquisition": "verification/a-disney-cloud-20261012/acquisition.json",
+    "nativeFrames": 5,
+    "correctedPreview": 1,
+    "rejectedPreview": 1,
+    "fullVdbLoaded": false,
+    "highestRenderedResolution": "half",
+    "actualSceneChanged": false,
+    "candidateAdopted": false,
+    "shadowDeferred": true,
+    "status": "source acquired PASS / translated renderer TUNE; not Hyperion reproduction",
+    "next": "same-source light transport and sample convergence before local fixed-light atlas"
   }
 }

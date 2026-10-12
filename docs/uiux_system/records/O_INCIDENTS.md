@@ -478,3 +478,19 @@ coherent는GLSL예약어다. Vite는shader문자열의WebGL컴파일을검사하
 sharedColour로이름변경. 최종후보전체고정구도재캡처→8초영상→실wheel2/nearLODnative확인. 과거console3error는보존하고수정후신규오류와구분한다. 중간실패capture를final증거로사용하지않음.
 ### 재발 방지와 자동화 상태
 빌드후실제GLSL compilation/renderer로그/nearLOD보임검증을필수로유지. 실제캡처중source파일수정피하고끝난뒤에HMR. 자동GLSL테스트추가미실시,브라우저확인으로검증. report ECG_A_source_optical_continuity_2026-10-10.md.
+
+## O-025. VDB import 기본 축 회전이 원본 예제 카메라와 충돌했다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [코드][실험] |
+| 연결 | D-133 / CASE-007 |
+
+### 증상
+Disney첫preview가공식예제와달리세로로돌아가고잘려보였다.
+### 원인
+Blender4.5.3 volume_import의objectrotation은기본X+90°였다.원형XML은Y-upcamera/light/ground와원본VDB좌표를직접사용하므로이회전과충돌했다.독립probe의rotation/matrix로확인했다.미리보기품질이나원본결문제와구별.
+### 조치
+cloud.rotation_euler=(0,0,0) 명시후512preview재렌더. 기각원형/manifest는verification/a-disney-cloud-20261012/rejected-import-axis/에보존.중간probe는grids.load전grid조회IndexError도났지만rotation증거는이미출력됨;정식metadata는nativeOpenVDB로읽음.
+### 재발 방지와 자동화 상태
+원형VDB/카메라좌표를번안할때import뒤matrixworld/rotation/scale를readback하고공식beauty와형상방향대조.이번script에는rotation복원과manifestrecord추가.전체importer회귀테스트/다른에셋축보장은미구현.

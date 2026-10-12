@@ -808,3 +808,7 @@ D132/F097: 보유10원본 조사,06/08 density1/4 및08 g.35/0 대조. native새
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_source_optics_2026-10-12.md
 
 D132 publication verified: 551269a payload pushed under standing cloud upload authorization, remote SHA matched. Gallery and ten related resources HTTP200; records285/knowledge51cases182original PASS. UI open request queued, actual browser motion not verified. Native asset result TUNE; next higher-resolution source + producer example comparison.
+
+## 2026-10-12 D133 Disney원본·광학대조
+D133/F098/O025: DisneyZIP2.97GB/hash확보,quarter/half와6/64bounce실제native대조+확대쌍.64bounce가돌같은어두운면을완화;원본해상도만의문제로단정불가. import90도축기각보존/수정. source확보PASS/번안렌더TUNE/공식Hyperion품질및실제web미달. 다음같은source광학·sampling수렴검토후국소atlas. 그림자보류/서고KEEP/실패2/2유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_source_2026-10-12.md

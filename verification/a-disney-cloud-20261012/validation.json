@@ -1,0 +1,27 @@
+{
+  "newNativeFrames": 5,
+  "previewFrames": 1,
+  "rejectedPreviewFrames": 1,
+  "fileSourceHashes": "PASS",
+  "dimensions": "PASS",
+  "http200": [
+    "gallery.html",
+    "manifest.json",
+    "close-comparison.png",
+    "quarter-b64.png",
+    "half-b64.png",
+    "half-b6.png",
+    "quarter-b64-fov27-ev1.png",
+    "half-b64-fov27-ev1.png"
+  ],
+  "scope": "offline native and HTTP resources; not browser motion/realtime/target GPU performance",
+  "actualSceneChanged": false,
+  "suppliedBeautyIncludedInOwnBoards": false,
+  "browser": {
+    "pageLoaded": true,
+    "imageElements": 15,
+    "allImagesComplete": true,
+    "screenshot": "browser-review.png",
+    "scope": "static gallery and image loading only; no realtime scene motion"
+  }
+}

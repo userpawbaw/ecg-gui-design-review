@@ -2311,3 +2311,24 @@ source06자체결부족만이원인인지와광학두께부족을분리.보유10
 native4장offline시간기록.사용자liveGPU/스크롤품질/지도인계증거아님. density multiplier는sourceunit→metre보정이아니며opacity도변경.그림자보류/서고KEEP/실패2/2유지.
 ### 놓쳤다면
 광학적으로가려진결을원본해상도부족으로만오해하거나명암개선을사진섬유결목표달성으로과장했을것이다.
+
+## F-098. 고알베도 구름의 재산란 상한도 돌 같은 질감을 만든다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [문헌][코드][실험] |
+| 상태 | Disney source확보PASS / Cycles번안TUNE |
+| 연결 | D-133 / F-097 / O-025 / CASE-007 |
+
+### 발단
+사용자Disney고해상도원본과공식예제다음스텝승인. 기존팩광학증량은명암만개선하고사진결미달이었다.
+### 먼저 의심한 것과 배제 방법
+공식XML density4/HG.877/albedo1과깊은경로조건을확인. sourcequarter/half동일뷰,같은half6/64bounce대조로단순해상도와광학상한분리.첫preview자동X90도import축충돌은독립probe확인후기각/복원.
+### 결정적 근거
+ZIP2,968,485,941B/SHA확보,half188,358,293activevoxel metadata. 같은half에서6bounce는검고돌같은면,64는훨씬부드러운구름면. 따라서지금질감을원본만의문제로확정할수없다. 전체뷰의quarter/half차이는작고FOV27EV1동일확대쌍추가. 보고서 ECG_A_disney_cloud_source_2026-10-12.md / verification/a-disney-cloud-20261012/manifest.json. 공식Hyperionbeauty는제공참고이미지로직접렌더와구별.
+### 조치와 검토한 대안
+새source교체만반복하지않고같은source광학깊이·sampling수렴·표시조건검토후고정빛국소atlas검토.64실시간추가권장이아니며offline고품질bake와runtime를분리.사진휘도·섬유결전체gate는TUNE.
+### 비용 / 영향 범위
+native5장및수정preview1/기각preview1기록.fullVDB는ZIP보유만/미로드;최고half. nativeGPU완료는webframe/VRAM/near인계/targetPC통과아님.그림자보류/서고KEEP/실패2/2유지.
+### 놓쳤다면
+더고해상도source교체만계속하거나검고거친광학결과를density조형결함으로오인했을것이다. 공식예제와renderer·RR·spectral/display차이는미검증으로남긴다.

@@ -1,0 +1,78 @@
+{
+  "producer": "Walt Disney Animation Studios",
+  "date": "2026-10-12",
+  "sourcePage": "https://www.disneyanimation.com/resources/clouds/",
+  "downloadUrl": "https://assets.disneyanimation.com/wdas_cloud.zip",
+  "archive": {
+    "localPath": "assets/source/disney-cloud/wdas_cloud.zip",
+    "bytes": 2968485941,
+    "sha256": "f7cf130e17b366a08ed038865277ed67dc76f87d1fa6effd21b76aa7294cdccd"
+  },
+  "license": "Copyright2017 Disney Enterprises Inc / CC BY-SA3.0; source photo Kevin Udy also CC BY-SA3.0",
+  "useStage": "internal concept review; release replacement/rights review separate",
+  "files": [
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/README.txt",
+      "bytes": 1671,
+      "sha256": "f79dddd6295fb9126027f03e32f69f0c14b9485725fdd663600a84f8371b44c0",
+      "zipCrcChecked": true
+    },
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_eighth.vdb",
+      "bytes": 10032545,
+      "sha256": "e067404d3775f80a3bd3264f26c93cbe341d3da026cc8f7bfdcd2b23d780df41",
+      "zipCrcChecked": true
+    },
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_half.vdb",
+      "bytes": 491820521,
+      "sha256": "2e309dee0e0bef7d0c096b72174e3c593ed6cc400c3d3fec47e47878668bcc5f",
+      "zipCrcChecked": true
+    },
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_hyperion_render.exr",
+      "bytes": 4538773,
+      "sha256": "e641b1ada1f8b3f195a553a71a3a6187a820a223489296ffc4c4c0a47bf6f596",
+      "zipCrcChecked": true
+    },
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_hyperion_render.png",
+      "bytes": 2023265,
+      "sha256": "036c78312d43ae83395373755b552ef4cee32ea18c38e4e1373bb30f171a31ec",
+      "zipCrcChecked": true
+    },
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_mitsuba_scene.exr",
+      "bytes": 130832,
+      "sha256": "2238284a0688d249bb19a6fef67dbae035c38fafb8e1a50a8e5a8ca44b106bd4",
+      "zipCrcChecked": true
+    },
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_mitsuba_scene.png",
+      "bytes": 51915,
+      "sha256": "b0b8c7ed56674c3aa7e7d6e5538d99c01c7420dbc1e426f56a6724c860535530",
+      "zipCrcChecked": true
+    },
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_mitsuba_scene.xml",
+      "bytes": 2239,
+      "sha256": "1f2edce0bb1af4225368f1a4bb1493417124173fef81f7b07a83422d590c5c4c",
+      "zipCrcChecked": true
+    },
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_quarter.vdb",
+      "bytes": 68366243,
+      "sha256": "279efd7566f4f8f3d05a1cb4529b7e903d64a6b4e91c2edce5824b9b5c9f722a",
+      "zipCrcChecked": true
+    },
+    {
+      "file": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_sixteenth.vdb",
+      "bytes": 1631620,
+      "sha256": "295c2a2e179e64b7c0c798f8934f78e0af8a74120f13a17ac23737c95351869f",
+      "zipCrcChecked": true
+    }
+  ],
+  "fullVdb": "present in ZIP; not extracted or loaded in this trial",
+  "secondsHashAndExtract": 6.611915826797485,
+  "uploadScope": "code/own rendered samples/review records only; ZIP/VDB and supplied reference beauty images local-only"
+}

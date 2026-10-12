@@ -1,0 +1,124 @@
+{
+  "frames": [
+    {
+      "file": "eighth-b64-preview.png",
+      "level": "eighth",
+      "source": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_eighth.vdb",
+      "sourceSha256": "e067404d3775f80a3bd3264f26c93cbe341d3da026cc8f7bfdcd2b23d780df41",
+      "sha256": "403dee4987c7384602489e992a2dff6f4243c97e30d6983975a0b7ad0b28d3eb",
+      "seconds": 8.566137313842773,
+      "size": [
+        512,
+        277
+      ],
+      "maxSamples": 32,
+      "adaptiveSampling": true,
+      "adaptiveThreshold": 0.009999999776482582,
+      "denoiser": "OPENIMAGEDENOISE",
+      "volumeBounces": 64,
+      "maxBounces": 64,
+      "stepRate": 0.35,
+      "densityMultiplier": 4,
+      "anisotropy": 0.877,
+      "albedo": [
+        1,
+        1,
+        1
+      ],
+      "volumeSpace": "OBJECT",
+      "objectScale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "bounds": [
+        [
+          -226.66665649414062,
+          -80.0,
+          -306.6666564941406
+        ],
+        [
+          -226.66665649414062,
+          -80.0,
+          211.66665649414062
+        ],
+        [
+          -226.66665649414062,
+          225.0,
+          211.66665649414062
+        ],
+        [
+          -226.66665649414062,
+          225.0,
+          -306.6666564941406
+        ],
+        [
+          198.3333282470703,
+          -80.0,
+          -306.6666564941406
+        ],
+        [
+          198.3333282470703,
+          -80.0,
+          211.66665649414062
+        ],
+        [
+          198.3333282470703,
+          225.0,
+          211.66665649414062
+        ],
+        [
+          198.3333282470703,
+          225.0,
+          -306.6666564941406
+        ]
+      ],
+      "camera": {
+        "origin": [
+          648.0640258789062,
+          -82.4729995727539,
+          -63.85599899291992
+        ],
+        "target": [
+          6.020999908447266,
+          100.04299926757812,
+          -43.67900085449219
+        ],
+        "up": [
+          0.27300000190734863,
+          0.9620000123977661,
+          -0.008999999612569809
+        ],
+        "horizontalFov": 54.43
+      },
+      "sun": {
+        "direction": [
+          -0.5825999975204468,
+          -0.765999972820282,
+          -0.271699994802475
+        ],
+        "rgbIrradianceApproximation": [
+          2.6,
+          2.5,
+          2.3
+        ]
+      },
+      "skyRgb": [
+        0.03,
+        0.07,
+        0.23
+      ],
+      "renderer": "4.5.3 LTS",
+      "device": "GPU",
+      "viewTransform": "AgX",
+      "limitations": [
+        "Cycles translation, not original Mitsuba integrator or Hyperion",
+        "source example uses maxDepth1000000/sampleCount1024; this trial uses bounded depth and adaptive max samples",
+        "RGB sunlight is a translated approximation; radiometric/spectral equivalence not established",
+        "transparent sky + AgX rather than original EXR display pipeline",
+        "offline asset; no live geographic scene or GPU frame performance evidence"
+      ]
+    }
+  ],
+  "rejectedReason": "Blender volume_import default +90deg X rotation conflicts with original XML y-up coordinates; source orientation invalid"
+}

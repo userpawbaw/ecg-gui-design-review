@@ -1,0 +1,94 @@
+[
+  {
+    "level": "sixteenth",
+    "voxelSizeSourceUnits": [
+      3.3333332538604736,
+      3.3333332538604736,
+      3.3333332538604736
+    ],
+    "metadata": {
+      "class": "fog volume",
+      "creator": "Houdini 16.0.504.20/GEO_VDBTranslator",
+      "file_bbox_max": "(59, 64, 63)",
+      "file_bbox_min": "(-66, -21, -90)",
+      "file_compression": "active values",
+      "file_mem_bytes": "5095208",
+      "file_voxel_count": "415642",
+      "is_local_space": "False",
+      "is_saved_as_half_float": "False",
+      "name": "density",
+      "value_type": "float",
+      "vector_type": "invariant",
+      "voxelsize": "0.0"
+    }
+  },
+  {
+    "level": "eighth",
+    "voxelSizeSourceUnits": [
+      1.6666666269302368,
+      1.6666666269302368,
+      1.6666666269302368
+    ],
+    "metadata": {
+      "class": "fog volume",
+      "creator": "Houdini 16.0.504.20/GEO_VDBTranslator",
+      "file_bbox_max": "(118, 128, 127)",
+      "file_bbox_min": "(-131, -41, -179)",
+      "file_compression": "active values",
+      "file_mem_bytes": "17299644",
+      "file_voxel_count": "3122022",
+      "is_local_space": "False",
+      "is_saved_as_half_float": "False",
+      "name": "density",
+      "value_type": "float",
+      "vector_type": "invariant",
+      "voxelsize": "0.0"
+    }
+  },
+  {
+    "level": "quarter",
+    "voxelSizeSourceUnits": [
+      0.8333333134651184,
+      0.8333333134651184,
+      0.8333333134651184
+    ],
+    "metadata": {
+      "class": "fog volume",
+      "creator": "Houdini 16.0.504.20/GEO_VDBTranslator",
+      "file_bbox_max": "(236, 256, 254)",
+      "file_bbox_min": "(-261, -81, -358)",
+      "file_compression": "active values",
+      "file_mem_bytes": "92494808",
+      "file_voxel_count": "24063202",
+      "is_local_space": "False",
+      "is_saved_as_half_float": "False",
+      "name": "density",
+      "value_type": "float",
+      "vector_type": "invariant",
+      "voxelsize": "0.0"
+    }
+  },
+  {
+    "level": "half",
+    "voxelSizeSourceUnits": [
+      0.4166666567325592,
+      0.4166666567325592,
+      0.4166666567325592
+    ],
+    "metadata": {
+      "class": "fog volume",
+      "creator": "Houdini 16.0.504.20/GEO_VDBTranslator",
+      "file_bbox_max": "(472, 513, 509)",
+      "file_bbox_min": "(-521, -162, -715)",
+      "file_compression": "active values",
+      "file_mem_bytes": "590228032",
+      "file_voxel_count": "188358293",
+      "is_local_space": "False",
+      "is_saved_as_half_float": "False",
+      "name": "density",
+      "value_type": "float",
+      "vector_type": "invariant",
+      "voxelsize": "0.0"
+    }
+  }
+]

@@ -3233,3 +3233,26 @@ density증량으로흰날림/불투명덩어리/세부손실이면기각.새sour
 
 ### 실행 결과 / F097
 보유10원본 조사후08선별. 새native4와기존baseline재사용1에서density4는작은능선/골명암강화,g0는밝은면추가변화.사진섬유결은미달/돌같은면gap/TUNE;4배실제web채택보류.신규고해상도source및공식example재현다음.보고서 ECG_A_cloud_source_optics_2026-10-12.md.
+
+## D-133. Disney 고해상도 원본과 공식 예제의 조건을 확보해 결을 대조한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-12 [대화][문헌] |
+| 상태 | 제작 전 결정 |
+| 연결 | D-132 / F-097 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 Disney source 비교진행승인. 기존팩반복/신규원본확보/사진cutout 중 선택.
+### 검토한 선택지
+Disney공식VDB full및lower-resolution, 기존JangaFX증폭,2D사진bake. 공식예제Mitsuba원형실행과Blender조건번안도구별비교.
+### 고른 것과 근거
+공식ZIP확보/hash/README와XML원문먼저확인. 메모리와densitygrid크기에맞춰저해상도preview후더높은해상도동일view광학대조. 공식예제카메라·빛·phase·extinction을읽고번안가능성검토;다른renderer의동일결과라는주장금지. 필요한원본해상도/조건은실제metadata확인후결정.
+### 버린 것과 이유
+보유팩warp반복은결gate미달.그대로livefullVDB추가는3070/web예산미검증.원본beauty이미지를실제web결과로표시하는방식제외.
+### 되돌려야 하는 조건
+메모리부족/포맷불일치/원본특징미달시저해상도단계나국소crop으로제한하고실패범위기록.사진결gate통과전에webpatch채택안함.그림자보류/서고KEEP/실패2/2유지.
+
+### 실행 결과 / F098/O025
+DisneyZIP획득/hash/CRC/metadata/원형XML확인. import90도축충돌기각보존후원형좌표복원. quarter/halfnative 및half6/64bounces대조에서광학상한이돌같은어두운면에큰영향.전체뷰source해상도차이는작아closeFOV27EV1동일쌍추가.원본확보PASS/공식Hyperion재현·실제web미달TUNE;같은source광학·샘플수렴후국소atlas검토.세부보고서 ECG_A_disney_cloud_source_2026-10-12.md.

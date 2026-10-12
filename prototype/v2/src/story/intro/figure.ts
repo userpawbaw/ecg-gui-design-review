@@ -172,7 +172,9 @@ void main(){
  // D-054 inflow red (inflow-preview-v3 add_red): P-b common mode over the whole body + M-b wave from the forearm to RA
  float wx=(vInD-uFront)/.045,wave=exp(-wx*wx)*vInM*exp(-vInD/.9)*uWaveK;
  vec3 red=vec3(1.,.19,.28)*(uCommon*.9+wave)*.3*uOpacity;
- red+=uEdgeCol*(pow(fres,3.2)*1.4+pow(fres,9.)*1.2)*uEdgeK*reveal*uOpacity;   // S-10 outline (emitted, survives the blend)
+ // S-10 outline (emitted, survives the blend). 2026-10-12: the 1-px pow(fres,9) rim crawled as the body moved (shading
+ // aliasing MSAA does not touch) — one wider, softer band instead
+ red+=uEdgeCol*pow(fres,2.6)*1.9*uEdgeK*reveal*uOpacity;
  gl_FragColor=vec4(col*uExposure+(uLine*scanLine*uOpacity*1.5+glow+red)/max(ao,.05),ao);
 }`;
 function h5Material(){

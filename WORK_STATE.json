@@ -1531,6 +1531,12 @@
     "candidateAdopted": false,
     "shadowDeferred": true,
     "status": "source acquired PASS / translated renderer TUNE; not Hyperion reproduction",
-    "next": "same-source light transport and sample convergence before local fixed-light atlas"
+    "next": "same-source light transport and sample convergence before local fixed-light atlas",
+    "remotePublication": {
+      "status": "published_verified",
+      "verifiedPayloadHead": "0411831579b2ab3deb45b30f2899b192274ab7ca",
+      "authorization": "cloudUploadAuthorization",
+      "destination": "https://github.com/userpawbaw/ecg-gui-design-review/tree/codex/abc-light-design-20261004"
+    }
   }
 }

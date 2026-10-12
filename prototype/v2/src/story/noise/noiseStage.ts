@@ -101,6 +101,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const bu=figure.bodyMat.uniforms;bu.uHeart.value.copy(heartWorld);bu.uFeet.value=0;bu.uRefDist.value=2.6;bu.uSunOn.value=1;
  bu.tLight.value=arch.lightRT.depthTexture;bu.uLightVP.value=arch.lightVP;bu.uSunTo.value=arch.sunTo;figure.setBodyOpacity(1);
  bu.uScan.value=-1;bu.uScanOn.value=0;figure.heartMat.uniforms.uOpacity.value=1;   // fully revealed (the intro scan is not used here)
+ {const q=new URLSearchParams(location.search),g=Number(q.get('heart')??1.6),f=Number(q.get('hfill')??.05);   // S-13: the intro's heart gain (1.6) + a faint fill so the R squeeze reads as area
+  figure.heartMat.uniforms.uOpacity.value=g;figure.heartMat.uniforms.uFill.value=f;}
  // meshopt reorders vertices: find the electrode / sternum vertices by position (figure frame → three: x, z, −y)
  const P0=body.getAttribute('position');
  const nearest=(q:THREE.Vector3)=>{let bi=0,bd=Infinity;for(let i=0;i<P0.count;i++){const dx=P0.getX(i)-q.x,dy=P0.getY(i)-q.y,dz=P0.getZ(i)-q.z,d=dx*dx+dy*dy+dz*dz;if(d<bd){bd=d;bi=i;}}return bi;};
@@ -203,7 +205,10 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const STRIP=V3(-.97,.05,-3.62),DESK=V3(-2.35,1.0,-3.55);         // archive power strip / desk (Blender archive frame → three)
  function finalFor(cond:Cond){
   const c=camFrom(cond==='bw'?'side':'ma');
-  if(c.def.type!=='ortho')return{pos:c.loc,look:c.look,h:hfovOf(c.def.lens??16)};
+  // K-06 (user 2026-10-12): the ma framing at fist height, fist and heart filling the frame. The 10/8 recording shows it
+  // ~12 % tighter than a 16:9 canvas does (narrower browser canvas); ?macam=b keeps the camera and narrows the lens to match
+  const zoom=cond==='ma'&&new URLSearchParams(location.search).get('macam')==='b'?.88:1;
+  if(c.def.type!=='ortho')return{pos:c.loc,look:c.look,h:hfovOf(c.def.lens??16)*zoom};
   // B-b side view: the stills' orthographic camera becomes a long lens far away, a little from above (the near armrest)
   const fwd=c.look.clone().sub(c.loc).normalize(),pivot=c.loc.clone().addScaledVector(fwd,Math.abs(c.def.loc[0]));
   // S-09: inside the room (2.4 m, above the desk and monitor) — the 4.5 m position was behind the wall, so the orbit to it
@@ -285,9 +290,10 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const fistAt=(t:number)=>{for(const c of clenches){const d=t-c;if(d<0||d>CLOSE+HOLD+OPEN)continue;return d<CLOSE?ss(0,CLOSE,d):d<CLOSE+HOLD?1:1-ss(CLOSE+HOLD,CLOSE+HOLD+OPEN,d);}return 0;};
  const waveAt=(t:number)=>{let best=-1;for(const c of clenches){const d=t-c-.3;if(d>=0&&d<1.6)best=d;}return best;};   // wave starts as the fist tightens
  /** Pose of the figure and the camera's breath offset at scene time t (shared by the frame update and the self-check). */
- const BREATH_WEAK=.3;
+ const BREATH_WEAK=Number(new URLSearchParams(location.search).get('breathk')??.3);   // S-12: breath outside bw (QA: ?breathk=1 is the 10/8 strength)
  // S-10 legibility in the side view (bw): ?legib=0 none, 1 cyan outline, 2 denser body, 3 both (default 3, user to choose)
  const LEGIB=Number(new URLSearchParams(location.search).get('legib')??3);
+ const CHEST=Number(new URLSearchParams(location.search).get('chest')??.8);   // S-13 chest window strength (QA: ?chest=0..1)
  function poseAt(t:number){
   const tl=((t%T)+T)%T,breath=bw?bw.breath[Math.min(bw.breath.length-1,Math.floor(tl*data.fs))]:breathFixed(t);
   // S-12 / A-02: outside the baseline-wander scene the breath stays visible but small (≤ 1/3), so it does not suggest a
@@ -324,7 +330,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
    const target=fistP.lerp(raP,k*k*(3-2*k));(bokeh.uniforms as Record<string,{value:number}>).focus.value=camera.position.distanceTo(target);
    (bokeh.uniforms as Record<string,{value:number}>).aperture.value=t<4?.0005:.006;}
   bu.uCommon.value=common;bu.uFront.value=front;bu.uWaveK.value=waveK;
-  {const k=data.cond==='bw'?ss(1,4,t):0;bu.uEdgeK.value=LEGIB&1?k:0;bu.uDense.value=LEGIB&2?.35*k:0;}   // eases in with the orbit (no pop)
+  {const k=data.cond==='bw'?ss(1,4,t):0;bu.uEdgeK.value=LEGIB&1?k:0;bu.uDense.value=LEGIB&2?.35*k:0;}
+  bu.uChest.value=CHEST;   // eases in with the orbit (no pop)
   ringMat.opacity=ringK;leadMat.opacity=leadK;
   // heart + sweep on the same clock
   const ph=beatPhase(data.loop,data.fs,t);figure.beat(ph,1);

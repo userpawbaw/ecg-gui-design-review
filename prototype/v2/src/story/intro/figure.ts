@@ -126,6 +126,7 @@ uniform vec3 uHeart;uniform float uWaveT,uWaveAmp;
 uniform sampler2D tLight;uniform mat4 uLightVP;
 uniform float uCommon,uFront,uWaveK;                             // Story inflow markers (D-054): 0 = off (intro)
 uniform vec3 uEdgeCol;uniform float uEdgeK,uDense;              // Story S-10 legibility: glowing silhouette, denser body (0 = off)
+uniform float uChest;                                           // Story S-13: chest window over the heart (0 = off, intro)
 varying vec3 vN,vW;varying float vS,vInD,vInM;
 float ringAt(float c,float dens){float d=c*dens,fw=max(fwidth(d),1e-4);float e=min(fract(d),1.-fract(d));return 1.-smoothstep(.5*fw,1.6*fw,e);}
 void main(){
@@ -149,6 +150,10 @@ void main(){
  float band=exp(-pow((dh-uWaveT*1.5)/.05,2.))*exp(-uWaveT/.32)*uWaveAmp;col+=uLine*band*.5;
  float a=mix(.7,.95,pow(fres,1.4))*(1.-.5*hl);                    // thin centre, dense edge; thinner over the heart
  a=mix(a,.96,uDense);
+ // S-13 (user 2026-10-12: "가슴 부분만 투명도를 … 심장의 윤곽이 보이도록"): a soft window in the frosted chest over the heart,
+ // so the heart's own rim and its R-locked beat read through it; its scattered glow is cut there too (it washed the outline out)
+ float win=uChest*(1.-smoothstep(.06,.16,dh));
+ a*=1.-.8*win;
  // uScanDir 1: visible above the scan line (appear top-down); −1: visible below it (vanish from the top, the reverse of
  // appearing — REVIEW-R1-WEB-20261008 I-5 ②)
  float reveal=uScanDir>0.?smoothstep(uScan-.004,uScan+.012,y):1.-smoothstep(uScan-.012,uScan+.004,y);
@@ -157,7 +162,7 @@ void main(){
  // heart glow scattered by the frosted surface: emitted light, so it is divided by alpha to survive the blend (the stills'
  // heart reads as a pink glow through the chest)
  float hlg=exp(-dh*dh/.011);
- vec3 glow=vec3(1.,.36,.42)*hlg*(1.1+.9*uFlash)*reveal*uOpacity;
+ vec3 glow=vec3(1.,.36,.42)*hlg*(1.1+.9*uFlash)*reveal*uOpacity*(1.-.75*win);
  col*=1.-.5*hlg;                                              // the surface's own white gives way to the heart's light
  float ao=clamp(a+scanLine*uOpacity*.6,0.,1.);
  // D-054 inflow red (inflow-preview-v3 add_red): P-b common mode over the whole body + M-b wave from the forearm to RA
@@ -171,7 +176,7 @@ function h5Material(){
   uniforms:{uSkin:{value:new THREE.Color('#d9dde3')},uLine:{value:new THREE.Color('#f4f1ea')},uSunCol:{value:new THREE.Color('#ffd09a')},uSunTo:{value:new THREE.Vector3(0,-1,0)},
    uExposure:{value:.42},uRefDist:{value:0},uSunOn:{value:0},tLight:{value:null},uLightVP:{value:new THREE.Matrix4()},uOpacity:{value:0},uFlash:{value:0},uFeet:{value:FEET_Y},
    uDensity:{value:42},uScan:{value:2},uScanOn:{value:0},uScanDir:{value:1},uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},
-   uCommon:{value:0},uFront:{value:-1},uWaveK:{value:0},uEdgeCol:{value:new THREE.Color('#6ff3ff')},uEdgeK:{value:0},uDense:{value:0}}});
+   uCommon:{value:0},uFront:{value:-1},uWaveK:{value:0},uEdgeCol:{value:new THREE.Color('#6ff3ff')},uEdgeK:{value:0},uDense:{value:0},uChest:{value:0}}});
 }
 
 function rimMaterial(color:string,pow:number,fill:number,deform:boolean){

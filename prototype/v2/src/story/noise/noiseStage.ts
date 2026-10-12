@@ -225,7 +225,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
    {t:18.6,pos:finalPos,look:finalLook,hfov:finalH,ease:'whip'}],                               // whip zoom on a beat
   bw:[{t:0,pos:maPos,look:maLook,hfov:maH},{t:4,pos:finalPos,look:finalLook,hfov:finalH}],         // 90° orbit to the side view
   ma:[{t:0,pos:Fo.clone().add(V3(-1.3,1.0,.6)),look:H0,hfov:.9},{t:4,pos:finalPos,look:finalLook,hfov:finalH},
-   {t:31,pos:finalPos,look:finalLook,hfov:finalH},{t:35,pos:Fo.clone().add(V3(2.0,3.2,1.2)),look:Fo.clone().add(V3(-.4,.4,-.4)),hfov:hfovOf(22),cut:false}]};   // end: crane up over the archive → Lab (right of the hanging lamp, ④)
+   {t:31,pos:finalPos,look:finalLook,hfov:finalH},{t:35,pos:Fo.clone().add(V3(1.4,2.8,1.9)),look:Fo.clone().add(V3(-.4,.4,-.4)),hfov:hfovOf(22),cut:false}]};   // end: crane up over the archive → Lab (right of the hanging lamp, below the stack tops: ④ + clearance, 2026-10-12)
  return K[cond];}
  // S-07: a scene ends only on the explicit button. HOLD = key time of the settled composition; after leave() the camera
  // plays the outro keys (if any) and the scene hands over after OUTLEN (curtain lift, or black into Lab for the last one)

@@ -174,7 +174,9 @@ void main(){
  vec3 red=vec3(1.,.19,.28)*(uCommon*.9+wave)*.3*uOpacity;
  // S-10 outline (emitted, survives the blend). 2026-10-12: the 1-px pow(fres,9) rim crawled as the body moved (shading
  // aliasing MSAA does not touch) — one wider, softer band instead
- red+=uEdgeCol*pow(fres,2.6)*1.9*uEdgeK*reveal*uOpacity;
+ // and where the band changes faster than ~1/8 per pixel (grazing silhouettes of a breathing mesh) it is damped, since that
+ // is where it flickers frame to frame (user 2026-10-12: "테두리 네온 빛이 자글거리는 문제")
+ {float e=pow(fres,2.6);e/=1.+8.*fwidth(e);red+=uEdgeCol*e*1.9*uEdgeK*reveal*uOpacity;}
  gl_FragColor=vec4(col*uExposure+(uLine*scanLine*uOpacity*1.5+glow+red)/max(ao,.05),ao);
 }`;
 function h5Material(){

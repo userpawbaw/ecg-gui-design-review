@@ -3,7 +3,8 @@
 // from scene to scene (user 2026-10-08: "장면 사이도 카메라로 이어지게 해줘").
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {decode} from '../../engine';
-import {loadScene,type Bank} from '../../data';
+import type {Bank} from '../../data';
+import {loadLong,type LongScene} from '../longData';
 import {detectR} from '../intro/beats';
 import {rankScene} from '../storyData';
 import {createNoiseStage,type Cond,type NoiseData,type WaveUi} from './noiseStage';
@@ -15,35 +16,24 @@ const SCENE:Record<Cond,{id:string,ko:string,en:string,synthetic:boolean}>={
  ma:{id:'d0-ma_synth--5',ko:'근육 잡음',en:'MUSCLE ARTIFACT',synthetic:true}};
 type LabTarget={axis:string,noise:string,snr:number,method:string};
 
-// S-16 (user 2026-10-12: "10초밖에 없는 데이터 문제로 계속 끊기는 경험 … 30초 이상"): when the 600 s replay package is present
-// (replay/manifest.json, hash-verified 30 s chunks of the same stored scenes), the Story uses its first LONG_S seconds of the
-// same scene id; without it, the stored 10 s segment as before. The output method stays the 10 s ranking's winner; samples
-// are the stored ones either way (no resampling, no synthesis).
-export const LONG_S=40;
-type Long=Partial<Record<Cond,{record:string,traces:Record<string,Float32Array>}>>;
+type Long=Partial<Record<Cond,LongScene>>;
 function sceneData(bank:Bank,cond:Cond,long?:Long){
  const s=bank.scenes.find(x=>x.id===SCENE[cond].id);if(!s)throw Error('noise scene missing: '+SCENE[cond].id);
- const winner=rankScene(s).ranking[0].id,L=long?.[cond];
- const n=L&&L.traces[winner]?Math.min(Math.round(LONG_S*bank.fs),L.traces.clean.length):bank.n;
- const d=(k:string)=>L&&L.traces[winner]?L.traces[k].slice(0,n):decode(s.traces[k],s.scale,bank.n);
- const clean=d('clean'),input=d('input'),output=d(winner);
+ const winner=rankScene(s).ranking[0].id,L=long?.[cond]&&long[cond]!.traces[winner]?long[cond]:undefined;   // S-16: 600 s package when present (longData.ts)
+ const d=(k:string)=>L?L.traces[k]:decode(s.traces[k],s.scale,bank.n);
+ const clean=d('clean'),input=d('input'),output=d(winner),n=clean.length;
  const data:NoiseData={cond,fs:bank.fs,loop:{start:0,end:n,beats:detectR(clean,bank.fs)},input,output,clean};
- return{s:L&&L.traces[winner]?{...s,record:L.record}:s,winner,data,seconds:n/bank.fs};
+ return{s:L?{...s,record:L.record}:s,winner,data,seconds:n/bank.fs};
 }
-async function loadLong(conds:Cond[]):Promise<Long|undefined>{
- const r=await fetch('./replay/manifest.json').catch(()=>null);if(!r||!r.ok)return undefined;
- const long=await r.json() as Bank;if(!long?.scenes?.length)return undefined;long.long=true;
- const out:Long={},ac=new AbortController();
- for(const c of conds){const sc=long.scenes.find(x=>x.id===SCENE[c].id);if(!sc)continue;
-  try{const l=await loadScene(long,sc,ac.signal,0);if(l.offset===0)out[c]={record:sc.record,traces:l.traces};}catch{/* a failed hash keeps the 10 s segment */}}
- return out;
+async function loadLongConds(conds:Cond[]):Promise<Long>{
+ const got=await loadLong(conds.map(c=>SCENE[c].id)),out:Long={};for(const c of conds){const v=got[SCENE[c].id];if(v)out[c]=v;}return out;
 }
 
 export function NoiseShell(p:{bank:Bank,conds?:Cond[],onLab?:(t:LabTarget)=>void}){
  const q=new URLSearchParams(location.search);
  const order=useMemo<Cond[]>(()=>p.conds??(q.get('cond')==='all'?['pli','bw','ma']:[(['pli','bw','ma'].includes(q.get('cond')||'')?q.get('cond'):'pli') as Cond]),[]);   // cond=all: the three scenes in a row (QA)
  const [long,setLong]=useState<Long|undefined|'pending'>('pending');
- useEffect(()=>{let live=true;(q.get('long')==='0'?Promise.resolve(undefined):loadLong(order)).then(l=>{if(live)setLong(l);},()=>{if(live)setLong(undefined);});return()=>{live=false;};},[]);
+ useEffect(()=>{let live=true;loadLongConds(order).then(l=>{if(live)setLong(l);},()=>{if(live)setLong(undefined);});return()=>{live=false;};},[]);
  if(long==='pending')return <div className="ns-root"/>;
  return <NoiseShellInner {...p} order={order} long={long}/>;
 }

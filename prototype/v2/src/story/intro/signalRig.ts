@@ -50,7 +50,7 @@ void main(){
  vec4 lp=uLightVP*vec4(vW,1.);vec3 l=lp.xyz/lp.w*.5+.5;
  float lit=(l.x>0.&&l.x<1.&&l.y>0.&&l.y<1.)?step(l.z-.003,texture2D(tLight,l.xy).x):0.;
  vec3 v=normalize(cameraPosition-vW);
- vec3 c=uBase*((.5+.5*(n.y*.5+.5))*uShade+uSunCol*max(dot(n,-uSunTo),0.)*lit*1.2)+uBase*pow(1.-abs(dot(n,v)),3.)*.25;
+ vec3 c=uBase*((.5+.5*(n.y*.5+.5))*uShade+uSunCol*max(dot(n,-uSunTo),0.)*lit*1.2)+uBase*pow(max(0.,1.-abs(dot(n,v))),3.)*.25;
  c=mix(c*uExposure,uDash*uGlow,dash);
  gl_FragColor=vec4(c*uFade,reveal);
 }`;

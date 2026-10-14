@@ -37,7 +37,7 @@ uniform vec3 uHeart;uniform float uWaveT,uWaveAmp;
 varying vec3 vN,vW;varying float vH;
 void main(){
  vec3 n=normalize(vN),v=normalize(cameraPosition-vW);
- float fres=pow(1.-abs(dot(n,v)),uPow);
+ float fres=pow(max(0.,1.-abs(dot(n,v))),uPow);
  float back=.6+.4*smoothstep(-.3,.9,n.y);                  // backlight from above-behind: top edges brighter
  float rim=fres*back;
  // H2: conduction wave — a thin bright band leaves the heart at each R and fades as it travels
@@ -63,7 +63,7 @@ varying float vS;
 float ringAt(float c,float dens){float d=c*dens,fw=max(fwidth(d),1e-4);float e=min(fract(d),1.-fract(d));return 1.-smoothstep(.5*fw,1.6*fw,e);}
 void main(){
  vec3 n=normalize(vN),v=normalize(cameraPosition-vW);
- float fres=1.-abs(dot(n,v));
+ float fres=max(0.,1.-abs(dot(n,v)));
  // P2 floor reflection: the mirrored copy samples the pattern at the reflected point and fades with depth
  vec3 P=uMirror>.5?vec3(vW.x,2.*uFeet-vW.y,vW.z):vW;
  float mf=uMirror>.5?.22*exp(-(uFeet-vW.y)/.32):1.;
@@ -131,7 +131,7 @@ varying vec3 vN,vW;varying float vS,vInD,vInM;
 float ringAt(float c,float dens){float d=c*dens,fw=max(fwidth(d),1e-4);float e=min(fract(d),1.-fract(d));return 1.-smoothstep(.5*fw,1.6*fw,e);}
 void main(){
  vec3 n=normalize(vN);if(!gl_FrontFacing)n=-n;
- vec3 v=normalize(cameraPosition-vW);float fres=1.-abs(dot(n,v));
+ vec3 v=normalize(cameraPosition-vW);float fres=max(0.,1.-abs(dot(n,v)));
  float y=vW.y-uFeet;
  float lit=0.;
  if(uSunOn>.5){vec4 lp=uLightVP*vec4(vW,1.);vec3 l=lp.xyz/lp.w*.5+.5;

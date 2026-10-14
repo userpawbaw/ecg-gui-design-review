@@ -43,7 +43,7 @@ export function createGlobe(tex:{day:THREE.Texture,night:THREE.Texture,clouds:TH
    vec2 px=vec2(2./4096.,2./2048.);
    float h0=hAt(vUv),hu=hAt(vUv+vec2(px.x,0.))-h0,hv=hAt(vUv+vec2(0.,px.y))-h0;
    vec3 n=normalize(n0-uBump*(hu*E+hv*Nn));
-   float fres=1.-abs(dot(v,n0)),sunOri=dot(n0,uSun);
+   float fres=max(0.,1.-abs(dot(v,n0))),sunOri=dot(n0,uSun);
    vec3 day=texture2D(tDay,vUv).rgb;
    float cl=cloudAt(vUv);
    vec3 sT=uSun-dot(uSun,n0)*n0;vec2 sUv=vec2(dot(sT,E),dot(sT,Nn))*.012;
@@ -74,7 +74,7 @@ export function createGlobe(tex:{day:THREE.Texture,night:THREE.Texture,clouds:TH
   ${common}
   void main(){
    vec3 n=normalize(vN),v=normalize(cameraPosition-vW);
-   float fres=1.-abs(dot(v,n)),sunOri=dot(n,uSun);             // n = outward normal (BackSide keeps it)
+   float fres=max(0.,1.-abs(dot(v,n))),sunOri=dot(n,uSun);             // n = outward normal (BackSide keeps it)
    float a=pow(clamp((1.-fres)/(1.-.73),0.,1.),3.);                // REF: remap(fresnel, .73→1, 1→0)³
    a*=smoothstep(-.35,.6,sunOri)*reachMask(n)*uOpacity*(1.+uPulse*1.5);
    gl_FragColor=vec4(atmoColor(sunOri)*a*1.6,a);

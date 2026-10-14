@@ -135,7 +135,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const shellMat=(u:{uA:{value:number}})=>new THREE.ShaderMaterial({uniforms:u,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
   vertexShader:'varying vec3 vN,vV;void main(){vec4 w=modelMatrix*vec4(position,1.);vN=normalize(mat3(modelMatrix)*normal);vV=normalize(cameraPosition-w.xyz);gl_Position=projectionMatrix*viewMatrix*w;}',
   // rim (fresnel) for the shell's edge, a faint body so the inside reads as a volume, front faces a touch brighter
-  fragmentShader:'uniform float uA;varying vec3 vN,vV;void main(){float c=abs(dot(normalize(vN),vV)),f=1.-c;float rim=pow(f,2.4)*.95+pow(f,7.)*.9,body=.06;gl_FragColor=vec4(vec3(1.,.27,.38)*(rim+body)*(gl_FrontFacing?1.:.55)*uA,1.);}'});
+  fragmentShader:'uniform float uA;varying vec3 vN,vV;void main(){float c=abs(dot(normalize(vN),normalize(vV))),f=max(0.,1.-c);float rim=pow(f,2.4)*.95+pow(f,7.)*.9,body=.06;gl_FragColor=vec4(vec3(1.,.27,.38)*(rim+body)*(gl_FrontFacing?1.:.55)*uA,1.);}'});
  const shells=Array.from({length:8},()=>{const u={uA:{value:0}};const m=new THREE.Mesh(new THREE.SphereGeometry(1,72,36),shellMat(u));m.visible=false;m.position.copy(STRIP_C);m.renderOrder=3;scene.add(m);return{m,u};});
  // nearest distance strip → body (the field must pass the figure)
  let reach=Infinity;{const mw=figure.group.matrixWorld,q=new THREE.Vector3();for(let i=0;i<P0.count;i+=17){q.fromBufferAttribute(P0,i).applyMatrix4(mw);reach=Math.min(reach,q.distanceTo(STRIP_C));}}

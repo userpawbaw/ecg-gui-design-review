@@ -116,7 +116,7 @@ export async function createArchive(){
    float noise(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);
     return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
                mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);}
-   float hg(float c,float g){float g2=g*g;return (1.-g2)/(4.*3.14159*pow(1.+g2-2.*g*c,1.5));}
+   float hg(float c,float g){float g2=g*g;return (1.-g2)/(4.*3.14159*pow(max(1e-4,1.+g2-2.*g*c),1.5));}
    void main(){
     vec3 col=texture2D(tDiffuse,vUv).rgb;
     if(uOn<.002){gl_FragColor=vec4(col,1.);return;}

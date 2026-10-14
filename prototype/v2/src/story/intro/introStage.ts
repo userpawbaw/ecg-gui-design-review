@@ -83,7 +83,8 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   figure.line.visible=false;
   seated!.geo.computeBoundingBox();scanTop=seated!.geo.boundingBox!.max.y;
   figure.setGrip(opt.grip??0);
-  if(climber){const cu=climber.bodyMat.uniforms;cu.uFeet.value=0;cu.uRefDist.value=2.6;cu.uSunOn.value=1;cu.tLight.value=arch.lightRT.depthTexture;
+  if(climber){const cu=climber.bodyMat.uniforms;cu.uFeet.value=0;cu.uRefDist.value=Number(new URLSearchParams(location.search).get('climbRef')??3.6);   // 2026-10-14 user: rings too sparse as the camera nears the climber (~2 m) — densify from 3.6 m (was 2.6), close to the floor-sitter's spacing
+  cu.uSunOn.value=1;cu.tLight.value=arch.lightRT.depthTexture;
    cu.uLightVP.value=arch.lightVP;cu.uSunTo.value=arch.sunTo;cu.uHeart.value.set(0,-9,0);}
  }
  // electrodes, leads, trunk, comm cable, power line and the inside-body paths with the flowing dash shader (C4)
@@ -329,7 +330,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  gsap.ticker.lagSmoothing(0);gsap.ticker.add(tick);
 
  return{
-  state,lenis,arch,rig,figure,globe,
+  state,lenis,arch,rig,figure,globe,climber,camera,
   renderOnce(draw=true){frame(1/60,draw);},
   pause(v:boolean){paused=v;},
   set(o:{p?:number,t?:number|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;},

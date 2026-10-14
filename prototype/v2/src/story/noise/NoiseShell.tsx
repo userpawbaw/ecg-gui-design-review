@@ -69,7 +69,9 @@ function NoiseShellInner({bank,order,long,onLab}:{bank:Bank,order:Cond[],long?:L
  const next=()=>{setUi(u=>({...u,atEnd:false}));stageRef.current?.leave();};
  const toggle=()=>{stageRef.current?.toggleOverlay();};
  const cur=scenes[i],info=SCENE[order[i]];
+ const debug=q.has('debug');
  return <div className="ns-root">
+  {debug&&<QaPanel stage={()=>stageRef.current}/>}
   <canvas ref={gl} className="ns-gl"/><canvas ref={overlay} className="ns-overlay"/><canvas ref={grid} className="ns-grid"/><canvas ref={sweep} className="ns-sweep"/>
   <div ref={strip} className="ns-strip" aria-label="입력에서 출력으로 처리 단계"><i/><i/><i/><i/><span>{ui.overlay?'겹쳐 보기 · 입력 + 출력':ui.phase==='auto'?'박동마다 한 겹 · '+cur.winner:'입력 → 출력 · '+cur.winner}</span></div>
   <div className={'ns-actions'+(ui.atEnd?' on':'')} aria-hidden={!ui.atEnd}>
@@ -85,4 +87,24 @@ function NoiseShellInner({bank,order,long,onLab}:{bank:Bank,order:Cond[],long?:L
 /** Intro → power line → baseline wander → muscle artifact → Lab (user 2026-10-08), one continuous camera. */
 export function NoiseSequence({bank,onLab}:{bank:Bank,onLab:(t:LabTarget)=>void}){
  return <NoiseShell bank={bank} conds={['pli','bw','ma']} onLab={onLab}/>;
+}
+
+// QA panel (?debug=1, 2026-10-14 user: "실제 시연에서 비교할 수 있도록 디버깅용 버튼"): switches the candidates live on the stage.
+const QA_GROUPS:[string,string,[string,string][]][]=[
+ ['comp','멀티탭 구도',[['A0','현재(가까이)'],['A1','멀리'],['A2','위에서']]],
+ ['speed','동심원 속도',[['B0','고정'],['B1','거리 비례'],['B2','거리 비례+흐리게']]],
+ ['ac','교류 표시',[['C0','말풍선(글자)'],['C1','아이콘만'],['C2','아이콘+60 Hz']]],
+ ['sonar','소나',[['D0','4+5 ×2'],['D1','1초마다 계속']]],
+ ['fade','계속 소나 투명도',[['Ea','낮은 시작'],['Eb','테두리만'],['Ec','완만한 감쇠']]]];
+type QaStage={setQa:(k:string,v:string)=>void,qa:Record<string,string>,jump:(t:number)=>void}|null;
+function QaPanel({stage}:{stage:()=>unknown}){
+ const st=()=>stage() as QaStage;const [,force]=useState(0);
+ const cur=st()?.qa??{};const msaa=new URLSearchParams(location.search).get('msaa')!=='0';
+ const reload=(k:string,v:string)=>{const u=new URL(location.href);u.searchParams.set(k,v);for(const [kk,vv] of Object.entries(cur))u.searchParams.set(kk,vv);location.href=u.toString();};
+ return <div className="ns-qa" onWheel={e=>e.stopPropagation()}>
+  {QA_GROUPS.map(([k,label,opts])=><div key={k}><span>{label}</span>{opts.map(([v,t])=>
+   <button key={v} className={cur[k]===v?'on':''} onClick={()=>{st()?.setQa(k,v);if(k==='comp')st()?.jump(9.5);force(x=>x+1);}}>{v} {t}</button>)}</div>)}
+  <div><span>구간</span><button onClick={()=>st()?.jump(9.5)}>멀티탭부터</button><button onClick={()=>st()?.jump(13.5)}>동심원부터</button><button onClick={()=>st()?.jump(0)}>처음부터</button>
+   <button onClick={()=>reload('msaa',msaa?'0':'4')}>MSAA {msaa?'끄기':'켜기'}</button></div>
+ </div>;
 }

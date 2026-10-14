@@ -99,3 +99,24 @@
 
 QA 렌더는 모두 `?msaa=0`이다. SwiftShader에서 MSAA 4×는 프레임당 수 분이 걸린다.
 40초 자료는 10초를 이어 붙인 시험용 묶음으로 경로만 확인했고, 그 묶음은 지웠다.
+
+## 8. 2026-10-14 4차 — 깜빡임(S-20), 도입부 고리선(S-21), 책상 에셋(S-22), 전원 장면 후보(S-23)
+
+| 파일 | 내용 |
+|---|---|
+| `24_intro_climber_ring_density.jpg` | 도입부 사다리 사람 고리선. 밀도 기준 거리 2.6 m → 3.6 m(`?climbRef`). 10 s 구도에서 15 s 앉은 사람과 비슷한 개수 |
+| `25_lightmap_denoise_before_after.jpg` | 서고 빛 지도 흰 점 제거 전/후(`scripts/assets/denoise-archive-lightmap.py`, 원본 `light_shell.raw.webp` 보관) |
+| `26_workstation_before_after.jpg` | 책상 상자 모형 → 새 워크스테이션(`scripts/assets/workstation-v1.py`). 구운 상자는 웹에서 부피로 잘라 냄 |
+| `27_pli_comp_ac_candidates.jpg` | 멀티탭 구도 A0/A1/A2 × 교류 표시 C0/C1/C2 |
+| `28_pli_sonar_fade_candidates.jpg` | 소나 D0/D1 × 투명도 Ea/Eb/Ec |
+| `29_debug_panel.jpg` | `?debug=1` 비교 패널(A1 + C1 상태) |
+
+깜빡임(46–49 s, F-042):
+- 원인 추정: 껍질 셰이더의 `pow(1-|n·v|, k)`에서 밑이 부동소수 오차로 음수가 되면 일부 GPU가 NaN을 낸다. 블룸이 NaN 한 화소를 화면 전체로 번지게 한다.
+- 조치: 모든 fresnel·pow 밑을 `max(0.,…)`로 막음(껍질, 몸, 심장 테두리, 지구본, 장비, 산란 위상).
+- **SwiftShader에서는 재현되지 않았다**(수정 전 빌드에서도 최소 밝기 45). 실제 GPU에서 사용자 확인이 필요하다. 남아 있으면 패널의 MSAA 끄기로 원인을 가른다.
+
+남은 것:
+- 책장 책 상자의 꼭짓점 빛 얼룩은 그대로다(꼭짓점 단위 빛이라 빛 지도 정리로는 안 바뀜).
+- 조명 아이디어(책상 램프 켜기, 화면 빛, 의자 위 전등)는 사용자 선택 대기.
+- 후보 기본값은 기존 동작(A0·B0·C0·D0)이다. 선택 후 기본값을 바꾼다.

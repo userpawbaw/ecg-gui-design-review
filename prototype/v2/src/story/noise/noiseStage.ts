@@ -55,6 +55,10 @@ export function breathFromBaseline(x:Float32Array,fs:number){        // 1 s movi
 
 export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOptions){
  let data=data0;
+ // QA candidates (2026-10-14 user: "후보 아이디어를 제시하고 실제 시연에서 비교할 수 있도록 디버깅용 버튼"): strip close-up composition,
+ // shell speed by camera distance, the AC mark, sonar rhythm and the continuous sonar's fade. URL (?comp= …) or the ?debug panel.
+ const qp=new URLSearchParams(location.search);
+ const QA:Record<string,string>={comp:qp.get('comp')??'A0',speed:qp.get('speed')??'B0',ac:qp.get('ac')??'C0',sonar:qp.get('sonar')??'D0',fade:qp.get('fade')??'Eb'};
  const U=(f:string)=>new URL(`./assets/${f}`,import.meta.url).href;
  const story:Story=await (await fetch(U('story.json'))).json();
  const A=story.figure_anchor;
@@ -132,15 +136,14 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // P-b field (pli), S-05 (REVIEW-R1-STORY-20261011): sphere shells centred on the power strip, emitted on eighth notes
  // (4 + 5 rest, twice; fieldPulse.ts) and fading as they travel out — illustration of the strip's 60 Hz field, not a measurement
  const STRIP_C=new THREE.Vector3(-.95,.035,-3.62);               // power strip centre (archive frame → three), on the floor
- const shellMat=(u:{uA:{value:number}})=>new THREE.ShaderMaterial({uniforms:u,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
+ const shellMat=(u:{uA:{value:number},uBody:{value:number}})=>new THREE.ShaderMaterial({uniforms:u,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
   vertexShader:'varying vec3 vN,vV;void main(){vec4 w=modelMatrix*vec4(position,1.);vN=normalize(mat3(modelMatrix)*normal);vV=normalize(cameraPosition-w.xyz);gl_Position=projectionMatrix*viewMatrix*w;}',
   // rim (fresnel) for the shell's edge, a faint body so the inside reads as a volume, front faces a touch brighter
-  fragmentShader:'uniform float uA;varying vec3 vN,vV;void main(){float c=abs(dot(normalize(vN),normalize(vV))),f=max(0.,1.-c);float rim=pow(f,2.4)*.95+pow(f,7.)*.9,body=.06;gl_FragColor=vec4(vec3(1.,.27,.38)*(rim+body)*(gl_FrontFacing?1.:.55)*uA,1.);}'});
- const shells=Array.from({length:8},()=>{const u={uA:{value:0}};const m=new THREE.Mesh(new THREE.SphereGeometry(1,72,36),shellMat(u));m.visible=false;m.position.copy(STRIP_C);m.renderOrder=3;scene.add(m);return{m,u};});
+  fragmentShader:'uniform float uA,uBody;varying vec3 vN,vV;void main(){float c=abs(dot(normalize(vN),normalize(vV))),f=max(0.,1.-c);float rim=pow(f,2.4)*.95+pow(f,7.)*.9,body=uBody;gl_FragColor=vec4(vec3(1.,.27,.38)*(rim+body)*(gl_FrontFacing?1.:.55)*uA,1.);}'});
+ const shells=Array.from({length:8},()=>{const u={uA:{value:0},uBody:{value:.06}};const m=new THREE.Mesh(new THREE.SphereGeometry(1,72,36),shellMat(u));m.visible=false;m.position.copy(STRIP_C);m.renderOrder=3;scene.add(m);return{m,u};});
  // nearest distance strip → body (the field must pass the figure)
  let reach=Infinity;{const mw=figure.group.matrixWorld,q=new THREE.Vector3();for(let i=0;i<P0.count;i+=17){q.fromBufferAttribute(P0,i).applyMatrix4(mw);reach=Math.min(reach,q.distanceTo(STRIP_C));}}
  const R_MAX=Math.max(1.6,reach*2.2),EMIT=emissionTimes(13.0);
- let T_CONTACT=EMIT[0];for(let a=0;a<3;a+=.01){const st=shell(EMIT[0]+a,EMIT[0],R_MAX);if(st&&st.r>=reach){T_CONTACT=EMIT[0]+a;break;}}   // first shell meets the body
  // S-04 (plan IDEA-R1-NOISE §8.3): at the strip close-up a speech-bubble board pops up with an AC sine and "교류 60 Hz".
  // The sine scrolls at a symbolic speed (a real 60 Hz would strobe at 60 fps) — said in the small line.
  function drawBubble(t:number){
@@ -153,6 +156,16 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   const over=1+.12*Math.sin(Math.PI*clamp((t-10.7)/.42))*(1-ss(10.95,11.15,t));   // one overshoot (0.3 s pop)
   const px=side?bx+bw:bx,py=side?by+bh*.7:by+bh;                                   // scale about the tail root
   og.save();og.globalAlpha=k;og.translate(px,py);og.scale(pop*over,pop*over);og.translate(-px,-py);
+  if(QA.ac!=='C0'){   // C1: the AC source symbol only (circle, sine, two leads) · C2: + "60 Hz" in the small mono tier
+   const r=Math.min(bw,bh)*.34,lead=r*.75,cx0=clamp(ax,r+lead+16,W-r-lead-16),cy0=Math.max(top+r,ay-r*3.1);   // straight above the strip, under the title band
+   og.lineCap='round';og.strokeStyle='rgba(255,236,220,.95)';og.lineWidth=Math.max(2,r*.09);og.shadowColor='rgba(255,90,100,.8)';og.shadowBlur=12;
+   og.beginPath();og.arc(cx0,cy0,r,0,Math.PI*2);og.moveTo(cx0-r-lead,cy0);og.lineTo(cx0-r,cy0);og.moveTo(cx0+r,cy0);og.lineTo(cx0+r+lead,cy0);og.stroke();
+   const draw=ss(11.0,11.6,t),ph=.35*t;og.strokeStyle='rgba(255,98,112,1)';og.lineWidth=Math.max(2.2,r*.1);og.beginPath();
+   for(let i=0;i<=60*draw;i++){const u=i/60,x=cx0-r*.62+u*r*1.24,y=cy0-r*.38*Math.sin(2*Math.PI*(u-ph*.0));i?og.lineTo(x,y):og.moveTo(x,y);}og.stroke();og.shadowBlur=0;
+   // tail: a thin line from the symbol to the strip
+   og.strokeStyle='rgba(255,214,170,.5)';og.lineWidth=1.2;og.beginPath();og.moveTo(cx0,cy0+r+(QA.ac==='C2'?r*.75:4));og.lineTo(ax,ay-6);og.stroke();
+   if(QA.ac==='C2'){og.fillStyle='rgba(255,233,210,.85)';og.font=`500 ${Math.max(11,Math.round(r*.32))}px 'IBM Plex Mono', monospace`;og.textAlign='center';og.fillText('60 Hz',cx0,cy0+r+Math.max(14,r*.55));og.textAlign='start';}
+   og.restore();return;}
   og.fillStyle='rgba(16,13,12,.86)';og.strokeStyle='rgba(255,214,170,.85)';og.lineWidth=1.4;
   og.beginPath();og.roundRect(bx,by,bw,bh,12);
   if(side){og.moveTo(bx+bw,by+bh*.55);og.lineTo(ax-4,ay-2);og.lineTo(bx+bw,by+bh*.78);}else{og.moveTo(bx+22,by+bh);og.lineTo(ax+2,ay-4);og.lineTo(bx+46,by+bh);}
@@ -216,14 +229,17 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  }
  const maDef=story.cams.ma,maE=maDef.rot_euler,maF=new THREE.Vector3(0,0,-1).applyEuler(new THREE.Euler(maE[0],maE[1],maE[2],'ZYX'));
  const maPos=toThree(maDef.loc,A),maLook=toThree([maDef.loc[0]+maF.x,maDef.loc[1]+maF.y,maDef.loc[2]+maF.z],A),maH=hfovOf(maDef.lens??16);
+ // strip close-up candidates (offsets from the strip; t10 approach, t13 close-up, close-up hfov)
+ //  A0 current: ~0.4 m, low · A1 farther: ~0.85 m, the whole strip and floor around it · A2 above: ~0.9 m looking down, shells read as rings
+ const COMP:Record<string,[THREE.Vector3,THREE.Vector3,number]>={A0:[V3(.5,.45,-.5),V3(.28,.17,-.24),.7],A1:[V3(.75,.65,-.7),V3(.55,.38,-.48),.75],A2:[V3(.6,.95,-.55),V3(.3,.85,-.3),.8]};
  function keysFor(cond:Cond):Key[]{
  const {pos:finalPos,look:finalLook,h:finalH}=finalFor(cond);
  const K:Record<Cond,Key[]>={
   pli:[{t:0,pos:H0.clone().add(V3(0,.05,.75)),look:H0,hfov:.42},
    {t:3,pos:H0.clone().add(V3(.1,.1,.95)),look:H0,hfov:.85},
    {t:7,pos:Fo.clone().add(V3(1.25,1.15,1.35)),look:H0.clone().lerp(DESK,.55),hfov:.95},          // orbit: desk + computer behind
-   {t:10,pos:STRIP.clone().add(V3(.5,.45,-.5)),look:STRIP,hfov:.9},                                // down to the strip from behind-right (open floor; S-02/S-09: the old path went between chair and desk)
-   {t:13,pos:STRIP.clone().add(V3(.28,.17,-.24)),look:STRIP,hfov:.7},                             // the strip, close (bubble + first shells)
+   {t:10,pos:STRIP.clone().add(COMP[QA.comp]?.[0]??COMP.A0[0]),look:STRIP,hfov:.9},                    // down to the strip from behind-right (open floor; S-02/S-09)
+   {t:13,pos:STRIP.clone().add(COMP[QA.comp]?.[1]??COMP.A0[1]),look:STRIP,hfov:(COMP[QA.comp]??COMP.A0)[2] as number},   // the strip close-up (bubble + first shells); candidates A0–A2
    {t:15,pos:STRIP.clone().add(V3(.45,1.45,-.5)),look:STRIP.clone().add(V3(.1,.3,.2)),hfov:.95},                  // crane rises straight up behind the strip (clear of chair and figure)
    {t:17,pos:Fo.clone().add(V3(1.6,2.35,.85)),look:Fo.clone().add(V3(-.2,.55,-.25)),hfov:hfovOf(24),cut:false},   // crane up, wide — right of the lamp over the chair (④ foreground, 2026-10-12)
    {t:18.6,pos:finalPos,look:finalLook,hfov:finalH,ease:'whip'}],                               // whip zoom on a beat
@@ -285,6 +301,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   camera.position.copy(keep.p);camera.quaternion.copy(keep.q);camera.fov=keep.fov;camera.near=keep.near;camera.updateProjectionMatrix();camera.updateMatrixWorld();cur.look.copy(keep.look);cur.h=keep.h;
  }
  // stored-trace timings (per scene)
+ // shell clock (B1/B2 slow it near the camera), first contact with the body and each shell's arrival (D1 inflow pulses)
+ const REF_D=1.6;let sClock=0,contactT=-1;const arrive:number[]=[],arrived=new Set<number>();
  let T=0,bw:ReturnType<typeof breathFromBaseline>|null=null,drive:ReturnType<typeof createFistDrive>|null=null,PROC=0;
  const breathFixed=(t:number)=>{const u=t%5;return u<2?ss(0,2,u):1-ss(2,5,u);};              // D-053: 2 per 10 s
  // S-14 (user 2026-10-12): fist and red marker follow the stored muscle noise itself (fistDrive.ts) — the fist closes at a
@@ -310,7 +328,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   T=data.input.length/data.fs;bw=data.cond==='bw'?breathFromBaseline(data.input,data.fs):null;
   drive=data.cond==='ma'?createFistDrive(data.input,data.clean,data.fs):null;
   HOLD={pli:18.6,bw:4,ma:31}[data.cond];OUTLEN=data.cond==='ma'?4:1.2;TP={pli:19,bw:11,ma:11}[data.cond];PROC=TP+3;   // panel (right curtain + wave) from TP; strip after the inflow
-  keys=keysFor(data.cond);
+  keys=keysFor(data.cond);sClock=0;contactT=-1;arrive.length=0;arrived.clear();
   if(handover)keys[0]={t:0,pos:camera.position.clone(),look:cur.look.clone(),hfov:cur.h};
   bokeh.enabled=data.cond==='ma';shells.forEach(({m})=>{m.visible=false;});
   sweep=mkSweep();wave.reset();ui='';t0=performance.now();if(frozen!==null)frozen=0;resize();
@@ -326,11 +344,31 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   setMorphs(breath,fist);placeElectrodes();
   // inflow markers
   let common=0,ringK=0,leadK=0,front=-1,waveK=0;
-  if(data.cond==='pli'){const p=t-T_CONTACT;common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p));ringK=ss(1.4,2.2,p);leadK=ss(1.6,2.4,p);}   // field reaches the body as the crane ends
+  // shells (pli): D0 = 4 + 5 eighth notes ×2 (S-05); D1 = one per second from 13 s until the scene ends (2026-10-14 candidate)
+  if(data.cond==='pli'){
+   const dts=Math.min(.1,Math.max(0,t-lastT)),dc=camera.position.distanceTo(STRIP_C),kd=clamp(dc/REF_D,.3,1);
+   const raw=t-lastT;
+   if(t<lastT-1e-3){contactT=-1;arrive.length=0;arrived.clear();}
+   if(t<12.5||QA.speed==='B0'||raw<0||raw>.5)sClock=t;else sClock+=dts*kd;   // jumps (seek, capture) resync to real time
+   shells.forEach(({m,u},i)=>{
+    const n=Math.floor((sClock-13)/1.0)-i,emit=QA.sonar==='D1'?(n>=0?13+n:-1):EMIT[i];
+    const st=emit>=0?shell(sClock,emit,R_MAX):null;m.visible=!!st&&st.a>.004;if(!st)return;
+    m.scale.setScalar(st.r);const inside=camera.position.distanceTo(STRIP_C)/st.r,fr=Math.max(0,1-st.r/R_MAX);
+    let a=st.a*.85*(inside<1?.06+.94*ss(.82,1,inside):1);
+    if(QA.speed==='B2')a*=clamp(dc/REF_D,.4,1);                                 // close: fainter too
+    if(QA.sonar==='D1'){if(QA.fade==='Ea')a*=.5;else if(QA.fade==='Ec')a*=fr>0?.35*fr**.6/fr**1.35:0;else a*=.8;}   // Ea low start · Eb rim only · Ec slow fade, low peak
+    u.uA.value=a;u.uBody.value=QA.sonar==='D1'&&QA.fade==='Eb'?0:.06;m.visible=a>.004;
+    if(st.r>=reach&&!arrived.has(emit)){arrived.add(emit);arrive.push(t);if(contactT<0)contactT=t;}
+   });
+   if(contactT>=0){const p=t-contactT;
+    if(QA.sonar==='D1'){let pulse=0;for(const ta of arrive){const d=t-ta;if(d>=0&&d<1)pulse=Math.max(pulse,Math.sin(Math.PI*d));}   // each arrival: the RA lead brightens and fades
+     common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p))+.12*pulse;ringK=Math.max(.35*ss(1.4,2.2,p),pulse);leadK=Math.max(.35*ss(1.6,2.4,p),pulse);}
+    else{common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p));ringK=ss(1.4,2.2,p);leadK=ss(1.6,2.4,p);}}   // field reaches the body as the crane ends
+  }
   if(data.cond==='ma'&&t>4&&drive){const b=drive.burstAt(tl),lv=Math.min(1,drive.level(tl)*1.6);
    if(b){const k=b.active?b.since%RELAUNCH:b.since-Math.floor(b.len/RELAUNCH)*RELAUNCH;   // relaunch while the noise lasts; the last climb finishes
     if(k<RELAUNCH){front=(ss(0,.6,k)*1.15-.05)*story.ra_arc_m;waveK=12*lv;ringK=ss(.45,.55,k)*(1-ss(.55,RELAUNCH,k)*.6)*lv;leadK=ringK;}}}
-  shells.forEach(({m,u},i)=>{const st=data.cond==='pli'?shell(t,EMIT[i],R_MAX):null;m.visible=!!st&&st.a>.004;if(st){m.scale.setScalar(st.r);const inside=camera.position.distanceTo(STRIP_C)/st.r;u.uA.value=st.a*.85*(inside<1?.06+.94*ss(.82,1,inside):1);}});   // camera inside a shell: only a faint wash, so the outer edges stay the read (2026-10-12 capture review)
+  if(data.cond!=='pli')shells.forEach(({m})=>{m.visible=false;});
   if(bokeh.enabled){const fistP=skin(VID.fist),raP=skin(VID.RA),k=front<0?0:clamp(front/story.ra_arc_m);
    const target=fistP.lerp(raP,k*k*(3-2*k));(bokeh.uniforms as Record<string,{value:number}>).focus.value=camera.position.distanceTo(target);
    (bokeh.uniforms as Record<string,{value:number}>).aperture.value=t<4?.0005:.006;}
@@ -402,6 +440,10 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  }
  gsap.ticker.add(update);
  return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,selfCheck,
+  /** QA candidates (debug panel): set one and rebuild the camera keys when the composition changes */
+  setQa(k:string,v:string){QA[k]=v;if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
+  /** QA: jump the scene clock (e.g. back to the strip) */
+  jump(tt:number){if(frozen!==null)frozen=tt;else t0=performance.now()-tt*1000;lastT=tt;if(tt<12.5){sClock=tt;contactT=-1;arrive.length=0;arrived.clear();}},
   scroll:(dy:number)=>wave.scroll(dy),toggleOverlay:()=>wave.toggleOverlay(),leave:()=>{if(leaveT<0)leaveT=clock();},get cond(){return data.cond;},figure,arch,
   /** QA: the muscle-noise bursts the fist follows (loop seconds) and the stored loop length */
   bursts:()=>({T,bursts:drive?.bursts??[]}),

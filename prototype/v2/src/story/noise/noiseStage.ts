@@ -170,17 +170,25 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // S-03: the detailed strip replaces the baked box (scripts/assets/power-strip-v1.py; same spot)
  // archive.glb is merged by material, so the baked box strip (build_archive.py PowerStrip/StripHole/StripSwitch/Plug: 0.30 ×
  // 0.07 m, up to 8.5 cm with the plug) is removed here by dropping the triangles whose centre lies in its volume (floor kept).
- {const lo=STRIP_C.clone().add(new THREE.Vector3(-.165,-.032,-.04)),hi=STRIP_C.clone().add(new THREE.Vector3(.165,.055,.04)),box=new THREE.Box3(lo,hi);
+ // 2026-10-14 (user: "컴퓨터쪽 에셋들은 퀄리티가 … 구식 게임의 에셋같은"): the baked PC case, CRT, keyboard and ECG device boxes go the
+ // same way and scripts/assets/workstation-v1.py replaces them. Archive frame (x, y, z) → three (x, z, −y); desk top z 0.77 kept.
+ const A2T=(x0:number,y0:number,z0:number,x1:number,y1:number,z1:number)=>new THREE.Box3(new THREE.Vector3(x0,z0,-y1),new THREE.Vector3(x1,z1,-y0));
+ const trimBoxes=[new THREE.Box3(STRIP_C.clone().add(new THREE.Vector3(-.165,-.032,-.04)),STRIP_C.clone().add(new THREE.Vector3(.165,.055,.04))),
+  A2T(-2.63,3.46,.775,-2.17,4.04,1.28),      // PC case + CRT body/back/screen (DESK −2.35, 3.55)
+  A2T(-2.63,3.18,.775,-2.17,3.36,.83),       // keyboard
+  A2T(-1.71,3.74,.815,-1.29,4.06,.94)];      // ECG device on the cart (CART −1.5, 3.9)
+ {const inAny=(p:THREE.Vector3)=>trimBoxes.some(b=>b.containsPoint(p));
   const a=new THREE.Vector3(),b=new THREE.Vector3(),c=new THREE.Vector3();
   arch.room.updateMatrixWorld(true);arch.room.traverse(o=>{const m=o as THREE.Mesh;if(!m.isMesh)return;const g=m.geometry,P=g.getAttribute('position');
    const idx=g.index?Array.from(g.index.array):Array.from({length:P.count},(_,i)=>i),keep:number[]=[];
    const groups=g.groups.length?g.groups.map(x=>({...x})):[{start:0,count:idx.length,materialIndex:0}],out:{start:number,count:number,materialIndex?:number}[]=[];
    for(const gr of groups){const s0=keep.length;
     for(let i=gr.start;i<gr.start+gr.count;i+=3){a.fromBufferAttribute(P,idx[i]).applyMatrix4(m.matrixWorld);b.fromBufferAttribute(P,idx[i+1]).applyMatrix4(m.matrixWorld);c.fromBufferAttribute(P,idx[i+2]).applyMatrix4(m.matrixWorld);
-     if(!box.containsPoint(a.add(b).add(c).multiplyScalar(1/3)))keep.push(idx[i],idx[i+1],idx[i+2]);}
+     if(!inAny(a.add(b).add(c).multiplyScalar(1/3)))keep.push(idx[i],idx[i+1],idx[i+2]);}
     out.push({start:s0,count:keep.length-s0,materialIndex:gr.materialIndex});}
    if(keep.length<idx.length){g.setIndex(keep);if(g.groups.length){g.clearGroups();out.forEach(x=>g.addGroup(x.start,x.count,x.materialIndex));}}});}
  const strip=(await loader.loadAsync(U('power_strip.glb'))).scene;scene.add(strip);
+ const workstation=(await loader.loadAsync(U('workstation.glb'))).scene;scene.add(workstation);
  // camera from story.json ('ma' for pli/ma, 'side' for bw — the person's right, D-054)
  const camFrom=(name:string)=>{const d=story.cams[name],e=d.rot_euler,eul=new THREE.Euler(e[0],e[1],e[2],'ZYX');   // Blender XYZ euler = Rz·Ry·Rx = three order ZYX
   const f=new THREE.Vector3(0,0,-1).applyEuler(eul);return{def:d,loc:toThree(d.loc,A),look:toThree([d.loc[0]+f.x,d.loc[1]+f.y,d.loc[2]+f.z],A)};};

@@ -1,0 +1,29 @@
+{
+  "source": "verification/a-disney-atlas-20261012/native/atlas-e45-ev1.png",
+  "sourceSha256": "76cafe0425bf8af19578829dac90a2050f9386681cf01585ae8d42808da79dfe",
+  "file": "detail.r8",
+  "sha256": "365935dd736f3b2e9ab5573833ec966e243342ebf2a86e6a93917fae49e99c4f",
+  "size": [
+    512,
+    512
+  ],
+  "cropPixels": [
+    346,
+    244,
+    693,
+    567
+  ],
+  "linearLuminance": true,
+  "gaussianSigmaPixels": [
+    3,
+    16
+  ],
+  "alphaThreshold": 0.98,
+  "alphaErosionKernel": 17,
+  "quantile95": 0.10587984041472519,
+  "neutralEncoded": 128,
+  "scaleEncoded": 100,
+  "interpretation": "bounded baked-light luminance bandpass; not physical density/normal",
+  "nominalR8MipmapMiB": 0.3333333333333333,
+  "license": "Disney2017 CC BY-SA3.0 / Kevin Udy reference"
+}

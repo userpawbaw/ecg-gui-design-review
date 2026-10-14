@@ -2398,3 +2398,25 @@ D136 Asharedcoverage/coredetail→B중간결/경계연결→C공통density시험
 이번은보고서/계획만,code나native재렌더없음. D135광학·footprint·근접volume한계유지.
 ### 놓쳤다면
 선명한원본확보와짧은GPU검증을씬전체미감승인으로오인하고이질적군집을주intro에채택했을것이다.
+
+
+## F-102. 공통 구름 형태에 명암 잔차를 넣어도 사진결은 자동 확보되지 않는다
+
+| | |
+|---|---|
+| 상태 | 잠정 / 실제runtime대조 |
+| 발견 | 2026-10-14 [캡처][코드] · D137 |
+| 영향 | 재질정합과미세결확보를별도gate로유지 |
+
+### 발단 — 무엇이 이상해 보였나
+사용자D135질감이질성반례뒤공통형태안에서국소결을강화하고자했다.
+### 먼저 의심한 것과 배제 방법
+완성sprite의색/윤곽을제거하고기존coverage/alpha/height/rayintersection을유지,source의안쪽명암잔차만radiance에추가.8/15%대조가약해보존후30/60%동일camera대조.
+### 결정적 근거
+D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear luminance bandpass잔차추가. 최초8/15%9장보존후0/30/60%9runtime+8초자체canvas정역영상. 독립실루엣이질성한요소완화,사진결/선명도개선제한TUNE. R8512²명목.333MiB/실제density·normal아님;주intro미채택/근접통과미구현. 지역확대displayRGB평균차이30%.03290/255,60%.06745/255;AA/dither포함표시진단이며미감점수아님. independent덩어리는생성안하지만원래의부드러운구름면을사진같은3D굴곡으로바꾸지는못했다. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_shared_detail_2026-10-14.md / runtime-manifest.json.
+### 조치와 검토한 대안
+실제후보는TUNE.같은형태내에서명암/높이proxy의중간결을연결하는B또는공통density C후속검토. 잔차세기만계속올려성공으로판정하지않는다.
+### 비용 / 영향 범위
+최종9snapshot/약한9보존/자체canvas8초영상. 추가R8+mip계산치.333MiB,실제VRAM실측아님. 짧은30표본GPU진단변동있어정확한overhead/FPS/targetPC통과미주장. 영상trace/생성은PASS이나연속미감/자글거림은사용자검토대기.
+### 놓쳤다면
+실루엣문제제거를texture목표완료로오인하거나광학명암증량만으로선명3D결을계속추구했을것이다.

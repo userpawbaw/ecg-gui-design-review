@@ -3330,3 +3330,31 @@ A→B의저비용순차시험권장. 완성RGBA를덩어리째더붙이기보다
 전체blur만늘리면요청된선명한결을잃음.색만맞추면굴곡크기와독립silhouette차이는남음.한프레임위주opaqueatlasfade로다른footprint연결은정역ghost위험.
 ### 되돌려야 하는 조건
 고주파잔차가사진결이아닌noise/구워진광원반응을강조하거나pixel정역자글거림을만들면채택안함. A/B는미실행/효과미검증. 동일weather/density후보C또는보류fallback검토.그림자보류/서고KEEP/실패2/2유지.
+
+## D-137. 기존 위성 coverage 내부에 Disney 미세 명암 잔차를 연결해 비교한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-14 [대화][코드] |
+| 상태 | 제작 전 결정 |
+| 연결 | D-136 / F-101 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자 진행 승인. D136A의저비용sharedcoverage+core detail부터실행. 완성RGBAoverlay/공통density전체재구성은대조·후속으로보존.
+### 검토한 선택지
+Disneynative45도linear luminance에서alpha안쪽bandpass잔차,실제VDB밀도고도수직추출,독립sprite색보정. 첫후보는bandpass잔차로실루엣·기본색·카메라·지도유지.
+### 고른 것과 근거
+기존massLayer내부의base sun radiance에8%/15%bounded signed modulation. 같은world좌표/위성두꺼운coverage마스크/명시pixel-footprint mip으로국소적용. source윤곽alpha edge제외. 단일R8 512²재료;실제density/normal아님. 원경→확대 .18/.21/.235 각baseline/8/15,그리고역scroll입력시험.
+### 버린 것과 이유
+독립RGBA군집은사용자재질이질성반례. 전체blur는요청된선명core상실. 실제volume대체는이번범위에비해좌표/광학/예산재검증비용큼.
+### 되돌려야 하는 조건
+원본조명잔차나noise가굴곡대신얼룩/자글거림으로읽히면미채택. 변화가너무약해도사진결PASS선언금지. sharedshape통과와선명도TUNE를분리하고B중간결/높이normal또는C공통density로검토.그림자보류/서고KEEP/실패2/2유지.
+
+
+### D137 첫 대조 뒤 강도 보완 [캡처][코드]
+8/15%9runtime에서독립실루엣은제거됐지만15%지역확대의displayRGB평균차이는.0165/255로작고실제선명도개선미달. low-contrast-trial로원형보존. 동일core·worldmask에서30/60%의boundedradiance변조를추가비교. 구름양의30/60%가아니며재질명암최대변조상한이다. base광원·색·실루엣및R8원본고정,선명도/얼룩/clip/TAA는별도검토.
+
+### 실행 결과 / F102
+D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear luminance bandpass잔차추가. 최초8/15%9장보존후0/30/60%9runtime+8초자체canvas정역영상. 독립실루엣이질성한요소완화,사진결/선명도개선제한TUNE. R8512²명목.333MiB/실제density·normal아님;주intro미채택/근접통과미구현.
+보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_shared_detail_2026-10-14.md

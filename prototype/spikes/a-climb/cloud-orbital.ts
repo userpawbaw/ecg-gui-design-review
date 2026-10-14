@@ -5,6 +5,8 @@ import {Effect,BlendFunction} from 'postprocessing';
 const fragment=`
 uniform sampler2D cloudMap, cloudDetailMap;
 uniform float rawSource, detailAmount;
+uniform sampler2D materialDetailMap;
+uniform float materialDetail;
 uniform mat4 inverseProjection;
 uniform mat3 viewRotation, geographicRotation;
 uniform vec3 eye, sunLocal;
@@ -79,6 +81,17 @@ float lightingHeight(vec3 point,float footprint){
  // Shading relief only: preserve the existing silhouette and ray intersection.
  return 7000.+2200.*broad+min(localRelief,2.)*3800.*(fine-broad);
 }
+// D137: common silhouette/color; only bounded interior shading residual.
+float materialResidual(vec3 point,float d,float pixelFootprint){
+ if(materialDetail<.0001)return 0.;
+ vec2 uv=(point.xz-vec2(-15000.,-16000.))/vec2(90000.,67500.)+.5;
+ if(any(lessThan(uv,vec2(0.)))||any(greaterThan(uv,vec2(1.))))return 0.;
+ float edge=smoothstep(0.,.08,min(min(uv.x,uv.y),min(1.-uv.x,1.-uv.y)));
+ float core=smoothstep(.55,.82,d);
+ float lod=max(0.,log2(max(pixelFootprint,450.)/176.));
+ float residual=(textureLod(materialDetailMap,uv,lod).r-128./255.)*255./100.;
+ return clamp(residual,-1.,1.)*edge*core*materialDetail;
+}
 vec4 massLayer(vec3 ray){
  float front=shell(ray,9400.),back=shell(ray,7000.);
  if(front<0.||back<0.)return vec4(0.);
@@ -123,6 +136,7 @@ vec4 massLayer(vec3 ray){
  vec3 key=mix(vec3(.73,.70,.65),vec3(1.13,1.07,.97),lightContrast);
  // Direct radiance increases independently: shadow fill and ground exposure stay fixed.
  vec3 radiance=fill*.065+key*facing*transmission*mix(.065,1.0,whiteHighlight);
+ radiance*=1.+materialResidual(point,d,t*pixelAngle);
  vec3 light=mix(vec3(.045,.065,.09)*.065,radiance,day);
  light=mix(light,vec3(.30,.40,.53)*.065,(1.-exp(-t/2200000.))*.35);
  return vec4(light,alpha*amount);
@@ -138,7 +152,7 @@ void mainImage(const in vec4 inputColor,const in vec2 uv,out vec4 outputColor){
 
 export class OrbitalCloudEffect extends Effect{
  constructor(){super('OrbitalCloudProxy',fragment,{blendFunction:BlendFunction.NORMAL,uniforms:new Map<string,THREE.Uniform>([
-  ['localRelief',new THREE.Uniform(0)],['whiteHighlight',new THREE.Uniform(0)],['lightContrast',new THREE.Uniform(0)],['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
+  ['materialDetailMap',new THREE.Uniform(null)],['materialDetail',new THREE.Uniform(0)],['localRelief',new THREE.Uniform(0)],['whiteHighlight',new THREE.Uniform(0)],['lightContrast',new THREE.Uniform(0)],['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
   ['viewRotation',new THREE.Uniform(new THREE.Matrix3())],['geographicRotation',new THREE.Uniform(new THREE.Matrix3())],
   ['eye',new THREE.Uniform(new THREE.Vector3())],['sunLocal',new THREE.Uniform(new THREE.Vector3())],
   ['relief',new THREE.Uniform(1)],['amount',new THREE.Uniform(1)],['coverageBoost',new THREE.Uniform(0)]
@@ -163,6 +177,13 @@ export class OrbitalCloudEffect extends Effect{
   this.uniforms.get('cloudDetailMap')!.value=make(data[1],4096,1536);
   this.uniforms.get('rawSource')!.value=1;
  }
+ async loadMaterialDetail(){
+  const response=await fetch(new URL('./assets/disney-detail/detail.r8',import.meta.url).href);if(!response.ok)throw Error('Disney detail R8 load');
+  const data=new Uint8Array(await response.arrayBuffer());if(data.length!==512*512)throw Error('Disney detail size');
+  const t=new THREE.DataTexture(data,512,512,THREE.RedFormat,THREE.UnsignedByteType);t.internalFormat='R8';t.colorSpace=THREE.NoColorSpace;t.generateMipmaps=true;t.flipY=false;t.minFilter=THREE.LinearMipmapLinearFilter;t.magFilter=THREE.LinearFilter;t.wrapS=t.wrapT=THREE.ClampToEdgeWrapping;t.needsUpdate=true;
+  this.uniforms.get('materialDetailMap')!.value=t;
+ }
+ setMaterialDetail(v:number){this.uniforms.get('materialDetail')!.value=THREE.MathUtils.clamp(v,0,.6);}
  setDetail(value:string){this.uniforms.get('detailAmount')!.value=value==='8k'?1:0;}
  setCoverageBoost(value:number){this.uniforms.get('coverageBoost')!.value=THREE.MathUtils.clamp(value,0,.14);}
  setPlacement(near:boolean){this.uniforms.get('sourceCentre')!.value.set(near?.671875:.64,near?.8330078125:.78);}

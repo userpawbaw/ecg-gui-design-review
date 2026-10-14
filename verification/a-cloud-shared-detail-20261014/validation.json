@@ -1,0 +1,43 @@
+{
+  "runtimeFrames": 9,
+  "lowContrastFramesPreserved": 9,
+  "dimensions": "PASS",
+  "sameCamera": "PASS",
+  "http200": [
+    "gallery.html",
+    "runtime-manifest.json",
+    "runtime/blend-0-p1800.png",
+    "runtime/blend-30-p1800.png",
+    "runtime/blend-60-p1800.png",
+    "runtime/blend-0-p2100.png",
+    "runtime/blend-30-p2100.png",
+    "runtime/blend-60-p2100.png",
+    "runtime/blend-0-p2350.png",
+    "runtime/blend-30-p2350.png",
+    "runtime/blend-60-p2350.png"
+  ],
+  "mainIntroAdopted": false,
+  "scope": "static lab shader actual rendering; aesthetic/motion not approved",
+  "motion": {
+    "generatedMs": 8000,
+    "traceRange": [
+      0.18,
+      0.235
+    ],
+    "header": "PASS",
+    "visualMotionQuality": "not approved"
+  },
+  "appBrowser": {
+    "imagesLoaded": 19,
+    "imageCount": 19,
+    "videoDurationSeconds": 8.012763,
+    "videoReadyState": 4,
+    "videoSize": [
+      1280,
+      720
+    ],
+    "consoleErrors": [],
+    "viewportRestored": true,
+    "screenshot": "browser-live.png"
+  }
+}

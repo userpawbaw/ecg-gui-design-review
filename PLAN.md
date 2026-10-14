@@ -596,3 +596,7 @@ D135/F100/O026: Disneyquarter source 고정빛3각도atlas를 실제북유럽lab
 ## 2026-10-12 D136 재질연결후속계획
 D136/F101: 사용자D135질감이질성feedback반영. 같은위성분포·기본조명에국소미세결을추가하고중간결/경계로연결하는A→B권장. Epic공식layout/profile/detail분리문헌과현재shader/capture분석. 새후보미실행/효과미검증/주intro미채택/TUNE;그림자보류/서고KEEP/실패2/2유지.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_material_coherence_2026-10-12.md
+
+## 2026-10-14 D137 공통구름국소결시험
+D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear luminance bandpass잔차추가. 최초8/15%9장보존후0/30/60%9runtime+8초자체canvas정역영상. 독립실루엣이질성한요소완화,사진결/선명도개선제한TUNE. R8512²명목.333MiB/실제density·normal아님;주intro미채택/근접통과미구현.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_shared_detail_2026-10-14.md

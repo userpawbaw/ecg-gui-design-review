@@ -1594,5 +1594,18 @@
     "candidateAdopted": false,
     "mainIntroAdopted": false,
     "shadowDeferred": true
+  },
+  "sharedCloudD137": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_shared_detail_2026-10-14.md",
+    "manifest": "verification/a-cloud-shared-detail-20261014/runtime-manifest.json",
+    "runtimeFrames": 9,
+    "lowContrastPreserved": 9,
+    "ownCanvasVideoMs": 8000,
+    "candidateAdopted": false,
+    "mainIntroAdopted": false,
+    "status": "actual lab diagnostic PASS / detail quality TUNE; not measured density/normal",
+    "shadowDeferred": true,
+    "next": "user visual review, then same-shape middle detail/lighting normal B or common density C; not residual strength escalation alone",
+    "videoPublication": "local_only; auto approval review excluded video from standing upload scope"
   }
 }

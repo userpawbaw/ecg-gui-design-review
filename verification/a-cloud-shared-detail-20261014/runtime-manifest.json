@@ -1,0 +1,141 @@
+{
+  "frames": [
+    {
+      "file": "runtime/blend-0-p1800.png",
+      "meta": "runtime/blend-0-p1800.json",
+      "p": 0.18,
+      "strength": 0.0,
+      "sha256": "4fe77a9e5510aed435a726cd6cba4d0fb3192746eb7e621d92e69101182ea906",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 6.631424,
+        "p95": 9.1392
+      },
+      "displayRgbMeanAbsoluteDifference": 0.0,
+      "note": "8bit displayed pixel difference incl AA/dither; not quality score"
+    },
+    {
+      "file": "runtime/blend-30-p1800.png",
+      "meta": "runtime/blend-30-p1800.json",
+      "p": 0.18,
+      "strength": 0.3,
+      "sha256": "1cb2862ad11bbffa52d8428a115cf0157918c0ce64d56a02fc1c566a62dbe4ab",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 6.572032,
+        "p95": 9.022464
+      },
+      "displayRgbMeanAbsoluteDifference": 0.006832682291666667,
+      "note": "8bit displayed pixel difference incl AA/dither; not quality score"
+    },
+    {
+      "file": "runtime/blend-60-p1800.png",
+      "meta": "runtime/blend-60-p1800.json",
+      "p": 0.18,
+      "strength": 0.6,
+      "sha256": "ba16ea09af5b6e7ab458fe7d8b13c408a94ce8a87d9081f29e8b95767192a07f",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 6.601728,
+        "p95": 8.982528
+      },
+      "displayRgbMeanAbsoluteDifference": 0.006427589699074074,
+      "note": "8bit displayed pixel difference incl AA/dither; not quality score"
+    },
+    {
+      "file": "runtime/blend-0-p2100.png",
+      "meta": "runtime/blend-0-p2100.json",
+      "p": 0.21,
+      "strength": 0.0,
+      "sha256": "0ef84f82ca2338131d60c1ccaf183c6b5152502f7e3fe72dc809dcb1ec2d2a9a",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 6.992896,
+        "p95": 9.162752
+      },
+      "displayRgbMeanAbsoluteDifference": 0.0,
+      "note": "8bit displayed pixel difference incl AA/dither; not quality score"
+    },
+    {
+      "file": "runtime/blend-30-p2100.png",
+      "meta": "runtime/blend-30-p2100.json",
+      "p": 0.21,
+      "strength": 0.3,
+      "sha256": "16ecd7e982266f72518c54f7db55891faad52f2474db411e6971cd8d65a0b2dd",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 6.736896,
+        "p95": 9.073664
+      },
+      "displayRgbMeanAbsoluteDifference": 0.007925347222222223,
+      "note": "8bit displayed pixel difference incl AA/dither; not quality score"
+    },
+    {
+      "file": "runtime/blend-60-p2100.png",
+      "meta": "runtime/blend-60-p2100.json",
+      "p": 0.21,
+      "strength": 0.6,
+      "sha256": "7ac34d22d863fceae9d26d5e10afe8a22788354d156690d7f16223c9633e2f45",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 6.757376,
+        "p95": 9.170944
+      },
+      "displayRgbMeanAbsoluteDifference": 0.016523075810185184,
+      "note": "8bit displayed pixel difference incl AA/dither; not quality score"
+    },
+    {
+      "file": "runtime/blend-0-p2350.png",
+      "meta": "runtime/blend-0-p2350.json",
+      "p": 0.235,
+      "strength": 0.0,
+      "sha256": "9c3300b4d05587aa49d6292311bb1bd5f2d74660cdd56c75fbac845dffe261de",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 4.299776,
+        "p95": 4.834304
+      },
+      "displayRgbMeanAbsoluteDifference": 0.0,
+      "note": "8bit displayed pixel difference incl AA/dither; not quality score"
+    },
+    {
+      "file": "runtime/blend-30-p2350.png",
+      "meta": "runtime/blend-30-p2350.json",
+      "p": 0.235,
+      "strength": 0.3,
+      "sha256": "ac57283525dbb063c11a46b0326fe8d5f7c24dc31d0592801b387d2a40e9002c",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 4.06016,
+        "p95": 4.806656
+      },
+      "displayRgbMeanAbsoluteDifference": 0.03289641203703704,
+      "note": "8bit displayed pixel difference incl AA/dither; not quality score"
+    },
+    {
+      "file": "runtime/blend-60-p2350.png",
+      "meta": "runtime/blend-60-p2350.json",
+      "p": 0.235,
+      "strength": 0.6,
+      "sha256": "dee2ab1e856d45f3d94183acde5dc6417b1c9d2229fe5f2d78b9e4a28fc02f95",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 7.044096,
+        "p95": 9.459712
+      },
+      "displayRgbMeanAbsoluteDifference": 0.067451171875,
+      "note": "8bit displayed pixel difference incl AA/dither; not quality score"
+    }
+  ],
+  "source": "assets/disney-detail/manifest.json",
+  "scope": "actual opt-in lab9staticcaptures; not adoption or complete motion quality"
+}

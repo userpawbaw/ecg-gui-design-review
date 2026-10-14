@@ -845,3 +845,5 @@ D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear l
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_shared_detail_2026-10-14.md
 
 D137 upload scope correction: automatic approval review rejected push containing own canvas WebM because standing upload scope was not accepted as including video. Unpublished latest commit amended to exclude WebM; local video preserved. Only authorized code/images/R8 derived material/review records to be published.
+
+D137 publication verified: f3b2f42e9f5f574b09e7e2fcb9ac24dba08b1c5b remote SHA and shader/runtime-manifest Git blobs matched; WebM absent from uploaded tree/history of this payload. Authorized code/images/data/records published; own canvas video remains local after auto-review denial. Hostfinalbuild/local9snapshots/19galleryimages/video8.012763s trace PASS; aesthetic/continuousmotion quality TUNE. Records297/knowledge51cases194original structural PASS.

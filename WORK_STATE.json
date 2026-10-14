@@ -1606,6 +1606,16 @@
     "status": "actual lab diagnostic PASS / detail quality TUNE; not measured density/normal",
     "shadowDeferred": true,
     "next": "user visual review, then same-shape middle detail/lighting normal B or common density C; not residual strength escalation alone",
-    "videoPublication": "local_only; auto approval review excluded video from standing upload scope"
+    "videoPublication": "local_only; auto approval review excluded video from standing upload scope",
+    "remotePublication": {
+      "status": "published_verified_video_excluded",
+      "verifiedPayloadHead": "f3b2f42e9f5f574b09e7e2fcb9ac24dba08b1c5b",
+      "remoteContentMatched": [
+        "prototype/spikes/a-climb/cloud-orbital.ts",
+        "verification/a-cloud-shared-detail-20261014/runtime-manifest.json"
+      ],
+      "authorization": "cloudUploadAuthorization",
+      "video": "local_only"
+    }
   }
 }

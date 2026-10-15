@@ -132,7 +132,7 @@ export async function createArchive(){
    uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze;uniform vec3 uHazeCol;varying vec2 vUv;
    uniform float uCOn,uCMinY;uniform vec3 uCLP,uCLD,uCCol;uniform vec2 uCCos;
    vec3 lampCone(vec3 cam,vec3 rd,float far,float j){
-    vec3 C=uCLP+uCLD*.32;float R=.5;vec3 oc=cam-C;float b=dot(oc,rd),c=dot(oc,oc)-R*R,h=b*b-c;if(h<=0.)return vec3(0.);
+    vec3 C=uCLP+uCLD*.34;float R=.62;vec3 oc=cam-C;float b=dot(oc,rd),c=dot(oc,oc)-R*R,h=b*b-c;if(h<=0.)return vec3(0.);
     h=sqrt(h);float t0=max(-b-h,0.),t1=min(-b+h,far);if(t1<=t0)return vec3(0.);
     const int M=28;float dt=(t1-t0)/float(M),acc=0.;
     for(int i=0;i<M;i++){vec3 p=cam+rd*(t0+(float(i)+j)*dt);vec3 l=p-uCLP;float dl=max(length(l),1e-3);

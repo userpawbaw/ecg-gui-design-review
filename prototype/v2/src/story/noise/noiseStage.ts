@@ -218,12 +218,12 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  workstation.traverse(o=>{const m=(o as THREE.Mesh).material as THREE.MeshStandardMaterial|undefined;if(!m)return;
   if(m.name==='ws_crt_glass'||m.name==='ws_ecg_screen')emit0.set(m,[m.emissive.clone(),m.emissiveIntensity]);   // L0 = as before
   if(m.name==='ws_crt_glass'){m.roughness=.4;screenMats.push(m);}   // rougher: no point-light hotspot on the glass
-  else if(m.name==='ws_ecg_screen'){screenMats.push(m);}});
+  else if(m.name==='ws_ecg_screen'){m.roughness=.6;screenMats.push(m);}});
  const V3t=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
  const CRT_P=V3t(-2.40,1.155,-3.49),CRT_N=new THREE.Vector3(0,0,1),ECG_P=V3t(-1.44,.985,-3.82),ECG_N=new THREE.Vector3(0,.42,.91).normalize();
  const lampLight=new THREE.SpotLight(0xffc98f,0,2.4,.62,.55,2);lampLight.position.copy(LAMP_P);lampLight.target.position.copy(LAMP_P.clone().add(LAMP_D));scene.add(lampLight,lampLight.target);
  const crtLight=new THREE.PointLight(0x9fc4e6,0,1.8,2);crtLight.position.copy(CRT_P).addScaledVector(CRT_N,.3);scene.add(crtLight);
- const ecgLight=new THREE.PointLight(0x39d27a,0,1.2,2);ecgLight.position.copy(ECG_P).addScaledVector(ECG_N,.08);scene.add(ecgLight);
+ const ecgLight=new THREE.PointLight(0x39d27a,0,1.2,2);ecgLight.position.copy(ECG_P).addScaledVector(ECG_N,.3);scene.add(ecgLight);
  const LK=Number(qp.get('lamp')??1),SK=Number(qp.get('scr')??1),CK=Number(qp.get('cone')??1);   // QA strengths
  {const su=arch.shared;su.uLampP.value.copy(LAMP_P);su.uLampD.value.copy(LAMP_D);su.uLampMinY.value=DESK_TOP;
   su.uScrP.value[0].copy(CRT_P);su.uScrN.value[0].copy(CRT_N);su.uScrP.value[1].copy(ECG_P);su.uScrN.value[1].copy(ECG_N);}

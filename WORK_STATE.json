@@ -1676,5 +1676,18 @@
       "scope": "55 cloud code/direct render image/review record files; video and source VDB excluded",
       "authorization": "cloudUploadAuthorization"
     }
+  },
+  "regionalCloudD140": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_optics_2026-10-16.md",
+    "manifest": "verification/a-cloud-optics-20261016/runtime-manifest.json",
+    "runtimeFrames": 18,
+    "status": "industry optics partial; bounded haze/scattering trial; material joining TUNE",
+    "userAdopted": false,
+    "mainIntroAdopted": false,
+    "shadowDeferred": true,
+    "fullBrunetonCloudCoupling": false,
+    "cloudTAA": false,
+    "gpuPerformanceGate": "not evaluated: three-frame samples/concurrent contexts",
+    "next": "review 3 modes; shared density and optical integration before source resolution increase"
   }
 }

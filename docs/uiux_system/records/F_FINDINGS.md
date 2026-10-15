@@ -2464,3 +2464,25 @@ D139/F104: 사용자 D138 어색함·진행 승인에 따라 TUNE 유지. 같은
 same192ray/6light, R8두벌6.75MiB재사용. density 조회에 하단 satellite texture sampling이 추가된다. 짧은순차30표본 legacy2.06–4.18ms/joined2.75–5.14ms; 정확한overhead/FPS/다른PC/전체VRAM 보장 아님. 구름통과/지형그림자/서고통합은이번범위아님.
 ### 놓쳤다면
 진행 승인을 미감 채택으로 바꾸거나 원경/근접 품질을 높이 성장만으로 계속 보완했을 것이다.
+
+## F-105. 좋은 밀도 에셋과 업계 렌더러 이름이 전체 광학 경로 적용을 뜻하지 않는다
+
+| | |
+|---|---|
+| 상태 | 업계 적용 일부 / 안개·산란 후보 / TUNE |
+| 발견 | 2026-10-16 [대화][코드][문헌][캡처] |
+| 영향 | 추가 광량·에셋 증량보다 실제 pass 경로와 공통 medium 연결 우선 |
+
+### 발단 — 무엇이 이상해 보였나
+사용자는 ‘이게 최선인가’, ‘기존 업계 방식이 충분히 적용되었는지’ 확인하고 어색함이 남으면 안개층을 추가하자고 했다. D139를 최종 한계나 미감 채택으로 승격하지 않았다.
+### 먼저 의심한 것과 배제 방법
+밀도 source 해상도만의 문제인지, 다른 광학·대기 계산 문제인지 나눴다. 실제 활성 pass와 package0.7.6 소스를 확인하니 orbital에서 Takram CloudsEffect는 빠진다. hazeDensityScale UI 값만으로 custom 구름이 바뀌지 않는다.
+### 결정적 근거
+D140/F105: 사용자 최선/업계 적용 감사 및 안개 추가 요청. 실제 orbital 경로는 Takram CloudsEffect/TAA/haze 미사용이며 별도 gradient 조명·고정3.9km light trace였음을 확인. 같은 D139 joined source에서 현재/안개/산란+안개 actual18동일구도. dualHG/3octave 근사·box 출구까지 light path·6.5–14.5km depth-aware 안개 추가. 원경 대비 완화/국소 명암 변화는 있으나 heightfield와 VDB의 재질 차이 및 사진결은 미해결TUNE. full atmosphere coupling/TAA/common density는 미구현. GPU3frame 표본은 성능판정 제외. 주intro미채택/그림자보류/서고KEEP/실패2/2 유지.
+코드와18장 metadata는 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_optics_2026-10-16.md 및 runtime-manifest.json. 별개 재질의 인과 전부를 이번3후보로 증명한 것은 아니다.
+### 조치와 검토한 대안
+현재/안개만/산란+안개를 분리했다. 안개는 단순 screen blur가 아니라 world 고도와 ground depth/weighted cloud distance로 제한한다. 기존 높이장·VDB 두 군집의 단일 medium 통합과 TAA는 다음 구조 작업이다. full Takram/Nubis 재현이라고 표시하지 않는다.
+### 비용 / 영향 범위
+기존 R8두 벌6.75MiB 재사용, 추가16step haze와6light/3octave 조명 계산. 실제 비용은 이번3frame 표본으로 판정하지 않는다. 18장 ready/context/camera 조건과 hostbuild만 기술 검증, 사진결/연속운동/전시PC/전체도입부 검증 아님.
+### 놓쳤다면
+공식 renderer 이름과 UI 값만 보고 모든 업계 기법이 적용되었다고 오판하고 미감 한계를 source 탓으로만 돌렸을 것이다.

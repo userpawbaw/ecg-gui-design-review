@@ -83,3 +83,11 @@ RTX3070 회복 확인 후 같은 latest north6구도를 upscale50%/fullres50%/fu
 
 ## 2026-10-08 D108 커튼빛·양감 보완
 완료: source광학유지·sun15/az0/haze.00018/layer1.2후보,같은6구도·ON/OFF·정역6moving actual24쌍. high50/fullresTAA,terrain1.5×/archiveKEEP,main미변경. 원본광선기여확인/79modulebuildPASS/fixed120GPUquery범위. 품질TUNE·nearface/far반복/역광암부보완. 다음이룩사용자리뷰→globe지역/하강인계와실제wheel/서고가림검증;Story/BC/D080별도. report docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_takram_beam_review_2026-10-08.md;gallery verification/a-takram-beam-20261008/gallery.html.
+
+
+## D140 / F105 — 2026-10-16 실제 활성 경로 재감사
+공식 기능 목록과 현재 실행 중인 pass를 구별한다. orbital=true에서는 CloudsEffect가 빠져 Takram의 haze/다중산란/TAA가 custom 국소구름에 전달되지 않는다. D140은 full Takram 도입 완료가 아니라 dualHG/3octave 근사·box 출구까지 light trace·weighted cloud distance/ground depth로 제한한 고도 안개를 시험한 것이다.
+
+현재/안개/산란+안개 actual18장: 원경 대비와 국소 골 음영은 바뀌지만 높이장/VDB 재질 차이는 남음. TUNE/주Intro미채택. 권장 다음 순서는 공통 density/light 합성 → 필요한 근접 source resolution → temporal reconstruction. 원본 전체 광학 연결이 없는 상태에서 UI haze 수치만 올리는 방식은 재사용하지 않는다.
+
+추가 1차 자료: [Skybolt 제작자 노트](https://prograda.com/2021/07/28/rendering-planetwide-volumetric-clouds-in-skybolt/), [Epic 공식 cloud 문서](https://dev.epicgames.com/documentation/unreal-engine/volumetric-cloud-component-in-unreal-engine?lang=en-US). 본문 확인 및 로컬0.7.6 source 대조. 보고서: ../rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_optics_2026-10-16.md. 8초 영상은 background9표본이어서 연속모션 통과 근거가 아니다. 정지 렌더/기술검사/사용자미감/성능gate를 분리한다.

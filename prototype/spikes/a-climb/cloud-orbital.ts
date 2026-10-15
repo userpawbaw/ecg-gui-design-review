@@ -1,7 +1,7 @@
 // D114: orbital-only 2.5D proxy. NASA luminance supplies shape, NOT measured density/height.
 import * as THREE from 'three';
 import {regionalVolumeShader,loadRegionalVolume} from './cloud-regional-volume';
-import {Effect,BlendFunction} from 'postprocessing';
+import {Effect,BlendFunction,EffectAttribute} from 'postprocessing';
 
 const fragment=`
 uniform sampler2D cloudMap, cloudDetailMap;
@@ -143,23 +143,44 @@ vec4 massLayer(vec3 ray){
  return vec4(light,alpha*amount);
 }
 ${regionalVolumeShader}
+uniform float regionalHaze;
+vec2 hazeSphere(vec3 ray,float h){vec3 o=eye-centre;float b=dot(o,ray),d=b*b-dot(o,o)+(radius+h)*(radius+h);return d<0.?vec2(-1.):vec2(-b-sqrt(d),-b+sqrt(d));}
+vec3 cloudHaze(vec3 color,vec3 ray,float limit){
+ if(regionalHaze<.0001||limit<0.)return color;
+ vec2 outer=hazeSphere(ray,14500.),inner=hazeSphere(ray,6500.);if(outer.y<=0.)return color;
+ float begin=max(0.,outer.x),end=min(limit,outer.y);if(inner.x>begin)end=min(end,inner.x);if(end<=begin)return color;
+ float stepSize=(end-begin)/16.,tau=0.;
+ for(int j=0;j<16;j++){vec3 p=eye+ray*(begin+(float(j)+.5)*stepSize);vec3 n=normalize(p-centre);float h=length(p-centre)-radius;
+  float profile=smoothstep(6500.,8500.,h)*(1.-smoothstep(11000.,14500.,h));
+  float weather=smoothstep(.05,.80,filteredDensity(geoUV(n),25000.));tau+=profile*(.22+.78*weather)*8.e-6*stepSize;
+ }
+ // Artistic upper bound: retain white crest detail instead of a full-screen whiteout.
+ float alpha=(1.-exp(-min(tau,.55)*regionalHaze));float towardSun=pow(max(0.,dot(ray,sunLocal)),8.);
+ vec3 scatter=mix(vec3(.54,.65,.76),vec3(1.10,1.01,.89),towardSun*.45)*.065;
+ return mix(color,scatter,alpha);
+}
 void mainImage(const in vec4 inputColor,const in vec2 uv,out vec4 outputColor){
  vec4 view=inverseProjection*vec4(uv*2.-1.,1.,1.);
  vec3 ray=normalize(viewRotation*(view.xyz/view.w));
+ regionalGroundLimit=1.e12;
+ #ifdef REGIONAL_DEPTH
+ float z=readDepth(uv);if(z<.999999){vec4 ground=inverseProjection*vec4(uv*2.-1.,z*2.-1.,1.);regionalGroundLimit=length(ground.xyz/ground.w);}
+ #endif
  vec4 thin=layer(ray,12500.,0.);vec4 thick=massMode>.5?massLayer(ray):layer(ray,8500.,1.);
- vec3 color=mix(inputColor.rgb,thick.rgb,thick.a);
- vec4 local=regionalCloud(ray);color=color*(1.-local.a)+local.rgb;
- color=mix(color,thin.rgb,thin.a);
+ vec3 color=cloudHaze(inputColor.rgb,ray,regionalGroundLimit);vec3 thickColor=cloudHaze(thick.rgb,ray,shell(ray,9400.));color=mix(color,thickColor,thick.a);
+ vec4 local=regionalCloud(ray);vec3 localColor=local.a>.0001?cloudHaze(local.rgb/local.a,ray,regionalWeightedDistance)*local.a:vec3(0.);color=color*(1.-local.a)+localColor;
+ color=mix(color,cloudHaze(thin.rgb,ray,shell(ray,12500.)),thin.a);
  outputColor=vec4(color,inputColor.a);
 }`;
 
 export class OrbitalCloudEffect extends Effect{
- constructor(){super('OrbitalCloudProxy',fragment,{blendFunction:BlendFunction.NORMAL,uniforms:new Map<string,THREE.Uniform>([
-  ['regionalFine',new THREE.Uniform(null)],['regionalCoarse',new THREE.Uniform(null)],['regionalEnabled',new THREE.Uniform(0)],['regionalMorph',new THREE.Uniform(0)],['regionalJoined',new THREE.Uniform(0)],['materialDetailMap',new THREE.Uniform(null)],['materialDetail',new THREE.Uniform(0)],['localRelief',new THREE.Uniform(0)],['whiteHighlight',new THREE.Uniform(0)],['lightContrast',new THREE.Uniform(0)],['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
+ constructor(depthStudy=false){super('OrbitalCloudProxy',depthStudy?'#define REGIONAL_DEPTH\n'+fragment:fragment,{attributes:depthStudy?EffectAttribute.DEPTH:EffectAttribute.NONE,blendFunction:BlendFunction.NORMAL,uniforms:new Map<string,THREE.Uniform>([
+  ['regionalHaze',new THREE.Uniform(0)],['regionalScattering',new THREE.Uniform(0)],['regionalFine',new THREE.Uniform(null)],['regionalCoarse',new THREE.Uniform(null)],['regionalEnabled',new THREE.Uniform(0)],['regionalMorph',new THREE.Uniform(0)],['regionalJoined',new THREE.Uniform(0)],['materialDetailMap',new THREE.Uniform(null)],['materialDetail',new THREE.Uniform(0)],['localRelief',new THREE.Uniform(0)],['whiteHighlight',new THREE.Uniform(0)],['lightContrast',new THREE.Uniform(0)],['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
   ['viewRotation',new THREE.Uniform(new THREE.Matrix3())],['geographicRotation',new THREE.Uniform(new THREE.Matrix3())],
   ['eye',new THREE.Uniform(new THREE.Vector3())],['sunLocal',new THREE.Uniform(new THREE.Vector3())],
   ['relief',new THREE.Uniform(1)],['amount',new THREE.Uniform(1)],['coverageBoost',new THREE.Uniform(0)]
  ])});}
+ setRegionalAtmosphere(mode:string){this.uniforms.get('regionalHaze')!.value=mode==='legacy'?0:1;this.uniforms.get('regionalScattering')!.value=mode==='scatter'?1:0;}
  async loadRegional(){const [fine,coarse]=await loadRegionalVolume();this.uniforms.get('regionalFine')!.value=fine;this.uniforms.get('regionalCoarse')!.value=coarse;}
  setRegional(on:boolean,p:number,joined=false){this.uniforms.get('regionalJoined')!.value=joined?1:0;this.uniforms.get('regionalEnabled')!.value=on?1:0;this.uniforms.get('regionalMorph')!.value=THREE.MathUtils.smoothstep(p,.19,.25);}
  async load(url:string){

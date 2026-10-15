@@ -1,0 +1,46 @@
+{
+  "runtimeFrames": 18,
+  "sameCamera": "PASS",
+  "renderSize": [
+    1280,
+    720
+  ],
+  "readyContext": "PASS",
+  "build": "host Vite PASS",
+  "adopted": false,
+  "motion": {
+    "completedGeneration": true,
+    "traceCount": 9,
+    "nominalMs": 8000,
+    "motionQualityGate": "NOT PASSED: sparse background trace",
+    "uploaded": false
+  },
+  "gpuPerformanceGate": "NOT EVALUATED: three-frame samples, concurrent lab contexts",
+  "capturesTemporalAccumulation": false,
+  "http200": [
+    "gallery.html",
+    "runtime-manifest.json",
+    "fidelity.md",
+    "runtime/optics-legacy-p1800.png",
+    "runtime/optics-haze-p1800.png",
+    "runtime/optics-scatter-p1800.png",
+    "runtime/optics-legacy-p2100.png",
+    "runtime/optics-haze-p2100.png",
+    "runtime/optics-scatter-p2100.png",
+    "runtime/optics-legacy-p2350.png",
+    "runtime/optics-haze-p2350.png",
+    "runtime/optics-scatter-p2350.png",
+    "runtime/optics-legacy-p2500.png",
+    "runtime/optics-haze-p2500.png",
+    "runtime/optics-scatter-p2500.png",
+    "runtime/optics-legacy-p2700.png",
+    "runtime/optics-haze-p2700.png",
+    "runtime/optics-scatter-p2700.png",
+    "runtime/optics-legacy-p2900.png",
+    "runtime/optics-haze-p2900.png",
+    "runtime/optics-scatter-p2900.png"
+  ],
+  "browserScreenshot": "browser-review.png",
+  "browserReview": "gallery loaded; execution link and 3 comparison columns visible",
+  "shaderErrorsObserved": []
+}

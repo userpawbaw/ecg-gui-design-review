@@ -864,3 +864,8 @@ D139/F104: 사용자 D138 어색함·진행 승인에 따라 TUNE 유지. 같은
 다음 튜닝: 재질 연결 → 필요한 근접 subregion 해상도 → 정역 안정성. 모든 항목 사용자 시각 통과 뒤 near/커튼 연결.
 
 D139 publication verified 2026-10-16: 837bed89c169b0aa36631f63af7f121855eea517 SHA/shader/runtime manifest match.55 authorized cloud files; ownWebM/sourceVDB/personal attachments excluded. Hostfinalbuild/12samecamera captures/8sec trace481/records301/knowledge51cases198 PASS within stated technical scope. Material joining/photographic fidelity/user adoption TUNE.
+
+## 2026-10-16 D140 업계 광학 경로 감사와 고도 안개
+D140/F105: 사용자 최선/업계 적용 감사 및 안개 추가 요청. 실제 orbital 경로는 Takram CloudsEffect/TAA/haze 미사용이며 별도 gradient 조명·고정3.9km light trace였음을 확인. 같은 D139 joined source에서 현재/안개/산란+안개 actual18동일구도. dualHG/3octave 근사·box 출구까지 light path·6.5–14.5km depth-aware 안개 추가. 원경 대비 완화/국소 명암 변화는 있으나 heightfield와 VDB의 재질 차이 및 사진결은 미해결TUNE. full atmosphere coupling/TAA/common density는 미구현. GPU3frame 표본은 성능판정 제외. 주intro미채택/그림자보류/서고KEEP/실패2/2 유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_optics_2026-10-16.md
+다음: 안개·산란 시각 비교 후 공통 밀도/조명 합성 → 필요한 근접 source 해상도 → 시간 재구성·정역 안정성.

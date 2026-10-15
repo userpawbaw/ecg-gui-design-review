@@ -1,0 +1,960 @@
+{
+  "canonicalCase": {
+    "schemaVersion": 1,
+    "id": "EXP-051",
+    "title": "흰 구름 윗면의 결은 실루엣과 조명 굴곡을 분리해 보완하기",
+    "category": "구름",
+    "tags": [
+      "국소 명암",
+      "위성 구름",
+      "gradient",
+      "shading relief",
+      "흰 윗면"
+    ],
+    "status": "partial",
+    "problem": {
+      "goal": "확대 주변 일부 구름의 흰 윗면과 어두운 골이 선명하게 읽힘",
+      "symptoms": [
+        "윗면 밝기 증량 후에도 작은 명암 결이 약함"
+      ]
+    },
+    "scope": {
+      "environment": [
+        "Three0.186.1/WebGL2/Takram0.19.1 atmosphere + custom 2.5D orbital effect; RTX3070 1280×720",
+        "D127 opt-in reviewRound cloud-relief-20261010, p.1584/.18/.235"
+      ],
+      "applies": [
+        "고해상도 위성 footprint는 확보했지만 밝은 윗면 결이 약한 height-field proxy",
+        "같은 카메라/광원에서 작은 후보 비교가 가능한 장면"
+      ],
+      "excludes": [
+        "이 사례의 해결을 전체 도입부·Story 완성 또는 출품 승인으로 확대하지 않는다.",
+        "다른 PC·해상도·패키지 버전에는 당시 성능 수치와 설정을 그대로 보장하지 않는다."
+      ]
+    },
+    "recommendation": {
+      "strength": "candidate",
+      "action": "실제 활성 렌더 경로부터 감사한다. D140에서 orbital은 Takram CloudsEffect/TAA/haze를 실행하지 않음을 확인했다. 현재/고도 안개/산란+안개 비교를 TUNE로 보존하고, 안개로 사진결·접합 해결을 선언하지 않는다. 기존 높이장과 실제 밀도 군집의 공통 밀도·조명 합성→필요한 근접 source 해상도→시간 재구성·정역 안정성을 우선한다.",
+      "steps": [
+        {
+          "action": "같은source의광학깊이/샘플수렴과표시조건분리검토",
+          "reason": "D133 6/64bounce반례:고해상도source만으로사진결이나흰면이자동확보되지않는다."
+        },
+        {
+          "action": "현재density warp 후보는 실제web에 채택하지 않고 source/광학기여 대조",
+          "reason": "작은윤곽변화만으로 사진섬유결 목표가 달성되지 않았고 기존 회색면/edgegrain이 남는다."
+        },
+        {
+          "action": "전지구 해상도가 아닌 지역texel 및 원본 결부터 확인",
+          "reason": "조명 gradient를 늘려도 원본에 없는 섬유결은 복원되지 않는다."
+        },
+        {
+          "action": "큰 조형과 billow/wisp 밀도 결 및 sampling을 분리 대조",
+          "reason": "산업자료는 단순 RGB 선명화가 아닌 profile 침식과 거리 필터를 사용한다. 현행 스택 결과는 미검증."
+        },
+        {
+          "action": "기존 분포·높이·불투명도 고정",
+          "reason": "높이 자체 detail 증폭은 뾰족한 지형 형태를 만들 수 있다."
+        },
+        {
+          "action": "동일 위성 fine/broad의 조명 굴곡을 국소 geographic mask로 적용",
+          "reason": "큰 빈틈을 보존하며 확대 주변에만 필요한 명암을 만든다."
+        },
+        {
+          "action": "기존/중간/강한 동일구도와 정역영상을 비교",
+          "reason": "선명함과 자연스러운 결, 자글거림을 따로 평가한다."
+        }
+      ],
+      "evidenceIds": [
+        "F-092",
+        "D-127",
+        "F-093",
+        "D-128",
+        "F-094",
+        "D-129",
+        "F-095",
+        "D-130",
+        "F-096",
+        "D-131",
+        "F-097",
+        "D-132",
+        "F-098",
+        "D-133",
+        "O-025",
+        "F-099",
+        "D-134",
+        "F-100",
+        "D-135",
+        "O-026",
+        "F-101",
+        "D-136",
+        "F-102",
+        "D-137",
+        "F-103",
+        "D-138",
+        "F-104",
+        "D-139",
+        "F-105",
+        "D-140"
+      ],
+      "recheck": [
+        "마스크 윤곽/새 군집 생성/돌 같은 결/자글거림/흰날림",
+        "실제 volume 내부 통과에는 이 shading-only 근사를 그대로 쓰지 않는다."
+      ]
+    },
+    "quality": {
+      "target": "확대 주변 일부 구름의 흰 윗면과 어두운 골이 선명하게 읽힘",
+      "achieved": "9final native에서 일부 명암 분리 부분 개선; 중간추천 TUNE; 후속 사용자 반례로 source-first권장 수정, 투명2K원본샘플3장/작은lobes확인; D130 동일source sampling/denoise4조건 진단 완료, 큰형태결은유지/섬유결목표TUNE; D133 DisneyZIP/sourcehalf확보,5native로6/64bounce광학상한기여확인/선명source동일뷰대조; D134 샘플/산란 상한/noisy 전후 native3장 분리 대조; D1353관찰각nativeatlas→실제북유럽lab8구도/alpha·높이정합튜닝; D137같은형태·색의국소잔차9runtime/8초정역자료; D138 국소 실제 밀도 에셋16runtime/72step반례16보존/8초정역 및휠복귀; D139 고정높이/하단연결 actual12정지·8초정역생성; D140 active-pass audit/18samecamera cloud optics candidates",
+      "remaining": [
+        "실사 섬유 결·완전 volume/모든프레임 shimmering·사용자 채택·near 인계 미완",
+        "지도 source 경계 잔여와 기존 지면 그림자 보류 유지",
+        "별도선명국소층 실제배치/톤매핑·alpha·edgegrain·고정빛·multi-view 인계 미검증",
+        "D131 실제밀도변형도 사진섬유결미달/효과작음;더선명한원본과광학기여대조 필요",
+        "OpenVDB13→Blender VDB225/224버전경고 조건부;경고없는 호환성 및 numeric 변환 미검증",
+        "D132 광학명암개선과사진섬유결미달분리;더고해상도source실제확보/공식example재현미완",
+        "D133 Cycles번안의Hyperion/Mitsuba동일재현·사진결/광학sampling수렴·국소atlas/실시간미완",
+        "D134 raw noise와사진결gap/공식beauty재현/국소atlas/실시간 미완",
+        "D135 회색·별개덩어리감/각도ghost/거리별동일footprint/실제3D near통과 및 shadow·targetPC 미완",
+        "F101 사용자D135재질이질성확인/sharedcoverage·공통조명·중간결연결A/B는미실행",
+        "D137 signedradiance만의선명도/3D굴곡개선제한;middle detail/lighting normal/commondensity 및사용자미감미검증",
+        "D138 기존층과 새 volume 군집의 형태·재질 연결 및 사진 reference 결 TUNE; 근접 통과/지형 depth·shadow 미검증",
+        "D139에도 기존 얕은 층과 실제 density source의 재질 결 차이가 남음; 최종 사용자 미감·near 통합 미완",
+        "D140 안개·산란 후보에도 heightfield와 VDB 결 차이; full atmosphere coupling/TAA/common medium 미구현"
+      ]
+    },
+    "cause": {
+      "certainty": "inferred",
+      "explanation": "높이 transfer plateau와 넓은 gradient 표본이 디테일 약화에 기여; 전체 사진 품질 차이의 유일 원인으로 확정하지 않음",
+      "evidenceIds": [
+        "F-092"
+      ]
+    },
+    "history": [
+      {
+        "seq": 1,
+        "mode": "executed",
+        "result": "rejected",
+        "approach": "실제 높이와 slope detail 증폭",
+        "observation": "9장에 뾰족한 지형 같은 형태",
+        "decision": "실루엣 유지로 변경",
+        "evidenceIds": [
+          "F-092"
+        ]
+      },
+      {
+        "seq": 2,
+        "mode": "executed",
+        "result": "rejected",
+        "approach": "좁은 geographic focus/약한 shading-only relief",
+        "observation": "9장에 마지막 확대 명암 차이 작음",
+        "decision": "기여 범위/gradient 보완",
+        "evidenceIds": [
+          "F-092"
+        ]
+      },
+      {
+        "seq": 3,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "최종 geographic90–330km shading relief/6회 local sunlight 가림",
+        "observation": "9장+8초 자동 영상; 일부 골/흰능선 개선, 실사 결 미달",
+        "decision": "중간추천TUNE; 사용자채택별도",
+        "evidenceIds": [
+          "F-092",
+          "D-127"
+        ]
+      },
+      {
+        "seq": 4,
+        "mode": "considered",
+        "result": "not_tested",
+        "approach": "동일 footprint 추가 volume층",
+        "observation": null,
+        "decision": "최종국소명암미달때재검토",
+        "evidenceIds": [
+          "D-127"
+        ]
+      },
+      {
+        "seq": 5,
+        "mode": "feedback",
+        "result": "improved",
+        "approach": "사용자가 명암과 별개로 선명한texture 결을 요구",
+        "observation": "D127명암보완으로texture목표달성을보장할수없음",
+        "decision": "source gate를앞에추가",
+        "evidenceIds": [
+          "F-093"
+        ]
+      },
+      {
+        "seq": 6,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "실제JangaFX01/06 VDB 투명2K/65°·35° asset probe",
+        "observation": "3native에lobes/골은더읽히나grain/짙은그늘/사진결미달TUNE",
+        "decision": "국소patch 적용전원본시험기록;실제scene완료아님",
+        "evidenceIds": [
+          "F-093",
+          "D-128"
+        ]
+      },
+      {
+        "seq": 7,
+        "mode": "considered",
+        "result": "not_tested",
+        "approach": "업계노트 재독 기반 국소 밀도 결/샘플링 분리 및 거리 LOD 번안",
+        "observation": null,
+        "decision": "source gate 유지; 미실행 시험으로 기록",
+        "evidenceIds": [
+          "F-094",
+          "D-129"
+        ]
+      },
+      {
+        "seq": 8,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "동일 cloud06 1024² close crop, step .35/.175 × denoise OFF/ON",
+        "observation": "입자노이즈와 큰 형태결 구분. 사진섬유결 목표미달TUNE;sampling/denoise단독원인으로확정하지않음",
+        "decision": "다음국소density결시험;실시간기본미변경",
+        "evidenceIds": [
+          "F-095",
+          "D-130"
+        ]
+      },
+      {
+        "seq": 9,
+        "mode": "executed",
+        "result": "failed",
+        "approach": "shader침식/gain 두preview기각 후 native VDB field warp; 새native2장과 기존baseline재사용",
+        "observation": "작은윤곽·골 변화는있으나사진섬유결미달TUNE;후보차이작음;버전경고조건부",
+        "decision": "web적용미추천; 별도source/광학대조후patch",
+        "evidenceIds": [
+          "F-096",
+          "D-131"
+        ]
+      },
+      {
+        "seq": 10,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "보유10source384조사/06와081024native density1/4;08 g.35/0 독립대조",
+        "observation": "density증량으로국소골·돌기명암은더읽히나단단한면과사진섬유결gap남음;source변경만으로미달",
+        "decision": "asset TUNE;web채택보류/신규고해상도source공식example재현다음",
+        "evidenceIds": [
+          "F-097",
+          "D-132"
+        ]
+      },
+      {
+        "seq": 11,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "DisneyZIP/source확보,quarter/half같은camera및half6/64bounce,closeFOV27EV1쌍",
+        "observation": "64bounce는같은half원본의검고돌같은면을완화;source해상도만의원인아님.공식beauty휘도·섬유결gap남음",
+        "decision": "source확보PASS/번안렌더TUNE;같은source광학수렴후국소atlas;사용자채택전",
+        "evidenceIds": [
+          "F-098",
+          "D-133",
+          "O-025"
+        ]
+      },
+      {
+        "seq": 12,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "동일Disneyquarter source fixed32/128, b64/128, 동일noisy/OIDN",
+        "observation": "D134: 동일 Disneyquarter source에서 fixed32→128 samples는 작은 골·윤곽 보존을 조금 개선했으나 사진섬유결 확보는 미달. fixed128의 b64→128은 더 밝고 부드러운 면을 만들었으며 깊이 상한이 아직 결과에 영향을 준다. 따라서 광학 수렴 완료로 선언할 수 없다. noisy pass의 점들은 여전히 노이즈가 많고 source detail로 세지 않는다. native3장+같은 경로 noisy3장, 실제 web 미변경/TUNE.",
+        "decision": "native정지진단PASS/사진결TUNE/실제web미적용",
+        "evidenceIds": [
+          "F-099",
+          "D-134"
+        ]
+      },
+      {
+        "seq": 13,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "같은source 고정빛3각도atlas / bank높이.28+중립sky / northern lab opt-in",
+        "observation": "D135/F100/O026: Disneyquarter source 고정빛3각도atlas를 실제북유럽lab두군집에추가. 바닥alpha실패와푸른탑join기각보존후Y.28/중립sky/bank규모튜닝. 최종native3+기각6,실제runtime8+기각8/휠정역입력확인. 명암/높이개선이나회색·별개덩어리감/사진결TUNE. opt-in만/주도입부미채택/near통과미구현.",
+        "decision": "runtime시험PASS/미감TUNE/주intro채택전/near미구현",
+        "evidenceIds": [
+          "F-100",
+          "D-135",
+          "O-026"
+        ]
+      },
+      {
+        "seq": 14,
+        "mode": "considered",
+        "result": "not_tested",
+        "approach": "sharedcoverage+기본조명+core고주파와중간결/경계의새후보",
+        "observation": null,
+        "decision": "사용자D135재질이질성feedback뒤A→B권장;새후보미실행",
+        "evidenceIds": [
+          "F-101",
+          "D-136"
+        ]
+      },
+      {
+        "seq": 15,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "same satellite coverage + alpha-eroded linear luminance bandpass/core radiance",
+        "observation": "D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear luminance bandpass잔차추가. 최초8/15%9장보존후0/30/60%9runtime+8초자체canvas정역영상. 독립실루엣이질성한요소완화,사진결/선명도개선제한TUNE. R8512²명목.333MiB/실제density·normal아님;주intro미채택/근접통과미구현.",
+        "decision": "runtime진단PASS/선명도TUNE/사용자채택전",
+        "evidenceIds": [
+          "F-102",
+          "D-137"
+        ]
+      },
+      {
+        "seq": 16,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "regional actual VDB density / coarse-fine-height morphology / live sun density shading / 72→192 sampling",
+        "observation": "D138/F103: p.2100 이후 사용자 반례를 반영해 Disney quarter VDB를192×96×192 fine/coarse R8로 변환, 실제 북유럽 lab 두 군집에 고정 배치했다. opacity fade 대신 밀도·높이 morphology와 pixel footprint 필터, 실제 밀도 gradient/태양 방향 가림을 적용했다. 첫72step16장 보존 후192step16장, 자체8초 정역 영상과 실제휠2회 복귀 확인. 국소 윗면·골·높이 개선이나 기존층 재질 연결/사진결/전체motion 미감 TUNE. 추가6.75MiB 명목, 주intro 미채택/지형shadow 보류/서고KEEP/실패2/2 유지.",
+        "decision": "technical diagnostics PASS / material joining and photographic detail TUNE / user adoption pending",
+        "evidenceIds": [
+          "F-103",
+          "D-138"
+        ]
+      },
+      {
+        "seq": 17,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "fixed lower height and satellite support in lower volume density",
+        "observation": "D139/F104: 사용자 D138 어색함·진행 승인에 따라 TUNE 유지. 같은 VDB/source/태양에서 높이 성장을 제거하고5.6/4.4km 고정 높이·낮춘 중심·하단 satellite density 지지를 함께 적용했다. legacy/joined actual12동일구도와8초정역 trace481. static 돌출감 감소, 기존층/새군집 결 차이와 사진결은 미해결TUNE. 새 데이터 없음, GPU짧은30표본 joined p50 2.75–5.14ms. 지형 그림자보류/서고KEEP/실패2/2/주intro미채택 유지.",
+        "decision": "TUNE; height and support changed together, no isolated causality or final acceptance",
+        "evidenceIds": [
+          "F-104",
+          "D-139"
+        ]
+      },
+      {
+        "seq": 18,
+        "mode": "executed",
+        "result": "improved",
+        "approach": "active optical path audit; dual HG and 3-octave approximation plus depth-limited altitude haze",
+        "observation": "D140/F105: 사용자 최선/업계 적용 감사 및 안개 추가 요청. 실제 orbital 경로는 Takram CloudsEffect/TAA/haze 미사용이며 별도 gradient 조명·고정3.9km light trace였음을 확인. 같은 D139 joined source에서 현재/안개/산란+안개 actual18동일구도. dualHG/3octave 근사·box 출구까지 light path·6.5–14.5km depth-aware 안개 추가. 원경 대비 완화/국소 명암 변화는 있으나 heightfield와 VDB의 재질 차이 및 사진결은 미해결TUNE. full atmosphere coupling/TAA/common density는 미구현. GPU3frame 표본은 성능판정 제외. 주intro미채택/그림자보류/서고KEEP/실패2/2 유지.",
+        "decision": "TUNE; not full Takram optics or photographic fidelity",
+        "evidenceIds": [
+          "F-105",
+          "D-140"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "F-092",
+        "kind": "event",
+        "reference": "F-092",
+        "quote": null
+      },
+      {
+        "id": "D-127",
+        "kind": "event",
+        "reference": "D-127",
+        "quote": null
+      },
+      {
+        "id": "report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_local_detail_2026-10-10.md",
+        "quote": null
+      },
+      {
+        "id": "F-093",
+        "kind": "event",
+        "reference": "F-093",
+        "quote": null
+      },
+      {
+        "id": "D-128",
+        "kind": "event",
+        "reference": "D-128",
+        "quote": null
+      },
+      {
+        "id": "texture-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_texture_source_review_2026-10-11.md",
+        "quote": null
+      },
+      {
+        "id": "F-094",
+        "kind": "event",
+        "reference": "F-094",
+        "quote": null
+      },
+      {
+        "id": "D-129",
+        "kind": "event",
+        "reference": "D-129",
+        "quote": null
+      },
+      {
+        "id": "practitioner-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md",
+        "quote": null
+      },
+      {
+        "id": "F-095",
+        "kind": "event",
+        "reference": "F-095",
+        "quote": null
+      },
+      {
+        "id": "D-130",
+        "kind": "event",
+        "reference": "D-130",
+        "quote": null
+      },
+      {
+        "id": "sampling-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sampling_audit_2026-10-12.md",
+        "quote": null
+      },
+      {
+        "id": "F-096",
+        "kind": "event",
+        "reference": "F-096",
+        "quote": null
+      },
+      {
+        "id": "D-131",
+        "kind": "event",
+        "reference": "D-131",
+        "quote": null
+      },
+      {
+        "id": "density-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_density_detail_2026-10-12.md",
+        "quote": null
+      },
+      {
+        "id": "F-097",
+        "kind": "event",
+        "reference": "F-097",
+        "quote": null
+      },
+      {
+        "id": "D-132",
+        "kind": "event",
+        "reference": "D-132",
+        "quote": null
+      },
+      {
+        "id": "source-optics-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_source_optics_2026-10-12.md",
+        "quote": null
+      },
+      {
+        "id": "F-098",
+        "kind": "event",
+        "reference": "F-098",
+        "quote": null
+      },
+      {
+        "id": "D-133",
+        "kind": "event",
+        "reference": "D-133",
+        "quote": null
+      },
+      {
+        "id": "O-025",
+        "kind": "event",
+        "reference": "O-025",
+        "quote": null
+      },
+      {
+        "id": "disney-source-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_source_2026-10-12.md",
+        "quote": null
+      },
+      {
+        "id": "F-099",
+        "kind": "event",
+        "reference": "F-099",
+        "quote": null
+      },
+      {
+        "id": "D-134",
+        "kind": "event",
+        "reference": "D-134",
+        "quote": null
+      },
+      {
+        "id": "disney-convergence-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_convergence_2026-10-12.md",
+        "quote": null
+      },
+      {
+        "id": "F-100",
+        "kind": "event",
+        "reference": "F-100",
+        "quote": null
+      },
+      {
+        "id": "D-135",
+        "kind": "event",
+        "reference": "D-135",
+        "quote": null
+      },
+      {
+        "id": "O-026",
+        "kind": "event",
+        "reference": "O-026",
+        "quote": null
+      },
+      {
+        "id": "disney-atlas-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_atlas_2026-10-12.md",
+        "quote": null
+      },
+      {
+        "id": "F-101",
+        "kind": "event",
+        "reference": "F-101",
+        "quote": null
+      },
+      {
+        "id": "D-136",
+        "kind": "event",
+        "reference": "D-136",
+        "quote": null
+      },
+      {
+        "id": "material-coherence-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_material_coherence_2026-10-12.md",
+        "quote": null
+      },
+      {
+        "id": "F-102",
+        "kind": "event",
+        "reference": "F-102",
+        "quote": null
+      },
+      {
+        "id": "D-137",
+        "kind": "event",
+        "reference": "D-137",
+        "quote": null
+      },
+      {
+        "id": "shared-detail-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_shared_detail_2026-10-14.md",
+        "quote": null
+      },
+      {
+        "id": "F-103",
+        "kind": "event",
+        "reference": "F-103",
+        "quote": null
+      },
+      {
+        "id": "D-138",
+        "kind": "event",
+        "reference": "D-138",
+        "quote": null
+      },
+      {
+        "id": "regional-volume-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_volume_2026-10-14.md",
+        "quote": null
+      },
+      {
+        "id": "F-104",
+        "kind": "event",
+        "reference": "F-104",
+        "quote": null
+      },
+      {
+        "id": "D-139",
+        "kind": "event",
+        "reference": "D-139",
+        "quote": null
+      },
+      {
+        "id": "regional-join-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_join_2026-10-16.md",
+        "quote": null
+      },
+      {
+        "id": "F-105",
+        "kind": "event",
+        "reference": "F-105",
+        "quote": null
+      },
+      {
+        "id": "D-140",
+        "kind": "event",
+        "reference": "D-140",
+        "quote": null
+      },
+      {
+        "id": "cloud-optics-report",
+        "kind": "document",
+        "reference": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_optics_2026-10-16.md",
+        "quote": null
+      }
+    ],
+    "sourceRecordIds": [
+      "F-092",
+      "D-127",
+      "F-093",
+      "D-128",
+      "F-094",
+      "D-129",
+      "F-095",
+      "D-130",
+      "F-096",
+      "D-131",
+      "F-097",
+      "D-132",
+      "F-098",
+      "D-133",
+      "O-025",
+      "F-099",
+      "D-134",
+      "F-100",
+      "D-135",
+      "O-026",
+      "F-101",
+      "D-136",
+      "F-102",
+      "D-137",
+      "F-103",
+      "D-138",
+      "F-104",
+      "D-139",
+      "F-105",
+      "D-140"
+    ],
+    "resolutionEvidence": [],
+    "artifacts": [
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_local_detail_2026-10-10.md",
+        "role": "report",
+        "description": "세 시험과 국소 명암의 범위/미달 기록"
+      },
+      {
+        "path": "verification/a-cloud-relief-20261010/gallery.html",
+        "role": "gallery",
+        "description": "실제 renderer9장·동일crop·8초영상 비교"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_texture_source_review_2026-10-11.md",
+        "role": "report",
+        "description": "source자료/해상도/후속국소패치기준"
+      },
+      {
+        "path": "verification/a-cloud-texture-assets-20261011/gallery.html",
+        "role": "gallery",
+        "description": "nativeoffline원본결;actual북유럽scene아님"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_practitioner_notes_2026-10-11.md",
+        "role": "report",
+        "description": "기존/새 자료 구분, 구현 세부 및 국소 밀도 시험 권장"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_sampling_audit_2026-10-12.md",
+        "role": "report",
+        "description": "sampling/denoise 독립 조건 및 실제 범위"
+      },
+      {
+        "path": "verification/a-cloud-sampling-20261012/gallery.html",
+        "role": "gallery",
+        "description": "동일밀도4조건 실제offline close crop"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_density_detail_2026-10-12.md",
+        "role": "report",
+        "description": "3preview의기각및native실제밀도변형/OBJECTspace점검"
+      },
+      {
+        "path": "verification/a-cloud-density-20261012/gallery.html",
+        "role": "gallery",
+        "description": "새native2장+baseline재사용 및 preview3라운드"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_source_optics_2026-10-12.md",
+        "role": "report",
+        "description": "보유10원본 및광학두께/산란분리실험"
+      },
+      {
+        "path": "verification/a-cloud-source-optics-20261012/gallery.html",
+        "role": "gallery",
+        "description": "native4+재사용1/source10조사"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_source_2026-10-12.md",
+        "role": "report",
+        "description": "공식XML/ZIP/SHA/해상도/광학번안과축실패"
+      },
+      {
+        "path": "verification/a-disney-cloud-20261012/gallery.html",
+        "role": "gallery",
+        "description": "5native/원형beauty출처분리/확대대조"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_convergence_2026-10-12.md",
+        "role": "report",
+        "description": "동일source 샘플/깊이와noise 분리"
+      },
+      {
+        "path": "verification/a-disney-convergence-20261012/gallery.html",
+        "role": "gallery",
+        "description": "3native+same-path noisy pass"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_disney_cloud_atlas_2026-10-12.md",
+        "role": "report",
+        "description": "source에서runtime까지atlas정합과기각과정"
+      },
+      {
+        "path": "verification/a-disney-atlas-20261012/gallery.html",
+        "role": "gallery",
+        "description": "8실제runtime ON/OFF와기각보존"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_material_coherence_2026-10-12.md",
+        "role": "report",
+        "description": "미실행혼합후보와통과기준"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_shared_detail_2026-10-14.md",
+        "role": "report",
+        "description": "공통구름국소명암시험과한계"
+      },
+      {
+        "path": "verification/a-cloud-shared-detail-20261014/gallery.html",
+        "role": "gallery",
+        "description": "9구도/첫약한후보/정역영상"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_volume_2026-10-14.md",
+        "role": "report",
+        "description": "지역 실제 밀도 구름 제작과 연결·품질 한계"
+      },
+      {
+        "path": "verification/a-cloud-regional-volume-20261014/gallery.html",
+        "role": "gallery",
+        "description": "16구도와72step반례/로컬정역영상"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_join_2026-10-16.md",
+        "role": "report",
+        "description": "고정 높이와 하단 연결 대조·튜닝 기준"
+      },
+      {
+        "path": "verification/a-cloud-regional-join-20261016/gallery.html",
+        "role": "gallery",
+        "description": "legacy/joined12구도와 로컬정역영상"
+      },
+      {
+        "path": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_optics_2026-10-16.md",
+        "role": "report",
+        "description": "활성 광학 경로 감사와 안개·산란 시험"
+      },
+      {
+        "path": "verification/a-cloud-optics-20261016/gallery.html",
+        "role": "gallery",
+        "description": "현재/안개만/산란+안개 세 후보의 실제18구도 대조"
+      }
+    ],
+    "related": [
+      "EXP-037",
+      "EXP-027"
+    ],
+    "time": {
+      "value": null,
+      "unit": null,
+      "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+      "evidenceIds": []
+    },
+    "cost": {
+      "value": null,
+      "unit": null,
+      "unknownReason": "당시 전체 작업의 시간·금전 비용을 일관된 기준으로 측정한 원자료가 없어 수치를 만들지 않았다.",
+      "evidenceIds": []
+    },
+    "review": {
+      "owner": "project-maintainer",
+      "reviewedOn": "2026-10-16",
+      "method": "actual18 samecamera metadata/images; primary docs and installed0.7.6 source; technical scope separated from visual acceptance",
+      "verdict": "new_evidence_review",
+      "userAcceptance": "D139 어색함 지속/최선인지 재검토 요청; D140 채택 전",
+      "limits": [
+        "당시 생성 정지 목업은 구현·ECG 데이터 정확성·실시간 성능 증거가 아니다.",
+        "전체 장기 재생·목표 전시 PC·터치 입력은 이관 작업에서 재검증하지 않았다."
+      ]
+    },
+    "next": {
+      "owner": "project-maintainer",
+      "action": "실제 활성 렌더 경로부터 감사한다. D140에서 orbital은 Takram CloudsEffect/TAA/haze를 실행하지 않음을 확인했다. 현재/고도 안개/산란+안개 비교를 TUNE로 보존하고, 안개로 사진결·접합 해결을 선언하지 않는다. 기존 높이장과 실제 밀도 군집의 공통 밀도·조명 합성→필요한 근접 source 해상도→시간 재구성·정역 안정성을 우선한다.",
+      "doneWhen": "같은 기준 구도의 전후 증거와 적용 범위가 명시되고, 남은 차이에 대해 KEEP/TUNE/REJECT 또는 보류 판단이 기록된다."
+    },
+    "revision": 14,
+    "revisionHistory": [
+      {
+        "revision": 1,
+        "date": "2026-10-10",
+        "reason": "macro 분포 문제가 아닌 흰 윗면 국소 조명 결의 별도 원인/시험을 신규 사례로 기록",
+        "evidenceIds": [
+          "F-092",
+          "D-127"
+        ],
+        "previousRecommendation": null
+      },
+      {
+        "revision": 2,
+        "date": "2026-10-11",
+        "reason": "사용자 원본texture 결 반례로 shading-only 우선 권장을 source-first로 보완",
+        "evidenceIds": [
+          "F-093",
+          "D-128"
+        ],
+        "previousRecommendation": "밝기만 더 올리기 전에 큰 실루엣과 조명용 높이를 분리하고, 목표 주변의 gradient·자기 가림을 연속적으로 추가해 비교한다."
+      },
+      {
+        "revision": 3,
+        "date": "2026-10-11",
+        "reason": "제작자 노트 재탐색으로 source 확보 이후 밀도 결/거리 sampling 방법을 구체화; 실행 미검증",
+        "evidenceIds": [
+          "F-094",
+          "D-129"
+        ],
+        "previousRecommendation": "명암 보완과 texture 원본 확보를 분리한다. kilometre texel의 global map은 원경층으로 유지하고, 확대 군집용 별도 cloud source의 결을 먼저 검토한 뒤 geographic patch/거리별 인계를 비교한다."
+      },
+      {
+        "revision": 4,
+        "date": "2026-10-12",
+        "reason": "D130 sampling/denoise 대조 실행, 목표 결 미달을 유지하며 다음 density결 시험 지정",
+        "evidenceIds": [
+          "F-095",
+          "D-130"
+        ],
+        "previousRecommendation": "명암 보완과 texture 원본 확보를 분리한다. kilometre texel의 global map은 원경층으로 유지하고, 확대 군집용 별도 cloud source의 결을 먼저 검토한 뒤 geographic patch/거리별 인계를 비교한다. 원본 확보 뒤에는 큰 profile·billow/wisp density결·sampling/denoise를 분리 대조하고 동일 footprint의 거리별 detail을 설계한다."
+      },
+      {
+        "revision": 5,
+        "date": "2026-10-12",
+        "reason": "밀도변형시험도목표결미달;미세변형반복보다source/광학대조권장",
+        "evidenceIds": [
+          "F-096",
+          "D-131"
+        ],
+        "previousRecommendation": "명암 보완과 texture 원본 확보를 분리한다. kilometre texel의 global map은 원경층으로 유지하고, 확대 군집용 별도 cloud source의 결을 먼저 검토한 뒤 geographic patch/거리별 인계를 비교한다. 원본 확보 뒤에는 큰 profile·billow/wisp density결·sampling/denoise를 분리 대조하고 동일 footprint의 거리별 detail을 설계한다. D130 동일 소스 4조건에서 sampling/denoise만으로 사진결 확보는 미달; 다음 국소 density 형태결 시험을 진행한다."
+      },
+      {
+        "revision": 6,
+        "date": "2026-10-12",
+        "reason": "광학두께기여확인하되원본사진결미달유지/신규source공식example우선",
+        "evidenceIds": [
+          "F-097",
+          "D-132"
+        ],
+        "previousRecommendation": "명암과 source결을 구별한다. D131 보유VDB의 작은 density warp는 사진섬유결 미달이라 실제web적용을 권하지 않는다. 별도 선명source 및 광학기여를 대조한 뒤 국소patch를 진행한다."
+      },
+      {
+        "revision": 7,
+        "date": "2026-10-12",
+        "reason": "Disneysource확보/광학상한반례확인;source교체만반복하지않음",
+        "evidenceIds": [
+          "F-098",
+          "D-133",
+          "O-025"
+        ],
+        "previousRecommendation": "광학두께·산란방향과원본결을분리한다. D132 density4는명암가독성을높이지만사진섬유결확보와다르다. 기존팩의warp/광학증폭반복보다더고해상도source와공식example조건재현을먼저검토한뒤국소patch로진행한다."
+      },
+      {
+        "revision": 8,
+        "date": "2026-10-12",
+        "reason": "source를고정한sampling/산란깊이대조,미세결과noise분리",
+        "evidenceIds": [
+          "F-099",
+          "D-134"
+        ],
+        "previousRecommendation": "원본해상도와빛전달상한을같은source에서분리검토한다. D133 Disney원본을확보했고6→64bounce는돌같은어두운면을완화했다. 새source교체반복보다같은source의광학·sampling수렴과표시조건을검토한뒤고정빛국소atlas/near인계로진행한다. Cycles번안은공식Hyperion재현과구별한다."
+      },
+      {
+        "revision": 9,
+        "date": "2026-10-12",
+        "reason": "원본확보이후실제궤도스케일/주변광정합이별도필요;고정빛impostor한계확인",
+        "evidenceIds": [
+          "F-100",
+          "D-135",
+          "O-026"
+        ],
+        "previousRecommendation": "샘플·depth 수치를 계속 증량해 사진결을 해결한다고 가정하지 않는다. 현재 b128 결과를 채택 전 후보로 유지하고, 같은 source를 실제 궤도 화면의 구름 크기와 빛 방향에 맞춘 소형 국소 atlas로 시험한다. 확대 주변의 명암/결/footprint와 거리별 인계는 따로 검토하며, 근접 사진결·완전 광학수렴은 TUNE로 남긴다."
+      },
+      {
+        "revision": 10,
+        "date": "2026-10-12",
+        "reason": "사용자이질성반례로독립atlas정합후보에서큰형태공유와국소detail계층연결권장",
+        "evidenceIds": [
+          "F-101",
+          "D-136"
+        ],
+        "previousRecommendation": "실제궤도구도에서국소atlas의군집위치·규모·위성층색정합을먼저검토한다. source원형의높이/sky를그대로붙여품질을보장하지않는다. fixed-lightimpostor의평면감/각도ghost/반복형태는별도gate;유지되면같은footprint와거리별인계를시험하고near통과는3D깊이후보로분리한다."
+      },
+      {
+        "revision": 11,
+        "date": "2026-10-14",
+        "reason": "공통형태시험실행/독립형태제거와사진결gap구별",
+        "evidenceIds": [
+          "F-102",
+          "D-137"
+        ],
+        "previousRecommendation": "국소결은기존구름의큰형태/coverage/기본조명에연결해시험한다. D135독립fixed-lightRGBA는사용자가재질이질성을지적했다. 같은weather마스크내부에boundedcore detail을넣는A부터,중간결/경계연결B,필요시공통density C로진행한다.새혼합후보는미실행/효과미검증이며사진결과씬정합TUNE를유지한다."
+      },
+      {
+        "revision": 12,
+        "date": "2026-10-14",
+        "reason": "사용자 p.21 이후 반례로 실제 국소 density 에셋 형태 인계 시험",
+        "evidenceIds": [
+          "F-103",
+          "D-138"
+        ],
+        "previousRecommendation": "공통형태/조명에서국소결을시험하고재질정합과사진결gate를분리한다. D137은같은위성층의signedluminance잔차로독립sprite문제를줄였지만선명도개선은제한TUNE. 원경mip와core마스크유지,후속은같은형태의중간결/lighting normal B또는공통density C. 잔차강도만올려사진결완료로판정하지않는다."
+      },
+      {
+        "revision": 13,
+        "date": "2026-10-16",
+        "reason": "사용자 D138 어색함 반영; 성장과 재질 연결 분리",
+        "evidenceIds": [
+          "F-104",
+          "D-139"
+        ],
+        "previousRecommendation": "p.21 이후 실제 형태가 부족하면 국소 실제 density 에셋을 시험한다. D138은 원경 coarse→근접 fine 밀도/높이 형태 인계와 같은 태양 재조명으로 윗면·골을 보완했다. 새 군집/기존층 연결 및 사진결은 별도 TUNE이며 density 추가 자체를 최종 품질로 판정하지 않는다. 원경·근접 정역 camera 대조, ray sampling 흔적과 source voxel 확대를 분리하고 필요한 subregion만 증량한다."
+      },
+      {
+        "revision": 14,
+        "date": "2026-10-16",
+        "reason": "사용자의 업계 방식 적용 감사 요청; 실제 활성 pass의 광학 gap 확인",
+        "evidenceIds": [
+          "F-105",
+          "D-140"
+        ],
+        "previousRecommendation": "국소 실제 density 에셋의 도입은 TUNE로 두고 먼저 기존층과의 연결을 맞춘다. D139은 고정 높이/낮춘 중심/하단 위성분포 지지로 성장·돌출감을 줄였지만 source 결 차이는 남는다. 재질·footprint 연결→필요한 근접 subregion 해상도→정역 안정성을 각각 통과시킨 뒤 near 통합한다. 진행 승인을 미감 채택으로 바꾸지 않는다."
+      }
+    ]
+  },
+  "reportSha256": "9dfe1e7a3698cb4454679fd06dbe806bf7ac68544ac925a2b65828c5af482825",
+  "actualLabChanged": true,
+  "mainIntroAdopted": false
+}

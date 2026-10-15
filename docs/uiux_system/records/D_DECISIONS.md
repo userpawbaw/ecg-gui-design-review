@@ -3411,3 +3411,27 @@ D138의 p.19→.25 높이 성장을 없애고 두 군집의 높이를5.6/4.4km�
 ### 실행 결과 / F104 [캡처][코드]
 D139/F104: 사용자 D138 어색함·진행 승인에 따라 TUNE 유지. 같은 VDB/source/태양에서 높이 성장을 제거하고5.6/4.4km 고정 높이·낮춘 중심·하단 satellite density 지지를 함께 적용했다. legacy/joined actual12동일구도와8초정역 trace481. static 돌출감 감소, 기존층/새군집 결 차이와 사진결은 미해결TUNE. 새 데이터 없음, GPU짧은30표본 joined p50 2.75–5.14ms. 지형 그림자보류/서고KEEP/실패2/2/주intro미채택 유지.
 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_join_2026-10-16.md
+
+## D-140. 업계 적용 감사를 거쳐 산란 조명과 고도 안개층을 독립 비교한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-16 [대화][코드][문헌][추론] |
+| 상태 | 실행한 비교 후보 / TUNE |
+| 연결 | D-139 / F-104 / F-105 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자가 현재가 최선인지와 업계 방식 적용 수준을 요청했고, 어색함이 남으면 안개층 추가를 승인했다. 감사 결과 orbital=true에서는 Takram CloudsEffect/TAA/haze가 빠지고 custom orbital pass가 실행된다. 현재 VDB source/ray extinction/filter는 있지만 Lambert 유사 gradient lighting, 짧은 고정3.9km light trace, 단순 거리색 혼합이다. 공식 cloud optics 전체를 적용한 구현이 아니다.
+### 검토한 선택지
+지금 값만 계속 조절, 실제 Takram 밀도/optical chain 통합, 국소 산란 근사와 깊이/고도 안개층 비교. 전체 통합 전 영향 분리를 위해 D139고정높이 후보를 기준으로 현재/안개/산란+안개3후보.
+### 고른 것과 근거
+Skybolt 제작 노트의 HG+다중산란 근사/weighted cloud distance 대기합성, Epic multiple scattering/aerial perspective, Takram 공식fog layer/phase/haze와 로컬0.7.6 소스를 확인한다. gradient 표면광 대신 dualHG/3octave 근사, 군집을 빠져나갈 때까지6단계 광학깊이, 실제 cloud weighted depth와 ground depth로 종료하는 고도6.5–14.5km 안개를 시험한다. 새안개는 coarse 위성분포를 따라 world 고정, 임의blur/스크롤fade아님. Bruneton LUT대기 전체 재현이나 광학수렴이라 주장하지 않는다.
+### 버린 것과 이유
+UI의 Takram hazeDensityScale만 변경하면 orbital 경로에 적용되지 않는다. 전체screen whiteoverlay는 깊이단서와 밝은세부를 함께 지운다. TAA/공통density 전체통합은 후속구조작업으로 남기고 이번scope에 완료로표시하지 않는다.
+### 되돌려야 하는 조건
+안개가 흰윗면/지형을 가리거나 접합차이를 흐림으로만 숨기면 약화·기각. scattering이 과노출/어두운회색을 만들면 현재조명+안개후보보존. .18/.21/.235/.25/.27/.29 ×3 실제비교와 정역자료, 기술PASS와미감채택분리. 지형그림자보류/서고KEEP/실패2/2/fallback/주intro미채택유지.
+
+### 실행 결과 / F105 [캡처][코드]
+D140/F105: 사용자 최선/업계 적용 감사 및 안개 추가 요청. 실제 orbital 경로는 Takram CloudsEffect/TAA/haze 미사용이며 별도 gradient 조명·고정3.9km light trace였음을 확인. 같은 D139 joined source에서 현재/안개/산란+안개 actual18동일구도. dualHG/3octave 근사·box 출구까지 light path·6.5–14.5km depth-aware 안개 추가. 원경 대비 완화/국소 명암 변화는 있으나 heightfield와 VDB의 재질 차이 및 사진결은 미해결TUNE. full atmosphere coupling/TAA/common density는 미구현. GPU3frame 표본은 성능판정 제외. 주intro미채택/그림자보류/서고KEEP/실패2/2 유지.
+보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_optics_2026-10-16.md

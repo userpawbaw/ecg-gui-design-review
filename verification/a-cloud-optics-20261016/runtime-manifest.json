@@ -1,0 +1,330 @@
+{
+  "frames": [
+    {
+      "file": "runtime/optics-legacy-p1800.png",
+      "meta": "runtime/optics-legacy-p1800.json",
+      "p": 0.18,
+      "variant": "legacy",
+      "sha256": "4e7b1ed8363d04c38e968d5d86a5b51ddaa6868bb4eed91bc15947b271876b41",
+      "gpu": {
+        "available": true,
+        "count": 2,
+        "p50": 19.182592,
+        "p95": 19.182592
+      },
+      "camera": [
+        220000,
+        820000,
+        650000
+      ]
+    },
+    {
+      "file": "runtime/optics-haze-p1800.png",
+      "meta": "runtime/optics-haze-p1800.json",
+      "p": 0.18,
+      "variant": "haze",
+      "sha256": "f9c998c76e0eed1b4736ed86be5631cb92c043bc31802577ccbbc36d176825fe",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 27.144192,
+        "p95": 31.835136
+      },
+      "camera": [
+        220000,
+        820000,
+        650000
+      ]
+    },
+    {
+      "file": "runtime/optics-scatter-p1800.png",
+      "meta": "runtime/optics-scatter-p1800.json",
+      "p": 0.18,
+      "variant": "scatter",
+      "sha256": "844753de60d0c7f1ec09a5d65126262624d9ce0d1578d27fad232bb9a1575288",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 17.353728,
+        "p95": 22.079488
+      },
+      "camera": [
+        220000,
+        820000,
+        650000
+      ]
+    },
+    {
+      "file": "runtime/optics-legacy-p2100.png",
+      "meta": "runtime/optics-legacy-p2100.json",
+      "p": 0.21,
+      "variant": "legacy",
+      "sha256": "da6dd0c8c16c13c7c5e1b73e3c9a630cfdea69d1f84b293a9221304fb2d3bd9d",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 16.715776,
+        "p95": 22.0928
+      },
+      "camera": [
+        126280.99173553719,
+        411044.32757325313,
+        366003.00525920355
+      ]
+    },
+    {
+      "file": "runtime/optics-haze-p2100.png",
+      "meta": "runtime/optics-haze-p2100.json",
+      "p": 0.21,
+      "variant": "haze",
+      "sha256": "d4b0f388a1002939aeea1dae0f89df8593f340266a13cba7776ad712163186d5",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 23.248896,
+        "p95": 24.654848
+      },
+      "camera": [
+        126280.99173553719,
+        411044.32757325313,
+        366003.00525920355
+      ]
+    },
+    {
+      "file": "runtime/optics-scatter-p2100.png",
+      "meta": "runtime/optics-scatter-p2100.json",
+      "p": 0.21,
+      "variant": "scatter",
+      "sha256": "c21c45ab8ce44adc7a40dac1b2c9ee661de79350bbd97927f5a5ce9a9d07fd84",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 19.972096,
+        "p95": 20.52096
+      },
+      "camera": [
+        126280.99173553719,
+        411044.32757325313,
+        366003.00525920355
+      ]
+    },
+    {
+      "file": "runtime/optics-legacy-p2350.png",
+      "meta": "runtime/optics-legacy-p2350.json",
+      "p": 0.235,
+      "variant": "legacy",
+      "sha256": "3da1a77514083434b6ee0376af638dea669f8215c5c7f0cfad423629a45719fa",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 21.680128,
+        "p95": 21.970944
+      },
+      "camera": [
+        55000,
+        100000,
+        150000
+      ]
+    },
+    {
+      "file": "runtime/optics-haze-p2350.png",
+      "meta": "runtime/optics-haze-p2350.json",
+      "p": 0.235,
+      "variant": "haze",
+      "sha256": "9ccd0584316131c2f2a33f4c38fc42ac6bd6ed9935fb8d207d0c91087cce32ef",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 23.877632,
+        "p95": 24.534016
+      },
+      "camera": [
+        55000,
+        100000,
+        150000
+      ]
+    },
+    {
+      "file": "runtime/optics-scatter-p2350.png",
+      "meta": "runtime/optics-scatter-p2350.json",
+      "p": 0.235,
+      "variant": "scatter",
+      "sha256": "62b76ccb678291166ccce5b6022e9042f50f4ffb38f85f1ce137c5c0eeb8a87e",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 20.837376,
+        "p95": 28.125184
+      },
+      "camera": [
+        55000,
+        100000,
+        150000
+      ]
+    },
+    {
+      "file": "runtime/optics-legacy-p2500.png",
+      "meta": "runtime/optics-legacy-p2500.json",
+      "p": 0.25,
+      "variant": "legacy",
+      "sha256": "a65cc134ae1842b7c8c9ca4899c401d61681a02046a9a59c338da95eaa324d56",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 20.586496,
+        "p95": 22.822912
+      },
+      "camera": [
+        49662.9221665908,
+        88022.66727355483,
+        132724.79289940826
+      ]
+    },
+    {
+      "file": "runtime/optics-haze-p2500.png",
+      "meta": "runtime/optics-haze-p2500.json",
+      "p": 0.25,
+      "variant": "haze",
+      "sha256": "f6bbbe3627024aa24351ae053f35da8e827c7d3dc0e97959499b9df36d3fe43d",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 23.12192,
+        "p95": 29.213696
+      },
+      "camera": [
+        49662.9221665908,
+        88022.66727355483,
+        132724.79289940826
+      ]
+    },
+    {
+      "file": "runtime/optics-scatter-p2500.png",
+      "meta": "runtime/optics-scatter-p2500.json",
+      "p": 0.25,
+      "variant": "scatter",
+      "sha256": "b1c20d38ba10d2b01e2ad1640729e7cdb8904c711432766d92a0e2438c994d50",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 20.790272,
+        "p95": 33.05984
+      },
+      "camera": [
+        49662.9221665908,
+        88022.66727355483,
+        132724.79289940826
+      ]
+    },
+    {
+      "file": "runtime/optics-legacy-p2700.png",
+      "meta": "runtime/optics-legacy-p2700.json",
+      "p": 0.27,
+      "variant": "legacy",
+      "sha256": "d1272f25fba1c97009f4915bfd7432b651a2744edd554f27068661c8398b0707",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 22.863872,
+        "p95": 26.10176
+      },
+      "camera": [
+        32986.80018206643,
+        50598.54346836591,
+        78747.04142011827
+      ]
+    },
+    {
+      "file": "runtime/optics-haze-p2700.png",
+      "meta": "runtime/optics-haze-p2700.json",
+      "p": 0.27,
+      "variant": "haze",
+      "sha256": "d5c900d3c548b18e366239ed3a122c3182c0aada6b36d8feba24a71ccbec3305",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 23.54688,
+        "p95": 27.53536
+      },
+      "camera": [
+        32986.80018206643,
+        50598.54346836591,
+        78747.04142011827
+      ]
+    },
+    {
+      "file": "runtime/optics-scatter-p2700.png",
+      "meta": "runtime/optics-scatter-p2700.json",
+      "p": 0.27,
+      "variant": "scatter",
+      "sha256": "55248c5dd2291291b92450ba5337080024941fa48b877dc6d42b536596549bae",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 24.759296,
+        "p95": 27.11552
+      },
+      "camera": [
+        32986.80018206643,
+        50598.54346836591,
+        78747.04142011827
+      ]
+    },
+    {
+      "file": "runtime/optics-legacy-p2900.png",
+      "meta": "runtime/optics-legacy-p2900.json",
+      "p": 0.29,
+      "variant": "legacy",
+      "sha256": "55275a8e7cc2cbf4bcdef8da1c8166652c8499d3149efaddadd950e6cdc0ab67",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 28.237824,
+        "p95": 33.056768
+      },
+      "camera": [
+        18035.79426490669,
+        17045.880746472478,
+        30353.195266272225
+      ]
+    },
+    {
+      "file": "runtime/optics-haze-p2900.png",
+      "meta": "runtime/optics-haze-p2900.json",
+      "p": 0.29,
+      "variant": "haze",
+      "sha256": "35771453deabb12ce141dae32e8e6f28ff6b6b08979e5027e63cb6402b6ebf93",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 24.992768,
+        "p95": 26.170368
+      },
+      "camera": [
+        18035.79426490669,
+        17045.880746472478,
+        30353.195266272225
+      ]
+    },
+    {
+      "file": "runtime/optics-scatter-p2900.png",
+      "meta": "runtime/optics-scatter-p2900.json",
+      "p": 0.29,
+      "variant": "scatter",
+      "sha256": "b101c03d40c96c9f41e01988bbf36c95029bd5f86695f02113ca9bf613527c80",
+      "gpu": {
+        "available": true,
+        "count": 3,
+        "p50": 22.068224,
+        "p95": 32.70144
+      },
+      "camera": [
+        18035.79426490669,
+        17045.880746472478,
+        30353.195266272225
+      ]
+    }
+  ],
+  "source": "D138 Disney derived fine/coarse R8 reused",
+  "scope": "D140 custom phase/multiple-scattering approximation and bounded altitude haze; not full Takram optics"
+}

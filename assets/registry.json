@@ -205,10 +205,11 @@
         "sha256": "2ac8389afc1519449a9cfdf7efd9fa36780a2177bb47ab58f7a7dda7d247dc8c",
         "bytes": 4453
       },
-      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene)",
+      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene); scripts/assets/desk-lamp-story.py rebuilds it for the Story desk corner (moved to the desk front-right, turned to the keyboard, WebP textures; D-067)",
       "processed": null,
       "used_by": [
-        "prototype/spikes/lab-corner"
+        "prototype/spikes/lab-corner",
+        "prototype/v2/src/story/noise/assets/desk_lamp.glb"
       ],
       "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
     },

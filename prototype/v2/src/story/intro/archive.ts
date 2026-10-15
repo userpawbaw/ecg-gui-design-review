@@ -29,7 +29,12 @@ export async function createArchive(){
  const groupOf=(o:THREE.Object3D)=>{let x:THREE.Object3D|null=o;while(x){for(const [g,i] of Object.entries(manifest.groups))if(x.name===i.object||x.name.startsWith(i.object+'_'))return g;x=x.parent;}return 'shell';};
  const room=gltf.scene;
  // baked material: albedo × decoded light (lightmap on UV1 or per-corner colour), × uFade for scene transitions
- const shared={lmScale:{value:manifest.lm_scale},uFade:{value:0},uExposure:{value:1.3},uSat:{value:.72}};
+ const shared={lmScale:{value:manifest.lm_scale},uFade:{value:0},uExposure:{value:1.3},uSat:{value:.72},
+  // D-067 practical lights added on top of the bake (Story desk corner; off by default so the intro is unchanged):
+  // one spot (desk lamp, only above uLampMinY — no baked shadow, so the desk top stops it) + two emitters facing uScrN (screens)
+  uPrac:{value:0},uLampP:{value:new THREE.Vector3()},uLampD:{value:new THREE.Vector3(0,-1,0)},uLampCos:{value:new THREE.Vector2(.82,.95)},
+  uLampCol:{value:new THREE.Vector3()},uLampMinY:{value:0},uScrP:{value:[new THREE.Vector3(),new THREE.Vector3()]},uScrN:{value:[new THREE.Vector3(0,0,1),new THREE.Vector3(0,0,1)]},
+  uScrCol:{value:[new THREE.Vector3(),new THREE.Vector3()]}};
  const mats:THREE.ShaderMaterial[]=[];
  room.traverse(o=>{
   const m=o as THREE.Mesh;if(!m.isMesh)return;
@@ -42,14 +47,23 @@ export async function createArchive(){
     #ifdef VC
     attribute vec4 color;varying vec3 vLight;
     #endif
-    varying vec2 vUv,vUv1;
+    varying vec2 vUv,vUv1;varying vec3 vWP,vWN;
     vec2 pick(int c){return c==2?uv2:(c==1?uv1:uv);}
-    void main(){vUv=(mapTransform*vec3(pick(mapChannel),1.)).xy;vUv1=uv1;
+    void main(){vUv=(mapTransform*vec3(pick(mapChannel),1.)).xy;vUv1=uv1;vWP=(modelMatrix*vec4(position,1.)).xyz;vWN=normalize(mat3(modelMatrix)*normal);
      #ifdef VC
      vLight=color.rgb;
      #endif
      gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
    fragmentShader:`uniform sampler2D map,lm;uniform bool useMap;uniform vec3 color;uniform float lmScale,alphaTest,uFade,uExposure,uSat;varying vec2 vUv,vUv1;
+    uniform float uPrac,uLampMinY;uniform vec3 uLampP,uLampD,uLampCol,uScrP[2],uScrN[2],uScrCol[2];uniform vec2 uLampCos;varying vec3 vWP,vWN;
+    float win(float d,float r){float k=clamp(1.-pow(min(d/r,1.),4.),0.,1.);return k*k;}   // smooth range cut (bases >= 0, F-042)
+    vec3 practical(vec3 p,vec3 n){
+     vec3 o=vec3(0.);vec3 l=uLampP-p;float d=max(length(l),1e-3);l/=d;
+     float cone=smoothstep(uLampCos.x,uLampCos.y,dot(-l,uLampD));
+     o+=uLampCol*cone*max(dot(n,l),0.)/(d*d+.02)*win(d,2.2)*smoothstep(uLampMinY-.015,uLampMinY+.004,p.y);
+     for(int i=0;i<2;i++){vec3 s=uScrP[i]-p;float e=max(length(s),1e-3);s/=e;
+      o+=uScrCol[i]*max(dot(uScrN[i],-s),0.)*max(dot(n,s),0.)/(e*e+.04)*win(e,1.8);}
+     return o;}
     #ifdef VC
     varying vec3 vLight;
     #endif
@@ -59,7 +73,9 @@ export async function createArchive(){
      #else
      vec3 e=texture2D(lm,vUv1).rgb;
      #endif
-     vec3 c=a.rgb*color*e*e*lmScale*uExposure*uFade;c=mix(vec3(dot(c,vec3(.2126,.7152,.0722))),c,uSat);   // T3: stills match
+     vec3 L=e*e*lmScale;
+     if(uPrac>0.){vec3 n=normalize(vWN);if(!gl_FrontFacing)n=-n;L+=practical(vWP,n)*uPrac;}
+     vec3 c=a.rgb*color*L*uExposure*uFade;c=mix(vec3(dot(c,vec3(.2126,.7152,.0722))),c,uSat);   // T3: stills match
      gl_FragColor=vec4(c,1.);
      #include <tonemapping_fragment>
      #include <colorspace_fragment>
@@ -106,11 +122,22 @@ export async function createArchive(){
   uniforms:{tDiffuse:{value:null},tDepth:{value:null},tLight:{value:lightRT.depthTexture},
    uInvProj:{value:new THREE.Matrix4()},uInvView:{value:new THREE.Matrix4()},uLightVP:{value:lightVP},uCam:{value:new THREE.Vector3()},
    uSun:{value:sunTo},uCol:{value:sunCol},uDensity:{value:.05},uIntensity:{value:1.8},uTime:{value:0},uFrame:{value:0},uOn:{value:0},
-   uHaze:{value:.018},uHazeCol:{value:new THREE.Color(.22,.17,.13)}},
+   uHaze:{value:.018},uHazeCol:{value:new THREE.Color(.22,.17,.13)},
+   // D-067: optional spot-light cone (Story desk lamp) in the same pass — a second pass sampling this depth would read the
+   // target it writes (feedback loop). Marched only inside a sphere around the cone; cut below uCMinY (desk top).
+   uCOn:{value:0},uCLP:{value:new THREE.Vector3()},uCLD:{value:new THREE.Vector3(0,-1,0)},uCCos:{value:new THREE.Vector2(.8,.93)},uCCol:{value:new THREE.Vector3(1,.78,.52)},uCMinY:{value:0}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
   fragmentShader:`precision highp float;
    uniform sampler2D tDiffuse,tDepth,tLight;uniform mat4 uInvProj,uInvView,uLightVP;uniform vec3 uCam,uSun,uCol;
    uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze;uniform vec3 uHazeCol;varying vec2 vUv;
+   uniform float uCOn,uCMinY;uniform vec3 uCLP,uCLD,uCCol;uniform vec2 uCCos;
+   vec3 lampCone(vec3 cam,vec3 rd,float far,float j){
+    vec3 C=uCLP+uCLD*.32;float R=.5;vec3 oc=cam-C;float b=dot(oc,rd),c=dot(oc,oc)-R*R,h=b*b-c;if(h<=0.)return vec3(0.);
+    h=sqrt(h);float t0=max(-b-h,0.),t1=min(-b+h,far);if(t1<=t0)return vec3(0.);
+    const int M=28;float dt=(t1-t0)/float(M),acc=0.;
+    for(int i=0;i<M;i++){vec3 p=cam+rd*(t0+(float(i)+j)*dt);vec3 l=p-uCLP;float dl=max(length(l),1e-3);
+     acc+=smoothstep(uCCos.x,uCCos.y,dot(l/dl,uCLD))*smoothstep(uCMinY-.01,uCMinY+.03,p.y)/(dl*dl+.05)*dt;}
+    return uCCol*acc*.05*uCOn;}
    float ign(vec2 p){return fract(52.9829189*fract(dot(p,vec2(.06711056,.00583715))));}
    float hash(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
    float noise(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);
@@ -119,7 +146,7 @@ export async function createArchive(){
    float hg(float c,float g){float g2=g*g;return (1.-g2)/(4.*3.14159*pow(max(1e-4,1.+g2-2.*g*c),1.5));}
    void main(){
     vec3 col=texture2D(tDiffuse,vUv).rgb;
-    if(uOn<.002){gl_FragColor=vec4(col,1.);return;}
+    if(uOn<.002&&uCOn<.002){gl_FragColor=vec4(col,1.);return;}
     float d=texture2D(tDepth,vUv).x;
     vec4 v=uInvProj*vec4(vUv*2.-1.,d*2.-1.,1.);v/=v.w;vec3 wp=(uInvView*v).xyz;
     vec3 rd=wp-uCam;float len=min(length(rd),9.);rd=normalize(rd);
@@ -134,7 +161,8 @@ export async function createArchive(){
     float ph=hg(dot(uSun,-rd),.55)*4.*3.14159*.25+.25;
     // room air lit by the bounce light (the stills' uniform volume): lifts the shade and softens saturation with depth
     float hz=(1.-exp(-uHaze*min(length(wp-uCam),14.)))*uOn;
-    gl_FragColor=vec4(mix(col,uHazeCol,hz)+uCol*acc*ph*uIntensity*uOn,1.);
+    vec3 cone=uCOn>.002?lampCone(uCam,rd,length(wp-uCam),j):vec3(0.);
+    gl_FragColor=vec4(mix(col,uHazeCol,hz)+uCol*acc*ph*uIntensity*uOn+cone,1.);
    }`});
  vol.uniforms.tLight.value=lightRT.depthTexture;vol.uniforms.uLightVP.value=lightVP;vol.uniforms.uSun.value=sunTo;vol.uniforms.uCol.value=sunCol;
 

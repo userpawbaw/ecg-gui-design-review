@@ -1323,7 +1323,7 @@ GPU 자체 점검(심장 포함·카메라 거리·주인공 가림·근평면 �
 
 | | |
 |---|---|
-| 상태 | 원인 후보 수정(재현은 사용자 GPU에서만). 이 환경(SwiftShader)에서는 수정 전 빌드로도 재현되지 않음 |
+| 상태 | 해결 — 사용자 GPU에서 깜빡임 사라짐 확인(2026-10-15 `[대화]` "깜박임 사라졌어."). 이 환경(SwiftShader)에서는 수정 전 빌드로도 재현되지 않았음. 플레이북 J-003, P-006 |
 | 발견 | 2026-10-14 사용자 녹화 46–49 s `[대화]` `[런타임]` |
 | 영향 | 모든 무대(도입부·Story)의 프레넬 계산, 이후 셰이더 작성 규칙 |
 | 연결 | REVIEW-R1-STORY-20261011 S-20, `prototype/v2/src/story/noise/noiseStage.ts`, `intro/figure.ts`, `intro/globe.ts`, `intro/signalRig.ts`, `intro/archive.ts` |

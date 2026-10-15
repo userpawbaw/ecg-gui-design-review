@@ -58,7 +58,9 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // QA candidates (2026-10-14 user: "후보 아이디어를 제시하고 실제 시연에서 비교할 수 있도록 디버깅용 버튼"): strip close-up composition,
  // shell speed by camera distance, the AC mark, sonar rhythm and the continuous sonar's fade. URL (?comp= …) or the ?debug panel.
  const qp=new URLSearchParams(location.search);
- const QA:Record<string,string>={comp:qp.get('comp')??'A0',speed:qp.get('speed')??'B0',ac:qp.get('ac')??'C0',sonar:qp.get('sonar')??'D0',fade:qp.get('fade')??'Eb'};
+ const QA:Record<string,string>={comp:qp.get('comp')??'A0',speed:qp.get('speed')??'B0',ac:qp.get('ac')??'C0',sonar:qp.get('sonar')??'D0',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L1'};
+ // QA: ?cam=x,y,z,lx,ly,lz,vfov freezes the camera (three frame) for still comparisons
+ const camFix=(()=>{const c=qp.get('cam')?.split(',').map(Number);return c&&c.length>=7?{p:new THREE.Vector3(c[0],c[1],c[2]),l:new THREE.Vector3(c[3],c[4],c[5]),fov:c[6]}:null;})();
  const U=(f:string)=>new URL(`./assets/${f}`,import.meta.url).href;
  const story:Story=await (await fetch(U('story.json'))).json();
  const A=story.figure_anchor;
@@ -189,7 +191,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const trimBoxes=[new THREE.Box3(STRIP_C.clone().add(new THREE.Vector3(-.165,-.032,-.04)),STRIP_C.clone().add(new THREE.Vector3(.165,.055,.04))),
   A2T(-2.63,3.46,.775,-2.17,4.04,1.28),      // PC case + CRT body/back/screen (DESK −2.35, 3.55)
   A2T(-2.63,3.18,.775,-2.17,3.36,.83),       // keyboard
-  A2T(-1.71,3.74,.815,-1.29,4.06,.94)];      // ECG device on the cart (CART −1.5, 3.9)
+  A2T(-1.71,3.74,.815,-1.29,4.06,.94),       // ECG device on the cart (CART −1.5, 3.9)
+  A2T(-1.96,3.54,.775,-1.84,3.86,1.23)];     // baked desk lamp (shade toward the back of the desk) → desk_lamp.glb, turned to the keyboard (D-067)
  {const inAny=(p:THREE.Vector3)=>trimBoxes.some(b=>b.containsPoint(p));
   const a=new THREE.Vector3(),b=new THREE.Vector3(),c=new THREE.Vector3();
   arch.room.updateMatrixWorld(true);arch.room.traverse(o=>{const m=o as THREE.Mesh;if(!m.isMesh)return;const g=m.geometry,P=g.getAttribute('position');
@@ -202,6 +205,34 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
    if(keep.length<idx.length){g.setIndex(keep);if(g.groups.length){g.clearGroups();out.forEach(x=>g.addGroup(x.start,x.count,x.materialIndex));}}});}
  const strip=(await loader.loadAsync(U('power_strip.glb'))).scene;scene.add(strip);
  const workstation=(await loader.loadAsync(U('workstation.glb'))).scene;scene.add(workstation);
+ // D-067 (user 2026-10-15 "조명은 A+B로"): A desk lamp on (warm pool on the desk + a light cone), B screens glow (no content).
+ // Added on top of the bake: archive.ts practical() for the baked room, three lights for the PBR props, a light cone marched in the archive shaft pass.
+ const lampInfo:{bulb:number[],dir:number[]}=await (await fetch(U('desk_lamp.json'))).json();
+ const LAMP_P=new THREE.Vector3(...lampInfo.bulb),LAMP_D=new THREE.Vector3(...lampInfo.dir).normalize(),DESK_TOP=.775;
+ const lamp=(await loader.loadAsync(U('desk_lamp.glb'))).scene;scene.add(lamp);
+ const bulbMats:THREE.MeshStandardMaterial[]=[],screenMats:THREE.MeshStandardMaterial[]=[],emit0=new Map<THREE.MeshStandardMaterial,[THREE.Color,number]>();
+ lamp.traverse(o=>{const m=(o as THREE.Mesh).material as THREE.MeshStandardMaterial|undefined;if(m?.name?.endsWith('_light'))bulbMats.push(m);});
+ // CRT glass: a soft radial glow, brighter in the middle (no picture, no waveform — decorative space)
+ const crtTex=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d')!,r=g.createRadialGradient(64,64,6,64,64,78);
+  r.addColorStop(0,'#ffffff');r.addColorStop(.55,'#9aa6b4');r.addColorStop(1,'#1c2026');g.fillStyle=r;g.fillRect(0,0,128,128);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;})();
+ workstation.traverse(o=>{const m=(o as THREE.Mesh).material as THREE.MeshStandardMaterial|undefined;if(!m)return;
+  if(m.name==='ws_crt_glass'||m.name==='ws_ecg_screen')emit0.set(m,[m.emissive.clone(),m.emissiveIntensity]);   // L0 = as before
+  if(m.name==='ws_crt_glass'){m.roughness=.4;screenMats.push(m);}   // rougher: no point-light hotspot on the glass
+  else if(m.name==='ws_ecg_screen'){screenMats.push(m);}});
+ const V3t=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
+ const CRT_P=V3t(-2.40,1.155,-3.49),CRT_N=new THREE.Vector3(0,0,1),ECG_P=V3t(-1.44,.985,-3.82),ECG_N=new THREE.Vector3(0,.42,.91).normalize();
+ const lampLight=new THREE.SpotLight(0xffc98f,0,2.4,.62,.55,2);lampLight.position.copy(LAMP_P);lampLight.target.position.copy(LAMP_P.clone().add(LAMP_D));scene.add(lampLight,lampLight.target);
+ const crtLight=new THREE.PointLight(0x9fc4e6,0,1.8,2);crtLight.position.copy(CRT_P).addScaledVector(CRT_N,.3);scene.add(crtLight);
+ const ecgLight=new THREE.PointLight(0x39d27a,0,1.2,2);ecgLight.position.copy(ECG_P).addScaledVector(ECG_N,.08);scene.add(ecgLight);
+ const LK=Number(qp.get('lamp')??1),SK=Number(qp.get('scr')??1),CK=Number(qp.get('cone')??1);   // QA strengths
+ {const su=arch.shared;su.uLampP.value.copy(LAMP_P);su.uLampD.value.copy(LAMP_D);su.uLampMinY.value=DESK_TOP;
+  su.uScrP.value[0].copy(CRT_P);su.uScrN.value[0].copy(CRT_N);su.uScrP.value[1].copy(ECG_P);su.uScrN.value[1].copy(ECG_N);}
+ function setLights(on:boolean){const k=on?1:0,su=arch.shared;
+  su.uPrac.value=k;su.uLampCol.value.set(1,.74,.46).multiplyScalar(.21*LK);su.uScrCol.value[0].set(.55,.68,.85).multiplyScalar(.05*SK);su.uScrCol.value[1].set(.2,.8,.4).multiplyScalar(.025*SK);
+  lampLight.intensity=.9*LK*k;crtLight.intensity=.18*SK*k;ecgLight.intensity=.04*SK*k;
+  bulbMats.forEach(m=>{m.emissive.set(0xffd9a8);m.emissiveIntensity=on?6:0;});
+  screenMats.forEach(m=>{const [c0,i0]=emit0.get(m)!;if(!on){m.emissive.copy(c0);m.emissiveIntensity=i0;m.emissiveMap=null;m.needsUpdate=true;return;}
+   if(m.name==='ws_crt_glass'){m.emissive.set(0x9fc4e6);m.emissiveMap=crtTex;m.emissiveIntensity=.38*SK;}else{m.emissive.set(0x2fa865);m.emissiveIntensity=.22*SK;}m.needsUpdate=true;});cone.uniforms.uOn.value=on?CK:0;}
  // camera from story.json ('ma' for pli/ma, 'side' for bw — the person's right, D-054)
  const camFrom=(name:string)=>{const d=story.cams[name],e=d.rot_euler,eul=new THREE.Euler(e[0],e[1],e[2],'ZYX');   // Blender XYZ euler = Rz·Ry·Rx = three order ZYX
   const f=new THREE.Vector3(0,0,-1).applyEuler(eul);return{def:d,loc:toThree(d.loc,A),look:toThree([d.loc[0]+f.x,d.loc[1]+f.y,d.loc[2]+f.z],A)};};
@@ -271,10 +302,14 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   camera.near=THREE.MathUtils.lerp(Math.min(.05,nearCut),nearCut,cutK);
   camera.updateProjectionMatrix();camera.updateMatrixWorld();
  }
+ // D-067 A: the lamp's light cone is marched in the archive shaft pass (archive.ts lampCone; one pass, no mesh edges; the desk
+ // top, the monitor and the figure cut it through the scene depth)
+ {const u=arch.vol.uniforms;u.uCLP.value.copy(LAMP_P);u.uCLD.value.copy(LAMP_D);u.uCMinY.value=DESK_TOP;}
+ const cone={uniforms:{uOn:arch.vol.uniforms.uCOn}};
  // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
  // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
  const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
- composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);
+ composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);setLights(QA.light==='L1');
  // M-b shallow focus (§10.4): focus rides the wave — fist → shoulder → RA
  const bokeh=new BokehPass(scene,camera,{focus:1,aperture:0,maxblur:.008});composer.addPass(bokeh);bokeh.enabled=false;
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.5,.35,.8);composer.addPass(bloom);composer.addPass(new OutputPass());
@@ -341,6 +376,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   const {breath,fist,breathOff}=poseAt(t);
   const panelK=ss(TP,TP+.6,t)*(last||leaveT<0?1:1-ss(leaveT,leaveT+1.2,t));   // the curtain lifts before the next scene
   camAt(leaveT<0?Math.min(t,HOLD):HOLD+(t-leaveT),breathOff);    // camera before anything is projected
+  if(camFix){camera.position.copy(camFix.p);camera.lookAt(camFix.l);camera.fov=camFix.fov;camera.near=.05;camera.updateProjectionMatrix();camera.updateMatrixWorld();}
   setMorphs(breath,fist);placeElectrodes();
   // inflow markers
   let common=0,ringK=0,leadK=0,front=-1,waveK=0;
@@ -441,7 +477,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  gsap.ticker.add(update);
  return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,selfCheck,
   /** QA candidates (debug panel): set one and rebuild the camera keys when the composition changes */
-  setQa(k:string,v:string){QA[k]=v;if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
+  setQa(k:string,v:string){QA[k]=v;if(k==='light')setLights(v==='L1');if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
   /** QA: jump the scene clock (e.g. back to the strip) */
   jump(tt:number){if(frozen!==null)frozen=tt;else t0=performance.now()-tt*1000;lastT=tt;if(tt<12.5){sClock=tt;contactT=-1;arrive.length=0;arrived.clear();}},
   scroll:(dy:number)=>wave.scroll(dy),toggleOverlay:()=>wave.toggleOverlay(),leave:()=>{if(leaveT<0)leaveT=clock();},get cond(){return data.cond;},figure,arch,

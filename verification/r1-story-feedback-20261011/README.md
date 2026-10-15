@@ -127,7 +127,8 @@ QA 렌더는 모두 `?msaa=0`이다. SwiftShader에서 MSAA 4×는 프레임당 
 
 | 파일 | 내용 |
 |---|---|
-| `30_desk_light_off_on.jpg` | 왼쪽 L0(조명 끔, 이전), 오른쪽 L1(램프 + 화면 빛). 전원 4 s · 7 s, 책상 고정 시점(`?cam=`) |
+| `30_desk_light_off_on.jpg` | 왼쪽 L0(조명 끔, 이전), 오른쪽 L1(램프 + 화면 빛). 전원 4 s · 7 s, 책상 고정 시점(`?cam=`). 심전도 화면 반사 수정 전 |
+| `31_desk_light_final.jpg` | 최종 L1: 전원 4 s(심전도 화면 반사 없음), 책상 고정 시점(원뿔 범위 확대) |
 
 S-24 구현:
 - 램프: 같은 CC0 원본(`desk_lamp_arm_01`)을 책상 앞 오른쪽으로 옮기고 갓을 키보드 쪽으로 돌렸다(`scripts/assets/desk-lamp-story.py`). 구운 램프는 부피로 잘라 냈다.

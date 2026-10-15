@@ -855,3 +855,5 @@ D138/F103: p.2100 이후 사용자 반례를 반영해 Disney quarter VDB를192�
 
 
 2026-10-16 D138 중단 복구: 코드·두 밀도파일 hash·16 final/16 first captures·로컬8초 영상 보존 확인. 종료된4198 서버 재가동, 실제 lab 화면 복구 확인. records299/knowledge51cases196 structural PASS. 원래10-14 제작일은 유지. 업로드 마감과 사용자 미감 리뷰만 남음. 영상/VDB/개인첨부 제외 범위 유지.
+
+2026-10-16 D138 publication verified: 0ff740bec8b8711a16b46da36ae89049ff97e14f remote SHA and shader/density manifest/runtime manifest blobs match. 106 authorized cloud files published; WebM/VDB/ZIP/personal attachments excluded. Local video remains available for review. Resumed live screenshot preserved. Quality TUNE / adoption pending.

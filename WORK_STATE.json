@@ -1633,6 +1633,17 @@
     "shadowDeferred": true,
     "next": "user visual review p.20-.29, then footprint/height/contact and needed subregion detail tuning",
     "resumedOn": "2026-10-16",
-    "resumeCheck": "derived density hashes, saved final16/first16/own video, host server restarted, actual live lab visible, records299/knowledge51cases196 PASS"
+    "resumeCheck": "derived density hashes, saved final16/first16/own video, host server restarted, actual live lab visible, records299/knowledge51cases196 PASS",
+    "publication": {
+      "payloadCommit": "0ff740bec8b8711a16b46da36ae89049ff97e14f",
+      "remoteBlobMatches": [
+        "prototype/spikes/a-climb/cloud-regional-volume.ts",
+        "prototype/spikes/a-climb/assets/disney-volume/manifest.json",
+        "verification/a-cloud-regional-volume-20261014/runtime-manifest.json"
+      ],
+      "scope": "106 files: cloud code/direct rendered images/derived R8/review records; excludes videos/source VDB/ZIP/personal attachments",
+      "verifiedOn": "2026-10-16",
+      "authorization": "cloudUploadAuthorization"
+    }
   }
 }

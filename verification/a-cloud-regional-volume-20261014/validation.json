@@ -1,0 +1,54 @@
+{
+  "runtimeFrames": 16,
+  "firstStepTrialFramesPreserved": 16,
+  "dimensions": "PASS",
+  "sameCamera": "PASS",
+  "densityEncoding": "R8 sqrt, actual quarter VDB resampling",
+  "motionQuality": "pending review",
+  "mainIntroAdopted": false,
+  "ownCanvasVideo": {
+    "nominalMs": 8000,
+    "traceSamples": 482,
+    "minP": 0.18,
+    "maxP": 0.2898,
+    "uploaded": false
+  },
+  "wheel": {
+    "forwardAndReverse": true,
+    "settledP": 0.21,
+    "cameraMatchesStatic": true,
+    "displayMeanAbsoluteDifference": 0.02312065972222222,
+    "limits": "AA/dither pixel difference diagnostic, not complete motion/aesthetic clearance",
+    "input": {
+      "source": "wheel",
+      "wheelCount": 2,
+      "lastWheelPixels": -720,
+      "target": 0.20999999999999996,
+      "current": 0.21,
+      "settled": true,
+      "reducedMotion": false
+    }
+  },
+  "build": "host Vite PASS",
+  "shaderErrors": [],
+  "browser": {
+    "imagesTotal": 33,
+    "imagesLoaded": 33,
+    "videoDurationSeconds": 7.985887,
+    "videoSize": [
+      1280,
+      720
+    ],
+    "readyState": 4,
+    "errors": []
+  },
+  "resume20261016": {
+    "densityHashes": "PASS",
+    "savedEvidencePreserved": true,
+    "server": "restarted4198",
+    "browser": "actual live lab visible; screenshot saved; user input state preserved",
+    "records": 299,
+    "knowledgeCases": 51,
+    "knowledgeOriginals": 196
+  }
+}

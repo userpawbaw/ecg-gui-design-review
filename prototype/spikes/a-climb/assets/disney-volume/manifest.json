@@ -1,0 +1,52 @@
+{
+  "source": "assets/source/disney-cloud/unpacked/wdas_cloud/wdas_cloud_quarter.vdb",
+  "sourceSha256": "279efd7566f4f8f3d05a1cb4529b7e903d64a6b4e91c2edce5824b9b5c9f722a",
+  "dimensions": [
+    192,
+    96,
+    192
+  ],
+  "sourceBounds": [
+    [
+      -261,
+      -81,
+      -358
+    ],
+    [
+      236,
+      256,
+      254
+    ]
+  ],
+  "sourceVoxelSize": [
+    0.8333333134651184,
+    0.8333333134651184,
+    0.8333333134651184
+  ],
+  "sourceDensityNormalizer": 0.9877839088439941,
+  "sourceRange": [
+    0.0,
+    1.0
+  ],
+  "encoding": "sqrt density/normalizer; decode red squared; x-fastest y z",
+  "coarseGaussianSigmaVoxels": 3,
+  "files": [
+    {
+      "file": "fine.r8",
+      "sha256": "36c884deb16f6be42c5fe8a12eba875f5982ec42ea318dc4c7c47fa1450ab4ec",
+      "bytes": 3538944
+    },
+    {
+      "file": "coarse.r8",
+      "sha256": "dd80e3cc4bdc6a7cee0b5038489cfa5631dd4ed9cc5775942368b75d6255fd8f",
+      "bytes": 3538944
+    }
+  ],
+  "nominalR8MiB": 6.75,
+  "license": "Copyright Disney Enterprises Inc 2017, CC BY-SA 3.0, Kevin Udy photo reference",
+  "limitations": [
+    "resampled quarter VDB; not full-resolution original",
+    "artistic world scale; not measured northern weather",
+    "no baked lighting/normal or original integrator equivalence"
+  ]
+}

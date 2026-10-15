@@ -2420,3 +2420,25 @@ D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear l
 최종9snapshot/약한9보존/자체canvas8초영상. 추가R8+mip계산치.333MiB,실제VRAM실측아님. 짧은30표본GPU진단변동있어정확한overhead/FPS/targetPC통과미주장. 영상trace/생성은PASS이나연속미감/자글거림은사용자검토대기.
 ### 놓쳤다면
 실루엣문제제거를texture목표완료로오인하거나광학명암증량만으로선명3D결을계속추구했을것이다.
+
+
+## F-103. 국소 밀도 에셋은 세부 형태를 만들지만 원경 층과의 연결은 별도 검토다
+
+| | |
+|---|---|
+| 상태 | 잠정 / 실제 runtime 대조 / 사용자 채택 전 |
+| 발견 | 2026-10-14 [대화][캡처][영상][코드] · D138 |
+| 영향 | p.21 이후 radiance 잔차에서 실제 지역 density로 접근 변경 |
+
+### 발단 — 무엇이 이상해 보였나
+사용자는 D137의 지역 확대가 어색하고 ‘높은 퀄리티의 질감을 보여줄 수 있는 세부 구름’이 필요하다고 했다. 잔차 강도만으로는 원래 매끈한 높이/윤곽을 바꿀 수 없다.
+### 먼저 의심한 것과 배제 방법
+독립 baked atlas의 색/평면감과 실제 density의 표현을 구별했다. 새 shader는 Disney quarter 실제 scalar density를 사용하고 현재 sun으로 재조명하며, 고정 좌표/큰 형태부터 점진 세부 인계를 한다. 사진 결을 procedural noise로 복원했다고 주장하지 않는다.
+### 결정적 근거
+D138/F103: p.2100 이후 사용자 반례를 반영해 Disney quarter VDB를192×96×192 fine/coarse R8로 변환, 실제 북유럽 lab 두 군집에 고정 배치했다. opacity fade 대신 밀도·높이 morphology와 pixel footprint 필터, 실제 밀도 gradient/태양 방향 가림을 적용했다. 첫72step16장 보존 후192step16장, 자체8초 정역 영상과 실제휠2회 복귀 확인. 국소 윗면·골·높이 개선이나 기존층 재질 연결/사진결/전체motion 미감 TUNE. 추가6.75MiB 명목, 주intro 미채택/지형shadow 보류/서고KEEP/실패2/2 유지. 동일 p의 ON/OFF camera는 같고 ready/context/크기 확인. p.29 첫72step 줄무늬가192step으로 감소한 static 반례를 보존했다. 최종16장과 source/encoding hash는 runtime-manifest.json과 자산 manifest에 있다. 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_volume_2026-10-14.md.
+### 조치와 검토한 대안
+원경 coarse와 근접 fine density/높이 연속 형태 인계를 실제 구현했다. atlas opacity fade와 잔차 증량은 이번 후보로 채택하지 않았다. 기존 위성층 전체 대체/공통 footprint 깊이 인계는 후속이며 아직 실행하지 않았다.
+### 비용 / 영향 범위
+추가 R8 두 벌6.75MiB 명목. RTX3070/1280×720/각30표본 ON GPU p50 3.47–4.87ms, OFF1.82–3.77ms; 정확한 overhead/FPS/targetPC/VRAM 보장 아님. 8초 영상 trace482, 실제wheel 정역2회 p.21 settled복귀/camera동일. pixel 차이 .02312/255는 AA/dither 포함 표시진단이며 미감점수 아님. 전체frame 미감/aliasing 제거는 미확정.
+### 놓쳤다면
+밀도/실루엣이 없는 명암 잔차를 계속 증량하거나, 새 국소 형태가 보이는 것을 기존층과의 완전한 연결로 오인했을 것이다. 새 구현은 TUNE로 유지한다.

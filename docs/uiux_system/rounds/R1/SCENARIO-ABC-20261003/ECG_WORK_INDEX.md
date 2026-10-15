@@ -334,3 +334,8 @@ D136/F101: 사용자D135질감이질성feedback반영. 같은위성분포·기�
 ## 2026-10-14 D137 공통구름국소결시험
 D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear luminance bandpass잔차추가. 최초8/15%9장보존후0/30/60%9runtime+8초자체canvas정역영상. 독립실루엣이질성한요소완화,사진결/선명도개선제한TUNE. R8512²명목.333MiB/실제density·normal아님;주intro미채택/근접통과미구현.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_shared_detail_2026-10-14.md
+
+## 2026-10-14 D138 지역 세부 구름 에셋
+D138/F103: p.2100 이후 사용자 반례를 반영해 Disney quarter VDB를192×96×192 fine/coarse R8로 변환, 실제 북유럽 lab 두 군집에 고정 배치했다. opacity fade 대신 밀도·높이 morphology와 pixel footprint 필터, 실제 밀도 gradient/태양 방향 가림을 적용했다. 첫72step16장 보존 후192step16장, 자체8초 정역 영상과 실제휠2회 복귀 확인. 국소 윗면·골·높이 개선이나 기존층 재질 연결/사진결/전체motion 미감 TUNE. 추가6.75MiB 명목, 주intro 미채택/지형shadow 보류/서고KEEP/실패2/2 유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_volume_2026-10-14.md
+다음: p.20→.29 군집 인계·재질·근접 줄무늬 사용자 리뷰. 별개 군집감이면 고도 고정/footprint 교체 마스크, source 결 부족이면 필요한 subregion 해상도만 보완. 기술 PASS를 미감 채택으로 승격하지 않음.

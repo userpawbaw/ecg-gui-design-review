@@ -3358,3 +3358,32 @@ Disneynative45도linear luminance에서alpha안쪽bandpass잔차,실제VDB밀도
 ### 실행 결과 / F102
 D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear luminance bandpass잔차추가. 최초8/15%9장보존후0/30/60%9runtime+8초자체canvas정역영상. 독립실루엣이질성한요소완화,사진결/선명도개선제한TUNE. R8512²명목.333MiB/실제density·normal아님;주intro미채택/근접통과미구현.
 보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_shared_detail_2026-10-14.md
+
+## D-138. 지역 확대에 VDB 밀도 에셋과 거리별 형태 인계를 시험한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-14 [대화][문헌][코드] |
+| 상태 | 제작 전 결정 / 사용자 p.2100 이후 반례 |
+| 연결 | D-137 / F-102 |
+| CASE | CASE-007 |
+
+### 갈림길
+사용자는 명암 잔차가 아닌 선명한 구름 에셋이 확대되며 자연스럽게 드러나길 요청했다. opacity fade, 고정빛 atlas 교체, 실제 밀도 volume을 비교했다.
+### 검토한 선택지
+기존 명암 잔차 증량, 고정빛 atlas opacity 전환, 실제 VDB 밀도와 거리별 형태 인계를 비교했다.
+
+### 고른 것과 근거
+보유 Disney quarter VDB에서 제한 영역의 R8 3D 밀도와 평활 밀도 에셋을 추출한다. 고정 세계좌표에 국소 군집을 놓고 ray marching / 태양 방향 밀도 가림을 적용한다. 원경은 평활 밀도, 확대는 원본 밀도로 연속 형태 변형한다. 전체 sprite opacity fade 대신 coarse→fine density morph와 화면 footprint에 따른 필터링을 사용한다. Epic 공식 cloud layout/profile/noise 분리 및 erosion 설명을 응용한 별도 구현이며 Epic/Nubis 재현은 아니다.
+### 버린 것과 이유
+D137 잔차 증량은 실루엣과 세부 굴곡을 만들지 못한다. D135 독립 billboard를 그대로 재사용하면 사용자 재질 이질성 반례가 반복된다. 전체 화면 고해상도 volume은 불필요한 비용 증가.
+### 되돌려야 하는 조건
+새 군집이 별도 덩어리로 읽히거나 p.21에서 튀어나오면 TUNE/미채택. .18/.20/.21/.22/.235/.25의 baseline/volume 및 역방향 확인. 성능은 짧은 GPU 진단 범위를 명시하고 실제 VRAM/target PC 통과로 확대하지 않는다. 지형 그림자 보류, 서고 KEEP, 실패 2/2 및 fallback 보존. source 단위는 실제 기상 고도와 같다고 주장하지 않는다.
+
+공식 근거: https://dev.epicgames.com/documentation/en-us/unreal-engine/volumetric-cloud-material-in-unreal-engine (본문 확인: layout/global mask/height profile, Noise_Bias dilation/erosion). https://www.guerrilla-games.com/read/nubis-evolved (제작자 발표 출처 확인; 알고리즘 전체 재현 주장 없음).
+
+### D138 실행 결과 / F103 [캡처][코드]
+D138/F103: p.2100 이후 사용자 반례를 반영해 Disney quarter VDB를192×96×192 fine/coarse R8로 변환, 실제 북유럽 lab 두 군집에 고정 배치했다. opacity fade 대신 밀도·높이 morphology와 pixel footprint 필터, 실제 밀도 gradient/태양 방향 가림을 적용했다. 첫72step16장 보존 후192step16장, 자체8초 정역 영상과 실제휠2회 복귀 확인. 국소 윗면·골·높이 개선이나 기존층 재질 연결/사진결/전체motion 미감 TUNE. 추가6.75MiB 명목, 주intro 미채택/지형shadow 보류/서고KEEP/실패2/2 유지.
+보고서 docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_volume_2026-10-14.md
+
+기록 형식 보완: records checker가 요구한 선택지 절을 분리했다. 결정 의미는 유지하며 먼저 수집한 D138 event snapshot은 원형 보존한다.

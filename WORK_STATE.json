@@ -1617,5 +1617,22 @@
       "authorization": "cloudUploadAuthorization",
       "video": "local_only"
     }
+  },
+  "regionalCloudD138": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_volume_2026-10-14.md",
+    "manifest": "verification/a-cloud-regional-volume-20261014/runtime-manifest.json",
+    "runtimeFrames": 16,
+    "firstStepTrialPreserved": 16,
+    "ownCanvasVideoMs": 8000,
+    "uploadedVideo": false,
+    "source": "actual quarter Disney VDB resampled density, artistic local placement",
+    "nominalR8MiB": 6.75,
+    "candidateAdopted": false,
+    "mainIntroAdopted": false,
+    "status": "actual lab density/shape trial verified / material joining and photo fidelity TUNE",
+    "shadowDeferred": true,
+    "next": "user visual review p.20-.29, then footprint/height/contact and needed subregion detail tuning",
+    "resumedOn": "2026-10-16",
+    "resumeCheck": "derived density hashes, saved final16/first16/own video, host server restarted, actual live lab visible, records299/knowledge51cases196 PASS"
   }
 }

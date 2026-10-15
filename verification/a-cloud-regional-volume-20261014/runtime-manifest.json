@@ -1,0 +1,310 @@
+{
+  "frames": [
+    {
+      "file": "runtime/volume-off-p1800.png",
+      "meta": "runtime/volume-off-p1800.json",
+      "p": 0.18,
+      "enabled": false,
+      "sha256": "4a8355cefeb68520d03919038940761ad049b6b0b873e8240cb61fbd3848bae9",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.694144,
+        "p95": 4.978688
+      },
+      "camera": [
+        220000,
+        820000,
+        650000
+      ],
+      "morph": 0
+    },
+    {
+      "file": "runtime/volume-on-p1800.png",
+      "meta": "runtime/volume-on-p1800.json",
+      "p": 0.18,
+      "enabled": true,
+      "sha256": "19d32f5eb25133ab149452a7defc076d7deb49e174c04db79b58427ecf205ad5",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.81952,
+        "p95": 5.961728
+      },
+      "camera": [
+        220000,
+        820000,
+        650000
+      ],
+      "morph": 0
+    },
+    {
+      "file": "runtime/volume-off-p2000.png",
+      "meta": "runtime/volume-off-p2000.json",
+      "p": 0.2,
+      "enabled": false,
+      "sha256": "4370d3dd0c10fe52551e1607def00a2c5430dcf1d029f8273939c8ca3eb904b7",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 1.821696,
+        "p95": 4.881408
+      },
+      "camera": [
+        170413.2231404958,
+        603621.3373403453,
+        499737.0398196842
+      ],
+      "morph": 0.07407407407407421
+    },
+    {
+      "file": "runtime/volume-on-p2000.png",
+      "meta": "runtime/volume-on-p2000.json",
+      "p": 0.2,
+      "enabled": true,
+      "sha256": "5831732f72fd9edd4a6a5513888c7f7e4a342e2fb9c6e576e3d06a5248899963",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.861504,
+        "p95": 6.449152
+      },
+      "camera": [
+        170413.2231404958,
+        603621.3373403453,
+        499737.0398196842
+      ],
+      "morph": 0.07407407407407421
+    },
+    {
+      "file": "runtime/volume-off-p2100.png",
+      "meta": "runtime/volume-off-p2100.json",
+      "p": 0.21,
+      "enabled": false,
+      "sha256": "68c002210514aec35cf4d6405920664e0efab4b86cc5377d871d638263e96f40",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.172928,
+        "p95": 4.87936
+      },
+      "camera": [
+        126280.99173553719,
+        411044.32757325313,
+        366003.00525920355
+      ],
+      "morph": 0.2592592592592591
+    },
+    {
+      "file": "runtime/volume-on-p2100.png",
+      "meta": "runtime/volume-on-p2100.json",
+      "p": 0.21,
+      "enabled": true,
+      "sha256": "74aa2e11f93980f1b9af91d52f778704d95627116964bbb63bf9ed7ab46fa43c",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.46624,
+        "p95": 6.228992
+      },
+      "camera": [
+        126280.99173553719,
+        411044.32757325313,
+        366003.00525920355
+      ],
+      "morph": 0.2592592592592591
+    },
+    {
+      "file": "runtime/volume-off-p2200.png",
+      "meta": "runtime/volume-off-p2200.json",
+      "p": 0.22,
+      "enabled": false,
+      "sha256": "ad23ffc4f37da4a7209382b1e5333aef5c3133f7757c45e814f400ea9d7882f9",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.05312,
+        "p95": 4.682752
+      },
+      "camera": [
+        85123.9669421487,
+        231450.03756573977,
+        241284.74830954155
+      ],
+      "morph": 0.5
+    },
+    {
+      "file": "runtime/volume-on-p2200.png",
+      "meta": "runtime/volume-on-p2200.json",
+      "p": 0.22,
+      "enabled": true,
+      "sha256": "39c98aa897780280744208bac5109889ea1e96e27b09d7033badffae647b22bc",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.694592,
+        "p95": 6.426624
+      },
+      "camera": [
+        85123.9669421487,
+        231450.03756573977,
+        241284.74830954155
+      ],
+      "morph": 0.5
+    },
+    {
+      "file": "runtime/volume-off-p2350.png",
+      "meta": "runtime/volume-off-p2350.json",
+      "p": 0.235,
+      "enabled": false,
+      "sha256": "9c3300b4d05587aa49d6292311bb1bd5f2d74660cdd56c75fbac845dffe261de",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.765248,
+        "p95": 5.842944
+      },
+      "camera": [
+        55000,
+        100000,
+        150000
+      ],
+      "morph": 0.8437499999999998
+    },
+    {
+      "file": "runtime/volume-on-p2350.png",
+      "meta": "runtime/volume-on-p2350.json",
+      "p": 0.235,
+      "enabled": true,
+      "sha256": "cff10eff8a44f931adcdf508ec1b48f57ab44a0de769d143d6d54f0104e37f4c",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 4.79232,
+        "p95": 7.834624
+      },
+      "camera": [
+        55000,
+        100000,
+        150000
+      ],
+      "morph": 0.8437499999999998
+    },
+    {
+      "file": "runtime/volume-off-p2500.png",
+      "meta": "runtime/volume-off-p2500.json",
+      "p": 0.25,
+      "enabled": false,
+      "sha256": "c311a506dd0e0564ee681fc0bfb24feca9344b6e88788ee204562238be3548e7",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.762752,
+        "p95": 5.364736
+      },
+      "camera": [
+        49662.9221665908,
+        88022.66727355483,
+        132724.79289940826
+      ],
+      "morph": 1
+    },
+    {
+      "file": "runtime/volume-on-p2500.png",
+      "meta": "runtime/volume-on-p2500.json",
+      "p": 0.25,
+      "enabled": true,
+      "sha256": "e1c16006ec227f59fa64f5bcf27dea149724c9ee2c9204bcb7518c8b5dfd13bc",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.529728,
+        "p95": 6.131712
+      },
+      "camera": [
+        49662.9221665908,
+        88022.66727355483,
+        132724.79289940826
+      ],
+      "morph": 1
+    },
+    {
+      "file": "runtime/volume-off-p2700.png",
+      "meta": "runtime/volume-off-p2700.json",
+      "p": 0.27,
+      "enabled": false,
+      "sha256": "068cb53d7342ecad1bca473f8d5e60c48ab8fe6a6e098ec2c61ee0c8251d3015",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.355648,
+        "p95": 6.208512
+      },
+      "camera": [
+        32986.80018206643,
+        50598.54346836591,
+        78747.04142011827
+      ],
+      "morph": 1
+    },
+    {
+      "file": "runtime/volume-on-p2700.png",
+      "meta": "runtime/volume-on-p2700.json",
+      "p": 0.27,
+      "enabled": true,
+      "sha256": "38d231403735f0c39dd49ccd1823867a64d0f059b05efe51e925ecfee3a36559",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 4.4288,
+        "p95": 7.36256
+      },
+      "camera": [
+        32986.80018206643,
+        50598.54346836591,
+        78747.04142011827
+      ],
+      "morph": 1
+    },
+    {
+      "file": "runtime/volume-off-p2900.png",
+      "meta": "runtime/volume-off-p2900.json",
+      "p": 0.29,
+      "enabled": false,
+      "sha256": "e84ba93786735c1a8ebf0cf8218a6f810e6bb3371c1e272bfa2b4e1e3dbe67f9",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.106816,
+        "p95": 5.28896
+      },
+      "camera": [
+        18035.79426490669,
+        17045.880746472478,
+        30353.195266272225
+      ],
+      "morph": 1
+    },
+    {
+      "file": "runtime/volume-on-p2900.png",
+      "meta": "runtime/volume-on-p2900.json",
+      "p": 0.29,
+      "enabled": true,
+      "sha256": "0c8eec1b4cbeece9f307555cf809196136f1c1001cd4989b9dfbe06ac9fd1753",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 4.872192,
+        "p95": 8.04352
+      },
+      "camera": [
+        18035.79426490669,
+        17045.880746472478,
+        30353.195266272225
+      ],
+      "morph": 1
+    }
+  ],
+  "scope": "actual local 3D density trial, no final visual acceptance",
+  "source": "prototype/spikes/a-climb/assets/disney-volume/manifest.json"
+}

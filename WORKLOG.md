@@ -847,3 +847,11 @@ D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear l
 D137 upload scope correction: automatic approval review rejected push containing own canvas WebM because standing upload scope was not accepted as including video. Unpublished latest commit amended to exclude WebM; local video preserved. Only authorized code/images/R8 derived material/review records to be published.
 
 D137 publication verified: f3b2f42e9f5f574b09e7e2fcb9ac24dba08b1c5b remote SHA and shader/runtime-manifest Git blobs matched; WebM absent from uploaded tree/history of this payload. Authorized code/images/data/records published; own canvas video remains local after auto-review denial. Hostfinalbuild/local9snapshots/19galleryimages/video8.012763s trace PASS; aesthetic/continuousmotion quality TUNE. Records297/knowledge51cases194original structural PASS.
+
+## 2026-10-14 D138 지역 세부 구름 에셋
+D138/F103: p.2100 이후 사용자 반례를 반영해 Disney quarter VDB를192×96×192 fine/coarse R8로 변환, 실제 북유럽 lab 두 군집에 고정 배치했다. opacity fade 대신 밀도·높이 morphology와 pixel footprint 필터, 실제 밀도 gradient/태양 방향 가림을 적용했다. 첫72step16장 보존 후192step16장, 자체8초 정역 영상과 실제휠2회 복귀 확인. 국소 윗면·골·높이 개선이나 기존층 재질 연결/사진결/전체motion 미감 TUNE. 추가6.75MiB 명목, 주intro 미채택/지형shadow 보류/서고KEEP/실패2/2 유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_volume_2026-10-14.md
+다음: p.20→.29 군집 인계·재질·근접 줄무늬 사용자 리뷰. 별개 군집감이면 고도 고정/footprint 교체 마스크, source 결 부족이면 필요한 subregion 해상도만 보완. 기술 PASS를 미감 채택으로 승격하지 않음.
+
+
+2026-10-16 D138 중단 복구: 코드·두 밀도파일 hash·16 final/16 first captures·로컬8초 영상 보존 확인. 종료된4198 서버 재가동, 실제 lab 화면 복구 확인. records299/knowledge51cases196 structural PASS. 원래10-14 제작일은 유지. 업로드 마감과 사용자 미감 리뷰만 남음. 영상/VDB/개인첨부 제외 범위 유지.

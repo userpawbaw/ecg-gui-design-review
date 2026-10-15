@@ -56,7 +56,7 @@
 | A-02 | 전원 | 숨 들썩임이 전원 장면에도 같은 크기로 있음. S-12와 같은 개연성 문제 | 전원 장면 숨도 S-12와 같은 상한 | 완료(S-12와 같은 ×0.3) |
 | A-03 | 기저선 | 옆모습에서 카메라 쪽 팔걸이가 몸 아래를 가로지름(2026-10-08 기록에 남은 것) | 가림 검사에서 팔걸이가 가슴·심장 시선을 가리지 않음 | 완료(가림 검사 0) |
 | A-04 | 3장면 | 상태줄 문구 "박동마다 한 겹 · 방법명"은 새 UX(자동 1회 + 스크롤)와 맞지 않음 | 문구가 실제 동작을 말함(도입부 D-055와 같은 규칙) | 완료(자동 "박동마다 한 겹", 스크롤 "입력 → 출력", 겹쳐 보기 "입력 + 출력") |
-| A-05 | 3장면 | 새 버튼(다음·겹쳐 보기·원래대로)의 키보드 조작, 초점 표시, reduced-motion 동작 | 키보드만으로 조작 가능, reduced-motion에서 전환 즉시 | 부분(버튼 Tab·Enter·focus-visible·reduced-motion CSS 구현. 키보드만 조작 브라우저 테스트는 **미작성**) |
+| A-05 | 3장면 | 새 버튼(다음·겹쳐 보기·원래대로)의 키보드 조작, 초점 표시, reduced-motion 동작 | 키보드만으로 조작 가능, reduced-motion에서 전환 즉시 | 완료(2026-10-15 브라우저 테스트 `story noise: keyboard-only control with reduced motion` PASS 6.7 min: reduced-motion에서 자동 1회가 즉시 끝남, PageUp/PageDown 교차, 숨은 버튼은 tabindex −1·aria-hidden, Tab → 겹쳐 보기 focus-visible, Enter·Space 동작, Tab → 다음 장면 Enter로 기저선 이동) |
 | A-06 | 3장면 | 휠 1회로 장면을 넘기던 기존 동작(`NoiseShell` wheel skip)이 스크롤 교차와 충돌 | 휠은 교차에만 쓰임 | 완료(wheel skip 제거, 브라우저 테스트) |
 
 ## 4. 계획 대조표 (계획에 있었는데 구현에서 빠진 것 찾기)

@@ -385,7 +385,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   let common=0,ringK=0,leadK=0,front=-1,waveK=0;
   // shells (pli): D0 = 4 + 5 eighth notes ×2 (S-05); D1 = one per second from 13 s until the scene ends (2026-10-14 candidate)
   if(data.cond==='pli'){
-   const dts=Math.min(.1,Math.max(0,t-lastT)),dc=camera.position.distanceTo(STRIP_C),kd=clamp(dc/REF_D,.3,1);
+   const dts=Math.min(.1,Math.max(0,t-lastT)),dc=camera.position.distanceTo(STRIP_C),kd=clamp(dc/REF_D,.5,1);   // close: half speed at most (.3 kept the first shells inside the strip for ~1 s, 2026-10-15 run)
    const raw=t-lastT;
    if(t<lastT-1e-3){contactT=-1;arrive.length=0;arrived.clear();}
    if(t<12.5||QA.speed==='B0'||raw<0||raw>.5)sClock=t;else sClock+=dts*kd;   // jumps (seek, capture) resync to real time
@@ -394,7 +394,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
     const st=emit>=0?shell(sClock,emit,R_MAX):null;m.visible=!!st&&st.a>.004;if(!st)return;
     m.scale.setScalar(st.r);const inside=camera.position.distanceTo(STRIP_C)/st.r,fr=Math.max(0,1-st.r/R_MAX);
     let a=st.a*.85*(inside<1?.06+.94*ss(.82,1,inside):1);
-    if(QA.speed==='B2')a*=clamp(dc/REF_D,.4,1);                                 // close: fainter too
+    if(QA.speed==='B2')a*=clamp(dc/REF_D,.7,1);                                 // close: fainter too (.4 × rim-only made 13–14.5 s empty)
     if(QA.sonar==='D1'){if(QA.fade==='Ea')a*=.5;else if(QA.fade==='Ec')a*=fr>0?.35*fr**.6/fr**1.35:0;else a*=.8;}   // Ea low start · Eb rim only · Ec slow fade, low peak
     u.uA.value=a;u.uBody.value=QA.sonar==='D1'&&QA.fade==='Eb'?0:.06;m.visible=a>.004;
     if(st.r>=reach&&!arrived.has(emit)){arrived.add(emit);arrive.push(t);if(contactT<0)contactT=t;}

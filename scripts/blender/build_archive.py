@@ -107,7 +107,7 @@ if args.art == 'r6':                                          # D-062 (F-040): R
     pal = args.palette == 'pastel'
     flatten(M_WOOD, '#dccbb0' if pal else '#8a6a48', float(os.environ.get('TEX_KEEP', .15)))
     flatten(M_WALL, '#e8dfcf' if pal else '#bfb39e', float(os.environ.get('TEX_KEEP', .15)))
-    flatten(M_FLOOR, os.environ.get('FLOOR_COL', '#a89075' if pal else '#6a4f36'), .4)
+    flatten(M_FLOOR, os.environ.get('FLOOR_COL', '#86705a' if pal else '#6a4f36'), .4)   # r7 (D-067): darker floor = less bounce into the shade (r6b #a89075)
 BOOK_MATS = [mat(f'book_{i}', srgb(h), 0.72) for i, (h, _) in enumerate(PALETTE)]
 BOOK_W = [w for _, w in PALETTE]
 
@@ -327,7 +327,7 @@ if args.dress:
     for ci in range(5):
         for r in range(11):
             if (ci, r) not in DRESS and rd.random() < .12: DRESS[(ci, r)] = 'sparse'
-    M_PAINT = mat('cell_paint', srgb('#ebe2d0' if args.palette == 'pastel' else '#d9ccb4'), 0.9)
+    M_PAINT = mat('cell_paint', srgb(os.environ.get('CELL_COL', '#ebe2d0' if args.palette == 'pastel' else '#d9ccb4')), 0.9)
     M_DRAWER = mat('drawer_paint', srgb('#cdd5c4' if args.palette == 'pastel' else '#8f8170'), 0.8)
     M_PLASTER = mat('plaster_white', srgb('#efe9de'), 0.85)
     M_PRINT = [mat(f'print_{i}', srgb(h), 0.85) for i, h in enumerate(('#f2ebdc', '#d9805f', '#7f9e9a', '#2f4a5a', '#e3b55c'))]
@@ -821,14 +821,14 @@ if args.art in ('r4', 'r5', 'r6'):                      # D-059: a larger sun di
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 if args.art == 'r6':                                   # D-062 (F-040): the REF key is a near small lamp (crisp edges + falloff inside one light)
     hx0, hx1, hy0, hy1 = HATCH; hc = Vector(((hx0 + hx1) / 2, (hy0 + hy1) / 2, H))
-    KEY_D = float(os.environ.get('KEY_D', 2.2))                  # metres back along the light direction from the hatch centre
+    KEY_D = float(os.environ.get('KEY_D', 1.6))                  # metres back along the light direction from the hatch centre (r7 D-067: 1.6, nearer = more falloff inside the pool; r6b 2.2)
     KEY_TO = Vector(tuple(float(v) for v in os.environ.get('KEY_DIR', '0.45,0.5,-0.74').split(','))).normalized()
-    K = bpy.data.lights.new('key', 'SPOT'); K.energy = float(os.environ.get('KEY_E', 5500)); K.color = srgb(os.environ.get('KEY_COL', '#fff0e2'))
+    K = bpy.data.lights.new('key', 'SPOT'); K.energy = float(os.environ.get('KEY_E', 3500)); K.color = srgb(os.environ.get('KEY_COL', '#fff0e2'))
     K.shadow_soft_size = float(os.environ.get('KEY_R', 0.06)); K.spot_size = math.radians(110); K.spot_blend = 0.3
     ko = bpy.data.objects.new('key', K); ko.location = hc - KEY_TO * KEY_D; ko.rotation_euler = KEY_TO.to_track_quat('-Z', 'Y').to_euler(); scene.collection.objects.link(ko)
     print('r6 key at', tuple(round(v, 2) for v in ko.location), 'energy', K.energy)
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
-w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4 if args.light == 'r1' else float(os.environ.get('SKY_E', {'r4': 2.4, 'r5': 0.8, 'r6': 0.5}.get(args.art, 1.8))) if args.art in ('r3', 'r4', 'r5', 'r6') else 0.9   # cool sky fill vs warm sun (r2: less fill = dark anchors)
+w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 1.4 if args.light == 'r1' else float(os.environ.get('SKY_E', {'r4': 2.4, 'r5': 0.8, 'r6': 0.3}.get(args.art, 1.8))) if args.art in ('r3', 'r4', 'r5', 'r6') else 0.9   # cool sky fill vs warm sun (r2: less fill = dark anchors)
 for y in (() if args.art in ('r3', 'r4', 'r5', 'r6') else (-1.8, 1.3)):              # r3: one source — the bulbs stay off
     L = bpy.data.lights.new('bulb', 'POINT'); L.energy = 60; L.color = srgb('#ffb36b'); L.shadow_soft_size = 0.05
     lo_ = bpy.data.objects.new('bulb', L); lo_.location = (0, y, H - 1.45); scene.collection.objects.link(lo_)
@@ -902,6 +902,8 @@ if args.pose and FIG is not None:                                 # D-050 shots:
         HR = FIG.location + FROT @ Vector(fj['hand_r']); RA = FIG.location + FROT @ Vector(fj['electrodes']['RA']['p'])
         mid = RA.lerp(HR, .5)                                    # behind-right and above the climber: gripping hand + chest (RA through the glass body)
         SHOTS['d7_climb_close'] = (tuple(mid + Vector((.6, -.8, .35))), tuple(mid), 38)
+elif args.nofig and args.art in ('r3', 'r4', 'r5', 'r6'):          # r7 (D-067): the same frontal shots with the figures hidden (sharpC without the ring pattern)
+    SHOTS = {'a1_front': ((0.15, 0.95, 1.6), (0.75, 4.7, 2.75), 52), 'a2_near': ((0.55, 1.25, 1.45), (0.8, 4.7, 2.2), 52)}
 if args.clay:                                                     # D-049 clay gate A: grey diffuse everywhere, no volume, no emission
     CLAY = mat('clay_gate', (.5, .5, .5), .8)
     for o in scene.objects:

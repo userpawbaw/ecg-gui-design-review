@@ -869,3 +869,5 @@ D139 publication verified 2026-10-16: 837bed89c169b0aa36631f63af7f121855eea517 S
 D140/F105: 사용자 최선/업계 적용 감사 및 안개 추가 요청. 실제 orbital 경로는 Takram CloudsEffect/TAA/haze 미사용이며 별도 gradient 조명·고정3.9km light trace였음을 확인. 같은 D139 joined source에서 현재/안개/산란+안개 actual18동일구도. dualHG/3octave 근사·box 출구까지 light path·6.5–14.5km depth-aware 안개 추가. 원경 대비 완화/국소 명암 변화는 있으나 heightfield와 VDB의 재질 차이 및 사진결은 미해결TUNE. full atmosphere coupling/TAA/common density는 미구현. GPU3frame 표본은 성능판정 제외. 주intro미채택/그림자보류/서고KEEP/실패2/2 유지.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_optics_2026-10-16.md
 다음: 안개·산란 시각 비교 후 공통 밀도/조명 합성 → 필요한 근접 source 해상도 → 시간 재구성·정역 안정성.
+
+D140 publication verified 2026-10-16: e635c6bc2e19703ad52dc0ed94aa27ded9e47dea SHA + two shaders/gallery/runtime manifest bytes match. 74 authorized files. Hostbuild/18samecamera/records303/knowledge51cases200 structural PASS. Sparse9sample video/motion and GPU performance NOT passed; material joining/photo fidelity remain TUNE.

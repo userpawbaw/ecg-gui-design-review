@@ -1688,6 +1688,18 @@
     "fullBrunetonCloudCoupling": false,
     "cloudTAA": false,
     "gpuPerformanceGate": "not evaluated: three-frame samples/concurrent contexts",
-    "next": "review 3 modes; shared density and optical integration before source resolution increase"
+    "next": "review 3 modes; shared density and optical integration before source resolution increase",
+    "publication": {
+      "payloadCommit": "e635c6bc2e19703ad52dc0ed94aa27ded9e47dea",
+      "remoteBlobMatches": [
+        "prototype/spikes/a-climb/cloud-regional-volume.ts",
+        "prototype/spikes/a-climb/cloud-orbital.ts",
+        "verification/a-cloud-optics-20261016/runtime-manifest.json",
+        "verification/a-cloud-optics-20261016/gallery.html"
+      ],
+      "verifiedOn": "2026-10-16",
+      "scope": "74 cloud code/direct render image/review record files; video and original VDB excluded",
+      "authorization": "cloudUploadAuthorization"
+    }
   }
 }

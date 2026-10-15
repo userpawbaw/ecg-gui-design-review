@@ -1,7 +1,7 @@
 """Desk lamp for the Story desk corner, aimed at the keyboard (D-067, user 2026-10-15 "조명은 A+B로 진행해줘").
 The baked archive has the same CC0 lamp (Poly Haven desk_lamp_arm_01, build_archive.py place(..., 0.45, rot=200°)) with its
-shade turned to the back of the desk, so a lit pool would land behind the monitor. This rebuilds it at the same height, moved to the
-front-right corner and turned so the shade faces the keyboard; the web trims the baked lamp by volume (noiseStage.ts) and lights from the
+shade turned to the back of the desk, so a lit pool would land behind the monitor. This rebuilds it at the same height, 7 cm right of
+the baked spot, turned so the shade faces the keyboard; the web trims the baked lamp by volume (noiseStage.ts) and lights from the
 bulb position/direction written to desk_lamp.json (three frame: x, z, -y).
 Run: python scripts/assets/desk-lamp-story.py   → prototype/v2/src/story/noise/assets/desk_lamp.glb + desk_lamp.json
 """
@@ -12,8 +12,9 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.pat
 SRC = os.path.join(ROOT, 'assets', 'source', 'ph-desk_lamp_arm_01', 'desk_lamp_arm_01_1k.gltf')
 OUT = os.path.join(ROOT, 'prototype', 'v2', 'src', 'story', 'noise', 'assets')
 DESK, MZ = Vector((-2.35, 3.55, 0)), 0.77
-BASE = Vector((DESK.x + .63, DESK.y - .13))            # front-right of the desk (1.9 x 0.9 m): at the baked spot (+.45, +.15) the shade sat
-                                                        # 2 cm from the PC case and burned its side (web check 2026-10-15)
+BASE = Vector((DESK.x + .52, DESK.y + .10))            # near the baked spot (+.45, +.15): the bw side view (K-03) sees this corner at its left
+                                                        # edge; the front-right corner (+.63, -.13) put a large lit lamp in its foreground
+                                                        # (2026-10-15). At the exact baked spot the shade sat 2 cm from the PC case and burned it.
 AIM = Vector((DESK.x - .05, DESK.y - .28, MZ))          # keyboard centre (workstation-v1.py)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=SRC)

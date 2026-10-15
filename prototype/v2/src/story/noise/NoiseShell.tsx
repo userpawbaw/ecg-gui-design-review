@@ -55,7 +55,7 @@ function NoiseShellInner({bank,order,long,onLab}:{bank:Bank,order:Cond[],long?:L
   const frozen=q.has('t')?Number(q.get('t')):null,reduced=q.get('reduced')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches;
   createNoiseStage({gl:gl.current!,grid:grid.current!,sweep:sweep.current!,overlay:overlay.current!,cells:[...strip.current!.querySelectorAll<HTMLElement>('i')]},
    scenes[0].data,{frozenT:frozen,reduced,last:order.length===1,onEnd:()=>advance.current(),onUi:setUi})
-   .then(s=>{if(dead){s.dispose();return;}stageRef.current=s;(window as unknown as {__noise:unknown}).__noise={set:s.set,renderOnce:s.renderOnce,next:()=>advance.current(),get cond(){return s.cond;},ready:true,probe:s.probe,around:s.around,leave:s.leave,bursts:s.bursts,scroll:s.scroll,overlay:s.toggleOverlay,
+   .then(s=>{if(dead){s.dispose();return;}stageRef.current=s;(window as unknown as {__noise:unknown}).__noise={set:s.set,renderOnce:s.renderOnce,next:()=>advance.current(),get cond(){return s.cond;},ready:true,probe:s.probe,qaPose:s.qaPose,around:s.around,leave:s.leave,bursts:s.bursts,scroll:s.scroll,overlay:s.toggleOverlay,
     check:(o?:{dt?:number,all?:boolean,pathOnly?:boolean,viewOnly?:boolean,maxFg?:number})=>s.selfCheck((o?.all?(['pli','bw','ma'] as Cond[]).map(c=>sceneData(bank,c,long).data):scenes.map(x=>x.data)),o),seconds:scenes.map(x=>x.seconds)};});
   return()=>{dead=true;stageRef.current?.dispose();stageRef.current=null;};
  },[]);

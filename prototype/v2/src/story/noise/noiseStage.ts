@@ -60,6 +60,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const qp=new URLSearchParams(location.search);
  const QA:Record<string,string>={comp:qp.get('comp')??'A0',speed:qp.get('speed')??'B0',ac:qp.get('ac')??'C0',sonar:qp.get('sonar')??'D0',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L1'};
  // QA: ?cam=x,y,z,lx,ly,lz,vfov freezes the camera (three frame) for still comparisons
+ let qaBreath:number|null=null;   // QA (S-10 measurement): fixed breath 0..1
  const camFix=(()=>{const c=qp.get('cam')?.split(',').map(Number);return c&&c.length>=7?{p:new THREE.Vector3(c[0],c[1],c[2]),l:new THREE.Vector3(c[3],c[4],c[5]),fov:c[6]}:null;})();
  const U=(f:string)=>new URL(`./assets/${f}`,import.meta.url).href;
  const story:Story=await (await fetch(U('story.json'))).json();
@@ -373,7 +374,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  function update(){
   const t=clock(),tl=((t%T)+T)%T;frame++;
   // motion
-  const {breath,fist,breathOff}=poseAt(t);
+  const pz=poseAt(t),breath=qaBreath??pz.breath,{fist,breathOff}=pz;
   const panelK=ss(TP,TP+.6,t)*(last||leaveT<0?1:1-ss(leaveT,leaveT+1.2,t));   // the curtain lifts before the next scene
   camAt(leaveT<0?Math.min(t,HOLD):HOLD+(t-leaveT),breathOff);    // camera before anything is projected
   if(camFix){camera.position.copy(camFix.p);camera.lookAt(camFix.l);camera.fov=camFix.fov;camera.near=.05;camera.updateProjectionMatrix();camera.updateMatrixWorld();}
@@ -478,6 +479,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,selfCheck,
   /** QA candidates (debug panel): set one and rebuild the camera keys when the composition changes */
   setQa(k:string,v:string){QA[k]=v;if(k==='light')setLights(v==='L1');if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
+  /** QA (S-10): fix the breath morph (null = data) and show the figure alone on black for a body mask */
+  qaPose(o:{breath?:number|null,mask?:boolean}){if(o.breath!==undefined)qaBreath=o.breath;if(o.mask!==undefined){arch.setFade(o.mask?0:1);[chair,strip,workstation,lamp].forEach(x=>x.visible=!o.mask);}},
   /** QA: jump the scene clock (e.g. back to the strip) */
   jump(tt:number){if(frozen!==null)frozen=tt;else t0=performance.now()-tt*1000;lastT=tt;if(tt<12.5){sClock=tt;contactT=-1;arrive.length=0;arrived.clear();}},
   scroll:(dy:number)=>wave.scroll(dy),toggleOverlay:()=>wave.toggleOverlay(),leave:()=>{if(leaveT<0)leaveT=clock();},get cond(){return data.cond;},figure,arch,

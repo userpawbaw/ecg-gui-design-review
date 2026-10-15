@@ -862,3 +862,5 @@ D138/F103: p.2100 이후 사용자 반례를 반영해 Disney quarter VDB를192�
 D139/F104: 사용자 D138 어색함·진행 승인에 따라 TUNE 유지. 같은 VDB/source/태양에서 높이 성장을 제거하고5.6/4.4km 고정 높이·낮춘 중심·하단 satellite density 지지를 함께 적용했다. legacy/joined actual12동일구도와8초정역 trace481. static 돌출감 감소, 기존층/새군집 결 차이와 사진결은 미해결TUNE. 새 데이터 없음, GPU짧은30표본 joined p50 2.75–5.14ms. 지형 그림자보류/서고KEEP/실패2/2/주intro미채택 유지.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_join_2026-10-16.md
 다음 튜닝: 재질 연결 → 필요한 근접 subregion 해상도 → 정역 안정성. 모든 항목 사용자 시각 통과 뒤 near/커튼 연결.
+
+D139 publication verified 2026-10-16: 837bed89c169b0aa36631f63af7f121855eea517 SHA/shader/runtime manifest match.55 authorized cloud files; ownWebM/sourceVDB/personal attachments excluded. Hostfinalbuild/12samecamera captures/8sec trace481/records301/knowledge51cases198 PASS within stated technical scope. Material joining/photographic fidelity/user adoption TUNE.

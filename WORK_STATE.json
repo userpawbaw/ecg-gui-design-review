@@ -1665,6 +1665,16 @@
       5.6,
       4.4
     ],
-    "next": "review combined fixed-height/lower-support candidate before near traversal integration"
+    "next": "review combined fixed-height/lower-support candidate before near traversal integration",
+    "publication": {
+      "payloadCommit": "837bed89c169b0aa36631f63af7f121855eea517",
+      "remoteBlobMatches": [
+        "prototype/spikes/a-climb/cloud-regional-volume.ts",
+        "verification/a-cloud-regional-join-20261016/runtime-manifest.json"
+      ],
+      "verifiedOn": "2026-10-16",
+      "scope": "55 cloud code/direct render image/review record files; video and source VDB excluded",
+      "authorization": "cloudUploadAuthorization"
+    }
   }
 }

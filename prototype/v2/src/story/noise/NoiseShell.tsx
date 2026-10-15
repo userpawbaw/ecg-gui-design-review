@@ -91,10 +91,10 @@ export function NoiseSequence({bank,onLab}:{bank:Bank,onLab:(t:LabTarget)=>void}
 
 // QA panel (?debug=1, 2026-10-14 user: "실제 시연에서 비교할 수 있도록 디버깅용 버튼"): switches the candidates live on the stage.
 const QA_GROUPS:[string,string,[string,string][]][]=[
- ['comp','멀티탭 구도',[['A0','현재(가까이)'],['A1','멀리'],['A2','위에서']]],
- ['speed','동심원 속도',[['B0','고정'],['B1','거리 비례'],['B2','거리 비례+흐리게']]],
- ['ac','교류 표시',[['C0','말풍선(글자)'],['C1','아이콘만'],['C2','아이콘+60 Hz']]],
- ['sonar','소나',[['D0','4+5 ×2'],['D1','1초마다 계속']]],
+ ['comp','멀티탭 구도',[['A0','이전(가까이)'],['A1','멀리'],['A2','위에서']]],
+ ['speed','동심원 속도',[['B0','이전(고정)'],['B1','거리 비례'],['B2','거리 비례+흐리게']]],
+ ['ac','교류 표시',[['C0','이전(말풍선)'],['C1','아이콘만'],['C2','아이콘+60 Hz']]],
+ ['sonar','소나',[['D0','이전(4+5 ×2)'],['D1','1초마다 계속']]],
  ['fade','계속 소나 투명도',[['Ea','낮은 시작'],['Eb','테두리만'],['Ec','완만한 감쇠']]],
  ['light','책상 조명(D-067)',[['L0','끔(이전)'],['L1','램프 + 화면 빛']]]];
 type QaStage={setQa:(k:string,v:string)=>void,qa:Record<string,string>,jump:(t:number)=>void}|null;

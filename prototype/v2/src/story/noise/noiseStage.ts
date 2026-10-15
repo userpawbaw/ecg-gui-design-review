@@ -340,7 +340,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  }
  // stored-trace timings (per scene)
  // shell clock (B1/B2 slow it near the camera), first contact with the body and each shell's arrival (D1 inflow pulses)
- const REF_D=1.6;let sClock=0,contactT=-1;const arrive:number[]=[],arrived=new Set<number>();
+ const REF_D=1.6;let sClock=0,contactT=-1;const sAt=new Map<number,number>();const arrive:number[]=[],arrived=new Set<number>();
  let T=0,bw:ReturnType<typeof breathFromBaseline>|null=null,drive:ReturnType<typeof createFistDrive>|null=null,PROC=0;
  const breathFixed=(t:number)=>{const u=t%5;return u<2?ss(0,2,u):1-ss(2,5,u);};              // D-053: 2 per 10 s
  // S-14 (user 2026-10-12): fist and red marker follow the stored muscle noise itself (fistDrive.ts) — the fist closes at a
@@ -366,7 +366,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   T=data.input.length/data.fs;bw=data.cond==='bw'?breathFromBaseline(data.input,data.fs):null;
   drive=data.cond==='ma'?createFistDrive(data.input,data.clean,data.fs):null;
   HOLD={pli:18.6,bw:4,ma:31}[data.cond];OUTLEN=data.cond==='ma'?4:1.2;TP={pli:19,bw:11,ma:11}[data.cond];PROC=TP+3;   // panel (right curtain + wave) from TP; strip after the inflow
-  keys=keysFor(data.cond);sClock=0;contactT=-1;arrive.length=0;arrived.clear();
+  keys=keysFor(data.cond);sClock=0;contactT=-1;arrive.length=0;arrived.clear();sAt.clear();
   if(handover)keys[0]={t:0,pos:camera.position.clone(),look:cur.look.clone(),hfov:cur.h};
   bokeh.enabled=data.cond==='ma';shells.forEach(({m})=>{m.visible=false;});
   sweep=mkSweep();wave.reset();ui='';t0=performance.now();if(frozen!==null)frozen=0;resize();
@@ -387,11 +387,14 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   if(data.cond==='pli'){
    const dts=Math.min(.1,Math.max(0,t-lastT)),dc=camera.position.distanceTo(STRIP_C),kd=clamp(dc/REF_D,.5,1);   // close: half speed at most (.3 kept the first shells inside the strip for ~1 s, 2026-10-15 run)
    const raw=t-lastT;
-   if(t<lastT-1e-3){contactT=-1;arrive.length=0;arrived.clear();}
-   if(t<12.5||QA.speed==='B0'||raw<0||raw>.5)sClock=t;else sClock+=dts*kd;   // jumps (seek, capture) resync to real time
+   if(t<lastT-1e-3){contactT=-1;arrive.length=0;arrived.clear();sAt.clear();}
+   if(t<12.5||QA.speed==='B0'||raw<0||raw>.5){if(sClock!==t)sAt.clear();sClock=t;}else sClock+=dts*kd;   // jumps (seek, capture) resync to real time
    shells.forEach(({m,u},i)=>{
-    const n=Math.floor((sClock-13)/1.0)-i,emit=QA.sonar==='D1'?(n>=0?13+n:-1):EMIT[i];
-    const st=emit>=0?shell(sClock,emit,R_MAX):null;m.visible=!!st&&st.a>.004;if(!st)return;
+    // emission on the real clock (once per second / the 4+5 rhythm); only the growth runs on the slowed clock (B1/B2).
+    // Counting emissions on the slowed clock delayed the first shell to ~14.7 s (2026-10-15 continuous run).
+    const n=Math.floor(t-13)-i,emit=QA.sonar==='D1'?(n>=0?13+n:-1):EMIT[i];
+    if(emit>=0&&t>=emit&&!sAt.has(emit))sAt.set(emit,sClock-(t-emit)*(sClock===t?1:kd));   // slowed-clock time of this emission
+    const st=emit>=0&&t>=emit?shell(sClock,sAt.get(emit)??emit,R_MAX):null;m.visible=!!st&&st.a>.004;if(!st)return;
     m.scale.setScalar(st.r);const inside=camera.position.distanceTo(STRIP_C)/st.r,fr=Math.max(0,1-st.r/R_MAX);
     let a=st.a*.85*(inside<1?.06+.94*ss(.82,1,inside):1);
     if(QA.speed==='B2')a*=clamp(dc/REF_D,.7,1);                                 // close: fainter too (.4 × rim-only made 13–14.5 s empty)
@@ -484,7 +487,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   /** QA (S-10): fix the breath morph (null = data) and show the figure alone on black for a body mask */
   qaPose(o:{breath?:number|null,mask?:boolean}){if(o.breath!==undefined)qaBreath=o.breath;if(o.mask!==undefined){arch.setFade(o.mask?0:1);[chair,strip,workstation,lamp].forEach(x=>x.visible=!o.mask);}},
   /** QA: jump the scene clock (e.g. back to the strip) */
-  jump(tt:number){if(frozen!==null)frozen=tt;else t0=performance.now()-tt*1000;lastT=tt;if(tt<12.5){sClock=tt;contactT=-1;arrive.length=0;arrived.clear();}},
+  jump(tt:number){if(frozen!==null)frozen=tt;else t0=performance.now()-tt*1000;lastT=tt;if(tt<12.5){sClock=tt;contactT=-1;arrive.length=0;arrived.clear();sAt.clear();}},
   scroll:(dy:number)=>wave.scroll(dy),toggleOverlay:()=>wave.toggleOverlay(),leave:()=>{if(leaveT<0)leaveT=clock();},get cond(){return data.cond;},figure,arch,
   /** QA: the muscle-noise bursts the fist follows (loop seconds) and the stored loop length */
   bursts:()=>({T,bursts:drive?.bursts??[]}),

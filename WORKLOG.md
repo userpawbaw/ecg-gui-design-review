@@ -857,3 +857,8 @@ D138/F103: p.2100 이후 사용자 반례를 반영해 Disney quarter VDB를192�
 2026-10-16 D138 중단 복구: 코드·두 밀도파일 hash·16 final/16 first captures·로컬8초 영상 보존 확인. 종료된4198 서버 재가동, 실제 lab 화면 복구 확인. records299/knowledge51cases196 structural PASS. 원래10-14 제작일은 유지. 업로드 마감과 사용자 미감 리뷰만 남음. 영상/VDB/개인첨부 제외 범위 유지.
 
 2026-10-16 D138 publication verified: 0ff740bec8b8711a16b46da36ae89049ff97e14f remote SHA and shader/density manifest/runtime manifest blobs match. 106 authorized cloud files published; WebM/VDB/ZIP/personal attachments excluded. Local video remains available for review. Resumed live screenshot preserved. Quality TUNE / adoption pending.
+
+## 2026-10-16 D139 지역 구름 연결감
+D139/F104: 사용자 D138 어색함·진행 승인에 따라 TUNE 유지. 같은 VDB/source/태양에서 높이 성장을 제거하고5.6/4.4km 고정 높이·낮춘 중심·하단 satellite density 지지를 함께 적용했다. legacy/joined actual12동일구도와8초정역 trace481. static 돌출감 감소, 기존층/새군집 결 차이와 사진결은 미해결TUNE. 새 데이터 없음, GPU짧은30표본 joined p50 2.75–5.14ms. 지형 그림자보류/서고KEEP/실패2/2/주intro미채택 유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_join_2026-10-16.md
+다음 튜닝: 재질 연결 → 필요한 근접 subregion 해상도 → 정역 안정성. 모든 항목 사용자 시각 통과 뒤 near/커튼 연결.

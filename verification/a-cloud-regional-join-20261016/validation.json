@@ -1,0 +1,39 @@
+{
+  "runtimeFrames": 12,
+  "sameCamera": "PASS",
+  "renderSize": [
+    1280,
+    720
+  ],
+  "readyContext": "PASS",
+  "build": "host Vite PASS",
+  "adopted": false,
+  "motion": {
+    "canvasVideoGenerated": true,
+    "nominalMs": 8000,
+    "traceCount": 481,
+    "minP": 0.18,
+    "maxP": 0.2898,
+    "quality": "user review pending",
+    "uploaded": false
+  },
+  "http200": [
+    "gallery.html",
+    "runtime-manifest.json",
+    "fidelity.md",
+    "runtime/volume-on-p2000.png",
+    "runtime/volume-joined-p2000.png",
+    "runtime/volume-on-p2100.png",
+    "runtime/volume-joined-p2100.png",
+    "runtime/volume-on-p2350.png",
+    "runtime/volume-joined-p2350.png",
+    "runtime/volume-on-p2500.png",
+    "runtime/volume-joined-p2500.png",
+    "runtime/volume-on-p2700.png",
+    "runtime/volume-joined-p2700.png",
+    "runtime/volume-on-p2900.png",
+    "runtime/volume-joined-p2900.png"
+  ],
+  "browserShaderErrors": [],
+  "browserScreenshot": "browser-live.png"
+}

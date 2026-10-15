@@ -2,16 +2,20 @@
 import * as THREE from 'three';
 export const regionalVolumeShader=`
 uniform sampler3D regionalFine,regionalCoarse;
-uniform float regionalEnabled,regionalMorph;
-vec3 volumeCentre(int i){return i==0?vec3(-14000.,11200.,-9000.):vec3(22000.,10500.,-36000.);}
-vec3 volumeSize(int i){return i==0?vec3(52000.,mix(3600.,8400.,regionalMorph),46000.):vec3(36000.,mix(3000.,6500.,regionalMorph),40000.);}
+uniform float regionalEnabled,regionalMorph,regionalJoined;
+vec3 volumeCentre(int i){return i==0?vec3(-14000.,mix(11200.,10600.,regionalJoined),-9000.):vec3(22000.,mix(10500.,10200.,regionalJoined),-36000.);}
+vec3 volumeSize(int i){return i==0?vec3(52000.,mix(mix(3600.,8400.,regionalMorph),5600.,regionalJoined),46000.):vec3(36000.,mix(mix(3000.,6500.,regionalMorph),4400.,regionalJoined),40000.);}
 vec3 volumeUV(vec3 p,int i){vec3 q=(p-volumeCentre(i))/volumeSize(i);if(i==1)q.xz=vec2(-q.z,q.x);return q+.5;}
 float volumeDensity(vec3 p,int i,float footprint){
  vec3 uv=volumeUV(p,i);if(any(lessThan(uv,vec3(0.)))||any(greaterThan(uv,vec3(1.))))return 0.;
  float c=texture(regionalCoarse,uv).r,f=texture(regionalFine,uv).r;
  float resolved=regionalMorph*(1.-smoothstep(280.,1600.,footprint));
  // Actual density field morphology; alpha is computed from integrated extinction.
- return mix(c*c,f*f,resolved);
+ float d=mix(c*c,f*f,resolved);
+ // D139: only the lower volume inherits the existing satellite footprint.
+ // No rectangle/ellipse cut-out and no screen/time opacity ramp.
+ if(regionalJoined>.5){float support=smoothstep(.22,.62,filteredDensity(geoUV(normalize(p-centre)),max(1800.,footprint)));float lower=1.-smoothstep(.12,.62,uv.y);d*=mix(1.,support,lower);}
+ return d;
 }
 vec4 volumeCluster(vec3 ray,int id){
  vec3 size=volumeSize(id),pos=volumeCentre(id);

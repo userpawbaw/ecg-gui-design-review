@@ -155,13 +155,13 @@ void mainImage(const in vec4 inputColor,const in vec2 uv,out vec4 outputColor){
 
 export class OrbitalCloudEffect extends Effect{
  constructor(){super('OrbitalCloudProxy',fragment,{blendFunction:BlendFunction.NORMAL,uniforms:new Map<string,THREE.Uniform>([
-  ['regionalFine',new THREE.Uniform(null)],['regionalCoarse',new THREE.Uniform(null)],['regionalEnabled',new THREE.Uniform(0)],['regionalMorph',new THREE.Uniform(0)],['materialDetailMap',new THREE.Uniform(null)],['materialDetail',new THREE.Uniform(0)],['localRelief',new THREE.Uniform(0)],['whiteHighlight',new THREE.Uniform(0)],['lightContrast',new THREE.Uniform(0)],['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
+  ['regionalFine',new THREE.Uniform(null)],['regionalCoarse',new THREE.Uniform(null)],['regionalEnabled',new THREE.Uniform(0)],['regionalMorph',new THREE.Uniform(0)],['regionalJoined',new THREE.Uniform(0)],['materialDetailMap',new THREE.Uniform(null)],['materialDetail',new THREE.Uniform(0)],['localRelief',new THREE.Uniform(0)],['whiteHighlight',new THREE.Uniform(0)],['lightContrast',new THREE.Uniform(0)],['massMode',new THREE.Uniform(0)],['pixelAngle',new THREE.Uniform(.001)],['sourceCentre',new THREE.Uniform(new THREE.Vector2(.64,.78))],['rawSource',new THREE.Uniform(0)],['detailAmount',new THREE.Uniform(0)],['cloudDetailMap',new THREE.Uniform(null)],['cloudMap',new THREE.Uniform(null)],['inverseProjection',new THREE.Uniform(new THREE.Matrix4())],
   ['viewRotation',new THREE.Uniform(new THREE.Matrix3())],['geographicRotation',new THREE.Uniform(new THREE.Matrix3())],
   ['eye',new THREE.Uniform(new THREE.Vector3())],['sunLocal',new THREE.Uniform(new THREE.Vector3())],
   ['relief',new THREE.Uniform(1)],['amount',new THREE.Uniform(1)],['coverageBoost',new THREE.Uniform(0)]
  ])});}
  async loadRegional(){const [fine,coarse]=await loadRegionalVolume();this.uniforms.get('regionalFine')!.value=fine;this.uniforms.get('regionalCoarse')!.value=coarse;}
- setRegional(on:boolean,p:number){this.uniforms.get('regionalEnabled')!.value=on?1:0;this.uniforms.get('regionalMorph')!.value=THREE.MathUtils.smoothstep(p,.19,.25);}
+ setRegional(on:boolean,p:number,joined=false){this.uniforms.get('regionalJoined')!.value=joined?1:0;this.uniforms.get('regionalEnabled')!.value=on?1:0;this.uniforms.get('regionalMorph')!.value=THREE.MathUtils.smoothstep(p,.19,.25);}
  async load(url:string){
   const texture=await new THREE.TextureLoader().loadAsync(url);
   texture.colorSpace=THREE.NoColorSpace;texture.wrapS=THREE.RepeatWrapping;texture.wrapT=THREE.ClampToEdgeWrapping;

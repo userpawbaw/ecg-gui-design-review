@@ -339,3 +339,8 @@ D137/F102: 같은위성coverage·형태·기본색/조명내부에Disneylinear l
 D138/F103: p.2100 이후 사용자 반례를 반영해 Disney quarter VDB를192×96×192 fine/coarse R8로 변환, 실제 북유럽 lab 두 군집에 고정 배치했다. opacity fade 대신 밀도·높이 morphology와 pixel footprint 필터, 실제 밀도 gradient/태양 방향 가림을 적용했다. 첫72step16장 보존 후192step16장, 자체8초 정역 영상과 실제휠2회 복귀 확인. 국소 윗면·골·높이 개선이나 기존층 재질 연결/사진결/전체motion 미감 TUNE. 추가6.75MiB 명목, 주intro 미채택/지형shadow 보류/서고KEEP/실패2/2 유지.
 보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_volume_2026-10-14.md
 다음: p.20→.29 군집 인계·재질·근접 줄무늬 사용자 리뷰. 별개 군집감이면 고도 고정/footprint 교체 마스크, source 결 부족이면 필요한 subregion 해상도만 보완. 기술 PASS를 미감 채택으로 승격하지 않음.
+
+## 2026-10-16 D139 지역 구름 연결감
+D139/F104: 사용자 D138 어색함·진행 승인에 따라 TUNE 유지. 같은 VDB/source/태양에서 높이 성장을 제거하고5.6/4.4km 고정 높이·낮춘 중심·하단 satellite density 지지를 함께 적용했다. legacy/joined actual12동일구도와8초정역 trace481. static 돌출감 감소, 기존층/새군집 결 차이와 사진결은 미해결TUNE. 새 데이터 없음, GPU짧은30표본 joined p50 2.75–5.14ms. 지형 그림자보류/서고KEEP/실패2/2/주intro미채택 유지.
+보고서: docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_join_2026-10-16.md
+다음 튜닝: 재질 연결 → 필요한 근접 subregion 해상도 → 정역 안정성. 모든 항목 사용자 시각 통과 뒤 near/커튼 연결.

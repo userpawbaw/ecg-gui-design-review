@@ -1,0 +1,222 @@
+{
+  "frames": [
+    {
+      "file": "runtime/volume-on-p2000.png",
+      "meta": "runtime/volume-on-p2000.json",
+      "p": 0.2,
+      "variant": "on",
+      "sha256": "51fde8c638c46253dd46c081963d7bcfbf7d769a57c9c120961fd04cc4f54476",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.500608,
+        "p95": 3.63008
+      },
+      "camera": [
+        170413.2231404958,
+        603621.3373403453,
+        499737.0398196842
+      ]
+    },
+    {
+      "file": "runtime/volume-joined-p2000.png",
+      "meta": "runtime/volume-joined-p2000.json",
+      "p": 0.2,
+      "variant": "joined",
+      "sha256": "230d2ac842a8099763f5cf247273f477f503e7db9faa02a9e45ab449129693ae",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.751488,
+        "p95": 5.004288
+      },
+      "camera": [
+        170413.2231404958,
+        603621.3373403453,
+        499737.0398196842
+      ]
+    },
+    {
+      "file": "runtime/volume-on-p2100.png",
+      "meta": "runtime/volume-on-p2100.json",
+      "p": 0.21,
+      "variant": "on",
+      "sha256": "a9ddc81e5af8cf5fd828f8531ba4963a54729cdd38a8bb4324cfa1336f1aad1b",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.246656,
+        "p95": 3.800064
+      },
+      "camera": [
+        126280.99173553719,
+        411044.32757325313,
+        366003.00525920355
+      ]
+    },
+    {
+      "file": "runtime/volume-joined-p2100.png",
+      "meta": "runtime/volume-joined-p2100.json",
+      "p": 0.21,
+      "variant": "joined",
+      "sha256": "bef5d0a18075a12c8a37be7743d8ed65900a568c6d5ae11f7ca1aec3720dc8f3",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.93376,
+        "p95": 4.215808
+      },
+      "camera": [
+        126280.99173553719,
+        411044.32757325313,
+        366003.00525920355
+      ]
+    },
+    {
+      "file": "runtime/volume-on-p2350.png",
+      "meta": "runtime/volume-on-p2350.json",
+      "p": 0.235,
+      "variant": "on",
+      "sha256": "1f8df09275654e6538cc9212bc50aea35b3061c8369643c3fa454452edc2335f",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.824192,
+        "p95": 4.9264
+      },
+      "camera": [
+        55000,
+        100000,
+        150000
+      ]
+    },
+    {
+      "file": "runtime/volume-joined-p2350.png",
+      "meta": "runtime/volume-joined-p2350.json",
+      "p": 0.235,
+      "variant": "joined",
+      "sha256": "eb8aa3da09ab2bc42cc6b350c044bcc0799679ceba894fa7c60f1d69889b8056",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.781632,
+        "p95": 5.052416
+      },
+      "camera": [
+        55000,
+        100000,
+        150000
+      ]
+    },
+    {
+      "file": "runtime/volume-on-p2500.png",
+      "meta": "runtime/volume-on-p2500.json",
+      "p": 0.25,
+      "variant": "on",
+      "sha256": "e1c16006ec227f59fa64f5bcf27dea149724c9ee2c9204bcb7518c8b5dfd13bc",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.056192,
+        "p95": 4.76672
+      },
+      "camera": [
+        49662.9221665908,
+        88022.66727355483,
+        132724.79289940826
+      ]
+    },
+    {
+      "file": "runtime/volume-joined-p2500.png",
+      "meta": "runtime/volume-joined-p2500.json",
+      "p": 0.25,
+      "variant": "joined",
+      "sha256": "6ce07ae09868ecb3bf9f26638e5f3ea41e7bfbdc83b33a029390ef7037003420",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 2.90816,
+        "p95": 4.216832
+      },
+      "camera": [
+        49662.9221665908,
+        88022.66727355483,
+        132724.79289940826
+      ]
+    },
+    {
+      "file": "runtime/volume-on-p2700.png",
+      "meta": "runtime/volume-on-p2700.json",
+      "p": 0.27,
+      "variant": "on",
+      "sha256": "38d231403735f0c39dd49ccd1823867a64d0f059b05efe51e925ecfee3a36559",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 3.2512,
+        "p95": 4.245504
+      },
+      "camera": [
+        32986.80018206643,
+        50598.54346836591,
+        78747.04142011827
+      ]
+    },
+    {
+      "file": "runtime/volume-joined-p2700.png",
+      "meta": "runtime/volume-joined-p2700.json",
+      "p": 0.27,
+      "variant": "joined",
+      "sha256": "57e92d64cc27146bebedc7bbc6029f785179a53dab402a698d6b8ae8dc7ad19a",
+      "gpu": {
+        "available": true,
+        "count": 29,
+        "p50": 4.827136,
+        "p95": 6.495232
+      },
+      "camera": [
+        32986.80018206643,
+        50598.54346836591,
+        78747.04142011827
+      ]
+    },
+    {
+      "file": "runtime/volume-on-p2900.png",
+      "meta": "runtime/volume-on-p2900.json",
+      "p": 0.29,
+      "variant": "on",
+      "sha256": "10e176a40bc2400a5a43ac0d3bc70c2c1c089f31f14f8edd1466d2fd159c2f14",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 4.180992,
+        "p95": 6.258688
+      },
+      "camera": [
+        18035.79426490669,
+        17045.880746472478,
+        30353.195266272225
+      ]
+    },
+    {
+      "file": "runtime/volume-joined-p2900.png",
+      "meta": "runtime/volume-joined-p2900.json",
+      "p": 0.29,
+      "variant": "joined",
+      "sha256": "c16a0bc0b60cb8691e3a0f7a40b7f11e0eeabe9c9c59cbd9c1a87aa0c8e235b5",
+      "gpu": {
+        "available": true,
+        "count": 30,
+        "p50": 5.143552,
+        "p95": 6.263808
+      },
+      "camera": [
+        18035.79426490669,
+        17045.880746472478,
+        30353.195266272225
+      ]
+    }
+  ],
+  "source": "same D138 derived R8; no new asset data",
+  "scope": "fixed-height and lower-support combined trial; not isolated causal attribution"
+}

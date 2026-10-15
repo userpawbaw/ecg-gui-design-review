@@ -1645,5 +1645,26 @@
       "verifiedOn": "2026-10-16",
       "authorization": "cloudUploadAuthorization"
     }
+  },
+  "regionalCloudD139": {
+    "report": "docs/uiux_system/rounds/R1/SCENARIO-ABC-20261003/ECG_A_cloud_regional_join_2026-10-16.md",
+    "manifest": "verification/a-cloud-regional-join-20261016/runtime-manifest.json",
+    "runtimeFrames": 12,
+    "videoMs": 8000,
+    "videoUploaded": false,
+    "status": "lower protrusion in static trial / joining and photographic detail TUNE",
+    "userAdopted": false,
+    "mainIntroAdopted": false,
+    "shadowDeferred": true,
+    "tuneOrder": [
+      "material/footprint joining",
+      "needed close source subregion detail",
+      "reverse-motion stability"
+    ],
+    "fixedHeightKm": [
+      5.6,
+      4.4
+    ],
+    "next": "review combined fixed-height/lower-support candidate before near traversal integration"
   }
 }

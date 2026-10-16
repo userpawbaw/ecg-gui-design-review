@@ -40,3 +40,18 @@ Read: shade depth kept (L*5 4) while plain_range rose 5 (a2 now inside REF's ran
 down to ~4.9 % and the room-scale lit share to 44 / 48 %. Off: L*75 a2 65 (REF ≤ 62); sharpC does not move with intensities (layout /
 occlusion question, analysis §5). Files: `a1_front_pastel_r8.jpg`, `a2_near_pastel_r8.jpg`, `a1_front_pastel_r8_nofig.jpg`,
 `r8_compare.jpg` (r7 vs r8), `r8_light_structure.jpg`. Not checked: web bake, softness of the floor bounce by eye (D-061 intent).
+
+## S3 — pool edge back to the ladder at the hands? (CONDITIONAL: user choice, defaults unchanged)
+Key direction x 0.45 (r8) / 0.55 / 0.65 / 0.75 screened at 640×360 (a1); x 0.65 puts the edge at the ladder at the climber's
+hands. Then a 1280×720 light-group render of x 0.65 and a 48-set sweep (a1/a2):
+
+| | L* 5/25/50/75/95 a1 / a2 | plain_range a1 / a2 |
+|---|---|---|
+| r8 (x 0.45) | 4 17 27 61 80 / 4 18 27 65 79 | 55.8 / 58.6 |
+| x 0.65, r8 intensities | 4 17 26 50 78 / 4 17 26 55 78 | 40.6 / 36.0 |
+| x 0.65, key ×1.3 | 7 20 30 55 81 / 7 21 30 59 81 | 45.1 / 48.5 |
+
+With this camera, putting the edge at the hands shrinks the pool in frame and plain_range falls back to the r6b level; buying it back
+with the key lifts the shade (L*5 7). Edge position and in-pool range conflict in the a1/a2 framing. `s3_compare.jpg`: r8 /
+x 0.65 / x 0.65 + key ×1.3 / r6b. A different framing (analysis V1: level camera, narrower lens) changes how much of the frame the
+pool covers, so the choice may be re-opened with the camera.

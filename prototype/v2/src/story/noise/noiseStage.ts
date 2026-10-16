@@ -211,7 +211,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // D-067 (user 2026-10-15 "조명은 A+B로"): A desk lamp on (warm pool on the desk + a light cone), B screens glow (no content).
  // Added on top of the bake: archive.ts practical() for the baked room, three lights for the PBR props, a light cone marched in the archive shaft pass.
  const lampInfo:{bulb:number[],dir:number[]}=await (await fetch(U('desk_lamp.json'))).json();
- const LAMP_P=new THREE.Vector3(...lampInfo.bulb),LAMP_D=new THREE.Vector3(...lampInfo.dir).normalize(),DESK_TOP=.775;
+ const LAMP_P=new THREE.Vector3(...lampInfo.bulb),LAMP_D=new THREE.Vector3(...lampInfo.dir).normalize(),DESK_TOP=.745;   // the baked table top is at 0.76 m (build_archive place(..., 0.76)); .775 shut the lamp off the desk itself
  const lamp=(await loader.loadAsync(U('desk_lamp.glb'))).scene;scene.add(lamp);
  const bulbMats:THREE.MeshStandardMaterial[]=[],screenMats:THREE.MeshStandardMaterial[]=[],emit0=new Map<THREE.MeshStandardMaterial,[THREE.Color,number]>();
  lamp.traverse(o=>{const m=(o as THREE.Mesh).material as THREE.MeshStandardMaterial|undefined;if(m?.name?.endsWith('_light'))bulbMats.push(m);});
@@ -235,12 +235,12 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   lampLight.intensity=.9*LK*k;crtLight.intensity=.18*SK*k;ecgLight.intensity=.04*SK*k;
   bulbMats.forEach(m=>m.emissive.set(0xffd9a8));
   // L2: a brighter, harder-edged pool so the shadows read (first L2 check: shadows invisible in a weak, soft pool)
-  if(fx){su.uLampCol.value.multiplyScalar(2.2);su.uLampCos.value.set(.86,.965);arch.vol.uniforms.uCCos.value.set(.86,.95);lampLight.intensity*=2.2;lampLight.angle=.54;lampLight.penumbra=.3;}
+  if(fx){su.uLampCol.value.multiplyScalar(2.2);su.uLampCos.value.set(.86,.965);arch.vol.uniforms.uCCos.value.set(.86,.95);lampLight.intensity*=1.1;lampLight.angle=.54;lampLight.penumbra=.3;}
   else{su.uLampCos.value.set(.82,.95);arch.vol.uniforms.uCCos.value.set(.8,.93);lampLight.angle=.62;lampLight.penumbra=.55;}
   su.uLampSh.value=fx?1:0;arch.vol.uniforms.uCSh.value=fx?1:0;lampLight.castShadow=fx;glow.visible=fx;
   bulbMats.forEach(m=>{m.emissiveIntensity=on?(fx?9:6):0;});
   screenMats.forEach(m=>{const [c0,i0]=emit0.get(m)!;if(!on){m.emissive.copy(c0);m.emissiveIntensity=i0;m.emissiveMap=null;m.needsUpdate=true;return;}
-   if(m.name==='ws_crt_glass'){m.emissive.set(0x9fc4e6);m.emissiveMap=crtTex;m.emissiveIntensity=.38*SK;}else{m.emissive.set(0x2fa865);m.emissiveIntensity=.22*SK;}m.needsUpdate=true;});cone.uniforms.uOn.value=on?CK:0;}
+   if(m.name==='ws_crt_glass'){m.emissive.set(0x9fc4e6);m.emissiveMap=crtTex;m.emissiveIntensity=.38*SK;}else{m.emissive.set(0x2fa865);m.emissiveIntensity=.22*SK;}m.needsUpdate=true;});cone.uniforms.uOn.value=on?CK*(fx?.55:1):0;}
  // H5 (LIGHT-REF-R1-DESK, user "램프는 수정해야 해"): the shade mouth glows when you look into it, so the lamp reads as the source
  // (L8). A disc facing out of the shade along the light axis — edge-on from the side, hidden from above by the shade.
  const glow=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d')!,r=g.createRadialGradient(32,32,2,32,32,32);

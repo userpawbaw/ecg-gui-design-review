@@ -24,3 +24,19 @@ Validation (1280×720, 64 samples, r7 defaults):
 
 A weight equals a change of that light's energy: intensity tuning now takes seconds per candidate instead of ~17 min.
 Direction, position, size and bounce limits (SUN_MB) still need a render.
+
+## S2 — sun bounce limited to 1, key ×1.3, sun ×1.5 (D-070, now the defaults in `--art r6`)
+Light-group render with `SUN_MB=1`, then 108 weight sets (a1 36 + a1/a2 72) through `light-group-sweep.py`; chosen
+key 3500 → 4550, sun 22 → 33, sun max bounces 1, sky and exposure unchanged. Confirmed by real renders (1280×720, 64 samples):
+
+| | L* 5/25/50/75/95 | plain_range | deep% | pastel% | room-scale ≥ +1.5 stops | sharpC with / without figure |
+|---|---|---|---|---|---|---|
+| r7 a1 / a2 | 4 17 25 57 77 / 4 17 26 62 78 | 50.8 / 54.4 | 6.2 / 5.2 | 22.9 / 26.3 | 43 / 46 % | 13.8 / 12.7 · 15.8 / 15.9 |
+| sweep prediction a1 / a2 | 4 18 27 61 80 / 4 18 28 65 79 | 55.7 / 58.6 | 4.9 / 4.9 | 23.7 / 27.5 | | |
+| **r8 render a1 / a2** | **4 17 27 61 80 / 4 18 27 65 79** | **55.8 / 58.6** | **4.9 / 4.8** | 23.7 / 27.5 | 44 / 48 % | 13.9 / 12.7 · 16.0 / 16.3 |
+| REF-002 | 2–4 15–18 25–33 52–62 81–97 | 57–69 | 3.6 | 22–25 | 48 % | 20–22 |
+
+Read: shade depth kept (L*5 4) while plain_range rose 5 (a2 now inside REF's range), the bright end to 79–80 (REF 81+), deep colour
+down to ~4.9 % and the room-scale lit share to 44 / 48 %. Off: L*75 a2 65 (REF ≤ 62); sharpC does not move with intensities (layout /
+occlusion question, analysis §5). Files: `a1_front_pastel_r8.jpg`, `a2_near_pastel_r8.jpg`, `a1_front_pastel_r8_nofig.jpg`,
+`r8_compare.jpg` (r7 vs r8), `r8_light_structure.jpg`. Not checked: web bake, softness of the floor bounce by eye (D-061 intent).

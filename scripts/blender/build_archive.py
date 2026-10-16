@@ -815,16 +815,16 @@ SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()   # across the gaps between st
 if args.light == 'r2':                                 # steeper: the hero window's beam crosses the ladder and lands at its foot (D-050 floor spot)
     SUN_TO = Vector((0.807, 0.07, -0.584)).normalized(); sun.angle = math.radians(0.55)
 if args.art in ('r3', 'r4', 'r5', 'r6'):                                   # through the hatch onto the back shelves (receiver), cream light (review D)
-    SUN_TO = Vector(tuple(float(v) for v in os.environ.get('SUN_DIR', '0.22,0.62,-0.75').split(','))).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', {'r5': 26.0, 'r6': 22.0}.get(args.art, 20.0)))
+    SUN_TO = Vector(tuple(float(v) for v in os.environ.get('SUN_DIR', '0.22,0.62,-0.75').split(','))).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', {'r5': 26.0, 'r6': 33.0}.get(args.art, 20.0)))
 if args.art in ('r4', 'r5', 'r6'):                      # D-059: a larger sun disc so every hole's edge gets a penumbra (≈ 3.5 cm per metre of throw at 2°)
     sun.angle = math.radians(float(os.environ.get('SUN_ANG', 0.5 if args.art == 'r6' else 2.0)))   # r6 (F-040): crisp like REF, sigma 0.8 px
-    if os.environ.get('SUN_MB'): sun.cycles.max_bounces = int(os.environ['SUN_MB'])   # F-043: the sun's bounce fills the shade; 0 = accents only
+    if args.art == 'r6' or os.environ.get('SUN_MB'): sun.cycles.max_bounces = int(os.environ.get('SUN_MB', 1))   # r8 D-070 / F-043: the sun's bounce filled the shade; 1 bounce, 0 = accents only
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 if args.art == 'r6':                                   # D-062 (F-040): the REF key is a near small lamp (crisp edges + falloff inside one light)
     hx0, hx1, hy0, hy1 = HATCH; hc = Vector(((hx0 + hx1) / 2, (hy0 + hy1) / 2, H))
     KEY_D = float(os.environ.get('KEY_D', 1.6))                  # metres back along the light direction from the hatch centre (r7 D-069: 1.6, nearer = more falloff inside the pool; r6b 2.2)
     KEY_TO = Vector(tuple(float(v) for v in os.environ.get('KEY_DIR', '0.45,0.5,-0.74').split(','))).normalized()
-    K = bpy.data.lights.new('key', 'SPOT'); K.energy = float(os.environ.get('KEY_E', 3500)); K.color = srgb(os.environ.get('KEY_COL', '#fff0e2'))
+    K = bpy.data.lights.new('key', 'SPOT'); K.energy = float(os.environ.get('KEY_E', 4550)); K.color = srgb(os.environ.get('KEY_COL', '#fff0e2'))
     K.shadow_soft_size = float(os.environ.get('KEY_R', 0.06)); K.spot_size = math.radians(110); K.spot_blend = 0.3
     ko = bpy.data.objects.new('key', K); ko.location = hc - KEY_TO * KEY_D; ko.rotation_euler = KEY_TO.to_track_quat('-Z', 'Y').to_euler(); scene.collection.objects.link(ko)
     print('r6 key at', tuple(round(v, 2) for v in ko.location), 'energy', K.energy)

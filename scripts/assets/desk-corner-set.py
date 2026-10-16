@@ -49,12 +49,12 @@ def mat(name, hexc, rough=.6, metal=0., spec=.35):
     if 'Specular IOR Level' in b.inputs: b.inputs['Specular IOR Level'].default_value = spec
     return m
 
-def oak(name, a='#8a5f3a', b='#6b4527', scale=6., rough=.5):
+def oak(name, a='#8a5f3a', b='#74502f', scale=2.4, rough=.5):
     """oak: wave bands + fine noise, along the object's local x (planks run lengthwise)"""
     m = mat(name, a, rough); nt = m.node_tree; N = nt.nodes; L = nt.links; bsdf = N['Principled BSDF']
     tc = N.new('ShaderNodeTexCoord'); mp = N.new('ShaderNodeMapping'); mp.inputs['Scale'].default_value = (1, scale, scale)
     wv = N.new('ShaderNodeTexWave'); wv.wave_type = 'BANDS'; wv.bands_direction = 'Y'; wv.inputs['Scale'].default_value = 2.2
-    wv.inputs['Distortion'].default_value = 6.0; wv.inputs['Detail'].default_value = 3.0
+    wv.inputs['Distortion'].default_value = 3.0; wv.inputs['Detail'].default_value = 4.0; wv.inputs['Detail Scale'].default_value = 1.5
     nz = N.new('ShaderNodeTexNoise'); nz.inputs['Scale'].default_value = 140.; nz.inputs['Detail'].default_value = 2.
     ramp = N.new('ShaderNodeValToRGB'); ramp.color_ramp.elements[0].color = (*srgb(b), 1); ramp.color_ramp.elements[1].color = (*srgb(a), 1)
     mix = N.new('ShaderNodeMix'); mix.data_type = 'RGBA'; mix.blend_type = 'MULTIPLY'; mix.inputs['Factor'].default_value = .12
@@ -82,10 +82,10 @@ def paper_mat(name):
     nt.links.new(tx.outputs['Color'], N['Principled BSDF'].inputs['Base Color']); return m
 
 M = {
-    'oak': oak('set_oak'), 'oak_dark': oak('set_oak_dark', '#5a3a22', '#3f2716', 7.),
+    'oak': oak('set_oak', '#7d5a3c', '#6c4c31'), 'oak_dark': oak('set_oak_dark', '#5a3a22', '#4a2f1c', 2.8),
     'brass': mat('set_brass', '#a8823f', .32, .85), 'plaster': mat('set_plaster', '#e8e2d6', .82, spec=.25),
     'wainscot': mat('set_wainscot', '#4a4f45', .7), 'frame': mat('set_frame', '#2a211b', .45),
-    'rug': mat('set_rug', '#7a3b2c', .95, spec=.1), 'rug_border': mat('set_rug_border', '#d7c7a6', .95, spec=.1),
+    'rug': mat('set_rug', '#5e3429', .95, spec=.1), 'rug_border': mat('set_rug_border', '#b9a888', .95, spec=.1),
     'cloth_r': mat('set_cloth_r', '#6e2a24', .8), 'cloth_b': mat('set_cloth_b', '#2c3a4f', .8), 'cloth_o': mat('set_cloth_o', '#a9822f', .8),
     'page': mat('set_page', '#e9dfc7', .9), 'card': mat('set_card', '#efe8d6', .9),
     'floor': mat('stand_floor', '#4a3324', .7), 'wall': mat('stand_wall', '#6a5a4a', .9), 'shelf': mat('stand_shelf', '#3b2a1d', .8),
@@ -252,21 +252,21 @@ stand('Stand_floor', (8, 10, .02), (0, 0, -.01), M['floor'])
 stand('Stand_wall_l', (.05, 10, 5), (WALL_X - .025, 0, 2.5), M['wall'])
 stand('Stand_wall_b', (8, .05, 5), (0, WALL_Y + .025, 2.5), M['wall'])
 stand('Stand_shelf_b', (2.6, .4, 2.6), (-2.3, WALL_Y - .2, 1.2 + 1.3), M['shelf'])     # high shelves behind the desk (build_archive: none below 1.2)
-stand('Stand_ceiling', (8, 10, .05), (0, 0, 5.0), M['wall'])
 
 # ---------------- light: one small sun, off-screen occluders ----------------
-sun_to = Vector(tuple(float(v) for v in args.sun.split(','))) if args.sun else Vector((-0.62, 0.46, -0.64))
+sun_to = Vector(tuple(float(v) for v in args.sun.split(','))) if args.sun else Vector((-0.42, 0.40, -0.81))
 sun_to.normalize()
-sd = bpy.data.lights.new('sun', 'SUN'); sd.energy = 4.2; sd.angle = math.radians(args.sunang); sd.color = srgb('#ffe9cf')
+sd = bpy.data.lights.new('sun', 'SUN'); sd.energy = 6.5; sd.angle = math.radians(args.sunang); sd.color = srgb('#ffe9cf')
 so = bpy.data.objects.new('sun', sd); so.rotation_euler = sun_to.to_track_quat('-Z', 'Y').to_euler(); bpy.context.collection.objects.link(so)
 # the sunlit patch is framed by a window opening far up-right (bars), with a foliage cluster further out (soft dapple);
-# the ceiling stand-in has a hole along the sun path so the sun reaches the corner (an unseen high window / hatch)
-target = Vector((-2.6, 3.9, .9))
+# no ceiling stand-in: a full ceiling blocked the sun entirely (first preview, 2026-10-16); the window slab frames the patch
+target = Vector((-2.35, 3.75, .8))
 def occl_mesh(name, verts_faces):
     me = bpy.data.meshes.new(name); bm = bmesh.new()
     for poly_ in verts_faces:
         vs = [bm.verts.new(v) for v in poly_]; bm.faces.new(vs)
-    bm.to_mesh(me); bm.free(); o = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(o); o.data.materials.append(M['occl']); o['stand'] = 1; return o
+    bm.to_mesh(me); bm.free(); o = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(o); o.data.materials.append(M['occl']); o['stand'] = 1
+    o.visible_camera = False; o.visible_glossy = False; return o   # off screen by definition: shadows only
 # basis perpendicular to the sun
 up = Vector((0, 0, 1)); u = sun_to.cross(up).normalized(); v = u.cross(sun_to).normalized()
 def plane_at(dist):
@@ -283,17 +283,17 @@ faces.append(quad(wc, u * W2, v * T / 2)); faces.append(quad(wc + v * H2 * .5, u
 occl_mesh('Occ_window', faces)
 # foliage: twig lines with elliptical leaves, 5.5 m out → 20 cm penumbra, free-form dapple
 fc = plane_at(5.5) + u * .35 + v * .55; leaves = []
-for twig in range(7):
-    p = fc + u * random.uniform(-.9, .9) + v * random.uniform(-.7, .8); dirv = (u * random.uniform(-1, 1) + v * random.uniform(-.4, .6)).normalized()
+for twig in range(16):
+    p = fc + u * random.uniform(-1.3, 1.1) + v * random.uniform(-1.0, .9); dirv = (u * random.uniform(-1, 1) + v * random.uniform(-.4, .6)).normalized()
     for k in range(9):
         q = p + dirv * k * .11 + (u * random.uniform(-.05, .05) + v * random.uniform(-.05, .05))
         ang = random.uniform(0, math.pi); a = (u * math.cos(ang) + v * math.sin(ang)); b = a.cross(sun_to).normalized()
-        L, Wd = random.uniform(.09, .16), random.uniform(.035, .06)
+        L, Wd = random.uniform(.11, .2), random.uniform(.045, .08)
         leaves.append([q + a * L * math.cos(t) + b * Wd * math.sin(t) for t in [i * 2 * math.pi / 10 for i in range(10)]])
 occl_mesh('Occ_foliage', leaves)
 
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
-w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#8a7a66'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = .35
+w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#8a7a66'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = .4
 
 scene.render.engine = 'CYCLES'; scene.cycles.device = 'CPU'; scene.cycles.samples = args.samples
 scene.cycles.use_denoising = True; scene.view_settings.view_transform = 'AgX'; scene.view_settings.look = 'None'
@@ -314,3 +314,60 @@ if args.preview:
     os.makedirs(args.preview, exist_ok=True)
     for s in args.shots.split(','): shoot(s, args.preview)
 print('set objects', len(SET), 'groups', sorted({g for _, g in SET}), flush=True)
+
+# ---------------- bake: colour x light per group → sqrt-encoded WebP + glb (UV = bake layer) ----------------
+RES = {'furn': 2048, 'wall': 2048, 'rug': 1024, 'small': 1024}
+if args.bake:
+    import numpy as np
+    from PIL import Image
+    os.makedirs(OUT, exist_ok=True)
+    scale_res = float(os.environ.get('BAKE_SCALE', 1.0))            # QA: smaller textures for a quick pipeline check
+    scene.cycles.bake_type = 'COMBINED'; scene.render.bake.margin = 8
+    scene.render.bake.use_pass_direct = scene.render.bake.use_pass_indirect = scene.render.bake.use_pass_color = True
+    joined, raw = {}, {}
+    for g in sorted({gg for _, gg in SET}):
+        objs = [o for o, gg in SET if gg == g]
+        bpy.ops.object.select_all(action='DESELECT')
+        for o in objs: o.select_set(True)
+        bpy.context.view_layer.objects.active = objs[0]; bpy.ops.object.join(); o = bpy.context.active_object; o.name = 'Set_' + g
+        me = o.data; base = me.uv_layers[0] if me.uv_layers else me.uv_layers.new(name='UVMap'); base.active_render = True
+        uv = me.uv_layers.new(name='bake'); me.uv_layers.active = uv
+        bpy.ops.object.mode_set(mode='EDIT'); bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.uv.smart_project(angle_limit=math.radians(60), island_margin=.003, area_weight=0.0, scale_to_bounds=False)
+        bpy.ops.uv.pack_islands(margin=.004); bpy.ops.object.mode_set(mode='OBJECT')
+        n = max(64, int(RES[g] * scale_res)); img = bpy.data.images.new('bake_' + g, n, n, alpha=True, float_buffer=True)
+        img.pixels.foreach_set(np.zeros(n * n * 4, np.float32))
+        for slot in o.material_slots:
+            m = slot.material; m = m.copy(); slot.material = m; nt = m.node_tree
+            tn = nt.nodes.new('ShaderNodeTexImage'); tn.image = img; nt.nodes.active = tn
+        bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); bpy.context.view_layer.objects.active = o
+        print('baking', g, n, 'px', len(me.polygons), 'faces', flush=True)
+        bpy.ops.object.bake(type='COMBINED')
+        a = np.empty(n * n * 4, np.float32); img.pixels.foreach_get(a); raw[g] = a.reshape(n, n, 4)[::-1]   # top row first
+        joined[g] = o
+    # one scale for all groups so they stay consistent: 99.7th percentile of baked radiance
+    allv = np.concatenate([r[..., :3][r[..., 3] > 0].ravel() for r in raw.values()])
+    scale = float(np.percentile(allv, 99.7)) if allv.size else 1.0
+    from scipy import ndimage
+    meta = {'source': 'scripts/assets/desk-corner-set.py', 'encoding': 'webp sqrt(linear colour x light / scale)', 'scale': round(scale, 5),
+            'sun_to': [round(x, 4) for x in sun_to], 'sun_angle_deg': args.sunang, 'samples': args.samples, 'groups': {}}
+    for g, r in raw.items():
+        rgb, m = r[..., :3], r[..., 3] > 0
+        med = np.stack([ndimage.median_filter(rgb[..., c], 3) for c in range(3)], -1)
+        fire = m & (rgb.mean(-1) > med.mean(-1) * 1.6 + .02); rgb = rgb.copy(); rgb[fire] = med[fire]   # fireflies only
+        enc = np.sqrt(np.clip(rgb / scale, 0, 1)); enc[~m] = 0
+        fn = f'{g}.webp'; Image.fromarray((enc * 255 + .5).astype(np.uint8)).save(os.path.join(OUT, fn), quality=92, method=6)
+        meta['groups'][g] = {'file': fn, 'size': r.shape[0], 'fireflies': int(fire.sum())}
+        print('saved', fn, r.shape[0], 'fireflies', int(fire.sum()), flush=True)
+    # export: joined meshes only, the bake UV as TEXCOORD_0, no materials (the web applies the baked texture)
+    for g, o in joined.items():
+        me = o.data
+        for l in [l for l in me.uv_layers if l.name != 'bake']: me.uv_layers.remove(l)
+        o.data.materials.clear()
+    bpy.ops.object.select_all(action='DESELECT')
+    for o in joined.values(): o.select_set(True)
+    bpy.ops.export_scene.gltf(filepath=os.path.join(OUT, 'desk_corner.glb'), export_format='GLB', use_selection=True, export_apply=True,
+                              export_yup=True, export_materials='NONE', export_normals=False, export_texcoords=True)
+    meta['tris'] = sum(sum(len(p.vertices) - 2 for p in o.data.polygons) for o in joined.values())
+    with open(os.path.join(OUT, 'desk_corner.json'), 'w', encoding='utf-8') as f: json.dump(meta, f, indent=1)
+    print('exported desk_corner.glb', os.path.getsize(os.path.join(OUT, 'desk_corner.glb')), 'bytes', meta['tris'], 'tris, scale', scale, flush=True)

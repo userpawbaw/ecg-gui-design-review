@@ -57,7 +57,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  let data=data0;
  // QA candidates (2026-10-14 user: "후보 아이디어를 제시하고 실제 시연에서 비교할 수 있도록 디버깅용 버튼"): strip close-up composition,
  // shell speed by camera distance, the AC mark, sonar rhythm and the continuous sonar's fade. URL (?comp= …) or the ?debug panel.
- const qp=new URLSearchParams(location.search);
+ const qp=new URLSearchParams(location.search),LEGACY_DESK=qp.get('legacyDesk')==='1';   // ?legacyDesk=1: the 2026-10-14 computer + lamp (D-067) for comparison
  // D-068 (user 2026-10-15 "결정 사항은 추천대로"): A1 farther strip framing, B2 distance-scaled + fainter shells, C1 AC icon only,
  // D1 sonar once per second with the chest pulse, Eb rim only. Sonar → D2 (2026-10-16, D-069): 3 taps every 2 s, half alpha. The others stay selectable on the ?debug=1 panel.
  const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L0'};
@@ -195,7 +195,11 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   A2T(-2.63,3.46,.775,-2.17,4.04,1.28),      // PC case + CRT body/back/screen (DESK −2.35, 3.55)
   A2T(-2.63,3.18,.775,-2.17,3.36,.83),       // keyboard
   A2T(-1.71,3.74,.815,-1.29,4.06,.94),       // ECG device on the cart (CART −1.5, 3.9)
-  A2T(-1.96,3.54,.775,-1.84,3.86,1.23)];     // baked desk lamp (shade toward the back of the desk) → desk_lamp.glb, turned to the keyboard (D-067)
+  A2T(-1.96,3.54,.775,-1.84,3.86,1.23),      // baked desk lamp (shade toward the back of the desk) → desk_lamp.glb, turned to the keyboard (D-067)
+  // D-070 A (user 2026-10-16 "컴퓨터는 빼고 소품으로 바꿔줘"): the baked table, stool, cart and binder give way to the baked prop set
+  ...(LEGACY_DESK?[]:[A2T(-3.32,3.08,.004,-1.38,4.02,.92),   // painted table (1.9 x 0.9, top 0.76) + binder + cable top on it
+   A2T(-2.52,2.53,.004,-1.98,3.07,.56),                       // wooden stool
+   A2T(-1.78,3.62,.004,-1.22,4.18,.98)])];                     // ECG cart (legs, shelf)
  {const inAny=(p:THREE.Vector3)=>trimBoxes.some(b=>b.containsPoint(p));
   const a=new THREE.Vector3(),b=new THREE.Vector3(),c=new THREE.Vector3();
   arch.room.updateMatrixWorld(true);arch.room.traverse(o=>{const m=o as THREE.Mesh;if(!m.isMesh)return;const g=m.geometry,P=g.getAttribute('position');
@@ -207,12 +211,30 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
     out.push({start:s0,count:keep.length-s0,materialIndex:gr.materialIndex});}
    if(keep.length<idx.length){g.setIndex(keep);if(g.groups.length){g.clearGroups();out.forEach(x=>g.addGroup(x.start,x.count,x.materialIndex));}}});}
  const strip=(await loader.loadAsync(U('power_strip.glb'))).scene;scene.add(strip);
- const workstation=(await loader.loadAsync(U('workstation.glb'))).scene;scene.add(workstation);
+ const workstation=LEGACY_DESK?(await loader.loadAsync(U('workstation.glb'))).scene:new THREE.Group();scene.add(workstation);
  // D-067 (user 2026-10-15 "조명은 A+B로"): A desk lamp on (warm pool on the desk + a light cone), B screens glow (no content).
  // Added on top of the bake: archive.ts practical() for the baked room, three lights for the PBR props, a light cone marched in the archive shaft pass.
  const lampInfo:{bulb:number[],dir:number[]}=await (await fetch(U('desk_lamp.json'))).json();
  const LAMP_P=new THREE.Vector3(...lampInfo.bulb),LAMP_D=new THREE.Vector3(...lampInfo.dir).normalize(),DESK_TOP=.745;   // the baked table top is at 0.76 m (build_archive place(..., 0.76)); .775 shut the lamp off the desk itself
- const lamp=(await loader.loadAsync(U('desk_lamp.glb'))).scene;scene.add(lamp);
+ const lamp=LEGACY_DESK?(await loader.loadAsync(U('desk_lamp.glb'))).scene:new THREE.Group();scene.add(lamp);
+ // D-070 A: the desk-corner prop set, colour x light baked in Blender (scripts/assets/desk-corner-set.py: one sun + off-screen
+ // window bars and foliage). Unlit: texture² × scale through the archive's exposure / saturation / fade, so it sits in the same grade.
+ const setK=Number(qp.get('setk')??1);
+ const deskSet=await (async()=>{if(LEGACY_DESK)return new THREE.Group();
+  const D=(f:string)=>new URL(`./assets/desk_corner/${f}`,import.meta.url).href;
+  const meta:{scale:number,groups:Record<string,{file:string}>}=await (await fetch(D('desk_corner.json'))).json();
+  const g=(await loader.loadAsync(D('desk_corner.glb'))).scene,tl=new THREE.TextureLoader();
+  const sh=arch.shared;
+  for(const [k,v] of Object.entries(meta.groups)){const t=await tl.loadAsync(D(v.file));t.flipY=false;t.colorSpace=THREE.NoColorSpace;t.anisotropy=8;
+   const m=new THREE.ShaderMaterial({uniforms:{map:{value:t},uScale:{value:meta.scale*setK},uExposure:sh.uExposure,uSat:sh.uSat,uFade:sh.uFade},
+    vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+    fragmentShader:`uniform sampler2D map;uniform float uScale,uExposure,uSat,uFade;varying vec2 vUv;
+     void main(){vec3 e=texture2D(map,vUv).rgb;vec3 c=e*e*uScale*uExposure*uFade;c=mix(vec3(dot(c,vec3(.2126,.7152,.0722))),c,uSat);gl_FragColor=vec4(c,1.);
+      #include <tonemapping_fragment>
+      #include <colorspace_fragment>
+     }`,side:THREE.DoubleSide});
+   g.traverse(o=>{if((o as THREE.Mesh).isMesh&&(o.name==='Set_'+k||o.parent?.name==='Set_'+k))(o as THREE.Mesh).material=m;});}
+  return g;})();scene.add(deskSet);
  const bulbMats:THREE.MeshStandardMaterial[]=[],screenMats:THREE.MeshStandardMaterial[]=[],emit0=new Map<THREE.MeshStandardMaterial,[THREE.Color,number]>();
  lamp.traverse(o=>{const m=(o as THREE.Mesh).material as THREE.MeshStandardMaterial|undefined;if(m?.name?.endsWith('_light'))bulbMats.push(m);});
  // CRT glass: a soft radial glow, brighter in the middle (no picture, no waveform — decorative space)

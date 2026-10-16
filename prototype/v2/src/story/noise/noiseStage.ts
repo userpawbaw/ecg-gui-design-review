@@ -60,7 +60,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const qp=new URLSearchParams(location.search);
  // D-068 (user 2026-10-15 "결정 사항은 추천대로"): A1 farther strip framing, B2 distance-scaled + fainter shells, C1 AC icon only,
  // D1 sonar once per second with the chest pulse, Eb rim only. Sonar → D2 (2026-10-16, D-069): 3 taps every 2 s, half alpha. The others stay selectable on the ?debug=1 panel.
- const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L2'};
+ const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L0'};
  // QA: ?cam=x,y,z,lx,ly,lz,vfov freezes the camera (three frame) for still comparisons
  let qaBreath:number|null=null;   // QA (S-10 measurement): fixed breath 0..1
  const camFix=(()=>{const c=qp.get('cam')?.split(',').map(Number);return c&&c.length>=7?{p:new THREE.Vector3(c[0],c[1],c[2]),l:new THREE.Vector3(c[3],c[4],c[5]),fov:c[6]}:null;})();
@@ -218,6 +218,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // CRT glass: a soft radial glow, brighter in the middle (no picture, no waveform — decorative space)
  const crtTex=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d')!,r=g.createRadialGradient(64,64,6,64,64,78);
   r.addColorStop(0,'#ffffff');r.addColorStop(.55,'#9aa6b4');r.addColorStop(1,'#1c2026');g.fillStyle=r;g.fillRect(0,0,128,128);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;})();
+ // 2026-10-16 (user "컴퓨터 … 화면 꺼주고, 프린터도 … 치워줘"): the ECG device on the cart goes; the CRT stays dark
+ workstation.traverse(o=>{if(o.name.startsWith('WS_ecg'))o.visible=false;});
  workstation.traverse(o=>{const m=(o as THREE.Mesh).material as THREE.MeshStandardMaterial|undefined;if(!m)return;
   if(m.name==='ws_crt_glass'||m.name==='ws_ecg_screen')emit0.set(m,[m.emissive.clone(),m.emissiveIntensity]);   // L0 = as before
   if(m.name==='ws_crt_glass'){m.roughness=.4;screenMats.push(m);}   // rougher: no point-light hotspot on the glass
@@ -239,7 +241,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   else{su.uLampCos.value.set(.82,.95);arch.vol.uniforms.uCCos.value.set(.8,.93);lampLight.angle=.62;lampLight.penumbra=.55;}
   su.uLampSh.value=fx?1:0;arch.vol.uniforms.uCSh.value=fx?1:0;lampLight.castShadow=fx;glow.visible=fx;
   bulbMats.forEach(m=>{m.emissiveIntensity=on?(fx?9:6):0;});
-  screenMats.forEach(m=>{const [c0,i0]=emit0.get(m)!;if(!on){m.emissive.copy(c0);m.emissiveIntensity=i0;m.emissiveMap=null;m.needsUpdate=true;return;}
+  screenMats.forEach(m=>{const [c0,i0]=emit0.get(m)!;if(!on){m.emissive.copy(c0);m.emissiveIntensity=0;m.emissiveMap=null;m.needsUpdate=true;return;}   // L0: screens off (user 2026-10-16)
    if(m.name==='ws_crt_glass'){m.emissive.set(0x9fc4e6);m.emissiveMap=crtTex;m.emissiveIntensity=.38*SK;}else{m.emissive.set(0x2fa865);m.emissiveIntensity=.22*SK;}m.needsUpdate=true;});cone.uniforms.uOn.value=on?CK*(fx?.55:1):0;}
  // H5 (LIGHT-REF-R1-DESK, user "램프는 수정해야 해"): the shade mouth glows when you look into it, so the lamp reads as the source
  // (L8). A disc facing out of the shade along the light axis — edge-on from the side, hidden from above by the shade.

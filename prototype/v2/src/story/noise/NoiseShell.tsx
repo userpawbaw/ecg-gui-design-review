@@ -96,7 +96,7 @@ const QA_GROUPS:[string,string,[string,string][]][]=[
  ['ac','교류 표시',[['C0','이전(말풍선)'],['C1','아이콘만'],['C2','아이콘+60 Hz']]],
  ['sonar','소나',[['D0','이전(4+5 ×2)'],['D1','1초마다 계속'],['D2','3회 두드림 · 2초 주기']]],
  ['fade','계속 소나 투명도',[['Ea','낮은 시작'],['Eb','테두리만'],['Ec','완만한 감쇠']]],
- ['light','책상 조명',[['L0','끔'],['L1','램프 + 화면 빛(D-067)'],['L2','+ 그림자 · 갓 빛']]]];
+ ['light','책상 조명',[['L0','끔(기본, 화면 꺼짐)'],['L1','램프 + 화면 빛(D-067)'],['L2','+ 그림자 · 갓 빛']]]];
 type QaStage={setQa:(k:string,v:string)=>void,qa:Record<string,string>,jump:(t:number)=>void}|null;
 function QaPanel({stage}:{stage:()=>unknown}){
  const st=()=>stage() as QaStage;const [,force]=useState(0);

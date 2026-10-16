@@ -66,3 +66,30 @@ H5(램프 다듬기, 사용자 지적) → H1(그림자) → H2(원뿔 자르기
 ## 6. 남은 판단 (사용자)
 - 레퍼런스 중 직접 보고 "이 느낌"이라고 고를 것이 있는지(효과 카드를 만들 대상).
 - H4(반사)·H6(재질 결)까지 갈지, H1–H3에서 멈추고 볼지.
+
+## 7. 2026-10-16 방향 전환 — leoparpeix식(완전 베이크 + 화면 밖 고보)과 비슷한 레퍼런스
+
+계기:
+- 사용자 `[대화]` "전등도 내가 원하는 불빛이 아니야. 내가 원하는건 이전의 leoparpeix 다락방처럼 …" → REF-002 §11 해부 → D-070 A 선택.
+- 사용자 `[대화]` "비슷한 느낌을 주는 레퍼런스도 추가로 탐색을 진행해보자."
+
+§3–5의 램프 중심 후보(H1–H7)는 이 결정으로 **대체됨**이다. 기록으로만 남긴다. 웹 램프 L1·L2는 디버그 비교용이다.
+
+| ID | 레퍼런스 | 성격 · 출처 군 · 단위 · 증거 | 보는 법 |
+|---|---|---|---|
+| L9 | Vilhelm Hammershøi, 「햇빛 속에 춤추는 먼지」(1900, Ordrupgaard) — https://en.wikipedia.org/wiki/St%C3%B8vkornenes_dans_i_solstr%C3%A5lerne · 전시: https://ordrupgaard.dk/en/udstillinger/vilhelm-hammershoei | `CURATED_SCREEN`(회화) · F · 장면 · 원작 이미지 | 빈 방에 창 하나. 창살 그림자가 바닥에 **선명한 사다리꼴**로 떨어지고, 빛줄기는 먼지로 보인다. 소품 없이 빛 모양만으로 장면이 성립하는 예 |
+| L10 | Hammershøi 실내화 전반(Strandgade 30 연작) — https://gagosian.com/quarterly/2025/08/25/essay-hammershois-quiet-world/ | `CASE_STUDY`(비평) · F · 연작 · 2차 분석 | 문·액자·서랍장 같은 **직선 가구**와 회색 벽. 형태는 단순하고, 창빛의 밝은 사각형과 그 반사가 공간을 만든다 |
+| L11 | 「The Witness」(Thekla) 라이트맵 베이크 — https://www.ludicon.com/castano/blog/?p=1273 · 글 목록 https://www.ludicon.com/castano/blog/articles/ | `CASE_STUDY` · A/F · 기법 · 개발 블로그 | 단순하고 깨끗한 형태 + 미리 구운 간접광. "형태는 단순하게, 빛은 구워서 정확하게"가 leoparpeix와 같은 전략이다 |
+| L12 | Bruno Simon 「My Room in 3D」 — https://gigazine.net/gsc_news/en/20210913-my-room-in-3d (원 사이트 my-room-in-3d.vercel.app) | `LIVE_WEBSITE` · A · 장면 · 2차 기사 + 실행 | Blender에서 구운 방을 three.js로 보여 주고, 패널의 `uNightMix` 등으로 **구운 빛 여러 벌을 섞음**. 우리 Story의 장면별 빛 전환에 쓸 수 있는 구조 |
+| L13 | Blender 고보 기법(창·잎 투영 패턴) — 상품 설명 https://superhivemarket.com/products/gobo-light-pro--one-click-gobo-spotlights-65-built-in-patterns/docs | `COMPONENT_LIBRARY`(도구 문서) · D · 기법 · 문서 | "광원을 멀리 두고 크기(soft size)를 줄이면 선명, 가리는 물체를 멀리 두면 흐림", "창 고보는 키, 색이 있는 채움은 반사광" — 우리 굽기 설정의 근거. 상품 패턴은 쓰지 않고 잎·가지는 직접 만든다 |
+
+공통 원칙(L9–L13 + REF-002 §11):
+1. 빛은 해 하나. 작은 원반이라 가까운 물체의 그림자가 선명하다.
+2. 흐린 그림자는 화면 밖에 있는 먼 가림막(창 밖 식물, 큰 가지)이 만든다. 그림자 모양이 장면 안 물체와 연결되지 않아야 "자유분방"하게 보인다.
+3. 소품은 직선·베벨의 단순 형태. 품질은 텍셀 밀도와 빛에서 나온다.
+4. 그늘은 반사광으로 따뜻하게 채운다. 검은 구멍을 만들지 않는다.
+
+베끼지 않을 것:
+- leoparpeix의 꽃 조각, 아치 창, 크림색 팔레트.
+- Hammershøi의 회색 실내 구도.
+- 상품 고보 패턴 이미지.

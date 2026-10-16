@@ -525,6 +525,6 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
    return{lo:lo.toArray().map(v=>+v.toFixed(3)),hi:hi.toArray().map(v=>+v.toFixed(3)),fig:figSphere.center.toArray().map(v=>+v.toFixed(3)),figR:+figSphere.radius.toFixed(3),heart:heartWorld.toArray().map(v=>+v.toFixed(3)),strip:STRIP.toArray()};},
   probe(nx:number,ny:number){const r=new THREE.Raycaster();r.setFromCamera(new THREE.Vector2(nx,ny),camera);
    const h=r.intersectObjects(scene.children,true).filter(x=>(x.object as THREE.Mesh).isMesh&&x.distance>1e-3).slice(0,4).map(x=>({d:+x.distance.toFixed(3),o:x.object.name,m:((Array.isArray((x.object as THREE.Mesh).material)?((x.object as THREE.Mesh).material as THREE.Material[])[0]:(x.object as THREE.Mesh).material) as THREE.Material)?.name,p:x.point.toArray().map(v=>+v.toFixed(3))}));
-   return{near:camera.near,pos:camera.position.toArray().map(v=>+v.toFixed(3)),hits:h};},
+   return{near:camera.near,pos:camera.position.toArray().map(v=>+v.toFixed(3)),dir:camera.getWorldDirection(new THREE.Vector3()).toArray().map(v=>+v.toFixed(4)),fov:+camera.fov.toFixed(3),aspect:+camera.aspect.toFixed(4),hits:h};},
   dispose(){gsap.ticker.remove(update);removeEventListener('resize',resize);renderer.dispose();composer.dispose();arch.dispose();figure.dispose();}};
 }

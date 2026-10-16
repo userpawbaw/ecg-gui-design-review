@@ -34,7 +34,9 @@ export async function createArchive(){
   // one spot (desk lamp, only above uLampMinY — no baked shadow, so the desk top stops it) + two emitters facing uScrN (screens)
   uPrac:{value:0},uLampP:{value:new THREE.Vector3()},uLampD:{value:new THREE.Vector3(0,-1,0)},uLampCos:{value:new THREE.Vector2(.82,.95)},
   uLampCol:{value:new THREE.Vector3()},uLampMinY:{value:0},uScrP:{value:[new THREE.Vector3(),new THREE.Vector3()]},uScrN:{value:[new THREE.Vector3(0,0,1),new THREE.Vector3(0,0,1)]},
-  uScrCol:{value:[new THREE.Vector3(),new THREE.Vector3()]}};
+  uScrCol:{value:[new THREE.Vector3(),new THREE.Vector3()]},
+  // lamp shadow (H1, LIGHT-REF-R1-DESK): depth seen from the bulb, compared like the sun map; off (0) = unshadowed
+  uLampSh:{value:0},uLampDepth:{value:null as THREE.Texture|null},uLampVP:{value:new THREE.Matrix4()}};
  const mats:THREE.ShaderMaterial[]=[];
  room.traverse(o=>{
   const m=o as THREE.Mesh;if(!m.isMesh)return;
@@ -55,12 +57,15 @@ export async function createArchive(){
      #endif
      gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
    fragmentShader:`uniform sampler2D map,lm;uniform bool useMap;uniform vec3 color;uniform float lmScale,alphaTest,uFade,uExposure,uSat;varying vec2 vUv,vUv1;
-    uniform float uPrac,uLampMinY;uniform vec3 uLampP,uLampD,uLampCol,uScrP[2],uScrN[2],uScrCol[2];uniform vec2 uLampCos;varying vec3 vWP,vWN;
+    uniform float uPrac,uLampMinY,uLampSh;uniform vec3 uLampP,uLampD,uLampCol,uScrP[2],uScrN[2],uScrCol[2];uniform vec2 uLampCos;varying vec3 vWP,vWN;
+    uniform sampler2D uLampDepth;uniform mat4 uLampVP;
+    float lampVis(vec3 p){if(uLampSh<.5)return 1.;vec4 q=uLampVP*vec4(p,1.);if(q.w<=0.)return 1.;vec3 l=q.xyz/q.w*.5+.5;
+     if(l.x<0.||l.x>1.||l.y<0.||l.y>1.)return 1.;float v=0.;for(int x=-1;x<=1;x++)for(int y=-1;y<=1;y++)v+=step(l.z-.0006,texture2D(uLampDepth,l.xy+vec2(x,y)*(1.5/1024.)).x);return v/9.;}
     float win(float d,float r){float k=clamp(1.-pow(min(d/r,1.),4.),0.,1.);return k*k;}   // smooth range cut (bases >= 0, F-042)
     vec3 practical(vec3 p,vec3 n){
      vec3 o=vec3(0.);vec3 l=uLampP-p;float d=max(length(l),1e-3);l/=d;
      float cone=smoothstep(uLampCos.x,uLampCos.y,dot(-l,uLampD));
-     o+=uLampCol*cone*max(dot(n,l),0.)/(d*d+.02)*win(d,2.2)*smoothstep(uLampMinY-.015,uLampMinY+.004,p.y);
+     o+=uLampCol*cone*max(dot(n,l),0.)/(d*d+.02)*win(d,2.2)*smoothstep(uLampMinY-.015,uLampMinY+.004,p.y)*lampVis(p+n*.004);
      for(int i=0;i<2;i++){vec3 s=uScrP[i]-p;float e=max(length(s),1e-3);s/=e;
       o+=uScrCol[i]*max(dot(uScrN[i],-s),0.)*max(dot(n,s),0.)/(e*e+.04)*win(e,1.8);}
      return o;}
@@ -125,18 +130,19 @@ export async function createArchive(){
    uHaze:{value:.018},uHazeCol:{value:new THREE.Color(.22,.17,.13)},
    // D-067: optional spot-light cone (Story desk lamp) in the same pass — a second pass sampling this depth would read the
    // target it writes (feedback loop). Marched only inside a sphere around the cone; cut below uCMinY (desk top).
-   uCOn:{value:0},uCLP:{value:new THREE.Vector3()},uCLD:{value:new THREE.Vector3(0,-1,0)},uCCos:{value:new THREE.Vector2(.8,.93)},uCCol:{value:new THREE.Vector3(1,.78,.52)},uCMinY:{value:0}},
+   uCOn:{value:0},uCLP:{value:new THREE.Vector3()},uCLD:{value:new THREE.Vector3(0,-1,0)},uCCos:{value:new THREE.Vector2(.8,.93)},uCCol:{value:new THREE.Vector3(1,.78,.52)},uCMinY:{value:0},uCSh:{value:0},uCDepth:{value:null as THREE.Texture|null},uCVP:{value:new THREE.Matrix4()}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
   fragmentShader:`precision highp float;
    uniform sampler2D tDiffuse,tDepth,tLight;uniform mat4 uInvProj,uInvView,uLightVP;uniform vec3 uCam,uSun,uCol;
    uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze;uniform vec3 uHazeCol;varying vec2 vUv;
-   uniform float uCOn,uCMinY;uniform vec3 uCLP,uCLD,uCCol;uniform vec2 uCCos;
+   uniform float uCOn,uCMinY,uCSh;uniform vec3 uCLP,uCLD,uCCol;uniform vec2 uCCos;uniform sampler2D uCDepth;uniform mat4 uCVP;
+   float coneVis(vec3 p){if(uCSh<.5)return 1.;vec4 q=uCVP*vec4(p,1.);if(q.w<=0.)return 1.;vec3 l=q.xyz/q.w*.5+.5;if(l.x<0.||l.x>1.||l.y<0.||l.y>1.)return 1.;return step(l.z-.0006,texture2D(uCDepth,l.xy).x);}
    vec3 lampCone(vec3 cam,vec3 rd,float far,float j){
     vec3 C=uCLP+uCLD*.34;float R=.62;vec3 oc=cam-C;float b=dot(oc,rd),c=dot(oc,oc)-R*R,h=b*b-c;if(h<=0.)return vec3(0.);
     h=sqrt(h);float t0=max(-b-h,0.),t1=min(-b+h,far);if(t1<=t0)return vec3(0.);
     const int M=28;float dt=(t1-t0)/float(M),acc=0.;
     for(int i=0;i<M;i++){vec3 p=cam+rd*(t0+(float(i)+j)*dt);vec3 l=p-uCLP;float dl=max(length(l),1e-3);
-     acc+=smoothstep(uCCos.x,uCCos.y,dot(l/dl,uCLD))*smoothstep(uCMinY-.01,uCMinY+.03,p.y)/(dl*dl+.05)*dt;}
+     acc+=smoothstep(uCCos.x,uCCos.y,dot(l/dl,uCLD))*smoothstep(uCMinY-.01,uCMinY+.03,p.y)*coneVis(p)/(dl*dl+.05)*dt;}
     return uCCol*acc*.05*uCOn;}
    float ign(vec2 p){return fract(52.9829189*fract(dot(p,vec2(.06711056,.00583715))));}
    float hash(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}

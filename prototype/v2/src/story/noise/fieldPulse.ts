@@ -7,10 +7,16 @@ export const EIGHTH=.2,PER_GROUP=4,REST=5,GROUPS=2,LIFE=2.6;
 export function emissionTimes(start:number){
  const out:number[]=[];for(let g=0;g<GROUPS;g++)for(let k=0;k<PER_GROUP;k++)out.push(start+(g*(PER_GROUP+REST)+k)*EIGHTH);return out;
 }
+/** D2 (user 2026-10-16 "3회만 두드렸다가 멈추고 다시 두드리는 것을 반복 … 2초 주기"): three shells an eighth apart, then rest,
+ * every 2 s from start until the scene ends. idx-th emission time (idx = 0, 1, 2, …). */
+export const TAPS=3,CYCLE=2;
+export const tapTime=(start:number,idx:number)=>start+CYCLE*Math.floor(idx/TAPS)+(idx%TAPS)*EIGHTH;
+/** index of the latest emission at or before t (−1 before the first) */
+export function lastTap(start:number,t:number){if(t<start)return -1;const k=Math.floor((t-start)/CYCLE),j=Math.min(TAPS-1,Math.floor((t-start-k*CYCLE)/EIGHTH));return k*TAPS+j;}
 /** radius (m) and opacity of one shell at time t, or null when not alive */
-export function shell(t:number,emit:number,rMax:number,r0=.04){
+export function shell(t:number,emit:number,rMax:number,r0=.04,fadeK=1.35){
  const a=t-emit;if(a<0||a>LIFE)return null;
  const u=a/LIFE,e=1-(1-u)**2.2;                       // decelerating but strictly increasing until the end of life
- const r=r0+(rMax-r0)*e,fade=(1-r/rMax)**1.35;        // further out → more transparent (reaches 0 at rMax)
+ const r=r0+(rMax-r0)*e,fade=(1-r/rMax)**fadeK;       // further out → more transparent (reaches 0 at rMax)
  return{r,a:Math.min(1,a/.12)*fade};                  // short fade-in at birth (no pop)
 }

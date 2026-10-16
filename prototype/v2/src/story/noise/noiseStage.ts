@@ -20,7 +20,7 @@ import {createSweep} from '../intro/sweep';
 import {createGrid,mvPerBoxFor} from '../intro/waveUi';
 import {createFistDrive} from './fistDrive';
 import {createWaveMode} from './waveMode';
-import {emissionTimes,shell} from './fieldPulse';
+import {emissionTimes,shell,tapTime,lastTap} from './fieldPulse';
 import {beatPhase,type Loop} from '../intro/beats';
 import {createChecker} from './storyCheck';
 
@@ -59,8 +59,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // shell speed by camera distance, the AC mark, sonar rhythm and the continuous sonar's fade. URL (?comp= …) or the ?debug panel.
  const qp=new URLSearchParams(location.search);
  // D-068 (user 2026-10-15 "결정 사항은 추천대로"): A1 farther strip framing, B2 distance-scaled + fainter shells, C1 AC icon only,
- // D1 sonar once per second with the chest pulse, Eb rim only. The others stay selectable on the ?debug=1 panel.
- const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D1',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L1'};
+ // D1 sonar once per second with the chest pulse, Eb rim only. Sonar → D2 (2026-10-16, D-069): 3 taps every 2 s, half alpha. The others stay selectable on the ?debug=1 panel.
+ const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L2'};
  // QA: ?cam=x,y,z,lx,ly,lz,vfov freezes the camera (three frame) for still comparisons
  let qaBreath:number|null=null;   // QA (S-10 measurement): fixed breath 0..1
  const camFix=(()=>{const c=qp.get('cam')?.split(',').map(Number);return c&&c.length>=7?{p:new THREE.Vector3(c[0],c[1],c[2]),l:new THREE.Vector3(c[3],c[4],c[5]),fov:c[6]}:null;})();
@@ -230,12 +230,34 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const LK=Number(qp.get('lamp')??1),SK=Number(qp.get('scr')??1),CK=Number(qp.get('cone')??1);   // QA strengths
  {const su=arch.shared;su.uLampP.value.copy(LAMP_P);su.uLampD.value.copy(LAMP_D);su.uLampMinY.value=DESK_TOP;
   su.uScrP.value[0].copy(CRT_P);su.uScrN.value[0].copy(CRT_N);su.uScrP.value[1].copy(ECG_P);su.uScrN.value[1].copy(ECG_N);}
- function setLights(on:boolean){const k=on?1:0,su=arch.shared;
+ function setLights(mode:string){const on=mode!=='L0',k=on?1:0,su=arch.shared,fx=mode==='L2';
   su.uPrac.value=k;su.uLampCol.value.set(1,.74,.46).multiplyScalar(.21*LK);su.uScrCol.value[0].set(.55,.68,.85).multiplyScalar(.05*SK);su.uScrCol.value[1].set(.2,.8,.4).multiplyScalar(.025*SK);
   lampLight.intensity=.9*LK*k;crtLight.intensity=.18*SK*k;ecgLight.intensity=.04*SK*k;
-  bulbMats.forEach(m=>{m.emissive.set(0xffd9a8);m.emissiveIntensity=on?6:0;});
+  bulbMats.forEach(m=>m.emissive.set(0xffd9a8));
+  su.uLampSh.value=fx?1:0;arch.vol.uniforms.uCSh.value=fx?1:0;lampLight.castShadow=fx;glow.visible=fx;
+  bulbMats.forEach(m=>{m.emissiveIntensity=on?(fx?9:6):0;});
   screenMats.forEach(m=>{const [c0,i0]=emit0.get(m)!;if(!on){m.emissive.copy(c0);m.emissiveIntensity=i0;m.emissiveMap=null;m.needsUpdate=true;return;}
    if(m.name==='ws_crt_glass'){m.emissive.set(0x9fc4e6);m.emissiveMap=crtTex;m.emissiveIntensity=.38*SK;}else{m.emissive.set(0x2fa865);m.emissiveIntensity=.22*SK;}m.needsUpdate=true;});cone.uniforms.uOn.value=on?CK:0;}
+ // H5 (LIGHT-REF-R1-DESK, user "램프는 수정해야 해"): the shade mouth glows when you look into it, so the lamp reads as the source
+ // (L8). A disc facing out of the shade along the light axis — edge-on from the side, hidden from above by the shade.
+ const glow=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d')!,r=g.createRadialGradient(32,32,2,32,32,32);
+  r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.45,'rgba(255,236,205,.85)');r.addColorStop(1,'rgba(255,200,140,0)');g.fillStyle=r;g.fillRect(0,0,64,64);
+  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;
+  const m=new THREE.Mesh(new THREE.CircleGeometry(.05,32),new THREE.MeshBasicMaterial({map:t,color:0xffe7c4,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,toneMapped:false}));
+  m.position.copy(LAMP_P).addScaledVector(LAMP_D,.012);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),LAMP_D);m.visible=false;scene.add(m);return m;})();
+ // H1/H2: lamp shadow. The baked room and the cone compare against a depth map seen from the bulb (static scene → rendered once,
+ // figure, lamp and shells left out); the PBR props (workstation, chair, strip) use the spot's own three.js shadow.
+ const LSH=1024,lampRT=new THREE.WebGLRenderTarget(LSH,LSH,{depthTexture:new THREE.DepthTexture(LSH,LSH,THREE.FloatType)});
+ const lampCam=new THREE.PerspectiveCamera(112,1,.03,3);lampCam.position.copy(LAMP_P);lampCam.up.set(1,0,0);lampCam.lookAt(LAMP_P.clone().add(LAMP_D));
+ lampCam.updateMatrixWorld();lampCam.updateProjectionMatrix();
+ const lampVP=new THREE.Matrix4().multiplyMatrices(lampCam.projectionMatrix,lampCam.matrixWorldInverse);
+ {const off=[figure.group,arch.dust,lamp,glow,...shells.map(x=>x.m)],was=off.map(o=>o.visible);off.forEach(o=>o.visible=false);
+  scene.overrideMaterial=new THREE.MeshBasicMaterial({colorWrite:false,side:THREE.DoubleSide});
+  renderer.setRenderTarget(lampRT);renderer.clear();renderer.render(scene,lampCam);renderer.setRenderTarget(null);scene.overrideMaterial=null;off.forEach((o,i)=>o.visible=was[i]);}
+ arch.shared.uLampDepth.value=lampRT.depthTexture;arch.shared.uLampVP.value=lampVP;arch.vol.uniforms.uCDepth.value=lampRT.depthTexture;arch.vol.uniforms.uCVP.value=lampVP;
+ renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ lampLight.shadow.mapSize.set(1024,1024);lampLight.shadow.camera.near=.03;lampLight.shadow.camera.far=2.4;lampLight.shadow.bias=-.0004;lampLight.shadow.normalBias=.01;
+ for(const o of [workstation,chair,strip])o.traverse(x=>{if((x as THREE.Mesh).isMesh){x.castShadow=true;x.receiveShadow=true;}});
  // camera from story.json ('ma' for pli/ma, 'side' for bw — the person's right, D-054)
  const camFrom=(name:string)=>{const d=story.cams[name],e=d.rot_euler,eul=new THREE.Euler(e[0],e[1],e[2],'ZYX');   // Blender XYZ euler = Rz·Ry·Rx = three order ZYX
   const f=new THREE.Vector3(0,0,-1).applyEuler(eul);return{def:d,loc:toThree(d.loc,A),look:toThree([d.loc[0]+f.x,d.loc[1]+f.y,d.loc[2]+f.z],A)};};
@@ -312,7 +334,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
  // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
  const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
- composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);setLights(QA.light==='L1');
+ composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);setLights(QA.light);
  // M-b shallow focus (§10.4): focus rides the wave — fist → shoulder → RA
  const bokeh=new BokehPass(scene,camera,{focus:1,aperture:0,maxblur:.008});composer.addPass(bokeh);bokeh.enabled=false;
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.5,.35,.8);composer.addPass(bloom);composer.addPass(new OutputPass());
@@ -392,18 +414,19 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
    shells.forEach(({m,u},i)=>{
     // emission on the real clock (once per second / the 4+5 rhythm); only the growth runs on the slowed clock (B1/B2).
     // Counting emissions on the slowed clock delayed the first shell to ~14.7 s (2026-10-15 continuous run).
-    const n=Math.floor(t-13)-i,emit=QA.sonar==='D1'?(n>=0?13+n:-1):EMIT[i];
+    const n=Math.floor(t-13)-i,L=lastTap(13,t)-i,emit=QA.sonar==='D1'?(n>=0?13+n:-1):QA.sonar==='D2'?(L>=0?tapTime(13,L):-1):EMIT[i];
     if(emit>=0&&t>=emit&&!sAt.has(emit))sAt.set(emit,sClock-(t-emit)*(sClock===t?1:kd));   // slowed-clock time of this emission
-    const st=emit>=0&&t>=emit?shell(sClock,sAt.get(emit)??emit,R_MAX):null;m.visible=!!st&&st.a>.004;if(!st)return;
+    const st=emit>=0&&t>=emit?shell(sClock,sAt.get(emit)??emit,R_MAX,.04,QA.sonar==='D2'?.675:1.35):null;m.visible=!!st&&st.a>.004;if(!st)return;   // D2: half the distance falloff
     m.scale.setScalar(st.r);const inside=camera.position.distanceTo(STRIP_C)/st.r,fr=Math.max(0,1-st.r/R_MAX);
     let a=st.a*.85*(inside<1?.06+.94*ss(.82,1,inside):1);
     if(QA.speed==='B2')a*=clamp(dc/REF_D,.7,1);                                 // close: fainter too (.4 × rim-only made 13–14.5 s empty)
     if(QA.sonar==='D1'){if(QA.fade==='Ea')a*=.5;else if(QA.fade==='Ec')a*=fr>0?.35*fr**.6/fr**1.35:0;else a*=.8;}   // Ea low start · Eb rim only · Ec slow fade, low peak
-    u.uA.value=a;u.uBody.value=QA.sonar==='D1'&&QA.fade==='Eb'?0:.06;m.visible=a>.004;
+    if(QA.sonar==='D2')a*=.4;   // user 2026-10-16: half of D1+Eb (.8) — "좀 정신사납네"
+    u.uA.value=a;u.uBody.value=QA.sonar==='D2'||QA.sonar==='D1'&&QA.fade==='Eb'?0:.06;m.visible=a>.004;
     if(st.r>=reach&&!arrived.has(emit)){arrived.add(emit);arrive.push(t);if(contactT<0)contactT=t;}
    });
    if(contactT>=0){const p=t-contactT;
-    if(QA.sonar==='D1'){let pulse=0;for(const ta of arrive){const d=t-ta;if(d>=0&&d<1)pulse=Math.max(pulse,Math.sin(Math.PI*d));}   // each arrival: the RA lead brightens and fades
+    if(QA.sonar!=='D0'){let pulse=0;for(const ta of arrive){const d=t-ta;if(d>=0&&d<1)pulse=Math.max(pulse,Math.sin(Math.PI*d));}   // each arrival: the RA lead brightens and fades
      common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p))+.12*pulse;ringK=Math.max(.35*ss(1.4,2.2,p),pulse);leadK=Math.max(.35*ss(1.6,2.4,p),pulse);}
     else{common=.7*ss(0,1.2,p)*(1-.85*ss(1.4,2.2,p));ringK=ss(1.4,2.2,p);leadK=ss(1.6,2.4,p);}}   // field reaches the body as the crane ends
   }
@@ -483,7 +506,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  gsap.ticker.add(update);
  return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,selfCheck,
   /** QA candidates (debug panel): set one and rebuild the camera keys when the composition changes */
-  setQa(k:string,v:string){QA[k]=v;if(k==='light')setLights(v==='L1');if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
+  setQa(k:string,v:string){QA[k]=v;if(k==='light')setLights(v);if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
   /** QA (S-10): fix the breath morph (null = data) and show the figure alone on black for a body mask */
   qaPose(o:{breath?:number|null,mask?:boolean}){if(o.breath!==undefined)qaBreath=o.breath;if(o.mask!==undefined){arch.setFade(o.mask?0:1);[chair,strip,workstation,lamp].forEach(x=>x.visible=!o.mask);}},
   /** QA: jump the scene clock (e.g. back to the strip) */

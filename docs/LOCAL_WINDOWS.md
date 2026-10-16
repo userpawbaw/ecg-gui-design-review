@@ -4,6 +4,20 @@
 
 **원칙: 터미널에는 `npm run …` 한 줄만 친다.** `&&`, `python3`, 경로 이동, UTF-8 설정, 의존성 설치, 자료 준비는 `scripts/local/run.mjs`가 대신 한다. 명령을 치기 싫으면 VS Code에서 `Ctrl+Shift+P` → **Tasks: Run Task** → 아래 작업 이름을 고르면 된다(`.vscode/tasks.json`, Windows에서는 cmd.exe로 실행).
 
+## 0. 어느 폴더에서 치나
+
+`npm run story`는 **이 저장소(`userpawbaw/ecg-gui-design-review`) 폴더**에서 친다. 원본 연구 저장소(`ECG_denoising_method_comparision`)에서 치면 `Could not read package.json`(ENOENT)이 난다(2026-10-16 사용자 보고).
+
+처음 받을 때(한 줄씩, 받을 상위 폴더에서):
+
+```
+git clone https://github.com/userpawbaw/ecg-gui-design-review.git
+cd ecg-gui-design-review
+git checkout claude/r1-autopilot-recommended
+```
+
+이미 받았다면 그 폴더로 옮긴 뒤 `git pull`. 600초 replay 자료(선택)는 릴리스 `archive-v2.2.1-recovery`의 zip에서 `app/replay/`를 `prototype/v2/public/replay/`로 풀어 둔다. 없으면 10초 자료로 돈다.
+
 ## 1. 처음 한 번
 
 | 순서 | 명령 | 하는 일 |

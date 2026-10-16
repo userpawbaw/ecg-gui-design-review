@@ -234,6 +234,9 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   su.uPrac.value=k;su.uLampCol.value.set(1,.74,.46).multiplyScalar(.21*LK);su.uScrCol.value[0].set(.55,.68,.85).multiplyScalar(.05*SK);su.uScrCol.value[1].set(.2,.8,.4).multiplyScalar(.025*SK);
   lampLight.intensity=.9*LK*k;crtLight.intensity=.18*SK*k;ecgLight.intensity=.04*SK*k;
   bulbMats.forEach(m=>m.emissive.set(0xffd9a8));
+  // L2: a brighter, harder-edged pool so the shadows read (first L2 check: shadows invisible in a weak, soft pool)
+  if(fx){su.uLampCol.value.multiplyScalar(2.2);su.uLampCos.value.set(.86,.965);arch.vol.uniforms.uCCos.value.set(.86,.95);lampLight.intensity*=2.2;lampLight.angle=.54;lampLight.penumbra=.3;}
+  else{su.uLampCos.value.set(.82,.95);arch.vol.uniforms.uCCos.value.set(.8,.93);lampLight.angle=.62;lampLight.penumbra=.55;}
   su.uLampSh.value=fx?1:0;arch.vol.uniforms.uCSh.value=fx?1:0;lampLight.castShadow=fx;glow.visible=fx;
   bulbMats.forEach(m=>{m.emissiveIntensity=on?(fx?9:6):0;});
   screenMats.forEach(m=>{const [c0,i0]=emit0.get(m)!;if(!on){m.emissive.copy(c0);m.emissiveIntensity=i0;m.emissiveMap=null;m.needsUpdate=true;return;}

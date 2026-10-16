@@ -24,6 +24,8 @@
 
 ---
 
+후속: 레퍼런스의 원근·시점·배치·빛 구역 분석은 `ANALYSIS-R1-REF002-SPACE-LIGHT-20261016.md`(F-044). S1 결과는 `verification/r1-archive-art-r8-lightgroups-20261016/`.
+
 ## 1. 지금 위치
 
 | 지표(파스텔 a1 / a2) | r7 (D-069) | REF-002 | 차이 |

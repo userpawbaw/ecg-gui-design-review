@@ -818,6 +818,7 @@ if args.art in ('r3', 'r4', 'r5', 'r6'):                                   # thr
     SUN_TO = Vector(tuple(float(v) for v in os.environ.get('SUN_DIR', '0.22,0.62,-0.75').split(','))).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', {'r5': 26.0, 'r6': 22.0}.get(args.art, 20.0)))
 if args.art in ('r4', 'r5', 'r6'):                      # D-059: a larger sun disc so every hole's edge gets a penumbra (≈ 3.5 cm per metre of throw at 2°)
     sun.angle = math.radians(float(os.environ.get('SUN_ANG', 0.5 if args.art == 'r6' else 2.0)))   # r6 (F-040): crisp like REF, sigma 0.8 px
+    if os.environ.get('SUN_MB'): sun.cycles.max_bounces = int(os.environ['SUN_MB'])   # F-043: the sun's bounce fills the shade; 0 = accents only
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 if args.art == 'r6':                                   # D-062 (F-040): the REF key is a near small lamp (crisp edges + falloff inside one light)
     hx0, hx1, hy0, hy1 = HATCH; hc = Vector(((hx0 + hx1) / 2, (hy0 + hy1) / 2, H))
@@ -921,7 +922,27 @@ if args.preview:
     scene.render.resolution_x, scene.render.resolution_y = rx, ry; scene.view_settings.view_transform = 'AgX'; scene.view_settings.exposure = float(os.environ.get('EXPO', {'r5': 0.9, 'r6': 0.15}.get(args.art, 0.8)))
     if os.environ.get('LOOK', 'AgX - Punchy' if args.art in ('r5', 'r6') else ''): scene.view_settings.look = os.environ.get('LOOK', 'AgX - Punchy')   # D-061 tone-curve test (e.g. 'AgX - Punchy')
     scene.cycles.max_bounces = int(os.environ.get('BOUNCES', 6)) if args.art in ('r3', 'r4', 'r5', 'r6') else 4; scene.cycles.diffuse_bounces = min(scene.cycles.max_bounces, int(os.environ.get('BOUNCES', 4))); scene.cycles.volume_bounces = 0   # Cycles caps diffuse at 4 by default (D-061)
+    if os.environ.get('SHOTS_JSON'):          # viewpoint study (ANALYSIS-R1-REF002-SPACE-LIGHT-20261016): {name: [loc, target, vfov_deg, shift_y]} replaces the shots
+        SHOTS = {k: tuple(v) for k, v in json.loads(os.environ['SHOTS_JSON']).items()}
     want = set(args.shots.split(',')) if args.shots else set(SHOTS)
+    LG_OUT = None
+    if os.environ.get('LIGHTGROUPS'):          # S1 (rounds/R1/RESEARCH-R1-ARCHIVE-LIGHT-WOW-20261016 §6): one denoised pass per light group beside the PNG
+        vl_ = scene.view_layers[0]
+        for g_ in ('key', 'sun', 'sky'): vl_.lightgroups.add(name=g_)
+        for o_name, g_ in (('key', 'key'), ('sun', 'sun')):
+            if o_name in bpy.data.objects: bpy.data.objects[o_name].lightgroup = g_
+        scene.world.lightgroup = 'sky'                       # the rest (lamps, visible lamp glass) = Combined − key − sun − sky
+        vl_.cycles.denoising_store_passes = True
+        scene.use_nodes = True; lt = scene.node_tree
+        lrl = lt.nodes.get('Render Layers') or lt.nodes.new('CompositorNodeRLayers'); lrl.layer = vl_.name
+        lcmp = lt.nodes.get('Composite') or lt.nodes.new('CompositorNodeComposite')
+        if not lcmp.inputs['Image'].is_linked: lt.links.new(lrl.outputs['Image'], lcmp.inputs['Image'])
+        LG_OUT = lt.nodes.new('CompositorNodeOutputFile'); LG_OUT.format.file_format = 'OPEN_EXR_MULTILAYER'; LG_OUT.format.color_depth = '32'
+        LG_OUT.layer_slots.clear(); LG_OUT.layer_slots.new('Combined'); lt.links.new(lrl.outputs['Image'], LG_OUT.inputs['Combined'])   # already denoised by the render
+        for g_ in ('key', 'sun', 'sky'):
+            dn = lt.nodes.new('CompositorNodeDenoise'); lt.links.new(lrl.outputs['Combined_' + g_], dn.inputs['Image'])
+            lt.links.new(lrl.outputs['Denoising Normal'], dn.inputs['Normal']); lt.links.new(lrl.outputs['Denoising Albedo'], dn.inputs['Albedo'])
+            LG_OUT.layer_slots.new(g_); lt.links.new(dn.outputs['Image'], LG_OUT.inputs[g_])
     if args.signal != 'off' and not args.clay:                    # neon glow for the dash preview (the web uses its bloom pass)
         scene.use_nodes = True; ct = scene.node_tree; rl = ct.nodes.get('Render Layers') or ct.nodes.new('CompositorNodeRLayers')
         cmp = ct.nodes.get('Composite') or ct.nodes.new('CompositorNodeComposite'); gl = ct.nodes.new('CompositorNodeGlare')
@@ -932,11 +953,12 @@ if args.preview:
         for sock, v_ in (('Threshold', 1.6), ('Strength', .6), ('Size', .5)):
             if sock in gl.inputs: gl.inputs[sock].default_value = v_
         ct.links.new(rl.outputs['Image'], gl.inputs[0]); ct.links.new(gl.outputs[0], cmp.inputs['Image'])
-    for name, (loc, tgt, fov) in SHOTS.items():
+    for name, shot_ in SHOTS.items():
+        loc, tgt, fov = shot_[:3]
         if name not in want: continue
         cd = bpy.data.cameras.new(name); cd.angle = math.radians(fov * 16 / 9) if False else math.radians(fov)
         cd.sensor_fit = 'VERTICAL'; cd.angle = math.radians(fov)
-        c = bpy.data.objects.new(name, cd); c.location = loc; scene.collection.objects.link(c)
+        c = bpy.data.objects.new(name, cd); c.location = loc; scene.collection.objects.link(c); cd.shift_y = shot_[3] if len(shot_) > 3 else 0.0   # lens shift keeps verticals straight (level camera)
         c.rotation_euler = (Vector(tgt) - Vector(loc)).to_track_quat('-Z', 'Y').to_euler()
         if FIG is not None and FIG.data.shape_keys and 'grip' in FIG.data.shape_keys.key_blocks:
             FIG.data.shape_keys.key_blocks['grip'].value = 1.0 if name in ('s6_grip', 'd6_climb') else 0.0     # the grip shots show the clenched hand
@@ -948,6 +970,7 @@ if args.preview:
         if args.pose: tag = f'_{args.light}' + ('_clay' if args.clay else f'_{args.signal}')
         if args.art: tag += f'_{args.art}_{args.palette}' + ('_dress' if args.dress else '')
         scene.render.filepath = os.path.join(args.preview, name + tag + '.png')
+        if LG_OUT is not None: LG_OUT.base_path = os.path.join(args.preview, name + tag + '_lg')
         bpy.ops.render.render(write_still=True)
         print('rendered', name)
 

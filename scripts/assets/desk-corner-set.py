@@ -66,7 +66,7 @@ def oak(name, a='#8a5f3a', b='#74502f', scale=2.4, rough=.5):
 def grid_paper_image(name, w=1024, h=768):
     """blank ECG grid paper (1 mm / 5 mm), cream with pink lines — no trace (decorative space rule)"""
     img = bpy.data.images.new(name, w, h, alpha=False); px = [0.0] * (w * h * 4)
-    paper, fine, bold = srgb('#efe6d4'), srgb('#e6b9ad'), srgb('#d58f84')
+    paper, fine, bold = srgb('#d9cfbb'), srgb('#d2a99e'), srgb('#c08277')
     mm = w / 160.0                                                     # 160 mm wide sheet
     for y in range(h):
         gy = (y / mm); fy = abs(gy - round(gy)) * mm < .55; by = abs(gy / 5 - round(gy / 5)) * 5 * mm < .9
@@ -83,11 +83,11 @@ def paper_mat(name):
 
 M = {
     'oak': oak('set_oak', '#7d5a3c', '#6c4c31'), 'oak_dark': oak('set_oak_dark', '#5a3a22', '#4a2f1c', 2.8),
-    'brass': mat('set_brass', '#a8823f', .32, .85), 'plaster': mat('set_plaster', '#e8e2d6', .82, spec=.25),
+    'brass': mat('set_brass', '#a8823f', .32, .85), 'plaster': mat('set_plaster', '#cfc8bb', .82, spec=.25),
     'wainscot': mat('set_wainscot', '#4a4f45', .7), 'frame': mat('set_frame', '#2a211b', .45),
     'rug': mat('set_rug', '#5e3429', .95, spec=.1), 'rug_border': mat('set_rug_border', '#b9a888', .95, spec=.1),
     'cloth_r': mat('set_cloth_r', '#6e2a24', .8), 'cloth_b': mat('set_cloth_b', '#2c3a4f', .8), 'cloth_o': mat('set_cloth_o', '#a9822f', .8),
-    'page': mat('set_page', '#e9dfc7', .9), 'card': mat('set_card', '#efe8d6', .9),
+    'page': mat('set_page', '#d4cab3', .9), 'card': mat('set_card', '#d6cfbd', .9),
     'floor': mat('stand_floor', '#4a3324', .7), 'wall': mat('stand_wall', '#6a5a4a', .9), 'shelf': mat('stand_shelf', '#3b2a1d', .8),
     'occl': mat('occluder', '#000000', 1.),
 }
@@ -365,7 +365,7 @@ if args.bake:
         joined[g] = o
     # one scale for all groups so they stay consistent: 99.7th percentile of baked radiance
     allv = np.concatenate([r[..., :3][r[..., 3] > 0].ravel() for r in raw.values()])
-    scale = float(np.percentile(allv, 99.7)) if allv.size else 1.0
+    scale = float(np.percentile(allv, 99.97)) if allv.size else 1.0   # 99.7 clipped sunlit whites (3.6 % of the small group)
     from scipy import ndimage
     meta = {'source': 'scripts/assets/desk-corner-set.py', 'encoding': 'webp sqrt(linear colour x light / scale)', 'scale': round(scale, 5),
             'sun_to': [round(x, 4) for x in sun_to], 'sun_angle_deg': args.sunang, 'samples': args.samples, 'groups': {}}

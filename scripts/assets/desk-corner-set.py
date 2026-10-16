@@ -85,7 +85,7 @@ M = {
     'oak': oak('set_oak', '#7d5a3c', '#6c4c31'), 'oak_dark': oak('set_oak_dark', '#5a3a22', '#4a2f1c', 2.8),
     'brass': mat('set_brass', '#a8823f', .32, .85), 'plaster': mat('set_plaster', '#cfc8bb', .82, spec=.25),
     'wainscot': mat('set_wainscot', '#4a4f45', .7), 'frame': mat('set_frame', '#2a211b', .45),
-    'rug': mat('set_rug', '#5e3429', .95, spec=.1), 'rug_border': mat('set_rug_border', '#b9a888', .95, spec=.1),
+    'rug': mat('set_rug', '#5e3429', .95, spec=.1), 'rug_border': mat('set_rug_border', '#8c7d63', .95, spec=.1),
     'cloth_r': mat('set_cloth_r', '#6e2a24', .8), 'cloth_b': mat('set_cloth_b', '#2c3a4f', .8), 'cloth_o': mat('set_cloth_o', '#a9822f', .8),
     'page': mat('set_page', '#d4cab3', .9), 'card': mat('set_card', '#d6cfbd', .9),
     'floor': mat('stand_floor', '#4a3324', .7), 'wall': mat('stand_wall', '#6a5a4a', .9), 'shelf': mat('stand_shelf', '#3b2a1d', .8),

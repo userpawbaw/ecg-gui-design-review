@@ -1,4 +1,4 @@
-# Archive r7 (D-067), 2026-10-15 — stills only
+# Archive r7 (D-069), 2026-10-15 — stills only
 
 User: "1a, 2a, 다운로드 허가" — tune once more (restore plain_range while keeping the shade depth), pastel palette.
 Build (r7 defaults now in `--art r6`):

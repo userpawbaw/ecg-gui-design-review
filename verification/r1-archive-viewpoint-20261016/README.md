@@ -16,3 +16,10 @@ python scripts/blender/build_archive.py --intro2 --art r6 --dress --palette past
   the pendant lamp in the middle at 3.4 / 2.6 m, the near stack end as a dark band on the right fifth.
 - `vp_tilt_shift.jpg`: same spot (1.6 m): tilting up converges the verticals; level + lens shift keeps them straight (REF look).
 Not done: animation, motion between the heights, REF-side parallax measurement (needs the recording, analysis §7 V0).
+
+## V0 — REF-002 recording measured (2026-10-16; recording kept in the session scratch folder only)
+`ref_v0_face_reveal.jpg` (analysis only, not an asset): the same wall point aligned at scroll 7165 and 8583 (camera ≈ 1.36 units
+lower); shelf undersides open from ≈ 3 to 24 px while the wall moves 385 px → d/Z ≈ 0.055 → wall ≈ 5.8 m, vertical fov ≈ 32°
+(25–39° for a 0.25–0.4 m cell depth). Wall moves 0.27 px per scroll px; the ladder moves like the wall (leans near it). Section
+spans page 7324–9243 px with a 948 px viewport, so the 2.75-unit descent takes ≈ 3 screens of scroll. Tool:
+`scripts/assets/ref-scroll-shift.py`. Full table: analysis §9.

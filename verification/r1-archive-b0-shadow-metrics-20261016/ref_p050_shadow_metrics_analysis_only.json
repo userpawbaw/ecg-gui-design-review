@@ -1,0 +1,32 @@
+{
+ "camera": {
+  "loc": [
+   14.75639820098877,
+   0.0,
+   -1.8142428398132324
+  ],
+  "vfov_deg": 22.895191956401895
+ },
+ "lights": {},
+ "bookcase_depth_m": {
+  "back_wall": 8.52,
+  "front_p10": 7.98
+ },
+ "directional_left_third": {
+  "right": 12.3,
+  "left": null,
+  "up": 11.8,
+  "down": -0.5,
+  "toward_camera": 17.7
+ },
+ "layering_left_third": {
+  "L_facing_light_side": 12.3,
+  "L_front_layer": 19.4,
+  "L_cell_interior": 11.6,
+  "counts": [
+   540,
+   3995,
+   1186
+  ]
+ }
+}

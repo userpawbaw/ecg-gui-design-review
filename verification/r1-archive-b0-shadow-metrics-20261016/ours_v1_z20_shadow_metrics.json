@@ -1,0 +1,133 @@
+{
+ "camera": {
+  "loc": [
+   0.0,
+   -0.800000011920929,
+   2.0
+  ],
+  "vfov_deg": 32.0
+ },
+ "lights": {
+  "sun": {
+   "type": "SUN",
+   "shadowed_share": 0.779,
+   "crisp_le3px": 0.352,
+   "medium_3_10px": 0.387,
+   "soft_gt10px": 0.261,
+   "occluder_dist_m_p10_50_90": [
+    0.07,
+    3.03,
+    4.9
+   ],
+   "penumbra_px_p10_50_90": [
+    0.1,
+    7.3,
+    16.3
+   ],
+   "boundary_samples": 5322,
+   "boundary_crisp_le3px": 0.436,
+   "boundary_soft_gt10px": 0.073,
+   "boundary_penumbra_px_p10_50_90": [
+    0.0,
+    4.8,
+    9.6
+   ]
+  },
+  "key": {
+   "type": "SPOT",
+   "shadowed_share": 0.746,
+   "crisp_le3px": 0.441,
+   "medium_3_10px": 0.011,
+   "soft_gt10px": 0.548,
+   "occluder_dist_m_p10_50_90": [
+    0.06,
+    2.37,
+    3.96
+   ],
+   "penumbra_px_p10_50_90": [
+    0.4,
+    16.5,
+    42.1
+   ],
+   "boundary_samples": 5611,
+   "boundary_crisp_le3px": 0.588,
+   "boundary_soft_gt10px": 0.393,
+   "boundary_penumbra_px_p10_50_90": [
+    0.1,
+    1.5,
+    32.0
+   ]
+  },
+  "pendant": {
+   "type": "SPOT",
+   "shadowed_share": 0.17,
+   "crisp_le3px": 0.816,
+   "medium_3_10px": 0.151,
+   "soft_gt10px": 0.033,
+   "occluder_dist_m_p10_50_90": [
+    0.02,
+    0.13,
+    0.34
+   ],
+   "penumbra_px_p10_50_90": [
+    0.3,
+    1.4,
+    3.8
+   ],
+   "boundary_samples": 5508,
+   "boundary_crisp_le3px": 0.842,
+   "boundary_soft_gt10px": 0.02,
+   "boundary_penumbra_px_p10_50_90": [
+    0.1,
+    1.0,
+    3.8
+   ]
+  },
+  "desklamp": {
+   "type": "SPOT",
+   "shadowed_share": 0.328,
+   "crisp_le3px": 0.95,
+   "medium_3_10px": 0.05,
+   "soft_gt10px": 0.0,
+   "occluder_dist_m_p10_50_90": [
+    0.02,
+    0.13,
+    0.45
+   ],
+   "penumbra_px_p10_50_90": [
+    0.1,
+    0.4,
+    1.4
+   ],
+   "boundary_samples": 7320,
+   "boundary_crisp_le3px": 0.961,
+   "boundary_soft_gt10px": 0.0,
+   "boundary_penumbra_px_p10_50_90": [
+    0.0,
+    0.2,
+    1.4
+   ]
+  }
+ },
+ "bookcase_depth_m": {
+  "back_wall": 5.78,
+  "front_p10": 5.48
+ },
+ "directional_left_third": {
+  "right": 13.0,
+  "left": null,
+  "up": 12.6,
+  "down": 10.7,
+  "toward_camera": 12.9
+ },
+ "layering_left_third": {
+  "L_facing_light_side": 12.9,
+  "L_front_layer": 16.3,
+  "L_cell_interior": 8.2,
+  "counts": [
+   1335,
+   4682,
+   4907
+  ]
+ }
+}

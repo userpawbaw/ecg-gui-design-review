@@ -199,7 +199,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   // D-070 A (user 2026-10-16 "컴퓨터는 빼고 소품으로 바꿔줘"): the baked table, stool, cart and binder give way to the baked prop set
   ...(LEGACY_DESK?[]:[A2T(-3.32,3.08,.004,-1.38,4.02,.92),   // painted table (1.9 x 0.9, top 0.76) + binder + cable top on it
    A2T(-2.52,2.53,.004,-1.98,3.07,.56),                       // wooden stool
-   A2T(-1.78,3.62,.004,-1.22,4.18,.98)])];                     // ECG cart (legs, shelf)
+   A2T(-1.78,3.62,.004,-1.22,4.18,.98),                       // ECG cart (legs, shelf)
+   A2T(-3.46,4.38,1.12,-.72,4.99,1.62)])];                     // nook back-shelf row 1.2–1.6 m: its boxes floated over the new set
  {const inAny=(p:THREE.Vector3)=>trimBoxes.some(b=>b.containsPoint(p));
   const a=new THREE.Vector3(),b=new THREE.Vector3(),c=new THREE.Vector3();
   arch.room.updateMatrixWorld(true);arch.room.traverse(o=>{const m=o as THREE.Mesh;if(!m.isMesh)return;const g=m.geometry,P=g.getAttribute('position');

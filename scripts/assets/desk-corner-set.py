@@ -271,18 +271,36 @@ def occl_mesh(name, verts_faces):
 up = Vector((0, 0, 1)); u = sun_to.cross(up).normalized(); v = u.cross(sun_to).normalized()
 def plane_at(dist):
     return target - sun_to * dist
-# window: an opening 1.6 x 2.0 in a wall slab, two bars each way (2.4 m out → bars a few cm soft)
-wc = plane_at(2.4); faces = []
+# one sun, two openings (user 2026-10-16: leoparpeix "오른쪽 뒤에서도 빛이 들어오고 천장의 구멍을 통해서도 들어오는 느낌";
+# REF-002 §11: one sun — every shadow is parallel — entering through several openings, plus cool sky light from each opening).
+# A slab perpendicular to the sun with two holes: A = a barred window whose patch lands on the desk and rug, B = a plain square
+# hatch whose patch lands on the frames on the left wall (their shadows on the wall stay crisp — the cubby target was hidden by a shelf).
+P0 = target - sun_to * 2.4
+def on_slab(t):
+    return t - sun_to * (t - P0).dot(sun_to)
+holeA, holeB = on_slab(target), on_slab(Vector((WALL_X + .06, 3.55, 1.58)))   # B: a square patch over the frames on the left wall
 W2, H2, T = 1.0, 1.25, .045
+B2 = .42
+def in_hole(p):
+    da, db = p - holeA, p - holeB
+    return (abs(da.dot(u)) < W2 and abs(da.dot(v)) < H2) or (abs(db.dot(u)) < B2 and abs(db.dot(v)) < B2)
+faces = []; step = .1; ext = 3.6
 def quad(c, a, b):  # rectangle centred c spanning half-vectors a, b
     return [c - a - b, c + a - b, c + a + b, c - a + b]
-for c, a, b in ((wc + v * (H2 + .6), u * 2.5, v * .6), (wc - v * (H2 + .6), u * 2.5, v * .6), (wc + u * (W2 + .8), u * .8, v * 3.), (wc - u * (W2 + .8), u * .8, v * 3.)):
-    faces.append(quad(c, a, b))                                            # the wall around the opening
-for k in (-1, 1): faces.append(quad(wc + u * (k * W2 / 3), u * T / 2, v * H2))
-faces.append(quad(wc, u * W2, v * T / 2)); faces.append(quad(wc + v * H2 * .5, u * W2, v * T / 2))
-occl_mesh('Occ_window', faces)
+for i in range(int(2 * ext / step)):
+    for j in range(int(2 * ext / step)):
+        c = P0 + u * (-ext + (i + .5) * step) + v * (-ext + (j + .5) * step)
+        if not in_hole(c): faces.append(quad(c, u * step / 2, v * step / 2))
+for k in (-1, 1): faces.append(quad(holeA + u * (k * W2 / 3), u * T / 2, v * H2))          # window bars (hole A only)
+faces.append(quad(holeA, u * W2, v * T / 2)); faces.append(quad(holeA + v * H2 * .5, u * W2, v * T / 2))
+occl_mesh('Occ_slab', faces)
+# cool sky light from each opening (a broad, weak area light just inside each hole)
+for hc, size, k in ((holeA, (2 * W2, 2 * H2), 1.0), (holeB, (2 * B2, 2 * B2), .6)):
+    ld = bpy.data.lights.new('sky_fill', 'AREA'); ld.shape = 'RECTANGLE'; ld.size, ld.size_y = size; ld.energy = 7 * k * size[0] * size[1]
+    ld.color = srgb('#a9bde0'); lo = bpy.data.objects.new('sky_fill', ld); lo.location = hc + sun_to * .05
+    lo.rotation_euler = sun_to.to_track_quat('-Z', 'Y').to_euler(); bpy.context.collection.objects.link(lo)
 # foliage: twig lines with elliptical leaves, 5.5 m out → 20 cm penumbra, free-form dapple
-fc = plane_at(5.5) + u * .35 + v * .55; leaves = []
+fc = holeA - sun_to * 3.1 + u * .35 + v * .55; leaves = []   # outside hole A only
 for twig in range(16):
     p = fc + u * random.uniform(-1.3, 1.1) + v * random.uniform(-1.0, .9); dirv = (u * random.uniform(-1, 1) + v * random.uniform(-.4, .6)).normalized()
     for k in range(9):

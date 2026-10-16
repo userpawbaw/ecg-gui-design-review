@@ -8,7 +8,8 @@ Outputs (OUT prefix):
   Penumbra widths are in pixels of a 720 px-high frame (the frame-tone-stats scale), whatever --res is.
   OUT_penumbra.png  per light: grey = lit, colour = shadowed by an occluder: red ≤ 3 px (crisp), yellow 3–10, blue > 10 (soft)
   OUT.json          per light: shares of crisp / medium / soft shadow among shadowed samples and among boundary samples
-                    (shadowed with a lit neighbour — the edges the eye reads), occluder-distance percentiles;
+                    (shadowed with a lit neighbour — the edges the eye reads), occluder-distance percentiles, and per occluder object
+                    (name before the first '.') its boundary count, median penumbra and distance;
                     per sample the arrays needed for the layering index (normal, depth class) when --image is given
   With --image RENDER.png (same camera): shade layering in the left third — median L* of (a) surfaces facing the light side
   (normal·side > 0.5; side = camera right unless --side), (b) the front layer (≥ 0.15 m in front of the cell back wall: shelf
@@ -17,7 +18,7 @@ Outputs (OUT prefix):
   (camera right / left / up / down / toward camera): where the fill in the shade comes from. REF-002 rebuilds work too (no lights: layering only).
 
   python scripts/blender/shadow-sharpness-map.py -- SCENE(.blend|.glb) OUT "cam=x,y,z;tx,ty,tz;vfov" [--res 320x180]
-         [--image RENDER.png] [--side 1,0,0] [--glbcam]   (--glbcam: use the glb's own camera, z offset via cam=;;;dz)
+         [--image RENDER.png] [--side 1,0,0] [--zone 0,0.333] [--glbcam]   (--glbcam: use the glb's own camera, z offset via cam=;;;dz)
 Run with the bpy Python. Lights read from the scene: SUN objects (angle) and POINT/SPOT objects (shadow_soft_size).
 """
 import json, math, sys
@@ -30,7 +31,7 @@ scene_path, out, camspec = a[0], a[1], a[2]
 opt = {}
 i = 3
 while i < len(a):
-    if a[i] in ('--res', '--image', '--side'): opt[a[i]] = a[i + 1]; i += 2
+    if a[i] in ('--res', '--image', '--side', '--zone'): opt[a[i]] = a[i + 1]; i += 2
     else: opt[a[i]] = True; i += 1
 W, H = (int(v) for v in opt.get('--res', '320x180').split('x'))
 
@@ -71,12 +72,13 @@ def cast(org, d, dist=1e4):
     while travelled < dist:
         hit, P, N, idx, ob, _ = sc.ray_cast(dg, org, d, distance=dist - travelled)
         if not hit: return False, None, None
-        if not skip(ob): return True, P, N
+        if not skip(ob): cast.last = ob.name; return True, P, N
         travelled += (P - org).length + 1e-4; org = P + d * 1e-4
     return False, None, None
+cast.last = ''
 
 depth = np.full((H, W), np.nan); nrm = np.zeros((H, W, 3)); pts = np.zeros((H, W, 3))
-res = {l[0]: {'pen': np.full((H, W), np.nan), 'occ': np.full((H, W), np.nan)} for l in lights}
+res = {l[0]: {'pen': np.full((H, W), np.nan), 'occ': np.full((H, W), np.nan), 'who': np.full((H, W), '', dtype=object)} for l in lights}
 for y in range(H):
     for x in range(W):
         u = ((x + .5) / W * 2 - 1) * tw; v = (1 - (y + .5) / H * 2) * th
@@ -93,7 +95,7 @@ for y in range(H):
             h2, Q, _ = cast(P + N * 1e-3, ld, dist_l)
             if not h2: continue
             dor = (Q - P).length
-            res[name]['occ'][y, x] = dor; res[name]['pen'][y, x] = dor * theta * fpx / z
+            res[name]['occ'][y, x] = dor; res[name]['pen'][y, x] = dor * theta * fpx / z; res[name]['who'][y, x] = cast.last.split('.')[0]
 
 # penumbra map image
 img = np.zeros((H * len(lights) or H, W, 3))
@@ -115,7 +117,11 @@ for k, (name, typ, val, size) in enumerate(lights):
         'penumbra_px_p10_50_90': [round(float(np.percentile(pen[m], q)), 1) for q in (10, 50, 90)] if m.any() else None,
         'boundary_samples': int(bd.sum()), 'boundary_crisp_le3px': round(float((pen[bd] <= 3).sum() / nbd), 3),
         'boundary_soft_gt10px': round(float((pen[bd] > 10).sum() / nbd), 3),
-        'boundary_penumbra_px_p10_50_90': [round(float(np.percentile(pen[bd], q)), 1) for q in (10, 50, 90)] if bd.any() else None}
+        'boundary_penumbra_px_p10_50_90': [round(float(np.percentile(pen[bd], q)), 1) for q in (10, 50, 90)] if bd.any() else None,
+        'by_occluder': {o: {'boundary_samples': int((bd & (res[name]['who'] == o)).sum()),
+                            'penumbra_px_p50': round(float(np.median(pen[bd & (res[name]['who'] == o)])), 1),
+                            'occluder_dist_m_p50': round(float(np.median(occ[bd & (res[name]['who'] == o)])), 2)}
+                        for o in sorted(set(res[name]['who'][bd])) if (bd & (res[name]['who'] == o)).sum() >= 15}}
 from PIL import Image
 Image.fromarray((np.clip(img, 0, 1) * 255).astype(np.uint8)).resize((W * 2, img.shape[0] * 2), Image.NEAREST).save(out + '_penumbra.png')
 
@@ -124,7 +130,8 @@ if opt.get('--image'):
     im = Image.open(opt['--image']).convert('RGB').resize((W, H), Image.BOX)
     a8 = np.asarray(im).astype(float) / 255; lin = np.where(a8 <= .04045, a8 / 12.92, ((a8 + .055) / 1.055) ** 2.4)
     Ls = 116 * np.cbrt(lin @ [.2126, .7152, .0722]) - 16
-    zone = np.zeros((H, W), bool); zone[:, :W // 3] = True; ok = zone & ~np.isnan(depth)
+    zx0, zx1 = (float(v) for v in opt.get('--zone', '0,0.3333').split(','))     # shade zone as frame-width fractions (default: left third)
+    zone = np.zeros((H, W), bool); zone[:, int(zx0 * W):int(zx1 * W)] = True; ok = zone & ~np.isnan(depth)
     back = float(np.percentile(depth[ok], 98))                       # the cell back wall (level camera facing the wall: one depth)
     unit = ok & (depth > back - 1.0)                                  # the bookcase only: ladder, stack ends, lamps excluded
     facing = unit & ((nrm @ np.array(side)) > 0.5)

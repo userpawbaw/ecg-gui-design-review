@@ -155,8 +155,8 @@ def cyl(name, r, depth, loc, m, rot=(0, 0, 0), verts=16):
 XW, Y0, Y1, H = 3.6, -5.0, 5.0, 5.0          # half width, front/back, ceiling height
 box('Floor', (2 * XW, Y1 - Y0, 0.1), (0, (Y0 + Y1) / 2, -0.05), M_FLOOR, tile=3.0)
 box('BackWall', (2 * XW, 0.15, H), (0, Y1 + 0.075, H / 2), M_WALL, tile=2.0)
-if args.b2:                                                    # D-084: a high window near the back corner; its mullions are the far occluder for the right bay
-    RWY0, RWY1, RWZ0, RWZ1 = (float(v) for v in os.environ.get('B2_WIN', '3.0,4.4,3.4,4.7').split(','))
+if args.b2 and os.environ.get('B2_WIN'):                      # D-084 (first try, off by default): a high right-wall window; at the 54° sun its light lands on the floor
+    RWY0, RWY1, RWZ0, RWZ1 = (float(v) for v in os.environ['B2_WIN'].split(','))
     for nm, (ya, yb, za, zb) in (('WallR_a', (Y0, RWY0, 0, H)), ('WallR_b', (RWY1, Y1, 0, H)), ('WallR_low', (RWY0, RWY1, 0, RWZ0)), ('WallR_top', (RWY0, RWY1, RWZ1, H))):
         box(nm, (0.15, yb - ya, zb - za), (XW + 0.075, (ya + yb) / 2, (za + zb) / 2), M_WALL, tile=2.0)
     for k in (1, 2): box('B2_mullion_v', (0.1, 0.06, RWZ1 - RWZ0), (XW + 0.02, RWY0 + k * (RWY1 - RWY0) / 3, (RWZ0 + RWZ1) / 2), M_FRAME)
@@ -171,7 +171,7 @@ HATCH = tuple(float(v) for v in os.environ.get('HATCH', '0.0,1.6,2.47,3.88').spl
 # shades a 0.12 m strip at this sun slope (ray check, it2).
 HOLES = [HATCH]
 if args.art in ('r4', 'r5', 'r6'):
-    HOLES += [tuple(float(v) for v in h.split(',')) for h in os.environ.get('HOLES', ('' if args.b2 else '0.6,1.6,1.0,1.6') if args.art == 'r6' else '-1.9,-0.9,0.95,1.75;-2.5,-1.0,2.45,2.75;-2.5,-1.0,2.87,3.17;-2.5,-1.0,3.29,3.59;0.6,1.6,1.0,1.6').split(';') if h]
+    HOLES += [tuple(float(v) for v in h.split(',')) for h in os.environ.get('HOLES', ('1.75,3.3,2.6,3.85' if args.b2 else '0.6,1.6,1.0,1.6') if args.art == 'r6' else '-1.9,-0.9,0.95,1.75;-2.5,-1.0,2.45,2.75;-2.5,-1.0,2.87,3.17;-2.5,-1.0,3.29,3.59;0.6,1.6,1.0,1.6').split(';') if h]
     HOLES += [tuple(float(v) for v in h.split(',')) for h in os.environ.get('HOLES_ADD', '-1.5,0.4,-0.4,0.25' if args.art in ('r5', 'r6') and not args.b2 else '').split(';') if h]   # D-061 experiments (e.g. a floor-patch hole)
 if args.art in ('r3', 'r4', 'r5', 'r6'):
     hx0, hx1, hy0, hy1 = HATCH
@@ -829,6 +829,24 @@ if args.art in ('r4', 'r5', 'r6'):                      # D-059: a larger sun di
     sun.angle = math.radians(float(os.environ.get('SUN_ANG', 0.5 if args.art == 'r6' else 2.0)))   # r6 (F-040): crisp like REF, sigma 0.8 px
     if args.art == 'r6' or os.environ.get('SUN_MB'): sun.cycles.max_bounces = int(os.environ.get('SUN_MB', 1))   # r8 D-082 / F-043: the sun's bounce filled the shade; 1 bounce, 0 = accents only
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
+if args.b2:                                                    # D-084: shaping the one sun (bake-only off-screen occluders are named B2_*)
+    if os.environ.get('B2_LID', '1') != '0':                  # a lid standing on the hatch's right edge: a near occluder that trims the beam into the left bays
+        hx0_, hx1_, hy0_, hy1_ = HATCH; lid_h = float(os.environ.get('B2_LID_H', 1.2))
+        lid = box('B2_lid', (0.04, hy1_ - hy0_, lid_h), (hx1_ + 0.02, (hy0_ + hy1_) / 2, H + 0.15 + lid_h / 2), M_BEAM)
+    if os.environ.get('B2_CANOPY', '1') != '0':               # leaves ~3.5 m above the skylight, up-sun: soft free shapes inside the pool (REF: the daisy)
+        sk = [h for h in HOLES if h != HATCH]
+        if sk:
+            c0 = Vector(((sk[0][0] + sk[0][1]) / 2, (sk[0][2] + sk[0][3]) / 2, H)); zc = float(os.environ.get('B2_CANOPY_Z', 8.5))
+            cc = c0 - SUN_TO * ((zc - H) / -SUN_TO.z)
+            M_LEAF = mat('b2_leaf', srgb('#3a3a2c'), 0.8); r_ = random.Random(23)
+            for k in range(int(os.environ.get('B2_LEAVES', 14))):
+                ang = r_.uniform(0, 2 * math.pi); rad = 2.4 * math.sqrt(r_.random())
+                p_ = cc + Vector((math.cos(ang) * rad, math.sin(ang) * rad, r_.uniform(-0.4, 0.4)))
+                bpy.ops.mesh.primitive_uv_sphere_add(segments=12, ring_count=6, radius=1, location=p_)
+                lf = bpy.context.object; lf.name = 'B2_canopy'; sz = r_.uniform(0.18, 0.5)
+                lf.scale = (sz, sz * r_.uniform(0.35, 0.7), 0.03); lf.rotation_euler = (r_.uniform(-.5, .5), r_.uniform(-.5, .5), r_.uniform(0, math.pi))
+                lf.data.materials.append(M_LEAF)
+            print('b2 canopy centre', tuple(round(v, 2) for v in cc))
 if args.art == 'r6':                                   # D-062 (F-040): the REF key is a near small lamp (crisp edges + falloff inside one light)
     hx0, hx1, hy0, hy1 = HATCH; hc = Vector(((hx0 + hx1) / 2, (hy0 + hy1) / 2, H))
     KEY_D = float(os.environ.get('KEY_D', 1.6))                  # metres back along the light direction from the hatch centre (r7 D-081: 1.6, nearer = more falloff inside the pool; r6b 2.2)

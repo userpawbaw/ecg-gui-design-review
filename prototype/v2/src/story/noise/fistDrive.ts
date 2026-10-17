@@ -38,8 +38,24 @@ export function fistTrack(bursts:Burst[],T:number,rate=100){
  return f;
 }
 
-export function createFistDrive(input:Float32Array,clean:Float32Array,fs:number){
- const T=input.length/fs,env=noiseEnvelope(input,clean,fs),bursts=findBursts(env,fs),track=fistTrack(bursts,T),RATE=100;
+/** F1 (D-072, user 2026-10-17 "주먹을 다 쥐었을 때와 잡음이 생겨나는 시점이 동기화되고 잡음이 사라지는 시점부터 주먹을 펴도록"):
+ *  every burst gets a full clench — closing starts CLOSE_S early so the fist is shut when the noise starts (the noise is stored,
+ *  so its start is known), it holds while the noise lasts and opens over OPEN_S after it ends. Between close bursts the hand
+ *  opens part way and closes again (depth = gap / (OPEN_S + CLOSE_S)); gaps under HOLD_GAP_S would only twitch, so they hold. */
+export const HOLD_GAP_S=.25;
+export function fistTrackHold(bursts:Burst[],T:number,rate=100){
+ const seg:{s:number,e:number}[]=[];
+ for(const b of bursts){const p=seg[seg.length-1];if(p&&b.start-p.e<HOLD_GAP_S)p.e=b.end;else seg.push({s:b.start,e:b.end});}
+ const all=[-1,0,1].flatMap(k=>seg.map(x=>({s:x.s+k*T,e:x.e+k*T})));   // the loop wraps: neighbours across the seam count
+ const n=Math.ceil(T*rate),f=new Float32Array(n);
+ for(let i=0;i<n;i++){const t=i/rate;let v=0;
+  for(const x of all){const p=t<x.s?1-(x.s-t)/CLOSE_S:t<=x.e?1:1-(t-x.e)/OPEN_S;if(p>v)v=p;}
+  f[i]=Math.max(0,Math.min(1,v));}
+ return f;
+}
+
+export function createFistDrive(input:Float32Array,clean:Float32Array,fs:number,mode='F1'){
+ const T=input.length/fs,env=noiseEnvelope(input,clean,fs),bursts=findBursts(env,fs),track=mode==='F0'?fistTrack(bursts,T):fistTrackHold(bursts,T),RATE=100;
  // noise level 0..1 (quiet floor → loud top), the same envelope the bursts come from, for the red marker's strength
  const sorted=Float32Array.from(env).sort(),floor=sorted[Math.floor(sorted.length*.2)],top=sorted[Math.floor(sorted.length*.995)];
  const level=env.map(v=>Math.min(1,Math.max(0,(v-floor)/Math.max(1e-9,top-floor))));

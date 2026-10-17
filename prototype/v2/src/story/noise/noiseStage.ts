@@ -60,7 +60,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const qp=new URLSearchParams(location.search),LEGACY_DESK=qp.get('legacyDesk')==='1';   // ?legacyDesk=1: the 2026-10-14 computer + lamp (D-067) for comparison
  // D-068 (user 2026-10-15 "결정 사항은 추천대로"): A1 farther strip framing, B2 distance-scaled + fainter shells, C1 AC icon only,
  // D1 sonar once per second with the chest pulse, Eb rim only. Sonar → D2 (2026-10-16, D-069): 3 taps every 2 s, half alpha. The others stay selectable on the ?debug=1 panel.
- const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L0',set:qp.get('set')??'A'};   // set: A = archive + desk-corner prop set (D-070), C = the rebuilt attic room (D-071)
+ const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L0',set:qp.get('set')??'A',fist:qp.get('fist')??'F1'};   // fist: F1 full clench at the noise (D-072), F0 the S-14 rule   // set: A = archive + desk-corner prop set (D-070), C = the rebuilt attic room (D-071)
  // QA: ?cam=x,y,z,lx,ly,lz,vfov freezes the camera (three frame) for still comparisons
  let qaBreath:number|null=null;   // QA (S-10 measurement): fixed breath 0..1
  const camFix=(()=>{const c=qp.get('cam')?.split(',').map(Number);return c&&c.length>=7?{p:new THREE.Vector3(c[0],c[1],c[2]),l:new THREE.Vector3(c[3],c[4],c[5]),fov:c[6]}:null;})();
@@ -444,7 +444,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  function setScene(d:NoiseData,o:{last?:boolean}={}){
   const handover=keys.length>0;data=d;last=!!o.last;ended=false;leaveT=-1;
   T=data.input.length/data.fs;bw=data.cond==='bw'?breathFromBaseline(data.input,data.fs):null;
-  drive=data.cond==='ma'?createFistDrive(data.input,data.clean,data.fs):null;
+  drive=data.cond==='ma'?createFistDrive(data.input,data.clean,data.fs,QA.fist):null;
   HOLD={pli:18.6,bw:4,ma:31}[data.cond];OUTLEN=data.cond==='ma'?4:1.2;TP={pli:19,bw:11,ma:11}[data.cond];PROC=TP+3;   // panel (right curtain + wave) from TP; strip after the inflow
   keys=keysFor(data.cond);sClock=0;contactT=-1;arrive.length=0;arrived.clear();sAt.clear();
   if(handover)keys[0]={t:0,pos:camera.position.clone(),look:cur.look.clone(),hfov:cur.h};
@@ -564,7 +564,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  gsap.ticker.add(update);
  return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,selfCheck,
   /** QA candidates (debug panel): set one and rebuild the camera keys when the composition changes */
-  setQa(k:string,v:string){QA[k]=v;if(k==='light')setLights(v);if(k==='set')void useSet(v);if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
+  setQa(k:string,v:string){QA[k]=v;if(k==='light')setLights(v);if(k==='set')void useSet(v);if(k==='fist'&&data.cond==='ma')drive=createFistDrive(data.input,data.clean,data.fs,v);if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
   /** QA (S-10): fix the breath morph (null = data) and show the figure alone on black for a body mask */
   qaPose(o:{breath?:number|null,mask?:boolean}){if(o.breath!==undefined)qaBreath=o.breath;if(o.mask!==undefined){arch.setFade(o.mask?0:1);[chair,strip,workstation,lamp].forEach(x=>x.visible=!o.mask);}},
   /** QA: jump the scene clock (e.g. back to the strip) */

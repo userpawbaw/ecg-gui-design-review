@@ -97,6 +97,7 @@ const QA_GROUPS:[string,string,[string,string][]][]=[
  ['sonar','소나',[['D0','이전(4+5 ×2)'],['D1','1초마다 계속'],['D2','3회 두드림 · 2초 주기']]],
  ['fade','계속 소나 투명도',[['Ea','낮은 시작'],['Eb','테두리만'],['Ec','완만한 감쇠']]],
  ['light','책상 조명',[['L0','끔(기본, 화면 꺼짐)'],['L1','램프 + 화면 빛(D-067)'],['L2','+ 그림자 · 갓 빛']]],
+ ['fist','주먹(근육)',[['F0','이전(잡음 동안 쥐어 감)'],['F1','잡음 시작에 다 쥠 · 끝나면 폄']]],
  ['set','공간',[['A','A안: 서고 + 책상 세트(D-070)'],['C','C안: 다락방 새로 짓기(D-071)']]]];
 type QaStage={setQa:(k:string,v:string)=>void,qa:Record<string,string>,jump:(t:number)=>void}|null;
 function QaPanel({stage}:{stage:()=>unknown}){

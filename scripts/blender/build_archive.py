@@ -387,7 +387,8 @@ cyl('LadderRail', 0.016, 2 * XW - 0.4, (0, BY - 0.08, 4.25), M_BRASS, rot=(0, ma
 
 # ---------------- library ladder (the figure sits on it) ----------------
 LAD_X, LAD_TOP, LAD_ANG = 0.55, 4.25, math.radians(14)
-if args.art in ('r3', 'r4', 'r5', 'r6'): LAD_TOP = H + 0.02                           # up into the hatch
+LAD_MODE = os.environ.get('LAD_MODE', 'hatch')                                   # D-085: hatch (r3 default) | hatch_back (L1) | wall (L2)
+if args.art in ('r3', 'r4', 'r5', 'r6'): LAD_TOP = H + 0.02 if LAD_MODE != 'wall' else 4.3   # up into the hatch; L2: resting on the back-shelf rail
 LAD_FOOT_Y = BY - 0.08 - LAD_TOP * math.tan(LAD_ANG)
 # intro2: the Mixamo climb's rung spacing fitted with its hand/foot contacts (0.2525 m along the stile, max error 23 mm;
 # the old 0.29 m left 79 mm) — the user allowed changing the ladder rather than the motion (2026-10-08)
@@ -424,7 +425,10 @@ LAD_TOP_LOCAL = Vector((LAD_X, BY - 0.08, LAD_TOP))
 LAD_M = Matrix.Identity(4)
 if args.art in ('r3', 'r4', 'r5', 'r6'):
     hx0, hx1, hy0, hy1 = HATCH
-    LAD_M = Matrix.Translation((hx0 + 0.06, (hy0 + hy1) / 2, LAD_TOP)) @ Matrix.Rotation(LAD_YAW, 4, 'Z') @ Matrix.Translation(-LAD_TOP_LOCAL)
+    top_y = {'hatch': (hy0 + hy1) / 2,                                          # D-085: the stile nearer the wall stays 5 cm inside the hatch (L1)
+             'hatch_back': hy1 - 0.05 - 0.24 * abs(math.sin(LAD_YAW)),           # or rests on the brass rail, in front of the shelf fronts (L2)
+             'wall': BY - 0.13 - 0.24 * abs(math.sin(LAD_YAW))}[LAD_MODE]
+    LAD_M = Matrix.Translation((hx0 + 0.06, top_y, LAD_TOP)) @ Matrix.Rotation(LAD_YAW, 4, 'Z') @ Matrix.Translation(-LAD_TOP_LOCAL)
     bpy.context.view_layer.update()
     for o in LADDER_OBJS: o.matrix_world = LAD_M @ o.matrix_world
     print('r3 ladder: foot centre', tuple(round(v, 3) for v in (LAD_M @ Vector((LAD_X, LAD_FOOT_Y, 0)))), 'top', tuple(round(v, 3) for v in (LAD_M @ LAD_TOP_LOCAL)))
@@ -817,6 +821,26 @@ if FIG is not None and args.fig == 'v3' and args.pose != 'floor':     # D-050: e
         print('rig exported', len(rig), 'objects', sorted({o.name.split('_')[0] for o in rig}), flush=True)
 
 
+if os.environ.get('UNDERSIDE_K') or os.environ.get('SHELF_LIP'):   # D-085 underside test: the shelf undersides read as bright as the tops
+    uk = float(os.environ.get('UNDERSIDE_K', 1.0)); lip = float(os.environ.get('SHELF_LIP', 0))   # (bounce off the cell floor below)
+    dark_ = {}
+    for o in [o for o in scene.objects if o.type == 'MESH' and o.name.startswith(('BackShelf', 'StackShelf')) and not o.name.startswith('BackShelfBack')]:
+        if uk < 1.0:                                                  # a darker copy of the board's material on its downward faces only
+            m0 = o.data.materials[0]
+            if m0.name not in dark_:
+                md = m0.copy(); md.name = m0.name + '_under'; nt = md.node_tree; b = nt.nodes['Principled BSDF']
+                mix = nt.nodes.new('ShaderNodeMix'); mix.data_type = 'RGBA'; mix.blend_type = 'MULTIPLY'; mix.inputs['Factor'].default_value = 1.0
+                src = b.inputs['Base Color'].links[0].from_socket if b.inputs['Base Color'].is_linked else None
+                if src: nt.links.new(src, mix.inputs['A'])
+                else: mix.inputs['A'].default_value = b.inputs['Base Color'].default_value
+                mix.inputs['B'].default_value = (uk, uk, uk, 1); nt.links.new(mix.outputs['Result'], b.inputs['Base Color']); dark_[m0.name] = md
+            o.data.materials.append(dark_[m0.name])
+            for poly in o.data.polygons:
+                if poly.normal.z < -0.9: poly.material_index = 1
+        if lip > 0 and o.name.startswith('BackShelf'):                 # a front lip under each back shelf: hides the underside's front and draws a line
+            bb = [o.matrix_world @ Vector(c) for c in o.bound_box]; y0_ = min(v.y for v in bb); z0_ = min(v.z for v in bb)
+            box('ShelfLip', (max(v.x for v in bb) - min(v.x for v in bb), 0.018, lip), (sum(v.x for v in bb) / 8, y0_ + 0.009, z0_ - lip / 2), o.data.materials[0])
+    print('underside test: K', uk, 'lip', lip)
 # ---------------- light: sun through the blinds + dim sky + warm lamp bulbs ----------------
 sun = bpy.data.lights.new('sun', 'SUN'); sun.energy = 11.0; sun.angle = math.radians(1.2); sun.color = srgb('#ffd9a8')
 so = bpy.data.objects.new('sun', sun); scene.collection.objects.link(so)
@@ -839,7 +863,34 @@ if args.b2:                                                    # D-084: shaping 
             c0 = Vector(((sk[0][0] + sk[0][1]) / 2, (sk[0][2] + sk[0][3]) / 2, H)); zc = float(os.environ.get('B2_CANOPY_Z', 8.5))
             cc = c0 - SUN_TO * ((zc - H) / -SUN_TO.z)
             M_LEAF = mat('b2_leaf', srgb('#3a3a2c'), 0.8); r_ = random.Random(23)
-            for k in range(int(os.environ.get('B2_LEAVES', 14))):
+            beam_c = lambda z_: c0 - SUN_TO * ((z_ - H) / -SUN_TO.z)              # the skylight beam's axis at height z_
+            hu, hv = (sk[0][1] - sk[0][0]) / 2, (sk[0][3] - sk[0][2]) / 2
+            if os.environ.get('B2_FOLIAGE') == 'branch':                           # D-085: curved twigs with pointed leaves at 6.5–10 m —
+                bm_ = bmesh.new(); edge_only = os.environ.get('B2_EDGE') == '1'  # near leaves draw outlines, far ones blur (w = d · 0.0087)
+                nb = int(os.environ.get('B2_BRANCHES', 10 if edge_only else 7))
+                for b_ in range(nb):
+                    side = b_ % 4; t_ = r_.uniform(-0.8, 0.8)                     # enter from each side of the beam in turn
+                    p_uv = [(-1.35, t_), (1.35, t_), (t_, -1.35), (t_, 1.35)][side]
+                    tgt = (p_uv[0] * r_.uniform(0.55, 0.75), p_uv[1] * r_.uniform(0.55, 0.75)) if edge_only else (r_.uniform(-0.7, 0.7), r_.uniform(-0.7, 0.7))
+                    ang_ = math.atan2(tgt[1] - p_uv[1], tgt[0] - p_uv[0]); z_ = zc + r_.uniform(-2.0, 1.5)
+                    u_, v_ = p_uv[0] * hu, p_uv[1] * hv
+                    steps = r_.randint(4, 6) if edge_only else r_.randint(7, 10)
+                    for s_ in range(steps):
+                        ang_ += r_.uniform(-0.35, 0.35); ln = r_.uniform(0.18, 0.3); z_ -= r_.uniform(0, 0.12)
+                        nu, nv = u_ + math.cos(ang_) * ln, v_ + math.sin(ang_) * ln
+                        a0, a1 = beam_c(z_) + Vector((u_, v_, 0)), beam_c(z_) + Vector((nu, nv, 0)); nrm = Vector((-math.sin(ang_), math.cos(ang_), 0)) * (0.022 * (1 - s_ / steps) + 0.006)
+                        bm_.faces.new([bm_.verts.new(q) for q in (a0 - nrm, a1 - nrm, a1 + nrm, a0 + nrm)])   # twig ribbon, tapering
+                        for _ in range(r_.choice((2, 2, 3))):                     # leaves on short stalks either side
+                            sd = r_.choice((-1, 1)); L_ = r_.uniform(0.08, 0.24); W_ = L_ * r_.uniform(0.32, 0.5)
+                            base = a0.lerp(a1, r_.random()) + Vector((-math.sin(ang_), math.cos(ang_), 0)) * sd * r_.uniform(0.02, 0.08)
+                            rot_ = Euler((r_.uniform(-1.0, 1.0), r_.uniform(-1.0, 1.0), ang_ + sd * r_.uniform(0.4, 1.2))).to_matrix()
+                            outline = [(0, 0), (.25, .45), (.6, .5), (1, 0), (.6, -.5), (.25, -.45)]   # pointed leaf
+                            bm_.faces.new([bm_.verts.new(base + rot_ @ Vector((x_ * L_, y_ * W_, 0))) for x_, y_ in outline])
+                        u_, v_ = nu, nv
+                me_ = bpy.data.meshes.new('B2_canopy'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(M_LEAF)
+                ob_ = bpy.data.objects.new('B2_canopy', me_); scene.collection.objects.link(ob_)
+                print('b2 foliage: branches', nb, 'faces', len(me_.polygons), 'edge only' if edge_only else 'across the beam')
+            for k in range(int(os.environ.get('B2_LEAVES', 14)) if os.environ.get('B2_FOLIAGE') != 'branch' else 0):
                 ang = r_.uniform(0, 2 * math.pi); rad = 2.4 * math.sqrt(r_.random())
                 p_ = cc + Vector((math.cos(ang) * rad, math.sin(ang) * rad, r_.uniform(-0.4, 0.4)))
                 bpy.ops.mesh.primitive_uv_sphere_add(segments=12, ring_count=6, radius=1, location=p_)

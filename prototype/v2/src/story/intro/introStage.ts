@@ -23,7 +23,7 @@ export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Arra
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
  title:HTMLElement,noiseChars:HTMLElement[],sub:HTMLElement,hint:HTMLElement,labels:HTMLElement,labelIn:HTMLElement,labelOut:HTMLElement,outMono:HTMLElement,steps:HTMLElement[],
  scale:HTMLElement,grid:HTMLCanvasElement,ann:HTMLElement,sweepWrap:HTMLElement,end:HTMLElement,parallax:HTMLElement[]};
-export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'|'archive',shot?:string|null,signal?:SignalState|null,grip?:number};
+export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'|'archive',shot?:string|null,cam?:string|null,signal?:SignalState|null,grip?:number};
 
 const clamp=(x:number,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const seg=(p:number,a:number,b:number)=>clamp((p-a)/(b-a));
@@ -265,7 +265,9 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
    grade.uniforms.uSpace.value=aF;globe.group.visible=globe.group.visible&&p<.3;
    archCam!(p);
    // ?shot=<manifest shot>: verification only — the Blender still's camera, room fully faded in (stills vs web)
-   if(opt.shot&&arch.manifest.shots[opt.shot]){const k=arch.shot(opt.shot);arch.setFade(1);rig?.setFade(1);archShaft=1;
+   // ?cam=x,y,z,lx,ly,lz,vfov (three frame): verification only — any viewpoint of the room (2026-10-18 backdrop viewpoint survey)
+   const qc=opt.cam?.split(',').map(Number),k=qc&&qc.length>=7?{pos:new THREE.Vector3(qc[0],qc[1],qc[2]),look:new THREE.Vector3(qc[3],qc[4],qc[5]),fov:qc[6]}:opt.shot&&arch.manifest.shots[opt.shot]?arch.shot(opt.shot):null;
+   if(k){arch.setFade(1);rig?.setFade(1);archShaft=1;
     camera.position.copy(k.pos);if(camera.fov!==k.fov){camera.fov=k.fov;camera.updateProjectionMatrix();}camera.lookAt(k.look);}
   }else cameraAt(cam);
 

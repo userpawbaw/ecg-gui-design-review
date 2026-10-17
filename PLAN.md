@@ -1,5 +1,11 @@
 # Review plan
 
+## 2026-10-18 KST — 서고 빛 인수인계 재개
+
+- `claude/archive-light-r7-ag2rja`의 `6b00daf`를 체크아웃하고 지정 문서 5개를 순서대로 확인했다. 근거: `verification/r1-archive-light-takeover-20261018/README.md`.
+- **사용자 선택 대기 유지**: (a)/(b), L1/L2, 30°/45°, 아랫면 ×0.35. r8·D-084 재현값과 Story 소유 파일·소품은 바꾸지 않는다.
+- 환경은 아직 Blender 재현 준비 전이다(Python 3.12.14 / 시스템 Blender 4.3.2, bpy 및 Poly Haven 원본 없음). 다음은 선택 확인 → 인계 버전 환경·원본 복구 → 구현 전 원격 D 번호 확인 및 기록 → 선택 범위 검증. 새 렌더·웹 이식은 확인 안 함.
+
 Updated: 2026-09-15 (KST)
 
 ## Current Work control

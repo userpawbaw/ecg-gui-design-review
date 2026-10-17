@@ -45,7 +45,7 @@
       "resource": "archive light/art stills: scripts/blender/build_archive.py (--art r3..r6, r7 defaults since D-081, --dress), verification/r1-archive-art-*, docs/uiux_system/rounds/R1/REVIEW-R1-ARCHIVE-ART-20261009.md",
       "owner": "separate archive-light session (handoff docs/uiux_system/handoffs/HANDOFF_ARCHIVE_LIGHT_2026-10-10.md)",
       "since": "2026-10-10",
-      "note": "Story work continues in the R1 session; it does not edit these files. Records (D/F/PLAN/WORKLOG) are shared: check the latest number before committing. 2026-10-15: r7 (D-081) stills on branch claude/archive-light-r7-ag2rja, awaiting the user's check; web bake not started. 2026-10-17: D numbers collided twice with the Story branch; this session now uses D-081 upward (r7 D-081, r8 D-082, V1 D-083, B2 D-084). The Story desk-corner set (desk-corner-set.py, D-070 on its branch) uses sun direction (-0.42, 0.40, -0.81); the archive B2 adopts the same sun so both bakes cast parallel shadows."
+      "note": "Story work continues in the R1 session; it does not edit these files. Records (D/F/PLAN/WORKLOG) are shared: check the latest number before committing. 2026-10-15: r7 (D-081) stills on branch claude/archive-light-r7-ag2rja, awaiting the user's check; web bake not started. 2026-10-17: D numbers collided twice with the Story branch; this session now uses D-081 upward (r7 D-081, r8 D-082, V1 D-083, B2 D-084, B2 variants D-085). The Story desk-corner set (desk-corner-set.py, D-070 on its branch) uses sun direction (-0.42, 0.40, -0.81); the archive B2 adopts the same sun so both bakes cast parallel shadows."
     }
   ],
   "concurrency": {

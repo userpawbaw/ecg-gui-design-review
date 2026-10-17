@@ -49,3 +49,32 @@ Read `[런타임]`:
   lower key weight would bring the sun pattern forward (a weight choice, no re-render needed).
 - Not checked: climber pose against the moved ladders (only the rung-contact fit is printed, max error 25 mm as before), web bake,
   motion.
+
+## Shelf undersides (user: "책장 칸 아랫면이 더 어둡게 나오지 않는다는 문제가 [해치 빛]에 영향을 받는지 … 후자만 개선할 수 있는지")
+
+Source of the underside light (`scripts/blender/underside-light-sources.py`, D-084 candidate render, 2.0 m, mix weights applied;
+linear luminance medians):
+
+| zone | underside, sunlit cell below | underside, shaded cell below | shelf top |
+|---|---|---|---|
+| left third (hatch beam) | 0.116 (sun 81 %) | 0.031 (key 38 %, sun 45 %) | 0.122 |
+| centre third | 0.160 (sun 56 %) | 0.080 (**key 78 %**) | 0.093 |
+| right third | 0.597 (key 52 %) | 0.363 (**key 84 %**) | 0.582 |
+
+The hatch beam brightens an underside only where it lights the cell floor directly below it. There the underside is as bright
+as a shelf top (0.116 vs 0.122). Those cells are few (52 of 690 left-third underside samples). Most underside light in the
+centre and right comes from the key spot bouncing off the cell floors.
+
+Test (a, L1, 30°, 2.0 m, same weights; `underside_test_p3_z20.jpg`, full frames + 1:1 crops of the left-centre bays):
+
+| | underside over shaded cell | over sunlit cell | shelf top | underside/top | L* 5/25/50/75/95 | plain_range |
+|---|---|---|---|---|---|---|
+| as rendered | 0.084 | 0.316 | 0.140 | 0.60 | 2 18 33 56 80 | 48.1 |
+| underside albedo ×0.35 (`UNDERSIDE_K=0.35`) | **0.037** | 0.162 | 0.136 | **0.27** | 0 17 32 54 80 | 48.2 |
+| 4 cm front lip (`SHELF_LIP=0.04`) | 0.243 | 1.640 | 0.155 | — | 1 19 34 58 81 | 48.2 |
+| both | 0.113 | 1.619 | 0.152 | — | 0 19 33 57 81 | 48.0 |
+
+The darker underside material halves the underside light and leaves everything else as it was. The lip makes things worse:
+its front faces the camera and the light, so it adds a bright band where the dark strip was (the lip pixels sit in the same
+screen positions the underside used to occupy). A darker underside material is cheap and stays in a bake. REF-002 shows dark undersides (F-047), which the rendered
+strip lacks. A lip would need a dark finish too, so it is a B4 prop-kit question, not a light fix.

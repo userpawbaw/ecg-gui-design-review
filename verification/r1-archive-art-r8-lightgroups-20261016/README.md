@@ -25,7 +25,7 @@ Validation (1280×720, 64 samples, r7 defaults):
 A weight equals a change of that light's energy: intensity tuning now takes seconds per candidate instead of ~17 min.
 Direction, position, size and bounce limits (SUN_MB) still need a render.
 
-## S2 — sun bounce limited to 1, key ×1.3, sun ×1.5 (D-070, now the defaults in `--art r6`)
+## S2 — sun bounce limited to 1, key ×1.3, sun ×1.5 (D-082, now the defaults in `--art r6`)
 Light-group render with `SUN_MB=1`, then 108 weight sets (a1 36 + a1/a2 72) through `light-group-sweep.py`; chosen
 key 3500 → 4550, sun 22 → 33, sun max bounces 1, sky and exposure unchanged. Confirmed by real renders (1280×720, 64 samples):
 

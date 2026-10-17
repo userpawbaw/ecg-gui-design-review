@@ -25,7 +25,7 @@ Clean metrics on the rebuilt attic frames (no UI text, no video compression; `re
 | frame | L* 5/25/50/75/95 | plain_range | sharpC | deep% | pastel% | room-scale ≥ +1.5 stops |
 |---|---|---|---|---|---|---|
 | REF p 0.25 / 0.5 / 0.75 | 1 14 23 45 80 / 0 16 25 52 77 / 2 19 26 50 74 | 44.9 / 54.0 / 48.8 | 17.2 / 18.7 / 19.1 | 6.0 / 5.7 / 5.0 | 18 / 23 / 22 | 42 % (p 0.5) |
-| ours V1 2.8 / 2.0 m (D-071) | 2 17 29 54 84 / 2 16 30 63 80 | 58.5 / 61.0 | 16.1 / 14.8 | 5.5 / 3.6 | 21 / 25 | 41 % (2.0 m) |
+| ours V1 2.8 / 2.0 m (D-083) | 2 17 29 54 84 / 2 16 30 63 80 | 58.5 / 61.0 | 16.1 / 14.8 | 5.5 / 3.6 | 21 / 25 | 41 % (2.0 m) |
 
 The recording-based REF targets used since F-038 (L*95 81–97, plain_range 57–69, sharpC 20–22, deep 3.6 %) were inflated by the
 overlaid title text and compression; F-045 replaces them with these.

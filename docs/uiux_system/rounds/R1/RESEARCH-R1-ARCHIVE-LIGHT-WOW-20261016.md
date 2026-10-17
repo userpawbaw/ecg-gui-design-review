@@ -28,7 +28,7 @@
 
 ## 1. 지금 위치
 
-| 지표(파스텔 a1 / a2) | r7 (D-069) | REF-002 | 차이 |
+| 지표(파스텔 a1 / a2) | r7 (D-081) | REF-002 | 차이 |
 |---|---|---|---|
 | L* 5/25/50/75/95 | 4 17 25 57 77 / 4 17 26 62 78 | 2–4 15–18 25–33 52–62 81–97 | **밝은 끝(L*95)이 낮다** |
 | plain_range | 51 / 54 | 57–69 | 약간 부족 |
@@ -66,7 +66,7 @@ REF-002에서 사용자가 wow로 짚은 것은 셋이다(REF-002 §6).
 | 해 최대 되튐 0 | 39 / 0 / 47 / 15 % | **0.0028** | 0.0215 | 0.853 | **4.9스톱** |
 
 읽기 `[추론]`:
-- D-061에서 일부러 낸 **바닥 빛 조각**(해가 바닥에 닿는 구멍)이 되튀어 그늘 전체를 채운다. D-069에서 줄인 하늘빛은 어둠의 11 %뿐이었다.
+- D-061에서 일부러 낸 **바닥 빛 조각**(해가 바닥에 닿는 구멍)이 되튀어 그늘 전체를 채운다. D-081에서 줄인 하늘빛은 어둠의 11 %뿐이었다.
 - 해의 되튐을 막으면 어둠이 크게 깊어진다. 그래서 그만큼 **주광과 해 직접광을 다시 올릴 여유**가 생긴다.
   - 해 직접광을 올리면 L*95 강조와 경계 대비 sharpC가 오른다.
   - 주광을 올리면 웅덩이 안 변화 폭 plain_range가 오른다.
@@ -171,7 +171,7 @@ S1–S3는 정지 렌더라 지금 바로 할 수 있다. S4는 웹 반영 방�
 - 굽기 + 실시간 그림자: [PlayCanvas forum](https://forum.playcanvas.com/t/can-baked-lightmaps-work-alongside-real-time-shadows/2892), [Babylon.js forum](https://forum.babylonjs.com/t/how-to-best-mix-baked-and-realtime-shadows/51056), [three.js forum — principle of shadow rendering](https://discourse.threejs.org/t/what-is-the-principle-of-threejs-shadow-rendering/42056)
 - 빛줄기·먼지·후처리: [three-good-godrays README](https://cdn.jsdelivr.net/npm/three-good-godrays@0.12.0/README.md), [three.js forum — godrays for a cave scene](https://discourse.threejs.org/t/help-with-persistent-volumetric-light-god-rays-light-shafts-sunbeam-sunburst-for-underground-cave-scene/79085), [three.js forum — volumetric lighting in WebGPU](https://discourse.threejs.org/t/volumetric-lighting-in-webgpu/87959), [N8AO](https://github.com/N8python/n8ao)
 - 사례(빛 굽기 정보 없음): [Awwwards — Igloo Inc case study](https://awwwards.com/igloo-inc-case-study.html)
-- 저장소 내부: REF-002 §6(EFX-002-01~03), F-040, D-061, D-062, D-069, F-043, `verification/r1-archive-art-r7-20261015/`
+- 저장소 내부: REF-002 §6(EFX-002-01~03), F-040, D-061, D-062, D-081, F-043, `verification/r1-archive-art-r7-20261015/`
 
 ## 9. 사용자에게 물을 것
 

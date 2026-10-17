@@ -35,6 +35,7 @@ ap.add_argument('--size', type=int, default=2048)
 ap.add_argument('--bsamples', type=int, default=128)
 ap.add_argument('--art', default='', choices=['', 'r3', 'r4', 'r5', 'r6'], help='r6 = D-062: r5 with a near small spot key outside the hatch (crisp shadows + distance falloff, one pool), sun 0.5° as accents only, the left-side holes closed (shade zone), flat low-texture albedo on walls/wood. r5 = D-061: r4 plus a floor-patch hole (sun on the floor in front of the back shelves, bounced up), sky 0.8, sun 26, exposure 0.9, AgX Punchy (deep darks like REF). r4 = D-059: r3 plus more light holes (skylight, roof-board gaps), r2 windows open for sky fill, larger sun disc for penumbra. D-058 art test: ceiling hatch over the back of the aisle, side ladder up into it (rigid move of the r2 ladder + climber), sun through the hatch onto the back shelves, haze only in the hatch beam, cream sun, no bulbs')
 ap.add_argument('--dress', action='store_true', help='D-060 set dressing on the back wall (review proposal 4): a drawer cabinet under the skylight patch, open cells with a framed print, block sculpture and lying book stacks under the hatch patch, painted cell backs, sparser shelves — broad light flat surfaces that catch and bounce the sun')
+ap.add_argument('--b2', action='store_true', help='D-084 B2 light test (with --art r6): the desk-corner sun (-0.42, 0.40, -0.81), a high mullioned window in the right wall near the back corner, no floor-patch hole or front skylight')
 ap.add_argument('--palette', default='archive', choices=['archive', 'pastel'], help='D-058: archive = original dark book/wood colours; pastel = light pastel books, pale wood, light boxes (REF-002 comparison)')
 args = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 if args.intro2: args.fig = 'v3'; args.pose = 'ar_floor'
@@ -107,7 +108,7 @@ if args.art == 'r6':                                          # D-062 (F-040): R
     pal = args.palette == 'pastel'
     flatten(M_WOOD, '#dccbb0' if pal else '#8a6a48', float(os.environ.get('TEX_KEEP', .15)))
     flatten(M_WALL, '#e8dfcf' if pal else '#bfb39e', float(os.environ.get('TEX_KEEP', .15)))
-    flatten(M_FLOOR, os.environ.get('FLOOR_COL', '#86705a' if pal else '#6a4f36'), .4)   # r7 (D-069): darker floor = less bounce into the shade (r6b #a89075)
+    flatten(M_FLOOR, os.environ.get('FLOOR_COL', '#86705a' if pal else '#6a4f36'), .4)   # r7 (D-081): darker floor = less bounce into the shade (r6b #a89075)
 BOOK_MATS = [mat(f'book_{i}', srgb(h), 0.72) for i, (h, _) in enumerate(PALETTE)]
 BOOK_W = [w for _, w in PALETTE]
 
@@ -154,7 +155,15 @@ def cyl(name, r, depth, loc, m, rot=(0, 0, 0), verts=16):
 XW, Y0, Y1, H = 3.6, -5.0, 5.0, 5.0          # half width, front/back, ceiling height
 box('Floor', (2 * XW, Y1 - Y0, 0.1), (0, (Y0 + Y1) / 2, -0.05), M_FLOOR, tile=3.0)
 box('BackWall', (2 * XW, 0.15, H), (0, Y1 + 0.075, H / 2), M_WALL, tile=2.0)
-box('WallR', (0.15, Y1 - Y0, H), (XW + 0.075, (Y0 + Y1) / 2, H / 2), M_WALL, tile=2.0)
+if args.b2:                                                    # D-084: a high window near the back corner; its mullions are the far occluder for the right bay
+    RWY0, RWY1, RWZ0, RWZ1 = (float(v) for v in os.environ.get('B2_WIN', '3.0,4.4,3.4,4.7').split(','))
+    for nm, (ya, yb, za, zb) in (('WallR_a', (Y0, RWY0, 0, H)), ('WallR_b', (RWY1, Y1, 0, H)), ('WallR_low', (RWY0, RWY1, 0, RWZ0)), ('WallR_top', (RWY0, RWY1, RWZ1, H))):
+        box(nm, (0.15, yb - ya, zb - za), (XW + 0.075, (ya + yb) / 2, (za + zb) / 2), M_WALL, tile=2.0)
+    for k in (1, 2): box('B2_mullion_v', (0.1, 0.06, RWZ1 - RWZ0), (XW + 0.02, RWY0 + k * (RWY1 - RWY0) / 3, (RWZ0 + RWZ1) / 2), M_FRAME)
+    box('B2_mullion_h', (0.1, RWY1 - RWY0, 0.06), (XW + 0.02, (RWY0 + RWY1) / 2, (RWZ0 + RWZ1) / 2), M_FRAME)
+    for za in (RWZ0, RWZ1): box('B2_sill', (0.2, RWY1 - RWY0 + 0.08, 0.05), (XW - 0.02, (RWY0 + RWY1) / 2, za), M_FRAME)
+else:
+    box('WallR', (0.15, Y1 - Y0, H), (XW + 0.075, (Y0 + Y1) / 2, H / 2), M_WALL, tile=2.0)
 HATCH = tuple(float(v) for v in os.environ.get('HATCH', '0.0,1.6,2.47,3.88').split(','))   # D-058 r3: x0, x1, y0, y1 (between the beams at y 2.32 / 4.0, clear of the pendant at x −0.7)                                 # D-058 r3: x0, x1, y0, y1 of the ceiling hatch (between beams, clear of the pendant)
 # D-059 r4: more light holes beside the hatch (user 2026-10-09: "다락문 하나에 갇혀 있을 필요는 없어"): a small skylight whose patch
 # lands low on the back shelves at the centre, three roof-board gaps (0.30 m gaps, 0.12 m boards) that draw soft bands upper left, and
@@ -162,8 +171,8 @@ HATCH = tuple(float(v) for v in os.environ.get('HATCH', '0.0,1.6,2.47,3.88').spl
 # shades a 0.12 m strip at this sun slope (ray check, it2).
 HOLES = [HATCH]
 if args.art in ('r4', 'r5', 'r6'):
-    HOLES += [tuple(float(v) for v in h.split(',')) for h in os.environ.get('HOLES', '0.6,1.6,1.0,1.6' if args.art == 'r6' else '-1.9,-0.9,0.95,1.75;-2.5,-1.0,2.45,2.75;-2.5,-1.0,2.87,3.17;-2.5,-1.0,3.29,3.59;0.6,1.6,1.0,1.6').split(';') if h]
-    HOLES += [tuple(float(v) for v in h.split(',')) for h in os.environ.get('HOLES_ADD', '-1.5,0.4,-0.4,0.25' if args.art in ('r5', 'r6') else '').split(';') if h]   # D-061 experiments (e.g. a floor-patch hole)
+    HOLES += [tuple(float(v) for v in h.split(',')) for h in os.environ.get('HOLES', ('' if args.b2 else '0.6,1.6,1.0,1.6') if args.art == 'r6' else '-1.9,-0.9,0.95,1.75;-2.5,-1.0,2.45,2.75;-2.5,-1.0,2.87,3.17;-2.5,-1.0,3.29,3.59;0.6,1.6,1.0,1.6').split(';') if h]
+    HOLES += [tuple(float(v) for v in h.split(',')) for h in os.environ.get('HOLES_ADD', '-1.5,0.4,-0.4,0.25' if args.art in ('r5', 'r6') and not args.b2 else '').split(';') if h]   # D-061 experiments (e.g. a floor-patch hole)
 if args.art in ('r3', 'r4', 'r5', 'r6'):
     hx0, hx1, hy0, hy1 = HATCH
     xs = sorted({-XW, XW, *[h[0] for h in HOLES], *[h[1] for h in HOLES]}); ys = sorted({Y0, Y1, *[h[2] for h in HOLES], *[h[3] for h in HOLES]})
@@ -815,14 +824,14 @@ SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()   # across the gaps between st
 if args.light == 'r2':                                 # steeper: the hero window's beam crosses the ladder and lands at its foot (D-050 floor spot)
     SUN_TO = Vector((0.807, 0.07, -0.584)).normalized(); sun.angle = math.radians(0.55)
 if args.art in ('r3', 'r4', 'r5', 'r6'):                                   # through the hatch onto the back shelves (receiver), cream light (review D)
-    SUN_TO = Vector(tuple(float(v) for v in os.environ.get('SUN_DIR', '0.22,0.62,-0.75').split(','))).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', {'r5': 26.0, 'r6': 33.0}.get(args.art, 20.0)))
+    SUN_TO = Vector(tuple(float(v) for v in os.environ.get('SUN_DIR', '-0.42,0.40,-0.81' if args.b2 else '0.22,0.62,-0.75').split(','))).normalized(); sun.color = srgb('#fff0dc'); sun.energy = float(os.environ.get('SUN_E', {'r5': 26.0, 'r6': 33.0}.get(args.art, 20.0)))
 if args.art in ('r4', 'r5', 'r6'):                      # D-059: a larger sun disc so every hole's edge gets a penumbra (≈ 3.5 cm per metre of throw at 2°)
     sun.angle = math.radians(float(os.environ.get('SUN_ANG', 0.5 if args.art == 'r6' else 2.0)))   # r6 (F-040): crisp like REF, sigma 0.8 px
-    if args.art == 'r6' or os.environ.get('SUN_MB'): sun.cycles.max_bounces = int(os.environ.get('SUN_MB', 1))   # r8 D-070 / F-043: the sun's bounce filled the shade; 1 bounce, 0 = accents only
+    if args.art == 'r6' or os.environ.get('SUN_MB'): sun.cycles.max_bounces = int(os.environ.get('SUN_MB', 1))   # r8 D-082 / F-043: the sun's bounce filled the shade; 1 bounce, 0 = accents only
 so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler()
 if args.art == 'r6':                                   # D-062 (F-040): the REF key is a near small lamp (crisp edges + falloff inside one light)
     hx0, hx1, hy0, hy1 = HATCH; hc = Vector(((hx0 + hx1) / 2, (hy0 + hy1) / 2, H))
-    KEY_D = float(os.environ.get('KEY_D', 1.6))                  # metres back along the light direction from the hatch centre (r7 D-069: 1.6, nearer = more falloff inside the pool; r6b 2.2)
+    KEY_D = float(os.environ.get('KEY_D', 1.6))                  # metres back along the light direction from the hatch centre (r7 D-081: 1.6, nearer = more falloff inside the pool; r6b 2.2)
     KEY_TO = Vector(tuple(float(v) for v in os.environ.get('KEY_DIR', '0.45,0.5,-0.74').split(','))).normalized()
     K = bpy.data.lights.new('key', 'SPOT'); K.energy = float(os.environ.get('KEY_E', 4550)); K.color = srgb(os.environ.get('KEY_COL', '#fff0e2'))
     K.shadow_soft_size = float(os.environ.get('KEY_R', 0.06)); K.spot_size = math.radians(110); K.spot_blend = 0.3
@@ -903,7 +912,7 @@ if args.pose and FIG is not None:                                 # D-050 shots:
         HR = FIG.location + FROT @ Vector(fj['hand_r']); RA = FIG.location + FROT @ Vector(fj['electrodes']['RA']['p'])
         mid = RA.lerp(HR, .5)                                    # behind-right and above the climber: gripping hand + chest (RA through the glass body)
         SHOTS['d7_climb_close'] = (tuple(mid + Vector((.6, -.8, .35))), tuple(mid), 38)
-elif args.nofig and args.art in ('r3', 'r4', 'r5', 'r6'):          # r7 (D-069): the same frontal shots with the figures hidden (sharpC without the ring pattern)
+elif args.nofig and args.art in ('r3', 'r4', 'r5', 'r6'):          # r7 (D-081): the same frontal shots with the figures hidden (sharpC without the ring pattern)
     SHOTS = {'a1_front': ((0.15, 0.95, 1.6), (0.75, 4.7, 2.75), 52), 'a2_near': ((0.55, 1.25, 1.45), (0.8, 4.7, 2.2), 52)}
 if args.clay:                                                     # D-049 clay gate A: grey diffuse everywhere, no volume, no emission
     CLAY = mat('clay_gate', (.5, .5, .5), .8)

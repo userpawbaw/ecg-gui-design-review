@@ -24,7 +24,7 @@ lower); shelf undersides open from ≈ 3 to 24 px while the wall moves 385 px �
 spans page 7324–9243 px with a 948 px viewport, so the 2.75-unit descent takes ≈ 3 screens of scroll. Tool:
 `scripts/assets/ref-scroll-shift.py`. Full table: analysis §9.
 
-## V1 — level-camera path from the V0 numbers (D-071)
+## V1 — level-camera path from the V0 numbers (D-083)
 `SHOTS_JSON` shots p1–p4: level camera, vfov 32°, aisle centre x 0 (x 0.45 put the near stack over a quarter of the frame), y −0.8
 (back wall ≈ 5.8 m), heights 3.6 / 2.8 / 2.0 / 1.2 m. 1280×720, 64 samples, r8 lights. `v1_path_r8.jpg`, `v1_edge_compare.jpg`.
 

@@ -60,7 +60,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const qp=new URLSearchParams(location.search),LEGACY_DESK=qp.get('legacyDesk')==='1';   // ?legacyDesk=1: the 2026-10-14 computer + lamp (D-067) for comparison
  // D-068 (user 2026-10-15 "결정 사항은 추천대로"): A1 farther strip framing, B2 distance-scaled + fainter shells, C1 AC icon only,
  // D1 sonar once per second with the chest pulse, Eb rim only. Sonar → D2 (2026-10-16, D-069): 3 taps every 2 s, half alpha. The others stay selectable on the ?debug=1 panel.
- const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L0',set:qp.get('set')??'A',fist:qp.get('fist')??'F1'};   // fist: F1 full clench at the noise (D-072), F0 the S-14 rule   // set: A = archive + desk-corner prop set (D-070), C = the rebuilt attic room (D-071)
+ const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L0',set:qp.get('set')??'A',fist:qp.get('fist')??'F2'};   // fist: F2 quick clench on the noise start + slow release from its end, F1 measured speeds (D-072), F0 the S-14 rule   // set: A = archive + desk-corner prop set (D-070), C = the rebuilt attic room (D-071)
  // QA: ?cam=x,y,z,lx,ly,lz,vfov freezes the camera (three frame) for still comparisons
  let qaBreath:number|null=null;   // QA (S-10 measurement): fixed breath 0..1
  const camFix=(()=>{const c=qp.get('cam')?.split(',').map(Number);return c&&c.length>=7?{p:new THREE.Vector3(c[0],c[1],c[2]),l:new THREE.Vector3(c[3],c[4],c[5]),fov:c[6]}:null;})();

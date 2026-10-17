@@ -43,19 +43,22 @@ export function fistTrack(bursts:Burst[],T:number,rate=100){
  *  so its start is known), it holds while the noise lasts and opens over OPEN_S after it ends. Between close bursts the hand
  *  opens part way and closes again (depth = gap / (OPEN_S + CLOSE_S)); gaps under HOLD_GAP_S would only twitch, so they hold. */
 export const HOLD_GAP_S=.25;
-export function fistTrackHold(bursts:Burst[],T:number,rate=100){
+// F2 (D-072, user 2026-10-17 "쥘 때 속도는 좀 더 빠르게, 펼 때 속도는 좀 더 느리게 … 쥘 때와 잡음 시작이 동기화, 잡음이 끝나는 지점과
+// 주먹을 펴기 시작하는 시작이 동기화"): a quick clench that lands on the noise start (lead 0.2 s instead of 0.56 s) and a slow release from its end
+export const CLOSE_F2_S=.2,OPEN_F2_S=.8;
+export function fistTrackHold(bursts:Burst[],T:number,rate=100,close=CLOSE_S,open=OPEN_S){
  const seg:{s:number,e:number}[]=[];
  for(const b of bursts){const p=seg[seg.length-1];if(p&&b.start-p.e<HOLD_GAP_S)p.e=b.end;else seg.push({s:b.start,e:b.end});}
  const all=[-1,0,1].flatMap(k=>seg.map(x=>({s:x.s+k*T,e:x.e+k*T})));   // the loop wraps: neighbours across the seam count
  const n=Math.ceil(T*rate),f=new Float32Array(n);
  for(let i=0;i<n;i++){const t=i/rate;let v=0;
-  for(const x of all){const p=t<x.s?1-(x.s-t)/CLOSE_S:t<=x.e?1:1-(t-x.e)/OPEN_S;if(p>v)v=p;}
+  for(const x of all){const p=t<x.s?1-(x.s-t)/close:t<=x.e?1:1-(t-x.e)/open;if(p>v)v=p;}
   f[i]=Math.max(0,Math.min(1,v));}
  return f;
 }
 
-export function createFistDrive(input:Float32Array,clean:Float32Array,fs:number,mode='F1'){
- const T=input.length/fs,env=noiseEnvelope(input,clean,fs),bursts=findBursts(env,fs),track=mode==='F0'?fistTrack(bursts,T):fistTrackHold(bursts,T),RATE=100;
+export function createFistDrive(input:Float32Array,clean:Float32Array,fs:number,mode='F2'){
+ const T=input.length/fs,env=noiseEnvelope(input,clean,fs),bursts=findBursts(env,fs),track=mode==='F0'?fistTrack(bursts,T):mode==='F1'?fistTrackHold(bursts,T):fistTrackHold(bursts,T,100,CLOSE_F2_S,OPEN_F2_S),RATE=100;
  // noise level 0..1 (quiet floor → loud top), the same envelope the bursts come from, for the red marker's strength
  const sorted=Float32Array.from(env).sort(),floor=sorted[Math.floor(sorted.length*.2)],top=sorted[Math.floor(sorted.length*.995)];
  const level=env.map(v=>Math.min(1,Math.max(0,(v-floor)/Math.max(1e-9,top-floor))));

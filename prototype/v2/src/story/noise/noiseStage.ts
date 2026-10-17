@@ -60,7 +60,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  const qp=new URLSearchParams(location.search),LEGACY_DESK=qp.get('legacyDesk')==='1';   // ?legacyDesk=1: the 2026-10-14 computer + lamp (D-067) for comparison
  // D-068 (user 2026-10-15 "결정 사항은 추천대로"): A1 farther strip framing, B2 distance-scaled + fainter shells, C1 AC icon only,
  // D1 sonar once per second with the chest pulse, Eb rim only. Sonar → D2 (2026-10-16, D-069): 3 taps every 2 s, half alpha. The others stay selectable on the ?debug=1 panel.
- const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L0'};
+ const QA:Record<string,string>={comp:qp.get('comp')??'A1',speed:qp.get('speed')??'B2',ac:qp.get('ac')??'C1',sonar:qp.get('sonar')??'D2',fade:qp.get('fade')??'Eb',light:qp.get('light')??'L0',set:qp.get('set')??'A'};   // set: A = archive + desk-corner prop set (D-070), C = the rebuilt attic room (D-071)
  // QA: ?cam=x,y,z,lx,ly,lz,vfov freezes the camera (three frame) for still comparisons
  let qaBreath:number|null=null;   // QA (S-10 measurement): fixed breath 0..1
  const camFix=(()=>{const c=qp.get('cam')?.split(',').map(Number);return c&&c.length>=7?{p:new THREE.Vector3(c[0],c[1],c[2]),l:new THREE.Vector3(c[3],c[4],c[5]),fov:c[6]}:null;})();
@@ -236,6 +236,34 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
      }`,side:THREE.DoubleSide});
    g.traverse(o=>{if((o as THREE.Mesh).isMesh&&(o.name==='Set_'+k||o.parent?.name==='Set_'+k))(o as THREE.Mesh).material=m;});}
   return g;})();scene.add(deskSet);
+ // D-071 C (user 2026-10-17 "일단 별개로 C안을 진행해봐. 확인은 두개의 결과를 보고 비교해볼게"): the noise scenes' space rebuilt as
+ // a baked attic (scripts/assets/desk-room-c.py: gable roof, skylights over the desk and the strip, an arched window, one sun).
+ // The archive is hidden while it shows; its sun map is re-rendered from the room's sun so shafts, dust and the figure follow.
+ // Loaded on first use (?set=C or the panel), same unlit baked material as the prop set.
+ const bakedMat=(t:THREE.Texture,scale:number)=>{const sh=arch.shared;return new THREE.ShaderMaterial({uniforms:{map:{value:t},uScale:{value:scale},uExposure:sh.uExposure,uSat:sh.uSat,uFade:sh.uFade},
+  vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+  fragmentShader:`uniform sampler2D map;uniform float uScale,uExposure,uSat,uFade;varying vec2 vUv;
+   void main(){vec3 e=texture2D(map,vUv).rgb;vec3 c=e*e*uScale*uExposure*uFade;c=mix(vec3(dot(c,vec3(.2126,.7152,.0722))),c,uSat);gl_FragColor=vec4(c,1.);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
+   }`,side:THREE.DoubleSide});};
+ let roomC:THREE.Object3D|null=null,roomCSun:THREE.Vector3|null=null;
+ const key0=key.position.clone();
+ async function useSet(v:string){
+  if(v==='C'&&!roomC){const D=(f:string)=>new URL(`./assets/room_c/${f}`,import.meta.url).href;
+   const meta:{scale:number,sun_to:number[],groups:Record<string,{file:string}>}=await (await fetch(D('room_c.json'))).json();
+   const g=(await loader.loadAsync(D('room_c.glb'))).scene,tl=new THREE.TextureLoader();
+   for(const [k,f] of Object.entries(meta.groups)){const t=await tl.loadAsync(D(f.file));t.flipY=false;t.colorSpace=THREE.NoColorSpace;t.anisotropy=8;
+    const m=bakedMat(t,meta.scale*setK);g.traverse(o=>{if((o as THREE.Mesh).isMesh&&(o.name==='Room_'+k||o.parent?.name==='Room_'+k))(o as THREE.Mesh).material=m;});}
+   const s=meta.sun_to;roomCSun=new THREE.Vector3(s[0],s[2],-s[1]).normalize();roomC=g;scene.add(g);}
+  const c=v==='C'&&!!roomC;
+  arch.room.visible=!c;deskSet.visible=!c;if(roomC)roomC.visible=c;
+  arch.setSun(renderer,c?roomCSun:null,c?roomC:null);
+  // the PBR props' key light (chair, strip) comes from the room's sun in C
+  if(c){key.position.copy(origin).addScaledVector(roomCSun!,-5);key.target.position.copy(origin);}else{key.position.copy(key0);key.target.position.set(0,0,0);}
+  key.target.updateMatrixWorld();
+ }
+ if(QA.set==='C')await useSet('C');
  const bulbMats:THREE.MeshStandardMaterial[]=[],screenMats:THREE.MeshStandardMaterial[]=[],emit0=new Map<THREE.MeshStandardMaterial,[THREE.Color,number]>();
  lamp.traverse(o=>{const m=(o as THREE.Mesh).material as THREE.MeshStandardMaterial|undefined;if(m?.name?.endsWith('_light'))bulbMats.push(m);});
  // CRT glass: a soft radial glow, brighter in the middle (no picture, no waveform — decorative space)
@@ -534,7 +562,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  gsap.ticker.add(update);
  return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,selfCheck,
   /** QA candidates (debug panel): set one and rebuild the camera keys when the composition changes */
-  setQa(k:string,v:string){QA[k]=v;if(k==='light')setLights(v);if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
+  setQa(k:string,v:string){QA[k]=v;if(k==='light')setLights(v);if(k==='set')void useSet(v);if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
   /** QA (S-10): fix the breath morph (null = data) and show the figure alone on black for a body mask */
   qaPose(o:{breath?:number|null,mask?:boolean}){if(o.breath!==undefined)qaBreath=o.breath;if(o.mask!==undefined){arch.setFade(o.mask?0:1);[chair,strip,workstation,lamp].forEach(x=>x.visible=!o.mask);}},
   /** QA: jump the scene clock (e.g. back to the strip) */

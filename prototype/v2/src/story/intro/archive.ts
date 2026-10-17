@@ -99,10 +99,19 @@ export async function createArchive(){
  const lightRT=new THREE.WebGLRenderTarget(2048,2048,{depthTexture:new THREE.DepthTexture(2048,2048,THREE.FloatType)});
  const lightVP=new THREE.Matrix4().multiplyMatrices(lightCam.projectionMatrix,lightCam.matrixWorldInverse);
  const depthOnly=new THREE.MeshBasicMaterial({colorWrite:false});
- function renderSunDepth(renderer:THREE.WebGLRenderer){
-  const sc=new THREE.Scene();const parent=room.parent;sc.add(room);sc.overrideMaterial=depthOnly;
+ function renderSunDepth(renderer:THREE.WebGLRenderer,obj:THREE.Object3D=room){
+  const sc=new THREE.Scene();const parent=obj.parent,vis=obj.visible;obj.visible=true;sc.add(obj);sc.overrideMaterial=depthOnly;
   renderer.setRenderTarget(lightRT);renderer.clear();renderer.render(sc,lightCam);renderer.setRenderTarget(null);
-  sc.remove(room);if(parent)parent.add(room);
+  sc.remove(obj);if(parent)parent.add(obj);obj.visible=vis;
+ }
+ // D-071 (Story route C): another baked room with its own sun takes over the sun map. The direction and light matrix are
+ // updated in place, so everything holding sunTo / lightVP (shafts, dust, the figure's sun shading) follows. null → the archive's.
+ const sun0=sunTo.clone();
+ function setSun(renderer:THREE.WebGLRenderer,to:THREE.Vector3|null,obj:THREE.Object3D|null){
+  sunTo.copy(to??sun0).normalize();
+  lightCam.position.copy(centre).addScaledVector(sunTo,-2*R);lightCam.lookAt(centre);lightCam.updateMatrixWorld();lightCam.updateProjectionMatrix();
+  lightVP.multiplyMatrices(lightCam.projectionMatrix,lightCam.matrixWorldInverse);
+  renderSunDepth(renderer,obj??room);
  }
 
  // dust: motes in the room's air, bright only inside a sunbeam (same depth map) and when scattering toward the camera
@@ -176,7 +185,7 @@ export async function createArchive(){
  const fig=manifest.figure;
  const hq=fig.heart_q_wxyz_blender;                               // Blender (w, x, y, z) z-up → three y-up: (x, z, −y)
  const heartQuat=new THREE.Quaternion(hq[1],hq[3],-hq[2],hq[0]);
- return{manifest,room,dust,vol,mats,shared,lightRT,lightVP,sunTo,sunCol,renderSunDepth,
+ return{manifest,room,dust,vol,mats,shared,lightRT,lightVP,sunTo,sunCol,renderSunDepth,setSun,
   figureLocation:V(fig.location),heart:V(fig.heart),heartQuat,handR:V(fig.hand_r),climb:manifest.climb?{location:V(manifest.climb.location),pitch:manifest.climb.pitch_x_rad}:null,
   shot:(k:string)=>({pos:V(manifest.shots[k].pos),look:V(manifest.shots[k].look),fov:manifest.shots[k].fov_v_deg}),
   setFade(a:number){shared.uFade.value=a;room.visible=a>.002;dust.visible=a>.002;},

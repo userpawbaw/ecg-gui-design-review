@@ -43,7 +43,7 @@ export function createGlow(){
   if(levels<=0||strength<=.003)return;
   const gx=b.l-PAD,gy=b.t-PAD,gw=b.r-b.l+2*PAD,gh=b.b-b.t+2*PAD;
   lv.forEach((l,i)=>{const w=Math.ceil(gw/2**(i+1)),h=Math.ceil(gh/2**(i+1));if(l.c.width!==w||l.c.height!==h){l.c.width=w;l.c.height=h;}l.g.setTransform(1,0,0,1,0,0);l.g.clearRect(0,0,w,h);l.g.imageSmoothingEnabled=true;});
-  const l0=lv[0];l0.g.setTransform(.5,0,0,.5,-gx*.5,-gy*.5);l0.g.lineJoin='round';l0.g.lineCap='round';l0.g.strokeStyle=style;l0.g.lineWidth=3.4;l0.g.stroke(path);
+  const l0=lv[0];l0.g.setTransform(.5,0,0,.5,-gx*.5,-gy*.5);l0.g.lineJoin='round';l0.g.lineCap='round';l0.g.strokeStyle=style;l0.g.lineWidth=2.4;l0.g.stroke(path);
   for(let i=1;i<levels+1&&i<3;i++)lv[i].g.drawImage(lv[i-1].c,0,0,lv[i].c.width,lv[i].c.height);
   g.save();g.imageSmoothingEnabled=true;g.globalCompositeOperation='lighter';
   if(levels>=2){g.globalAlpha=.8*strength;g.drawImage(lv[2].c,gx,gy,gw,gh);}

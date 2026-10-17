@@ -250,7 +250,9 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  let roomC:THREE.Object3D|null=null,roomCSun:THREE.Vector3|null=null;
  const key0=key.position.clone();
  async function useSet(v:string){
-  if(v==='C'&&!roomC){const D=(f:string)=>new URL(`./assets/room_c/${f}`,import.meta.url).href;
+  // ?roomDir=room_c2: the frame-budget process test (P-007, scripts/assets/desk-room-c.py ROOM_VARIANT=c2)
+  const RD:Record<string,(f:string)=>string>={room_c:f=>new URL(`./assets/room_c/${f}`,import.meta.url).href,room_c2:f=>new URL(`./assets/room_c2/${f}`,import.meta.url).href};
+  if(v==='C'&&!roomC){const D=RD[qp.get('roomDir')??'room_c']??RD.room_c;
    const meta:{scale:number,sun_to:number[],groups:Record<string,{file:string}>}=await (await fetch(D('room_c.json'))).json();
    const g=(await loader.loadAsync(D('room_c.glb'))).scene,tl=new THREE.TextureLoader();
    for(const [k,f] of Object.entries(meta.groups)){const t=await tl.loadAsync(D(f.file));t.flipY=false;t.colorSpace=THREE.NoColorSpace;t.anisotropy=8;

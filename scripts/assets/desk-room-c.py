@@ -31,7 +31,10 @@ ap.add_argument('--clay', action='store_true')
 args = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
-OUT = os.path.join(ROOT, 'prototype', 'v2', 'src', 'story', 'noise', 'assets', 'room_c')
+# ROOM_VARIANT: c1 = the 2026-10-17 route C (rejected, F-043); c2 = the frame-budget process test (P-007): archive shelving
+# on the walls in view, no sky-only front window, a smaller rug (strip on the boards), leaves at one edge of skylight B.
+VARIANT = os.environ.get('ROOM_VARIANT', 'c1')
+OUT = os.environ.get('ROOM_OUT') or os.path.join(ROOT, 'prototype', 'v2', 'src', 'story', 'noise', 'assets', 'room_c' if VARIANT == 'c1' else 'room_' + VARIANT)
 random.seed(11)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene = bpy.context.scene
@@ -73,12 +76,12 @@ def oak(name, a='#8a5f3a', b='#74502f', scale=2.4, rough=.5):
     L.new(mix.outputs['Result'], bsdf.inputs['Base Color'])
     return m
 
-def planks(name, a='#86613f', b='#6d4c30', gap='#2a1c12'):
+def planks(name, a='#86613f', b='#6d4c30', gap='#2a1c12', width=1.4, row=.16):
     """floor boards: brick texture with long staggered boards (0.16 x 1.4 m), thin dark joints, per-board tone"""
     m = mat(name, a, .55); nt = m.node_tree; N = nt.nodes; L = nt.links; bsdf = N['Principled BSDF']
     tc = N.new('ShaderNodeTexCoord'); br = N.new('ShaderNodeTexBrick')
     br.inputs['Scale'].default_value = 1.0; br.inputs['Mortar Size'].default_value = .0025; br.inputs['Mortar Smooth'].default_value = .2
-    br.inputs['Brick Width'].default_value = 1.4; br.inputs['Row Height'].default_value = .16; br.offset = .37; br.offset_frequency = 1
+    br.inputs['Brick Width'].default_value = width; br.inputs['Row Height'].default_value = row; br.offset = .37; br.offset_frequency = 1
     br.inputs['Color1'].default_value = (*srgb(a), 1); br.inputs['Color2'].default_value = (*srgb(b), 1); br.inputs['Mortar'].default_value = (*srgb(gap), 1)
     sw = N.new('ShaderNodeSeparateXYZ'); cm = N.new('ShaderNodeCombineXYZ')            # boards run along y: feed (y, x)
     L.new(tc.outputs['Object'], sw.inputs['Vector']); L.new(sw.outputs['Y'], cm.inputs['X']); L.new(sw.outputs['X'], cm.inputs['Y'])
@@ -109,7 +112,7 @@ def paper_mat(name):
 
 M = {
     'oak': oak('c_oak', '#7d5a3c', '#6c4c31'), 'oak_dark': oak('c_oak_dark', '#5a3a22', '#4a2f1c', 2.8),
-    'rafter': oak('c_rafter', '#6a4a30', '#573b25', 3.2, .7), 'floor': planks('c_floor', '#9a7550', '#7f5c3b'),
+    'rafter': oak('c_rafter', '#6a4a30', '#573b25', 3.2, .7), 'floor': planks('c_floor', *(('#9a7550', '#7f5c3b') if os.environ.get('ROOM_VARIANT', 'c1') == 'c1' else ('#7a5636', '#4e3522', '#1a110a', .62, .085))),   # c2: darker, narrow high-contrast boards (light boards blew out; wide plain boards read as empty floor)
     'brass': mat('c_brass', '#a8823f', .32, .85), 'plaster': mat('c_plaster', '#cbc2b0', .85, spec=.2),
     'plaster_w': mat('c_plaster_w', '#c7bca8', .88, spec=.2), 'iron': mat('c_iron', '#1d1b19', .45, .3),
     'frame': mat('c_frame', '#2a211b', .45), 'rug': mat('c_rug', '#6e4033', .95, spec=.1), 'rug_border': mat('c_rug_border', '#8c7d63', .95, spec=.1),
@@ -202,9 +205,12 @@ def on_right(T):  # … on the right slope z = ZR − SL (x − XR)
     t = (ZR + SL * XR - SL * T.x - T.z) / (L.z + SL * L.x); return T + L * t
 HA_T, HB_T = Vector((-2.45, 3.62, TOP)), Vector((-.85, 3.55, 0))
 HA_C, HB_C = on_left(HA_T), on_right(HB_T)
-HA, HB = 1.0, .9                                  # skylight openings (square)
+HA, HB = (1.0 if VARIANT == 'c1' else 1.4), .9                                  # skylight openings (square)
 nL = Vector((-SL, 0, 1)).normalized(); nR = Vector((SL, 0, 1)).normalized()     # slope outward normals
-WIN_C = Vector((X1, 4.2, 0)); WIN_W, WIN_H, WIN_Z0 = .9, 1.2, .9   # right knee-wall arched window (centre y, sill height)
+WIN_C = Vector((X1, 4.2, 0)); WIN_W, WIN_H, WIN_Z0 = (.9, 1.2, .9) if VARIANT == 'c1' else (1.2, 1.4, .7)   # right knee-wall arched window (c2 larger: bw lit area)
+# c2: skylight A2 low in the left slope, its sun square on the left wall's archive shelving (light on a vertical surface in the
+# pli frames, with leaves for a soft edge — F-043 cause 2)
+A2_T = Vector((-3.24, 2.3, .62)); A2_C = on_left(A2_T); A2 = .8
 print('skylight A', tuple(round(v, 2) for v in HA_C), 'skylight B', tuple(round(v, 2) for v in HB_C), flush=True)
 
 # ---------------- shell ----------------
@@ -230,8 +236,8 @@ gb = prism('Gable_B', gable, Y1, Y1 + WT, M['plaster_w'], 'walls', holes=[cutter
 # front gable: a wide window that only the sky reaches (the sun is behind the room) — the soft fill of a room open on one side
 FW_C, FW_W, FW_H = Vector((-1.2, Y0, 1.3)), 2.2, 1.7
 bpy.ops.mesh.primitive_cube_add(size=1, location=(FW_C.x, Y0 - WT / 2, FW_C.z)); fc1 = bpy.context.active_object; fc1.scale = (FW_W, WT + .4, FW_H)
-prism('Gable_F', gable, Y0 - WT, Y0, M['plaster_w'], 'front', holes=[cutter('FWin_cut', [fc1])])
-for k in (-1, 0, 1):
+prism('Gable_F', gable, Y0 - WT, Y0, M['plaster_w'], 'front', holes=[cutter('FWin_cut', [fc1])] if VARIANT == 'c1' else [])
+for k in ((-1, 0, 1) if VARIANT == 'c1' else ()):                      # c2: no sky-only fill window (it lifted every shadow, F-043)
     rbox('FWin_bar', (.035, .04, FW_H), (FW_C.x + k * FW_W / 3 if k else FW_C.x, Y0 - WT * .5, FW_C.z), M['iron'], .004, group='front')
 # roof slabs (0.15 thick, inner face on the slope line), one skylight in each
 def slope_slab(name, xa, xb, holes=()):
@@ -241,7 +247,7 @@ def slope_slab(name, xa, xb, holes=()):
 def hatch_cut(name, C, n, size):
     bpy.ops.mesh.primitive_cube_add(size=1, location=C + n * .1); hc = bpy.context.active_object
     hc.scale = (size, size, .8); hc.rotation_euler = n.to_track_quat('Z', 'Y').to_euler(); return cutter(name, [hc])
-slope_slab('Roof_L', X0 - .2, XR, holes=[hatch_cut('HA_cut', HA_C, nL, HA)])
+slope_slab('Roof_L', X0 - .2, XR, holes=[hatch_cut('HA_cut', HA_C, nL, HA)] + ([hatch_cut('A2_cut', A2_C, nL, A2)] if VARIANT == 'c2' else []))
 slope_slab('Roof_R', XR, X1 + .2, holes=[hatch_cut('HB_cut', HB_C, nR, HB)])
 def lining(C, n, size):
     """deep oak frame through the slab (crisp patch edge). track_quat('Z', 'Y'): local z = slope normal, y = up the slope, x = world y"""
@@ -250,12 +256,13 @@ def lining(C, n, size):
         rbox('Hat_jamb', (size + .08, .04, .26), C + sd * (k * (size / 2 + .02)) + n * .06, M['oak'], .005, rot=rot, group='roof')
         rbox('Hat_jamb', (.04, size + .08, .26), C + Vector((0, k * (size / 2 + .02), 0)) + n * .06, M['oak'], .005, rot=rot, group='roof')
 lining(HA_C, nL, HA); lining(HB_C, nR, HB)
+if VARIANT == 'c2': lining(A2_C, nL, A2)
 # rafters under both slopes every 0.6 m (skipped across a skylight, trimmers either side), ridge beam, a purlin on the right
 def rafter(y, xa, xb):
     a = Vector((xa, y, roof_z(xa))); b = Vector((xb, y, roof_z(xb))); n = (Vector((-(b.z - a.z), 0, b.x - a.x)).normalized()) * -.05
     between('Rafter', a + n, b + n, .04, M['rafter'], group='roof', square=True)
 for y in [Y0 + .3 + i * .6 for i in range(int((Y1 - Y0 - .4) / .6) + 1)]:
-    if abs(y - HA_C.y) >= HA / 2 + .06: rafter(y, X0, XR)
+    if abs(y - HA_C.y) >= HA / 2 + .06 and (VARIANT == 'c1' or abs(y - A2_C.y) >= A2 / 2 + .06): rafter(y, X0, XR)
     if abs(y - HB_C.y) >= HB / 2 + .06: rafter(y, XR, X1)
 for k in (-1, 1):
     rafter(HA_C.y + k * (HA / 2 + .06), X0, XR); rafter(HB_C.y + k * (HB / 2 + .06), XR, X1)
@@ -322,7 +329,7 @@ for c in range(cols):
                 rbox('Cub_book', (.2, .035, .22), (X0 + .2, y0 + .05 + k * .04, z0 + .1), M[cloths[k]], .003, rot=(.32, 0, 0), group='small')
             poly('Cub_poly', 'ico', .05, (bx, y0 + cw * .65, z0 + .05), (.4, .3, .1), M['plaster'])
 # frames on the back wall between the ladder and the window (grid paper), polyhedra on the cubby top (in the skylight beam)
-for i, (x, z, w, h) in enumerate(((-1.6, 1.42, .46, .36), (-1.0, 1.5, .34, .46), (-.4, 1.4, .4, .3))):
+for i, (x, z, w, h) in enumerate(((-1.6, 1.42, .46, .36), (-1.0, 1.5, .34, .46), (-.4, 1.4, .4, .3)) if VARIANT == 'c1' else ()):
     rbox('Frame', (w, .03, h), (x, Y1 - .015, z), M['frame'], .006, group='walls')
     rbox('Frame_mat', (w - .07, .006, h - .07), (x, Y1 - .032, z), M['card'], 0, group='walls')
     rbox('Frame_paper', (w - .13, .004, h - .13), (x, Y1 - .037, z), M['paper'], 0, group='walls')
@@ -344,9 +351,13 @@ for r in range(4):
 poly('Poly_dodeca', 'ico', .09, (cx, cy + .15, 1.055 + .085), (.6, .1, .2), M['plaster'])
 # tall open shelf on the right knee wall, front part (off the arched window), and a built-in bookcase on the back wall right of
 # the frames (the ma views look at the back wall)
-def bookcase(name, x0, x1, y0, y1, h, shelves, face):
-    """open bookcase: face 'y' = front toward −y (back wall), 'x' = front toward −x (right wall); books stand in each row"""
-    if face == 'x':
+def bookcase(name, x0, x1, y0, y1, h, shelves, face, theme=False):
+    """open bookcase: face 'y' = front toward −y (back wall), 'x' = front toward −x (right wall), 'x+' = front toward +x (left
+    wall); books stand in each row. theme (c2): archive record boxes and rolled ECG paper between the books"""
+    if face == 'x+':
+        for y in (y0, (y0 + y1) / 2, y1): rbox(name + '_side', (x1 - x0, .025, h), ((x0 + x1) / 2, y, h / 2), M['oak_dark'], .004, group='walls')
+        rbox(name + '_back', (.02, y1 - y0, h), (x0 + .01, (y0 + y1) / 2, h / 2), M['oak_dark'], .003, group='walls')
+    elif face == 'x':
         for y in (y0, (y0 + y1) / 2, y1): rbox(name + '_side', (x1 - x0, .025, h), ((x0 + x1) / 2, y, h / 2), M['oak_dark'], .004, group='walls')
         rbox(name + '_back', (.02, y1 - y0, h), (x1 - .01, (y0 + y1) / 2, h / 2), M['oak_dark'], .003, group='walls')
     else:
@@ -355,18 +366,45 @@ def bookcase(name, x0, x1, y0, y1, h, shelves, face):
     zs = [.05 + (h - .08) * k / shelves for k in range(shelves + 1)]
     for z in zs: rbox(name + '_shelf', (x1 - x0, y1 - y0, .025), ((x0 + x1) / 2, (y0 + y1) / 2, z), M['oak_dark'], .004, group='walls')
     for z in zs[:-1]:
-        a = (y0 if face == 'x' else x0) + .03; end = (y1 if face == 'x' else x1) - .03
+        a = (y0 if face[0] == 'x' else x0) + .03; end = (y1 if face[0] == 'x' else x1) - .03
         while a < end - .05:
+            if theme and random.random() < .22 and a < end - .32:             # record boxes (labelled) or a stack of paper rolls
+                if random.random() < .55:
+                    bw_ = random.uniform(.24, .3); bh = min(.26, (h - .08) / shelves - .05)
+                    for k in range(random.randint(1, 2)):
+                        cx_ = a + bw_ / 2 + k * (bw_ + .01); zc = z + .0125 + bh / 2
+                        if face == 'y': rbox(name + '_box', (bw_, .3, bh), (cx_, y1 - .17, zc), M['card'], .006, group='small'); rbox(name + '_lbl', (.08, .004, .04), (cx_, y1 - .322, zc + .03), M['paper'], 0, group='small')
+                        elif face == 'x': rbox(name + '_box', (.3, bw_, bh), (x1 - .17, cx_, zc), M['card'], .006, group='small'); rbox(name + '_lbl', (.004, .08, .04), (x1 - .322, cx_, zc + .03), M['paper'], 0, group='small')
+                        else: rbox(name + '_box', (.3, bw_, bh), (x0 + .17, cx_, zc), M['card'], .006, group='small'); rbox(name + '_lbl', (.004, .08, .04), (x0 + .322, cx_, zc + .03), M['paper'], 0, group='small')
+                    a += 2 * bw_ + .03
+                else:
+                    r_ = .045
+                    for k in range(3):
+                        px, pz = a + r_ + (k % 2) * 2 * r_ + (k // 2) * r_, z + .0125 + r_ + (k // 2) * 1.75 * r_
+                        rot = (math.radians(90), 0, 0) if face == 'y' else (0, math.radians(90), 0)
+                        if face == 'y': cyl(name + '_roll', r_, .28, (px, y1 - .17, pz), M['paper'], 24, rot=rot, bevel=.002, group='small')
+                        else: cyl(name + '_roll', r_, .28, ((x1 - .17) if face == 'x' else (x0 + .17), px, pz), M['paper'], 24, rot=rot, bevel=.002, group='small')
+                    a += 4 * r_ + .04
+                continue
             tt = random.uniform(.025, .05); hh = random.uniform(.2, min(.34, (h - .08) / shelves - .04))
             if random.random() < .16: a += random.uniform(.1, .25); continue
             if random.random() < .12 and a < end - .3:                          # a box or a poly now and then
-                poly(name + '_poly', 'ico', .055, ((x1 - .17 if face == 'x' else a + .07), (a + .07 if face == 'x' else y1 - .17), z + .068), (.4, .2, .3), M['plaster']); a += .16; continue
+                poly(name + '_poly', 'ico', .055, ((x1 - .17 if face == 'x' else x0 + .17 if face == 'x+' else a + .07), (a + .07 if face[0] == 'x' else y1 - .17), z + .068), (.4, .2, .3), M['plaster']); a += .16; continue
             d = random.uniform(.18, .24)
             if face == 'x': rbox(name + '_book', (d, tt, hh), (x1 - .02 - d / 2, a + tt / 2, z + .0125 + hh / 2), M[random.choice(cloths + ['oak_dark'])], .003, group='small')
+            elif face == 'x+': rbox(name + '_book', (d, tt, hh), (x0 + .02 + d / 2, a + tt / 2, z + .0125 + hh / 2), M[random.choice(cloths + ['oak_dark'])], .003, group='small')
             else: rbox(name + '_book', (tt, d, hh), (a + tt / 2, y1 - .02 - d / 2, z + .0125 + hh / 2), M[random.choice(cloths + ['oak_dark'])], .003, group='small')
             a += tt + .003
 bookcase('R_shelf', X1 - .32, X1, 1.15, 2.35, 1.9, 4, 'x')
 bookcase('B_case', .1, 1.6, Y1 - .34, Y1, 2.2, 5, 'y')
+if VARIANT == 'c2':                                      # archive shelving where the frames left plain wall in view (F-043 cause 1, 4)
+    bookcase('B_arch_l', -3.18, -1.9, Y1 - .34, Y1, 1.8, 5, 'y', theme=True)
+    bookcase('B_arch_m', -1.88, .08, Y1 - .34, Y1, 2.2, 6, 'y', theme=True)
+    bookcase('L_arch', X0, X0 + .34, .9, 3.2, 1.12, 3, 'x+', theme=True)
+    bookcase('R_arch', X1 - .32, X1, .45, 1.1, 1.9, 4, 'x', theme=True)
+    for x, z, w, h in ((-1.45, 2.55, .36, .28), (-.85, 2.6, .3, .38)):     # small frames above the shelving (ma view, plain gable)
+        rbox('Frame', (w, .03, h), (x, Y1 - .015, z), M['frame'], .006, group='walls')
+        rbox('Frame_paper', (w - .08, .004, h - .08), (x, Y1 - .033, z), M['paper'], 0, group='walls')
 rbox('Frame_big', (.03, .7, .52), (X1 - .015, 3.2, 1.6), M['frame'], .008, group='walls')
 rbox('Frame_big_mat', (.006, .62, .44), (X1 - .032, 3.2, 1.6), M['card'], 0, group='walls')
 rbox('Frame_big_paper', (.004, .54, .36), (X1 - .037, 3.2, 1.6), M['paper'], 0, group='walls')
@@ -392,23 +430,28 @@ rbox('Paper_sheet', (.21, .297, .002), (dx + .05, dy - .12, TOP + .001), M['pape
 poly('Desk_ico', 'ico', .07, (dx - .55, dy - .12, TOP + .065), (.3, .2, .5), M['plaster'])
 poly('Desk_cube', 'cube', .09, (dx - .35, dy - .2, TOP + .045), (0, 0, .4), M['plaster'])
 # rug under the desk and the chair spot
-rbox('Rug', (3.0, 1.9, .012), (-1.75, 3.35, .006), M['rug_border'], .003, group='rug')
-rbox('Rug_field', (2.8, 1.7, .004), (-1.75, 3.35, .014), M['rug'], .001, group='rug')
+if VARIANT == 'c1':
+    rbox('Rug', (3.0, 1.9, .012), (-1.75, 3.35, .006), M['rug_border'], .003, group='rug')
+    rbox('Rug_field', (2.8, 1.7, .004), (-1.75, 3.35, .014), M['rug'], .001, group='rug')
+else:                                                    # c2: under the desk only — the strip's sun square falls on the boards
+    rbox('Rug', (1.8, 1.6, .012), (-2.35, 3.35, .006), M['rug_border'], .003, group='rug')
+    rbox('Rug_field', (1.6, 1.4, .004), (-2.35, 3.35, .014), M['rug'], .001, group='rug')
 
 # ---------------- light ----------------
 sd = bpy.data.lights.new('sun', 'SUN'); sd.energy = 6.5; sd.angle = math.radians(1.0); sd.color = srgb('#ffe9cf')
 so = bpy.data.objects.new('sun', sd); so.rotation_euler = SUN_TO.to_track_quat('-Z', 'Y').to_euler(); bpy.context.collection.objects.link(so)
 # sky through the openings only (the room is closed): bluish world + light portals in both openings
 w = bpy.data.worlds.new('w'); scene.world = w; w.use_nodes = True
-w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#b4bccb'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = 2.2
+w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#b4bccb'), 1); w.node_tree.nodes['Background'].inputs[1].default_value = (2.2 if VARIANT == 'c1' else 1.5)
 def portal(c, size, normal):
     ld = bpy.data.lights.new('portal', 'AREA'); ld.shape = 'RECTANGLE'; ld.size, ld.size_y = size; ld.cycles.is_portal = True
     lo = bpy.data.objects.new('portal', ld); lo.location = c; lo.rotation_euler = (-normal).to_track_quat('-Z', 'Y').to_euler()
     bpy.context.collection.objects.link(lo)
 portal(Vector((X1 + WT + .02, WIN_C.y, WIN_Z0 + (WIN_H + WIN_W / 2) / 2)), (WIN_H + WIN_W / 2, WIN_W), Vector((1, 0, 0)))
 portal(HA_C + nL * .3, (HA, HA), nL); portal(HB_C + nR * .3, (HB, HB), nR)
+if VARIANT == 'c2': portal(A2_C + nL * .3, (A2, A2), nL)
 portal(Vector((OC.x, Y1 + WT + .02, OC.z)), (.6, .6), Vector((0, 1, 0)))
-portal(Vector((FW_C.x, Y0 - WT - .02, FW_C.z)), (FW_W, FW_H), Vector((0, -1, 0)))
+if VARIANT == 'c1': portal(Vector((FW_C.x, Y0 - WT - .02, FW_C.z)), (FW_W, FW_H), Vector((0, -1, 0)))
 # off-screen branches outside both openings: soft, free-form dapple (REF-002 §11.2)
 def occl_mesh(name, polys):
     me = bpy.data.meshes.new(name); bm = bmesh.new()
@@ -427,7 +470,8 @@ def foliage(centre, n, spread):
             leaves.append([q + a * Lf * math.cos(s) + b * Wd * math.sin(s) for s in [i * 2 * math.pi / 10 for i in range(10)]])
     return leaves
 occl_mesh('Occ_branches', foliage(Vector((X1, WIN_C.y, WIN_Z0 + .9)) + L * 2.4, 10, .8)          # outside the arched window
-          + foliage(HA_C + L * 2.2 + Vector((.45, 0, .2)), 4, .35))                             # sparse over A (dense swallowed the beam, p4)
+          + foliage(HA_C + L * 2.2 + Vector((.45, 0, .2)), 4, .35)                              # sparse over A (dense swallowed the beam, p4)
+          + (foliage(HB_C + L * 2.0 + Vector((0, .55, .25)), 2, .2) + foliage(A2_C + L * 2.4 + Vector((0, .2, .1)), 5, .45) if VARIANT == 'c2' else []))  # c2: leaves at one edge of B, a cluster over A2
 # B stays clear: the strip's square of sun keeps a crisp edge (leaves over B turned it into a blur, p8)
 
 scene.render.engine = 'CYCLES'; scene.cycles.device = 'CPU'; scene.cycles.samples = args.samples

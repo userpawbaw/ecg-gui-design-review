@@ -5,13 +5,13 @@ import type {Loaded} from './data';
 import {ageGradient,freshGradient,paper,createGlow,rgb,BAND_S,type Box} from './labFx';
 type Props={data:Loaded;transport:Transport;mode:Mode;span:number;inspect:boolean;amplitude:number;reference:number;method:string;preview:string|null;comparison:string|null;large?:boolean;soft:boolean;residual?:boolean;gain?:number};
 const BG='#0a1a21',GAP_S=.12;
-// D-073 laptop budget: glow levels 2 (three blur levels) → 1 (two, the default — user 2026-10-18 "최대는 너무 세고") → 0 (none). ?labfx= pins it; otherwise it steps down when the
+// D-073 laptop budget: glow levels 2 (three blur levels) → 1 (two) → 0 (none). Level 2 is the default again at the thinner lines (user 2026-10-18 "이 두께에선 &labfx=2가 기본값"). ?labfx= pins it; otherwise it steps down when the
 // frame interval while playing stays above 26 ms (< ~38 fps) — the script part of a draw is ~2.5 ms, the cost is in rasterising
 // the glow, so the interval is what shows it — and never back up, so the picture does not pulse between levels.
 const FX_PIN=(()=>{const v=new URLSearchParams(location.search).get('labfx');return v===null?null:Math.max(0,Math.min(2,Number(v)||0));})();
 export function Plot(p:Props){
  const canvas=useRef<HTMLCanvasElement>(null),latest=useRef(p);latest.current=p;
- const fx=useRef({level:FX_PIN??1,ema:0,frames:0,last:0});
+ const fx=useRef({level:FX_PIN??2,ema:0,frames:0,last:0});
  useEffect(()=>{const c=canvas.current!;const g=c.getContext('2d');if(!g)return;let raf=0,signature='',bgSig='';
  const bg=document.createElement('canvas'),bgg=bg.getContext('2d')!,hot=document.createElement('canvas'),hg=hot.getContext('2d')!,glow=createGlow();
  const draw=()=>{const t0=performance.now(),q=latest.current,t=q.transport.time;const rect=c.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
@@ -53,7 +53,7 @@ export function Plot(p:Props){
    fresh.forEach((pt,i)=>{if(i&&(pt.breakBefore||pt.index!==fresh[i-1].index+1))flush();run.push(pt);});flush();
    g.save();g.globalCompositeOperation='lighter';g.fillStyle=freshGradient(g,left,right,rgb(row.color),ageOf,r===1?.34:.22);g.fill(pa);g.restore();}}
  if(!isDiff)trace(q.data.traces.clean,'#c4c6c7',1.8,q.reference);   // thinner lines (user 2026-10-18 "선 두께도 좀 더 줄여"): Reference 2.4 → 1.8, traces 1.6 → 1.2
- trace(q.data.traces[row.id],row.color,1.2,1,false,!!isDiff,isDiff?0:r===1?1.15:.8,!isDiff&&r===1?.55:0);   // glow ×0.55 (user: "지금도 약간 센 것 같긴 해")
+ trace(q.data.traces[row.id],row.color,1.2,1,false,!!isDiff,isDiff?0:r===1?1.15:.8,isDiff?0:r===1?.55:r===0?.35:0);   // glow ×0.55 on the output; the input too (user 2026-10-18 "입력에도 이 효과가 포함"), lower — its dense noise stacks far more glow per pixel (intro sweep.ts)
  if(r===1&&q.preview&&q.preview!==q.method&&q.preview!==q.comparison)trace(q.data.traces[q.preview],'#f6d18d',1.2,1,true);
  // head marker: a small hot point at the newest sample (brighter on the selected output)
  if(fxOn&&!isDiff&&q.data.traces[row.id]){const hi=Math.min(q.data.n-1,Math.floor(t*q.data.fs))-q.data.offset,a=q.data.traces[row.id]!;if(hi>=0&&hi<a.length){const x=headX,y=yOf(a,hi+q.data.offset,false),R=r===1?16:11;

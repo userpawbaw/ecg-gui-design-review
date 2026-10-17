@@ -20,7 +20,7 @@ with its contrast C = |∇L_σ*|·σ*·√(2π) (exact for a blurred step). Edge
   plain_range  L* 90th − 10th percentile on plain surfaces only (local fine-texture energy < 2 L*): how far light travels from
                bright to dark across walls, cabinet fronts, empty cells. Separated REF-002 (49–55) from our r3 (21) when the edge
                metrics did not (soft area was similar) — a gradient on a plain surface reads, one on book spines does not.
-               Compare only frames rendered at the same resolution (D-069): the same scene measured 32 at a 1280×720 render and
+               Compare only frames rendered at the same resolution (D-081): the same scene measured 32 at a 1280×720 render and
                51 at a 640×360 render (a low-res render resolves less fine texture, so the plain mask grows); resizing after
                the render does not change it.
 Self-test (synthetic step / 40 px ramp / 120 px ramp): python scripts/assets/frame-tone-stats.py --selftest

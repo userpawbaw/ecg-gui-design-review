@@ -44,8 +44,8 @@ export function fistTrack(bursts:Burst[],T:number,rate=100){
  *  opens part way and closes again (depth = gap / (OPEN_S + CLOSE_S)); gaps under HOLD_GAP_S would only twitch, so they hold. */
 export const HOLD_GAP_S=.25;
 // F2 (D-072, user 2026-10-17 "쥘 때 속도는 좀 더 빠르게, 펼 때 속도는 좀 더 느리게 … 쥘 때와 잡음 시작이 동기화, 잡음이 끝나는 지점과
-// 주먹을 펴기 시작하는 시작이 동기화"): a quick clench that lands on the noise start (lead 0.2 s instead of 0.56 s) and a slow release from its end
-export const CLOSE_F2_S=.2,OPEN_F2_S=.8;
+// 주먹을 펴기 시작하는 시작이 동기화"): a quick clench that lands on the noise start (lead CLOSE_F2_S instead of 0.56 s) and a slow release from its end
+export const CLOSE_F2_S=.3,OPEN_F2_S=.7;   // user 2026-10-17: 0.2 / 0.8 → 0.3 / 0.7
 export function fistTrackHold(bursts:Burst[],T:number,rate=100,close=CLOSE_S,open=OPEN_S){
  const seg:{s:number,e:number}[]=[];
  for(const b of bursts){const p=seg[seg.length-1];if(p&&b.start-p.e<HOLD_GAP_S)p.e=b.end;else seg.push({s:b.start,e:b.end});}

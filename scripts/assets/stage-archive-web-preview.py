@@ -2,7 +2,6 @@
 import argparse
 import json
 from pathlib import Path
-import re
 import shutil
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -52,11 +51,19 @@ for name in sorted(files):
     target = DEST / name
     if name == 'preview.html':
         html = (SOURCE / name).read_text(encoding='utf-8')
-        html, replacements = re.subn(
-            r'("three":"\./)node_modules/three(/build/three\.module\.js","three/addons/":")\./node_modules/three/examples/jsm/',
-            r'\1three\2three/', html)
-        if replacements != 1:
+        marker = '<script type="importmap">'
+        start = html.find(marker)
+        end = html.find('</script>', start)
+        if start < 0 or end < 0:
             raise SystemExit('Could not rewrite the preview import map for the staged runtime')
+        json_start = start + len(marker)
+        import_map = json.loads(html[json_start:end].strip())
+        imports = import_map.get('imports', {})
+        if set(imports) != {'three', 'three/addons/'}:
+            raise SystemExit('Unexpected preview import map entries: ' + ', '.join(imports))
+        imports['three'] = './node_modules/three/build/three.module.js'
+        imports['three/addons/'] = './node_modules/three/examples/jsm/'
+        html = html[:json_start] + '\n    ' + json.dumps(import_map, separators=(',', ':')) + '\n  ' + html[end:]
         target.write_text(html, encoding='utf-8')
         shutil.copystat(SOURCE / name, target)
     else:

@@ -18,12 +18,16 @@ import {createArchive} from './story/intro/archive';
 
 type Key={pos:THREE.Vector3,look:THREE.Vector3,fov:number};
 const V=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
-// D-077 paths (three frame; Blender (x, y, z) → (x, z, −y)), ?path=c1 (default) | c3:
+// D-077 paths (three frame; Blender (x, y, z) → (x, z, −y)), ?path=c1 (default) | c2 | c3:
 //  c1 — down the ladder while moving up the aisle; it passes through two light curtains (skylights in the front ceiling bay) at
 //       ~21–27 % and ~56–64 % of the page scroll (scratch design: ray test of the path against the skylight beams)
+//  c2 — c1, then over the last quarter the view turns into the last gap of the left stacks, where the window light strikes
+//       a stack face at 30° (the D-075 contrast up close)
 //  c3 — the D-074 descent (top of the ladder without the ceiling lamp → upper shelves → floor)
 const PATHS:Record<string,Key[]>={
  c1:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.25,2.4,1.2),look:V(.35,1.5,-4.3),fov:48},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],
+ c2:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.22,2.7,1.9),look:V(.35,1.55,-4.3),fov:47},{pos:V(.26,2.0,.4),look:V(.35,1.4,-4.3),fov:48},
+  {pos:V(.3,1.25,-.75),look:V(.2,1.1,-4.3),fov:50},{pos:V(.1,1.3,-1.0),look:V(-2.7,3.0,-1.6),fov:55}],   // the window light lands high (z 2.8–4.1) on the face at y 1.55
  c3:[{pos:V(-.2,3.0,1.6),look:V(.4,1.4,-4.3),fov:44},{pos:V(.3,2.5,-.6),look:V(.35,1.8,-4.3),fov:50},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],
 };
 const KEYS:Key[]=PATHS[new URLSearchParams(location.search).get('path')??'c1']??PATHS.c1;

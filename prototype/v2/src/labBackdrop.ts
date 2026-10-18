@@ -25,9 +25,10 @@ const KEYS:Key[]=[
 ];
 const SPRING=2.6;   // rad/s, critically damped: 80 % of a scroll step in ~1.2 s, settled in ~2 s (eases in and out)
 const Q=new URLSearchParams(location.search),RES_Q=Q.get('bgres');
-// D-075 ambient: ?amb=0 off (?amb=1 forces it on in the low-power mode); ?wind= ?silk= ?cloud= 0–100 in 10 % steps, 50 = designed
+// D-075 ambient: ?amb=0 off (?amb=1 forces it on in the low-power mode); ?silk= ?shaft= 0–100 in 10 % steps, 50 = designed.
+// User 2026-10-18 after the first look: wind and cloud removed (F-051), the dust smaller and sparser, nothing moves during playback.
 const lvl=(k:string)=>{const r=Q.get(k),v=Number(r);return r===null||!Number.isFinite(v)?1:Math.min(100,Math.max(0,Math.round(v/10)*10))/50;};
-const AMB={on:Q.get('amb')!=='0',forced:Q.get('amb')==='1',wind:lvl('wind'),silk:lvl('silk'),cloud:lvl('cloud')};
+const AMB={on:Q.get('amb')!=='0',forced:Q.get('amb')==='1',silk:lvl('silk')};
 
 export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
@@ -44,15 +45,16 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const out=new OutputPass();out.renderToScreen=true;arch.vol.renderToScreen=false;
  const du=arch.dustMat.uniforms;du.uDepthOn.value=1;du.tSceneDepth.value=base.depthTexture;
  if(Q.get('shaft')!==null)arch.vol.uniforms.uIntensity.value*=lvl('shaft');   // ?shaft= 0–100, 50 = designed
- arch.amb.wind.value=AMB.wind;arch.amb.silk.value=AMB.silk;arch.amb.cloud.value=AMB.cloud;
+ arch.amb.silk.value=AMB.silk;
+ arch.dust.geometry.setDrawRange(0,1100);   // 2600 motes in the intro; the Lab keeps 1100 (user: "먼지도 약간 과한 감")
  const ambient=AMB.on&&!(matchMedia('(prefers-reduced-motion: reduce)').matches)&&(!soft||AMB.forced);
  const curve=(pick:(k:Key)=>THREE.Vector3)=>new THREE.CatmullRomCurve3(KEYS.map(pick),false,'centripetal');
  const posC=curve(k=>k.pos),lookC=curve(k=>k.look);
  let p=0,ps=0,pv=0,px=0,pxShown=0,dirty=true,raf=0,last=0,frame=0,playing=false,paused=false,lastT=0,clock=0,settle:ReturnType<typeof setTimeout>|undefined;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches||soft;
- if(!ambient){arch.amb.wind.value=arch.amb.silk.value=arch.amb.cloud.value=0;}
+ if(!ambient)arch.amb.silk.value=0;
  function resize(){const w=innerWidth,h=innerHeight,pr=Math.min(Math.min(2,devicePixelRatio||1)*RES,Math.sqrt(1.2e6/(w*h)));renderer.setPixelRatio(pr);renderer.setSize(w,h,false);
   const W=Math.max(1,Math.round(w*pr)),H=Math.max(1,Math.round(h*pr));base.setSize(W,H);work.setSize(W,H);du.uRes.value.set(W,H);
-  camera.aspect=w/h;camera.updateProjectionMatrix();arch.setPx(h,pr);dirty=true;kick();}
+  camera.aspect=w/h;camera.updateProjectionMatrix();arch.setPx(h,pr*.6);dirty=true;kick();}   // motes 0.6 × the intro size
  function place(){
   const u=Math.min(1,Math.max(0,ps)),seg=u*(KEYS.length-1),i=Math.min(KEYS.length-2,Math.floor(seg)),f=seg-i;
   const pos=posC.getPoint(u),look=lookC.getPoint(u);camera.fov=THREE.MathUtils.lerp(KEYS[i].fov,KEYS[i+1].fov,f);camera.updateProjectionMatrix();
@@ -69,19 +71,16 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   renderer.setRenderTarget(work);renderer.autoClear=false;renderer.render(dustScene,camera);renderer.autoClear=true;
   out.render(renderer,null as unknown as THREE.WebGLRenderTarget,work,0,false);
  }
- function tick(now:number){raf=0;if(paused){lastT=0;return;}
+ function tick(now:number){raf=0;if(paused||playing){lastT=0;return;}   // playback: the waveform comes first (user video 2 at 28 s)
   const dt=lastT?Math.min(.05,(now-lastT)/1000):1/60;lastT=now;
-  // a waveform plays: the camera holds (scroll and pointer wait), only the ambient light keeps moving at a lower rate
-  if(!playing){
-   // scroll: a critically damped spring follows the page position, so the descent speeds up and settles instead of jumping
-   if(reduced){ps=p;pv=0;}else{pv+=(-2*SPRING*pv-SPRING*SPRING*(ps-p))*dt;ps+=pv*dt;if(Math.abs(ps-p)<1e-4&&Math.abs(pv)<1e-3){ps=p;pv=0;}}
-   if(!reduced)pxShown+=(px-pxShown)*Math.min(1,dt*4);
-   if(Math.abs(px-pxShown)<=.005)pxShown=px;
-  }
-  const moving=!playing&&(Math.abs(px-pxShown)>.005||ps!==p);if(moving)dirty=true;
-  const camMoved=dirty&&!playing;
+  // scroll: a critically damped spring follows the page position, so the descent speeds up and settles instead of jumping
+  if(reduced){ps=p;pv=0;}else{pv+=(-2*SPRING*pv-SPRING*SPRING*(ps-p))*dt;ps+=pv*dt;if(Math.abs(ps-p)<1e-4&&Math.abs(pv)<1e-3){ps=p;pv=0;}}
+  if(!reduced)pxShown+=(px-pxShown)*Math.min(1,dt*4);
+  if(Math.abs(px-pxShown)<=.005)pxShown=px;
+  const moving=Math.abs(px-pxShown)>.005||ps!==p;if(moving)dirty=true;
+  const camMoved=dirty;
   if(!camMoved&&!ambient){lastT=0;return;}
-  const gap=camMoved?33:playing?83:42;                                        // ≤ 30 fps moving · 24 idle · 12 while playing
+  const gap=camMoved?33:42;                                                   // ≤ 30 fps moving · 24 idle
   if(now-last<gap){kick();return;}
   draw(camMoved,Math.min(.1,(now-(last||now))/1000)||dt);last=now;if(camMoved)dirty=false;
   if(moving||ambient)kick();}
@@ -95,8 +94,8 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   setPointer(v:number){if(reduced)return;px=Math.max(-1,Math.min(1,v));kick();},
   /** software rendering detected (low-power mode) */
   soft,
-  /** a waveform plays: hold the camera until it stops (the ambient light keeps moving at 12 fps) */
-  setPlaying(v:boolean){playing=v;kick();},
+  /** a waveform plays: hold the last frame until it stops */
+  setPlaying(v:boolean){playing=v;if(!v){dirty=true;kick();}},
   /** stop drawing (the large viewer covers the page) */
   setPaused(v:boolean){paused=v;if(!v){dirty=true;kick();}},
   dispose(){cancelAnimationFrame(raf);clearTimeout(settle);removeEventListener('resize',onResize);arch.dispose();base.dispose();work.dispose();out.dispose();renderer.dispose();},

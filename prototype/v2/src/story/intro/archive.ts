@@ -124,8 +124,9 @@ export async function createArchive(variant:'base'|'sun35'='base'){
 
  // D-075 ambient (Lab backdrop; every strength 0 by default, so the intro and Story are unchanged): one cloud field in the sun's
  // light space, drawn into a small texture each frame, dims the shafts, the sun-lit surfaces and the dust together (A); the
- // shafts can fold like silk along the beam (B); the dust drifts with the same wind (C). One time base: gusts also speed the clouds.
- const amb={cloud:{value:0},silk:{value:0},wind:{value:0},gust:{value:0},windOff:{value:new THREE.Vector3()},cloudT:{value:0},
+ // shafts can fold like silk along the beam (B). User 2026-10-18 after the first look: the wind (C) is removed and the cloud is
+ // off in the Lab (F-051: stair-step patterns on the ladder and the floor), kept here behind uCloud for a later fix.
+ const amb={cloud:{value:0},silk:{value:0},cloudT:{value:0},
   cloudDir:{value:new THREE.Vector2(1,0)},tCloud:{value:null as THREE.Texture|null}};
  const cloudRT=new THREE.WebGLRenderTarget(256,256,{type:THREE.UnsignedByteType,depthBuffer:false});cloudRT.texture.wrapS=cloudRT.texture.wrapT=THREE.ClampToEdgeWrapping;
  amb.tCloud.value=cloudRT.texture;
@@ -139,10 +140,9 @@ export async function createArchive(variant:'base'|'sun35'='base'){
     gl_FragColor=vec4(vec3(smoothstep(.36,.7,c)),1.);}`}));   // 1 = clear sun, 0 = under a cloud
  /** advance the ambient clock (dt s) and redraw the cloud texture; call before rendering a frame */
  function stepAmbient(renderer:THREE.WebGLRenderer,t:number,dt:number){
-  const g=.5+.5*Math.sin(t*.21)*Math.sin(t*.13+1),gust=g*g;amb.gust.value=gust;
-  const w=new THREE.Vector3(sunTo.x,0,sunTo.z).normalize();   // the wind follows the light in from the windows
-  amb.windOff.value.addScaledVector(w,dt*(.04+.16*gust)*amb.wind.value);
-  amb.cloudT.value+=dt*(.05+.08*gust);
+  if(amb.cloud.value<=0)return;
+  const g=.5+.5*Math.sin(t*.21)*Math.sin(t*.13+1);amb.cloudT.value+=dt*(.05+.08*g*g);
+  const w=new THREE.Vector3(sunTo.x,0,sunTo.z).normalize();   // the clouds drift the way the light comes in
   const wl=w.clone().transformDirection(lightCam.matrixWorldInverse);amb.cloudDir.value.set(wl.x,wl.y).normalize();
   const rt=renderer.getRenderTarget();renderer.setRenderTarget(cloudRT);cloudQuad.render(renderer);renderer.setRenderTarget(rt);
  }
@@ -153,19 +153,14 @@ export async function createArchive(variant:'base'|'sun35'='base'){
  const dg=new THREE.BufferGeometry();dg.setAttribute('position',new THREE.BufferAttribute(pos,3));dg.setAttribute('aSeed',new THREE.BufferAttribute(seed,1));
  const dustMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
   uniforms:{uTime:{value:0},tLight:{value:lightRT.depthTexture},uLightVP:{value:lightVP},uSun:{value:sunTo},uCol:{value:sunCol},uPx:{value:1},uFade:shared.uFade,
-   uWind:amb.wind,uGust:amb.gust,uWindOff:amb.windOff,uCloud:amb.cloud,tCloud:amb.tCloud,uBoxMin:{value:box.min.clone()},uBoxSize:{value:box.getSize(new THREE.Vector3())},
+   uCloud:amb.cloud,tCloud:amb.tCloud,
    // D-075: the Lab draws the dust over a stored frame without a depth buffer → test against the stored depth here (off = 0)
    uDepthOn:{value:0},tSceneDepth:{value:null as THREE.Texture|null},uRes:{value:new THREE.Vector2(1,1)}},
-  vertexShader:`attribute float aSeed;uniform float uTime,uPx,uWind,uGust,uCloud;uniform sampler2D tLight,tCloud;uniform mat4 uLightVP;uniform vec3 uSun,uWindOff,uBoxMin,uBoxSize;varying float vA;
+  vertexShader:`attribute float aSeed;uniform float uTime,uPx,uCloud;uniform sampler2D tLight,tCloud;uniform mat4 uLightVP;uniform vec3 uSun;varying float vA;
    void main(){float t=uTime*(.02+.03*aSeed)+aSeed*50.;vec3 p=position+vec3(sin(t*1.3),sin(t*.7+2.)*.5,cos(t*1.1))*.15;
-    float edge=1.;
-    if(uWind>0.){   // C: drift with the wind (faster motes nearer the light), swirl in gusts, wrap around the room
-     float ts=uTime*.35+aSeed*20.;
-     p+=uWindOff*(.6+.8*aSeed)+uWind*(.12+.3*uGust)*vec3(sin(ts+position.y*1.7),.5*sin(ts*.8+position.x*1.3),cos(ts*.9+position.z*1.5));
-     vec3 r=mod(p-uBoxMin,uBoxSize);p=uBoxMin+r;vec3 e=min(r,uBoxSize-r);edge=smoothstep(0.,.4,min(e.x,e.z));}
     vec4 lp=uLightVP*vec4(p,1.);vec3 l=lp.xyz/lp.w*.5+.5;
     float lit=(all(greaterThan(l.xy,vec2(0.)))&&all(lessThan(l.xy,vec2(1.))))?step(l.z-.002,texture2D(tLight,l.xy).x):0.;
-    if(uCloud>0.)lit*=1.-uCloud*.8*(1.-texture2D(tCloud,l.xy).r);lit*=edge;
+    if(uCloud>0.)lit*=1.-uCloud*.8*(1.-texture2D(tCloud,l.xy).r);
     vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;
     float fwd=pow(max(dot(normalize(p-cameraPosition),uSun),0.),2.);
     vA=lit*(.25+1.6*fwd)*(.4+.6*sin(uTime*1.3+aSeed*40.)*sin(uTime*1.3+aSeed*40.));

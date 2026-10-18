@@ -13,7 +13,8 @@ Isolated B3 web export for reviewing the selected archive lighting with a freely
 
 ## 확인 안 함
 
-- Story route integration and Story-owned files/assets/defaults were not changed. Public GitHub Pages publication is prepared but blocked until the repository Pages source is enabled as GitHub Actions.
+- Story route integration and Story-owned files/assets/defaults were not changed.
+- Public GitHub Pages: `https://userpawbaw.github.io/ecg-gui-design-review/preview.html`. Deployment run `39122861788` completed, and the page, GLB (10,305,880 bytes), and manifest respond HTTP 200. The first public Chromium check found an import-map path mismatch in the staged artifact (Three.js modules referenced unpublished `node_modules/three/...` paths). The local staging fix is pending deployment; public browser rendering, lightmap application, orbit, and reset remain unverified until that run passes.
 - Physical display/GPU/browser diversity, mobile performance, and download behavior on a production network were not tested. The browser check used headless Chromium with SwiftShader.
 - Visual approval of all materials, hidden surfaces, and every camera angle was not performed. Blender GLTF export emitted warnings that some materials had multiple image nodes and the first node is used by the GLTF sampler; the packaged web preview loads, but those materials require a separate art-direction review.
 - The web preview tone mapping is the project's web shader path; pixel identity with Blender's AgX still is not claimed.

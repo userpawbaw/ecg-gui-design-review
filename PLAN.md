@@ -14,7 +14,7 @@
 - D-144 광원 그룹 key 후보 0.5/0.35/0.25의 2시점 혼합 비교 및 사용자 선택 완료: 0.5. 이를 B3 시안 선택값으로 유지한다. 다음은 승인 범위를 넓히지 않고 L2 사람·해치 연출, 웹 굽기, 기기 Q0–Q5를 별도로 검증한다. Story 소유 파일·r8/D-084 보존.
 - 서고 전체 배치 컷어웨이 렌더(1280×720, bpy 4.5.3, 32 Cycles CPU samples)를 추가했다. Ceiling/Beam·측벽을 임시 숨긴 전시용 시안이며 표준 광원 믹스 검증은 아니다. verification/r1-archive-b3-rerender-20261018/README.md. 다음 우선 검토 후보는 L2 사다리·인물·해치 동선이며 Story 원본 변경은 포함하지 않는다.
 - D-145: B3 선택 조명을 별도 verification 경로에 실제 GLB/lightmap으로 굽고, 기존 웹 셰이더 재현과 자유 카메라 브라우저 검증을 완료했다. Story 에셋/로더/defaults는 수정하지 않았다. 외부 프리뷰 경로 부재를 확인해 D-146으로 공개 호스팅을 결정했다.
-- D-146: 사용자의 공개 동의 후 GitHub Pages에 프리뷰 HTML·GLB·lightmap·manifest와 필요한 고정 Three.js 모듈/MIT 고지만 배포한다. 검증 보고서·recipe·캡처·저장소 소스는 배포하지 않는다. Actions Pages 권한·사용자 브라우저 경로 확인 전.
+- D-146: 공개 동의 후 Pages에 최소 프리뷰 패키지만 배포했다. `https://userpawbaw.github.io/ecg-gui-design-review/preview.html` 외부 응답은 확인. artifact import map을 고치고 공개 URL Chromium 검사까지 마무리한다. Story 자원·기본값 변경은 계속 제외.
 
 # Review plan
 
@@ -336,5 +336,6 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] GitHub Pages absence and admin access checked; user explicitly approved public publication.
 - [x] D-146 recorded before implementation after checking 31 remote branches (highest record D-145).
 - [x] Prepare a 13.31 MB static package containing only the preview, baked GLB/lightmap/manifest, seven pinned Three.js modules and MIT notice; standalone Chromium load, baked-light state, orbit and reset PASS.
-- [ ] GitHub API site creation returned 403 `Resource not accessible by integration`; repository administrator must set Pages source to GitHub Actions, then push a README URL/status update to trigger deployment.
-- [ ] Verify Actions deployment URL and externally accessible browser behavior; check payload scope and licenses.
+- [x] Minimal Pages workflow added to `main` at `3528631`; user enabled Pages source as GitHub Actions; workflow run `39122861788` deployed successfully.
+- [x] Public URL responds 200 for preview HTML, GLB (10,305,880 bytes), and manifest; package scope and Three.js MIT notice preserved.
+- [ ] Public Chromium check exposed a staging import-map path mismatch; rewrite is fixed locally, pending publish and rerun of full public browser check.

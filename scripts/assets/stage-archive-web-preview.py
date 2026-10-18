@@ -2,6 +2,7 @@
 import argparse
 import json
 from pathlib import Path
+import re
 import shutil
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -48,7 +49,18 @@ if missing_three:
 
 DEST.mkdir(parents=True, exist_ok=True)
 for name in sorted(files):
-    shutil.copy2(SOURCE / name, DEST / name)
+    target = DEST / name
+    if name == 'preview.html':
+        html = (SOURCE / name).read_text(encoding='utf-8')
+        html, replacements = re.subn(
+            r'("three":"\./)node_modules/three(/build/three\.module\.js","three/addons/":")\./node_modules/three/examples/jsm/',
+            r'\1three\2three/', html)
+        if replacements != 1:
+            raise SystemExit('Could not rewrite the preview import map for the staged runtime')
+        target.write_text(html, encoding='utf-8')
+        shutil.copystat(SOURCE / name, target)
+    else:
+        shutil.copy2(SOURCE / name, target)
 for name in three_files[:-1]:
     target = DEST / 'node_modules/three' / name
     target.parent.mkdir(parents=True, exist_ok=True)

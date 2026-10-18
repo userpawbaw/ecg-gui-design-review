@@ -1,0 +1,58 @@
+name: Archive baked-light preview
+
+on:
+  push:
+    branches:
+      - claude/archive-light-r7-ag2rja
+    paths:
+      - 'scripts/assets/stage-archive-web-preview.py'
+      - 'verification/r1-archive-web-bake-20261018/README.md'
+      - 'verification/r1-archive-web-bake-20261018/archive.glb'
+      - 'verification/r1-archive-web-bake-20261018/light_shell.webp'
+      - 'verification/r1-archive-web-bake-20261018/manifest.json'
+      - 'verification/r1-archive-web-bake-20261018/preview.html'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: archive-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out preview source
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: prototype/v2/package-lock.json
+
+      - name: Install pinned web dependencies
+        run: npm ci --prefix prototype/v2
+
+      - name: Stage only the archive preview and its runtime
+        run: python3 scripts/assets/stage-archive-web-preview.py --destination "$RUNNER_TEMP/archive-pages"
+
+      - name: Read GitHub Pages configuration
+        uses: actions/configure-pages@v5
+
+      - name: Upload the minimal Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/archive-pages
+
+      - name: Publish the archive preview
+        id: deployment
+        uses: actions/deploy-pages@v4

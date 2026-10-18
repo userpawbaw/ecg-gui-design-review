@@ -13,8 +13,6 @@
 // test went from 11.6 s to over 45 s there, the pointer easing alone costing tens of ~1 s frames.
 // Viewpoints: verification/lab-backdrop-survey-20261018 (three frame).
 import * as THREE from 'three';
-import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
-import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {createArchive} from './story/intro/archive';
 
@@ -26,21 +24,33 @@ const KEYS:Key[]=[
  {pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50},       // the floor: the lower shelves and the sun patches
 ];
 const SPRING=2.6;   // rad/s, critically damped: 80 % of a scroll step in ~1.2 s, settled in ~2 s (eases in and out)
-const RES_Q=new URLSearchParams(location.search).get('bgres');
+const Q=new URLSearchParams(location.search),RES_Q=Q.get('bgres');
+// D-075 ambient: ?amb=0 off (?amb=1 forces it on in the low-power mode); ?wind= ?silk= ?cloud= 0–100 in 10 % steps, 50 = designed
+const lvl=(k:string)=>{const r=Q.get(k),v=Number(r);return r===null||!Number.isFinite(v)?1:Math.min(100,Math.max(0,Math.round(v/10)*10))/50;};
+const AMB={on:Q.get('amb')!=='0',forced:Q.get('amb')==='1',wind:lvl('wind'),silk:lvl('silk'),cloud:lvl('cloud')};
 
 export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x05090b,1);
  const gl=renderer.getContext(),dbg=gl.getExtension('WEBGL_debug_renderer_info'),gpu=String(dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
  const soft=/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:.6;
- const scene=new THREE.Scene(),arch=await createArchive();scene.add(arch.room,arch.dust);arch.setFade(1);arch.renderSunDepth(renderer);
+ const arch=await createArchive();arch.setFade(1);arch.renderSunDepth(renderer);
+ const roomScene=new THREE.Scene(),dustScene=new THREE.Scene();roomScene.add(arch.room);dustScene.add(arch.dust);
  const camera=new THREE.PerspectiveCamera(50,1,.05,60);
- const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
- composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);composer.addPass(new OutputPass());
+ // D-075 frame: the room (colour + depth) is drawn into `base` only when the camera moves; every frame then adds the moving light
+ // over it — shafts (+ cloud on the sun patches) into `work`, the dust into `work` against the stored depth, tone map to the screen
+ const base=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)});
+ const work=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
+ const out=new OutputPass();out.renderToScreen=true;arch.vol.renderToScreen=false;
+ const du=arch.dustMat.uniforms;du.uDepthOn.value=1;du.tSceneDepth.value=base.depthTexture;
+ arch.amb.wind.value=AMB.wind;arch.amb.silk.value=AMB.silk;arch.amb.cloud.value=AMB.cloud;
+ const ambient=AMB.on&&!(matchMedia('(prefers-reduced-motion: reduce)').matches)&&(!soft||AMB.forced);
  const curve=(pick:(k:Key)=>THREE.Vector3)=>new THREE.CatmullRomCurve3(KEYS.map(pick),false,'centripetal');
  const posC=curve(k=>k.pos),lookC=curve(k=>k.look);
- let p=0,ps=0,pv=0,px=0,pxShown=0,dirty=true,raf=0,last=0,frame=0,playing=false,paused=false,lastT=0,settle:ReturnType<typeof setTimeout>|undefined;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches||soft;
- function resize(){const w=innerWidth,h=innerHeight,pr=Math.min(Math.min(2,devicePixelRatio||1)*RES,Math.sqrt(1.2e6/(w*h)));renderer.setPixelRatio(pr);renderer.setSize(w,h,false);composer.setPixelRatio(pr);composer.setSize(w,h);
+ let p=0,ps=0,pv=0,px=0,pxShown=0,dirty=true,raf=0,last=0,frame=0,playing=false,paused=false,lastT=0,clock=0,settle:ReturnType<typeof setTimeout>|undefined;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches||soft;
+ if(!ambient){arch.amb.wind.value=arch.amb.silk.value=arch.amb.cloud.value=0;}
+ function resize(){const w=innerWidth,h=innerHeight,pr=Math.min(Math.min(2,devicePixelRatio||1)*RES,Math.sqrt(1.2e6/(w*h)));renderer.setPixelRatio(pr);renderer.setSize(w,h,false);
+  const W=Math.max(1,Math.round(w*pr)),H=Math.max(1,Math.round(h*pr));base.setSize(W,H);work.setSize(W,H);du.uRes.value.set(W,H);
   camera.aspect=w/h;camera.updateProjectionMatrix();arch.setPx(h,pr);dirty=true;kick();}
  function place(){
   const u=Math.min(1,Math.max(0,ps)),seg=u*(KEYS.length-1),i=Math.min(KEYS.length-2,Math.floor(seg)),f=seg-i;
@@ -50,17 +60,30 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   d.applyAxisAngle(new THREE.Vector3(0,1,0),-pxShown*THREE.MathUtils.degToRad(3));pos.addScaledVector(right,pxShown*.06);
   camera.position.copy(pos);camera.lookAt(pos.clone().add(d));
  }
- function tick(now:number){raf=0;if(paused||playing){lastT=0;return;}
-  // scroll: a critically damped spring follows the page position, so the descent speeds up and settles instead of jumping
+ function draw(camMoved:boolean,dt:number){
+  if(camMoved){place();renderer.setRenderTarget(base);renderer.clear();renderer.render(roomScene,camera);}
+  if(ambient){clock+=dt;arch.stepAmbient(renderer,clock,dt);}
+  arch.update(clock,frame++,camera,base.depthTexture,1);
+  arch.vol.render(renderer,work,base,0,false);
+  renderer.setRenderTarget(work);renderer.autoClear=false;renderer.render(dustScene,camera);renderer.autoClear=true;
+  out.render(renderer,null as unknown as THREE.WebGLRenderTarget,work,0,false);
+ }
+ function tick(now:number){raf=0;if(paused){lastT=0;return;}
   const dt=lastT?Math.min(.05,(now-lastT)/1000):1/60;lastT=now;
-  if(reduced){ps=p;pv=0;}else{pv+=(-2*SPRING*pv-SPRING*SPRING*(ps-p))*dt;ps+=pv*dt;if(Math.abs(ps-p)<1e-4&&Math.abs(pv)<1e-3){ps=p;pv=0;}}
-  if(!reduced)pxShown+=(px-pxShown)*Math.min(1,dt*4);
-  const moving=Math.abs(px-pxShown)>.005||ps!==p;if(Math.abs(px-pxShown)<=.005)pxShown=px;if(ps!==p)dirty=true;
-  if(!dirty&&!moving){lastT=0;return;}
-  if(now-last<33){kick();return;}                                                // ≤ 30 fps
-  if(dirty||moving){last=now;dirty=false;place();
-   arch.update(now/1000,frame++,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,1);composer.render();}
-  if(moving)kick();}
+  // a waveform plays: the camera holds (scroll and pointer wait), only the ambient light keeps moving at a lower rate
+  if(!playing){
+   // scroll: a critically damped spring follows the page position, so the descent speeds up and settles instead of jumping
+   if(reduced){ps=p;pv=0;}else{pv+=(-2*SPRING*pv-SPRING*SPRING*(ps-p))*dt;ps+=pv*dt;if(Math.abs(ps-p)<1e-4&&Math.abs(pv)<1e-3){ps=p;pv=0;}}
+   if(!reduced)pxShown+=(px-pxShown)*Math.min(1,dt*4);
+   if(Math.abs(px-pxShown)<=.005)pxShown=px;
+  }
+  const moving=!playing&&(Math.abs(px-pxShown)>.005||ps!==p);if(moving)dirty=true;
+  const camMoved=dirty&&!playing;
+  if(!camMoved&&!ambient){lastT=0;return;}
+  const gap=camMoved?33:playing?83:42;                                        // ≤ 30 fps moving · 24 idle · 12 while playing
+  if(now-last<gap){kick();return;}
+  draw(camMoved,Math.min(.1,(now-(last||now))/1000)||dt);last=now;if(camMoved)dirty=false;
+  if(moving||ambient)kick();}
  function kick(){if(!raf)raf=requestAnimationFrame(tick);}
  const onResize=()=>{clearTimeout(settle);settle=setTimeout(resize,150);};
  addEventListener('resize',onResize);resize();
@@ -71,11 +94,11 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   setPointer(v:number){if(reduced)return;px=Math.max(-1,Math.min(1,v));kick();},
   /** software rendering detected (low-power mode) */
   soft,
-  /** a waveform plays: hold the last frame until it stops */
-  setPlaying(v:boolean){playing=v;if(!v){dirty=true;kick();}},
+  /** a waveform plays: hold the camera until it stops (the ambient light keeps moving at 12 fps) */
+  setPlaying(v:boolean){playing=v;kick();},
   /** stop drawing (the large viewer covers the page) */
   setPaused(v:boolean){paused=v;if(!v){dirty=true;kick();}},
-  dispose(){cancelAnimationFrame(raf);clearTimeout(settle);removeEventListener('resize',onResize);arch.dispose();composer.dispose();renderer.dispose();},
+  dispose(){cancelAnimationFrame(raf);clearTimeout(settle);removeEventListener('resize',onResize);arch.dispose();base.dispose();work.dispose();out.dispose();renderer.dispose();},
  };
 }
 export type LabBackdrop=Awaited<ReturnType<typeof createLabBackdrop>>;

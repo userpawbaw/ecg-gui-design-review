@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
 import {ShaderPass} from 'three/addons/postprocessing/ShaderPass.js';
+import {FullScreenQuad} from 'three/addons/postprocessing/Pass.js';
 
 export type ArchiveManifest={lm_scale:number,groups:Record<string,{object:string,file?:string,vertex_color?:string}>,
  sun:{to_dir:number[],color:number[]},shots:Record<string,{pos:number[],look:number[],fov_v_deg:number}>,
@@ -114,21 +115,56 @@ export async function createArchive(){
   renderSunDepth(renderer,obj??room);
  }
 
+ // D-075 ambient (Lab backdrop; every strength 0 by default, so the intro and Story are unchanged): one cloud field in the sun's
+ // light space, drawn into a small texture each frame, dims the shafts, the sun-lit surfaces and the dust together (A); the
+ // shafts can fold like silk along the beam (B); the dust drifts with the same wind (C). One time base: gusts also speed the clouds.
+ const amb={cloud:{value:0},silk:{value:0},wind:{value:0},gust:{value:0},windOff:{value:new THREE.Vector3()},cloudT:{value:0},
+  cloudDir:{value:new THREE.Vector2(1,0)},tCloud:{value:null as THREE.Texture|null}};
+ const cloudRT=new THREE.WebGLRenderTarget(256,256,{type:THREE.UnsignedByteType,depthBuffer:false});cloudRT.texture.wrapS=cloudRT.texture.wrapT=THREE.ClampToEdgeWrapping;
+ amb.tCloud.value=cloudRT.texture;
+ const cloudQuad=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:{uT:amb.cloudT,uDir:amb.cloudDir},
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+  fragmentShader:`varying vec2 vUv;uniform float uT;uniform vec2 uDir;
+   float h(vec2 p){p=fract(p*vec2(.1031,.1030));p+=dot(p,p.yx+33.33);return fract((p.x+p.y)*p.x);}
+   float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+   void main(){vec2 q=vUv*3.2-uDir*uT;   // light-space uv spans the whole room (~13 m): one cell ≈ 4 m
+    float c=.55*n(q)+.3*n(q*2.07+vec2(7.3,1.7)-uDir*uT*.6)+.15*n(q*4.31-3.1);
+    gl_FragColor=vec4(vec3(smoothstep(.36,.7,c)),1.);}`}));   // 1 = clear sun, 0 = under a cloud
+ /** advance the ambient clock (dt s) and redraw the cloud texture; call before rendering a frame */
+ function stepAmbient(renderer:THREE.WebGLRenderer,t:number,dt:number){
+  const g=.5+.5*Math.sin(t*.21)*Math.sin(t*.13+1),gust=g*g;amb.gust.value=gust;
+  const w=new THREE.Vector3(sunTo.x,0,sunTo.z).normalize();   // the wind follows the light in from the windows
+  amb.windOff.value.addScaledVector(w,dt*(.04+.16*gust)*amb.wind.value);
+  amb.cloudT.value+=dt*(.05+.08*gust);
+  const wl=w.clone().transformDirection(lightCam.matrixWorldInverse);amb.cloudDir.value.set(wl.x,wl.y).normalize();
+  const rt=renderer.getRenderTarget();renderer.setRenderTarget(cloudRT);cloudQuad.render(renderer);renderer.setRenderTarget(rt);
+ }
+
  // dust: motes in the room's air, bright only inside a sunbeam (same depth map) and when scattering toward the camera
  const N=2600,pos=new Float32Array(N*3),seed=new Float32Array(N);let s=11;const rnd=()=>(s=(s*16807)%2147483647)/2147483647;
  for(let i=0;i<N;i++){pos.set([box.min.x+rnd()*(box.max.x-box.min.x),box.min.y+.3+rnd()*(box.max.y-box.min.y-.6),box.min.z+rnd()*(box.max.z-box.min.z)],i*3);seed[i]=rnd();}
  const dg=new THREE.BufferGeometry();dg.setAttribute('position',new THREE.BufferAttribute(pos,3));dg.setAttribute('aSeed',new THREE.BufferAttribute(seed,1));
  const dustMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
-  uniforms:{uTime:{value:0},tLight:{value:lightRT.depthTexture},uLightVP:{value:lightVP},uSun:{value:sunTo},uCol:{value:sunCol},uPx:{value:1},uFade:shared.uFade},
-  vertexShader:`attribute float aSeed;uniform float uTime,uPx;uniform sampler2D tLight;uniform mat4 uLightVP;uniform vec3 uSun;varying float vA;
+  uniforms:{uTime:{value:0},tLight:{value:lightRT.depthTexture},uLightVP:{value:lightVP},uSun:{value:sunTo},uCol:{value:sunCol},uPx:{value:1},uFade:shared.uFade,
+   uWind:amb.wind,uGust:amb.gust,uWindOff:amb.windOff,uCloud:amb.cloud,tCloud:amb.tCloud,uBoxMin:{value:box.min.clone()},uBoxSize:{value:box.getSize(new THREE.Vector3())},
+   // D-075: the Lab draws the dust over a stored frame without a depth buffer → test against the stored depth here (off = 0)
+   uDepthOn:{value:0},tSceneDepth:{value:null as THREE.Texture|null},uRes:{value:new THREE.Vector2(1,1)}},
+  vertexShader:`attribute float aSeed;uniform float uTime,uPx,uWind,uGust,uCloud;uniform sampler2D tLight,tCloud;uniform mat4 uLightVP;uniform vec3 uSun,uWindOff,uBoxMin,uBoxSize;varying float vA;
    void main(){float t=uTime*(.02+.03*aSeed)+aSeed*50.;vec3 p=position+vec3(sin(t*1.3),sin(t*.7+2.)*.5,cos(t*1.1))*.15;
+    float edge=1.;
+    if(uWind>0.){   // C: drift with the wind (faster motes nearer the light), swirl in gusts, wrap around the room
+     float ts=uTime*.35+aSeed*20.;
+     p+=uWindOff*(.6+.8*aSeed)+uWind*(.12+.3*uGust)*vec3(sin(ts+position.y*1.7),.5*sin(ts*.8+position.x*1.3),cos(ts*.9+position.z*1.5));
+     vec3 r=mod(p-uBoxMin,uBoxSize);p=uBoxMin+r;vec3 e=min(r,uBoxSize-r);edge=smoothstep(0.,.4,min(e.x,e.z));}
     vec4 lp=uLightVP*vec4(p,1.);vec3 l=lp.xyz/lp.w*.5+.5;
     float lit=(all(greaterThan(l.xy,vec2(0.)))&&all(lessThan(l.xy,vec2(1.))))?step(l.z-.002,texture2D(tLight,l.xy).x):0.;
+    if(uCloud>0.)lit*=1.-uCloud*.8*(1.-texture2D(tCloud,l.xy).r);lit*=edge;
     vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;
     float fwd=pow(max(dot(normalize(p-cameraPosition),uSun),0.),2.);
     vA=lit*(.25+1.6*fwd)*(.4+.6*sin(uTime*1.3+aSeed*40.)*sin(uTime*1.3+aSeed*40.));
     gl_PointSize=min(uPx*(1.+2.2*aSeed)/-mv.z,4.);}`,
-  fragmentShader:`uniform vec3 uCol;uniform float uFade;varying float vA;void main(){float d=length(gl_PointCoord-.5);gl_FragColor=vec4(uCol*vA*smoothstep(.5,0.,d)*2.2*uFade,1.);}`});
+  fragmentShader:`uniform vec3 uCol;uniform float uFade,uDepthOn;uniform sampler2D tSceneDepth;uniform vec2 uRes;varying float vA;void main(){
+   if(uDepthOn>0.&&gl_FragCoord.z>texture2D(tSceneDepth,gl_FragCoord.xy/uRes).x)discard;float d=length(gl_PointCoord-.5);gl_FragColor=vec4(uCol*vA*smoothstep(.5,0.,d)*2.2*uFade,1.);}`});
  const dust=new THREE.Points(dg,dustMat);dust.frustumCulled=false;dust.renderOrder=5;
 
  // volumetric shafts: ray-march from the camera to the scene depth, sampling the sun depth map (attic spike)
@@ -137,13 +173,14 @@ export async function createArchive(){
    uInvProj:{value:new THREE.Matrix4()},uInvView:{value:new THREE.Matrix4()},uLightVP:{value:lightVP},uCam:{value:new THREE.Vector3()},
    uSun:{value:sunTo},uCol:{value:sunCol},uDensity:{value:.05},uIntensity:{value:1.8},uTime:{value:0},uFrame:{value:0},uOn:{value:0},
    uHaze:{value:.018},uHazeCol:{value:new THREE.Color(.22,.17,.13)},
+   uCloud:{value:0},uSilk:{value:0},tCloud:{value:null},   // replaced by the shared ambient uniforms below (ShaderPass clones)
    // D-067: optional spot-light cone (Story desk lamp) in the same pass — a second pass sampling this depth would read the
    // target it writes (feedback loop). Marched only inside a sphere around the cone; cut below uCMinY (desk top).
    uCOn:{value:0},uCLP:{value:new THREE.Vector3()},uCLD:{value:new THREE.Vector3(0,-1,0)},uCCos:{value:new THREE.Vector2(.8,.93)},uCCol:{value:new THREE.Vector3(1,.78,.52)},uCMinY:{value:0},uCSh:{value:0},uCDepth:{value:null as THREE.Texture|null},uCVP:{value:new THREE.Matrix4()}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
   fragmentShader:`precision highp float;
    uniform sampler2D tDiffuse,tDepth,tLight;uniform mat4 uInvProj,uInvView,uLightVP;uniform vec3 uCam,uSun,uCol;
-   uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze;uniform vec3 uHazeCol;varying vec2 vUv;
+   uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze,uCloud,uSilk;uniform vec3 uHazeCol;uniform sampler2D tCloud;varying vec2 vUv;
    uniform float uCOn,uCMinY,uCSh;uniform vec3 uCLP,uCLD,uCCol;uniform vec2 uCCos;uniform sampler2D uCDepth;uniform mat4 uCVP;
    float coneVis(vec3 p){if(uCSh<.5)return 1.;vec4 q=uCVP*vec4(p,1.);if(q.w<=0.)return 1.;vec3 l=q.xyz/q.w*.5+.5;if(l.x<0.||l.x>1.||l.y<0.||l.y>1.)return 1.;return step(l.z-.0006,texture2D(uCDepth,l.xy).x);}
    vec3 lampCone(vec3 cam,vec3 rd,float far,float j){
@@ -166,26 +203,37 @@ export async function createArchive(){
     vec4 v=uInvProj*vec4(vUv*2.-1.,d*2.-1.,1.);v/=v.w;vec3 wp=(uInvView*v).xyz;
     vec3 rd=wp-uCam;float len=min(length(rd),9.);rd=normalize(rd);
     const int N=48;float dt=len/float(N),j=ign(gl_FragCoord.xy+uFrame*5.588),acc=0.,tr=1.;
+    // D-075 B: silk — the noise is stretched along the beam and folded across it, the folds drifting slowly (0 = the old haze)
+    vec3 sa=normalize(cross(uSun,vec3(0.,1.,0.))),sb=cross(sa,uSun);
     for(int i=0;i<N;i++){
      vec3 p=uCam+rd*(float(i)+j)*dt;
      vec4 lp=uLightVP*vec4(p,1.);vec3 l=lp.xyz/lp.w*.5+.5;
      float lit=(l.x>0.&&l.x<1.&&l.y>0.&&l.y<1.)?step(l.z-.0015,texture2D(tLight,l.xy).x):0.;
-     float dens=uDensity*(.55+.9*noise(p*2.2+vec3(0.,uTime*.05,uTime*.03)));
+     if(uCloud>0.&&lit>0.)lit*=1.-uCloud*.85*(1.-texture2D(tCloud,l.xy).r);   // A: a cloud dims the whole beam
+     float u=dot(p,sa),v=dot(p,sb),s=dot(p,uSun);
+     vec3 q=mix(p*2.2+vec3(0.,uTime*.05,uTime*.03),vec3(u*1.6+uTime*.035,s*.25-uTime*.02,v*1.6),uSilk>0.?1.:0.);
+     float n=noise(q);
+     if(uSilk>0.){float fold=.5+.5*sin(u*5.5+v*2.3+n*4.+uTime*.16);n=mix(n,fold*fold*(.6+.8*n),min(1.,uSilk));}
+     float dens=uDensity*(.55+.9*n);
      acc+=lit*dens*tr*dt;tr*=exp(-dens*.15*dt);
     }
+    if(uCloud>0.){   // A: sun-lit surfaces (the baked sun patches) dim under the same cloud
+     vec4 sp=uLightVP*vec4(wp,1.);vec3 sl=sp.xyz/sp.w*.5+.5;
+     if(sl.x>0.&&sl.x<1.&&sl.y>0.&&sl.y<1.&&sl.z-.004<texture2D(tLight,sl.xy).x)col*=1.-uCloud*.6*(1.-texture2D(tCloud,sl.xy).r);}
     float ph=hg(dot(uSun,-rd),.55)*4.*3.14159*.25+.25;
     // room air lit by the bounce light (the stills' uniform volume): lifts the shade and softens saturation with depth
     float hz=(1.-exp(-uHaze*min(length(wp-uCam),14.)))*uOn;
     vec3 cone=uCOn>.002?lampCone(uCam,rd,length(wp-uCam),j):vec3(0.);
     gl_FragColor=vec4(mix(col,uHazeCol,hz)+uCol*acc*ph*uIntensity*uOn+cone,1.);
    }`});
+ vol.uniforms.uCloud=amb.cloud;vol.uniforms.uSilk=amb.silk;vol.uniforms.tCloud=amb.tCloud;
  vol.uniforms.tLight.value=lightRT.depthTexture;vol.uniforms.uLightVP.value=lightVP;vol.uniforms.uSun.value=sunTo;vol.uniforms.uCol.value=sunCol;
 
  const V=(a:number[])=>new THREE.Vector3(...a);
  const fig=manifest.figure;
  const hq=fig.heart_q_wxyz_blender;                               // Blender (w, x, y, z) z-up → three y-up: (x, z, −y)
  const heartQuat=new THREE.Quaternion(hq[1],hq[3],-hq[2],hq[0]);
- return{manifest,room,dust,vol,mats,shared,lightRT,lightVP,sunTo,sunCol,renderSunDepth,setSun,
+ return{manifest,room,dust,dustMat,vol,mats,shared,lightRT,lightVP,sunTo,sunCol,renderSunDepth,setSun,amb,stepAmbient,
   figureLocation:V(fig.location),heart:V(fig.heart),heartQuat,handR:V(fig.hand_r),climb:manifest.climb?{location:V(manifest.climb.location),pitch:manifest.climb.pitch_x_rad}:null,
   shot:(k:string)=>({pos:V(manifest.shots[k].pos),look:V(manifest.shots[k].look),fov:manifest.shots[k].fov_v_deg}),
   setFade(a:number){shared.uFade.value=a;room.visible=a>.002;dust.visible=a>.002;},
@@ -196,6 +244,6 @@ export async function createArchive(){
    u.uCam.value.copy((camera as THREE.PerspectiveCamera).position);u.uTime.value=t;u.uFrame.value=frame%64;
   },
   setPx(h:number,pr:number){dustMat.uniforms.uPx.value=h*pr/55;},
-  dispose(){lightRT.dispose();dg.dispose();dustMat.dispose();mats.forEach(m=>m.dispose());Object.values(lightmaps).forEach(t=>t.dispose());}};
+  dispose(){lightRT.dispose();cloudRT.dispose();cloudQuad.dispose();dg.dispose();dustMat.dispose();mats.forEach(m=>m.dispose());Object.values(lightmaps).forEach(t=>t.dispose());}};
 }
 export type Archive=Awaited<ReturnType<typeof createArchive>>;

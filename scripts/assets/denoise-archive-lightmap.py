@@ -7,7 +7,7 @@ exported image: 1) outlier pixels (brighter than 1.35 x their 5 x 5 median) take
 smoothed only where neighbours differ little (edges and light/shadow borders stay sharp). UV islands are respected:
 the empty background is filled from the nearest island pixel before filtering and is black again afterwards.
 The original stays in light_shell.raw.webp; rerun after any new web bake.
-Run: python scripts/assets/denoise-archive-lightmap.py
+Run: python scripts/assets/denoise-archive-lightmap.py [archive dir]
 """
 import os, shutil, sys
 import numpy as np
@@ -16,6 +16,7 @@ from scipy import ndimage
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 DIR = os.path.join(ROOT, 'prototype', 'v2', 'src', 'story', 'intro', 'assets', 'archive')
+if len(sys.argv) > 1: DIR = os.path.abspath(sys.argv[1])   # another packaged archive (D-075: the Lab's sun variant)
 SRC, RAW = os.path.join(DIR, 'light_shell.webp'), os.path.join(DIR, 'light_shell.raw.webp')
 
 if not os.path.exists(RAW):

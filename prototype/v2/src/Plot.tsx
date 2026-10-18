@@ -21,9 +21,10 @@ export function Plot(p:Props){
  const count=rows.length;const rh=(h-(q.residual?144:0))/count;if(q.residual)rows.push({id:q.method,label:`Reference와 차이 · Output − Reference · 표시 ×${q.gain||1}`,color:'#c0ced7'});g.font='11px system-ui';const labelWidth=Math.max(...amplitudeTicks(q.amplitude,q.residual?q.gain||1:1).concat(amplitudeTicks(q.amplitude)).map(t=>g.measureText(t.label).width));const left=Math.max(72,labelWidth+26),right=w-18,pw=right-left;
  const boxes:Box[]=rows.map((_,r)=>{const isDiff=q.residual&&r===count,top=r*rh+36;return{l:left,r:right,t:top,b:isDiff?top+72:(r+1)*rh-30};});
  // static layer (background, ECG paper, labels, amplitude ticks) + a brighter paper copy for A — redrawn only when the layout changes
- const bs=[w,h,dpr,q.amplitude,q.span,q.residual,q.gain,q.method,q.comparison].join('|');
+ const clearBg=document.body.classList.contains('lab-dark')&&!c.closest('.large-dialog');   // D-074: the panel shows the archive faintly through
+ const bs=[w,h,dpr,q.amplitude,q.span,q.residual,q.gain,q.method,q.comparison,clearBg].join('|');
  if(bs!==bgSig){bgSig=bs;for(const [cv,cg] of [[bg,bgg],[hot,hg]] as const){cv.width=W;cv.height=H;cg.setTransform(dpr,0,0,dpr,0,0);cg.clearRect(0,0,w,h);}
-  bgg.fillStyle=BG;bgg.fillRect(0,0,w,h);
+  if(!clearBg){bgg.fillStyle=BG;bgg.fillRect(0,0,w,h);}
   rows.forEach((row,r)=>{const isDiff=q.residual&&r===count,b=boxes[r],amp=isDiff?q.amplitude/(q.gain||1):q.amplitude;
    paper(bgg,b,q.span,amp,1);paper(hg,b,q.span,amp,4.2);
    bgg.textAlign='left';bgg.textBaseline='alphabetic';bgg.font='11px system-ui';bgg.fillStyle='#acc2cd';bgg.fillText('[mV]',10,r*rh+22);bgg.font='600 14px system-ui';bgg.fillStyle=row.color;bgg.fillText(row.label,left,r*rh+22);

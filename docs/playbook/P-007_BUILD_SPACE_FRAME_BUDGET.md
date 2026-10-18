@@ -6,7 +6,7 @@
 | 언제 읽나 | 장면의 방·세트·소품 묶음을 새로 짓거나 크게 바꿀 때, 굽기(Blender bake) 전에 빛·구멍 위치를 정할 때, "허전하다·밋밋하다·테마가 안 느껴진다" 지적을 받았을 때, 새 안을 현재 채택안과 비교해 보일 때 |
 | 도달 수준 | A안(구운 서고 + 구운 소품 세트)이 사용자 채택("A안이 훨씬 낫네", 2026-10-17) `[대화]`. 이 카드의 사전 검토 순서는 C안 실패를 진단해 만든 제안이다. 적용해 검증한 적은 아직 없어 사용자 확인 대기다. 증거 F-043, `verification/r1-story-feedback-20261011/README.md` §13 |
 | 근거 여정 | J-004 T1–T4 |
-| 강제 장치 | `scripts/qa/frame-budget.py` (예산 만들기·판정·나란히 시트), `scripts/qa/frame-capture.cjs` (웹 톤 캡처), 예산 `scripts/qa/budgets/story-noise-A.json` |
+| 강제 장치 | `scripts/qa/frame-budget.py` (예산 만들기·판정·나란히 시트), `scripts/qa/frame-capture.cjs` (웹 톤 캡처, 브라우저는 `PW_EXECUTABLE`), 예산 `scripts/qa/budgets/story-noise-A.json` |
 | 갱신 | 2026-10-17 (검사기 제작·진행 테스트 C2 3라운드 반영) |
 
 ## 권장 방법

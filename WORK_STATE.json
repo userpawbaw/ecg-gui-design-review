@@ -48,10 +48,10 @@
       "note": "Story work continues in the R1 session; it does not edit these files. Records (D/F/PLAN/WORKLOG) are shared: check the latest number before committing. 2026-10-15: r7 (D-081) stills on branch claude/archive-light-r7-ag2rja, awaiting the user's check; web bake not started. 2026-10-17: D numbers collided twice with the Story branch; this session now uses D-081 upward (r7 D-081, r8 D-082, V1 D-083, B2 D-084, B2 variants D-085). Handed off to another AI on 2026-10-17: docs/uiux_system/handoffs/HANDOFF_ARCHIVE_LIGHT_2026-10-17.md. The Story desk-corner set (desk-corner-set.py, D-070 on its branch) uses sun direction (-0.42, 0.40, -0.81); the archive B2 adopts the same sun so both bakes cast parallel shadows."
     },
     {
-      "resource": "verification/r1-archive-web-bake-20261018: bpy Cycles bake, GLB/WebP package and local browser preview",
-      "owner": "claude/archive-light-r7-ag2rja D-145",
+      "resource": "GitHub Pages deployment for verification/r1-archive-web-bake-20261018 preview only",
+      "owner": "claude/archive-light-r7-ag2rja D-146",
       "since": "2026-10-18",
-      "note": "User requested actual baked web output and free movement. Separate output; no Story files/defaults. Remove this scoped entry after bake and browser verification complete."
+      "note": "User approved public preview. Scope is preview HTML + baked GLB/lightmap/manifest + pinned Three.js modules/MIT notice only; exclude verification report, recipe, browser log, screenshot and repository source. Story-owned files/defaults remain protected."
     }
   ],
   "concurrency": {
@@ -446,7 +446,7 @@
     "branch": "claude/archive-light-r7-ag2rja",
     "base_commit": "df532274de086866bfc829f2cec351e482413c75",
     "decision": "D-141",
-    "status": "b3_web_light_bake_in_progress_D145",
+    "status": "b3_web_bake_verified_public_pages_deploy_in_progress_D146",
     "selection": {
       "light_pattern": "b",
       "ladder": "L2",
@@ -470,17 +470,17 @@
       "sun shadow widths: ladder rungs 2.3px, stiles 1.8px, distant foliage 13.2px",
       "D-143 prop geometry audit: six PC/CRT/ECG box components fail, bevel fixture mechanical pass",
       "D-144 light-group key mixes 0.5/0.35/0.25 measured in two camera views",
-      "Whole archive cutaway overview rendered from saved B3 scene: 1280x720, bpy 4.5.3 Cycles CPU 32 samples + OIDN; output SHA pinned in verification README"
+      "Whole archive cutaway overview rendered from saved B3 scene: 1280x720, bpy 4.5.3 Cycles CPU 32 samples + OIDN; output SHA pinned in verification README",
+      "D-145 web bake: shell/books/decor 513.7/69.0/121.0 s; packaged GLB 10.31 MB; headless Chromium asset load, lightmap shader, orbit/reset and screenshot PASS"
     ],
     "not_verified": [
-      "Exact historical SHA/pixel identity for republished vintage_wooden_drawer_01",
-      "Applying the selected key 0.5 and underside 0.35 to protected Story/default/web production",
-      "L2 climber contacts/collisions and hatch choreography",
-      "Web bake/camera/motion and target-device checks"
+      "All-view/material art direction and target-device/GPU checks",
+      "Story route integration and applying B3 light values to protected Story/default production",
+      "Externally published Pages URL and user-browser load (D-146 pending)"
     ],
-    "next_action": "D-145 active: bake selected B3 light to an isolated web GLB/lightmap, package with WebP+meshopt, apply the project lightmap shader in a free-orbit local review page, capture actual browser render. Do not modify Story-owned assets or defaults.",
-    "evidence": "verification/r1-archive-web-bake-20261018/ (in progress)",
-    "blocked_scope": "Separate web bake and viewer only; Story integration/default transfer remains out of scope.",
+    "next_action": "D-146: publish isolated static review page with GitHub Pages Actions; verify public URL and external asset loads. Do not modify Story-owned files or defaults.",
+    "evidence": "verification/r1-archive-web-bake-20261018/README.md; docs/uiux_system/records/D_DECISIONS.md D-146",
+    "blocked_scope": "Public Pages artifact is limited to the review page and its required runtime assets; Story integration/default transfer remains out of scope.",
     "asset_policy": {
       "source": "docs/uiux_system/24_ASSET_RESEARCH_STAGE.md §1.1; rounds/R1/REVIEW-R1-ARCHIVE-SHADOW-ASSET-20261016.md §5 and §7.2",
       "main_route": "self-authored parametric props; clean solid colours / low-contrast grain",

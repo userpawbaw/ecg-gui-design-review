@@ -13,7 +13,8 @@
 - D-143 자체 소품 스킬/Q0–Q5 및 기하 검사기 완료. 초기 PC/CRT/ECG 6개는 수정 없는 상자라 Q2 FAIL. 새 소품 자체 제작/최종 Q1/Q4 미실행.
 - D-144 광원 그룹 key 후보 0.5/0.35/0.25의 2시점 혼합 비교 및 사용자 선택 완료: 0.5. 이를 B3 시안 선택값으로 유지한다. 다음은 승인 범위를 넓히지 않고 L2 사람·해치 연출, 웹 굽기, 기기 Q0–Q5를 별도로 검증한다. Story 소유 파일·r8/D-084 보존.
 - 서고 전체 배치 컷어웨이 렌더(1280×720, bpy 4.5.3, 32 Cycles CPU samples)를 추가했다. Ceiling/Beam·측벽을 임시 숨긴 전시용 시안이며 표준 광원 믹스 검증은 아니다. verification/r1-archive-b3-rerender-20261018/README.md. 다음 우선 검토 후보는 L2 사다리·인물·해치 동선이며 Story 원본 변경은 포함하지 않는다.
-- D-145: B3 선택 조명을 별도 verification 경로에 실제 GLB/lightmap으로 굽고, 기존 웹 셰이더 재현과 자유 카메라 브라우저 검증을 한다. Story 에셋/로더/defaults는 수정하지 않는다. 베이크/패키징/브라우저 검증 진행 중.
+- D-145: B3 선택 조명을 별도 verification 경로에 실제 GLB/lightmap으로 굽고, 기존 웹 셰이더 재현과 자유 카메라 브라우저 검증을 완료했다. Story 에셋/로더/defaults는 수정하지 않았다. 외부 프리뷰 경로 부재를 확인해 D-146으로 공개 호스팅을 결정했다.
+- D-146: 사용자의 공개 동의 후 GitHub Pages에 프리뷰 HTML·GLB·lightmap·manifest와 필요한 고정 Three.js 모듈/MIT 고지만 배포한다. 검증 보고서·recipe·캡처·저장소 소스는 배포하지 않는다. Actions Pages 권한·사용자 브라우저 경로 확인 전.
 
 # Review plan
 
@@ -329,3 +330,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] B3 light bake and optimized GLB generated in `verification/r1-archive-web-bake-20261018/`; web preview uses the existing lightmap shader model and free OrbitControls.
 - [x] Headless Chromium load, baked-light state, asset requests, camera drag/reset, and screenshot verified.
 - [ ] User art-direction review of all views/materials; production Story integration remains separate and requires its own scoped decision.
+
+## 2026-10-18 — publish isolated archive preview (D-146)
+
+- [x] GitHub Pages absence and admin access checked; user explicitly approved public publication.
+- [x] D-146 recorded before implementation after checking 31 remote branches (highest record D-145).
+- [ ] Publish only the preview page, baked GLB/lightmap/manifest, required pinned Three.js modules, and MIT notice.
+- [ ] Verify Actions deployment URL and externally accessible browser behavior; check payload scope and licenses.

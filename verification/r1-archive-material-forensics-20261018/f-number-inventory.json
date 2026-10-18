@@ -1,0 +1,157 @@
+[
+  {
+    "sha": "f7f74b1fe58a00346af92d2418b9bc962833e1a1",
+    "ref": "refs/heads/ccr-efb769e0-o5cmli",
+    "max_f": 31
+  },
+  {
+    "sha": "3497b7eb02259fe5fe0b6c33b15445742066d879",
+    "ref": "refs/heads/ci/uiux-records-check-20260918",
+    "max_f": 5
+  },
+  {
+    "sha": "3d594120ceaa597fe2b75f616ef1926134b1d68c",
+    "ref": "refs/heads/claude/archive-light-r7",
+    "max_f": 41
+  },
+  {
+    "sha": "e7e9f87c4e6c72bd2929f308981d257b5cd86cbc",
+    "ref": "refs/heads/claude/archive-light-r7-ag2rja",
+    "max_f": 47
+  },
+  {
+    "sha": "e1bd75ec0f64ba7900e3ef0678d482c3d86dd932",
+    "ref": "refs/heads/claude/live-tab-iframe",
+    "max_f": 9
+  },
+  {
+    "sha": "82b268b3d568bf3457b5b62c009dd0d8e3ad6f0d",
+    "ref": "refs/heads/claude/optimistic-goldberg-jnzpni",
+    "max_f": 25
+  },
+  {
+    "sha": "647af740e3341325a9b62c93c777b6b7df0d3a8b",
+    "ref": "refs/heads/claude/r1-autopilot-impl-3d1b78",
+    "max_f": 30
+  },
+  {
+    "sha": "d484aba93aec2058cdcfa09032ba37bf15fdb088",
+    "ref": "refs/heads/claude/r1-autopilot-recommended",
+    "max_f": 43
+  },
+  {
+    "sha": "9c1920b12c002b75e2d60614c912364db3129d1a",
+    "ref": "refs/heads/claude/wave-display-explore",
+    "max_f": 29
+  },
+  {
+    "sha": "0c3299f2e0366bf9221c1ec0ef3a60a6f01b8238",
+    "ref": "refs/heads/codex/abc-light-design-20261004",
+    "max_f": 105
+  },
+  {
+    "sha": "8eb3f72558a597a10bb5ec549231a151bb5b048a",
+    "ref": "refs/heads/codex/reference-to-ecg-workflow-20260927",
+    "max_f": 25
+  },
+  {
+    "sha": "572361fe3bc52210bbfd2f7f56b7cbf6d1ed6dc8",
+    "ref": "refs/heads/codex/scenario-abc-feedback-20261003",
+    "max_f": 31
+  },
+  {
+    "sha": "83a342271da88eb52594ff55b88d7c51e5a164a8",
+    "ref": "refs/heads/docs/alpha-beta-creative-tracks-20260923",
+    "max_f": 9
+  },
+  {
+    "sha": "703554557896da6dff84967a713d9e4429150b08",
+    "ref": "refs/heads/docs/dual-director-records-20260918",
+    "max_f": 7
+  },
+  {
+    "sha": "fdc815d5c4dc41fabf58f60d4da9be548f81b7a0",
+    "ref": "refs/heads/docs/dual-director-work-handoff-20260918",
+    "max_f": 6
+  },
+  {
+    "sha": "25b5ebb973c889b44b25b13701927f568837434d",
+    "ref": "refs/heads/docs/reference-mining-v1-20260918",
+    "max_f": 5
+  },
+  {
+    "sha": "e4ef7eacb86072010d393c43d6b492fb4c0e91e7",
+    "ref": "refs/heads/docs/reference-source-registry-20260920",
+    "max_f": 8
+  },
+  {
+    "sha": "53a9ce8a903f9174123359969818b5ddd3e2774e",
+    "ref": "refs/heads/docs/superdesign-final-validation-20260918",
+    "max_f": 6
+  },
+  {
+    "sha": "e13ed17433037bb91b76a56c48224a1d3cea2369",
+    "ref": "refs/heads/docs/superdesign-generator-layer-20260918",
+    "max_f": 6
+  },
+  {
+    "sha": "f07fc3903cbe391fe8e92c3653d1ba7ea9f4d28d",
+    "ref": "refs/heads/docs/uiux-record-system-v2-20260917",
+    "max_f": 3
+  },
+  {
+    "sha": "c071a0615ef8e3b32a7b583c4ba5387892a6847b",
+    "ref": "refs/heads/docs/uiux-system-v1-20260916",
+    "record_file": "404"
+  },
+  {
+    "sha": "e1f86d1a679492f73321bdce293cfb16e6162da0",
+    "ref": "refs/heads/experiment/dual-attract-20260919",
+    "max_f": 7
+  },
+  {
+    "sha": "5c822ad1a360e041fb73cb9eaf1c684320fb3f34",
+    "ref": "refs/heads/experiments/uiux-a-f-baseline-20260917",
+    "max_f": 3
+  },
+  {
+    "sha": "21381ce349845c337297072e762808e104aaa58b",
+    "ref": "refs/heads/feat/attract-vnext-recovered-20260924",
+    "max_f": 9
+  },
+  {
+    "sha": "cc977b0216f9cfdfd784554bb353e13fd1da3a34",
+    "ref": "refs/heads/feat/attract-vnext-variants-20260920",
+    "max_f": 8
+  },
+  {
+    "sha": "9958abc5ede0790505867830bb15065513982942",
+    "ref": "refs/heads/feat/dual-director-runtime-20260919",
+    "max_f": 7
+  },
+  {
+    "sha": "b8f01dfa7781a14e9166a48533d2d071a26c9c5c",
+    "ref": "refs/heads/feat/dual-director-runtime-main-20260919",
+    "max_f": 7
+  },
+  {
+    "sha": "03eefb0fd42c52ae3e985af2d8dfc7bc7e95ae2c",
+    "ref": "refs/heads/feat/r1-attic-fork",
+    "max_f": 35
+  },
+  {
+    "sha": "cfef4300e241134a7b4caf1d781766a4931a99db",
+    "ref": "refs/heads/main",
+    "max_f": 9
+  },
+  {
+    "sha": "5053161f2ab78b60a3ec8d3a4b3b36a0d8562dc3",
+    "ref": "refs/heads/preview/lite-baseline",
+    "max_f": 3
+  },
+  {
+    "sha": "f8b63004f54d29700b101d1e25599d62bc4e6e35",
+    "ref": "refs/heads/recovery/v2-interrupted-20260911",
+    "record_file": "404"
+  }
+]

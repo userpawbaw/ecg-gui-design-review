@@ -1,0 +1,34 @@
+[
+  {
+    "url": "https://polyhaven.com/license",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://ambientcg.com",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://docs.ambientcg.com/books/website/page/license",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://www.cgbookcase.com",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://www.poliigon.com",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://www.blenderkit.com",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://substance3d.adobe.com/assets",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "url": "https://www.fab.com",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  }
+]

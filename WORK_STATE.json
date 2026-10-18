@@ -470,7 +470,14 @@
       "main_route": "self-authored parametric props; clean solid colours / low-contrast grain",
       "polyhaven_role": "reference/supplement; old dependencies are not automatic production approvals",
       "materials": "author separately or research high-quality texture candidates; assess actual view/UV/bake/compression",
-      "audit": "verification/r1-archive-asset-policy-audit-20261018/README.md"
+      "audit": "verification/r1-archive-asset-policy-audit-20261018/README.md",
+      "forensics": {
+        "finding": "F-106",
+        "analysis": "docs/uiux_system/rounds/R1/ANALYSIS-R1-ARCHIVE-MATERIAL-SOURCING-20261018.md",
+        "evidence": "verification/r1-archive-material-forensics-20261018/README.md",
+        "scope": "Existing web GLB/input albedo/material-channel inspection, not latest r8/B2 stills or isolated render attribution",
+        "external_samples": "Not verified; official pages returned CONNECT 403"
+      }
     }
   }
 }

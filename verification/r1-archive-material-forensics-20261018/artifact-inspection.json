@@ -1,0 +1,210 @@
+[
+  {
+    "file": "prototype/v2/src/story/intro/assets/archive/archive.glb",
+    "bytes": 9853368,
+    "image_count": 50,
+    "dimensions": {
+      "1024x1024": 49,
+      "512x512": 1
+    },
+    "material_count": 47,
+    "sha256": "37b0cd3503aaaaba9dc3d0696d6b1722d85f5c57d2ab2571d227d5cd951f4cba",
+    "embedded_normal_materials": 17,
+    "embedded_rough_metal_materials": 17,
+    "inspected_images": [
+      {
+        "index": 4,
+        "name": "painted_plaster_wall_diff_1k",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 137918,
+        "sha256": "429cc4d9fbf254ae710ab814802ac98e5a052b2759c04028cb828dca8d9d82e1"
+      },
+      {
+        "index": 6,
+        "name": "ash_veneer_nor_gl_2k",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 6092,
+        "sha256": "a769316b9def5a286917a0aa3b9d04edde09ec5b1faded182e9071b2a8f5d8ec"
+      },
+      {
+        "index": 7,
+        "name": "ash_veneer_diff_2k",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 64968,
+        "sha256": "d86346f1c70473d7c37d3a9d748a15d70585a0fb1864785ee6635430fa3b933f"
+      },
+      {
+        "index": 8,
+        "name": "ash_veneer_arm_2k",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 132996,
+        "sha256": "ebf7ba05a708bebeedc65d5c5048d97dee64fb5f70c7f0d3a7b3d7533cbf06f1"
+      },
+      {
+        "index": 9,
+        "name": "walnut_veneer_diff_2k",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 43116,
+        "sha256": "b93206364c2e4e6787fac1bb3ba23c74b1140e4d82bb669ae6091a3108c78e0a"
+      },
+      {
+        "index": 13,
+        "name": "painted_wooden_table_diff_1k",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 30828,
+        "sha256": "6f4ed16a71aed44ec4588fe29bfa269a14662644ac69704abbd87ec021815358"
+      },
+      {
+        "index": 40,
+        "name": "vintage_wooden_drawer_01_diff_1k",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 93768,
+        "sha256": "243fc3d825a60da54506d700cfff5a6c4e0fae3f7f702a9f55c99208de480e25"
+      }
+    ]
+  },
+  {
+    "file": "assets/processed/model-waterbottle.glb",
+    "bytes": 91092,
+    "image_count": 4,
+    "dimensions": {
+      "1024x1024": 4
+    },
+    "material_count": 1,
+    "sha256": "a38a978adde83d3aa2e26bfe1f3a188da88eed76b11fbfcaed20a88e1a393b8c",
+    "embedded_normal_materials": 1,
+    "embedded_rough_metal_materials": 1,
+    "inspected_images": [
+      {
+        "index": 0,
+        "name": "0",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 10806,
+        "sha256": "59bd3d94b7fc39cc5db653bbc3547cef7193adf6dac13dbf0f1b0cea9b0e2fd5"
+      },
+      {
+        "index": 1,
+        "name": "1",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 35142,
+        "sha256": "058841df6f08bb88f4575920b6c3e43777cfcbed15dee8cd4fe317b7d22e3222"
+      },
+      {
+        "index": 2,
+        "name": "2",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 8364,
+        "sha256": "07560bfb4032e84df813c4158703e1b8e0300f3e1b83adbe923a55fd183b8f43"
+      },
+      {
+        "index": 3,
+        "name": "3",
+        "size": [
+          1024,
+          1024
+        ],
+        "format": "WEBP",
+        "bytes": 2080,
+        "sha256": "c98cb9789aae7efeb3196d364408f472028bf0a4ece252dcbb6cd5aaccd2dfac"
+      }
+    ]
+  },
+  {
+    "file": "assets/processed/model-waterbottle-webp90.glb",
+    "bytes": 683088,
+    "image_count": 4,
+    "dimensions": {
+      "2048x2048": 4
+    },
+    "material_count": 1,
+    "sha256": "6cdded52b8de7c8de1ed935cc87d092462ee95cbc24f4caad373eac0eef83ff2",
+    "embedded_normal_materials": 1,
+    "embedded_rough_metal_materials": 1,
+    "inspected_images": [
+      {
+        "index": 0,
+        "name": "0",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "WEBP",
+        "bytes": 124472,
+        "sha256": "8b446bb4ecc5f7d82e4a3ce1f8b151703a58826eeb8665be5280f35c5f222a30"
+      },
+      {
+        "index": 1,
+        "name": "1",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "WEBP",
+        "bytes": 281498,
+        "sha256": "66116b8fc830a22d159a8e134937a84bd806252d8ef267476b9d7021a1c3fab5"
+      },
+      {
+        "index": 2,
+        "name": "2",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "WEBP",
+        "bytes": 193210,
+        "sha256": "40327d94c8c3e31a888271a2643a913d0e59eceb14aa84caf28b11ec0816098a"
+      },
+      {
+        "index": 3,
+        "name": "3",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "WEBP",
+        "bytes": 8204,
+        "sha256": "0f14abf7b82649ab6e7fe8ea99733294378491b1ec86c350e1a377cad5be54b9"
+      }
+    ]
+  }
+]

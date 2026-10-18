@@ -463,6 +463,8 @@ P5 관련: 레퍼런스 자체가 **vanilla three.js + GSAP** 구조다. §13의
 - 라이선스 정책 갱신: **비영리 학술 전시**(사용자 확인 `[대화]`) → CC-BY-NC 계열도 허용. BY·SA의 표기·동일조건 의무는 registry의 `attribution`에 계속 기록한다.
 - Poly Haven 공식 API(`api.polyhaven.com`, 키 불필요, 도구 식별 User-Agent 필수)에 `polyhaven` 소스 유형을 추가했다. API가 준 **md5로 다운로드를 검증**한다. `studio_small_09` 1k EXR(1.32 MB)로 교체해 **B6(출처 불명)을 해소**했고, 기존 512 HDRI는 `superseded`로 남겼다.
 - B5(가공 품질) 비교: 기본 optimize(WebP 기본 품질, 91 KB)는 반사에 블록 얼룩이 생겼다. **WebP 품질 90 변형(683 KB)**은 얼룩이 사라졌다 `[캡처]`. `asset-test.html?q=low` / 기본(high)으로 나란히 비교할 수 있다.
+
+  후속 확인 2026-10-18(F-106): 현재 보존된 두 파일은 정확히 91,092/683,088 bytes지만 이미지가 1024²/2048²로 해상도도 다르다. 위 개선 관찰은 이력으로 남기되 **압축 quality만의 효과를 분리한 비교로 해석하지 않는다**. 원래 캡처 당시 파일 동일성은 확인 안 함이다. 상세: `docs/uiux_system/rounds/R1/ANALYSIS-R1-ARCHIVE-MATERIAL-SOURCING-20261018.md`(저장소 루트 기준).
 - 남은 사용자 몫: B2(Sketchfab 로그인/API 토큰 — 필요할 때만), B5(최종 품질 눈 확인). B1·B3·B6은 해소됐다.
 
 ## 20. AI 단독 Blender 제작 시험 — 아이소메트릭 연구실 코너 + 360° 빛 방향 (2026-09-25)

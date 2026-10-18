@@ -20,10 +20,10 @@ export type ArchiveManifest={lm_scale:number,groups:Record<string,{object:string
 // Vite fingerprints them; lightmap files are looked up by name from the manifest.
 const ASSET={manifest:new URL('./assets/archive/manifest.json',import.meta.url).href,glb:new URL('./assets/archive/archive.glb',import.meta.url).href,
  'light_shell.webp':new URL('./assets/archive/light_shell.webp',import.meta.url).href} as Record<string,string>;
-// D-075/D-076: the same room re-baked with the sun striking the stack faces at 30° (35° elevation) and one ceiling skylight
-// over the back of the left stacks, so a light curtain crosses the aisle (F-050) — the Lab backdrop's default;
-// scripts/assets/archive-sun-variant.py --sun 0.649,0.5,-0.574 --skylight -2.6,-1.0,2.5,3.85 -- --intro2 --bake …
-// (intro and Story keep the original)
+// D-075/D-076/D-077: the same room re-baked for the Lab backdrop (its default; intro and Story keep the original): the sun
+// strikes the stack faces at 30° (35° elevation, 0.5° disc), five ceiling skylights traced back from the C1 path (two curtains the
+// camera passes through), five leaf clusters outside, no aisle lamps — archive-sun-variant.py, arguments in
+// verification/lab-c1-20261018/README.md
 const ASSET_SUN35={manifest:new URL('./assets/archive-sun35/manifest.json',import.meta.url).href,glb:new URL('./assets/archive-sun35/archive.glb',import.meta.url).href,
  'light_shell.webp':new URL('./assets/archive-sun35/light_shell.webp',import.meta.url).href} as Record<string,string>;
 export async function createArchive(variant:'base'|'sun35'='base'){

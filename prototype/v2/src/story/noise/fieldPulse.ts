@@ -9,7 +9,7 @@ export function emissionTimes(start:number){
 }
 /** D2 (user 2026-10-16 "3회만 두드렸다가 멈추고 다시 두드리는 것을 반복 … 2초 주기"): three shells an eighth apart, then rest,
  * every 2 s from start until the scene ends. idx-th emission time (idx = 0, 1, 2, …). */
-export const TAPS=3,CYCLE=2;
+export const TAPS=3,CYCLE=3;   // D2 cycle 2 s → 3 s (user 2026-10-18 "소나는 2초가 아니라 3초 주기로")
 export const tapTime=(start:number,idx:number)=>start+CYCLE*Math.floor(idx/TAPS)+(idx%TAPS)*EIGHTH;
 /** index of the latest emission at or before t (−1 before the first) */
 export function lastTap(start:number,t:number){if(t<start)return -1;const k=Math.floor((t-start)/CYCLE),j=Math.min(TAPS-1,Math.floor((t-start-k*CYCLE)/EIGHTH));return k*TAPS+j;}

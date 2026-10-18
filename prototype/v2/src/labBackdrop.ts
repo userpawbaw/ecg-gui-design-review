@@ -34,7 +34,7 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x05090b,1);
  const gl=renderer.getContext(),dbg=gl.getExtension('WEBGL_debug_renderer_info'),gpu=String(dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
  const soft=/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:.6;
- const arch=await createArchive();arch.setFade(1);arch.renderSunDepth(renderer);
+ const arch=await createArchive(Q.get('sun')==='0'?'base':'sun35');arch.setFade(1);arch.renderSunDepth(renderer);   // D-075 ?sun=0: the original grazing sun
  const roomScene=new THREE.Scene(),dustScene=new THREE.Scene();roomScene.add(arch.room);dustScene.add(arch.dust);
  const camera=new THREE.PerspectiveCamera(50,1,.05,60);
  // D-075 frame: the room (colour + depth) is drawn into `base` only when the camera moves; every frame then adds the moving light
@@ -43,6 +43,7 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const work=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
  const out=new OutputPass();out.renderToScreen=true;arch.vol.renderToScreen=false;
  const du=arch.dustMat.uniforms;du.uDepthOn.value=1;du.tSceneDepth.value=base.depthTexture;
+ if(Q.get('shaft')!==null)arch.vol.uniforms.uIntensity.value*=lvl('shaft');   // ?shaft= 0–100, 50 = designed
  arch.amb.wind.value=AMB.wind;arch.amb.silk.value=AMB.silk;arch.amb.cloud.value=AMB.cloud;
  const ambient=AMB.on&&!(matchMedia('(prefers-reduced-motion: reduce)').matches)&&(!soft||AMB.forced);
  const curve=(pick:(k:Key)=>THREE.Vector3)=>new THREE.CatmullRomCurve3(KEYS.map(pick),false,'centripetal');

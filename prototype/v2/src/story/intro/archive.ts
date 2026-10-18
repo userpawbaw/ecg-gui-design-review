@@ -20,12 +20,17 @@ export type ArchiveManifest={lm_scale:number,groups:Record<string,{object:string
 // Vite fingerprints them; lightmap files are looked up by name from the manifest.
 const ASSET={manifest:new URL('./assets/archive/manifest.json',import.meta.url).href,glb:new URL('./assets/archive/archive.glb',import.meta.url).href,
  'light_shell.webp':new URL('./assets/archive/light_shell.webp',import.meta.url).href} as Record<string,string>;
-export async function createArchive(){
- const manifest:ArchiveManifest=await (await fetch(ASSET.manifest)).json();
- const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(ASSET.glb);
+// D-075: the same room re-baked with the sun striking the stack faces at 30° (35° elevation) — the Lab backdrop's default;
+// scripts/assets/archive-sun-variant.py --sun 0.649,0.5,-0.574 -- --intro2 --bake … (intro and Story keep the original)
+const ASSET_SUN35={manifest:new URL('./assets/archive-sun35/manifest.json',import.meta.url).href,glb:new URL('./assets/archive-sun35/archive.glb',import.meta.url).href,
+ 'light_shell.webp':new URL('./assets/archive-sun35/light_shell.webp',import.meta.url).href} as Record<string,string>;
+export async function createArchive(variant:'base'|'sun35'='base'){
+ const A=variant==='sun35'?ASSET_SUN35:ASSET;
+ const manifest:ArchiveManifest=await (await fetch(A.manifest)).json();
+ const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(A.glb);
  const tl=new THREE.TextureLoader(),lightmaps:Record<string,THREE.Texture>={};
  for(const [g,info] of Object.entries(manifest.groups))if(info.file){
-  const url=ASSET[info.file];if(!url)throw Error('archive: unknown lightmap '+info.file);
+  const url=A[info.file];if(!url)throw Error('archive: unknown lightmap '+info.file);
   const t=await tl.loadAsync(url);t.flipY=false;t.colorSpace=THREE.NoColorSpace;t.channel=1;lightmaps[g]=t;}
  const groupOf=(o:THREE.Object3D)=>{let x:THREE.Object3D|null=o;while(x){for(const [g,i] of Object.entries(manifest.groups))if(x.name===i.object||x.name.startsWith(i.object+'_'))return g;x=x.parent;}return 'shell';};
  const room=gltf.scene;

@@ -14,7 +14,7 @@
 - D-144 광원 그룹 key 후보 0.5/0.35/0.25의 2시점 혼합 비교 및 사용자 선택 완료: 0.5. 이를 B3 시안 선택값으로 유지한다. 다음은 승인 범위를 넓히지 않고 L2 사람·해치 연출, 웹 굽기, 기기 Q0–Q5를 별도로 검증한다. Story 소유 파일·r8/D-084 보존.
 - 서고 전체 배치 컷어웨이 렌더(1280×720, bpy 4.5.3, 32 Cycles CPU samples)를 추가했다. Ceiling/Beam·측벽을 임시 숨긴 전시용 시안이며 표준 광원 믹스 검증은 아니다. verification/r1-archive-b3-rerender-20261018/README.md. 다음 우선 검토 후보는 L2 사다리·인물·해치 동선이며 Story 원본 변경은 포함하지 않는다.
 - D-145: B3 선택 조명을 별도 verification 경로에 실제 GLB/lightmap으로 굽고, 기존 웹 셰이더 재현과 자유 카메라 브라우저 검증을 완료했다. Story 에셋/로더/defaults는 수정하지 않았다. 외부 프리뷰 경로 부재를 확인해 D-146으로 공개 호스팅을 결정했다.
-- D-146: 공개 동의 후 Pages에 최소 프리뷰 패키지만 배포했다. `https://userpawbaw.github.io/ecg-gui-design-review/preview.html` 외부 응답은 확인. artifact import map을 고치고 공개 URL Chromium 검사까지 마무리한다. Story 자원·기본값 변경은 계속 제외.
+- D-146: Pages에 최소 프리뷰 패키지를 배포했다. 공개 URL Chromium 154/SwiftShader 1280×720에서 GLB·모듈·라이트맵 응답, 1개 shell lightmap 적용, 회전·리셋 PASS. Story 자원·기본값 변경은 제외.
 
 # Review plan
 
@@ -338,4 +338,5 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] Prepare a 13.31 MB static package containing only the preview, baked GLB/lightmap/manifest, seven pinned Three.js modules and MIT notice; standalone Chromium load, baked-light state, orbit and reset PASS.
 - [x] Minimal Pages workflow added to `main` at `3528631`; user enabled Pages source as GitHub Actions; workflow run `39122861788` deployed successfully.
 - [x] Public URL responds 200 for preview HTML, GLB (10,305,880 bytes), and manifest; package scope and Three.js MIT notice preserved.
-- [ ] Public Chromium check exposed a staging import-map path mismatch; rewrite is fixed locally, pending publish and rerun of full public browser check.
+- [x] Public Chromium 154/SwiftShader 1280×720 PASS: HTML/GLB/manifest/lightmap/Three modules HTTP 200; baked lightmap 1; groups shell/books/decor; errors/failed requests 0; orbit PASS; reset error 0. Evidence: `verification/r1-archive-web-bake-20261018/public-browser-result.json`.
+- [ ] All-material visual art direction, physical GPU/browser diversity, and mobile behavior remain unverified.

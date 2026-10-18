@@ -1,0 +1,23 @@
+{
+  "url": "https://userpawbaw.github.io/ecg-gui-design-review/preview.html",
+  "result": "PASS",
+  "browser": "Chromium 154 headless + SwiftShader",
+  "viewport": [1280, 720],
+  "responses": {
+    "preview.html": 200,
+    "archive.glb": 200,
+    "manifest.json": 200,
+    "light_shell.webp": 200,
+    "three/build/three.module.js": 200,
+    "three/examples/jsm/loaders/GLTFLoader.js": 200,
+    "three/examples/jsm/controls/OrbitControls.js": 200,
+    "three/examples/jsm/libs/meshopt_decoder.module.js": 200
+  },
+  "status": "베이크 조명 적용 · 1 lightmaps · meshopt GLB",
+  "groups": ["shell", "books", "decor"],
+  "lightmaps": ["shell"],
+  "browser_errors": 0,
+  "failed_requests": 0,
+  "orbit_moved": true,
+  "reset_error": 0
+}

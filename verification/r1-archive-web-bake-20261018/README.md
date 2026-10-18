@@ -14,7 +14,18 @@ Isolated B3 web export for reviewing the selected archive lighting with a freely
 ## 확인 안 함
 
 - Story route integration and Story-owned files/assets/defaults were not changed.
-- Public GitHub Pages: `https://userpawbaw.github.io/ecg-gui-design-review/preview.html`. Deployment run `39122861788` completed, and the page, GLB (10,305,880 bytes), and manifest respond HTTP 200. The first public Chromium check found an import-map path mismatch in the staged artifact (Three.js modules referenced unpublished `node_modules/three/...` paths). The local staging fix is pending deployment; public browser rendering, lightmap application, orbit, and reset remain unverified until that run passes.
-- Physical display/GPU/browser diversity, mobile performance, and download behavior on a production network were not tested. The browser check used headless Chromium with SwiftShader.
-- Visual approval of all materials, hidden surfaces, and every camera angle was not performed. Blender GLTF export emitted warnings that some materials had multiple image nodes and the first node is used by the GLTF sampler; the packaged web preview loads, but those materials require a separate art-direction review.
 - The web preview tone mapping is the project's web shader path; pixel identity with Blender's AgX still is not claimed.
+- Blender GLTF export warned some materials had multiple image nodes and uses the first node as its sampler; full art-direction approval remains unverified.
+
+## Public preview deployment check (2026-10-18)
+
+- URL: https://userpawbaw.github.io/ecg-gui-design-review/preview.html
+- GitHub Pages workflow run: [39123185772](https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/39123185772), success; Pages source is GitHub Actions.
+- Public HTML, GLB (10,305,880 bytes), manifest, shell lightmap and pinned Three.js browser modules returned HTTP 200.
+- Chromium 154 headless + SwiftShader, 1280×720: status `베이크 조명 적용 · 1 lightmaps · meshopt GLB`; groups shell/books/decor; applied lightmaps shell; browser errors 0; failed requests 0; OrbitControls drag moved camera; reset position error 0. Full captured measurements: [`public-browser-result.json`](public-browser-result.json).
+- During setup, the first public browser run exposed a stale Pages deployment and then a managed proxy certificate issue. After the deployment completed, the current public HTML/runtime were checked directly with Chromium; the passing result above reflects the updated public artifact.
+
+## 확인 안 함
+
+- Story route integration and Story-owned files/assets/defaults were not changed.
+- Physical display/GPU/browser diversity, mobile performance, download behavior on a production network, and visual approval of every material/camera angle remain unverified. Headless Chromium with SwiftShader is not a substitute for those checks.

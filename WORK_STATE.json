@@ -51,7 +51,7 @@
       "resource": "GitHub Pages deployment for verification/r1-archive-web-bake-20261018 preview only",
       "owner": "claude/archive-light-r7-ag2rja D-146",
       "since": "2026-10-18",
-      "note": "User approved public preview. Pages source is workflow; run 39122861788 succeeded and public HTML/GLB/manifest return 200. Public Chromium check found the staged import map pointed at unpublished node_modules paths; stage-script fix is pending push and redeploy. Artifact excludes reports/recipe/log/screenshot/source. Story remains protected."
+      "note": "User approved public preview. Pages source is workflow; deployment run 39123185772 and public Chromium 154/SwiftShader 1280x720 PASS. HTML/GLB/manifest/lightmap/Three modules 200, shell lightmap applied, groups loaded, errors/failed requests 0, orbit PASS, reset error 0. Artifact excludes reports/recipe/log/screenshot/source. Story remains protected."
     }
   ],
   "concurrency": {
@@ -72,9 +72,9 @@
       "reason": "Final team closeout depends on R4"
     },
     {
-      "id": "D-146-public-browser-import-map",
-      "reason": "The public Pages browser check found Three.js modules referenced at node_modules/three while the minimal artifact publishes them under three/.",
-      "resume_when": "Push the fixed staging script and trigger Pages redeployment; rerun public Chromium checks for module/assets, baked lightmap, orbit, and reset."
+      "id": "D-146-production-visual-review",
+      "reason": "Automated public browser behavior is verified; visual review across all materials/camera angles and physical browser/GPU diversity has not been performed.",
+      "resume_when": "Review the public preview visually on target displays/devices; keep Story route and owned defaults out of scope absent a separate decision."
     }
   ],
   "completed_verified": [
@@ -481,11 +481,11 @@
     "not_verified": [
       "All-view/material art direction and target-device/GPU checks",
       "Story route integration and applying B3 light values to protected Story/default production",
-      "Publish and verify the fixed public archive preview import map (D-146)"
+      "User art-direction review of the public archive preview; Story integration remains a separate decision (D-146)"
     ],
-    "next_action": "Commit and push the Pages staging import-map fix, trigger deployment from main using source_ref=claude/archive-light-r7-ag2rja, then verify the public Chromium load and record URL/measurements. Do not modify Story-owned files/defaults.",
-    "evidence": "verification/r1-archive-web-bake-20261018/README.md; browser-result.json; staged-browser-result.json; docs/uiux_system/records/D_DECISIONS.md D-146",
-    "blocked_scope": "Pages is enabled and deploys; public Chromium verification remains pending until the import-map fix is deployed. Story integration/default transfer remains out of scope.",
+    "next_action": "User art-direction review of https://userpawbaw.github.io/ecg-gui-design-review/preview.html. Story route integration and protected Story defaults remain unchanged and require a separate decision.",
+    "evidence": "verification/r1-archive-web-bake-20261018/README.md; browser-result.json; staged-browser-result.json; public-browser-result.json; docs/uiux_system/records/D_DECISIONS.md D-146; GitHub Actions run 39123185772",
+    "blocked_scope": "Public isolated preview is deployed and automated Chromium behavior is verified. All-view visual/physical-device review and Story integration are separate unfinished scopes.",
     "asset_policy": {
       "source": "docs/uiux_system/24_ASSET_RESEARCH_STAGE.md §1.1; rounds/R1/REVIEW-R1-ARCHIVE-SHADOW-ASSET-20261016.md §5 and §7.2",
       "main_route": "self-authored parametric props; clean solid colours / low-contrast grain",

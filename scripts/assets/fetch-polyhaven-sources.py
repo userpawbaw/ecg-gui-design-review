@@ -10,7 +10,7 @@ SLUGS = {'ash_veneer': '2k', 'walnut_veneer': '2k', 'painted_plaster_wall': '1k'
 for s in 'binder_notebook cardboard_box_01 desk_lamp_arm_01 drawer_cabinet hanging_industrial_lamp painted_wooden_table power_box_01 vintage_suitcase vintage_wooden_drawer_01 wooden_crate_01 wooden_stool_01 GreenChair_01'.split():
     SLUGS[s] = '1k'
 UA = {'User-Agent': 'ECG-Signal-Studio-asset-pipeline/1.0 (non-profit academic exhibit)'}
-reg = {a['id']: a for a in json.load(open(os.path.join(ROOT, 'assets/registry.json')))['assets']}
+reg = {a['id']: a for a in json.load(open(os.path.join(ROOT, 'assets/registry.json'), encoding='utf-8'))['assets']}
 def get(u):
     return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=120).read()
 bad = 0

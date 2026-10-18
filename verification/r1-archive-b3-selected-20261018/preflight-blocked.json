@@ -1,0 +1,21 @@
+{
+  "status": "BLOCKED",
+  "errors": [
+    "Missing Poly Haven source: assets/source/ph-ash_veneer/ash_veneer_2k.gltf",
+    "Missing Poly Haven source: assets/source/ph-walnut_veneer/walnut_veneer_2k.gltf",
+    "Missing Poly Haven source: assets/source/ph-painted_plaster_wall/painted_plaster_wall_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-herringbone_parquet/herringbone_parquet_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-binder_notebook/binder_notebook_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-cardboard_box_01/cardboard_box_01_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-desk_lamp_arm_01/desk_lamp_arm_01_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-drawer_cabinet/drawer_cabinet_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-hanging_industrial_lamp/hanging_industrial_lamp_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-painted_wooden_table/painted_wooden_table_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-power_box_01/power_box_01_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-vintage_suitcase/vintage_suitcase_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-vintage_wooden_drawer_01/vintage_wooden_drawer_01_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-wooden_crate_01/wooden_crate_01_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-wooden_stool_01/wooden_stool_01_1k.gltf",
+    "Missing Poly Haven source: assets/source/ph-GreenChair_01/GreenChair_01_1k.gltf"
+  ]
+}

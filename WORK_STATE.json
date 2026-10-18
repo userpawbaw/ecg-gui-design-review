@@ -134,7 +134,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-10-05",
+  "updated_at": "2026-10-18",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -434,5 +434,35 @@
       "report": "docs/uiux_system/handoffs/R1_AUTOPILOT_REPORT_2026-09-27.md",
       "auto_decisions": "docs/uiux_system/rounds/R1/AUTOPILOT_DECISIONS.md"
     }
+  },
+  "archive_light_resume": {
+    "date": "2026-10-18",
+    "branch": "claude/archive-light-r7-ag2rja",
+    "base_commit": "df532274de086866bfc829f2cec351e482413c75",
+    "decision": "D-141",
+    "status": "blocked_polyhaven_network",
+    "selection": {
+      "light_pattern": "b",
+      "ladder": "L2",
+      "angle_degrees": 30,
+      "angle_status": "existing value retained; no explicit angle recommendation",
+      "underside_factor": 0.35
+    },
+    "verified": [
+      "pinned Python/bpy imports",
+      "64x64 Cycles CPU diagnostic render (not archive)",
+      "recipe environment isolation and missing-asset fail-fast",
+      "previous JPEG tone remeasurement",
+      "records/playbook checks"
+    ],
+    "not_verified": [
+      "Poly Haven source download/hashes",
+      "new archive scene/render/EXR",
+      "combined underside ratio",
+      "L2 climber contacts/collisions and hatch choreography",
+      "web bake/camera/motion"
+    ],
+    "next_action": "Apply saved network settings for api.polyhaven.com and dl.polyhaven.org, recheck API, restore and verify sources, then render matched underside baseline/candidate. Keep Story-owned people/hatch assets and r8/D-084 defaults unchanged.",
+    "evidence": "verification/r1-archive-b3-selected-20261018/README.md"
   }
 }

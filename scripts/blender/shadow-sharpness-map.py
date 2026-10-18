@@ -144,5 +144,5 @@ if opt.get('--image'):
     summary['layering_left_third'] = {'L_facing_light_side': med(facing), 'L_front_layer': med(lay_front), 'L_cell_interior': med(lay_in),
         'counts': [int(facing.sum()), int(lay_front.sum()), int(lay_in.sum())]}
 np.save(out + '_depth.npy', depth)
-json.dump(summary, open(out + '.json', 'w'), indent=1)
+json.dump(summary, open(out + '.json', 'w', encoding='utf-8'), indent=1)
 print(json.dumps(summary, indent=1))

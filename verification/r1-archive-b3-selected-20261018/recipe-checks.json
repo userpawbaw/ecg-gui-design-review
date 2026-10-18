@@ -1,0 +1,8 @@
+{
+  "environment_isolation": "PASS",
+  "selected_recipe": "PASS",
+  "matched_baseline_recipe": "PASS",
+  "missing_assets_block_render_before_output": "PASS",
+  "missing_asset_count": 16,
+  "blocked_exit_code": 2
+}

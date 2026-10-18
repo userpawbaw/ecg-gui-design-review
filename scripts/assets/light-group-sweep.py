@@ -41,7 +41,7 @@ for combo in itertools.product(*(grid[k] for k in keys)):
         img.pixels.foreach_set(np.concatenate([mix, np.ones((h, w, 1))], -1)[::-1].astype(np.float32).ravel())
         png = os.path.join(out_dir, f'{shot}__{tag}.png'); img.save_render(png, scene=sc); bpy.data.images.remove(img)
         st = fts.stats(png); rows.append((tag, shot, st)); print(tag, shot, st, flush=True)
-with open(os.path.join(out_dir, 'sweep.tsv'), 'w') as f:
+with open(os.path.join(out_dir, 'sweep.tsv'), 'w', encoding='utf-8') as f:
     cols = list(rows[0][2].keys()); f.write('\t'.join(['weights', 'shot'] + cols) + '\n')
     for tag, shot, st in rows: f.write('\t'.join([tag, shot] + [str(st[c]) for c in cols]) + '\n')
 print('rows', len(rows))

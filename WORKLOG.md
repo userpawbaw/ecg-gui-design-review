@@ -1,5 +1,13 @@
 # Work log
 
+## 2026-10-18 KST — B3 권장 조합 선택과 재현 준비
+
+- 사용자 `[대화]` "권장안들로." → (b)·L2·아랫면 ×0.35, 각도는 명시적 권장이 없으므로 기존 30° 유지. 원격 31개 브랜치의 D 번호 최댓값 140 확인 후 **D-141을 구현 전에 기록**했다.
+- 별도 실행 도구 `scripts/blender/archive-light-b3.py`: 빌더가 읽는 환경변수를 격리하고 두 V1 카메라·광원 그룹 혼합을 고정했다. 누락 원본 16종이 있으면 렌더/출력 생성 전에 exit 2. r8·기존 --b2·Story 소유 파일은 그대로다. 비교용 --underside 1.0도 제공한다.
+- Python 3.11.17/bpy 4.5.3/numpy 1.26.4/OpenEXR 3.5.2/Pillow 12.3.0/scipy 1.17.1 설치·import 확인. 별도 64×64 Cycles CPU 진단 렌더 PASS. 기존 (b), L2, 30° JPG 재측정: plain_range 42.0/44.9, sharpC 16.5/16.5. **선택 조합 새 렌더가 아니며 ×0.35 결과도 아니다.**
+- Poly Haven API는 프록시 CONNECT 403으로 차단. 환경 초안에 api.polyhaven.com·dl.polyhaven.org 추가 및 bpy 설치/재개 지침 저장. 초안 저장은 현재 네트워크 적용·게시가 아님. 원본 접근 전 다운로드·새 장면 렌더·그림자/아랫면 재측정·자세·웹은 확인 안 함으로 남겼다.
+- 플레이북 J-003/P-006(잠정), verification README·fidelity·실제 레시피/관문 결과를 기록했다. 기존 도구 3곳은 UTF-8 입출력만 명시했다. records 149개, record fixtures 32개, playbook 카드 6/여정 3, fixture 18개 PASS. 최종 인코딩·이식성·diff·원격 충돌 확인 후 커밋·푸시한다.
+
 ## 2026-09-15 — user-provided Release recovery
 
 - Remote f77b646 and generation-4 off verified. Claim generation 5 before download/install/QA.

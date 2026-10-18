@@ -18,17 +18,22 @@ import {createArchive} from './story/intro/archive';
 
 type Key={pos:THREE.Vector3,look:THREE.Vector3,fov:number};
 const V=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
-const KEYS:Key[]=[
- {pos:V(-.2,3.0,1.6),look:V(.4,1.4,-4.3),fov:44},       // top of the ladder: the stacks under the shafts, the ceiling lamp out of frame (user screenshot)
- {pos:V(.3,2.5,-.6),look:V(.35,1.8,-4.3),fov:50},       // halfway down, the upper shelves at eye level
- {pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50},       // the floor: the lower shelves and the sun patches
-];
+// D-077 paths (three frame; Blender (x, y, z) → (x, z, −y)), ?path=c1 (default) | c3:
+//  c1 — down the ladder while moving up the aisle; it passes through two light curtains (skylights in the front ceiling bay) at
+//       ~21–27 % and ~56–64 % of the page scroll (scratch design: ray test of the path against the skylight beams)
+//  c3 — the D-074 descent (top of the ladder without the ceiling lamp → upper shelves → floor)
+const PATHS:Record<string,Key[]>={
+ c1:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.25,2.4,1.2),look:V(.35,1.5,-4.3),fov:48},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],
+ c3:[{pos:V(-.2,3.0,1.6),look:V(.4,1.4,-4.3),fov:44},{pos:V(.3,2.5,-.6),look:V(.35,1.8,-4.3),fov:50},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],
+};
+const KEYS:Key[]=PATHS[new URLSearchParams(location.search).get('path')??'c1']??PATHS.c1;
 const SPRING=2.6;   // rad/s, critically damped: 80 % of a scroll step in ~1.2 s, settled in ~2 s (eases in and out)
 const Q=new URLSearchParams(location.search),RES_Q=Q.get('bgres');
-// D-075 ambient: ?amb=0 off (?amb=1 forces it on in the low-power mode); ?silk= ?shaft= 0–100 in 10 % steps, 50 = designed.
+// D-075 ambient: ?amb=0 off (?amb=1 forces it on in the low-power mode); ?aurora= (D-077 S1, replaced ?silk=) ?shaft= 0–100 in
+// 10 % steps, 50 = designed.
 // User 2026-10-18 after the first look: wind and cloud removed (F-051), the dust smaller and sparser, nothing moves during playback.
 const lvl=(k:string)=>{const r=Q.get(k),v=Number(r);return r===null||!Number.isFinite(v)?1:Math.min(100,Math.max(0,Math.round(v/10)*10))/50;};
-const AMB={on:Q.get('amb')!=='0',forced:Q.get('amb')==='1',silk:lvl('silk')};
+const AMB={on:Q.get('amb')!=='0',forced:Q.get('amb')==='1',aur:lvl('aurora')};
 
 export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
@@ -45,13 +50,13 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const out=new OutputPass();out.renderToScreen=true;arch.vol.renderToScreen=false;
  const du=arch.dustMat.uniforms;du.uDepthOn.value=1;du.tSceneDepth.value=base.depthTexture;
  if(Q.get('shaft')!==null)arch.vol.uniforms.uIntensity.value*=lvl('shaft');   // ?shaft= 0–100, 50 = designed
- arch.amb.silk.value=AMB.silk;
+ arch.amb.aur.value=AMB.aur;
  arch.dust.geometry.setDrawRange(0,1100);   // 2600 motes in the intro; the Lab keeps 1100 (user: "먼지도 약간 과한 감")
  const ambient=AMB.on&&!(matchMedia('(prefers-reduced-motion: reduce)').matches)&&(!soft||AMB.forced);
  const curve=(pick:(k:Key)=>THREE.Vector3)=>new THREE.CatmullRomCurve3(KEYS.map(pick),false,'centripetal');
  const posC=curve(k=>k.pos),lookC=curve(k=>k.look);
  let p=0,ps=0,pv=0,px=0,pxShown=0,dirty=true,raf=0,last=0,frame=0,playing=false,paused=false,lastT=0,clock=0,settle:ReturnType<typeof setTimeout>|undefined;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches||soft;
- if(!ambient)arch.amb.silk.value=0;
+ if(!ambient)arch.amb.aur.value=0;
  function resize(){const w=innerWidth,h=innerHeight,pr=Math.min(Math.min(2,devicePixelRatio||1)*RES,Math.sqrt(1.2e6/(w*h)));renderer.setPixelRatio(pr);renderer.setSize(w,h,false);
   const W=Math.max(1,Math.round(w*pr)),H=Math.max(1,Math.round(h*pr));base.setSize(W,H);work.setSize(W,H);du.uRes.value.set(W,H);
   camera.aspect=w/h;camera.updateProjectionMatrix();arch.setPx(h,pr*.6);dirty=true;kick();}   // motes 0.6 × the intro size

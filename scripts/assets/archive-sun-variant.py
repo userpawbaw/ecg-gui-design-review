@@ -3,9 +3,14 @@
 Why: the Lab backdrop's sun grazed the stack faces (86.5° from their normal); the user asked for light that strikes one
 bookcase obliquely, about 30° to its face, re-baked ("가)로 한번 해보자"). build_archive.py belongs to the archive-light
 session (WORK_STATE active_jobs), so this wrapper reads it, swaps the r1 sun line in memory and runs it; the file on disk
-and every default stay unchanged. --lab-shots replaces the preview shots with the Lab backdrop's three camera keys.
+and every default stay unchanged. --lab-shots replaces the preview shots with the Lab backdrop's three camera keys
+(--lab-shots c1: six frames along the C1 path of D-077).
+D-077 options: several skylights (';'), --sun-angle DEG, --no-lamps (the two aisle lamps and their bulbs), --leaves
+"x,y,z,radius,count;…" (branch-and-leaf clusters above the roof: soft dappled sun, group decor so the web's sun depth map
+casts them into the shafts too).
 
-    python scripts/assets/archive-sun-variant.py --sun 0.746,0.5,-0.439 [--skylight x0,x1,y0,y1] [--lab-shots] -- <build_archive.py args>
+    python scripts/assets/archive-sun-variant.py --sun 0.746,0.5,-0.439 [--skylight x0,x1,y0,y1[;…]] [--sun-angle 0.5]
+        [--no-lamps] [--leaves x,y,z,r,n[;…]] [--lab-shots [c1]] -- <build_archive.py args>
 Sun is the direction the light travels, Blender frame (x right, y into the room, z up).
 """
 import math, os, sys
@@ -15,6 +20,15 @@ SRC = os.path.join(ROOT, 'scripts', 'blender', 'build_archive.py')
 SUN_LINE = 'SUN_TO = Vector((0.85, 0.06, -0.50)).normalized()'
 CEIL_LINE = "    box('Ceiling', (2 * XW, Y1 - Y0, 0.15), (0, (Y0 + Y1) / 2, H + 0.075), M_WALL, tile=2.0)\n"
 PREVIEW_LINE = 'if args.preview:\n'
+SUNANG_LINE = "sun = bpy.data.lights.new('sun', 'SUN'); sun.energy = 11.0; sun.angle = math.radians(1.2); sun.color = srgb('#ffd9a8')"
+LAMP_LINES = ("for y in ((-1.8,) if args.art in ('r3', 'r4', 'r5', 'r6') else (-1.8, 1.3)):", "for y in (() if args.art in ('r3', 'r4', 'r5', 'r6') else (-1.8, 1.3)):")
+SHOTS_LINE = '# ---------------- preview shots (SPACE-R1-ARCHIVE §3–4) ----------------\n'
+# D-077 C1 path (prototype/v2/src/labBackdrop.ts PATHS.c1), Blender frame: (pos, look, vfov) keys
+C1 = [((0.15, -3.4, 3.3), (0.35, 4.3, 1.6), 46), ((0.25, -1.2, 2.4), (0.35, 4.3, 1.5), 48), ((0.3, 1.0, 0.95), (0.35, 4.3, 0.9), 50)]
+def c1_at(u):
+    seg = u * (len(C1) - 1); i = min(len(C1) - 2, int(seg)); f = seg - i
+    lerp = lambda a, b: tuple(round(x + (y - x) * f, 3) for x, y in zip(a, b))
+    return lerp(C1[i][0], C1[i + 1][0]), lerp(C1[i][1], C1[i + 1][1]), round(C1[i][2] + (C1[i + 1][2] - C1[i][2]) * f, 1)
 # the Lab backdrop keys (prototype/v2/src/labBackdrop.ts), three (x, y, z) → Blender (x, −z, y)
 LAB_SHOTS = "SHOTS = {'lab_top': ((-.2, -1.6, 3.0), (.4, 4.3, 1.4), 44), 'lab_mid': ((.3, .6, 2.5), (.35, 4.3, 1.8), 50), 'lab_low': ((.3, 1.0, .95), (.35, 4.3, .9), 50)}\n"
 
@@ -27,21 +41,53 @@ if sun:
     assert src.count(SUN_LINE) == 1, 'build_archive.py: the r1 sun line changed — update this wrapper'
     src = src.replace(SUN_LINE, f'SUN_TO = Vector(({v[0]:.4f}, {v[1]:.4f}, {v[2]:.4f})).normalized()   # archive-sun-variant.py')
     print('sun', [round(x, 4) for x in v], 'elevation', round(math.degrees(math.asin(-v[2])), 1), 'deg; to the stack face (normal -y)', round(math.degrees(math.asin(abs(v[1]))), 1), 'deg')
-if '--skylight' in own:   # D-076: one ceiling skylight (x0, x1, y0, y1, Blender) with a beam-wood trim, so the oblique sun crosses the aisle
-    sk = tuple(float(x) for x in own[own.index('--skylight') + 1].split(','))
+if '--skylight' in own:   # D-076/D-077: ceiling skylights (x0, x1, y0, y1, Blender; ';' between) with beam-wood trims
+    sks = [tuple(float(x) for x in h.split(',')) for h in own[own.index('--skylight') + 1].split(';')]
     assert src.count(CEIL_LINE) == 1, 'build_archive.py: the r1 ceiling line changed — update this wrapper'
-    src = src.replace(CEIL_LINE, f'''    _sk = {sk}; _xs = sorted({{-XW, XW, _sk[0], _sk[1]}}); _ys = sorted({{Y0, Y1, _sk[2], _sk[3]}})
+    src = src.replace(CEIL_LINE, f'''    _sks = {sks}; _xs = sorted({{-XW, XW, *[h[0] for h in _sks], *[h[1] for h in _sks]}}); _ys = sorted({{Y0, Y1, *[h[2] for h in _sks], *[h[3] for h in _sks]}})
     for xa, xb in zip(_xs, _xs[1:]):
         for ya, yb in zip(_ys, _ys[1:]):
-            if _sk[0] < (xa + xb) / 2 < _sk[1] and _sk[2] < (ya + yb) / 2 < _sk[3]: continue
+            if any(h[0] < (xa + xb) / 2 < h[1] and h[2] < (ya + yb) / 2 < h[3] for h in _sks): continue
             box('Ceiling', (xb - xa, yb - ya, 0.15), ((xa + xb) / 2, (ya + yb) / 2, H + 0.075), M_WALL, tile=2.0)
-    for (sx, sy, cx, cy) in ((_sk[1] - _sk[0] + .12, .06, (_sk[0] + _sk[1]) / 2, _sk[2] - .03), (_sk[1] - _sk[0] + .12, .06, (_sk[0] + _sk[1]) / 2, _sk[3] + .03),
-                             (.06, _sk[3] - _sk[2], _sk[0] - .03, (_sk[2] + _sk[3]) / 2), (.06, _sk[3] - _sk[2], _sk[1] + .03, (_sk[2] + _sk[3]) / 2)):
-        box('APR_skylight_trim', (sx, sy, .22), (cx, cy, H + .075 - .11), M_BEAM, grain=True)
+    for _sk in _sks:
+        for (sx, sy, cx, cy) in ((_sk[1] - _sk[0] + .12, .06, (_sk[0] + _sk[1]) / 2, _sk[2] - .03), (_sk[1] - _sk[0] + .12, .06, (_sk[0] + _sk[1]) / 2, _sk[3] + .03),
+                                 (.06, _sk[3] - _sk[2], _sk[0] - .03, (_sk[2] + _sk[3]) / 2), (.06, _sk[3] - _sk[2], _sk[1] + .03, (_sk[2] + _sk[3]) / 2)):
+            box('APR_skylight_trim', (sx, sy, .22), (cx, cy, H + .075 - .11), M_BEAM, grain=True)
 ''')
-    print('skylight', sk)
+    print('skylights', sks)
+if '--sun-angle' in own:   # D-077: a smaller sun = crisper near shadows, leaf shadows keep their outline (archive-light F-045, D-085: 0.5°)
+    assert src.count(SUNANG_LINE) == 1, 'build_archive.py: the r1 sun line changed — update this wrapper'
+    src = src.replace(SUNANG_LINE, SUNANG_LINE.replace('math.radians(1.2)', f"math.radians({float(own[own.index('--sun-angle') + 1])})"))
+if '--no-lamps' in own:    # D-077: the C1 path flies down the aisle where the two lamps hang (user: no ceiling lamp in view)
+    for ln in LAMP_LINES:
+        assert src.count(ln) == 1, 'build_archive.py: a lamp line changed — update this wrapper'
+        src = src.replace(ln, 'for y in ():')
+if '--leaves' in own:      # D-077: branch-and-leaf clusters above the roof — soft dappled sun on the far shelves (penumbra ≈ distance × sun size)
+    lv = [tuple(float(x) for x in c.split(',')) for c in own[own.index('--leaves') + 1].split(';')]
+    assert src.count(SHOTS_LINE) == 1, 'build_archive.py: the preview-shots header changed — update this wrapper'
+    src = src.replace(SHOTS_LINE, f'''_lr = random.Random(7); _ml = mat('leaf', srgb('#3d4a2a'), .8); _lbm = bmesh.new()
+def _quad(p, u, v):
+    vs = [_lbm.verts.new(p + u), _lbm.verts.new(p + v), _lbm.verts.new(p - u), _lbm.verts.new(p - v)]; _lbm.faces.new(vs)
+for (_cx, _cy, _cz, _rad, _n) in {lv}:
+    _nb = max(3, int(_n) // 50)
+    for _b in range(_nb):                      # a drooping branch: a twig strip with pointed leaves along it
+        _a = _lr.uniform(0, 2 * math.pi); _L = _rad * _lr.uniform(.6, 1.0)
+        _dv = Vector((math.cos(_a), math.sin(_a), _lr.uniform(-.15, .25))).normalized(); _base = Vector((_cx, _cy, _cz))
+        _pts = [_base + _dv * _L * t + Vector((0, 0, -.3 * t * t * _L)) for t in [i / 6 for i in range(7)]]
+        for _p0, _p1 in zip(_pts, _pts[1:]):
+            _side = (_p1 - _p0).cross(Vector((0, 0, 1))).normalized() * .012; _quad((_p0 + _p1) / 2, (_p1 - _p0) / 2, _side)
+        for _k in range(int(_n) // _nb):
+            _t = _lr.random(); _p = _base + _dv * _L * _t + Vector((0, 0, -.3 * _t * _t * _L)) + Vector((_lr.gauss(0, .1), _lr.gauss(0, .1), _lr.gauss(0, .06)))
+            _u = Vector((_lr.uniform(-1, 1), _lr.uniform(-1, 1), _lr.uniform(-.4, .4))).normalized(); _w = _u.cross(Vector((_lr.uniform(-1, 1), _lr.uniform(-1, 1), 1))).normalized()
+            _quad(_p, _u * _lr.uniform(.06, .1), _w * _lr.uniform(.02, .03))
+_lme = bpy.data.meshes.new('Leaves'); _lbm.to_mesh(_lme); _lbm.free(); _lme.materials.append(_ml)
+_lo = bpy.data.objects.new('Leaves', _lme); scene.collection.objects.link(_lo); _lo['group'] = 'decor'
+''' + SHOTS_LINE)
+    print('leaves', lv)
 if '--lab-shots' in own:
     assert src.count(PREVIEW_LINE) == 1, 'build_archive.py: the preview block changed — update this wrapper'
-    src = src.replace(PREVIEW_LINE, LAB_SHOTS + PREVIEW_LINE)
+    i = own.index('--lab-shots'); which = own[i + 1] if i + 1 < len(own) and not own[i + 1].startswith('--') else ''
+    shots = LAB_SHOTS if which != 'c1' else 'SHOTS = {' + ', '.join(f"'c1_{int(u * 100):03d}': {c1_at(u)}" for u in (0, .24, .42, .6, .8, 1)) + '}\n'
+    src = src.replace(PREVIEW_LINE, shots + PREVIEW_LINE)
 sys.argv = [SRC] + rest
 exec(compile(src, SRC, 'exec'), {'__name__': '__main__', '__file__': SRC})

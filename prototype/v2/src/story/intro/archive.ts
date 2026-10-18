@@ -124,10 +124,17 @@ export async function createArchive(variant:'base'|'sun35'='base'){
 
  // D-075 ambient (Lab backdrop; every strength 0 by default, so the intro and Story are unchanged): one cloud field in the sun's
  // light space, drawn into a small texture each frame, dims the shafts, the sun-lit surfaces and the dust together (A); the
- // shafts can fold like silk along the beam (B). User 2026-10-18 after the first look: the wind (C) is removed and the cloud is
- // off in the Lab (F-051: stair-step patterns on the ladder and the floor), kept here behind uCloud for a later fix.
- const amb={cloud:{value:0},silk:{value:0},cloudT:{value:0},
+ // silk folds in the air (B) were replaced by D-077 S1 (F-052: folds in the air average out along the view ray). User
+ // 2026-10-18 after the first look: the wind (C) is removed and the cloud is off in the Lab (F-051: stair-step patterns on the
+ // ladder and the floor), kept here behind uCloud for a later fix.
+ // D-077 S1 "aurora": the light's cross-section carries a leaf/streak pattern that sways a little (leaves moving in front of the
+ // openings). The pattern is constant along the beam, so summing along a view ray keeps the streaks; strength uAur (0 = off).
+ const amb={cloud:{value:0},aur:{value:0},cloudT:{value:0},
   cloudDir:{value:new THREE.Vector2(1,0)},tCloud:{value:null as THREE.Texture|null}};
+ const goboTex=(()=>{const S=128,C=8,g=new Uint8Array(S*S*4),r=(i:number,j:number)=>{const x=Math.sin(((i%C)+C)%C*127.1+(((j%C)+C)%C)*311.7)*43758.5453;return x-Math.floor(x);};
+  for(let y=0;y<S;y++)for(let x=0;x<S;x++){const fx=x/S*C,fy=y/S*C,i=Math.floor(fx),j=Math.floor(fy),u=fx-i,v=fy-j,su=u*u*(3-2*u),sv=v*v*(3-2*v);
+   const n=(r(i,j)*(1-su)+r(i+1,j)*su)*(1-sv)+(r(i,j+1)*(1-su)+r(i+1,j+1)*su)*sv;g.fill(Math.round(n*255),(y*S+x)*4,(y*S+x)*4+4);}
+  const t=new THREE.DataTexture(g,S,S);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.magFilter=t.minFilter=THREE.LinearFilter;t.needsUpdate=true;return t;})();   // tileable value noise, 8 cells
  const cloudRT=new THREE.WebGLRenderTarget(256,256,{type:THREE.UnsignedByteType,depthBuffer:false});cloudRT.texture.wrapS=cloudRT.texture.wrapT=THREE.ClampToEdgeWrapping;
  amb.tCloud.value=cloudRT.texture;
  const cloudQuad=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:{uT:amb.cloudT,uDir:amb.cloudDir},
@@ -175,14 +182,14 @@ export async function createArchive(variant:'base'|'sun35'='base'){
    uInvProj:{value:new THREE.Matrix4()},uInvView:{value:new THREE.Matrix4()},uLightVP:{value:lightVP},uCam:{value:new THREE.Vector3()},
    uSun:{value:sunTo},uCol:{value:sunCol},uDensity:{value:.05},uIntensity:{value:1.8},uTime:{value:0},uFrame:{value:0},uOn:{value:0},
    uHaze:{value:.018},uHazeCol:{value:new THREE.Color(.22,.17,.13)},
-   uCloud:{value:0},uSilk:{value:0},tCloud:{value:null},   // replaced by the shared ambient uniforms below (ShaderPass clones)
+   uCloud:{value:0},uAur:{value:0},tCloud:{value:null},tGobo:{value:null},   // replaced by the shared ambient uniforms below (ShaderPass clones)
    // D-067: optional spot-light cone (Story desk lamp) in the same pass — a second pass sampling this depth would read the
    // target it writes (feedback loop). Marched only inside a sphere around the cone; cut below uCMinY (desk top).
    uCOn:{value:0},uCLP:{value:new THREE.Vector3()},uCLD:{value:new THREE.Vector3(0,-1,0)},uCCos:{value:new THREE.Vector2(.8,.93)},uCCol:{value:new THREE.Vector3(1,.78,.52)},uCMinY:{value:0},uCSh:{value:0},uCDepth:{value:null as THREE.Texture|null},uCVP:{value:new THREE.Matrix4()}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
   fragmentShader:`precision highp float;
    uniform sampler2D tDiffuse,tDepth,tLight;uniform mat4 uInvProj,uInvView,uLightVP;uniform vec3 uCam,uSun,uCol;
-   uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze,uCloud,uSilk;uniform vec3 uHazeCol;uniform sampler2D tCloud;varying vec2 vUv;
+   uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze,uCloud,uAur;uniform vec3 uHazeCol;uniform sampler2D tCloud,tGobo;varying vec2 vUv;
    uniform float uCOn,uCMinY,uCSh;uniform vec3 uCLP,uCLD,uCCol;uniform vec2 uCCos;uniform sampler2D uCDepth;uniform mat4 uCVP;
    float coneVis(vec3 p){if(uCSh<.5)return 1.;vec4 q=uCVP*vec4(p,1.);if(q.w<=0.)return 1.;vec3 l=q.xyz/q.w*.5+.5;if(l.x<0.||l.x>1.||l.y<0.||l.y>1.)return 1.;return step(l.z-.0006,texture2D(uCDepth,l.xy).x);}
    vec3 lampCone(vec3 cam,vec3 rd,float far,float j){
@@ -205,17 +212,19 @@ export async function createArchive(variant:'base'|'sun35'='base'){
     vec4 v=uInvProj*vec4(vUv*2.-1.,d*2.-1.,1.);v/=v.w;vec3 wp=(uInvView*v).xyz;
     vec3 rd=wp-uCam;float len=min(length(rd),9.);rd=normalize(rd);
     const int N=48;float dt=len/float(N),j=ign(gl_FragCoord.xy+uFrame*5.588),acc=0.,tr=1.;
-    // D-075 B: silk — the noise is stretched along the beam and folded across it, the folds drifting slowly (0 = the old haze)
+    // D-077 S1: cross-section coordinates of the light (a, b ⟂ the sun), the same for every point along one beam
     vec3 sa=normalize(cross(uSun,vec3(0.,1.,0.))),sb=cross(sa,uSun);
     for(int i=0;i<N;i++){
      vec3 p=uCam+rd*(float(i)+j)*dt;
      vec4 lp=uLightVP*vec4(p,1.);vec3 l=lp.xyz/lp.w*.5+.5;
      float lit=(l.x>0.&&l.x<1.&&l.y>0.&&l.y<1.)?step(l.z-.0015,texture2D(tLight,l.xy).x):0.;
      if(uCloud>0.&&lit>0.)lit*=1.-uCloud*.85*(1.-texture2D(tCloud,l.xy).r);   // A: a cloud dims the whole beam
-     float u=dot(p,sa),v=dot(p,sb),s=dot(p,uSun);
-     vec3 q=mix(p*2.2+vec3(0.,uTime*.05,uTime*.03),vec3(u*1.6+uTime*.035,s*.25-uTime*.02,v*1.6),uSilk>0.?1.:0.);
-     float n=noise(q);
-     if(uSilk>0.){float fold=.5+.5*sin(u*5.5+v*2.3+n*4.+uTime*.16);n=mix(n,fold*fold*(.6+.8*n),min(1.,uSilk));}
+     if(uAur>0.&&lit>0.){   // leaves swaying in front of the opening: ~0.3 m cells, ±0.15 m sway with a phase that varies across the light
+      vec2 c=vec2(dot(p,sa),dot(p,sb))*.4;
+      c+=.06*vec2(sin(uTime*1.1+c.y*9.),sin(uTime*.83+c.x*7.))+vec2(uTime*.004,0.);
+      float g=.62*texture2D(tGobo,c).r+.38*texture2D(tGobo,c*2.3+vec2(uTime*.02,-uTime*.013)).r;
+      lit*=mix(1.,.2+1.4*smoothstep(.3,.72,g),min(1.,uAur));}
+     float n=noise(p*2.2+vec3(0.,uTime*.05,uTime*.03));
      float dens=uDensity*(.55+.9*n);
      acc+=lit*dens*tr*dt;tr*=exp(-dens*.15*dt);
     }
@@ -228,7 +237,7 @@ export async function createArchive(variant:'base'|'sun35'='base'){
     vec3 cone=uCOn>.002?lampCone(uCam,rd,length(wp-uCam),j):vec3(0.);
     gl_FragColor=vec4(mix(col,uHazeCol,hz)+uCol*acc*ph*uIntensity*uOn+cone,1.);
    }`});
- vol.uniforms.uCloud=amb.cloud;vol.uniforms.uSilk=amb.silk;vol.uniforms.tCloud=amb.tCloud;
+ vol.uniforms.uCloud=amb.cloud;vol.uniforms.uAur=amb.aur;vol.uniforms.tCloud=amb.tCloud;vol.uniforms.tGobo={value:goboTex};
  vol.uniforms.tLight.value=lightRT.depthTexture;vol.uniforms.uLightVP.value=lightVP;vol.uniforms.uSun.value=sunTo;vol.uniforms.uCol.value=sunCol;
 
  const V=(a:number[])=>new THREE.Vector3(...a);
@@ -246,6 +255,6 @@ export async function createArchive(variant:'base'|'sun35'='base'){
    u.uCam.value.copy((camera as THREE.PerspectiveCamera).position);u.uTime.value=t;u.uFrame.value=frame%64;
   },
   setPx(h:number,pr:number){dustMat.uniforms.uPx.value=h*pr/55;},
-  dispose(){lightRT.dispose();cloudRT.dispose();cloudQuad.dispose();dg.dispose();dustMat.dispose();mats.forEach(m=>m.dispose());Object.values(lightmaps).forEach(t=>t.dispose());}};
+  dispose(){lightRT.dispose();cloudRT.dispose();cloudQuad.dispose();goboTex.dispose();dg.dispose();dustMat.dispose();mats.forEach(m=>m.dispose());Object.values(lightmaps).forEach(t=>t.dispose());}};
 }
 export type Archive=Awaited<ReturnType<typeof createArchive>>;

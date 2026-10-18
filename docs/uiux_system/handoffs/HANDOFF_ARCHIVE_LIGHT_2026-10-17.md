@@ -100,6 +100,8 @@ python3.11 -m venv ~/bpyenv
 (이 세션의 실제 버전: bpy 4.5.3 LTS, Python 3.11.17. Cycles CPU, 4코어 기준 1280×720 64샘플 한 장 약 6분.)
 
 ### 4.2 에셋(Poly Haven, CC0, gitignored `assets/source/`)
+
+> 2026-10-18 조달 방침 재확인: 아래 받기 명령은 **과거 B2/r8 장면을 동일 조건으로 재현하기 위한 의존성 복구**다. 신규 소품은 §3 B4 및 검토안 §5/§7.2의 자체 키트 주력·Poly Haven 보조 방침을 따른다. 재질이 필요하면 모델과 분리해 직접 만들거나 고품질 텍스처를 조사한다. 이 복구 목록을 신규 채택 목록으로 쓰지 않는다. 공통 진입점 `../24_ASSET_RESEARCH_STAGE.md` §1.1, 확인 근거 `verification/r1-archive-asset-policy-audit-20261018/README.md`(저장소 루트 기준).
 ```
 ~/bpyenv/bin/python scripts/assets/fetch-polyhaven-sources.py .
 ```

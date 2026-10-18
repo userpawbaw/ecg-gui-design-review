@@ -440,7 +440,7 @@
     "branch": "claude/archive-light-r7-ag2rja",
     "base_commit": "df532274de086866bfc829f2cec351e482413c75",
     "decision": "D-141",
-    "status": "blocked_polyhaven_network",
+    "status": "partially_blocked",
     "selection": {
       "light_pattern": "b",
       "ladder": "L2",
@@ -462,7 +462,15 @@
       "L2 climber contacts/collisions and hatch choreography",
       "web bake/camera/motion"
     ],
-    "next_action": "Apply saved network settings for api.polyhaven.com and dl.polyhaven.org, recheck API, restore and verify sources, then render matched underside baseline/candidate. Keep Story-owned people/hatch assets and r8/D-084 defaults unchanged.",
-    "evidence": "verification/r1-archive-b3-selected-20261018/README.md"
+    "next_action": "Keep historical B3 baseline reproducible when source access is restored. For new production, follow the already approved self-authored kit route and independently evaluate any needed material textures. Preserve Story ownership and r8/D-084 defaults; record meaningful design choices before implementing.",
+    "evidence": "verification/r1-archive-b3-selected-20261018/README.md",
+    "blocked_scope": "Historical B3 same-condition render reproduction needs the original Poly Haven assets. This does not block all new asset research/design.",
+    "asset_policy": {
+      "source": "docs/uiux_system/24_ASSET_RESEARCH_STAGE.md §1.1; rounds/R1/REVIEW-R1-ARCHIVE-SHADOW-ASSET-20261016.md §5 and §7.2",
+      "main_route": "self-authored parametric props; clean solid colours / low-contrast grain",
+      "polyhaven_role": "reference/supplement; old dependencies are not automatic production approvals",
+      "materials": "author separately or research high-quality texture candidates; assess actual view/UV/bake/compression",
+      "audit": "verification/r1-archive-asset-policy-audit-20261018/README.md"
+    }
   }
 }

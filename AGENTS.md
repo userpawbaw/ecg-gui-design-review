@@ -94,6 +94,8 @@ User-approved workflow: source-project analysis → independent design/prototype
 
 ## Effect production pipeline (2026-09-26)
 
+- Archive/attic asset routing: before restoring or choosing materials/props, read `docs/uiux_system/24_ASSET_RESEARCH_STAGE.md` §1.1 and `rounds/R1/REVIEW-R1-ARCHIVE-SHADOW-ASSET-20261016.md` §5/§7.2 (under `docs/uiux_system/`). The approved archive direction uses a self-authored parametric kit as the main route and Poly Haven as a reference/supplement. Restoring a historical render's dependencies does not approve those assets for new production. Preserve Story-owned objects and the r8/D-084 baselines.
+
 - The user adopted the effect production pipeline (P1 = D-027, P5 = D-028, P6 = D-029). For HIGH and MEDIUM zone effect work, follow `docs/uiux_system/25_EFFECT_PRODUCTION_PIPELINE.md`: effect card → route choice → asset research (`24`) and external component review (`23`) → implementation with the shader/post review (`11_CHECKLISTS.md` §12) → fidelity gate G1–G6 (§13) before showing results → user check. LOW/polish work is exempt.
 - HIGH zone may use WebGL (this replaces D-016's Canvas 2D limit on the recovered Attract branch). MEDIUM defaults to DOM/Canvas 2D/SVG unless a D record justifies WebGL.
 - 3D/scroll effects are vanilla engine modules (three, GSAP, Lenis) mounted by React; per-frame values never flow through React state; one Lenis per page.

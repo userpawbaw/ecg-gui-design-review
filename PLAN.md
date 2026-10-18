@@ -322,3 +322,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-10-17 **B2 변형 16장(D-085, 조건부)**: 가지·잎 모양 잎 그림자, (a) 웅덩이 하나 / (b) 조각 유지 × 사다리 L1(해치 뒤 모서리) / L2(벽 레일에 기댐) × 30°/45° × 카메라 2.8/2.0 m. L2만 사다리 그림자가 선명(2.0–2.4 px). 칸 아랫면 빛은 주로 주광 스폿이 튄 빛이고, 해치 빛은 바로 아래 칸이 해를 받을 때만 영향을 준다. 아랫면 재질 ×0.35로 아랫면/윗면 0.60 → 0.27, 앞턱은 기각. `verification/r1-archive-b2-variants-20261017/`. **사용자 선택 대기.**
 - 2026-10-17 **다른 AI로 인수인계**(사용량 문제, 사용자 결정): `docs/uiux_system/handoffs/HANDOFF_ARCHIVE_LIGHT_2026-10-17.md`(상태, 대기 질문 4개, B3–B7, 환경 재현, 함정, 초기 지침 §6). 브랜치 `claude/archive-light-r7-ag2rja` 유지. 에셋 받기 스크립트 `scripts/assets/fetch-polyhaven-sources.py` 추가.
 
+
+## 2026-10-18 — isolated archive baked-light web preview
+
+- [x] D-145 decision recorded before implementation; preserve Story-owned assets/defaults and build a separate B3 review output.
+- [x] B3 light bake and optimized GLB generated in `verification/r1-archive-web-bake-20261018/`; web preview uses the existing lightmap shader model and free OrbitControls.
+- [x] Headless Chromium load, baked-light state, asset requests, camera drag/reset, and screenshot verified.
+- [ ] User art-direction review of all views/materials; production Story integration remains separate and requires its own scoped decision.

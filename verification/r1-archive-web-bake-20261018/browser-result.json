@@ -1,0 +1,86 @@
+{
+  "url": "http://127.0.0.1:5197/archive-bake-preview/preview.html",
+  "errors": [],
+  "failedRequests": [],
+  "responses": [
+    {
+      "status": 200,
+      "url": "/archive-bake-preview/preview.html"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/loaders/GLTFLoader.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/controls/OrbitControls.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/libs/meshopt_decoder.module.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js?v=6c090f67"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/utils/SkeletonUtils.js?v=6c090f67"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/build/three.module.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/build/three.core.js?v=6c090f67"
+    },
+    {
+      "status": 200,
+      "url": "/archive-bake-preview/manifest.json"
+    },
+    {
+      "status": 200,
+      "url": "/archive-bake-preview/light_shell.webp"
+    },
+    {
+      "status": 200,
+      "url": "/archive-bake-preview/archive.glb"
+    }
+  ],
+  "orbitMoved": true,
+  "status": "베이크 조명 적용 · 1 lightmaps · meshopt GLB",
+  "preview": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "groups": [
+      "shell",
+      "books",
+      "decor"
+    ],
+    "lightmaps": [
+      "shell"
+    ]
+  },
+  "camera": {
+    "initial": [
+      8.5,
+      5.500000000000002,
+      17
+    ],
+    "afterDrag": [
+      -2.543887868370795,
+      3.445559545070628,
+      18.934594685932286
+    ],
+    "afterReset": [
+      8.5,
+      5.500000000000002,
+      17
+    ],
+    "resetError": 0
+  },
+  "result": "PASS"
+}

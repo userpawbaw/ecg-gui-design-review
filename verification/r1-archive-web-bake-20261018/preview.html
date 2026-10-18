@@ -44,8 +44,8 @@
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(37, innerWidth / innerHeight, 0.05, 100);
-    const initialPosition = new THREE.Vector3(3.5, 10.8, 18.0);
-    const initialTarget = new THREE.Vector3(0.0, 2.4, -2.0);
+    const initialPosition = new THREE.Vector3(8.5, 5.5, 17.0);
+    const initialTarget = new THREE.Vector3(0.0, 2.15, -1.5);
     camera.position.copy(initialPosition);
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.target.copy(initialTarget);
@@ -56,6 +56,7 @@
     controls.minPolarAngle = 0.12;
     controls.maxPolarAngle = Math.PI * 0.48;
     controls.update();
+    controls.saveState();
 
     const loaded = await fetch('./manifest.json');
     if (!loaded.ok) throw new Error(`manifest HTTP ${loaded.status}`);
@@ -138,11 +139,19 @@
     });
     scene.add(gltf.scene);
     status.textContent = `베이크 조명 적용 · ${Object.keys(lightmaps).length} lightmaps · meshopt GLB`;
+    window.__archivePreview = { camera, controls, groups: Object.keys(manifest.groups), lightmaps: Object.keys(lightmaps) };
 
     document.querySelector('#reset').addEventListener('click', () => {
+      const damping = controls.enableDamping;
+      controls.enableDamping = false;
+      controls._sphericalDelta?.set(0, 0, 0);
+      controls._panOffset?.set(0, 0, 0);
+      controls._scale = 1;
       camera.position.copy(initialPosition);
       controls.target.copy(initialTarget);
       controls.update();
+      controls.saveState();
+      controls.enableDamping = damping;
     });
     addEventListener('resize', () => {
       camera.aspect = innerWidth / innerHeight;

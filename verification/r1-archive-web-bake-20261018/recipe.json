@@ -1,0 +1,69 @@
+{
+  "decision": "D-145",
+  "base_decision": "D-141",
+  "light_mix": "D-144",
+  "builder_sha256": "d570eea470c36ee41aebf37ee2139e64cb16804bb12470fbca815ad2ba08bf28",
+  "output": "verification/r1-archive-web-bake-20261018",
+  "bake_size": 2048,
+  "bake_samples": 128,
+  "selected": {
+    "foliage": "branch",
+    "ladder": "L2/wall",
+    "angle_degrees": 30,
+    "underside_factor": 0.35
+  },
+  "light_group_ratios": {
+    "key": 0.5,
+    "sun": 0.6,
+    "sky": 4.0,
+    "rest": 1.0,
+    "exposure": 0.3
+  },
+  "baked_source_energies": {
+    "key": 2275,
+    "sun": 19.8,
+    "sky": 1.2,
+    "rest": "builder default"
+  },
+  "environment": {
+    "B2_FOLIAGE": "branch",
+    "B2_EDGE": "0",
+    "B2_BRANCHES": "7",
+    "HOLES": "1.75,3.3,2.6,3.85",
+    "HOLES_ADD": "",
+    "LAD_MODE": "wall",
+    "LAD_YAW": "60",
+    "UNDERSIDE_K": "0.35",
+    "SHELF_LIP": "0",
+    "LIGHTGROUPS": "1",
+    "SHOTS_JSON": "{\"p2_z28\":[[0,-0.8,2.8],[0,4.7,2.8],32],\"p3_z20\":[[0,-0.8,2.0],[0,4.7,2.0],32]}",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "4",
+    "KEY_E": "2275",
+    "SUN_E": "19.8",
+    "SKY_E": "1.2",
+    "EXPO": "0.3"
+  },
+  "build": [
+    "/workspace/.ecg-cloud/bpyenv/bin/python",
+    "/workspace/ecg-gui-design-review/scripts/blender/build_archive.py",
+    "--intro2",
+    "--art",
+    "r6",
+    "--dress",
+    "--palette",
+    "pastel",
+    "--look",
+    "h5",
+    "--b2",
+    "--bake",
+    "verification/r1-archive-web-bake-20261018",
+    "--size",
+    "2048",
+    "--bsamples",
+    "128"
+  ],
+  "scope": "isolated web bake; Story source assets and defaults unchanged"
+}

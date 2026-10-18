@@ -5,6 +5,7 @@
 - B3 렌더에 보이는 PC/CRT/ECG 6 mesh는 각 8 vertex/6 polygon/bevel modifier 없음. `prop-geometry-audit.py` exit1 6/6; 3mm bevel fixture PASS. 기존 기기 Q2 FAIL, 새 기기 Q1/Q4 미확인.
 - D-144 same EXR mix: key 0.5/0.35/0.25. 사용자가 0.5를 시각 선택해 기존 B3 혼합값으로 유지. 보호된 기본값·Story·웹 반영 승인은 아님. 측정과 확인 안 함은 `verification/r1-archive-b3-rerender-20261018/README.md`.
 - Blender Manual, MIT GitHub skill 2곳, Polycount 위키 조사로 D-143 skill을 보강. records 155건/CASE, playbook 6 cards·3 journeys, encoding, portability 점검 PASS. Story/r8/D-084 보호.
+- D-145를 베이크 전에 기록했다. 실제 웹 베이크 GLB/lightmap을 verification 경로에서 패키징하고 OrbitControls 리뷰 페이지로 확인할 계획. Story asset/loader/defaults는 변경하지 않는다.
 - 전체 서고 컷어웨이 시안: 1280×720, Python/bpy 3.11.17/4.5.3, Cycles CPU 32 samples + OIDN. 상부 구조·측벽 렌더 제외. 배치 참고용이며 표준 광원 믹스/재질/동선 승인 아님. README에 source/output SHA와 재현 스크립트 기록.
 
 ## 2026-10-18 KST — 자체 제작 소품 품질 관문(D-143, CASE-008)

@@ -46,6 +46,12 @@
       "owner": "separate archive-light session (handoff docs/uiux_system/handoffs/HANDOFF_ARCHIVE_LIGHT_2026-10-10.md)",
       "since": "2026-10-10",
       "note": "Story work continues in the R1 session; it does not edit these files. Records (D/F/PLAN/WORKLOG) are shared: check the latest number before committing. 2026-10-15: r7 (D-081) stills on branch claude/archive-light-r7-ag2rja, awaiting the user's check; web bake not started. 2026-10-17: D numbers collided twice with the Story branch; this session now uses D-081 upward (r7 D-081, r8 D-082, V1 D-083, B2 D-084, B2 variants D-085). Handed off to another AI on 2026-10-17: docs/uiux_system/handoffs/HANDOFF_ARCHIVE_LIGHT_2026-10-17.md. The Story desk-corner set (desk-corner-set.py, D-070 on its branch) uses sun direction (-0.42, 0.40, -0.81); the archive B2 adopts the same sun so both bakes cast parallel shadows."
+    },
+    {
+      "resource": "verification/r1-archive-web-bake-20261018: bpy Cycles bake, GLB/WebP package and local browser preview",
+      "owner": "claude/archive-light-r7-ag2rja D-145",
+      "since": "2026-10-18",
+      "note": "User requested actual baked web output and free movement. Separate output; no Story files/defaults. Remove this scoped entry after bake and browser verification complete."
     }
   ],
   "concurrency": {
@@ -440,7 +446,7 @@
     "branch": "claude/archive-light-r7-ag2rja",
     "base_commit": "df532274de086866bfc829f2cec351e482413c75",
     "decision": "D-141",
-    "status": "b3_light_mix_user_selected_0.5; story_web_production_review_pending",
+    "status": "b3_web_light_bake_in_progress_D145",
     "selection": {
       "light_pattern": "b",
       "ladder": "L2",
@@ -472,9 +478,9 @@
       "L2 climber contacts/collisions and hatch choreography",
       "Web bake/camera/motion and target-device checks"
     ],
-    "next_action": "Next review candidate: visually assess L2 ladder, climber and hatch choreography against the whole-scene overview; do not edit Story-owned assets without authorization. Separately address legacy prop Q0-Q5, production light transfer, web bake and target-device validation.",
-    "evidence": "verification/r1-archive-b3-rerender-20261018/README.md",
-    "blocked_scope": "User selected key 0.5 for B3 stills. No Story/default/web application approved. L2 choreography, prop craft validation, web bake and target-device checks remain.",
+    "next_action": "D-145 active: bake selected B3 light to an isolated web GLB/lightmap, package with WebP+meshopt, apply the project lightmap shader in a free-orbit local review page, capture actual browser render. Do not modify Story-owned assets or defaults.",
+    "evidence": "verification/r1-archive-web-bake-20261018/ (in progress)",
+    "blocked_scope": "Separate web bake and viewer only; Story integration/default transfer remains out of scope.",
     "asset_policy": {
       "source": "docs/uiux_system/24_ASSET_RESEARCH_STAGE.md §1.1; rounds/R1/REVIEW-R1-ARCHIVE-SHADOW-ASSET-20261016.md §5 and §7.2",
       "main_route": "self-authored parametric props; clean solid colours / low-contrast grain",

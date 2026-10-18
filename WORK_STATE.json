@@ -490,7 +490,14 @@
       "rendered_frames": 22,
       "normal_correction_rerenders": 2,
       "scope": "Independent material fixture; no archive/Story integration",
-      "recommendation": "Self-authored clean paint; weak wood grain / PH ash as supplementary candidate; user aesthetic confirmation pending"
+      "recommendation": "Prioritize user-preferred PH ash original and own paint as candidates; verify in actual scene before adoption.",
+      "user_feedback": "2026-10-18: prefers PH ash original in bench; own paint acceptable. Not approval to change archive defaults.",
+      "original_branch_audit": {
+        "finding": "F-108",
+        "commit": "bf16509ee7fe493404becef0b9a9b42a55a069b1",
+        "evidence": "verification/r1-original-branch-assets-20261018/README.md",
+        "result": "Initial PC/ECG were un-bevelled self-authored boxes, background had distinct PH materials; original archive GLB identical to current branch"
+      }
     }
   }
 }

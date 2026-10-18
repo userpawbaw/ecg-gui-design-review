@@ -1,5 +1,13 @@
 # Review plan
 
+## 2026-10-18 KST — 최초 브랜치 에셋 감사(F-108)
+
+- 사용자 PH ash **원본** 선호·자체 paint 긍정 반응을 기록했다. 실제 서고 교체 승인으로 확대하지 않았다.
+- `claude/r1-autopilot-recommended` HEAD bf16509와 최초 빌더 62f0ef8 확인: 초기 PC/CRT/키보드/ECG 출력 기기는 PH 모델이 아닌 베벨 없는 자체 상자·단색이다. 책상은 PH painted_wooden_table, 벽은 painted_plaster_wall, 바닥은 herringbone_parquet, 서가는 ash_veneer, 사다리는 walnut_veneer다.
+- 10/14 “구식 게임” 피드백에 따른 자체 상세 workstation 교체(7ba8908)를 찾았다. 실제 GLB 557,820 bytes/95 meshes/9 materials/images 0. 후속 기본 Story는 컴퓨터를 뺀 자체 소품 세트이며 legacyDesk=1만 이전 workstation을 연다.
+- 원본 브랜치 archive.glb와 현재 빛 브랜치 Git blob 동일 확인. 기존 웹 1K WebP 분석은 이 바이너리에 해당하지만 옛 Cycles PNG의 원인으로 일반화하지 않는다. 기존 책상 PNG를 열어 단순 기기·마모된 주변 표면을 확인했다.
+- 감사: `verification/r1-original-branch-assets-20261018/README.md` + asset-evidence.json. 실제 최초 피드백 프레임·프린터 지칭·원인별 기여율은 확인 안 함. 구현/Story/기본값/신규 렌더 변경 없음. 다음은 선호 재질과 실제 소품 품질을 구분해 적용 범위를 정하는 일이다.
+
 ## 2026-10-18 KST — 외부 접속 복구·실제 재질 비교(D-142/F-107)
 
 - 공식 원본 다운로드 성공: PH 2종·ambientCG 4종·CGBookcase 2종, 2K PNG 8팩/361,430,072 bytes. PH 6맵 MD5 일치, 전체 SHA-256·CC0 근거·test-only 등록. 이전 CONNECT 403은 당시 이력이고 현재 전체 차단이 아니다.

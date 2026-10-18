@@ -125,4 +125,4 @@ Awwwards/Godly/SiteInspire/Land-book/Lapa Ninja/CSS Design Awards 같은 공개 
 
 ## 서고 자체 제작 소품 (2026-10-18)
 
-- project-local `self-authored-3d-props`: `.claude/skills/self-authored-3d-props/SKILL.md` + `references/sources.md`. 사용자 요청과 F-108/D-143/CASE-008, 기존 서고 리뷰 §5·§7을 근거로 자체 작성. 외부 스킬 원문/코드 복제 없음. 공식 Blender Manual Bevel/Weighted Normal/UV/Baking URL을 기술 참고로 사용. 실제 새 소품 품질은 아직 확인 안 함.
+- project-local `self-authored-3d-props`: `.claude/skills/self-authored-3d-props/SKILL.md` + `references/sources.md`. 사용자 요청과 F-108/D-143/CASE-008, 기존 서고 리뷰 §5·§7을 근거로 자체 작성. 외부 스킬 원문/코드 복제 없음. 공식 Blender Manual Bevel/Weighted Normal/UV/Baking URL, MIT GitHub `EL4CTEO/blender-skills`(71d031d, 66 stars), `scenario-labs/skills`(ccc6c5c, 1,043 stars), Polycount 위키 2개 본문을 기술 참고로 사용(2026-10-18). 별점은 설치 수가 아니며 외부 5.2 스크립트는 4.5.3에서 미검증이어서 복사/실행하지 않았다. 적용·제외 근거는 skill `references/sources.md`. 실제 새 소품 품질은 아직 확인 안 함.

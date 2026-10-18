@@ -463,7 +463,8 @@
       "same-sample underside medians: shaded 0.0935 to 0.0375 (-59.9%); shelf tops -1.0%",
       "sun shadow widths: ladder rungs 2.3px, stiles 1.8px, distant foliage 13.2px",
       "D-143 prop geometry audit: six PC/CRT/ECG box components fail, bevel fixture mechanical pass",
-      "D-144 light-group key mixes 0.5/0.35/0.25 measured in two camera views"
+      "D-144 light-group key mixes 0.5/0.35/0.25 measured in two camera views",
+      "Whole archive cutaway overview rendered from saved B3 scene: 1280x720, bpy 4.5.3 Cycles CPU 32 samples + OIDN; output SHA pinned in verification README"
     ],
     "not_verified": [
       "Exact historical SHA/pixel identity for republished vintage_wooden_drawer_01",
@@ -471,7 +472,7 @@
       "L2 climber contacts/collisions and hatch choreography",
       "Web bake/camera/motion and target-device checks"
     ],
-    "next_action": "Continue archive light redesign using key 0.5 as the user-selected B3 still mix. Keep protected Story/defaults unchanged; separately validate L2 hatch choreography, prop Q0-Q5, web bake and target-device checks.",
+    "next_action": "Next review candidate: visually assess L2 ladder, climber and hatch choreography against the whole-scene overview; do not edit Story-owned assets without authorization. Separately address legacy prop Q0-Q5, production light transfer, web bake and target-device validation.",
     "evidence": "verification/r1-archive-b3-rerender-20261018/README.md",
     "blocked_scope": "User selected key 0.5 for B3 stills. No Story/default/web application approved. L2 choreography, prop craft validation, web bake and target-device checks remain.",
     "asset_policy": {

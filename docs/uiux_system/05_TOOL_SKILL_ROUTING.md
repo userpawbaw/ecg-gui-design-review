@@ -118,3 +118,7 @@ spacing/label/색상 미세조정, 이미 reference/direction이 freeze된 구�
 `Alpha안으로 [scene] 설계해줘` → Alpha. `Beta안으로 [scene] 진행해줘` → Beta. `Alpha/Beta 라운드로 [scene] 진행해줘` → 두 track first pass 후 cross-review. `Alpha/Beta 결과 비교해줘` → 20번 공통 평가. 기존 Dual/Superdesign trigger는 역사/명시적 재검증 요청에서만 사용한다.
 
 실행 entrypoint는 특정 skill loader가 아니라 `20_ALPHA_BETA_OPERATING_PROTOCOL.md`의 workflow contract다. Chat/Work/Codex/Claude Code는 같은 문서를 읽어 동일 trigger 의미를 따른다. 이 자동 선택은 account-wide hook 보장이 아니다.
+
+## 서고 자체 제작 소품 (D-143)
+
+컴퓨터·모니터·프린터·ECG 기기·서가·책 등 직접 만든 hard-surface 소품을 제작/교체하거나 최종 품질로 소개하기 전에 `.claude/skills/self-authored-3d-props/SKILL.md`를 읽고 Q0–Q5를 적용한다. 다른 실행 환경에서는 같은 문서를 직접 읽는다. 근거: CASE-008. 조명만 시험하는 B3 렌더의 구형 소품은 소품 품질 검수 합격으로 간주하지 않는다.

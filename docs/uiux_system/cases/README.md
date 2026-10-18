@@ -32,3 +32,7 @@ D/R은 CASE 연결 또는 `10_RECORD_KEEPING.md`에 따른 구체적 비연결 �
 ## 2026-10-09
 
 - [CASE-007](CASE-007_EXPERIENCE_PLAYBOOK.md) — 리깅 시행착오를 계기로 경험을 권장 카드 + 여정 두 층의 플레이북으로 바꾼 과정(D-057). 산출물 `docs/playbook/`
+
+## 2026-10-18
+
+- [CASE-008](CASE-008_ARCHIVE_PROP_CRAFT_GATE.md) — 초기 자체 제작 장비의 형태 품질 문제를 제작 순서와 Q0–Q5 검수 관문으로 전환(D-143).

@@ -122,3 +122,7 @@ Awwwards/Godly/SiteInspire/Land-book/Lapa Ninja/CSS Design Awards 같은 공개 
 - project-local `pose-anatomy`: `.claude/skills/pose-anatomy/SKILL.md` + `references/rom.md`. 자체 작성(사용자 요청 2026-10-05, D-051 갱신, R-020). 수치 출처: AAOS 정상 관절 운동 범위, Luttgens & Hamilton 1997(WikEM 표), 일상동작 기능 범위 연구 2편, 양반다리 3D 동작 분석(BMC Musculoskelet Disord 2021), 아래팔 엎침 측정(PMC9091929). URL은 rom.md에 있다.
 - 공개 skill 검색 결과(2026-10-05): 리깅 기초(관절 종류·계층)와 MIT 라이선스 "blender-motion-state-inspection"(접지·발 미끄러짐·꼬임)만 있고 정지 자세 가동 범위 판정은 없었다. 후자는 "꼬임을 휘두름과 분리해 본다"는 생각만 참고했고 글·코드는 복제하지 않았다.
 - 실행 코드는 skill 밖 `scripts/assets/pose-check-v3.py`(빌드 관문)와 `pose-check-selftest.py`에 있다.
+
+## 서고 자체 제작 소품 (2026-10-18)
+
+- project-local `self-authored-3d-props`: `.claude/skills/self-authored-3d-props/SKILL.md` + `references/sources.md`. 사용자 요청과 F-108/D-143/CASE-008, 기존 서고 리뷰 §5·§7을 근거로 자체 작성. 외부 스킬 원문/코드 복제 없음. 공식 Blender Manual Bevel/Weighted Normal/UV/Baking URL을 기술 참고로 사용. 실제 새 소품 품질은 아직 확인 안 함.

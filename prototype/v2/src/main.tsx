@@ -14,19 +14,23 @@ import './style.css';
 // D-074: the archive behind the Lab page (fixed canvas). Scroll through the hero (.lab-hero) drives the descent, the pointer turns
 // the view; the page switches to the dark theme while it is shown. ?bg=0 turns it off.
 const BACKDROP=new URLSearchParams(location.search).get('bg')!=='0';
+// user 2026-10-18: a black curtain over the backdrop (the light stays, only outlines read) and UI at ~90 % opacity so the dark
+// backdrop shows faintly behind it; both set from the address bar in 10 % steps: ?curtain=70 (0–100) · ?ui=90 (0–100)
+const pct=(k:string,d:number)=>{const v=Number(new URLSearchParams(location.search).get(k));if(!Number.isFinite(v)||new URLSearchParams(location.search).get(k)===null)return d;const f=v>1?v/100:v;return Math.min(1,Math.max(0,Math.round(f*10)/10));};
+const CURTAIN=pct('curtain',.7),UI_A=pct('ui',.9);
 function LabBackdropLayer({playing,covered}:{playing:boolean,covered:boolean}){
  const ref=useRef<HTMLCanvasElement>(null),bdRef=useRef<LabBackdrop|null>(null),state=useRef({playing,covered});state.current={playing,covered};
  useEffect(()=>{bdRef.current?.setPaused(covered);},[covered]);useEffect(()=>{bdRef.current?.setPlaying(playing);},[playing]);
  useEffect(()=>{let bd:LabBackdrop|null=null,alive=true;
   const onScroll=()=>{const h=document.querySelector<HTMLElement>('.lab-hero');const end=h?h.offsetTop+h.offsetHeight-innerHeight*.25:1,raw=h?scrollY/Math.max(1,end):1;bd?.setProgress(Math.min(1,Math.max(0,raw)));
-   // the descent shows bright; as the Lab content arrives a dark veil settles over the backdrop so text and controls stay legible
-   const k=Math.min(1,Math.max(0,(raw-.55)/.5));document.documentElement.style.setProperty('--lab-veil',(.08+.5*k*k*(3-2*k)).toFixed(3));};
+};
   const onMove=(e:PointerEvent)=>bd?.setPointer(e.clientX/innerWidth*2-1);
   document.body.classList.add('lab-dark');document.documentElement.classList.add('lab-dark-root');
+  document.documentElement.style.setProperty('--lab-curtain',String(CURTAIN));document.documentElement.style.setProperty('--ui-a',String(UI_A));
   createLabBackdrop(ref.current!).then(b=>{if(!alive){b.dispose();return;}bd=b;bdRef.current=b;b.setPlaying(state.current.playing);b.setPaused(state.current.covered);onScroll();}).catch(e=>console.warn('lab backdrop',e));
   addEventListener('scroll',onScroll,{passive:true});addEventListener('pointermove',onMove,{passive:true});
   return()=>{alive=false;bd?.dispose();removeEventListener('scroll',onScroll);removeEventListener('pointermove',onMove);document.body.classList.remove('lab-dark');document.documentElement.classList.remove('lab-dark-root');};},[]);
- return <><canvas ref={ref} className="lab-backdrop" aria-hidden="true"/><div className="lab-backdrop-veil" aria-hidden="true"/></>;
+ return <><canvas ref={ref} className="lab-backdrop" aria-hidden="true"/><div className="lab-backdrop-curtain" aria-hidden="true"/></>;
 }
 const methods:Record<string,{name:string,family:string,principle:string,limit:string}>=methodData;
 const fmt=(x:number|undefined,d=2)=>x===undefined||Number.isNaN(x)?'—':Number.isFinite(x)?x.toFixed(d):x>0?'∞':'−∞';

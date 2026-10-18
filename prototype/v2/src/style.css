@@ -48,24 +48,25 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 @media(max-width:780px){.display-tools{align-items:stretch}.display-tools>label,.display-tools>button,.gain-group{flex:1 1 130px}.gain-group>span{flex:1}.advanced-settings-grid{align-items:stretch}.switch-control{flex:1 1 220px}}
 /* D-074 Lab backdrop: the archive behind the page (fixed canvas), a one-screen descent hero, dark theme while it shows */
 .lab-backdrop{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:-1;pointer-events:none}
-.lab-backdrop-veil{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 80% 70% at 50% 55%,#05090b 0%,#05090b 55%,rgba(5,9,11,.75) 100%);opacity:var(--lab-veil,.08)}
+/* black curtain over the backdrop (?curtain=, 10 % steps) — the archive light stays, only its outlines read through */
+.lab-backdrop-curtain{position:fixed;inset:0;z-index:-1;pointer-events:none;background:#000;opacity:var(--lab-curtain,.7)}
 .lab-hero{height:calc(100vh - 80px);display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:6vh;text-shadow:0 1px 12px rgba(0,0,0,.7)}
 .lab-hero p{font-size:15px;color:#e8dcc8;margin:6px 0 0}
 /* the dark colour sits on the root: a body background would paint over the z-index −1 canvas */
 :root.lab-dark-root{background:#05090b}body.lab-dark{background:transparent;color:#d6e3e6}
-.lab-dark header{background:rgba(5,11,14,.72);border-color:#1d3138}.lab-dark .brand{color:#e6f1ef}.lab-dark .brand small{color:#8fa9a2}
+.lab-dark header{background:rgb(5 11 14 / var(--ui-a,.9));border-color:#1d3138}.lab-dark .brand{color:#e6f1ef}.lab-dark .brand small{color:#8fa9a2}
 .lab-dark .badge{background:#2a2410;color:#e7d9a8}
 .lab-dark .viewer{background:transparent}
 .lab-dark h1,.lab-dark h2,.lab-dark h3{color:#eef5f4}
 .lab-dark .eyebrow{color:#9cc4b6}.lab-dark p,.lab-dark .page-heading p,.lab-dark .viewer-heading p,.lab-dark .subtle,.lab-dark .bookmarks span{color:#a9bfc4}
 .lab-dark label{color:#a9bfc4}
-.lab-dark .condition-bar,.lab-dark .method-panel,.lab-dark .metrics,.lab-dark .review,.lab-dark .metric-panel,.lab-dark .scenario-launcher,.lab-dark .evidence table{background:rgba(7,15,19,.86);border-color:#22363d;color:#d6e3e6}
+.lab-dark .condition-bar,.lab-dark .method-panel,.lab-dark .metrics,.lab-dark .review,.lab-dark .metric-panel,.lab-dark .scenario-launcher,.lab-dark .evidence table{background:rgb(7 15 19 / var(--ui-a,.9));border-color:#22363d;color:#d6e3e6}
 .lab-dark .metrics>div{border-color:#22363d}.lab-dark .metrics small{color:#93aab0}
-.lab-dark button{background:rgba(18,34,41,.92);color:#dfeaec;border-color:#2c454e}.lab-dark button:hover{background:#21414b}
+.lab-dark button{background:rgb(18 34 41 / var(--ui-a,.9));color:#dfeaec;border-color:#2c454e}.lab-dark button:hover{background:#21414b}
 .lab-dark button[aria-pressed=true],.lab-dark nav button[aria-current=page]{background:#067d72;color:#fff;border-color:#067d72}
 .lab-dark [data-open-large]{background:#067d72;color:#fff;border-color:#067d72}
-.lab-dark select,.lab-dark input[type=number],.lab-dark textarea{background:#0b1a20;color:#dfeaec;border-color:#2c454e}
+.lab-dark select,.lab-dark input[type=number],.lab-dark textarea{background:rgb(11 26 32 / var(--ui-a,.9));color:#dfeaec;border-color:#2c454e}
 .lab-dark .method.selected,.lab-dark .method[aria-pressed=true]{background:#10352e;color:#a6f0d8;border-color:#1f6b5a}
 .lab-dark .method-reading{border-color:#22363d}.lab-dark .limitation{color:#c9b39b}
-.lab-dark .signal-panel{background:rgba(10,26,33,.9)}
-.lab-dark footer{background:rgba(5,11,14,.8);border-color:#1d3138;color:#93aab0}
+.lab-dark .signal-panel{background:rgb(10 26 33 / var(--ui-a,.9))}
+.lab-dark footer{background:rgb(5 11 14 / var(--ui-a,.9));border-color:#1d3138;color:#93aab0}

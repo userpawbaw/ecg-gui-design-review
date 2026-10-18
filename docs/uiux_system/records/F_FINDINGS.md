@@ -1581,7 +1581,7 @@ Poly Haven 원본이 저품질인지와 배포 과정에서 나빠진 것인지�
 최초 브랜치 HEAD bf16509와 최초 빌더 62f0ef8, registry, 패키저, 실제 archive/workstation GLB, 10월 14일 변경 이력을 대조했다. 목록에 등록됐다는 사실과 실제 생성·표시를 구분했다. 기존 10월 5일 Cycles 책상 정지 렌더도 열었다.
 
 ### 결정적 근거
-- PC_Case/CRT_Body/CRT_Back/Keyboard/ECG_Device는 cube 기반 자체 기하다. box()에는 베벨이 없고 기기는 beige_plastic 단색, CRT 유리는 별도 단색 재질이다. 외부 먼지 텍스처를 기기에 바른 증거는 없다.
+- PC_Case/CRT_Body/CRT_Back/Keyboard/ECG_Device는 cube 기반 자체 기하다. box()에는 베벨이 없고 기기는 beige_plastic 단색, CRT 유리는 별도 단색 재질이다. 외부 먼지 텍스처를 기기에 바른 증거는 없다. D-141 선택 조합을 재생성한 장면에서는 PC/CRT/ECG 부품 6개가 각각 8정점·6면·modifier 0·smooth 면 0임을 bpy 4.5.3으로 확인했다(`verification/r1-prop-craft-gate-20261018/legacy-box-audit.json`). 이는 현재 동일 빌더의 기하 확인이지 최초 피드백 당시 최종 화면의 픽셀 기여율 측정은 아니다.
 - 서가 ash_veneer 2K, 사다리 walnut_veneer 2K, 벽 painted_plaster_wall 1K, 바닥 herringbone_parquet 1K. 책상은 ash가 아니라 PH painted_wooden_table 1K 모델이다.
 - 7ba8908(10월 14일)의 workstation-v1.py는 “구식 게임의 에셋같은 퀄리티” 사용자 피드백을 명시하고 상세 자체 기기로 교체한다. GLB 실측 557,820 bytes, 95 meshes, 9 materials, images 0. 이후 기본 화면에서는 사용자가 컴퓨터를 빼기로 해 자체 소품 세트가 들어간다. 현재 HEAD 기본 화면을 처음 피드백 시점의 화면으로 소급하지 않는다.
 - 최초 브랜치의 archive.glb Git blob은 빛 브랜치와 동일(90634d184e630f2dca9bc47871eecb9129dc0514). F-106의 1K WebP 분석은 그 바이너리에 적용된다. Cycles 정지 렌더에는 웹 압축을 직접 원인으로 적용하지 않는다.

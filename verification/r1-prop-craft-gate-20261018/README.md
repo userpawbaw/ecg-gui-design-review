@@ -4,7 +4,7 @@
 
 ## 측정·근거
 
-- 초기 브랜치의 2026-09-27 `build_archive.py`: PC/CRT/ECG 기기 구성에 `box()` 위주, 베벨 처리 없음(F-108). 이는 코드 구조의 측정이며 해당 시점의 최종 픽셀 전체에 대한 판정은 아니다.
+- 초기 브랜치의 2026-09-27 `build_archive.py`: PC/CRT/ECG 기기 구성에 `box()` 위주, 베벨 처리 없음(F-108). 이번 D-141 독립 재현 장면의 [legacy-box-audit.json](legacy-box-audit.json)에서 PC Case, CRT Body/Back/Screen, ECG Device/PaperOut 6개를 bpy 4.5.3으로 읽었다. **6/6은 각각 정점 8·면 6·modifier 0·smooth 면 0**이다. 이들 제조 기기 외곽의 Q2(의도된 베벨/법선) **FAIL**. 읽기 전용 `scripts/blender/prop-geometry-audit.py` 실행 exit 1, 6/6 FAIL. `/tmp`의 3 mm·2 segments Bevel modifier fixture는 exit 0·MECHANICAL_PASS. 이 검사는 6면 상자 결함만 자동 차단하며 모든 형상/노멀 품질을 판정하지 않는다. 최종 픽셀 전체의 Q1/Q4 판정은 아니다.
 - 기존 서고 리뷰 목표: 판재 베벨 3–5 mm, 소품 2–4 mm, 책 1.5–3 mm, 인셋 5–10 mm. 8.5 m/22.9° 검토 카메라에서 약 3.6 mm/px이라는 **기존 보고서 추산**을 참조했다. 신규 렌더의 픽셀 실측값으로 바꿔 쓰지 않았다.
 - 원격 31개 브랜치의 최신 D 기록 검사: 사용 최대 번호 D-142(현재 브랜치). 두 과거 브랜치는 기록 파일 404. D-143을 사용했다.
 - Blender Manual Bevel / Weighted Normal / UV / Baking 네 URL에 HTTP 200 응답 확인. 2026-10-18.

@@ -440,7 +440,7 @@
     "branch": "claude/archive-light-r7-ag2rja",
     "base_commit": "df532274de086866bfc829f2cec351e482413c75",
     "decision": "D-141",
-    "status": "material_review_complete_scene_application_unverified",
+    "status": "b3_selection_rendered_and_key_mix_candidates_reviewed; production_visual_approval_pending",
     "selection": {
       "light_pattern": "b",
       "ladder": "L2",
@@ -456,18 +456,23 @@
       "records/playbook checks",
       "Official 2K CC0 material originals (8 assets), PH 6 map MD5 and all SHA256 pins",
       "Independent material fixture 22 final frames, CGBookcase DX normal conversion",
-      "Map resolution vs WebP compression factor isolation in RGB8"
+      "Map resolution vs WebP compression factor isolation in RGB8",
+      "All 16 historical B3 source packs restored; 84 file MD5 checks pass, registry SHA 15/16 due one republished drawer",
+      "D-141 B3 render: 2 camera heights x underside 0.35/1.0, 1280x720, 64 samples",
+      "same-sample underside medians: shaded 0.0935 to 0.0375 (-59.9%); shelf tops -1.0%",
+      "sun shadow widths: ladder rungs 2.3px, stiles 1.8px, distant foliage 13.2px",
+      "D-143 prop geometry audit: six PC/CRT/ECG box components fail, bevel fixture mechanical pass",
+      "D-144 light-group key mixes 0.5/0.35/0.25 measured in two camera views"
     ],
     "not_verified": [
-      "Historical full 16-asset Poly Haven B3 source set restoration/hashes (subset material originals verified separately)",
-      "new archive scene/render/EXR",
-      "combined underside ratio",
+      "Exact historical SHA/pixel identity for republished vintage_wooden_drawer_01",
+      "User final visual selection of B3 and key-mix candidate",
       "L2 climber contacts/collisions and hatch choreography",
       "web bake/camera/motion"
     ],
-    "next_action": "Review actual material comparison; preserve r8/D-084/Story defaults. Restore historical B3 source set and compare underside factors separately; coordinate L2 hatch choreography before any Story change. Record production material adoption before integration.",
-    "evidence": "verification/r1-archive-b3-selected-20261018/README.md",
-    "blocked_scope": "Network access to required material originals is restored; historical B3 scene reproduction remains unexecuted, not globally network-blocked.",
+    "next_action": "Review the comparative stills in verification/r1-archive-b3-rerender-20261018/README.md. Keep key 0.5 and B3 values as candidates until user visual review; then continue light balance and separately resolve L2 hatch choreography, prop Q0-Q5, web bake and target-device checks. Protect r8/D-084 and Story-owned files.",
+    "evidence": "verification/r1-archive-b3-rerender-20261018/README.md",
+    "blocked_scope": "Network access restored. Scene render completed. Production adoption remains pending visual review, L2 choreography, web bake and target-device checks.",
     "asset_policy": {
       "source": "docs/uiux_system/24_ASSET_RESEARCH_STAGE.md §1.1; rounds/R1/REVIEW-R1-ARCHIVE-SHADOW-ASSET-20261016.md §5 and §7.2",
       "main_route": "self-authored parametric props; clean solid colours / low-contrast grain",

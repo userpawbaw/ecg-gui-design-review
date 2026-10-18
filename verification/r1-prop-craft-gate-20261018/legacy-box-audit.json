@@ -1,0 +1,107 @@
+{
+  "scene": "dist/archive-light-b3-selected-20261018/scene.blend",
+  "objects": [
+    {
+      "name": "PC_Case",
+      "dimensions_m": [
+        0.44,
+        0.42,
+        0.16
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "FAIL",
+      "issues": [
+        "unmodified six-face box: no edge geometry or Bevel modifier"
+      ]
+    },
+    {
+      "name": "CRT_Body",
+      "dimensions_m": [
+        0.4,
+        0.38,
+        0.34
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "FAIL",
+      "issues": [
+        "unmodified six-face box: no edge geometry or Bevel modifier"
+      ]
+    },
+    {
+      "name": "CRT_Back",
+      "dimensions_m": [
+        0.28,
+        0.2,
+        0.24
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "FAIL",
+      "issues": [
+        "unmodified six-face box: no edge geometry or Bevel modifier"
+      ]
+    },
+    {
+      "name": "CRT_Screen",
+      "dimensions_m": [
+        0.32,
+        0.01,
+        0.25
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "FAIL",
+      "issues": [
+        "unmodified six-face box: no edge geometry or Bevel modifier"
+      ]
+    },
+    {
+      "name": "ECG_Device",
+      "dimensions_m": [
+        0.4,
+        0.3,
+        0.12
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "FAIL",
+      "issues": [
+        "unmodified six-face box: no edge geometry or Bevel modifier"
+      ]
+    },
+    {
+      "name": "ECG_PaperOut",
+      "dimensions_m": [
+        0.2,
+        0.164,
+        0.0779
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "FAIL",
+      "issues": [
+        "unmodified six-face box: no edge geometry or Bevel modifier"
+      ]
+    }
+  ]
+}

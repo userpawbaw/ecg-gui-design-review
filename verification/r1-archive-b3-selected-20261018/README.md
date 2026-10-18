@@ -1,8 +1,8 @@
 # B3 선택 조합 — 2026-10-18 KST
 
-**현재: 선택 조합의 새 렌더는 미실행. 아래 403은 당시 기록이며, 재게시 후 재질 원본 접근은 복구됐다.**
+**현재 상태:** 후속 실제 렌더와 선택 아랫면 전후 비교를 완료했다. 최신 수치·이미지는 [`../r1-archive-b3-rerender-20261018/README.md`](../r1-archive-b3-rerender-20261018/README.md)에 있다. 아래 403은 이 README를 쓴 당시의 장애 기록이다.
 
-후속 실제 재질 검토: `verification/r1-archive-material-review-20261018/README.md`(D-142/F-107). 여기 필요한 과거 16종 전체 복구·B3 조합 렌더는 별도 미완료다.
+후속 실제 재질 검토: `verification/r1-archive-material-review-20261018/README.md`(D-142/F-107). 이후 전체 16종을 복구하고 B3 조합을 두 카메라에서 렌더했다. 단, 재게시된 서랍 파일 1종의 registry SHA는 다르다.
 
 > 같은 날 조달 방침 재확인: 여기서 원본 16종은 **과거 장면의 동일 조건 재현 의존성**이다. 신규 소품·재질을 Poly Haven으로 채택한다는 뜻이 아니다. 자체 키트 주력·외부 참고/보조의 기존 승인은 `docs/uiux_system/24_ASSET_RESEARCH_STAGE.md` §1.1과 `verification/r1-archive-asset-policy-audit-20261018/README.md`를 본다(저장소 루트 기준). 차단은 이 재현 단계에 한정하며 자체 제작 조사·설계 전체가 막힌 것은 아니다.
 
@@ -65,11 +65,11 @@ npm run py -- scripts/blender/archive-light-b3.py --plan
 
 앞선 아랫면/윗면 비 0.60 → 0.27은 **(a), L1**에서 얻은 수치다. 이번 (b), L2 조합에서 같은 비가 나온다고 검증하지 않았다.
 
-## 외부 차단과 재개 조건
+## 과거 외부 차단과 재개 조건 (2026-10-18 해결)
 
 - `https://api.polyhaven.com/files/ash_veneer` 요청이 프록시 CONNECT 단계에서 **403 Forbidden**으로 거절됐다. 인증키가 필요한 것으로 진단하지 않는다. 현재 사용자 지정 허용 도메인 목록은 비어 있었고 package_managers preset만 있었다.
 - 환경 설정 초안에 `api.polyhaven.com`, `dl.polyhaven.org` 두 도메인만 추가했다. 기존 preset·저장소 설정은 보존했다. 설치 스크립트에는 검증한 Python/bpy 설치 명령을, 시작 지침에는 이 브랜치의 경로·차단 상태·재개 순서를 덧붙여 저장했다. 도구 응답 status=saved, requires_publish=true. **초안 저장은 현재 네트워크 적용·게시가 아니다.**
-- 사용자가 환경 설정에서 이 변경을 저장·적용한 뒤 API 요청을 다시 확인한다. 접근이 열리면 원본 16종을 받기 스크립트로 복구하고 해시 검증 → 같은 조합의 아랫면 1.0/0.35 렌더 → 톤·그림자·아랫면 출처 측정 → 이미지 확인 순으로 재개한다. 불변 자원 없이 반복 렌더하거나 검증을 끄지 않는다.
+- 후속 확인에서 API 접근 복구. 16종 파일별 MD5는 모두 통과했고 15종의 registry SHA도 일치했다. 남은 재게시 SHA 차이와 실제 전후 렌더 결과는 새 README에 기록했다.
 
 ## 확인 안 함
 

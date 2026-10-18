@@ -1,0 +1,360 @@
+{
+ "camera": {
+  "loc": [
+   0.0,
+   -0.800000011920929,
+   2.0
+  ],
+  "vfov_deg": 32.0
+ },
+ "lights": {
+  "sun": {
+   "type": "SUN",
+   "shadowed_share": 0.747,
+   "crisp_le3px": 0.494,
+   "medium_3_10px": 0.202,
+   "soft_gt10px": 0.304,
+   "occluder_dist_m_p10_50_90": [
+    0.05,
+    1.62,
+    5.01
+   ],
+   "penumbra_px_p10_50_90": [
+    0.1,
+    3.2,
+    15.0
+   ],
+   "boundary_samples": 2719,
+   "boundary_crisp_le3px": 0.569,
+   "boundary_soft_gt10px": 0.177,
+   "boundary_penumbra_px_p10_50_90": [
+    0.0,
+    0.7,
+    12.5
+   ],
+   "by_occluder": {
+    "APR_hatch_trim": {
+     "boundary_samples": 89,
+     "penumbra_px_p50": 7.7,
+     "occluder_dist_m_p50": 3.64
+    },
+    "B2_canopy": {
+     "boundary_samples": 254,
+     "penumbra_px_p50": 13.2,
+     "occluder_dist_m_p50": 6.7
+    },
+    "B2_lid": {
+     "boundary_samples": 84,
+     "penumbra_px_p50": 7.3,
+     "occluder_dist_m_p50": 3.42
+    },
+    "BackShelf": {
+     "boundary_samples": 995,
+     "penumbra_px_p50": 0.1,
+     "occluder_dist_m_p50": 0.06
+    },
+    "BackUpright": {
+     "boundary_samples": 139,
+     "penumbra_px_p50": 0.2,
+     "occluder_dist_m_p50": 0.1
+    },
+    "Beam": {
+     "boundary_samples": 285,
+     "penumbra_px_p50": 3.8,
+     "occluder_dist_m_p50": 1.9
+    },
+    "Ceiling": {
+     "boundary_samples": 313,
+     "penumbra_px_p50": 10.1,
+     "occluder_dist_m_p50": 3.56
+    },
+    "LadderRung": {
+     "boundary_samples": 59,
+     "penumbra_px_p50": 2.3,
+     "occluder_dist_m_p50": 1.15
+    },
+    "LadderStile": {
+     "boundary_samples": 46,
+     "penumbra_px_p50": 1.8,
+     "occluder_dist_m_p50": 0.88
+    },
+    "Shelved": {
+     "boundary_samples": 202,
+     "penumbra_px_p50": 0.1,
+     "occluder_dist_m_p50": 0.03
+    },
+    "StackShelf": {
+     "boundary_samples": 23,
+     "penumbra_px_p50": 13.0,
+     "occluder_dist_m_p50": 2.76
+    },
+    "StackTop": {
+     "boundary_samples": 47,
+     "penumbra_px_p50": 13.3,
+     "occluder_dist_m_p50": 2.97
+    },
+    "WallR": {
+     "boundary_samples": 77,
+     "penumbra_px_p50": 7.2,
+     "occluder_dist_m_p50": 3.61
+    },
+    "body_v3_ar_climb": {
+     "boundary_samples": 43,
+     "penumbra_px_p50": 0.6,
+     "occluder_dist_m_p50": 0.29
+    },
+    "hanging_industrial_lamp": {
+     "boundary_samples": 28,
+     "penumbra_px_p50": 0.0,
+     "occluder_dist_m_p50": 0.01
+    }
+   }
+  },
+  "key": {
+   "type": "SPOT",
+   "shadowed_share": 0.696,
+   "crisp_le3px": 0.487,
+   "medium_3_10px": 0.041,
+   "soft_gt10px": 0.472,
+   "occluder_dist_m_p10_50_90": [
+    0.06,
+    1.16,
+    3.9
+   ],
+   "penumbra_px_p10_50_90": [
+    0.3,
+    6.6,
+    42.5
+   ],
+   "boundary_samples": 2325,
+   "boundary_crisp_le3px": 0.639,
+   "boundary_soft_gt10px": 0.237,
+   "boundary_penumbra_px_p10_50_90": [
+    0.1,
+    1.3,
+    29.8
+   ],
+   "by_occluder": {
+    "APR_hatch_trim": {
+     "boundary_samples": 68,
+     "penumbra_px_p50": 19.4,
+     "occluder_dist_m_p50": 3.65
+    },
+    "BackShelf": {
+     "boundary_samples": 1136,
+     "penumbra_px_p50": 0.5,
+     "occluder_dist_m_p50": 0.09
+    },
+    "BackUpright": {
+     "boundary_samples": 54,
+     "penumbra_px_p50": 1.0,
+     "occluder_dist_m_p50": 0.2
+    },
+    "Beam": {
+     "boundary_samples": 58,
+     "penumbra_px_p50": 33.0,
+     "occluder_dist_m_p50": 2.56
+    },
+    "Ceiling": {
+     "boundary_samples": 422,
+     "penumbra_px_p50": 24.3,
+     "occluder_dist_m_p50": 2.89
+    },
+    "LadderRung": {
+     "boundary_samples": 151,
+     "penumbra_px_p50": 6.8,
+     "occluder_dist_m_p50": 1.3
+    },
+    "LadderStile": {
+     "boundary_samples": 152,
+     "penumbra_px_p50": 7.3,
+     "occluder_dist_m_p50": 1.13
+    },
+    "Shelved": {
+     "boundary_samples": 108,
+     "penumbra_px_p50": 0.3,
+     "occluder_dist_m_p50": 0.05
+    },
+    "body_v3_ar_climb": {
+     "boundary_samples": 104,
+     "penumbra_px_p50": 1.5,
+     "occluder_dist_m_p50": 0.24
+    },
+    "hanging_industrial_lamp": {
+     "boundary_samples": 32,
+     "penumbra_px_p50": 0.1,
+     "occluder_dist_m_p50": 0.01
+    }
+   }
+  },
+  "pendant": {
+   "type": "SPOT",
+   "shadowed_share": 0.215,
+   "crisp_le3px": 0.691,
+   "medium_3_10px": 0.144,
+   "soft_gt10px": 0.165,
+   "occluder_dist_m_p10_50_90": [
+    0.03,
+    0.18,
+    1.35
+   ],
+   "penumbra_px_p10_50_90": [
+    0.3,
+    1.9,
+    12.8
+   ],
+   "boundary_samples": 1999,
+   "boundary_crisp_le3px": 0.772,
+   "boundary_soft_gt10px": 0.097,
+   "boundary_penumbra_px_p10_50_90": [
+    0.2,
+    1.3,
+    9.7
+   ],
+   "by_occluder": {
+    "BackShelf": {
+     "boundary_samples": 671,
+     "penumbra_px_p50": 1.3,
+     "occluder_dist_m_p50": 0.15
+    },
+    "BackUpright": {
+     "boundary_samples": 302,
+     "penumbra_px_p50": 1.1,
+     "occluder_dist_m_p50": 0.13
+    },
+    "DRS_block": {
+     "boundary_samples": 19,
+     "penumbra_px_p50": 1.9,
+     "occluder_dist_m_p50": 0.22
+    },
+    "DRS_cabinet": {
+     "boundary_samples": 20,
+     "penumbra_px_p50": 0.1,
+     "occluder_dist_m_p50": 0.01
+    },
+    "DRS_cellback": {
+     "boundary_samples": 43,
+     "penumbra_px_p50": 0.1,
+     "occluder_dist_m_p50": 0.01
+    },
+    "LadderRung": {
+     "boundary_samples": 59,
+     "penumbra_px_p50": 8.9,
+     "occluder_dist_m_p50": 0.84
+    },
+    "LadderStile": {
+     "boundary_samples": 251,
+     "penumbra_px_p50": 12.0,
+     "occluder_dist_m_p50": 1.14
+    },
+    "Rolls": {
+     "boundary_samples": 31,
+     "penumbra_px_p50": 0.5,
+     "occluder_dist_m_p50": 0.04
+    },
+    "Shelved": {
+     "boundary_samples": 427,
+     "penumbra_px_p50": 0.5,
+     "occluder_dist_m_p50": 0.05
+    },
+    "StackEnd": {
+     "boundary_samples": 22,
+     "penumbra_px_p50": 6.2,
+     "occluder_dist_m_p50": 0.18
+    },
+    "body_v3_ar_climb": {
+     "boundary_samples": 61,
+     "penumbra_px_p50": 5.0,
+     "occluder_dist_m_p50": 0.35
+    },
+    "hanging_industrial_lamp": {
+     "boundary_samples": 19,
+     "penumbra_px_p50": 6.0,
+     "occluder_dist_m_p50": 0.05
+    }
+   }
+  },
+  "desklamp": {
+   "type": "SPOT",
+   "shadowed_share": 0.329,
+   "crisp_le3px": 0.932,
+   "medium_3_10px": 0.068,
+   "soft_gt10px": 0.0,
+   "occluder_dist_m_p10_50_90": [
+    0.03,
+    0.14,
+    0.56
+   ],
+   "penumbra_px_p10_50_90": [
+    0.1,
+    0.4,
+    1.4
+   ],
+   "boundary_samples": 2761,
+   "boundary_crisp_le3px": 0.941,
+   "boundary_soft_gt10px": 0.0,
+   "boundary_penumbra_px_p10_50_90": [
+    0.1,
+    0.3,
+    1.5
+   ],
+   "by_occluder": {
+    "BackShelf": {
+     "boundary_samples": 799,
+     "penumbra_px_p50": 0.3,
+     "occluder_dist_m_p50": 0.11
+    },
+    "BackUpright": {
+     "boundary_samples": 344,
+     "penumbra_px_p50": 0.2,
+     "occluder_dist_m_p50": 0.11
+    },
+    "DRS_cabinet": {
+     "boundary_samples": 21,
+     "penumbra_px_p50": 0.0,
+     "occluder_dist_m_p50": 0.01
+    },
+    "ECG_Device": {
+     "boundary_samples": 29,
+     "penumbra_px_p50": 4.9,
+     "occluder_dist_m_p50": 1.11
+    },
+    "LadderRung": {
+     "boundary_samples": 26,
+     "penumbra_px_p50": 0.5,
+     "occluder_dist_m_p50": 0.13
+    },
+    "LadderStile": {
+     "boundary_samples": 117,
+     "penumbra_px_p50": 2.6,
+     "occluder_dist_m_p50": 1.25
+    },
+    "Rolls": {
+     "boundary_samples": 99,
+     "penumbra_px_p50": 0.6,
+     "occluder_dist_m_p50": 0.19
+    },
+    "Shelved": {
+     "boundary_samples": 1103,
+     "penumbra_px_p50": 0.2,
+     "occluder_dist_m_p50": 0.07
+    },
+    "body_v3_ar_climb": {
+     "boundary_samples": 20,
+     "penumbra_px_p50": 0.5,
+     "occluder_dist_m_p50": 0.15
+    },
+    "desk_lamp_arm_01": {
+     "boundary_samples": 90,
+     "penumbra_px_p50": 7.1,
+     "occluder_dist_m_p50": 1.31
+    },
+    "hanging_industrial_lamp": {
+     "boundary_samples": 24,
+     "penumbra_px_p50": 0.1,
+     "occluder_dist_m_p50": 0.01
+    }
+   }
+  }
+ }
+}

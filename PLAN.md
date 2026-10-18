@@ -1,7 +1,17 @@
+## 2026-10-18 KST — B3 재렌더·광원 밸런스 후속(D-141/D-144)
+
+- Poly Haven B3 16종 복구: 파일 MD5 84/84 통과, registry SHA 15/16. `vintage_wooden_drawer_01`은 재게시 SHA 차이를 기록.
+- B3 선택값·기준값을 같은 2개 카메라에서 각각 1280×720/64 samples로 재렌더. 그늘진 칸 아랫면 0.0935→0.0375(−59.9%), 선반 윗면 0.2675→0.2649(−1.0%). 사다리 penumbra 1.8–2.3px, 잎 13.2px.
+- B3 렌더에 보이는 PC/CRT/ECG 6 mesh는 각 8 vertex/6 polygon/bevel modifier 없음. `prop-geometry-audit.py` exit1 6/6; 3mm bevel fixture PASS. 기존 기기 Q2 FAIL, 새 기기 Q1/Q4 미확인.
+- D-144 same EXR mix: key 0.5/0.35/0.25. 0.35는 0.5보다 어둡고 절충 후보, 0.25는 더 어두워짐. 아직 기본값 선택·프로덕션 반영 안 함. 시트와 상세 수치는 `verification/r1-archive-b3-rerender-20261018/README.md`.
+- Blender Manual, MIT GitHub skill 2곳, Polycount 위키 조사로 D-143 skill을 보강. records/playbook/encoding/portability 점검 통과 예정 후 업데이트. Story/r8/D-084 보호.
+
 ## 2026-10-18 KST — 자체 소품 제작 관문 → 서고 빛 재설계
 
 - D-143/CASE-008: 자체 제작 스킬과 Q0–Q5 검수 문서화. 완료; 새 소품의 실제 합격은 확인 안 함. `verification/r1-prop-craft-gate-20261018/README.md`.
-- 다음: D-141 선택 조합의 Poly Haven 원본 복구·해시 검사, B3의 아랫면 1.0/0.35 동일 조건 실제 렌더·측정. Story 소유 파일·r8/D-084는 보존.
+- D-141 실제 B3 시안: 2카메라×아랫면 1.0/0.35 정지 렌더 완료. 그늘 아랫면 선형 휘도 −59.9%, 선반 윗면 −1.0%. 사다리 1.8–2.3px, 먼 잎 13.2px. `verification/r1-archive-b3-rerender-20261018/README.md`.
+- D-143 자체 소품 스킬/Q0–Q5 및 기하 검사기 완료. 초기 PC/CRT/ECG 6개는 수정 없는 상자라 Q2 FAIL. 새 소품 자체 제작/최종 Q1/Q4 미실행.
+- D-144 광원 그룹 key 후보 0.5/0.35/0.25의 2시점 혼합 비교 완료. 0.35는 중간 후보, 기본 0.5 유지. 다음은 선택 시안에 대한 사용자 시각 확인. 확인 전 key 0.5와 B3 선택값만 후보 상태로 유지하며, L2 사람·해치 연출 및 웹 굽기는 별도 미완료 범위로 둔다. Story 소유 파일·r8/D-084 보존.
 
 # Review plan
 
@@ -20,7 +30,7 @@
 - PH 벽·ambientCG Plaster006의 얼룩은 2K 원본에도 있다. PH ash는 균일한 미세 결로 공급처 전체 저품질 판정은 기각. 우선 권장: 자체 깨끗한 도장면 + 약한 목재 결. 후보별 KEEP/TUNE/REJECT는 verification README에 적었으며 사용자 최종 채택은 미확정이다.
 - RGB8 기준 PH 벽: 같은 2K WebP q75/q90 PSNR 34.28/40.89 dB; 무손실 1K 축소만으로 2K 대비 31.62 dB. PH 원본은 16-bit이며 이 수치는 16→8-bit 손실을 포함하지 않는다. 실제 서고 기여율로 일반화하지 않는다.
 - `verification/r1-archive-material-review-20261018/README.md`에 비교 시트·수치·라이선스/상용 후보·확인 안 함을 기록. 재현 스크립트 `scripts/blender/material-bench.py`. D 번호는 원격 31브랜치 D 최대141/F 최대106 확인 뒤 사용했다. J-003 T5/P-006 잠정 갱신.
-- **남음**: B3 전체 원본 16종 복구·선택 조합 아랫면 전후 렌더, L2 사람·해치 조율, 재질 실제 서고 적용·베이크·웹 확인. r8·D-084·Story 기본값은 변경하지 않았다. 다음은 이 비교 결과를 기준으로 실제 화면 적용 범위를 확인하고 별도 기록 후 진행한다.
+- 완료: B3 전체 원본 16종 복구·선택 조합 아랫면 전후 렌더. **남음**: L2 사람·해치 조율, 재질 실제 서고 적용·베이크·웹 확인. r8·D-084·Story 기본값은 변경하지 않았다.
 
 ## 2026-10-18 KST — 텍스처 원인·대체 조달처 분석(F-106)
 

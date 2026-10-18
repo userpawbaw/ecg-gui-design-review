@@ -2352,7 +2352,7 @@ D-084 후보는 잎을 납작한 타원 14개로 만들어 그림자가 둥근 �
 3. 기존 컷어웨이 Blender 스틸만 제공하고 실제 GLB/웹 검증은 미룬다.
 
 ### 고른 것과 근거
-- 1번을 선택한다. 기존 `build_archive.py --bake`와 `package-archive.py` 경로를 이용해 key 0.50, sun 0.60, sky 4, rest 1, exposure 0.3, (b) foliage, L2, 30°, underside 0.35를 별도 출력에 굽고 WebP/meshopt 패키징을 수행한다. 기존 생산 파이프라인의 실제 산출물에 대한 다운로드·셰이더 적용·브라우저 렌더를 확인한다.
+- 1번을 선택한다. 기존 `build_archive.py --bake`와 `package-archive.py` 경로를 이용해 B3의 (b) foliage, L2, 30°, underside 0.35를 재생성한다. key 0.50/sun 0.60/sky 4/rest 1의 그룹 비율은 r6 원래 에너지(key 4550/sun 33/sky 0.3)에 각각 적용해 key 2275/sun 19.8/sky 1.2로 굽고, exposure .3을 recipe에 고정한다. 이 베이크 출력은 Browser의 ACES/exposure 및 archive shader uExposure=1.3을 거친다. 같은 스틸의 AgX/exposure .3 결과와 픽셀 동일하다고 간주하지 않는다. WebP/meshopt 패키징 후 실제 브라우저에서 다운로드·셰이더 적용·렌더를 확인한다.
 - 리뷰 페이지는 OrbitControls로 사용자가 장면을 자유롭게 둘러보게 한다. 이는 요청한 동선 자유를 만족하면서 기존 Story 애니메이션/인물 에셋을 수정하지 않는다.
 - 새 GLB, 라이트맵, manifest, 리뷰 페이지, 캡처는 `verification/r1-archive-web-bake-20261018/`에 분리한다. 기존 `prototype/v2/src/story/intro/assets/archive/`, `archive.ts`, r8 기본값, D-084 값은 변경하지 않는다. B3 geometry/build 계약은 그대로 유지하고 렌더 경로만 베이크한다.
 

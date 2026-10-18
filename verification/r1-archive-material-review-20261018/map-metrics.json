@@ -1,0 +1,706 @@
+[
+  {
+    "asset": "ash_veneer",
+    "size": [
+      2048,
+      2048
+    ],
+    "rgb_mean": [
+      172.02376222610474,
+      148.11393451690674,
+      124.94801568984985
+    ],
+    "gray_p95_p5": 30.0,
+    "low_frequency_std": 0.5396561792091449,
+    "compression": [
+      {
+        "size": 2048,
+        "quality": "lossless PNG",
+        "bytes": 5336052,
+        "psnr_vs_2k_source_db": null,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 2048,
+        "quality": 75,
+        "bytes": 219356,
+        "psnr_vs_2k_source_db": 37.78522762077175,
+        "encoding_psnr_at_same_size_db": 37.78522762077175
+      },
+      {
+        "size": 2048,
+        "quality": 90,
+        "bytes": 576916,
+        "psnr_vs_2k_source_db": 41.16837431315914,
+        "encoding_psnr_at_same_size_db": 41.16837431315914
+      },
+      {
+        "size": 1024,
+        "quality": "lossless PNG",
+        "bytes": 1284518,
+        "psnr_vs_2k_source_db": 35.65214103804182,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 1024,
+        "quality": 75,
+        "bytes": 46726,
+        "psnr_vs_2k_source_db": 33.75520275890234,
+        "encoding_psnr_at_same_size_db": 38.17563804007901
+      },
+      {
+        "size": 1024,
+        "quality": 90,
+        "bytes": 132778,
+        "psnr_vs_2k_source_db": 34.712431962865736,
+        "encoding_psnr_at_same_size_db": 41.64307816123754
+      }
+    ],
+    "channels": [
+      {
+        "file": "ash_veneer_diff_2k.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB",
+        "png_bit_depth": 16
+      },
+      {
+        "file": "ash_veneer_nor_gl_2k.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB",
+        "png_bit_depth": 16
+      },
+      {
+        "file": "ash_veneer_rough_2k.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "I;16",
+        "png_bit_depth": 16
+      }
+    ],
+    "compression_reference": "Pillow decoded RGB8; excludes source 16-to-8-bit quantization"
+  },
+  {
+    "asset": "painted_plaster_wall",
+    "size": [
+      2048,
+      2048
+    ],
+    "rgb_mean": [
+      170.71473050117493,
+      162.93227338790894,
+      159.73585033416748
+    ],
+    "gray_p95_p5": 31.0,
+    "low_frequency_std": 2.0988721631152885,
+    "compression": [
+      {
+        "size": 2048,
+        "quality": "lossless PNG",
+        "bytes": 7992248,
+        "psnr_vs_2k_source_db": null,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 2048,
+        "quality": 75,
+        "bytes": 544858,
+        "psnr_vs_2k_source_db": 34.28130145372987,
+        "encoding_psnr_at_same_size_db": 34.28130145372987
+      },
+      {
+        "size": 2048,
+        "quality": 90,
+        "bytes": 1243996,
+        "psnr_vs_2k_source_db": 40.89252602372006,
+        "encoding_psnr_at_same_size_db": 40.89252602372006
+      },
+      {
+        "size": 1024,
+        "quality": "lossless PNG",
+        "bytes": 1830116,
+        "psnr_vs_2k_source_db": 31.61773095632089,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 1024,
+        "quality": 75,
+        "bytes": 67794,
+        "psnr_vs_2k_source_db": 29.808182110233385,
+        "encoding_psnr_at_same_size_db": 34.82549925694894
+      },
+      {
+        "size": 1024,
+        "quality": 90,
+        "bytes": 234334,
+        "psnr_vs_2k_source_db": 31.12291219766219,
+        "encoding_psnr_at_same_size_db": 40.869139390357
+      }
+    ],
+    "channels": [
+      {
+        "file": "painted_plaster_wall_diff_2k.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB",
+        "png_bit_depth": 16
+      },
+      {
+        "file": "painted_plaster_wall_nor_gl_2k.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB",
+        "png_bit_depth": 16
+      },
+      {
+        "file": "painted_plaster_wall_rough_2k.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "I;16",
+        "png_bit_depth": 16
+      }
+    ],
+    "compression_reference": "Pillow decoded RGB8; excludes source 16-to-8-bit quantization"
+  },
+  {
+    "asset": "Wood051",
+    "size": [
+      2048,
+      2048
+    ],
+    "rgb_mean": [
+      65.3603937625885,
+      52.13896989822388,
+      46.33697748184204
+    ],
+    "gray_p95_p5": 26.0,
+    "low_frequency_std": 2.1753081966064087,
+    "compression": [
+      {
+        "size": 2048,
+        "quality": "lossless PNG",
+        "bytes": 3852794,
+        "psnr_vs_2k_source_db": null,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 2048,
+        "quality": 75,
+        "bytes": 125650,
+        "psnr_vs_2k_source_db": 39.3683067913227,
+        "encoding_psnr_at_same_size_db": 39.3683067913227
+      },
+      {
+        "size": 2048,
+        "quality": 90,
+        "bytes": 346958,
+        "psnr_vs_2k_source_db": 43.00030518601766,
+        "encoding_psnr_at_same_size_db": 43.00030518601766
+      },
+      {
+        "size": 1024,
+        "quality": "lossless PNG",
+        "bytes": 1090819,
+        "psnr_vs_2k_source_db": 42.73153019765289,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 1024,
+        "quality": 75,
+        "bytes": 36188,
+        "psnr_vs_2k_source_db": 36.91645762457124,
+        "encoding_psnr_at_same_size_db": 38.31369644481797
+      },
+      {
+        "size": 1024,
+        "quality": 90,
+        "bytes": 105586,
+        "psnr_vs_2k_source_db": 39.518761827029095,
+        "encoding_psnr_at_same_size_db": 42.13651469478294
+      }
+    ],
+    "channels": [
+      {
+        "file": "Wood051_2K-PNG_Color.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB",
+        "png_bit_depth": 8
+      },
+      {
+        "file": "Wood051_2K-PNG_NormalGL.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB",
+        "png_bit_depth": 16
+      },
+      {
+        "file": "Wood051_2K-PNG_Roughness.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "L",
+        "png_bit_depth": 8
+      }
+    ],
+    "compression_reference": "Pillow decoded RGB8; excludes source 16-to-8-bit quantization"
+  },
+  {
+    "asset": "Plaster006",
+    "size": [
+      2048,
+      2048
+    ],
+    "rgb_mean": [
+      169.2197301387787,
+      167.7999963760376,
+      164.13179469108582
+    ],
+    "gray_p95_p5": 27.0,
+    "low_frequency_std": 4.87127478409073,
+    "compression": [
+      {
+        "size": 2048,
+        "quality": "lossless PNG",
+        "bytes": 5654481,
+        "psnr_vs_2k_source_db": null,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 2048,
+        "quality": 75,
+        "bytes": 148438,
+        "psnr_vs_2k_source_db": 37.92320349847326,
+        "encoding_psnr_at_same_size_db": 37.92320349847326
+      },
+      {
+        "size": 2048,
+        "quality": 90,
+        "bytes": 514136,
+        "psnr_vs_2k_source_db": 41.778145809771445,
+        "encoding_psnr_at_same_size_db": 41.778145809771445
+      },
+      {
+        "size": 1024,
+        "quality": "lossless PNG",
+        "bytes": 1386834,
+        "psnr_vs_2k_source_db": 39.843720384057015,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 1024,
+        "quality": 75,
+        "bytes": 36918,
+        "psnr_vs_2k_source_db": 35.60788141453173,
+        "encoding_psnr_at_same_size_db": 37.81635116821423
+      },
+      {
+        "size": 1024,
+        "quality": 90,
+        "bytes": 124068,
+        "psnr_vs_2k_source_db": 37.73584502993538,
+        "encoding_psnr_at_same_size_db": 41.80939853697354
+      }
+    ],
+    "channels": [
+      {
+        "file": "Plaster006_2K-PNG_Color.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB",
+        "png_bit_depth": 8
+      },
+      {
+        "file": "Plaster006_2K-PNG_NormalGL.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB",
+        "png_bit_depth": 16
+      },
+      {
+        "file": "Plaster006_2K-PNG_Roughness.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "L",
+        "png_bit_depth": 8
+      }
+    ],
+    "compression_reference": "Pillow decoded RGB8; excludes source 16-to-8-bit quantization"
+  },
+  {
+    "asset": "Wood095",
+    "size": [
+      2048,
+      1024
+    ],
+    "rgb_mean": [
+      204.81835794448853,
+      156.310546875,
+      110.55738544464111
+    ],
+    "gray_p95_p5": 26.0,
+    "low_frequency_std": 3.602864757570743,
+    "compression": [
+      {
+        "size": 2048,
+        "quality": "lossless PNG",
+        "bytes": 4996290,
+        "psnr_vs_2k_source_db": 51.76690909786083,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 2048,
+        "quality": 75,
+        "bytes": 145138,
+        "psnr_vs_2k_source_db": 38.2905996357126,
+        "encoding_psnr_at_same_size_db": 38.48707740967466
+      },
+      {
+        "size": 2048,
+        "quality": 90,
+        "bytes": 443230,
+        "psnr_vs_2k_source_db": 42.12866072652085,
+        "encoding_psnr_at_same_size_db": 41.9320930542351
+      },
+      {
+        "size": 1024,
+        "quality": "lossless PNG",
+        "bytes": 1497387,
+        "psnr_vs_2k_source_db": 46.00232960536574,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 1024,
+        "quality": 75,
+        "bytes": 46912,
+        "psnr_vs_2k_source_db": 36.213458248820444,
+        "encoding_psnr_at_same_size_db": 36.67715709751319
+      },
+      {
+        "size": 1024,
+        "quality": 90,
+        "bytes": 140330,
+        "psnr_vs_2k_source_db": 39.11839101224967,
+        "encoding_psnr_at_same_size_db": 40.032316671669044
+      }
+    ],
+    "channels": [
+      {
+        "file": "Wood095_2K-PNG_Color.png",
+        "size": [
+          2048,
+          1024
+        ],
+        "mode": "RGBA",
+        "png_bit_depth": 8
+      },
+      {
+        "file": "Wood095_2K-PNG_NormalGL.png",
+        "size": [
+          2048,
+          1024
+        ],
+        "mode": "RGBA",
+        "png_bit_depth": 16
+      },
+      {
+        "file": "Wood095_2K-PNG_Roughness.png",
+        "size": [
+          2048,
+          1024
+        ],
+        "mode": "L",
+        "png_bit_depth": 8
+      }
+    ],
+    "compression_reference": "Pillow decoded RGB8; excludes source 16-to-8-bit quantization"
+  },
+  {
+    "asset": "Paint004",
+    "size": [
+      2048,
+      2048
+    ],
+    "rgb_mean": [
+      193.85529208183289,
+      227.264652967453,
+      231.22667121887207
+    ],
+    "gray_p95_p5": 6.0,
+    "low_frequency_std": 1.6389644112472903,
+    "compression": [
+      {
+        "size": 2048,
+        "quality": "lossless PNG",
+        "bytes": 1020016,
+        "psnr_vs_2k_source_db": null,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 2048,
+        "quality": 75,
+        "bytes": 11520,
+        "psnr_vs_2k_source_db": 49.00907062844942,
+        "encoding_psnr_at_same_size_db": 49.00907062844942
+      },
+      {
+        "size": 2048,
+        "quality": 90,
+        "bytes": 32528,
+        "psnr_vs_2k_source_db": 49.79945061733317,
+        "encoding_psnr_at_same_size_db": 49.79945061733317
+      },
+      {
+        "size": 1024,
+        "quality": "lossless PNG",
+        "bytes": 391417,
+        "psnr_vs_2k_source_db": 58.41546305642883,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 1024,
+        "quality": 75,
+        "bytes": 3236,
+        "psnr_vs_2k_source_db": 48.47203878444414,
+        "encoding_psnr_at_same_size_db": 48.40331205230986
+      },
+      {
+        "size": 1024,
+        "quality": 90,
+        "bytes": 9652,
+        "psnr_vs_2k_source_db": 49.29790655218052,
+        "encoding_psnr_at_same_size_db": 49.19408711869265
+      }
+    ],
+    "channels": [
+      {
+        "file": "Paint004_2K-PNG_Color.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "P",
+        "png_bit_depth": 8
+      },
+      {
+        "file": "Paint004_2K-PNG_NormalGL.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGB",
+        "png_bit_depth": 16
+      },
+      {
+        "file": "Paint004_2K-PNG_Roughness.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "L",
+        "png_bit_depth": 8
+      }
+    ],
+    "compression_reference": "Pillow decoded RGB8; excludes source 16-to-8-bit quantization"
+  },
+  {
+    "asset": "Wood01",
+    "size": [
+      2048,
+      2048
+    ],
+    "rgb_mean": [
+      155.3075659275055,
+      119.24790596961975,
+      76.65790176391602
+    ],
+    "gray_p95_p5": 70.0,
+    "low_frequency_std": 12.943931957057991,
+    "compression": [
+      {
+        "size": 2048,
+        "quality": "lossless PNG",
+        "bytes": 5909948,
+        "psnr_vs_2k_source_db": null,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 2048,
+        "quality": 75,
+        "bytes": 270756,
+        "psnr_vs_2k_source_db": 35.82276907896856,
+        "encoding_psnr_at_same_size_db": 35.82276907896856
+      },
+      {
+        "size": 2048,
+        "quality": 90,
+        "bytes": 651390,
+        "psnr_vs_2k_source_db": 39.359499173419316,
+        "encoding_psnr_at_same_size_db": 39.359499173419316
+      },
+      {
+        "size": 1024,
+        "quality": "lossless PNG",
+        "bytes": 1728216,
+        "psnr_vs_2k_source_db": 39.29180559603595,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 1024,
+        "quality": 75,
+        "bytes": 100274,
+        "psnr_vs_2k_source_db": 33.31726116567068,
+        "encoding_psnr_at_same_size_db": 34.55522852350731
+      },
+      {
+        "size": 1024,
+        "quality": 90,
+        "bytes": 235812,
+        "psnr_vs_2k_source_db": 35.72004349823091,
+        "encoding_psnr_at_same_size_db": 38.24129895795954
+      }
+    ],
+    "channels": [
+      {
+        "file": "Wood01_2K_BaseColor.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGBA",
+        "png_bit_depth": 8
+      },
+      {
+        "file": "Wood01_2K_Normal.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGBA",
+        "png_bit_depth": 8
+      },
+      {
+        "file": "Wood01_2K_Roughness.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGBA",
+        "png_bit_depth": 8
+      }
+    ],
+    "compression_reference": "Pillow decoded RGB8; excludes source 16-to-8-bit quantization"
+  },
+  {
+    "asset": "Wood05",
+    "size": [
+      2048,
+      2048
+    ],
+    "rgb_mean": [
+      217.96541929244995,
+      182.93738222122192,
+      159.0245988368988
+    ],
+    "gray_p95_p5": 24.0,
+    "low_frequency_std": 2.602097128179617,
+    "compression": [
+      {
+        "size": 2048,
+        "quality": "lossless PNG",
+        "bytes": 6860734,
+        "psnr_vs_2k_source_db": null,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 2048,
+        "quality": 75,
+        "bytes": 285822,
+        "psnr_vs_2k_source_db": 33.7463006762566,
+        "encoding_psnr_at_same_size_db": 33.7463006762566
+      },
+      {
+        "size": 2048,
+        "quality": 90,
+        "bytes": 910888,
+        "psnr_vs_2k_source_db": 36.779927649179236,
+        "encoding_psnr_at_same_size_db": 36.779927649179236
+      },
+      {
+        "size": 1024,
+        "quality": "lossless PNG",
+        "bytes": 1648176,
+        "psnr_vs_2k_source_db": 34.75462220137874,
+        "encoding_psnr_at_same_size_db": null
+      },
+      {
+        "size": 1024,
+        "quality": 75,
+        "bytes": 49142,
+        "psnr_vs_2k_source_db": 31.74697056104045,
+        "encoding_psnr_at_same_size_db": 35.048990559079726
+      },
+      {
+        "size": 1024,
+        "quality": 90,
+        "bytes": 200926,
+        "psnr_vs_2k_source_db": 33.048058778831006,
+        "encoding_psnr_at_same_size_db": 38.20517914127511
+      }
+    ],
+    "channels": [
+      {
+        "file": "Wood05_2K_BaseColor.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGBA",
+        "png_bit_depth": 8
+      },
+      {
+        "file": "Wood05_2K_Normal.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGBA",
+        "png_bit_depth": 8
+      },
+      {
+        "file": "Wood05_2K_Roughness.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "mode": "RGBA",
+        "png_bit_depth": 8
+      }
+    ],
+    "compression_reference": "Pillow decoded RGB8; excludes source 16-to-8-bit quantization"
+  }
+]

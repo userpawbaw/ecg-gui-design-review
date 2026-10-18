@@ -1,0 +1,611 @@
+{
+  "date": "2026-10-18",
+  "downloads": [
+    {
+      "asset": "ash_veneer",
+      "channel": "Diffuse",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/ash_veneer/ash_veneer_diff_2k.png",
+      "path": "assets/source/material-review/ash_veneer/ash_veneer_diff_2k.png",
+      "bytes": 21086839,
+      "md5": "85801b8e6ca8714140f52a7978a83ff5",
+      "md5_verified": true,
+      "sha256": "e9ee020318e31181c8b69761ee1949f653d9f1dd4c7d17333e83398f757db2aa",
+      "status": 200
+    },
+    {
+      "asset": "ash_veneer",
+      "channel": "nor_gl",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/ash_veneer/ash_veneer_nor_gl_2k.png",
+      "path": "assets/source/material-review/ash_veneer/ash_veneer_nor_gl_2k.png",
+      "bytes": 19375062,
+      "md5": "698660c9d54a6bc820a102af77f08951",
+      "md5_verified": true,
+      "sha256": "7e99059aec68659494a4a7080963476b17ae534c702e2e73b9a4eea3cc638532",
+      "status": 200
+    },
+    {
+      "asset": "ash_veneer",
+      "channel": "Rough",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/ash_veneer/ash_veneer_rough_2k.png",
+      "path": "assets/source/material-review/ash_veneer/ash_veneer_rough_2k.png",
+      "bytes": 7655710,
+      "md5": "aa6183fa6a7280f309608cafaa05eb21",
+      "md5_verified": true,
+      "sha256": "0413894a26e8fba1a589d9248be45d681136add6e28095854082ac161fa718f5",
+      "status": 200
+    },
+    {
+      "asset": "painted_plaster_wall",
+      "channel": "Diffuse",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/painted_plaster_wall/painted_plaster_wall_diff_2k.png",
+      "path": "assets/source/material-review/painted_plaster_wall/painted_plaster_wall_diff_2k.png",
+      "bytes": 22706294,
+      "md5": "a59f31e4461b4e9385e88030e32280d9",
+      "md5_verified": true,
+      "sha256": "5d3e476d633d873f2f9f443936a7d3f6a5830b5486c9bd704cef7c1f89dbb3cc",
+      "status": 200
+    },
+    {
+      "asset": "painted_plaster_wall",
+      "channel": "nor_gl",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/painted_plaster_wall/painted_plaster_wall_nor_gl_2k.png",
+      "path": "assets/source/material-review/painted_plaster_wall/painted_plaster_wall_nor_gl_2k.png",
+      "bytes": 22789885,
+      "md5": "2eba0da17c1d194537c1231cb412e310",
+      "md5_verified": true,
+      "sha256": "322041257ab0dad1a1a1c18d98bc28689136103f6a64d4849f7aa3ae5b8b090f",
+      "status": 200
+    },
+    {
+      "asset": "painted_plaster_wall",
+      "channel": "Rough",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/painted_plaster_wall/painted_plaster_wall_rough_2k.png",
+      "path": "assets/source/material-review/painted_plaster_wall/painted_plaster_wall_rough_2k.png",
+      "bytes": 6836443,
+      "md5": "ca7f611c7ccbc7604fab09c698a4d329",
+      "md5_verified": true,
+      "sha256": "e355a47f007bcf8b50c9e2f9edfc9f45d85501eefc63a822fd82c2dbc7ab34ea",
+      "status": 200
+    },
+    {
+      "asset": "Wood051",
+      "channel": "zip",
+      "url": "https://ambientcg.com/get?file=Wood051_2K-PNG.zip",
+      "path": "assets/source/material-review/Wood051/Wood051_2K-PNG.zip",
+      "bytes": 56889576,
+      "md5": "9666ad6b9ea3cac7a761298b9e901a02",
+      "md5_verified": false,
+      "sha256": "70e5ff0263341b051d0e386cb1dc0ad62ed3b52a410e91b9eaf70fd684387eb3",
+      "status": 200
+    },
+    {
+      "asset": "Plaster006",
+      "channel": "zip",
+      "url": "https://ambientcg.com/get?file=Plaster006_2K-PNG.zip",
+      "path": "assets/source/material-review/Plaster006/Plaster006_2K-PNG.zip",
+      "bytes": 62989615,
+      "md5": "6fbb867d48a2298b614a84c554b6d31b",
+      "md5_verified": false,
+      "sha256": "730f430e8bbe3eee014a83b658dd92ab5b446e87192ed80fc6786537d8960788",
+      "status": 200
+    },
+    {
+      "asset": "Paint004",
+      "channel": "zip",
+      "url": "https://ambientcg.com/get?file=Paint004_2K-PNG.zip",
+      "path": "assets/source/material-review/Paint004/Paint004_2K-PNG.zip",
+      "bytes": 52333846,
+      "sha256": "b5f553c422e813d3ef0869b0777d295e283e31128108c4b413d08edea761972a",
+      "status": 200
+    },
+    {
+      "asset": "Wood095",
+      "channel": "zip",
+      "url": "https://ambientcg.com/get?file=Wood095_2K-PNG.zip",
+      "path": "assets/source/material-review/Wood095/Wood095_2K-PNG.zip",
+      "bytes": 34016478,
+      "sha256": "94b7df8729a72a7d197716e3646e2186474b730b1432597e1f5ea14fadde8bf7",
+      "status": 200
+    },
+    {
+      "asset": "Wood01",
+      "channel": "zip",
+      "url": "https://cgbookcase-volume.b-cdn.net/t/Wood01_MR_2K.zip",
+      "path": "assets/source/material-review/Wood01/Wood01_MR_2K.zip",
+      "bytes": 25973833,
+      "sha256": "48147c9669a91f6667dab1447b590c571e71d14f359b92398f9e63a9a1751bc2",
+      "status": 200
+    },
+    {
+      "asset": "Wood05",
+      "channel": "zip",
+      "url": "https://cgbookcase-volume.b-cdn.net/t/Wood05_MR_2K.zip",
+      "path": "assets/source/material-review/Wood05/Wood05_MR_2K.zip",
+      "bytes": 28776491,
+      "sha256": "f45b9cc58db1e7ac2cfbba3b141122b639820f47717200a2283417761edca513",
+      "status": 200
+    }
+  ],
+  "assets": [
+    {
+      "id": "ash_veneer",
+      "page": "https://polyhaven.com/a/ash_veneer",
+      "author": "Jenelle van Heerden / Poly Haven",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://polyhaven.com/license",
+      "status": "test-only",
+      "files": {
+        "assets/source/material-review/ash_veneer/ash_veneer_diff_2k.png": {
+          "bytes": 21086839,
+          "sha256": "e9ee020318e31181c8b69761ee1949f653d9f1dd4c7d17333e83398f757db2aa",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/ash_veneer/ash_veneer_nor_gl_2k.png": {
+          "bytes": 19375062,
+          "sha256": "7e99059aec68659494a4a7080963476b17ae534c702e2e73b9a4eea3cc638532",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/ash_veneer/ash_veneer_rough_2k.png": {
+          "bytes": 7655710,
+          "sha256": "0413894a26e8fba1a589d9248be45d681136add6e28095854082ac161fa718f5",
+          "png_bit_depth": 16,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "id": "painted_plaster_wall",
+      "page": "https://polyhaven.com/a/painted_plaster_wall",
+      "author": "Amal Kumar / Poly Haven",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://polyhaven.com/license",
+      "status": "test-only",
+      "files": {
+        "assets/source/material-review/painted_plaster_wall/painted_plaster_wall_diff_2k.png": {
+          "bytes": 22706294,
+          "sha256": "5d3e476d633d873f2f9f443936a7d3f6a5830b5486c9bd704cef7c1f89dbb3cc",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/painted_plaster_wall/painted_plaster_wall_nor_gl_2k.png": {
+          "bytes": 22789885,
+          "sha256": "322041257ab0dad1a1a1c18d98bc28689136103f6a64d4849f7aa3ae5b8b090f",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/painted_plaster_wall/painted_plaster_wall_rough_2k.png": {
+          "bytes": 6836443,
+          "sha256": "e355a47f007bcf8b50c9e2f9edfc9f45d85501eefc63a822fd82c2dbc7ab34ea",
+          "png_bit_depth": 16,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "id": "Wood051",
+      "page": "https://ambientcg.com/view?id=Wood051",
+      "author": "ambientCG / Lennart Demes",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://docs.ambientcg.com/license/",
+      "status": "test-only",
+      "files": {
+        "assets/source/material-review/Wood051/Wood051.png": {
+          "bytes": 278339,
+          "sha256": "84a274b7797862c71bc081d464eccaec2fad93229746f43bb015a64bc2da3412",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            512,
+            512
+          ]
+        },
+        "assets/source/material-review/Wood051/Wood051_2K-PNG_Color.png": {
+          "bytes": 3658772,
+          "sha256": "48041e66a6e4febfa797041f883acf9a2a9762bd79e12ff15c1304f999fccf25",
+          "png_bit_depth": 8,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood051/Wood051_2K-PNG_Displacement.png": {
+          "bytes": 6859033,
+          "sha256": "c6f2eb5e6f2cbecd0a985195e47e1e9cdb6ce66950b3f6d30739f231f4081625",
+          "png_bit_depth": 16,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood051/Wood051_2K-PNG_NormalDX.png": {
+          "bytes": 21180930,
+          "sha256": "abdab6f9c494cb8a8e0b387287bfb6495abceee2d1f83bfd964485fec6815df1",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood051/Wood051_2K-PNG_NormalGL.png": {
+          "bytes": 21180071,
+          "sha256": "e3406e453c0265313c10d7fe6cfd4e4ba7d350da5ff297b453638d1ce29075ae",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood051/Wood051_2K-PNG_Roughness.png": {
+          "bytes": 2625696,
+          "sha256": "8f6147e390c3fd77a603c9e4a9615a91f7fac2d19a07ed2078c25d133de6994a",
+          "png_bit_depth": 8,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "id": "Plaster006",
+      "page": "https://ambientcg.com/view?id=Plaster006",
+      "author": "ambientCG / Lennart Demes",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://docs.ambientcg.com/license/",
+      "status": "test-only",
+      "files": {
+        "assets/source/material-review/Plaster006/Plaster006.png": {
+          "bytes": 340526,
+          "sha256": "086c19f3bf499227b366d6ec008d9a4c4082a6a9eb07d52bf166dd9f49650018",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            512,
+            512
+          ]
+        },
+        "assets/source/material-review/Plaster006/Plaster006_2K-PNG_Color.png": {
+          "bytes": 5314861,
+          "sha256": "d98b01167efa4aa2f9591ad1ddf494498bfcec96f0a2171a18d586770f365880",
+          "png_bit_depth": 8,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Plaster006/Plaster006_2K-PNG_Displacement.png": {
+          "bytes": 6992436,
+          "sha256": "02db713e1a07eae58149ceb9a7cb597da3c9f528abf947a681c25ec41e1289d0",
+          "png_bit_depth": 16,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Plaster006/Plaster006_2K-PNG_NormalDX.png": {
+          "bytes": 23588684,
+          "sha256": "7d2a1235f118df368ad8ea213271aee954381e450ff9ece6af45c2566bb74874",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Plaster006/Plaster006_2K-PNG_NormalGL.png": {
+          "bytes": 23587988,
+          "sha256": "44c086a5e4c96fc070e3a568e113b2b398870fab4e20c5d232cda895ccc9d1cc",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Plaster006/Plaster006_2K-PNG_Roughness.png": {
+          "bytes": 2058490,
+          "sha256": "8f9a5aa05ef5e90ef078220da9f40f1ed187bfe599f9a4af875ec3e6f189beff",
+          "png_bit_depth": 8,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "id": "Wood095",
+      "page": "https://ambientcg.com/view?id=Wood095",
+      "author": "ambientCG / Lennart Demes",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://docs.ambientcg.com/license/",
+      "status": "test-only",
+      "files": {
+        "assets/source/material-review/Wood095/Wood095.png": {
+          "bytes": 296585,
+          "sha256": "b0925fb96bbcb1df851d47907c0182da27a44d598c956935eddb734ccda8f743",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            512,
+            512
+          ]
+        },
+        "assets/source/material-review/Wood095/Wood095_2K-PNG_Color.png": {
+          "bytes": 2985723,
+          "sha256": "aa31bd50146889f5e471e70b265d027013e12edf0b1d34cb4c04c1e29f749f04",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            1024
+          ]
+        },
+        "assets/source/material-review/Wood095/Wood095_2K-PNG_Displacement.png": {
+          "bytes": 3653776,
+          "sha256": "e74631300b420e8729339abe285519d71a04358139dafc2a53c76e63be199c44",
+          "png_bit_depth": 16,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            1024
+          ]
+        },
+        "assets/source/material-review/Wood095/Wood095_2K-PNG_NormalDX.png": {
+          "bytes": 12466616,
+          "sha256": "e8e21197741716f52c926084ee861589f1acfa7e33950a2a52cae1a6b6c048d3",
+          "png_bit_depth": 16,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            1024
+          ]
+        },
+        "assets/source/material-review/Wood095/Wood095_2K-PNG_NormalGL.png": {
+          "bytes": 12466717,
+          "sha256": "b6178bb464a9d84126fc5d70332936c38f7c9def3a6c0a33b2be0c4e816c72c8",
+          "png_bit_depth": 16,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            1024
+          ]
+        },
+        "assets/source/material-review/Wood095/Wood095_2K-PNG_Roughness.png": {
+          "bytes": 1037986,
+          "sha256": "65d19aff65b26d95abf377b69198bfa46a0542112a7b606f5a8f89d624004c3c",
+          "png_bit_depth": 8,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            1024
+          ]
+        }
+      }
+    },
+    {
+      "id": "Paint004",
+      "page": "https://ambientcg.com/view?id=Paint004",
+      "author": "ambientCG / Lennart Demes",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://docs.ambientcg.com/license/",
+      "status": "test-only",
+      "files": {
+        "assets/source/material-review/Paint004/Paint004.png": {
+          "bytes": 198465,
+          "sha256": "8e85e2331f374153fca66381f4248ba9013f430e365aee58a555d78f7a0d0f5e",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            512,
+            512
+          ]
+        },
+        "assets/source/material-review/Paint004/Paint004_2K-PNG_AmbientOcclusion.png": {
+          "bytes": 2208234,
+          "sha256": "abe7eeec8610e4930b97185798a6b7a60dda7fd45d207d9dd807b1600b1a435a",
+          "png_bit_depth": 8,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Paint004/Paint004_2K-PNG_Color.png": {
+          "bytes": 817951,
+          "sha256": "76e208507dd906a5c9ca78bda0d43bbf70a3a6c1b8d0d115f2dec5c33394d0ad",
+          "png_bit_depth": 8,
+          "png_color_type": 3,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Paint004/Paint004_2K-PNG_Displacement.png": {
+          "bytes": 6345396,
+          "sha256": "ccbdf55d097ce45e363d1c32b0539daf5a9bc13d76fc71d14893256299cbe89f",
+          "png_bit_depth": 16,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Paint004/Paint004_2K-PNG_NormalDX.png": {
+          "bytes": 19877378,
+          "sha256": "17a11190ac69bb73dfbaf3caf66889f7dc6609307f66798dfdde836447dd6b92",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Paint004/Paint004_2K-PNG_NormalGL.png": {
+          "bytes": 19876822,
+          "sha256": "0164172c98de5f8285534784093b598f4356cf0a355c01d0d1f04120510a1028",
+          "png_bit_depth": 16,
+          "png_color_type": 2,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Paint004/Paint004_2K-PNG_Roughness.png": {
+          "bytes": 1891539,
+          "sha256": "3cb452fc9a8fe046523e4e7fab8e27dd4ff30c8c306159228714cbb5a6fe855b",
+          "png_bit_depth": 8,
+          "png_color_type": 0,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "id": "Wood01",
+      "page": "https://www.cgbookcase.com/textures/wood-01",
+      "author": "Dorian Zgraggen / CGBookcase",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://www.cgbookcase.com/textures/wood-01",
+      "status": "test-only",
+      "files": {
+        "assets/source/material-review/Wood01/Wood01_2K_AO.png": {
+          "bytes": 2613081,
+          "sha256": "4ce26a6362b3e1047ada0a6ddb7f6f8596739af4da0d082899a067a58e0b1e22",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood01/Wood01_2K_BaseColor.png": {
+          "bytes": 10647761,
+          "sha256": "819ef0dadb4205fb00e13503881dcd215d15bb4b494b94f5352bc8dd0523bf64",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood01/Wood01_2K_Height.png": {
+          "bytes": 2086448,
+          "sha256": "3a137a8c245f2533ec4a3b2c920dd959503e2a1907f8d3db6c9400d2c3674034",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood01/Wood01_2K_Normal.png": {
+          "bytes": 7262306,
+          "sha256": "3622ee80a85fafb14e08a1aaa7c829e59f298a48b4a2601afaa0e39fee7c2bd3",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood01/Wood01_2K_Roughness.png": {
+          "bytes": 3474578,
+          "sha256": "c57628daa1e45a40fc56e8839b5b2c15eecf005115935dff7898d0cdd7b332e0",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        }
+      }
+    },
+    {
+      "id": "Wood05",
+      "page": "https://www.cgbookcase.com/textures/wood-05",
+      "author": "Dorian Zgraggen / CGBookcase",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://www.cgbookcase.com/textures/wood-05",
+      "status": "test-only",
+      "files": {
+        "assets/source/material-review/Wood05/Wood05_2K_BaseColor.png": {
+          "bytes": 8272457,
+          "sha256": "32e8feafcfeebf0a9e2cae9026d9968002771049be25e9c44bc61c6f02792685",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood05/Wood05_2K_Height.png": {
+          "bytes": 4419644,
+          "sha256": "5766918d07c18fd5ed617adf690fcc49801d6080a08a83a6dc8e8e7a68048cf5",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood05/Wood05_2K_Normal.png": {
+          "bytes": 13446734,
+          "sha256": "ebfb1b5fa52711d58c69f60020351c9c329a877867f1d4c44efa683bf4913a27",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        },
+        "assets/source/material-review/Wood05/Wood05_2K_Roughness.png": {
+          "bytes": 2629319,
+          "sha256": "d19113d933f0f18aaf2285c1d65ae9a4413389e93f91a6caa1b3b21ee68050ab",
+          "png_bit_depth": 8,
+          "png_color_type": 6,
+          "dimensions": [
+            2048,
+            2048
+          ]
+        }
+      }
+    }
+  ]
+}

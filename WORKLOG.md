@@ -1,5 +1,15 @@
 # Work log
 
+## 2026-10-18 KST — 외부 접속 복구·실제 재질 비교(D-142/F-107)
+
+- 공식 원본 다운로드 성공: PH 2종·ambientCG 4종·CGBookcase 2종, 2K PNG 8팩/361,430,072 bytes. PH 6맵 MD5 일치, 전체 SHA-256·CC0 근거·test-only 등록. 이전 CONNECT 403은 당시 이력이고 현재 전체 차단이 아니다.
+- 보호된 서고/Story와 분리한 자체 베벨 벤치 11조건×정면/사선 = 최종 22장. CGBookcase DirectX normal을 확인해 G 반전 후 두 장 재렌더, 최초 두 장은 기각했다.
+- PH 벽·ambientCG Plaster006의 얼룩은 2K 원본에도 있다. PH ash는 균일한 미세 결로 공급처 전체 저품질 판정은 기각. 우선 권장: 자체 깨끗한 도장면 + 약한 목재 결. 후보별 KEEP/TUNE/REJECT는 verification README에 적었으며 사용자 최종 채택은 미확정이다.
+- RGB8 기준 PH 벽: 같은 2K WebP q75/q90 PSNR 34.28/40.89 dB; 무손실 1K 축소만으로 2K 대비 31.62 dB. PH 원본은 16-bit이며 이 수치는 16→8-bit 손실을 포함하지 않는다. 실제 서고 기여율로 일반화하지 않는다.
+- `verification/r1-archive-material-review-20261018/README.md`에 비교 시트·수치·라이선스/상용 후보·확인 안 함을 기록. 재현 스크립트 `scripts/blender/material-bench.py`. D 번호는 원격 31브랜치 D 최대141/F 최대106 확인 뒤 사용했다. J-003 T5/P-006 잠정 갱신.
+- 검증 PASS: 렌더 최종 22장 해시·640²/원본 40파일 핀, records 152, playbook 6/3(형식 3건 보정 후), encoding 68파일·7/7, portability, diff. 앱 빌드·웹은 확인 안 함.
+- **남음**: B3 전체 원본 16종 복구·선택 조합 아랫면 전후 렌더, L2 사람·해치 조율, 재질 실제 서고 적용·베이크·웹 확인. r8·D-084·Story 기본값은 변경하지 않았다. 다음은 이 비교 결과를 기준으로 실제 화면 적용 범위를 확인하고 별도 기록 후 진행한다.
+
 ## 2026-10-18 KST — 배포 GLB 텍스처 포렌식·대체 조달처(F-106)
 
 - 사용자 후속 요청에 따라 원인 분석을 문서 확인에서 실제 파일·채널 검사로 확장했다. archive.glb의 이미지 50장(49×1024², 1×512², 모두 WebP), 노멀/roughness-metallic 연결 재질 각 17개를 실제 이미지 헤더·JSON/BIN으로 확인했다. 포함 알베도 3장은 저장소 밖에서 열어 마모·변색 무늬를 확인했다.

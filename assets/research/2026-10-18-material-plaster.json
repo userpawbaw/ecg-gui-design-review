@@ -1,0 +1,133 @@
+{
+  "query": "plaster",
+  "kind": "material",
+  "date": "2026-10-18",
+  "sources": {
+    "polyhaven": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Anti Slip Concrete",
+          "page": "https://polyhaven.com/a/anti_slip_concrete",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "anti_slip_concrete"
+          }
+        },
+        {
+          "title": "Asphalt Floor",
+          "page": "https://polyhaven.com/a/asphalt_floor",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "asphalt_floor"
+          }
+        },
+        {
+          "title": "Beige Wall 001",
+          "page": "https://polyhaven.com/a/beige_wall_001",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "beige_wall_001"
+          }
+        },
+        {
+          "title": "Beige Wall 002",
+          "page": "https://polyhaven.com/a/beige_wall_002",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "beige_wall_002"
+          }
+        },
+        {
+          "title": "Blue Plaster Wall",
+          "page": "https://polyhaven.com/a/blue_plaster_wall",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "blue_plaster_wall"
+          }
+        },
+        {
+          "title": "Blue Plaster Weathered",
+          "page": "https://polyhaven.com/a/blue_plaster_weathered",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "polyhaven",
+            "slug": "blue_plaster_weathered"
+          }
+        }
+      ]
+    },
+    "ambientcg": {
+      "status": "ok",
+      "access": "api-auto",
+      "candidates": [
+        {
+          "title": "Concrete 034",
+          "page": "https://ambientcg.com/view?id=Concrete034",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Concrete034",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Plaster 001",
+          "page": "https://ambientcg.com/view?id=Plaster001",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Plaster001",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Painted Plaster 017",
+          "page": "https://ambientcg.com/view?id=PaintedPlaster017",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "PaintedPlaster017",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Plaster 007",
+          "page": "https://ambientcg.com/view?id=Plaster007",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Plaster007",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Plaster 002",
+          "page": "https://ambientcg.com/view?id=Plaster002",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Plaster002",
+            "attribute": "1K-JPG"
+          }
+        },
+        {
+          "title": "Concrete 036",
+          "page": "https://ambientcg.com/view?id=Concrete036",
+          "licence": "CC0-1.0",
+          "fetch": {
+            "type": "ambientcg",
+            "asset_id": "Concrete036",
+            "attribute": "1K-JPG"
+          }
+        }
+      ]
+    }
+  }
+}

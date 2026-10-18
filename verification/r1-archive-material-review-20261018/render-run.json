@@ -1,0 +1,148 @@
+{
+  "bpy": "4.5.3 LTS",
+  "samples": 48,
+  "seed": 142,
+  "resolution": [
+    640,
+    640
+  ],
+  "threads": 4,
+  "view": "AgX / Medium High Contrast / exposure 0",
+  "uv": "1 repeat/metre, dominant-face planar (sphere uses default sphere UV)",
+  "material": "sRGB base; GL normal Non-Color strength 1 or .15; roughness Non-Color; no displacement/AO",
+  "normal_conventions": "PH/ambientCG GL; CGBookcase DirectX converted by 1-G",
+  "runs": [
+    {
+      "variant": "ph_ash",
+      "view": "front",
+      "file": "ph_ash-front.png",
+      "sha256": "a7986d8224ba7e1197ac9456f6bc8f1444a7ef69d286d21cb94534e592a5fdb2"
+    },
+    {
+      "variant": "ph_ash",
+      "view": "oblique",
+      "file": "ph_ash-oblique.png",
+      "sha256": "731ee08f58e3657d75c4a9bde91fcc0da2f2a10a4ae5fc41726012eabc72409c"
+    },
+    {
+      "variant": "ph_ash_flat15",
+      "view": "front",
+      "file": "ph_ash_flat15-front.png",
+      "sha256": "413308572ba77e75c1a8b72c1ec97123bbf26ab0e546c200a60cd243f2aa2b60"
+    },
+    {
+      "variant": "ph_ash_flat15",
+      "view": "oblique",
+      "file": "ph_ash_flat15-oblique.png",
+      "sha256": "b2f19b0e936d9d3cec2a2792523b905083afd24473f7e9c8e027440d5a7ffd24"
+    },
+    {
+      "variant": "acg_wood095",
+      "view": "front",
+      "file": "acg_wood095-front.png",
+      "sha256": "ccd8e1fb66b9a46dd0f9191f06a86b7b43ca8010e2707620abac16d1846a4f66"
+    },
+    {
+      "variant": "acg_wood095",
+      "view": "oblique",
+      "file": "acg_wood095-oblique.png",
+      "sha256": "75fc906935f3d3441217a282ab0bc766360733d1025495926177f0c83e6e0711"
+    },
+    {
+      "variant": "own_wood",
+      "view": "front",
+      "file": "own_wood-front.png",
+      "sha256": "26d47937dbcc205f82be482c8bce83bdb9fdd8f706f3bd890eafe5c67ec3afbf"
+    },
+    {
+      "variant": "own_wood",
+      "view": "oblique",
+      "file": "own_wood-oblique.png",
+      "sha256": "9eb5d2836283702ac5bd80a3be4e52e493092702cdf9f261b4ec9d9888e36c2b"
+    },
+    {
+      "variant": "acg_wood051_negative",
+      "view": "front",
+      "file": "acg_wood051_negative-front.png",
+      "sha256": "22a2ef7481141f2ab0c7c4a34495ab8951499093eeadefef92d23cf8f593e7cd"
+    },
+    {
+      "variant": "acg_wood051_negative",
+      "view": "oblique",
+      "file": "acg_wood051_negative-oblique.png",
+      "sha256": "a8daf151bf3df8a830eddb0643d0be991e1f17ad8319fd22980061539c94e456"
+    },
+    {
+      "variant": "ph_wall",
+      "view": "front",
+      "file": "ph_wall-front.png",
+      "sha256": "edaac5f8207e571dc60c261b8fda158ee94f13f249582f80c3c1a72e660ba7f3"
+    },
+    {
+      "variant": "ph_wall",
+      "view": "oblique",
+      "file": "ph_wall-oblique.png",
+      "sha256": "4740c0d8c94a5c5d603f15d81153c949590420c6e903c82d29ab1388a6bab837"
+    },
+    {
+      "variant": "ph_wall_flat15",
+      "view": "front",
+      "file": "ph_wall_flat15-front.png",
+      "sha256": "e1a5abfb4670a7499f795a166f7e4d6ce086ba957623b249fe65f1db96400489"
+    },
+    {
+      "variant": "ph_wall_flat15",
+      "view": "oblique",
+      "file": "ph_wall_flat15-oblique.png",
+      "sha256": "64f33b281f78627d41c9363e53d0e6d030f4db1a6479fa639cba09d120a235ba"
+    },
+    {
+      "variant": "acg_paint004",
+      "view": "front",
+      "file": "acg_paint004-front.png",
+      "sha256": "fa68971d1f3abba9af41ce2759c63f2030f7b6299fabf96f7da9e7565f90d995"
+    },
+    {
+      "variant": "acg_paint004",
+      "view": "oblique",
+      "file": "acg_paint004-oblique.png",
+      "sha256": "3137a34dd8e80a27ba318dbc7e075361e50335e0ceaae338f8c6486f3b08f1a4"
+    },
+    {
+      "variant": "own_paint",
+      "view": "front",
+      "file": "own_paint-front.png",
+      "sha256": "217471e2498883f1ffa6909f64c1d2ae52f0227bdd2f1f5be9686b657e020f5b"
+    },
+    {
+      "variant": "own_paint",
+      "view": "oblique",
+      "file": "own_paint-oblique.png",
+      "sha256": "c17d3276e45194b4a50d95226d7d7970da87bf5baeeff109f90270b1794be005"
+    },
+    {
+      "variant": "acg_plaster006_negative",
+      "view": "front",
+      "file": "acg_plaster006_negative-front.png",
+      "sha256": "e88348971f7ba4f205ceda1f6c238712fab99b17a4a3c38befc9afccd29330ee"
+    },
+    {
+      "variant": "acg_plaster006_negative",
+      "view": "oblique",
+      "file": "acg_plaster006_negative-oblique.png",
+      "sha256": "e3d74de7d10846f921cd570e7c80ff7226a777f64cd7468b5069d7f018960d61"
+    },
+    {
+      "variant": "cgb_wood05",
+      "view": "front",
+      "file": "cgb_wood05-front.png",
+      "sha256": "e92d7882c7b3f9786895216c3eb3e5e673b2bad509392c7c5d8430ae960ca6a8"
+    },
+    {
+      "variant": "cgb_wood05",
+      "view": "oblique",
+      "file": "cgb_wood05-oblique.png",
+      "sha256": "4e01e8bf0dc6bc826006a887cde649b194dea8fc5539994c8564e00eae0dd07a"
+    }
+  ]
+}

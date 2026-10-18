@@ -440,7 +440,7 @@
     "branch": "claude/archive-light-r7-ag2rja",
     "base_commit": "df532274de086866bfc829f2cec351e482413c75",
     "decision": "D-141",
-    "status": "partially_blocked",
+    "status": "material_review_complete_scene_application_unverified",
     "selection": {
       "light_pattern": "b",
       "ladder": "L2",
@@ -453,18 +453,21 @@
       "64x64 Cycles CPU diagnostic render (not archive)",
       "recipe environment isolation and missing-asset fail-fast",
       "previous JPEG tone remeasurement",
-      "records/playbook checks"
+      "records/playbook checks",
+      "Official 2K CC0 material originals (8 assets), PH 6 map MD5 and all SHA256 pins",
+      "Independent material fixture 22 final frames, CGBookcase DX normal conversion",
+      "Map resolution vs WebP compression factor isolation in RGB8"
     ],
     "not_verified": [
-      "Poly Haven source download/hashes",
+      "Historical full 16-asset Poly Haven B3 source set restoration/hashes (subset material originals verified separately)",
       "new archive scene/render/EXR",
       "combined underside ratio",
       "L2 climber contacts/collisions and hatch choreography",
       "web bake/camera/motion"
     ],
-    "next_action": "Keep historical B3 baseline reproducible when source access is restored. For new production, follow the already approved self-authored kit route and independently evaluate any needed material textures. Preserve Story ownership and r8/D-084 defaults; record meaningful design choices before implementing.",
+    "next_action": "Review actual material comparison; preserve r8/D-084/Story defaults. Restore historical B3 source set and compare underside factors separately; coordinate L2 hatch choreography before any Story change. Record production material adoption before integration.",
     "evidence": "verification/r1-archive-b3-selected-20261018/README.md",
-    "blocked_scope": "Historical B3 same-condition render reproduction needs the original Poly Haven assets. This does not block all new asset research/design.",
+    "blocked_scope": "Network access to required material originals is restored; historical B3 scene reproduction remains unexecuted, not globally network-blocked.",
     "asset_policy": {
       "source": "docs/uiux_system/24_ASSET_RESEARCH_STAGE.md §1.1; rounds/R1/REVIEW-R1-ARCHIVE-SHADOW-ASSET-20261016.md §5 and §7.2",
       "main_route": "self-authored parametric props; clean solid colours / low-contrast grain",
@@ -476,8 +479,18 @@
         "analysis": "docs/uiux_system/rounds/R1/ANALYSIS-R1-ARCHIVE-MATERIAL-SOURCING-20261018.md",
         "evidence": "verification/r1-archive-material-forensics-20261018/README.md",
         "scope": "Existing web GLB/input albedo/material-channel inspection, not latest r8/B2 stills or isolated render attribution",
-        "external_samples": "Not verified; official pages returned CONNECT 403"
+        "external_samples": "Verified 8 CC0 material originals and independent fixture; commercial candidate downloads not verified"
       }
+    },
+    "material_review": {
+      "decision": "D-142",
+      "finding": "F-107",
+      "evidence": "verification/r1-archive-material-review-20261018/README.md",
+      "downloaded_assets": 8,
+      "rendered_frames": 22,
+      "normal_correction_rerenders": 2,
+      "scope": "Independent material fixture; no archive/Story integration",
+      "recommendation": "Self-authored clean paint; weak wood grain / PH ash as supplementary candidate; user aesthetic confirmation pending"
     }
   }
 }

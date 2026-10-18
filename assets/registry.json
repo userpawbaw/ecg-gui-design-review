@@ -1913,6 +1913,198 @@
         "prototype/v2 R1 intro"
       ],
       "review": "Day side of the globe v2: January snow and ice make the backlit northern band bright as in REF-001 (July left it green). Credit NASA Earth Observatory."
+    },
+    {
+      "id": "material-review-ash_veneer-2k",
+      "title": "ash_veneer — independent material bench",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "material-review",
+        "page": "https://polyhaven.com/a/ash_veneer",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/ash_veneer/ash_veneer_diff_2k.png"
+      },
+      "author": "Jenelle van Heerden / Poly Haven",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://polyhaven.com/license",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/material-review/ash_veneer/ash_veneer_diff_2k.png",
+        "sha256": "e9ee020318e31181c8b69761ee1949f653d9f1dd4c7d17333e83398f757db2aa",
+        "bytes": 21086839
+      },
+      "processing": "Independent fixture only. Channel pins: verification/r1-archive-material-review-20261018/sources.json",
+      "used_by": [
+        "scripts/blender/material-bench.py"
+      ]
+    },
+    {
+      "id": "material-review-painted_plaster_wall-2k",
+      "title": "painted_plaster_wall — independent material bench",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "material-review",
+        "page": "https://polyhaven.com/a/painted_plaster_wall",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/painted_plaster_wall/painted_plaster_wall_diff_2k.png"
+      },
+      "author": "Amal Kumar / Poly Haven",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://polyhaven.com/license",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/material-review/painted_plaster_wall/painted_plaster_wall_diff_2k.png",
+        "sha256": "5d3e476d633d873f2f9f443936a7d3f6a5830b5486c9bd704cef7c1f89dbb3cc",
+        "bytes": 22706294
+      },
+      "processing": "Independent fixture only. Channel pins: verification/r1-archive-material-review-20261018/sources.json",
+      "used_by": [
+        "scripts/blender/material-bench.py"
+      ]
+    },
+    {
+      "id": "material-review-wood051-2k",
+      "title": "Wood051 — independent material bench",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "material-review",
+        "page": "https://ambientcg.com/view?id=Wood051",
+        "resolved_url": "https://ambientcg.com/get?file=Wood051_2K-PNG.zip"
+      },
+      "author": "ambientCG / Lennart Demes",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://docs.ambientcg.com/license/",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/material-review/Wood051/Wood051_2K-PNG.zip",
+        "sha256": "70e5ff0263341b051d0e386cb1dc0ad62ed3b52a410e91b9eaf70fd684387eb3",
+        "bytes": 56889576
+      },
+      "processing": "Independent fixture only. Channel pins: verification/r1-archive-material-review-20261018/sources.json",
+      "used_by": [
+        "scripts/blender/material-bench.py"
+      ]
+    },
+    {
+      "id": "material-review-plaster006-2k",
+      "title": "Plaster006 — independent material bench",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "material-review",
+        "page": "https://ambientcg.com/view?id=Plaster006",
+        "resolved_url": "https://ambientcg.com/get?file=Plaster006_2K-PNG.zip"
+      },
+      "author": "ambientCG / Lennart Demes",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://docs.ambientcg.com/license/",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/material-review/Plaster006/Plaster006_2K-PNG.zip",
+        "sha256": "730f430e8bbe3eee014a83b658dd92ab5b446e87192ed80fc6786537d8960788",
+        "bytes": 62989615
+      },
+      "processing": "Independent fixture only. Channel pins: verification/r1-archive-material-review-20261018/sources.json",
+      "used_by": [
+        "scripts/blender/material-bench.py"
+      ]
+    },
+    {
+      "id": "material-review-wood095-2k",
+      "title": "Wood095 — independent material bench",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "material-review",
+        "page": "https://ambientcg.com/view?id=Wood095",
+        "resolved_url": "https://ambientcg.com/get?file=Wood095_2K-PNG.zip"
+      },
+      "author": "ambientCG / Lennart Demes",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://docs.ambientcg.com/license/",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/material-review/Wood095/Wood095_2K-PNG.zip",
+        "sha256": "94b7df8729a72a7d197716e3646e2186474b730b1432597e1f5ea14fadde8bf7",
+        "bytes": 34016478
+      },
+      "processing": "Independent fixture only. Channel pins: verification/r1-archive-material-review-20261018/sources.json",
+      "used_by": [
+        "scripts/blender/material-bench.py"
+      ]
+    },
+    {
+      "id": "material-review-paint004-2k",
+      "title": "Paint004 — independent material bench",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "material-review",
+        "page": "https://ambientcg.com/view?id=Paint004",
+        "resolved_url": "https://ambientcg.com/get?file=Paint004_2K-PNG.zip"
+      },
+      "author": "ambientCG / Lennart Demes",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://docs.ambientcg.com/license/",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/material-review/Paint004/Paint004_2K-PNG.zip",
+        "sha256": "b5f553c422e813d3ef0869b0777d295e283e31128108c4b413d08edea761972a",
+        "bytes": 52333846
+      },
+      "processing": "Independent fixture only. Channel pins: verification/r1-archive-material-review-20261018/sources.json",
+      "used_by": [
+        "scripts/blender/material-bench.py"
+      ]
+    },
+    {
+      "id": "material-review-wood01-2k",
+      "title": "Wood01 — independent material bench",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "material-review",
+        "page": "https://www.cgbookcase.com/textures/wood-01",
+        "resolved_url": "https://cgbookcase-volume.b-cdn.net/t/Wood01_MR_2K.zip"
+      },
+      "author": "Dorian Zgraggen / CGBookcase",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://www.cgbookcase.com/textures/wood-01",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/material-review/Wood01/Wood01_MR_2K.zip",
+        "sha256": "48147c9669a91f6667dab1447b590c571e71d14f359b92398f9e63a9a1751bc2",
+        "bytes": 25973833
+      },
+      "processing": "Independent fixture only. Channel pins: verification/r1-archive-material-review-20261018/sources.json",
+      "used_by": [
+        "scripts/blender/material-bench.py"
+      ]
+    },
+    {
+      "id": "material-review-wood05-2k",
+      "title": "Wood05 — independent material bench",
+      "kind": "material",
+      "status": "test-only",
+      "source": {
+        "type": "material-review",
+        "page": "https://www.cgbookcase.com/textures/wood-05",
+        "resolved_url": "https://cgbookcase-volume.b-cdn.net/t/Wood05_MR_2K.zip"
+      },
+      "author": "Dorian Zgraggen / CGBookcase",
+      "licence": "CC0-1.0",
+      "licence_evidence": "https://www.cgbookcase.com/textures/wood-05",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/material-review/Wood05/Wood05_MR_2K.zip",
+        "sha256": "f45b9cc58db1e7ac2cfbba3b141122b639820f47717200a2283417761edca513",
+        "bytes": 28776491
+      },
+      "processing": "Independent fixture only. Channel pins: verification/r1-archive-material-review-20261018/sources.json",
+      "used_by": [
+        "scripts/blender/material-bench.py"
+      ]
     }
   ],
   "rejected": [

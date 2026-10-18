@@ -1,0 +1,26 @@
+{
+  "result": "PASS",
+  "source_assets": 8,
+  "source_files": 40,
+  "final_frames_verified": 22,
+  "png_dimensions": [
+    640,
+    640
+  ],
+  "discarded_cgb_frames_replaced": 2,
+  "protected_builder_and_web_files": "unchanged",
+  "checks": [
+    "actual pinned-source integrity",
+    "22 unique final PNG hashes/header dimensions",
+    "both corrected normal frames differ from discarded images",
+    "records/playbook",
+    "encoding/portability"
+  ],
+  "not_verified": [
+    "archive scene integration and bake",
+    "historical complete B3 source set",
+    "L2 choreography",
+    "user aesthetic approval",
+    "target GPU/web performance"
+  ]
+}

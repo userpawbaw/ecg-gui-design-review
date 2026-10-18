@@ -1,0 +1,18 @@
+{
+  "discarded": [
+    {
+      "variant": "cgb_wood05",
+      "view": "front",
+      "file": "cgb_wood05-front.png",
+      "sha256": "2bf6f8fef1a49da077cb912b7de50e67735ebdff3513b2f1791c4ed8a8b82b74"
+    },
+    {
+      "variant": "cgb_wood05",
+      "view": "oblique",
+      "file": "cgb_wood05-oblique.png",
+      "sha256": "73f75855ab16411f3f7a3ed6178c69225a205e843904acdd02c22929a8107d77"
+    }
+  ],
+  "reason": "CGBookcase DirectX normal requires G inversion; only these two frames re-rendered, other frames unchanged",
+  "official_guide": "https://www.cgbookcase.com/learn/how-to-use-pbr-textures-in-blender"
+}

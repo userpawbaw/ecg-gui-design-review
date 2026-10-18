@@ -1,0 +1,143 @@
+[
+  {
+    "name": "polyhaven-license",
+    "url": "https://polyhaven.com/license",
+    "status": 200,
+    "final_url": "https://polyhaven.com/license",
+    "bytes": 72685,
+    "title": "License \u2022 Poly Haven"
+  },
+  {
+    "name": "ambient-home",
+    "url": "https://ambientcg.com",
+    "status": 200,
+    "final_url": "https://ambientcg.com",
+    "bytes": 20863,
+    "title": "ambientCG - Free Textures, HDRIs and Models"
+  },
+  {
+    "name": "ambient-api",
+    "url": "https://ambientcg.com/api/v2/full_json?q=wood&limit=8&include=downloadData",
+    "status": 200,
+    "final_url": "https://ambientcg.com/api/v2/full_json?q=wood&limit=8&include=downloadData",
+    "bytes": 99870,
+    "title": null
+  },
+  {
+    "name": "cgbookcase",
+    "url": "https://www.cgbookcase.com/textures/",
+    "status": 200,
+    "final_url": "https://www.cgbookcase.com/textures",
+    "bytes": 355428,
+    "title": " Textures | cgbookcase.com"
+  },
+  {
+    "name": "poliigon",
+    "url": "https://www.poliigon.com/textures/wood",
+    "status": 200,
+    "final_url": "https://www.poliigon.com/textures/wood",
+    "bytes": 437366,
+    "title": "Wood Textures | 550+ Free &amp; Premium PBR Textures - Poliigon"
+  },
+  {
+    "name": "adobe",
+    "url": "https://substance3d.adobe.com/assets",
+    "status": 200,
+    "final_url": "https://substance3d.adobe.com/assets",
+    "bytes": 6147,
+    "title": "Substance 3D Assets Homepage"
+  },
+  {
+    "name": "blenderkit",
+    "url": "https://www.blenderkit.com",
+    "status": 200,
+    "final_url": "https://www.blendkit.com/",
+    "bytes": 1196310,
+    "title": "Blender Asset Library \u2013 150,000+ Free &amp; Paid 3D Assets | Blendkit"
+  },
+  {
+    "name": "fab",
+    "url": "https://www.fab.com",
+    "status": 200,
+    "final_url": "https://www.fab.com",
+    "bytes": 1904421,
+    "title": "Fab"
+  },
+  {
+    "name": "ph-ash-info",
+    "url": "https://api.polyhaven.com/info/ash_veneer",
+    "final_url": "https://api.polyhaven.com/info/ash_veneer",
+    "status": 200,
+    "bytes": 904,
+    "authors": {
+      "Jenelle van Heerden": "All"
+    }
+  },
+  {
+    "name": "ph-wall-info",
+    "url": "https://api.polyhaven.com/info/painted_plaster_wall",
+    "final_url": "https://api.polyhaven.com/info/painted_plaster_wall",
+    "status": 200,
+    "bytes": 993,
+    "authors": {
+      "Amal Kumar": "All"
+    }
+  },
+  {
+    "name": "poliigon-current-license",
+    "url": "https://help.poliigon.com/en/articles/8749749-asset-use-licensing",
+    "final_url": "https://help.poliigon.com/en/articles/8749749-asset-use-licensing",
+    "status": 200,
+    "bytes": 121396
+  },
+  {
+    "name": "fab-eula",
+    "url": "https://www.fab.com/eula",
+    "final_url": "https://www.fab.com/eula",
+    "status": 200,
+    "bytes": 481697
+  },
+  {
+    "name": "substance-assets",
+    "url": "https://substance3d.adobe.com/assets/allassets?category=Materials",
+    "final_url": "https://substance3d.adobe.com/assets/allassets?category=Materials",
+    "status": 200,
+    "bytes": 6048
+  },
+  {
+    "name": "ambient-license",
+    "url": "https://docs.ambientcg.com/license/",
+    "status": 200,
+    "saved_response_bytes": 34106
+  },
+  {
+    "name": "cg-wood01",
+    "url": "https://www.cgbookcase.com/textures/wood-01",
+    "status": 200,
+    "saved_response_bytes": 279688
+  },
+  {
+    "name": "cg-wood05",
+    "url": "https://www.cgbookcase.com/textures/wood-05",
+    "status": 200,
+    "saved_response_bytes": 279455
+  },
+  {
+    "name": "poliigon-product",
+    "url": "https://www.poliigon.com/texture/ash-wood-board-texture-light-beige/4186",
+    "status": 200,
+    "saved_response_bytes": 382070
+  },
+  {
+    "name": "blenderkit-license",
+    "url": "https://www.blenderkit.com/docs/licenses/",
+    "status": 200,
+    "saved_response_bytes": 95182
+  },
+  {
+    "name": "cgb-normal-guide",
+    "url": "https://www.cgbookcase.com/learn/how-to-use-pbr-textures-in-blender",
+    "status": 200,
+    "normal_convention": "DirectX; invert green channel for Blender OpenGL"
+  }
+]

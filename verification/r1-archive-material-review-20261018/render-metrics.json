@@ -1,0 +1,123 @@
+[
+  {
+    "variant": "ph_ash",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 189.239708994709,
+    "highpass_std": 1.89960441970773
+  },
+  {
+    "variant": "ph_ash_flat15",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 211.71574074074073,
+    "highpass_std": 0.5304939825420111
+  },
+  {
+    "variant": "acg_wood095",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 195.42674603174603,
+    "highpass_std": 2.2123306205733244
+  },
+  {
+    "variant": "own_wood",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 213.09727513227514,
+    "highpass_std": 0.5379496760919619
+  },
+  {
+    "variant": "acg_wood051_negative",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 88.20142857142856,
+    "highpass_std": 8.922388986166125
+  },
+  {
+    "variant": "ph_wall",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 197.05161375661376,
+    "highpass_std": 1.5717622425574231
+  },
+  {
+    "variant": "ph_wall_flat15",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 218.72386243386242,
+    "highpass_std": 0.5307970974251617
+  },
+  {
+    "variant": "acg_paint004",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 219.06349206349208,
+    "highpass_std": 1.3368387781895212
+  },
+  {
+    "variant": "own_paint",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 221.15362433862433,
+    "highpass_std": 0.5236392212865599
+  },
+  {
+    "variant": "acg_plaster006_negative",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 196.16730158730158,
+    "highpass_std": 4.079223347873109
+  },
+  {
+    "variant": "cgb_wood05",
+    "roi_xyxy": [
+      220,
+      140,
+      490,
+      280
+    ],
+    "gray_mean": 205.46722222222223,
+    "highpass_std": 3.171338610704675
+  }
+]

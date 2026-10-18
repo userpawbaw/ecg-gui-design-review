@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:5197/archive-bake-preview/preview.html",
+  "url": "/archive-bake-preview/preview.html",
   "errors": [],
   "failedRequests": [],
   "responses": [
@@ -9,31 +9,31 @@
     },
     {
       "status": 200,
-      "url": "/node_modules/three/examples/jsm/loaders/GLTFLoader.js"
+      "url": "/archive-bake-preview/node_modules/three/examples/jsm/loaders/GLTFLoader.js"
     },
     {
       "status": 200,
-      "url": "/node_modules/three/examples/jsm/controls/OrbitControls.js"
+      "url": "/archive-bake-preview/node_modules/three/examples/jsm/controls/OrbitControls.js"
     },
     {
       "status": 200,
-      "url": "/node_modules/three/examples/jsm/libs/meshopt_decoder.module.js"
+      "url": "/archive-bake-preview/node_modules/three/examples/jsm/libs/meshopt_decoder.module.js"
     },
     {
       "status": 200,
-      "url": "/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js?v=6c090f67"
+      "url": "/archive-bake-preview/node_modules/three/build/three.module.js"
     },
     {
       "status": 200,
-      "url": "/node_modules/three/examples/jsm/utils/SkeletonUtils.js?v=6c090f67"
+      "url": "/archive-bake-preview/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js"
     },
     {
       "status": 200,
-      "url": "/node_modules/three/build/three.module.js"
+      "url": "/archive-bake-preview/node_modules/three/examples/jsm/utils/SkeletonUtils.js"
     },
     {
       "status": 200,
-      "url": "/node_modules/three/build/three.core.js?v=6c090f67"
+      "url": "/archive-bake-preview/node_modules/three/build/three.core.js"
     },
     {
       "status": 200,
@@ -46,6 +46,218 @@
     {
       "status": 200,
       "url": "/archive-bake-preview/archive.glb"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/0e97dac1-958e-4bba-9b59-0fcac10b7c4b"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/b506fdf3-5b72-49e6-a888-d22b1a83ade8"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/1986cf84-a375-49ed-949e-299aeadb6896"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/b3d907a4-16de-4432-8ecb-c8a9103acc44"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/e3268517-ab34-469e-b403-7e40420eed81"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/5edbfd1c-7c42-4468-9c54-fd012dfdc017"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/24d84855-b771-4273-aa8b-8d8a59d019cf"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/3eb6d3c8-efc1-4eb7-97fc-3b747de647a4"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/54acfeae-df79-452b-8385-f304b5f1a049"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/eabfeb03-e761-48b8-a387-9b720bafd6b7"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/b0d539cc-d71c-4ea5-8541-9a7c8780b6ab"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/972116bc-7cd4-4d60-b220-ca62206d5cf2"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/c91a92a6-655f-46e6-877e-c130fe2d56be"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/c9382f76-ab06-4a23-9968-304720dddd4b"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/59b913ed-3866-43c8-b7be-fcbbd993ade8"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/a95b9da7-7684-4cab-bfac-b058543ecc26"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/5f249e87-8451-42c0-9b7f-3feb9bd06c3b"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/30c00849-317a-46ec-9712-14a0adb54529"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/26d04ad3-47ab-4e51-a5a9-6da3699f3c28"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/668bf55b-29a3-4d8c-936e-5f24797efb24"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/91358e1c-6860-4b5b-8681-abd0fa95bc0a"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/0bb7ca5b-ed1f-409e-834e-76e120ad10f0"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/948fd4a7-f632-4ec0-aa0e-bb7dcab47f0f"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/0c6df23f-80a0-4303-bbdc-b8e45a43bc81"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/4d41addc-0f9e-49dd-8b5b-cd9e89337244"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/f76d0817-7c43-4e92-b651-29e29ccbb539"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/0a98d9ca-531e-4ce6-869f-852a83bc932f"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/ed199bff-4e87-41cf-a8f0-ae232f619436"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/43301673-01e4-4854-9b06-0c465e9ca28b"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/0b69d879-fbd4-4e3d-837d-8fb9be79a574"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/d8260689-ac95-485d-97c7-3b15702a250f"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/a92e1ac6-329b-487e-9d6f-a98b15f17872"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/4ac4b57c-a0dd-40ef-8541-e3e8789d8827"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/99e99346-bba4-434f-b789-b95bd4991eb4"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/5358c105-1104-42bc-9f83-bf000eb86c2f"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/c548275d-c66e-4bd3-9391-db1ad92ee9ab"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/f2a5e08b-9623-4273-a733-ec914b5a1ee7"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/a5297945-8a15-41b3-8d47-6d72eaed4c67"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/26c6bf31-2ca9-48b5-b239-eda3737f12e2"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/edf924db-d5de-45a3-9f6a-9f5684a38657"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/88b3811b-59f0-4350-9409-165792c0777a"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/d81e58ba-7ad1-41ca-aef6-5695378b47b5"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/ec040829-faf1-4de2-bfe4-ea3a28840f5c"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/46f5f80e-ff4b-4bc5-89d9-d99139fe5ac2"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/2a88fa4a-e935-49f3-b1f4-49e48f69e422"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/090784fb-f36c-4580-8e0c-9274f33f6b18"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/ab8d812c-0830-4b51-a156-0697b48711ae"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/3902d776-ca39-4ddd-8f72-a0c3e5368554"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/86e9a11f-ae98-4d49-b0af-7037f23a6244"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/90e59ae0-4807-40a3-b59f-490fd8efe22b"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/0d86aebd-2163-4ba0-80d8-e8eb62c320c7"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/23a1d803-84d1-4092-9434-317daccd7c3c"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5197/e07da457-d405-457e-b14e-af8be8b51ce9"
     }
   ],
   "orbitMoved": true,

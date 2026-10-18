@@ -2395,3 +2395,7 @@ D-084 후보는 잎을 납작한 타원 14개로 만들어 그림자가 둥근 �
 - Actions가 Pages 권한으로 사이트를 만들거나 게시하지 못하면 정책을 우회하지 않고 상태를 기록한다.
 - Pages artifact에 명시한 프리뷰 파일·런타임 모듈·MIT 고지 외 파일이 포함되거나 라이선스 제한 에셋이 확인되면 배포를 중지하고 artifact를 정정한다.
 - 게시물에서 GLB/lightmap/Three.js 모듈이 모두 로드되지 않거나 카메라 조작이 실패하면 통과로 기록하지 않고 배포를 고친다. 사용자의 공개 동의가 철회되면 Pages를 비활성화하고 공개 artifact를 제거한다.
+
+### 실행 상태
+- `[런타임]` 공개 repo 조회와 사용자 브랜치 push 권한은 확인됐다. Pages 생성 `POST /repos/userpawbaw/ecg-gui-design-review/pages`는 `403 Resource not accessible by integration`으로 거부됐다. 연결된 GitHub integration token으로 Settings 권한을 바꿀 수는 없어 관리자 UI의 Pages source 설정이 필요하다. 이 환경 차단을 우회하지 않는다.
+- `[테스트]` 공개 artifact와 동일한 12개 파일(13.31 MB)을 별도 정적 서버에서 Chromium 154로 확인: 전체 응답 200, JS/browser 오류 0, lightmap 1개 적용, orbit/reset PASS. Pages 사용자 URL은 아직 게시되지 않았다.

@@ -9,39 +9,53 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const v2 = join(root, 'prototype/v2');
 const require = createRequire(join(v2, 'package.json'));
 const { chromium } = require('playwright');
+const previewUrl = process.env.ARCHIVE_PREVIEW_URL || 'http://127.0.0.1:5197/archive-bake-preview/preview.html';
+const displayUrl = (() => {
+  const parsed = new URL(previewUrl);
+  return ['localhost', '127.0.0.1'].includes(parsed.hostname) ? parsed.pathname : previewUrl;
+})();
+const resultPath = process.env.ARCHIVE_PREVIEW_RESULT_PATH
+  ? resolve(root, process.env.ARCHIVE_PREVIEW_RESULT_PATH)
+  : join(root, 'verification/r1-archive-web-bake-20261018/browser-result.json');
 const vite = join(v2, 'node_modules/vite/bin/vite.js');
-const server = spawn(process.execPath, [vite, '--host', '127.0.0.1', '--port', '5197', '--strictPort'], {
+const server = process.env.ARCHIVE_PREVIEW_URL ? null : spawn(process.execPath, [vite, '--host', '127.0.0.1', '--port', '5197', '--strictPort'], {
   cwd: v2, stdio: ['ignore', 'pipe', 'pipe']
 });
 let serverLog = '';
-server.stdout.on('data', (chunk) => { serverLog += chunk.toString(); });
-server.stderr.on('data', (chunk) => { serverLog += chunk.toString(); });
+server?.stdout.on('data', (chunk) => { serverLog += chunk.toString(); });
+server?.stderr.on('data', (chunk) => { serverLog += chunk.toString(); });
 
-const evidence = { url: 'http://127.0.0.1:5197/archive-bake-preview/preview.html', errors: [], failedRequests: [], responses: [], orbitMoved: false };
+const evidence = { url: displayUrl, errors: [], failedRequests: [], responses: [], orbitMoved: false };
 let browser;
 try {
   let ready = false;
   for (let i = 0; i < 60; i++) {
     try {
-      const response = await fetch(evidence.url);
+      const response = await fetch(previewUrl);
       if (response.ok) { ready = true; break; }
     } catch {}
-    if (server.exitCode !== null) throw new Error('Vite exited early: ' + serverLog);
+    if (server && server.exitCode !== null) throw new Error('Vite exited early: ' + serverLog);
     await delay(500);
   }
   if (!ready) throw new Error('Vite did not serve the preview: ' + serverLog);
 
-  browser = await chromium.launch({ headless: true, args: ['--enable-webgl', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  browser = await chromium.launch({
+    headless: true,
+    ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}),
+    args: ['--enable-webgl', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader']
+  });
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
   page.on('pageerror', (error) => evidence.errors.push(String(error)));
   page.on('console', (msg) => { if (msg.type() === 'error') evidence.errors.push(msg.text()); });
   page.on('requestfailed', (request) => evidence.failedRequests.push({ url: request.url(), error: request.failure()?.errorText }));
   page.on('response', (response) => {
-    if (response.url().includes('/archive-bake-preview/') || response.url().includes('/node_modules/three/')) {
-      evidence.responses.push({ status: response.status(), url: response.url().replace('http://127.0.0.1:5197', '') });
-    }
+    const responseUrl = new URL(response.url());
+    evidence.responses.push({
+      status: response.status(),
+      url: ['localhost', '127.0.0.1'].includes(responseUrl.hostname) ? responseUrl.pathname : response.url()
+    });
   });
-  const response = await page.goto(evidence.url, { waitUntil: 'networkidle', timeout: 120000 });
+  const response = await page.goto(previewUrl, { waitUntil: 'networkidle', timeout: 120000 });
   if (!response?.ok()) throw new Error('Preview page HTTP ' + response?.status());
   await page.waitForFunction(() => document.querySelector('#status')?.textContent?.startsWith('베이크 조명 적용'), null, { timeout: 120000 });
   await page.waitForTimeout(1500);
@@ -72,16 +86,16 @@ try {
     throw new Error('Browser preview has errors; see browser-result.json');
   }
   evidence.result = 'PASS';
-  await writeFile(join(root, 'verification/r1-archive-web-bake-20261018/browser-result.json'), JSON.stringify(evidence, null, 2) + '\n', 'utf8');
+  await writeFile(resultPath, JSON.stringify(evidence, null, 2) + '\n', 'utf8');
   process.stdout.write(JSON.stringify(evidence, null, 2) + '\n');
 } catch (error) {
   evidence.result = 'FAIL';
   evidence.errors.push(String(error?.stack || error));
   evidence.serverLog = serverLog;
-  await writeFile(join(root, 'verification/r1-archive-web-bake-20261018/browser-result.json'), JSON.stringify(evidence, null, 2) + '\n', 'utf8');
+  await writeFile(resultPath, JSON.stringify(evidence, null, 2) + '\n', 'utf8');
   process.stderr.write(JSON.stringify(evidence, null, 2) + '\n');
   process.exitCode = 1;
 } finally {
   await browser?.close();
-  server.kill('SIGTERM');
+  server?.kill('SIGTERM');
 }

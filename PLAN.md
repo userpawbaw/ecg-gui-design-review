@@ -335,5 +335,6 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 
 - [x] GitHub Pages absence and admin access checked; user explicitly approved public publication.
 - [x] D-146 recorded before implementation after checking 31 remote branches (highest record D-145).
-- [ ] Publish only the preview page, baked GLB/lightmap/manifest, required pinned Three.js modules, and MIT notice.
+- [x] Prepare a 13.31 MB static package containing only the preview, baked GLB/lightmap/manifest, seven pinned Three.js modules and MIT notice; standalone Chromium load, baked-light state, orbit and reset PASS.
+- [ ] GitHub API site creation returned 403 `Resource not accessible by integration`; repository administrator must set Pages source to GitHub Actions, then push a README URL/status update to trigger deployment.
 - [ ] Verify Actions deployment URL and externally accessible browser behavior; check payload scope and licenses.

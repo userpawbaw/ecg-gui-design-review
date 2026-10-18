@@ -1,0 +1,298 @@
+{
+  "url": "/preview.html",
+  "errors": [],
+  "failedRequests": [],
+  "responses": [
+    {
+      "status": 200,
+      "url": "/preview.html"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/libs/meshopt_decoder.module.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/controls/OrbitControls.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/loaders/GLTFLoader.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/utils/SkeletonUtils.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/build/three.module.js"
+    },
+    {
+      "status": 200,
+      "url": "/node_modules/three/build/three.core.js"
+    },
+    {
+      "status": 200,
+      "url": "/manifest.json"
+    },
+    {
+      "status": 200,
+      "url": "/light_shell.webp"
+    },
+    {
+      "status": 200,
+      "url": "/archive.glb"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/2b9893f0-d2f8-4692-bc4f-3bd260122e9c"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/f871cb64-014e-4e57-844c-44cc43bac3dd"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/b8b52e56-8c38-42bd-86ac-8169f4b0de11"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/60ac461f-5143-491c-baa5-52e3f38d4e33"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/7c4df748-7f20-4232-989d-076875b2a61d"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/113fc1d4-c5f0-4df9-82cc-939ad6f0314b"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/a66a81ef-c916-49f4-bedd-42f9dd7b1ff1"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/a3c83c64-bbe3-4fa1-8a55-32bd14016ab2"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/67ddc36e-352c-4561-8158-f3bb8095a120"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/5c094433-3c46-438c-9d2b-abc2f7ff61ac"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/4dfbf218-5c66-4b8c-9016-5d4ce68c4415"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/00d5c161-c817-4277-92b8-dc216a0ec86f"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/60c02eb3-a367-4916-98b1-a8564aef5ad9"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/0c64f1de-2058-465a-a23e-3ce95905d90f"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/92e80120-e5d2-4a90-a9a7-a71a47b7d64e"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/8c5a2630-1e9e-4353-8d96-fcf8e719fc44"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/ae6ea5b0-403e-4c55-a63a-a0ad346ffb02"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/11be0da6-7bc0-48e4-962c-1e577ac8964f"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/cdbf9d52-4a1d-4502-b6e4-e684fe035946"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/883441d8-c266-4582-909e-9101d1efe519"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/83b04f72-19c6-4a1c-84aa-67ade3b7183e"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/84fd2eb5-78cf-4760-8c0f-026a4517771d"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/7d8b3a98-4de5-48b5-b21f-b54b3dc7a29d"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/ebc9b77a-29d1-455c-9a8d-686f90ccd193"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/d612aff5-873d-491e-952e-78582d03bda5"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/1eebb281-4fdd-4167-a105-6b4dc81e2396"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/e573a1b4-98a7-46f5-b33e-d854e626419d"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/24f2c050-d63c-46cc-a9b4-41a17b58f947"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/d6344842-e8bc-407c-baed-8319020e420f"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/ef1f4b88-7077-46bd-8566-2f6cf9d4c902"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/ee61e20b-720e-4c53-b703-661658af55a6"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/0f73ecd5-9e9a-42c2-839b-8ea31366c1e5"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/4e95fd92-c575-4af2-8611-8228bde38711"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/3cd9758c-ed09-4bcf-86e5-633dbffd091d"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/bcdb6fb4-3321-437e-bf64-5a3e9c53410b"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/775f9eb5-90f6-4dcd-b40d-a0da61f1d435"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/fb8e294f-fd60-4fc9-ac4b-6e58144aae9a"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/9a6f4aad-d45c-4c30-b516-8c0d1a9811e5"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/94382ab3-1e31-45b6-9177-fee4c0219d83"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/26a05c25-125a-45b4-9246-0de23bdf7e7c"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/0e434ea7-3d19-49b6-9f81-bd12cafe189a"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/f4e51836-31c4-43d8-8f08-f67bc0a5c79b"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/0b1ba199-84ac-4d3d-bec6-a6765defc3d6"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/c7b69557-9706-4c39-946f-53985b6212b9"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/faf1a43c-1582-4a0f-b644-ea80c0efdbab"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/9f3cc1de-20c0-4852-8173-df204cc2772f"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/c5cc3ad1-7e2f-4a9f-b2c2-0d309f38d5a5"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/1310a082-1fe7-4de1-9cbf-24a7d47bcf53"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/55a8cceb-0bce-4218-9cee-8ccf77cb5643"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/b9106a28-e9f5-4ef0-95de-360a95c1e950"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/4c5c8d33-069c-46d5-85f8-037675f7e14b"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/4e76cbd6-7349-4d79-9f9b-9dab631b8b46"
+    },
+    {
+      "status": 200,
+      "url": "blob:http://127.0.0.1:5198/3b5bbf84-db28-41e0-9998-c07ddf27648a"
+    }
+  ],
+  "orbitMoved": true,
+  "status": "베이크 조명 적용 · 1 lightmaps · meshopt GLB",
+  "preview": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "groups": [
+      "shell",
+      "books",
+      "decor"
+    ],
+    "lightmaps": [
+      "shell"
+    ]
+  },
+  "camera": {
+    "initial": [
+      8.5,
+      5.500000000000002,
+      17
+    ],
+    "afterDrag": [
+      -2.543887868370795,
+      3.445559545070628,
+      18.934594685932286
+    ],
+    "afterReset": [
+      8.5,
+      5.500000000000002,
+      17
+    ],
+    "resetError": 0
+  },
+  "result": "PASS"
+}

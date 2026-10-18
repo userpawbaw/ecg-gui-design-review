@@ -3,7 +3,7 @@
 - Poly Haven B3 16종 복구: 파일 MD5 84/84 통과, registry SHA 15/16. `vintage_wooden_drawer_01`은 재게시 SHA 차이를 기록.
 - B3 선택값·기준값을 같은 2개 카메라에서 각각 1280×720/64 samples로 재렌더. 그늘진 칸 아랫면 0.0935→0.0375(−59.9%), 선반 윗면 0.2675→0.2649(−1.0%). 사다리 penumbra 1.8–2.3px, 잎 13.2px.
 - B3 렌더에 보이는 PC/CRT/ECG 6 mesh는 각 8 vertex/6 polygon/bevel modifier 없음. `prop-geometry-audit.py` exit1 6/6; 3mm bevel fixture PASS. 기존 기기 Q2 FAIL, 새 기기 Q1/Q4 미확인.
-- D-144 same EXR mix: key 0.5/0.35/0.25. 0.35는 0.5보다 어둡고 절충 후보, 0.25는 더 어두워짐. 아직 기본값 선택·프로덕션 반영 안 함. 시트와 상세 수치는 `verification/r1-archive-b3-rerender-20261018/README.md`.
+- D-144 same EXR mix: key 0.5/0.35/0.25. 사용자가 0.5를 시각 선택해 B3 시안 혼합값으로 유지; 보호된 기본값·프로덕션 반영은 별도. 시트와 상세 수치는 `verification/r1-archive-b3-rerender-20261018/README.md`.
 - Blender Manual, MIT GitHub skill 2곳, Polycount 위키 조사로 D-143 skill을 보강. records/playbook/encoding/portability 점검 통과 예정 후 업데이트. Story/r8/D-084 보호.
 
 ## 2026-10-18 KST — 자체 소품 제작 관문 → 서고 빛 재설계
@@ -11,7 +11,7 @@
 - D-143/CASE-008: 자체 제작 스킬과 Q0–Q5 검수 문서화. 완료; 새 소품의 실제 합격은 확인 안 함. `verification/r1-prop-craft-gate-20261018/README.md`.
 - D-141 실제 B3 시안: 2카메라×아랫면 1.0/0.35 정지 렌더 완료. 그늘 아랫면 선형 휘도 −59.9%, 선반 윗면 −1.0%. 사다리 1.8–2.3px, 먼 잎 13.2px. `verification/r1-archive-b3-rerender-20261018/README.md`.
 - D-143 자체 소품 스킬/Q0–Q5 및 기하 검사기 완료. 초기 PC/CRT/ECG 6개는 수정 없는 상자라 Q2 FAIL. 새 소품 자체 제작/최종 Q1/Q4 미실행.
-- D-144 광원 그룹 key 후보 0.5/0.35/0.25의 2시점 혼합 비교 완료. 0.35는 중간 후보, 기본 0.5 유지. 다음은 선택 시안에 대한 사용자 시각 확인. 확인 전 key 0.5와 B3 선택값만 후보 상태로 유지하며, L2 사람·해치 연출 및 웹 굽기는 별도 미완료 범위로 둔다. Story 소유 파일·r8/D-084 보존.
+- D-144 광원 그룹 key 후보 0.5/0.35/0.25의 2시점 혼합 비교 및 사용자 선택 완료: 0.5. 이를 B3 시안 선택값으로 유지한다. 다음은 승인 범위를 넓히지 않고 L2 사람·해치 연출, 웹 굽기, 기기 Q0–Q5를 별도로 검증한다. Story 소유 파일·r8/D-084 보존.
 
 # Review plan
 

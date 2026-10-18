@@ -3,7 +3,7 @@
 - Poly Haven B3 16종 복구: 파일 MD5 84/84 통과, registry SHA 15/16. `vintage_wooden_drawer_01`은 재게시 SHA 차이를 기록.
 - B3 선택값·기준값을 같은 2개 카메라에서 각각 1280×720/64 samples로 재렌더. 그늘진 칸 아랫면 0.0935→0.0375(−59.9%), 선반 윗면 0.2675→0.2649(−1.0%). 사다리 penumbra 1.8–2.3px, 잎 13.2px.
 - B3 렌더에 보이는 PC/CRT/ECG 6 mesh는 각 8 vertex/6 polygon/bevel modifier 없음. `prop-geometry-audit.py` exit1 6/6; 3mm bevel fixture PASS. 기존 기기 Q2 FAIL, 새 기기 Q1/Q4 미확인.
-- D-144 same EXR mix: key 0.5/0.35/0.25. 0.35는 0.5보다 어둡고 절충 후보, 0.25는 더 어두워짐. 아직 기본값 선택·프로덕션 반영 안 함. 시트와 상세 수치는 `verification/r1-archive-b3-rerender-20261018/README.md`.
+- D-144 same EXR mix: key 0.5/0.35/0.25. 사용자가 0.5를 시각 선택해 기존 B3 혼합값으로 유지. 보호된 기본값·Story·웹 반영 승인은 아님. 측정과 확인 안 함은 `verification/r1-archive-b3-rerender-20261018/README.md`.
 - Blender Manual, MIT GitHub skill 2곳, Polycount 위키 조사로 D-143 skill을 보강. records 155건/CASE, playbook 6 cards·3 journeys, encoding, portability 점검 PASS. Story/r8/D-084 보호.
 
 ## 2026-10-18 KST — 자체 제작 소품 품질 관문(D-143, CASE-008)

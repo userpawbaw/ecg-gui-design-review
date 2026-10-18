@@ -50,8 +50,6 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .lab-backdrop{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:-1;pointer-events:none}
 /* black curtain over the backdrop (?curtain=, 10 % steps) — the archive light stays, only its outlines read through */
 .lab-backdrop-curtain{position:fixed;inset:0;z-index:-1;pointer-events:none;background:#000;opacity:var(--lab-curtain,.7)}
-.lab-hero{height:calc(100vh - 80px);display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:6vh;text-shadow:0 1px 12px rgba(0,0,0,.7)}
-.lab-hero p{font-size:15px;color:#e8dcc8;margin:6px 0 0}
 /* the dark colour sits on the root: a body background would paint over the z-index −1 canvas */
 :root.lab-dark-root{background:#05090b}body.lab-dark{background:transparent;color:#d6e3e6}
 .lab-dark header{background:rgb(5 11 14 / var(--ui-a,.9));border-color:#1d3138}.lab-dark .brand{color:#e6f1ef}.lab-dark .brand small{color:#8fa9a2}

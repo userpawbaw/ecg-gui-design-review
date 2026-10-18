@@ -16,7 +16,8 @@ export function Plot(p:Props){
  const bg=document.createElement('canvas'),bgg=bg.getContext('2d')!,hot=document.createElement('canvas'),hg=hot.getContext('2d')!,glow=createGlow();
  const draw=()=>{const t0=performance.now(),q=latest.current,t=q.transport.time;const rect=c.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
  const sig=[t,q.mode,q.span,q.inspect,q.amplitude,q.reference,q.method,q.preview,q.comparison,q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,rect.width,rect.height,dpr,fx.current.level].join('|');
- if(sig!==signature){signature=sig;const W=Math.round(rect.width*dpr),H=Math.round(rect.height*dpr);if(c.width!==W||c.height!==H){c.width=W;c.height=H;}g.setTransform(dpr,0,0,dpr,0,0);const w=rect.width,h=rect.height;
+ // a collapsed canvas (0 × 0 while the layout changes) is skipped: drawImage of a 0-size static layer throws
+ if(sig!==signature&&rect.width>=1&&rect.height>=1){signature=sig;const W=Math.round(rect.width*dpr),H=Math.round(rect.height*dpr);if(c.width!==W||c.height!==H){c.width=W;c.height=H;}g.setTransform(dpr,0,0,dpr,0,0);const w=rect.width,h=rect.height;
  const rows=[{id:'input',label:'입력 · Noisy',color:'#ffbc79'},{id:q.method,label:q.method+' · 선택 출력',color:'#67e7c3'}];if(q.comparison)rows.push({id:q.comparison,label:q.comparison+' · 고정 비교',color:'#97c2ff'});
  const count=rows.length;const rh=(h-(q.residual?144:0))/count;if(q.residual)rows.push({id:q.method,label:`Reference와 차이 · Output − Reference · 표시 ×${q.gain||1}`,color:'#c0ced7'});g.font='11px system-ui';const labelWidth=Math.max(...amplitudeTicks(q.amplitude,q.residual?q.gain||1:1).concat(amplitudeTicks(q.amplitude)).map(t=>g.measureText(t.label).width));const left=Math.max(72,labelWidth+26),right=w-18,pw=right-left;
  const boxes:Box[]=rows.map((_,r)=>{const isDiff=q.residual&&r===count,top=r*rh+36;return{l:left,r:right,t:top,b:isDiff?top+72:(r+1)*rh-30};});

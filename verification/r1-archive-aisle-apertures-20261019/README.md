@@ -23,3 +23,8 @@
 
 ## 확인 안 함
 사용자 미감 승인, 실제 사용자 Edge/GPU의 FPS·터치·모바일·장기 soak, Cycles/near-key 품질 일치, 모든 방위의 책장 밝기. 이번 변경은 산란계수 증폭이나 최종 bake 교체가 아니다.
+
+## 공개 배포
+- runtime source `21fd8b9e100e0c91ce95828c4ae04424cb0d76bb`, main dispatch39299691498 success. [새 보기](https://userpawbaw.github.io/ecg-gui-design-review/light-study.html?view=aisle&v=21fd8b9).
+- 첫 run39299555862는 짧은 SHA를 branch로 해석한 checkout 실패. 전체40자리 SHA로 재요청해 해결했다. 이후 dispatcher에는 전체 SHA를 사용한다.
+- public-result.json / public-preview.png에 공개20files hash·HTTP·browser 입력·bake 왕복 결과를 기록한다.

@@ -371,5 +371,5 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 ## 통로 천창 추가 (2026-10-19, D-149)
 - [x] 전체 remote 번호 검사 후 실제 파생 roof geometry 절단·단면·A/B·통로/정면 preset 구현.
 - [x] ray/동일시점 volume 비교; protected sources 유지.
-- [ ] 기존 regression/공개20file 검증·commit/push·Pages.
+- [x] 기존 regression·신규geometry A/B 통과, source21fd8b9 commit/push 및 원격52files 확인, Pages39299691498 success. 공개20file hash 확인.
 - 사용자 미감·실제 GPU·최종 Cycles는 확인 안 함. 근거 verification/r1-archive-aisle-apertures-20261019/README.md.

@@ -2497,3 +2497,6 @@ D-084 후보는 잎을 납작한 타원 14개로 만들어 그림자가 둥근 �
  산란 증폭은 공간상 빛 경로 문제를 해결하지 않는다. shader만 뚫으면 CPU ray/그림자 경로 불일치 위험이 있다. 전체 재수출은 보호된 자산까지 변경 범위를 늘린다.
 ### 되돌려야 하는 조건
  천장 밖 형상이 잘리거나, 같은 시점에서 광선/책장 채광이 함께 확인되지 않으면 배치부터 재조정한다. 모든 방위각에서 보임을 보장하지 않으며 물리 GPU·최종 Cycles 품질은 별도 검증한다.
+
+### D-149 실행 결과
+독립 runtime21fd8b9, Pages39299691498 공개 완료. 신규 개구부3개 ray 통과/바깥 solid 보존, 동일시점 산란평균+51.2%, 기존 regression PASS. 공개20file hash/HTTP·browser 입력·bake 왕복 PASS. 신규형상의 direct/HDR parity 평균RGB1.276은 기존≤1 관문 미통과로 남김. 사용자 미감·실제GPU·Cycles는 확인 안 함. 근거 `verification/r1-archive-aisle-apertures-20261019/README.md`.

@@ -8,9 +8,12 @@ and every default stay unchanged. --lab-shots replaces the preview shots with th
 D-077 options: several skylights (';'), --sun-angle DEG, --no-lamps (the two aisle lamps and their bulbs), --leaves
 "x,y,z,radius,count;…" (branch-and-leaf clusters above the roof: soft dappled sun, group decor so the web's sun depth map
 casts them into the shafts too).
+D-078 options: --win-width C:W (window at centre y C gets width W), --open-window C (no blinds there: one large clean pool),
+--hidden-bulbs (the aisle lamp meshes go, their warm bulbs stay — F-053: they gave half the room's light), --sky '#hex' (sky tint).
 
     python scripts/assets/archive-sun-variant.py --sun 0.746,0.5,-0.439 [--skylight x0,x1,y0,y1[;…]] [--sun-angle 0.5]
-        [--no-lamps] [--leaves x,y,z,r,n[;…]] [--lab-shots [c1]] -- <build_archive.py args>
+        [--no-lamps | --hidden-bulbs] [--leaves x,y,z,r,n[;…]] [--win-width C:W] [--open-window C] [--sky '#hex']
+        [--lab-shots [c1]] -- <build_archive.py args>
 Sun is the direction the light travels, Blender frame (x right, y into the room, z up).
 """
 import math, os, sys
@@ -23,6 +26,10 @@ PREVIEW_LINE = 'if args.preview:\n'
 SUNANG_LINE = "sun = bpy.data.lights.new('sun', 'SUN'); sun.energy = 11.0; sun.angle = math.radians(1.2); sun.color = srgb('#ffd9a8')"
 LAMP_LINES = ("for y in ((-1.8,) if args.art in ('r3', 'r4', 'r5', 'r6') else (-1.8, 1.3)):", "for y in (() if args.art in ('r3', 'r4', 'r5', 'r6') else (-1.8, 1.3)):")
 SHOTS_LINE = '# ---------------- preview shots (SPACE-R1-ARCHIVE §3–4) ----------------\n'
+WIN_LINE = 'WIN = [(-3.8, 0.9), (-2.2, 0.9), (-0.6, 0.9), (1.0, 0.9), (2.6, 0.9), (3.95, 1.0)]'
+SLAT_DEF = 'def slat_layout(c, role):\n'
+ROLE_LINE = "WIN_ROLE = {3.95: 'hero', 1.0: 'support', -2.2: 'support'} if args.light == 'r2' else {}"
+SKY_COL = "w.node_tree.nodes['Background'].inputs[0].default_value = (*srgb('#7d96c4'), 1)"
 # D-077 C1 path (prototype/v2/src/labBackdrop.ts PATHS.c1), Blender frame: (pos, look, vfov) keys
 C1 = [((0.15, -3.4, 3.3), (0.35, 4.3, 1.6), 46), ((0.25, -1.2, 2.4), (0.35, 4.3, 1.5), 48), ((0.3, 1.0, 0.95), (0.35, 4.3, 0.9), 50)]
 def c1_at(u):
@@ -58,6 +65,23 @@ if '--skylight' in own:   # D-076/D-077: ceiling skylights (x0, x1, y0, y1, Blen
 if '--sun-angle' in own:   # D-077: a smaller sun = crisper near shadows, leaf shadows keep their outline (archive-light F-045, D-085: 0.5°)
     assert src.count(SUNANG_LINE) == 1, 'build_archive.py: the r1 sun line changed — update this wrapper'
     src = src.replace(SUNANG_LINE, SUNANG_LINE.replace('math.radians(1.2)', f"math.radians({float(own[own.index('--sun-angle') + 1])})"))
+if '--win-width' in own:   # D-078: a wider window → a larger pool
+    import re
+    assert src.count(WIN_LINE) == 1, 'build_archive.py: the window list changed — update this wrapper'
+    new = WIN_LINE
+    for spec in own[own.index('--win-width') + 1].split(';'):
+        c, w = spec.split(':'); new, k = re.subn(rf'\({re.escape(c)}, [0-9.]+\)', f'({c}, {w})', new); assert k == 1, f'no window at y {c}'
+    src = src.replace(WIN_LINE, new)
+if '--open-window' in own:  # D-078: no blinds on this window — one large clean pool with the mullion lines in it
+    c = float(own[own.index('--open-window') + 1])
+    assert src.count(SLAT_DEF) == 1 and src.count(ROLE_LINE) == 1, 'build_archive.py: the blind code changed — update this wrapper'
+    src = src.replace(SLAT_DEF, SLAT_DEF + "    if role == 'open': return []\n").replace(ROLE_LINE, ROLE_LINE + f"\nWIN_ROLE = {{**WIN_ROLE, {c}: 'open'}}")
+if '--hidden-bulbs' in own: # D-078 (F-053): the lamp meshes leave the aisle, the two warm bulbs stay
+    assert src.count(LAMP_LINES[0]) == 1, 'build_archive.py: a lamp line changed — update this wrapper'
+    src = src.replace(LAMP_LINES[0], 'for y in ():')
+if '--sky' in own:          # D-078 (F-053): the blue sky fill cools the shade
+    assert src.count(SKY_COL) == 1, 'build_archive.py: the sky colour line changed — update this wrapper'
+    src = src.replace(SKY_COL, SKY_COL.replace('#7d96c4', own[own.index('--sky') + 1]))
 if '--no-lamps' in own:    # D-077: the C1 path flies down the aisle where the two lamps hang (user: no ceiling lamp in view)
     for ln in LAMP_LINES:
         assert src.count(ln) == 1, 'build_archive.py: a lamp line changed — update this wrapper'

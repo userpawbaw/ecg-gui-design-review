@@ -10,6 +10,7 @@ D-077 options: several skylights (';'), --sun-angle DEG, --no-lamps (the two ais
 casts them into the shafts too).
 D-078 options: --win-width C:W (window at centre y C gets width W), --open-window C (no blinds there: one large clean pool),
 --hidden-bulbs (the aisle lamp meshes go, their warm bulbs stay — F-053: they gave half the room's light), --sky '#hex' (sky tint).
+D-080: --open-window takes several centres (';'), --wz0 Z lowers the window sills (taller windows).
 
     python scripts/assets/archive-sun-variant.py --sun 0.746,0.5,-0.439 [--skylight x0,x1,y0,y1[;…]] [--sun-angle 0.5]
         [--no-lamps | --hidden-bulbs] [--leaves x,y,z,r,n[;…]] [--win-width C:W] [--open-window C] [--sky '#hex']
@@ -72,10 +73,13 @@ if '--win-width' in own:   # D-078: a wider window → a larger pool
     for spec in own[own.index('--win-width') + 1].split(';'):
         c, w = spec.split(':'); new, k = re.subn(rf'\({re.escape(c)}, [0-9.]+\)', f'({c}, {w})', new); assert k == 1, f'no window at y {c}'
     src = src.replace(WIN_LINE, new)
-if '--open-window' in own:  # D-078: no blinds on this window — one large clean pool with the mullion lines in it
-    c = float(own[own.index('--open-window') + 1])
+if '--open-window' in own:  # D-078: no blinds on these windows (';' between centres) — clean pools with the mullion lines in them
+    cs = [float(c) for c in own[own.index('--open-window') + 1].split(';')]
     assert src.count(SLAT_DEF) == 1 and src.count(ROLE_LINE) == 1, 'build_archive.py: the blind code changed — update this wrapper'
-    src = src.replace(SLAT_DEF, SLAT_DEF + "    if role == 'open': return []\n").replace(ROLE_LINE, ROLE_LINE + f"\nWIN_ROLE = {{**WIN_ROLE, {c}: 'open'}}")
+    src = src.replace(SLAT_DEF, SLAT_DEF + "    if role == 'open': return []\n").replace(ROLE_LINE, ROLE_LINE + "\nWIN_ROLE = {**WIN_ROLE, " + ', '.join(f"{c}: 'open'" for c in cs) + "}")
+if '--wz0' in own:          # D-080: taller windows (lower sill) → taller light curtains through the stack gaps
+    WZ = 'WZ0, WZ1 = 3.45, 4.7'; assert src.count(WZ) == 1, 'build_archive.py: the window height line changed — update this wrapper'
+    src = src.replace(WZ, f"WZ0, WZ1 = {float(own[own.index('--wz0') + 1])}, 4.7")
 if '--hidden-bulbs' in own: # D-078 (F-053): the lamp meshes leave the aisle, the two warm bulbs stay
     assert src.count(LAMP_LINES[0]) == 1, 'build_archive.py: a lamp line changed — update this wrapper'
     src = src.replace(LAMP_LINES[0], 'for y in ():')

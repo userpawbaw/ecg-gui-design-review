@@ -35,8 +35,13 @@ const ASSET_SUN15={manifest:new URL('./assets/archive-sun15/manifest.json',impor
 // bulbs, warm grey sky, leaves over the hatch and outside a window — the Lab default
 const ASSET_LAB={manifest:new URL('./assets/archive-lab/manifest.json',import.meta.url).href,glb:new URL('./assets/archive-lab/archive.glb',import.meta.url).href,
  'light_shell.webp':new URL('./assets/archive-lab/light_shell.webp',import.meta.url).href} as Record<string,string>;
-export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'='base'){
- const A=variant==='sun35'?ASSET_SUN35:variant==='sun15'?ASSET_SUN15:variant==='lab'?ASSET_LAB:ASSET;
+// D-080: the original sun with five skylights, window sills at 2.6 m, two centre windows without blinds, hidden warm bulbs (e3);
+// the D layout of D-079 with the left hatch and the sun ×1.6, kept for comparison at the user's request (d16)
+const vAsset=(dir:string)=>({manifest:new URL(`./assets/${dir}/manifest.json`,import.meta.url).href,glb:new URL(`./assets/${dir}/archive.glb`,import.meta.url).href,
+ 'light_shell.webp':new URL(`./assets/${dir}/light_shell.webp`,import.meta.url).href} as Record<string,string>);
+const ASSET_E3=vAsset('archive-e3'),ASSET_D16=vAsset('archive-d16');
+export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d16'='base'){
+ const A=({sun35:ASSET_SUN35,sun15:ASSET_SUN15,lab:ASSET_LAB,e3:ASSET_E3,d16:ASSET_D16} as Record<string,Record<string,string>>)[variant]??ASSET;
  const manifest:ArchiveManifest=await (await fetch(A.manifest)).json();
  const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(A.glb);
  const tl=new THREE.TextureLoader(),lightmaps:Record<string,THREE.Texture>={};

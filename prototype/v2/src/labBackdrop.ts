@@ -45,8 +45,8 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const gl=renderer.getContext(),dbg=gl.getExtension('WEBGL_debug_renderer_info'),gpu=String(dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
  const soft=/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:.6;
  // default the original archive (user 2026-10-19: "바닥과 사다리에 빛이 비치는 처음 버젼이 제일 낫다", D-080) · ?sun=lab the
- // D-079 bake (C + larger hatch) · 30 the D-077 C1 bake · 15 the D-078 bake
- const SUN=Q.get('sun'),arch=await createArchive(SUN==='lab'?'lab':SUN==='15'?'sun15':SUN==='30'?'sun35':'base');arch.setFade(1);arch.renderSunDepth(renderer);
+ // D-079 bake (C + larger hatch) · 30 the D-077 C1 bake · 15 the D-078 bake · e3 / d16 the D-080 bakes
+ const SUN=Q.get('sun'),arch=await createArchive(({lab:'lab','15':'sun15','30':'sun35',e3:'e3',d16:'d16'} as Record<string,'lab'|'sun15'|'sun35'|'e3'|'d16'>)[SUN??'']??'base');arch.setFade(1);arch.renderSunDepth(renderer);
  // D-077: the Lab variant has no aisle lamps (their bulbs lit the room) → exposure ×1.8 brings the frame mean back to the
  // D-074 level (0.10–0.17 → measured in verification/lab-c1-20261018)
  if(SUN==='30')arch.shared.uExposure.value*=1.8;   // only the lamp-less D-077 bake; the later bakes keep their bulbs (F-053)

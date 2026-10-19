@@ -10,7 +10,7 @@ D-077 options: several skylights (';'), --sun-angle DEG, --no-lamps (the two ais
 casts them into the shafts too).
 D-078 options: --win-width C:W (window at centre y C gets width W), --open-window C (no blinds there: one large clean pool),
 --hidden-bulbs (the aisle lamp meshes go, their warm bulbs stay — F-053: they gave half the room's light), --sky '#hex' (sky tint).
-D-080: --open-window takes several centres (';'), --wz0 Z lowers the window sills (taller windows).
+D-080: --open-window takes several centres (';'), --wz0 Z lowers the window sills (taller windows), --sun-energy K (sun × K).
 
     python scripts/assets/archive-sun-variant.py --sun 0.746,0.5,-0.439 [--skylight x0,x1,y0,y1[;…]] [--sun-angle 0.5]
         [--no-lamps | --hidden-bulbs] [--leaves x,y,z,r,n[;…]] [--win-width C:W] [--open-window C] [--sky '#hex']
@@ -66,6 +66,9 @@ if '--skylight' in own:   # D-076/D-077: ceiling skylights (x0, x1, y0, y1, Blen
 if '--sun-angle' in own:   # D-077: a smaller sun = crisper near shadows, leaf shadows keep their outline (archive-light F-045, D-085: 0.5°)
     assert src.count(SUNANG_LINE) == 1, 'build_archive.py: the r1 sun line changed — update this wrapper'
     src = src.replace(SUNANG_LINE, SUNANG_LINE.replace('math.radians(1.2)', f"math.radians({float(own[own.index('--sun-angle') + 1])})"))
+if '--sun-energy' in own:  # D-080: sun strength × factor (user: keep D with the sun ×1.6 to compare)
+    assert src.count('sun.energy = 11.0;') == 1, 'build_archive.py: the r1 sun energy changed — update this wrapper'
+    src = src.replace('sun.energy = 11.0;', f"sun.energy = {11.0 * float(own[own.index('--sun-energy') + 1]):.2f};")
 if '--win-width' in own:   # D-078: a wider window → a larger pool
     import re
     assert src.count(WIN_LINE) == 1, 'build_archive.py: the window list changed — update this wrapper'

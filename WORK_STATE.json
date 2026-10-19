@@ -52,6 +52,12 @@
       "owner": "claude/archive-light-r7-ag2rja D-146",
       "since": "2026-10-18",
       "note": "User approved public preview. Pages source is workflow; deployment run 39123185772 and public Chromium 154/SwiftShader 1280x720 PASS. HTML/GLB/manifest/lightmap/Three modules 200, shell lightmap applied, groups loaded, errors/failed requests 0, orbit PASS, reset error 0. Artifact excludes reports/recipe/log/screenshot/source. Story remains protected."
+    },
+    {
+      "resource": "archive real-time light study page and Pages deployment: verification/r1-archive-web-bake-20261018/light-study.html",
+      "owner": "claude/archive-light-r7-ag2rja D-147",
+      "since": "2026-10-19",
+      "note": "Separate PBR/dynamic-shadow study page; existing baked preview retained. Local software-renderer model load verified, frame capture/performance not verified; public Pages deployment and browser interaction check pending."
     }
   ],
   "concurrency": {
@@ -94,7 +100,7 @@
     "2026-09-16 concurrency policy revision: docs/23 added at 2f39ff9, WORK_RESUME_POLICY v1.2 at 0d38797, AGENTS updated at aabfd19",
     "Existing ECG 6-hour automation prompt updated to policy v1.2; repository-wide lock removed and resource-scoped conflict checks retained"
   ],
-  "current_request": "Retire the repository-wide Work execution lock while preserving checkpoint/resume tracking and resource-scoped duplicate-job protection.",
+  "current_request": "D-147: provide a fast separate real-time archive lighting study with azimuth/elevation sliders while preserving baked reference.",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
@@ -130,7 +136,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "R1 (2026-10-06): D-053 — story all on the measurement chair, intro only differs; fist at video speed (close ~0.56 s, open ~0.39 s); breath 2 per 10 s (2.0 s in / 3.0 s out). Fist finger closure being rebuilt (middle/ring/pinky together). Read PLAN-R1-INTRO-STORY-V2 §9.8, §9.7, §9.6. Next: chair pose + fist on thigh + breath preview, per-noise inflow markers plan, then brief 3.",
+  "next_action": "Complete D-147 staging and local/public browser checks; deploy light-study.html without changing baked reference, record measurements and unverified scope, then commit and push.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -143,9 +149,9 @@
     "verification": "Current UI-01/03/04 source, 98×600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "completed",
+  "request_status": "in_progress",
   "schema_version": 3,
-  "updated_at": "2026-10-18",
+  "updated_at": "2026-10-19",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",

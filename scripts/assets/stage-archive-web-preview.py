@@ -20,7 +20,7 @@ if not (SOURCE / 'archive.glb').is_file() or not manifest_path.is_file():
     raise SystemExit('Missing packaged archive.glb or manifest.json')
 
 manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
-files = {'archive.glb', 'manifest.json', 'preview.html'}
+files = {'archive.glb', 'manifest.json', 'preview.html', 'light-study.html'}
 files.update(info['file'] for info in manifest['groups'].values() if info.get('file'))
 missing = [name for name in sorted(files) if not (SOURCE / name).is_file()]
 if missing:
@@ -49,18 +49,18 @@ if missing_three:
 DEST.mkdir(parents=True, exist_ok=True)
 for name in sorted(files):
     target = DEST / name
-    if name == 'preview.html':
+    if name.endswith('.html'):
         html = (SOURCE / name).read_text(encoding='utf-8')
         marker = '<script type="importmap">'
         start = html.find(marker)
         end = html.find('</script>', start)
         if start < 0 or end < 0:
-            raise SystemExit('Could not rewrite the preview import map for the staged runtime')
+            raise SystemExit(f'Could not rewrite the import map in {name}')
         json_start = start + len(marker)
         import_map = json.loads(html[json_start:end].strip())
         imports = import_map.get('imports', {})
         if set(imports) != {'three', 'three/addons/'}:
-            raise SystemExit('Unexpected preview import map entries: ' + ', '.join(imports))
+            raise SystemExit(f'Unexpected import map entries in {name}: ' + ', '.join(imports))
         imports['three'] = './node_modules/three/build/three.module.js'
         imports['three/addons/'] = './node_modules/three/examples/jsm/'
         html = html[:json_start] + '\n    ' + json.dumps(import_map, separators=(',', ':')) + '\n  ' + html[end:]

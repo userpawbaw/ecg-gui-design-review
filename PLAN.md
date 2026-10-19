@@ -343,3 +343,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [ ] All-material visual art direction, physical GPU/browser diversity, and mobile behavior remain unverified.
 - [x] Controlled flat-albedo vs baked-light A/B isolates diffuse texture as the main visible mottling source; result captures and limitations recorded.
 - [ ] User selects whether to keep/replace parquet and veneer texture before any public preview material revision. Lossless-vs-WebP and sample-noise contribution remain unmeasured.
+
+## Archive light exploration follow-up (2026-10-19, D-147)
+
+- Preserve `verification/r1-archive-web-bake-20261018/preview.html` as the high-quality baked reference.
+- Add isolated `light-study.html` for immediate azimuth/elevation exploration using original PBR maps and dynamic shadow map; stage only that additional page with existing approved GLB/runtime.
+- Verify load/material map counts, slider changes, shadow behavior, public Pages deployment. Record measured limits and “확인 안 함” in the verification README. Do not alter Story-owned files/defaults or B3 bake inputs.
+- After selecting a direction, validate the candidate at final quality with Blender 4.5.3 Cycles.

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,"><title>서고 · 실시간 조명 탐색</title>
+  <style>
+    :root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#111720;color:#eee9df}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}canvas{display:block;width:100%;height:100%}
+    aside{position:fixed;z-index:2;top:16px;left:16px;width:min(360px,calc(100vw - 32px));padding:16px;border:1px solid #ffffff2b;border-radius:10px;background:#111720eF;box-shadow:0 8px 30px #0008;backdrop-filter:blur(9px)}h1{font-size:16px;margin:0 0 5px}p{color:#bdc4cb;font-size:12px;margin:4px 0 13px}.row{display:grid;grid-template-columns:74px 1fr 52px;gap:9px;align-items:center;margin:12px 0}label{font-size:13px}input{width:100%;accent-color:#e2b878}output{text-align:right;font-variant-numeric:tabular-nums}.actions{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px}button,a{border:1px solid #ffffff40;border-radius:6px;color:#f4eee4;background:#252b33;padding:8px 10px;text-decoration:none;font:inherit;cursor:pointer}a{font-size:12px}#status{position:fixed;right:16px;top:16px;color:#e7ddcd;background:#111720c9;padding:7px 10px;border-radius:6px;font-size:12px}#error{position:fixed;z-index:3;left:16px;bottom:16px;color:#ff9999;white-space:pre-wrap}
+    @media(max-height:520px){aside{top:8px;left:8px;padding:10px}.row{margin:6px 0}p{margin-bottom:5px}}
+  </style>
+  <script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+</head>
+<body>
+  <aside>
+    <h1>서고 · 실시간 조명 탐색</h1>
+    <p>재질의 색·표면결은 원본 PBR 텍스처를 사용합니다. 슬라이더는 광원 방향과 그림자를 즉시 바꿉니다.</p>
+    <div class="row"><label for="azimuth">방위각</label><input id="azimuth" type="range" min="0" max="359" value="225"><output id="azimuthValue">225°</output></div>
+    <div class="row"><label for="elevation">고도각</label><input id="elevation" type="range" min="5" max="85" value="35"><output id="elevationValue">35°</output></div>
+    <div class="actions"><button id="reset" type="button">조명·시점 초기화</button><a href="./preview.html">고품질 베이크 결과 보기 ↗</a></div>
+    <p style="margin:12px 0 0">실시간 탐색용입니다. 간접광 베이크와 Cycles의 부드러운 그림자는 재현하지 않으며 GPU에 따라 그림자 품질·속도가 달라집니다.</p>
+  </aside>
+  <div id="status">PBR 모델 로딩 중…</div><div id="error"></div>
+  <script type="module">
+    import * as THREE from 'three';
+    import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+    import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+    import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
+    const status=document.querySelector('#status'), showError=e=>{document.querySelector('#error').textContent=String(e?.stack||e);status.textContent='로드 실패'};
+    try {
+      const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+      renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;document.body.appendChild(renderer.domElement);
+      const scene=new THREE.Scene();scene.background=new THREE.Color(0x111720);
+      const camera=new THREE.PerspectiveCamera(37,innerWidth/innerHeight,.05,100), initialPosition=new THREE.Vector3(8.5,5.5,17), initialTarget=new THREE.Vector3(0,2.15,-1.5);camera.position.copy(initialPosition);
+      const controls=new OrbitControls(camera,renderer.domElement);controls.target.copy(initialTarget);controls.enableDamping=true;controls.dampingFactor=.07;controls.minDistance=4;controls.maxDistance=35;controls.maxPolarAngle=Math.PI*.48;controls.update();
+      scene.add(new THREE.HemisphereLight(0xc4d9ff,0x39291c,1.15));scene.add(new THREE.AmbientLight(0xffffff,.22));
+      const sun=new THREE.DirectionalLight(0xffe0b5,3.2);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-8;sun.shadow.camera.right=8;sun.shadow.camera.top=8;sun.shadow.camera.bottom=-8;sun.shadow.camera.near=.5;sun.shadow.camera.far=30;sun.shadow.bias=-.00025;sun.shadow.normalBias=.025;sun.target.position.set(0,2,-1.5);scene.add(sun,sun.target);
+      const az=document.querySelector('#azimuth'),el=document.querySelector('#elevation');
+      function setLight(){const a=THREE.MathUtils.degToRad(+az.value),e=THREE.MathUtils.degToRad(+el.value),r=12;sun.position.set(sun.target.position.x+r*Math.cos(e)*Math.sin(a),sun.target.position.y+r*Math.sin(e),sun.target.position.z+r*Math.cos(e)*Math.cos(a));document.querySelector('#azimuthValue').value=`${az.value}°`;document.querySelector('#elevationValue').value=`${el.value}°`;}
+      az.addEventListener('input',setLight);el.addEventListener('input',setLight);setLight();
+      const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync('./archive.glb');
+      let meshes=0,removedVertexColorAttributes=0,normalMaps=0,roughnessMaps=0;
+      gltf.scene.traverse(o=>{if(!o.isMesh)return;meshes++;if(o.geometry.getAttribute('color')){o.geometry=o.geometry.clone();o.geometry.deleteAttribute('color');removedVertexColorAttributes++;}const mats=Array.isArray(o.material)?o.material:[o.material];for(const m of mats){if(!m)continue;m.vertexColors=false;m.needsUpdate=true;if(m.normalMap)normalMaps++;if(m.roughnessMap)roughnessMaps++;}o.castShadow=true;o.receiveShadow=true;});
+      scene.add(gltf.scene);status.textContent=`PBR 실시간 · 메시 ${meshes} · normal map ${normalMaps} · roughness map ${roughnessMaps} · shadow 2048²`;
+      document.querySelector('#reset').addEventListener('click',()=>{az.value=225;el.value=35;setLight();controls.target.copy(initialTarget);camera.position.copy(initialPosition);controls.update();});
+      addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+      window.__archiveLightStudy={camera,controls,sun,meshes,removedVertexColorAttributes,normalMaps,roughnessMaps,renderer,sliders:{azimuth:az,elevation:el}};
+      renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera)});
+    } catch(e){showError(e)}
+  </script>
+</body></html>

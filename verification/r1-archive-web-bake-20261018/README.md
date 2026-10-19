@@ -37,3 +37,19 @@ Isolated B3 web export for reviewing the selected archive lighting with a freely
 
 - Story route integration and Story-owned files/assets/defaults were not changed.
 - Physical display/GPU/browser diversity, mobile performance, download behavior on a production network, and visual approval of every material/camera angle remain unverified. Headless Chromium with SwiftShader is not a substitute for those checks.
+
+## 빠른 방위·고도 탐색 (D-147)
+
+- `light-study.html`은 기존 baked-light 페이지와 분리된 실시간 탐색기다. `preview.html`은 고품질 bake 기준으로 그대로 유지한다.
+- 같은 최적화 GLB를 불러와 albedo, normal, roughness PBR 맵을 유지하고, bake 때 적용한 vertex color 조명은 제거한다. 실시간 Hemisphere/Ambient fill과 DirectionalLight 그림자를 사용한다.
+- 조절 범위: 방위각 0–359°, 고도각 5–85°. 기본값 225°/35°. 그림자맵 2048×2048, PCFSoftShadowMap, capped device pixel ratio 1.5. 카메라 회전/줌/이동과 조명·시점 초기화가 있다.
+- 로컬 Chromium 1280×720 + SwiftShader 로드에서 HTTP 200, 메시 62, normal map이 있는 재질 22, roughness map이 있는 재질 21을 확인했다. 초기 DOM 상태 `PBR 실시간 · 메시 62 · normal map 22 · roughness map 21 · shadow 2048²`까지 도달했다.
+- 소프트웨어 렌더러에서 동적 shadow를 포함한 장면 캡처/프레임 속도 검증은 제한 시간 안에 끝나지 않았다. 슬라이더 DOM 입력 반응은 수치로 완료 검증하지 않았다. 실제 GPU에서의 FPS, 모바일 성능, 접촉 그림자 품질은 확인 안 함.
+- 이 모드는 PBR 표면 입력을 보존하지만 Cycles의 간접광 bake, 다중 bounce, 최종 bake 톤을 재현하지 않는다. 실시간 shadow map은 GPU/브라우저에 따라 hard/aliased/slow가 될 수 있다. 방향 선택 후 동일 카메라로 Blender 4.5.3 Cycles 최종 bake/still을 확인한다.
+- 공개 파일 허용 범위에는 `light-study.html`만 추가했다. Story 소유 파일, 기존 baked 페이지/GLB/defaults, r8 및 D-084 값은 바꾸지 않았다.
+
+### 확인 안 함
+
+- 실제 물리 GPU, 모바일, 다른 브라우저/디스플레이에서의 FPS 및 그림자 외관.
+- SwiftShader에서의 캡처와 슬라이더 프레임 응답 수치(동적 shadow 렌더가 검증 시간 제한을 초과함).
+- 실시간 모드와 Blender Cycles 최종 결과의 픽셀/조도 일치. 이 둘은 다른 검토 목적이다.

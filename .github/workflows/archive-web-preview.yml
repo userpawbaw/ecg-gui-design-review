@@ -11,6 +11,7 @@ on:
       - 'verification/r1-archive-web-bake-20261018/light_shell.webp'
       - 'verification/r1-archive-web-bake-20261018/manifest.json'
       - 'verification/r1-archive-web-bake-20261018/preview.html'
+      - 'verification/r1-archive-web-bake-20261018/light-study.html'
   workflow_dispatch:
 
 permissions:

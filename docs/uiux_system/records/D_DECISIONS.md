@@ -2399,3 +2399,36 @@ D-084 후보는 잎을 납작한 타원 14개로 만들어 그림자가 둥근 �
 ### 실행 상태
 - `[런타임]` 공개 repo 조회와 사용자 브랜치 push 권한은 확인됐다. Pages 생성 `POST /repos/userpawbaw/ecg-gui-design-review/pages`는 `403 Resource not accessible by integration`으로 거부됐다. 연결된 GitHub integration token으로 Settings 권한을 바꿀 수는 없어 관리자 UI의 Pages source 설정이 필요하다. 이 환경 차단을 우회하지 않는다.
 - `[테스트]` 공개 artifact와 동일한 12개 파일(13.31 MB)을 별도 정적 서버에서 Chromium 154로 확인: 전체 응답 200, JS/browser 오류 0, lightmap 1개 적용, orbit/reset PASS. Pages 사용자 URL은 아직 게시되지 않았다.
+
+## D-147. 빠른 서고 조명 탐색은 baked 결과를 보존한 별도 실시간 study 모드에서 한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-19 KST `[대화]` — 사용자: “빛 방위나 고도를 임의로 내가 바꿔서 결과를 확인할 수 있는 슬라이더를 놓아서 확인 가능해? 아니면 이건 저품질 결과가 나오나?” |
+| 상태 | 유효 — 현재 고품질 baked 프리뷰를 그대로 보존하고, 방위·고도 슬라이더를 갖는 별도 실시간 조명 탐색 페이지를 만든다 |
+| 연결 | D-145, D-146, D-142; `verification/r1-archive-mottle-reference-20261019/README.md` |
+| CASE | 불필요 — 격리된 시각 검토 도구의 품질/사용 경로 결정이며 AI 방법론 변경이 아님 |
+| 번호 | `git fetch --all --prune` 뒤 32개 remote ref의 현행 `D_DECISIONS.md` 경로를 읽음. 이 작업 브랜치의 최신은 D-146, 모든 조회 경로에서 D-147 충돌 없음. 레거시 분기별 문서가 더 낮은 번호에서 끝나는 것은 해당 시점 이후 기록 경로 부재로 판단해 현재 현행 기록과 별도 비교함. Story files/defaults 및 r8/D-084는 이 결정에서 제외. |
+
+### 갈림길
+사용자는 빠르게 결과 수준의 재질과 조명 방위를 확인하고 싶어 한다. 기존 페이지의 베이크 조명은 광원 방향을 실시간으로 바꾸지 못한다. baked image를 유지한 채 새 방향광을 더하면 그림자가 중복되므로 조명 탐색과 최종 베이크 검수는 모드를 분리해야 한다.
+
+### 검토한 선택지
+1. Blender에서 각 방위·고도 후보를 매번 렌더/베이크하고 사용자가 이미지를 비교한다. 품질은 높지만 한 장 수분, 베이크는 수분 이상 걸려 탐색이 느리다.
+2. 현재 baked GLB를 그대로 두고 새 방향광을 추가한다. 즉시 반응하지만 기존 baked 방향/그림자와 겹쳐 잘못된 조명 결과가 된다.
+3. 같은 최적화 GLB의 원본 albedo/PBR 재질을 쓰는 별도 실시간 WebGL study 페이지를 두고, baked lightmap/vertex lighting을 제거한 상태에서 방위·고도 슬라이더와 동적 그림자를 조절한다. 현재 baked 페이지는 최종 기준으로 유지하고, 선택 방향은 이후 Blender Cycles 고품질 렌더/베이크로 확인한다.
+
+### 고른 것과 근거
+- 3번을 선택한다. 사용자에게 빠른 상호작용을 주면서 고정 baked shadow의 중복을 방지하고, 승인된 고품질 기준 페이지를 손상하지 않는다. study 페이지는 B3 검수 GLB의 기존 최적화 재질을 활용하되 Story 라우트/자산/defaults와 무관한 정적 공개 검토 파일로 격리한다.
+- 슬라이더는 azimuth(방위)와 elevation(고도)을 실시간 DirectionalLight에 연결한다. 재질은 GLTFLoader가 읽은 diffuse/normal/roughness 입력을 사용하고, bake 전용 vertex color와 lightmap만 끈다. 조도(fill)와 shadow map은 명시한 고정 보조값으로 제어한다. 고정 seed/초기 위치를 제공해 비교를 재현한다.
+- 실시간 모드는 방향 탐색/재질 미리보기다. Cycles의 간접광·베이크 품질·최종 톤 일치가 아니며 ShadowMap 해상도, 접촉 그림자, GPU 성능에 제약이 있다. 결과를 품질 저하라고 숨기지 않고 페이지에 “실시간 조명 미리보기”로 명시한다. 선택한 후보는 같은 카메라로 Blender 4.5.3 Cycles 렌더 후 기존 baked 경로에서 확정한다.
+- 검수 README에 방위/고도 범위, 프레임 응답, shadow map 설정, GPU/브라우저 확인 범위, 실시간/베이크 간 차이를 측정값과 “확인 안 함”으로 남긴다. 공개 artifact에는 검사 페이지와 이미 승인된 GLB·runtime만 추가한다.
+
+### 버린 것과 이유
+- 1번은 매 조정마다 수분 단위 렌더가 필요해 빠른 방향 탐색 요청을 만족하지 못한다. 단, 최종 품질 확인 단계에서는 다시 사용한다.
+- 2번은 기존 baked direct/indirect light와 그림자를 새 광원 위에 중복 적용하여 유효한 방향 비교를 만들지 못한다.
+
+### 되돌려야 하는 조건
+- bake 전용 조명이 study 페이지에 남아 새 방향 그림자와 중복되거나 albedo/normal/roughness map이 로드되지 않으면 미리보기 통과로 기록하지 않고 고친다.
+- 모바일/SwiftShader/실제 GPU에서 프레임 속도와 그림자 품질을 확인하지 않았다면 보편적인 실시간 성능을 주장하지 않는다.
+- Story 소유 파일·기본값, r8/D-084 값을 건드리거나 승인 없이 public baked default를 대체하면 즉시 격리/복구한다.

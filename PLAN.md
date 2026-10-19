@@ -358,3 +358,12 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] 계획: `docs/uiux_system/rounds/R1/PLAN-R1-ARCHIVE-VOLUMETRIC-20261019.md`; source audit·측정/확인 안 함: `verification/r1-archive-volumetric-plan-20261019/README.md`.
 - [ ] 후속 구현 S0 optical bench → S1 depth/HDR → S2 가림 빛줄기 → S3 결/슬라이더/품질 → S4 검수/Pages → S5 Cycles·필요 시 key SpotLight 비교. 이번 요청은 계획 수립이며 runtime 변경/배포는 하지 않음. Story 소유 파일·r8/D-084/baked 기본값 보호.
 - 현재 요청 완료 기준: 문서 검사·로컬 링크·JSON·diff PASS, commit/push 및 원격 commit 확인. 효과 외관·GPU FPS는 후속 단계까지 확인 안 함.
+
+## Archive volumetric implementation (2026-10-19, user “진행해줘”, D-148)
+
+- [x] S0: 천창 open/closed/alpha·source offscreen bench, 실제 GLB roof/caster/alphaMode 조사.
+- [x] S1–S3: 독립 study 모듈과 HDR/depth/clip·빛결·방위/고도·강도·grain·품질·freeze·공유 상태·보기 프리셋 구현.
+- [x] staged optical/기능/12-frame fixed/sweep/orbit·3camera·reset/URL·출력 parity·resource/cache·viewport/reduced-motion 검사. 실제 GPU/FPS/터치는 확인 안 함.
+- [ ] S4: 검수 기록·커밋/푸시·기존 main Pages workflow의 source SHA dispatch·공개 HTML/modules/이미지/입력 확인. API status의 오래된 응답을 피하려 새 query로 재조회.
+- [ ] S5: 사용자 방향/미감 확인 뒤 Cycles와 동일 camera/source/medium 비교, 필요 시 near key SpotLight. 방향광 결과만으로 원본 B3 동등품질을 선언하지 않음.
+- `verification/r1-archive-volumetric-20261019/README.md` / fidelity / qa-result.json. Story 소유 파일·소품/defaults, baked reference, r8/D-084 유지.

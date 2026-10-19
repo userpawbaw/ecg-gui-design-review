@@ -21,6 +21,7 @@ if not (SOURCE / 'archive.glb').is_file() or not manifest_path.is_file():
 
 manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
 files = {'archive.glb', 'manifest.json', 'preview.html', 'light-study.html'}
+files.update({'study/volume-shaders.js', 'study/lighting-state.js', 'study/volumetric-light.js'})
 files.update(info['file'] for info in manifest['groups'].values() if info.get('file'))
 missing = [name for name in sorted(files) if not (SOURCE / name).is_file()]
 if missing:
@@ -40,6 +41,9 @@ three_files = (
     'examples/jsm/libs/meshopt_decoder.module.js',
     'examples/jsm/utils/BufferGeometryUtils.js',
     'examples/jsm/utils/SkeletonUtils.js',
+    'examples/jsm/postprocessing/Pass.js',
+    'examples/jsm/postprocessing/OutputPass.js',
+    'examples/jsm/shaders/OutputShader.js',
     'LICENSE',
 )
 missing_three = [name for name in three_files if not (THREE_ROOT / name).is_file()]
@@ -49,6 +53,7 @@ if missing_three:
 DEST.mkdir(parents=True, exist_ok=True)
 for name in sorted(files):
     target = DEST / name
+    target.parent.mkdir(parents=True, exist_ok=True)
     if name.endswith('.html'):
         html = (SOURCE / name).read_text(encoding='utf-8')
         marker = '<script type="importmap">'

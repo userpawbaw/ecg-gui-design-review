@@ -1,0 +1,720 @@
+{
+  "audit": {
+    "roof": {
+      "hatch": [],
+      "skylight": [],
+      "solid": [
+        {
+          "distance": 0.3001186660790589,
+          "point": [
+            -1.9999999999999996,
+            5.149881333920941,
+            -1.9999999999999998
+          ],
+          "mesh": "Cube_1"
+        },
+        {
+          "distance": 0.4500438971395111,
+          "point": [
+            -1.9999999999999996,
+            4.999956102860489,
+            -1.9999999999999998
+          ],
+          "mesh": "Cube_1"
+        }
+      ]
+    },
+    "triangles": 295864,
+    "materials": [
+      {
+        "mesh": "Cube",
+        "material": "parquet",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_1",
+        "material": "plaster",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_2",
+        "material": "beam.001",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_3",
+        "material": "window_frame",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_4",
+        "material": "blind_slat",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_5",
+        "material": "stack_wood",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_6",
+        "material": "stack_wood_under",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_7",
+        "material": "label",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_8",
+        "material": "cell_paint",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_9",
+        "material": "drawer_paint",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_10",
+        "material": "brass",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_11",
+        "material": "print_0",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_12",
+        "material": "print_1",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_13",
+        "material": "print_2",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_14",
+        "material": "print_3",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_15",
+        "material": "print_4",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_16",
+        "material": "plaster_white",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_17",
+        "material": "walnut",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_18",
+        "material": "black_plastic",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_19",
+        "material": "beige_plastic",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_20",
+        "material": "crt_glass",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_21",
+        "material": "steel",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_22",
+        "material": "ecg_paper",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_23",
+        "material": "outlet",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_24",
+        "material": "strip_lamp",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_25",
+        "material": "cable",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Cube_26",
+        "material": "b2_leaf",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008",
+        "material": "painted_wooden_table",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_1",
+        "material": "wooden_stool_01",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_2",
+        "material": "desk_lamp_arm_01",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_3",
+        "material": "desk_lamp_arm_01_light",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_4",
+        "material": "binder_notebook",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_5",
+        "material": "GreenChair_01",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_6",
+        "material": "cardboard_box_01",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_7",
+        "material": "cardboard_box_01",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_8",
+        "material": "wooden_crate_01",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_9",
+        "material": "vintage_suitcase_01",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_10",
+        "material": "vintage_suitcase_02",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_11",
+        "material": "drawer_cabinet",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_12",
+        "material": "vintage_wooden_drawer_01",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_13",
+        "material": "power_box_01",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_14",
+        "material": "hanging_industrial_lamp",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_15",
+        "material": "hanging_industrial_lamp_glass",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_16",
+        "material": "hanging_industrial_lamp",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "table008_17",
+        "material": "hanging_industrial_lamp_glass",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved",
+        "material": "book_0",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_1",
+        "material": "book_1",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_2",
+        "material": "book_2",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_3",
+        "material": "book_3",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_4",
+        "material": "book_4",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_5",
+        "material": "book_5",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_6",
+        "material": "book_6",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_7",
+        "material": "book_7",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_8",
+        "material": "book_8",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_9",
+        "material": "book_9",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_10",
+        "material": "book_10",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_11",
+        "material": "book_11",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_12",
+        "material": "archive_box.001",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_13",
+        "material": "archive_box_grey.001",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_14",
+        "material": "label",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_15",
+        "material": "ecg_paper",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      },
+      {
+        "mesh": "Shelved_16",
+        "material": "binder",
+        "alphaTest": 0,
+        "transparent": false,
+        "side": 2
+      }
+    ],
+    "removedBakedColorAttributes": 35,
+    "stats": {
+      "frames": 1,
+      "lightDepthRenders": 1,
+      "rawDepthSize": 2048,
+      "quality": "fast",
+      "scale": 0.25,
+      "steps": 16,
+      "fullScreenPasses": 4,
+      "sceneSamples": 4,
+      "casters": 62,
+      "worldBounds": {
+        "min": [
+          -3.749887675169706,
+          -0.09982497475057439,
+          -5.150000095367432
+        ],
+        "max": [
+          5.089195937041044,
+          8.277092429315147,
+          5
+        ]
+      },
+      "drawCalls": 252,
+      "size": [
+        960,
+        640
+      ],
+      "textures": 64
+    }
+  },
+  "angles": [
+    {
+      "az": 46.4,
+      "el": 54.4,
+      "file": "angle-46.4-54.4.png",
+      "max": 0.03558349609375,
+      "mean": 0.003982653096318245,
+      "lit": 19262,
+      "stats": {
+        "frames": 2,
+        "lightDepthRenders": 2,
+        "rawDepthSize": 2048,
+        "quality": "fast",
+        "scale": 0.25,
+        "steps": 16,
+        "fullScreenPasses": 4,
+        "sceneSamples": 4,
+        "casters": 62,
+        "worldBounds": {
+          "min": [
+            -3.749887675169706,
+            -0.09982497475057439,
+            -5.150000095367432
+          ],
+          "max": [
+            5.089195937041044,
+            8.277092429315147,
+            5
+          ]
+        },
+        "drawCalls": 208,
+        "size": [
+          960,
+          640
+        ],
+        "textures": 64
+      }
+    },
+    {
+      "az": 0,
+      "el": 35,
+      "file": "angle-0-35.png",
+      "max": 0.00824737548828125,
+      "mean": 0.0005340750018755595,
+      "lit": 5091,
+      "stats": {
+        "frames": 3,
+        "lightDepthRenders": 3,
+        "rawDepthSize": 2048,
+        "quality": "fast",
+        "scale": 0.25,
+        "steps": 16,
+        "fullScreenPasses": 4,
+        "sceneSamples": 4,
+        "casters": 62,
+        "worldBounds": {
+          "min": [
+            -3.749887675169706,
+            -0.09982497475057439,
+            -5.150000095367432
+          ],
+          "max": [
+            5.089195937041044,
+            8.277092429315147,
+            5
+          ]
+        },
+        "drawCalls": 208,
+        "size": [
+          960,
+          640
+        ],
+        "textures": 64
+      }
+    },
+    {
+      "az": 90,
+      "el": 35,
+      "file": "angle-90-35.png",
+      "max": 0.06011962890625,
+      "mean": 0.003957543720801671,
+      "lit": 10157,
+      "stats": {
+        "frames": 4,
+        "lightDepthRenders": 4,
+        "rawDepthSize": 2048,
+        "quality": "fast",
+        "scale": 0.25,
+        "steps": 16,
+        "fullScreenPasses": 4,
+        "sceneSamples": 4,
+        "casters": 62,
+        "worldBounds": {
+          "min": [
+            -3.749887675169706,
+            -0.09982497475057439,
+            -5.150000095367432
+          ],
+          "max": [
+            5.089195937041044,
+            8.277092429315147,
+            5
+          ]
+        },
+        "drawCalls": 208,
+        "size": [
+          960,
+          640
+        ],
+        "textures": 64
+      }
+    },
+    {
+      "az": 180,
+      "el": 35,
+      "file": "angle-180-35.png",
+      "max": 0,
+      "mean": 0,
+      "lit": 0,
+      "stats": {
+        "frames": 5,
+        "lightDepthRenders": 5,
+        "rawDepthSize": 2048,
+        "quality": "fast",
+        "scale": 0.25,
+        "steps": 16,
+        "fullScreenPasses": 4,
+        "sceneSamples": 4,
+        "casters": 62,
+        "worldBounds": {
+          "min": [
+            -3.749887675169706,
+            -0.09982497475057439,
+            -5.150000095367432
+          ],
+          "max": [
+            5.089195937041044,
+            8.277092429315147,
+            5
+          ]
+        },
+        "drawCalls": 208,
+        "size": [
+          960,
+          640
+        ],
+        "textures": 64
+      }
+    },
+    {
+      "az": 225,
+      "el": 35,
+      "file": "angle-225-35.png",
+      "max": 0.00894927978515625,
+      "mean": 2.3305416107177735e-07,
+      "lit": 1,
+      "stats": {
+        "frames": 6,
+        "lightDepthRenders": 6,
+        "rawDepthSize": 2048,
+        "quality": "fast",
+        "scale": 0.25,
+        "steps": 16,
+        "fullScreenPasses": 4,
+        "sceneSamples": 4,
+        "casters": 62,
+        "worldBounds": {
+          "min": [
+            -3.749887675169706,
+            -0.09982497475057439,
+            -5.150000095367432
+          ],
+          "max": [
+            5.089195937041044,
+            8.277092429315147,
+            5
+          ]
+        },
+        "drawCalls": 208,
+        "size": [
+          960,
+          640
+        ],
+        "textures": 64
+      }
+    },
+    {
+      "az": 270,
+      "el": 35,
+      "file": "angle-270-35.png",
+      "max": 0.0625,
+      "mean": 0.011194463099042574,
+      "lit": 37610,
+      "stats": {
+        "frames": 7,
+        "lightDepthRenders": 7,
+        "rawDepthSize": 2048,
+        "quality": "fast",
+        "scale": 0.25,
+        "steps": 16,
+        "fullScreenPasses": 4,
+        "sceneSamples": 4,
+        "casters": 62,
+        "worldBounds": {
+          "min": [
+            -3.749887675169706,
+            -0.09982497475057439,
+            -5.150000095367432
+          ],
+          "max": [
+            5.089195937041044,
+            8.277092429315147,
+            5
+          ]
+        },
+        "drawCalls": 208,
+        "size": [
+          960,
+          640
+        ],
+        "textures": 64
+      }
+    }
+  ],
+  "errors": []
+}

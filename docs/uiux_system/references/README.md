@@ -16,7 +16,7 @@
 | [REF-008](REF-008_SEARCHING_FOR_BIRDS.md) | searchingforbirds.visualcinnamon.com | EFX-008-01 ~ 03 (고정 차트 + 흐르는 단계 카드 + 차트 안 강조 띠, 데이터에 붙는 주석, 여러 파형 한 판 + 점선 격자 + 의미 구획 띠 — 격자 비교 기준) — **WebGL 없음** | 소스 + 헤드리스 로컬 사본(R-016) |
 | [REF-009](REF-009_IGLOO_INC.md) | igloo.inc (Awwwards SOTY 2024) | EFX-009-01 (고정폭 HUD 글자 뒤섞임) | 로더 소스 + 사례 연구만 — **시각 확인 없음**(WebGL, 녹화 필요) |
 | [REF-010](REF-010_BRIGHT_BIOTECH.md) | brightbiotech.co.uk (SOTD 2025-07-18) | EFX-010-01 (한 글꼴 극단 크기 대비 + 줄 단위 헤드라인) | HTML·CSS 소스만 — **시각 확인 없음** |
-| [REF-016](REF-016_SHADOW_MARCHED_SUN_SHAFTS.md) | three-good-godrays / Three.js 공식 Godrays | EFX-016-01 (그림자맵 레이마칭·저해상도·깊이 기반 업샘플링) | 코드·HTTP 조사만; 구현/시각/성능 확인 안 함 · D-148 |
+| [REF-016](REF-016_SHADOW_MARCHED_SUN_SHAFTS.md) | three-good-godrays / Three.js 공식 Godrays | EFX-016-01 (그림자맵 레이마칭·저해상도·깊이 기반 업샘플링) | 코드·HTTP + 독립 study optical/기능/연속 캡처 spike; 실제 GPU/사용자 확인 안 함 · D-148 |
 
 
 ## 레시피 색인

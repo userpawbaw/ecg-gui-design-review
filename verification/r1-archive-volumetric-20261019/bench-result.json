@@ -1,0 +1,27 @@
+{
+  "open": {
+    "maxRadiance": 0.042266845703125,
+    "meanRadiance": 0.003148846259271657,
+    "litPixels": 49440,
+    "width": 480,
+    "height": 360,
+    "depthRenders": 2
+  },
+  "closed": {
+    "maxRadiance": 0,
+    "meanRadiance": 0,
+    "litPixels": 0,
+    "width": 480,
+    "height": 360,
+    "depthRenders": 3
+  },
+  "alpha": {
+    "maxRadiance": 0.06927490234375,
+    "meanRadiance": 0.01727525633552836,
+    "litPixels": 124183,
+    "width": 480,
+    "height": 360,
+    "depthRenders": 4
+  },
+  "errors": []
+}

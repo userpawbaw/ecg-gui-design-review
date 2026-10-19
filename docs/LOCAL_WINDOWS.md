@@ -57,3 +57,11 @@ git checkout -- .
 - Playwright 실행 파일 경로를 고정하지 않는다: `process.env.PW_EXECUTABLE || (process.platform === 'linux' ? '<컨테이너 경로>' : undefined)`.
 - 텍스트 파일은 항상 UTF-8로 읽고 쓴다(`encoding='utf-8'`, Node는 `'utf8'`).
 - 사용자에게 줄 실행 안내는 이 문서의 `npm run …` 형식으로 쓴다.
+
+### 서고 빛 커튼 개발 검증
+
+별도 검토 GLB가 커밋된 상태에서 아래 검증은 임시 정적 패키지/서버를 만들고, 천창 가림·슬라이더·연속 프레임을 검사합니다. Python과 기존 v2 Playwright/브라우저 설치가 필요합니다. 실제 GPU 성능 검증을 대신하지 않습니다.
+
+```powershell
+npm run verify:archive-volume
+```

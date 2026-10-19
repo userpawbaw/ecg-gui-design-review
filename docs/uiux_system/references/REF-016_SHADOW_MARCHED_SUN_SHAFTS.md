@@ -74,7 +74,7 @@
 
 **ECG 번안**: HIGH 장면 서고의 공기 경로만 담당한다. ECG 파형·Story 신호·사람·소품·기존 bake/defaults와 분리된 D-147 study 페이지가 대상이다.
 
-**재현 상태**: `none` — 조사·설계만 완료. 기존 Story의 유사 구현 존재와 새 B3 재현 검증을 구분한다.
+**재현 상태**: 조사 시 `none` → 후속 사용자 진행 승인 뒤 `spike` — 독립 `verification/r1-archive-web-bake-20261018/light-study.html`에 구현. `verification/r1-archive-volumetric-20261019/README.md`의 optical bench·staged 기능·연속 프레임을 검증했다. 실제 GPU/사용자 미감·외부 demo 동일 카메라 비교·Cycles 일치는 확인 안 함이다.
 
 ## 7. 에셋 목록과 조달 경로
 

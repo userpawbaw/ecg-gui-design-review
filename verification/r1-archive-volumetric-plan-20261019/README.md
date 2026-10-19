@@ -47,3 +47,7 @@ remote 기본 fetch refspec이 main만 포함하고 있어 `git fetch --all`만�
 
 - 문서·REF/D 기록 구조와 링크: 커밋 전 `npm run records:check`, `npm run playbook:check`, `git diff --check` 및 상대 링크/JSON 검사 수행.
 - 검사 결과는 WORKLOG에 기록한다. 여기서 말하는 PASS는 문서/source audit 범위이며 시각·런타임 PASS가 아니다.
+
+## 후속 구현 링크
+
+사용자 “진행해줘” 뒤의 실제 구현·검수는 [실행 결과](../r1-archive-volumetric-20261019/README.md)를 따른다. 위의 “구현/렌더 안 함”은 당시 계획 단계의 범위다. 이전 D-147 run39281362397는 새 query를 붙인 최신 API 조회에서 success(updated2026-10-19T16:36:04Z)로 확인되어 당시 queued 관찰과 구분했다.

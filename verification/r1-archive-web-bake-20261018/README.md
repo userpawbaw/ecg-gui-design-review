@@ -53,3 +53,9 @@ Isolated B3 web export for reviewing the selected archive lighting with a freely
 - 실제 물리 GPU, 모바일, 다른 브라우저/디스플레이에서의 FPS 및 그림자 외관.
 - SwiftShader에서의 캡처와 슬라이더 프레임 응답 수치(동적 shadow 렌더가 검증 시간 제한을 초과함).
 - 실시간 모드와 Blender Cycles 최종 결과의 픽셀/조도 일치. 이 둘은 다른 검토 목적이다.
+
+## D-148 빛 커튼 구현 (2026-10-19)
+
+`light-study.html?view=shafts`에서 천창 빛의 공간 경로를 볼 수 있다. 별도 raw2048² 광원depth + view depth, 국소 single scattering/HG/world-space 결, 조작 중/정지 자동품질·freeze·설정 링크를 추가했다. 기존 baked page/GLB/Story defaults는 변경하지 않았다. 실제 근거와 확인 안 함은 [볼륨 검수 README](../r1-archive-volumetric-20261019/README.md), [fidelity](../r1-archive-volumetric-20261019/fidelity.md)로 모았다.
+
+위 D-147 초기 SwiftShader 시간제한/입력 미검증 기록은 당시 관찰이다. 후속 D-148 검증에서 actual staged 입력/이미지·캡처를 확인했다. 이전 공개 run39281362397도 새 API query 조회에서 success로 확인됐다. 이번 변경의 실제 공개 버전·동작은 새 deployment/public 결과로 확정한다.

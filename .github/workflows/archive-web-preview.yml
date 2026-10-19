@@ -12,7 +12,13 @@ on:
       - 'verification/r1-archive-web-bake-20261018/manifest.json'
       - 'verification/r1-archive-web-bake-20261018/preview.html'
       - 'verification/r1-archive-web-bake-20261018/light-study.html'
+      - 'verification/r1-archive-web-bake-20261018/study/**'
   workflow_dispatch:
+    inputs:
+      source_ref:
+        description: Branch or commit containing the isolated archive preview
+        required: true
+        default: claude/archive-light-r7-ag2rja
 
 permissions:
   contents: read
@@ -32,6 +38,8 @@ jobs:
     steps:
       - name: Check out preview source
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_ref || 'claude/archive-light-r7-ag2rja' }}
 
       - name: Set up Node
         uses: actions/setup-node@v4

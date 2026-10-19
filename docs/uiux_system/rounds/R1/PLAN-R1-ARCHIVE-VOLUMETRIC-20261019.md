@@ -1,7 +1,7 @@
 # 서고 실시간 빛 커튼 — 조사와 구현 설계
 
 작성: 2026-10-19 · 분류: RESEARCH → IMPLEMENTATION 계획 · 연결: D-147, D-148, [REF-016](../../references/REF-016_SHADOW_MARCHED_SUN_SHAFTS.md).
-상태: **설계 완료, 구현·시각·성능 검증 전**. 이번 요청은 구체 조사와 계획 수립이다. 새 런타임·새 배포는 수행하지 않는다.
+작성 시점: **설계 완료, 구현·시각·성능 검증 전**이었다. 후속 사용자 “진행해줘” 승인으로 S0–S4를 실행한다. 아래 계획의 초기 제안과 실제 실행 증거는 구분하며, 현재 결과는 `verification/r1-archive-volumetric-20261019/README.md`를 따른다.
 
 ## 1. 목표와 이번 조사로 바뀐 판단
 
@@ -145,3 +145,9 @@ pointer/key input으로 움직이는 동안 저품질, 마지막 input 후 200 m
 4. 기존 적응 경로가 3회 TUNE 뒤 시각/성능 기준을 못 채우면 별도 sandbox에서 three-good-godrays + Three0.186의 C4 비교를 연다. peer 범위를 강제로 무시한 채 주력에 넣지 않는다.
 5. 방향광 효과가 통과해도 B3 key의 원근 beam·falloff가 목표라면 SpotLight 단계가 필요하다. 방향광 한 개의 성공으로 종료하지 않는다.
 6. 실제 GPU/Edge를 측정하지 않았다면 30/60 fps 달성 또는 “고품질 실시간 완료”라고 쓰지 않는다. 이번 설계 단계에서는 모든 시각·성능 기준이 **목표**다.
+
+## 11. 후속 실행 기록 (2026-10-19, 사용자 진행 승인)
+
+S0 optical bench와 GLB 조사, S1 HDR/raw depth, S2 single scattering/room clip, S3 결/슬라이더/자동품질·freeze/링크를 독립 study에 구현했다. S4 staged Chromium smoke/입력·프레임·모바일 viewport/reduced-motion·cache/resource 검사를 수행했다. 실제 GPU/Edge FPS·터치 및 S5 Cycles/near key는 확인 안 함이다. 공개 배포는 새 source SHA·run/public browser 증거로 검증한다.
+
+계획의 OutputPass/3개 preset/광학 초기계수는 유지했다. shader source 외부 복사나 추가 패키지 설치 없이 프로젝트 내부 알고리즘과 공식 Three addon을 썼다. 기본225°/35°를 유지하고 `?view=shafts` 또는 ‘빛결 옆에서 보기’로 기준 방향·옆 시점을 선택한다.

@@ -19,7 +19,8 @@
     "py": "node scripts/local/run.mjs py",
     "py:setup": "node scripts/local/run.mjs py:setup",
     "browsers": "node scripts/local/run.mjs browsers",
-    "v2:prepare": "node scripts/local/run.mjs v2:prepare"
+    "v2:prepare": "node scripts/local/run.mjs v2:prepare",
+    "verify:archive-volume": "node scripts/assets/verify-archive-volume.mjs"
   },
   "engines": {
     "node": ">=24"

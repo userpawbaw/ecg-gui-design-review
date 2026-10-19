@@ -26,8 +26,12 @@ const ASSET={manifest:new URL('./assets/archive/manifest.json',import.meta.url).
 // verification/lab-c1-20261018/README.md
 const ASSET_SUN35={manifest:new URL('./assets/archive-sun35/manifest.json',import.meta.url).href,glb:new URL('./assets/archive-sun35/archive.glb',import.meta.url).href,
  'light_shell.webp':new URL('./assets/archive-sun35/light_shell.webp',import.meta.url).href} as Record<string,string>;
-export async function createArchive(variant:'base'|'sun35'='base'){
- const A=variant==='sun35'?ASSET_SUN35:ASSET;
+// D-078: sun 15° to the stack faces at 15° elevation, the back window widened without blinds (one large pool), the aisle lamp
+// meshes gone but their warm bulbs kept, warm grey sky (F-053) — ?sun=15 in the Lab
+const ASSET_SUN15={manifest:new URL('./assets/archive-sun15/manifest.json',import.meta.url).href,glb:new URL('./assets/archive-sun15/archive.glb',import.meta.url).href,
+ 'light_shell.webp':new URL('./assets/archive-sun15/light_shell.webp',import.meta.url).href} as Record<string,string>;
+export async function createArchive(variant:'base'|'sun35'|'sun15'='base'){
+ const A=variant==='sun35'?ASSET_SUN35:variant==='sun15'?ASSET_SUN15:ASSET;
  const manifest:ArchiveManifest=await (await fetch(A.manifest)).json();
  const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(A.glb);
  const tl=new THREE.TextureLoader(),lightmaps:Record<string,THREE.Texture>={};

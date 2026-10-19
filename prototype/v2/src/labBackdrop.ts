@@ -44,10 +44,10 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x05090b,1);
  const gl=renderer.getContext(),dbg=gl.getExtension('WEBGL_debug_renderer_info'),gpu=String(dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
  const soft=/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:.6;
- const arch=await createArchive(Q.get('sun')==='0'?'base':'sun35');arch.setFade(1);arch.renderSunDepth(renderer);   // D-075 ?sun=0: the original grazing sun
+ const SUN=Q.get('sun'),arch=await createArchive(SUN==='0'?'base':SUN==='15'?'sun15':'sun35');arch.setFade(1);arch.renderSunDepth(renderer);   // D-075 ?sun=0: the original grazing sun
  // D-077: the Lab variant has no aisle lamps (their bulbs lit the room) → exposure ×1.8 brings the frame mean back to the
  // D-074 level (0.10–0.17 → measured in verification/lab-c1-20261018)
- if(Q.get('sun')!=='0')arch.shared.uExposure.value*=1.8;
+ if(SUN!=='0'&&SUN!=='15')arch.shared.uExposure.value*=1.8;   // the 15° variant keeps its bulbs (D-078)
  const roomScene=new THREE.Scene(),dustScene=new THREE.Scene();roomScene.add(arch.room);dustScene.add(arch.dust);
  const camera=new THREE.PerspectiveCamera(50,1,.05,60);
  // D-075 frame: the room (colour + depth) is drawn into `base` only when the camera moves; every frame then adds the moving light

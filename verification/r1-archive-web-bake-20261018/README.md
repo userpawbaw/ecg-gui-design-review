@@ -11,6 +11,13 @@ Isolated B3 web export for reviewing the selected archive lighting with a freely
 - WebGL Chromium preview at 1280×720 loaded GLB/manifest/lightmap with HTTP 200, applied 1 shell lightmap and vertex lighting groups, reported no browser errors or failed requests, and OrbitControls moved/reset the camera. Local Vite and a standalone static-server copy of the Pages artifact both pass; see [`browser-result.json`](browser-result.json), [`staged-browser-result.json`](staged-browser-result.json), and [`web-preview.png`](web-preview.png).
 - Viewer shader follows the existing archive web-lighting transfer (sqrt decode, albedo multiplication, saturation, exposure and ACES tone mapping); free orbit, wheel zoom, right-drag pan, and reset are available.
 
+## Visual quality finding from public preview
+
+- User observed mottled/patchy grain in the public Pages view. Comparing the submitted screenshot with the local bake evidence confirms the pattern is present in the rendered materials, even though runtime loading, lightmap application, and camera controls pass.
+- Likely causes are distinct from a broken lightmap: the shell lightmap is 2048² and was compressed to lossy WebP q92; the baked source uses 128 Cycles samples; the scene materials retain Poly Haven wood/plaster/parquet textures, while the shelf wood only partially flattens its texture (`TEX_KEEP=0.15`) and the floor keeps 40%. Strong indirect bounce and the browser transfer curve can make those material variations look like mottled lighting.
+- The current checks establish successful decoding and shader application, not a clean lighting bake. To isolate causes, compare the lossless PNG lightmap against WebP; render the shell with albedo-free flat materials; then separately reduce sample noise and material texture frequency. Record matching crop metrics and a clean comparison before replacing the public preview.
+- Do not alter Story-owned production values/assets as part of this archive preview diagnosis.
+
 ## 확인 안 함
 
 - Story route integration and Story-owned files/assets/defaults were not changed.

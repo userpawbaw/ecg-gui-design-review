@@ -67,3 +67,12 @@ Python 표준 라이브러리와 v2의 pinned Three/Playwright·Chromium이 필�
 ## Pages 상태
 
 이전 D-147 run39281362397는 반복 URL 조회에서 queued였으나 새 query를 붙인 재조회에서 success(updated2026-10-19T16:36:04Z)였다. 이번에는 run의 실제 최신 응답과 공개 HTML/modules를 별도 재확인한다. 본 구현의 run ID·source SHA·공개 검증 결과는 배포 후 WORKLOG/공개 결과 JSON과 함께 기록한다.
+
+## 공개 배포·브라우저 확인 완료
+
+- 공개 URL: https://userpawbaw.github.io/ecg-gui-design-review/light-study.html?view=shafts&v=4dc59ce
+- source commit: `4dc59ce`; main workflow dispatch run [39295789728](https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/39295789728), success. 실제 workflow head와 runtime source는 [deployment.json](deployment.json)에 구별했다.
+- [public-result.json](public-result.json): 공개19files 모두HTTP200/sha256 일치. bench/README/recipe/QA 결과는 artifact에서 제외되어404. 공개1280×720 Chromium154/SwiftShader에서 volume 활성·raw2048²·settled0.5/48 확인, range75°/45° 변경 시 buffer hash/산란량 변화와 raw depth1회 갱신. browser error0/failed request0.
+- [실제 공개 캡처](public-preview.png). 기존 bake 기준 링크로 이동하고 뒤로 돌아온 뒤 다시 렌더하는 동작 PASS. HTTPS는 session proxy CA의 SPKI를 한정 신뢰했고 광범위 ignoreHTTPSErrors를 사용하지 않았다.
+- feature push run39295748312는 앱 문제가 아니라 github-pages 환경의 branch 보호 정책 때문에 배포 전 거절됐다. 정책은 유지하고, 후속 workflow는 main의 dispatch에서만 deploy하도록 guard했다. feature push는 배포 job을 skip한다. 이로써 새 커밋마다 불필요한 배포 실패를 만들지 않는다.
+- 전체 구현/기능의 확인 범위는 위와 같으며 실제 물리 GPU·모바일 속도·사용자 미감·Cycles/near key 비교는 여전히 확인 안 함이다.

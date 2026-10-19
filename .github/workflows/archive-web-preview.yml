@@ -5,6 +5,7 @@ on:
     branches:
       - claude/archive-light-r7-ag2rja
     paths:
+      - '.github/workflows/archive-web-preview.yml'
       - 'scripts/assets/stage-archive-web-preview.py'
       - 'verification/r1-archive-web-bake-20261018/README.md'
       - 'verification/r1-archive-web-bake-20261018/archive.glb'
@@ -31,6 +32,8 @@ concurrency:
 
 jobs:
   deploy:
+    # Pages permits main deployments; dispatch on main with the isolated source SHA.
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

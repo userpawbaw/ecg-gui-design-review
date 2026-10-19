@@ -1,0 +1,205 @@
+{
+  "source_sha": "4dc59ce6730a1cb9911d9c478c8f8d62f804a0e6",
+  "run_id": 39295789728,
+  "assets": [
+    {
+      "path": "THREE-LICENSE.txt",
+      "status": 200,
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "path": "archive.glb",
+      "status": 200,
+      "bytes": 10305880,
+      "sha256": "e4b5ede9a4cd685c64bd2699bfb9d5d480839d7ac4158b36ec177a1b9ae6791f"
+    },
+    {
+      "path": "light-study.html",
+      "status": 200,
+      "bytes": 14270,
+      "sha256": "0cc0349168af81de603c34626f4543523018dd382e8e8982bb00a6f6819bf437"
+    },
+    {
+      "path": "light_shell.webp",
+      "status": 200,
+      "bytes": 634364,
+      "sha256": "b94ba78f5ac19bc82e2e9b180eb0618253e651e73d6c5c19cbe45cc1f26a7345"
+    },
+    {
+      "path": "manifest.json",
+      "status": 200,
+      "bytes": 1713,
+      "sha256": "a0a6749297caa04af7ff369f6d7aa29be59c80b851309a6b532d7fa895baa9a7"
+    },
+    {
+      "path": "node_modules/three/build/three.core.js",
+      "status": 200,
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "node_modules/three/build/three.module.js",
+      "status": 200,
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/controls/OrbitControls.js",
+      "status": 200,
+      "bytes": 40755,
+      "sha256": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/libs/meshopt_decoder.module.js",
+      "status": 200,
+      "bytes": 29256,
+      "sha256": "d428e73a000057c6c94bfcedc3412d0c2dc14ca8800e88553aab05113ad2bf19"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+      "status": 200,
+      "bytes": 117570,
+      "sha256": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+      "status": 200,
+      "bytes": 4184,
+      "sha256": "02e4a261af34de71338185e9e87f0cbe5cba9115608d984363e1269dec1d2272"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/postprocessing/Pass.js",
+      "status": 200,
+      "bytes": 4218,
+      "sha256": "444b409c235ead986893c472e720da1b779a56985c7d10b279c7944b52bd61c5"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/shaders/OutputShader.js",
+      "status": 200,
+      "bytes": 1876,
+      "sha256": "353479f77a8d7e2629d49ccac9fc2f5dbfdda5442e0adf867b00377a2fcb0cb2"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+      "status": 200,
+      "bytes": 37712,
+      "sha256": "9fb63427ce6641fa14fd0baff9cc4d1b5f9c3d85fd084bf2e90e803c44ec1797"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/utils/SkeletonUtils.js",
+      "status": 200,
+      "bytes": 11535,
+      "sha256": "b1632a703206c3d830de9fcbe515696770d04b71a15ee6b50afa6d2c3298c86f"
+    },
+    {
+      "path": "preview.html",
+      "status": 200,
+      "bytes": 7831,
+      "sha256": "15af5b789d074535a7d89073a04121f3d12e3bc1359762b48d2fca978a80c7cb"
+    },
+    {
+      "path": "study/lighting-state.js",
+      "status": 200,
+      "bytes": 1194,
+      "sha256": "9fbf599226d5bc3e423d7323f9b9aa20d77f9ae84002446174667dacc4331946"
+    },
+    {
+      "path": "study/volume-shaders.js",
+      "status": 200,
+      "bytes": 4258,
+      "sha256": "6dcc7b991dca4a8dc0b2936de048a71bf9b9dacb10e922d7f1bc96a79ee6b8a3"
+    },
+    {
+      "path": "study/volumetric-light.js",
+      "status": 200,
+      "bytes": 8669,
+      "sha256": "8f6d3a5c8eb4697469e757351c7a95ae8a3062e6c3ac37e34f59f42065616f69"
+    }
+  ],
+  "errors": [],
+  "failed_requests": [],
+  "excluded": {
+    "bench.html": 404,
+    "README.md": 404,
+    "recipe.json": 404,
+    "qa-result.json": 404
+  },
+  "tls": "default verification with narrow session proxy CA SPKI trust",
+  "browser": "154.0.8037.57",
+  "url": "https://userpawbaw.github.io/ecg-gui-design-review/light-study.html?view=shafts&v=4dc59ce",
+  "initial": {
+    "state": {
+      "version": 1,
+      "light": {
+        "azimuth": 46.398877815288756,
+        "elevation": 54.396707420556595,
+        "strength": 1,
+        "grain": 0.15,
+        "enabled": true,
+        "quality": "auto",
+        "frozen": true
+      },
+      "camera": {
+        "position": [
+          -0.9999999999999996,
+          1.5,
+          -3.8
+        ],
+        "target": [
+          1.5,
+          3.4,
+          -3.5
+        ],
+        "fov": 52
+      }
+    },
+    "stats": {
+      "frames": 2,
+      "lightDepthRenders": 1,
+      "rawDepthSize": 2048,
+      "quality": "settled",
+      "scale": 0.5,
+      "steps": 48,
+      "fullScreenPasses": 4,
+      "sceneSamples": 4,
+      "casters": 62,
+      "worldBounds": {
+        "min": [
+          -3.749887675169706,
+          -0.09982497475057439,
+          -5.150000095367432
+        ],
+        "max": [
+          5.089195937041044,
+          8.277092429315147,
+          5
+        ]
+      },
+      "drawCalls": 80,
+      "size": [
+        1280,
+        720
+      ],
+      "textures": 42
+    },
+    "status": "빛 커튼 · 선명 · 실시간 조명"
+  },
+  "slider": {
+    "before": {
+      "max": 0.291015625,
+      "mean": 0.02206450934858165,
+      "hash": 3788406106,
+      "depthRenders": 1
+    },
+    "after": {
+      "max": 0.7744140625,
+      "mean": 0.12117797444264095,
+      "hash": 1509172635,
+      "depthRenders": 2
+    },
+    "pass": true
+  },
+  "baked_link_and_back": "PASS",
+  "result": "PASS"
+}

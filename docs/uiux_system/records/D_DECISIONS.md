@@ -2473,3 +2473,7 @@ D-084 후보는 잎을 납작한 타원 14개로 만들어 그림자가 둥근 �
 ### D-148 실행 승인·범위 갱신 (2026-10-19)
 - `[대화]` 사용자 “진행해줘”로 계획의 후속 구현을 승인했다. S0 광학 bench부터 S1–S4의 독립 study 구현·검증·기존 승인 Pages 공개 경로 반영을 진행한다. S5의 최종 방향 선택·원본 key SpotLight 재현은 방향광 구현의 한계와 별도로 기록한다.
 - 기존 Story 소유 파일/자산/r8/D-084와 baked reference는 보호한다. 구현 범위는 study runtime, 검증 도구/산출물, stage·Pages workflow와 기록이다.
+
+### D-148 실행 결과 (2026-10-19)
+- runtime4dc59ce로 S0–S4 구현·staged/공개검증 완료. 검수 `verification/r1-archive-volumetric-20261019/README.md`, main dispatch39295789728 success, 공개19file SHA 일치·입력→volume buffer 변화·기존 baked 링크 왕복 PASS. 사용자 미감·물리 GPU/FPS와 S5 Cycles/near key는 확인 안 함.
+- 기존 feature 자동 Pages deploy가 환경 branch 보호로 거절되는 것은 app/commit 오류가 아니다. 보호 정책을 유지하고 deploy job을 main workflow_dispatch로 한정하는 guard를 추가한다. 기존 main dispatcher에 source SHA를 넘기는 공개 경로는 그대로 사용한다.

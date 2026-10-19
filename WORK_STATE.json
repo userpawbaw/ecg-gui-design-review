@@ -46,12 +46,6 @@
       "owner": "separate archive-light session (handoff docs/uiux_system/handoffs/HANDOFF_ARCHIVE_LIGHT_2026-10-10.md)",
       "since": "2026-10-10",
       "note": "Story work continues in the R1 session; it does not edit these files. Records (D/F/PLAN/WORKLOG) are shared: check the latest number before committing. 2026-10-15: r7 (D-081) stills on branch claude/archive-light-r7-ag2rja, awaiting the user's check; web bake not started. 2026-10-17: D numbers collided twice with the Story branch; this session now uses D-081 upward (r7 D-081, r8 D-082, V1 D-083, B2 D-084, B2 variants D-085). Handed off to another AI on 2026-10-17: docs/uiux_system/handoffs/HANDOFF_ARCHIVE_LIGHT_2026-10-17.md. The Story desk-corner set (desk-corner-set.py, D-070 on its branch) uses sun direction (-0.42, 0.40, -0.81); the archive B2 adopts the same sun so both bakes cast parallel shadows."
-    },
-    {
-      "resource": "GitHub Pages archive light-study runtime/verification and deployment target",
-      "owner": "claude/archive-light-r7-ag2rja D-148",
-      "since": "2026-10-19",
-      "note": "Staged PASS; deploy new source commit and public browser verification next. D-147 prior deployment39281362397 confirmed success using fresh API query. Story/bake protected."
     }
   ],
   "concurrency": {
@@ -92,9 +86,10 @@
     "User-provided v2.2 archive replay recovered without inference: embedded verification byte-identical, 98 scenes and 1960/1960 chunk hashes PASS",
     "Chrome 153 Linux headless non-soak browser QA: corrected full run 2 PASS, 1 ten-minute soak SKIP",
     "2026-09-16 concurrency policy revision: docs/23 added at 2f39ff9, WORK_RESUME_POLICY v1.2 at 0d38797, AGENTS updated at aabfd19",
-    "Existing ECG 6-hour automation prompt updated to policy v1.2; repository-wide lock removed and resource-scoped conflict checks retained"
+    "Existing ECG 6-hour automation prompt updated to policy v1.2; repository-wide lock removed and resource-scoped conflict checks retained",
+    "D-148 2026-10-19: archive volumetric optical/staged input/captures PASS; Pages39295789728 source4dc59ce + public19file hashes/render/sliders/bake-back PASS. Physical GPU/Edge FPS and Cycles/key equivalence unverified."
   ],
-  "current_request": "D-148: 사용자 진행 승인에 따라 서고 실시간 빛 커튼 S0–S4 구현/검증/Pages 반영",
+  "current_request": "D-148: 서고 독립 실시간 빛 커튼 S0–S4 구현·검증·Pages 반영 완료. 실제 사용자 GPU/미감 및 S5는 확인 안 함.",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
@@ -130,7 +125,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D-148 runtime/검수 기록 커밋·푸시 뒤 main Pages workflow에 immutable source SHA dispatch, 새 query API와 공개 Chromium에서 동일 모듈/입력/캡처 확인",
+  "next_action": "사용자는 공개 light-study.html?view=shafts&v=4dc59ce에서 조명/결/품질을 검토할 수 있다. 다음은 사용자 미감/실제 Edge GPU 체감 피드백과 방향 후보 선택 뒤 S5 Cycles·필요 시 key SpotLight 비교.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -143,7 +138,7 @@
     "verification": "Current UI-01/03/04 source, 98×600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "in_progress",
+  "request_status": "completed",
   "schema_version": 3,
   "updated_at": "2026-10-19",
   "verification": [
@@ -519,7 +514,7 @@
     }
   },
   "archive_volumetric_planning": {
-    "status": "implemented_verified_staged_pending_public",
+    "status": "implemented_public_verified",
     "decision": "D-148",
     "reference": "REF-016",
     "baseline_commit": "fe402dc48b1c2308f301d93513ac6f9c341c2a11",
@@ -537,8 +532,10 @@
     "implementation": {
       "verification": "verification/r1-archive-volumetric-20261019/README.md",
       "checks": "staged Chromium154/SwiftShader PASS: bench/depth/sliders/grain/off/reset/link/output parity/fixed12/sweep12/orbit12/3camera/cache/resources/viewport/reduced-motion",
-      "public_deployment": "pending",
-      "limitations": "physical GPU/Edge FPS, actual touch, Cycles/near key equivalence unverified"
+      "public_deployment": "success; run39295789728; source4dc59ce",
+      "limitations": "physical GPU/Edge FPS, actual touch, Cycles/near key equivalence unverified",
+      "public_evidence": "verification/r1-archive-volumetric-20261019/public-result.json",
+      "public_url": "https://userpawbaw.github.io/ecg-gui-design-review/light-study.html?view=shafts&v=4dc59ce"
     }
   }
 }

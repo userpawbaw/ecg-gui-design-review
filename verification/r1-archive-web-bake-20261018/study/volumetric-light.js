@@ -47,7 +47,7 @@ export function createVolumetricLight({renderer,scene,camera,root,sun,bounds,lig
   let lightDirty=true,width=1,height=1;
   const stats={frames:0,lightDepthRenders:0,rawDepthSize:lightSize,quality:'settled',scale:.5,steps:48,fullScreenPasses:4,sceneSamples:4,casters:casters.length,worldBounds:{min:worldBounds.min.toArray(),max:worldBounds.max.toArray()},drawCalls:0};
   function updateLight(){
-    for(const {source,proxy} of casters){source.updateWorldMatrix(true,false);proxy.matrix.copy(source.matrixWorld);proxy.visible=source.visible;}
+    for(const {source,proxy} of casters){source.updateWorldMatrix(true,false);proxy.matrix.copy(source.matrixWorld);proxy.geometry=source.geometry;proxy.visible=source.visible;}
     const distance=worldBounds.getSize(new THREE.Vector3()).length()*1.5;
     lightCamera.position.copy(center).addScaledVector(lighting.toSun,distance);lightCamera.lookAt(center);lightCamera.updateMatrixWorld(true);
     const box=new THREE.Box3();for(const corner of corners)box.expandByPoint(corner.clone().applyMatrix4(lightCamera.matrixWorldInverse));

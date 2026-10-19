@@ -1,0 +1,160 @@
+{
+  "errors": [],
+  "url": "http://127.0.0.1:8766/light-study.html?view=aisle",
+  "False": {
+    "solid": [
+      0.3001186660790589,
+      0.4500438971395111
+    ],
+    "holes": [
+      [
+        0.3001186660790589
+      ],
+      [
+        0.3001186660790589
+      ],
+      [
+        0.3001186660790589
+      ]
+    ],
+    "volumeMean": 0.02758781655381123,
+    "volumeMax": 0.320556640625,
+    "geometry": [
+      {
+        "mesh": "Cube_1",
+        "before": 600,
+        "after": 1312
+      }
+    ],
+    "state": {
+      "version": 1,
+      "apertures": false,
+      "light": {
+        "azimuth": 0,
+        "elevation": 35,
+        "strength": 1,
+        "grain": 0.15,
+        "enabled": true,
+        "quality": "auto",
+        "frozen": true
+      },
+      "camera": {
+        "position": [
+          0.7000000000000005,
+          1.6000000000000005,
+          -3.8000000000000007
+        ],
+        "target": [
+          0.7,
+          3,
+          1
+        ],
+        "fov": 65
+      }
+    },
+    "stats": {
+      "frames": 2,
+      "lightDepthRenders": 2,
+      "rawDepthSize": 2048,
+      "quality": "settled",
+      "scale": 0.5,
+      "steps": 48,
+      "fullScreenPasses": 4,
+      "sceneSamples": 4,
+      "casters": 74,
+      "worldBounds": {
+        "min": [
+          -3.7498877135918462,
+          -0.09982497475057439,
+          -5.150000095367432
+        ],
+        "max": [
+          5.089195937041044,
+          8.277092429315147,
+          5
+        ]
+      },
+      "drawCalls": 210,
+      "size": [
+        960,
+        640
+      ],
+      "textures": 48
+    }
+  },
+  "True": {
+    "solid": [
+      0.3001186859732714,
+      0.45004387908239796
+    ],
+    "holes": [
+      [],
+      [],
+      []
+    ],
+    "volumeMean": 0.04170499087815794,
+    "volumeMax": 0.421875,
+    "geometry": [
+      {
+        "mesh": "Cube_1",
+        "before": 600,
+        "after": 1312
+      }
+    ],
+    "state": {
+      "version": 1,
+      "apertures": true,
+      "light": {
+        "azimuth": 0,
+        "elevation": 35,
+        "strength": 1,
+        "grain": 0.15,
+        "enabled": true,
+        "quality": "auto",
+        "frozen": true
+      },
+      "camera": {
+        "position": [
+          0.7000000000000005,
+          1.6000000000000005,
+          -3.8000000000000007
+        ],
+        "target": [
+          0.7,
+          3,
+          1
+        ],
+        "fov": 65
+      }
+    },
+    "stats": {
+      "frames": 3,
+      "lightDepthRenders": 3,
+      "rawDepthSize": 2048,
+      "quality": "settled",
+      "scale": 0.5,
+      "steps": 48,
+      "fullScreenPasses": 4,
+      "sceneSamples": 4,
+      "casters": 74,
+      "worldBounds": {
+        "min": [
+          -3.7498877135918462,
+          -0.09982497475057439,
+          -5.150000095367432
+        ],
+        "max": [
+          5.089195937041044,
+          8.277092429315147,
+          5
+        ]
+      },
+      "drawCalls": 252,
+      "size": [
+        960,
+        640
+      ],
+      "textures": 48
+    }
+  }
+}

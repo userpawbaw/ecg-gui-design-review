@@ -38,6 +38,8 @@ try{
  bench.resourceCounts=[];for(let i=0;i<5;i++)bench.resourceCounts.push(await page.evaluate(()=>window.__bench.recreate()));assert.equal(new Set(bench.resourceCounts).size,1);report.checks.bench=bench;
  console.log('PASS: open/closed/alpha/offscreen bench; recreate resources stable');
  await page.goto(base+'/light-study.html?view=shafts',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__archiveLightStudy?.engine.stats.frames>0,{timeout:120000});await page.evaluate(()=>window.__archiveLightStudy.pause());
+ // D-149: this regression retains the original roof fixture; added geometry has its own A/B verifier.
+ await page.evaluate(()=>window.__archiveLightStudy.setApertures?.(false));
  report.checks.glb=await page.evaluate(async()=>{const a=window.__archiveLightStudy,T=await import('three'),ray=new T.Raycaster();ray.far=.8;const roof={};for(const [name,x,z] of [['hatch',.8,-3.1],['skylight',2.4,-3.1],['solid',-2,-2]]){ray.set(new T.Vector3(x,5.45,z),new T.Vector3(0,-1,0));roof[name]=ray.intersectObject(a.root,true).map(h=>h.distance);}let triangles=0;a.root.traverse(o=>{if(o.isMesh)triangles+=(o.geometry.index?.count??o.geometry.attributes.position.count)/3;});return {triangles,roof,materials:a.materialAudit,stats:a.engine.stats,normalMaps:a.normalMaps,roughnessMaps:a.roughnessMaps};});
  assert.equal(report.checks.glb.roof.hatch.length,0);assert.equal(report.checks.glb.roof.skylight.length,0);assert(report.checks.glb.roof.solid.length>0);
  // Actual range input and keyboard, not just direct uniform mutation.

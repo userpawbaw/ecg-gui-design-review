@@ -2477,3 +2477,23 @@ D-084 후보는 잎을 납작한 타원 14개로 만들어 그림자가 둥근 �
 ### D-148 실행 결과 (2026-10-19)
 - runtime4dc59ce로 S0–S4 구현·staged/공개검증 완료. 검수 `verification/r1-archive-volumetric-20261019/README.md`, main dispatch39295789728 success, 공개19file SHA 일치·입력→volume buffer 변화·기존 baked 링크 왕복 PASS. 사용자 미감·물리 GPU/FPS와 S5 Cycles/near key는 확인 안 함.
 - 기존 feature 자동 Pages deploy가 환경 branch 보호로 거절되는 것은 app/commit 오류가 아니다. 보호 정책을 유지하고 deploy job을 main workflow_dispatch로 한정하는 guard를 추가한다. 기존 main dispatcher에 source SHA를 넘기는 공개 경로는 그대로 사용한다.
+
+## D-149. 통로 앞쪽에 실제 천장 개구부 3개를 독립 study에 추가한다
+
+- 시점: 2026-10-19 `[대화]` 사용자 “책장에 빛이 비치면서도 결이 보이게끔 통로용 천장 구멍을 좀 더 뚫어봐”.
+- 상태: 구현·검증 진행, 사용자 미감 확인 전 잠정.
+| | |
+|---|---|
+| CASE | 불필요 — 장면의 개구부 배치 조정이며 방법론 변경이 아니다. |
+- 번호: 전체 원격 heads 명시 fetch 후 D-149 중복 없음. 근거 `verification/r1-archive-aisle-apertures-20261019/remote-number-check.json`.
+### 갈림길
+ 산란/노출을 증폭할지, shader discard 구멍으로 근사할지, 실제 파생 geometry를 자를지.
+### 검토한 선택지
+1. 산란 증폭 2. shader discard 3. 실제 파생 mesh 절단
+
+### 고른 것과 근거
+ 독립 study의 plaster 천장 slab만 runtime geometry clipping으로 자르고 안쪽 단면을 추가한다. 원본 GLB·Story·r8/D-084는 변경하지 않는다. 실제 표면·표면 shadow·volume caster가 같은 geometry를 사용한다. 통로 천창 전후 스위치와 책장/통로 관찰 preset을 제공한다. 기존 각도 기본값·기존 preset은 보존한다.
+### 버린 것과 이유
+ 산란 증폭은 공간상 빛 경로 문제를 해결하지 않는다. shader만 뚫으면 CPU ray/그림자 경로 불일치 위험이 있다. 전체 재수출은 보호된 자산까지 변경 범위를 늘린다.
+### 되돌려야 하는 조건
+ 천장 밖 형상이 잘리거나, 같은 시점에서 광선/책장 채광이 함께 확인되지 않으면 배치부터 재조정한다. 모든 방위각에서 보임을 보장하지 않으며 물리 GPU·최종 Cycles 품질은 별도 검증한다.

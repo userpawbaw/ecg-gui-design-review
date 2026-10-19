@@ -367,3 +367,9 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] S4: source4dc59ce push → main dispatch39295789728 success → 공개19files hash/HTTP·1280×720 실제 volume/입력·bake 왕복 PASS. API status는 새 query로 조회.
 - [ ] S5: 사용자 방향/미감 확인 뒤 Cycles와 동일 camera/source/medium 비교, 필요 시 near key SpotLight. 방향광 결과만으로 원본 B3 동등품질을 선언하지 않음.
 - `verification/r1-archive-volumetric-20261019/README.md` / fidelity / qa-result.json. Story 소유 파일·소품/defaults, baked reference, r8/D-084 유지.
+
+## 통로 천창 추가 (2026-10-19, D-149)
+- [x] 전체 remote 번호 검사 후 실제 파생 roof geometry 절단·단면·A/B·통로/정면 preset 구현.
+- [x] ray/동일시점 volume 비교; protected sources 유지.
+- [ ] 기존 regression/공개20file 검증·commit/push·Pages.
+- 사용자 미감·실제 GPU·최종 Cycles는 확인 안 함. 근거 verification/r1-archive-aisle-apertures-20261019/README.md.

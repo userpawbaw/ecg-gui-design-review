@@ -73,8 +73,8 @@
     },
     {
       "id": "D-146-production-visual-review",
-      "reason": "User screenshot identifies mottled shelf/floor appearance despite successful browser loading; possible compression, material texture, and bake-noise contributors need controlled isolation.",
-      "resume_when": "Run controlled local comparisons: lossless PNG lightmap vs WebP, flat albedo vs current material, then sample count; measure matching image crops before changing the public artifact. Keep Story assets/defaults untouched."
+      "reason": "Controlled same-GLB A/B: neutral diffuse albedo with same baked light removes most mottling; disabling shell lightmap while retaining albedo leaves surface pattern. Main source is retained diffuse material texture.",
+      "resume_when": "Await user material direction before public preview changes. q92 compression and bake-sample noise contributions remain unmeasured. Keep Story assets/defaults untouched."
     }
   ],
   "completed_verified": [
@@ -481,11 +481,11 @@
     "not_verified": [
       "All-view/material art direction and target-device/GPU checks",
       "Story route integration and applying B3 light values to protected Story/default production",
-      "Diagnose public preview mottling with lossless lightmap, flat albedo, and bake-sample comparisons (D-146)"
+      "Select whether to replace retained parquet/veneer diffuse textures in the isolated public preview; q92/sample noise remain unmeasured (D-146)"
     ],
-    "next_action": "Isolate mottled appearance using lossless lightmap, flat-albedo, and bake-sample comparisons, then measure and review matching crops before publishing any replacement. Story-owned assets/defaults remain out of scope.",
+    "next_action": "Await user choice on public-preview material appearance. Diagnostic A/B identifies retained diffuse albedo as the main source. Do not change Story-owned assets/defaults.",
     "evidence": "verification/r1-archive-web-bake-20261018/README.md; browser-result.json; staged-browser-result.json; public-browser-result.json; docs/uiux_system/records/D_DECISIONS.md D-146; GitHub Actions run 39123185772",
-    "blocked_scope": "Public isolated preview is deployed and browser behavior is verified; user-reported mottling has not yet been visually diagnosed or corrected. Story integration remains separate and untouched.",
+    "blocked_scope": "Public isolated preview is deployed and browser behavior is verified; diffuse texture is isolated as main mottling source. Material-style change awaits user choice; Story integration remains separate and untouched.",
     "asset_policy": {
       "source": "docs/uiux_system/24_ASSET_RESEARCH_STAGE.md §1.1; rounds/R1/REVIEW-R1-ARCHIVE-SHADOW-ASSET-20261016.md §5 and §7.2",
       "main_route": "self-authored parametric props; clean solid colours / low-contrast grain",

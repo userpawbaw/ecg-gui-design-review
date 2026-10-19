@@ -14,8 +14,9 @@ Isolated B3 web export for reviewing the selected archive lighting with a freely
 ## Visual quality finding from public preview
 
 - User observed mottled/patchy grain in the public Pages view. Comparing the submitted screenshot with the local bake evidence confirms the pattern is present in the rendered materials, even though runtime loading, lightmap application, and camera controls pass.
-- Likely causes are distinct from a broken lightmap: the shell lightmap is 2048² and was compressed to lossy WebP q92; the baked source uses 128 Cycles samples; the scene materials retain Poly Haven wood/plaster/parquet textures, while the shelf wood only partially flattens its texture (`TEX_KEEP=0.15`) and the floor keeps 40%. Strong indirect bounce and the browser transfer curve can make those material variations look like mottled lighting.
-- The current checks establish successful decoding and shader application, not a clean lighting bake. To isolate causes, compare the lossless PNG lightmap against WebP; render the shell with albedo-free flat materials; then separately reduce sample noise and material texture frequency. Record matching crop metrics and a clean comparison before replacing the public preview.
+- Controlled GLB A/B found the main cause: neutralizing diffuse albedo while preserving the same baked light removes most of the mottling; disabling the shell lightmap while preserving albedo keeps the material pattern. See [`diagnostic comparison`](../r1-archive-mottle-reference-20261019/README.md).
+- The shell lightmap is 2048², baked at 128 Cycles samples, then compressed to lossy WebP q92; ash/wall albedo retains 15% texture and the parquet floor retains 40%. Their separate contributions beyond the tested diffuse-vs-light comparison remain unmeasured.
+- Browser success establishes asset decoding and shader application, not a clean material appearance. The likely review fix is a cleaner authored material/low-contrast grain; do not change public or Story materials until the user selects the look and that decision is recorded.
 - Do not alter Story-owned production values/assets as part of this archive preview diagnosis.
 
 ## 확인 안 함

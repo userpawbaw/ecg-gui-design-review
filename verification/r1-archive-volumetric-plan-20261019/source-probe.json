@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-19",
+  "upstream_sha": "70ad1c41c78796637064b3bb9246be08e81ee777",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/ameobea/three-good-godrays/70ad1c41c78796637064b3bb9246be08e81ee777/README.md",
+      "status": 200,
+      "bytes": 7536,
+      "sha256": "1198292ea1a5c4f0b4d7e70b296818d028e25bb26846d0501af8d0a2fd83bd5d"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ameobea/three-good-godrays/70ad1c41c78796637064b3bb9246be08e81ee777/src/godrays.frag",
+      "status": 200,
+      "bytes": 8429,
+      "sha256": "c27a8bddb188866a5b25c5c927deb1d40e17c37467eb1614126e52372dcad4f4"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ameobea/three-good-godrays/70ad1c41c78796637064b3bb9246be08e81ee777/src/illumPass.ts",
+      "status": 200,
+      "bytes": 15079,
+      "sha256": "2f9de6325ba63d7686aae6a6efa0f2867efc2bfedd612a89a9a9e59b0a78f677"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ameobea/three-good-godrays/70ad1c41c78796637064b3bb9246be08e81ee777/src/compositor.frag",
+      "status": 200,
+      "bytes": 4382,
+      "sha256": "2834266e951df40c55c7dbd790ce0e80e6c8edea748ca4dc8cfe610e814b1ff2"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ameobea/three-good-godrays/70ad1c41c78796637064b3bb9246be08e81ee777/src/index.ts",
+      "status": 200,
+      "bytes": 12737,
+      "sha256": "f023ad31517411eb45423c5141b9eea29f7e6ce22cf953b2ff260fe1727e6c0e"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ameobea/three-good-godrays/70ad1c41c78796637064b3bb9246be08e81ee777/LICENSE",
+      "status": 200,
+      "bytes": 955,
+      "sha256": "0bd2424efc74db216c49ac37cde475856a36a9e0911762cc41b6bf238340de40"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ameobea/three-good-godrays/70ad1c41c78796637064b3bb9246be08e81ee777/package.json",
+      "status": 200,
+      "bytes": 2271,
+      "sha256": "e280df4857ab6710f2677c1131c06a04916e67d03419626257d4b4f9ce8e2058"
+    },
+    {
+      "url": "https://threejs.org/examples/webgl_postprocessing_godrays.html",
+      "status": 200,
+      "bytes": 6387,
+      "sha256": "0d0d4a6bd0033766bdb5820fdb80f0a37cbe6347cde6be05b70de73fd1b8eb8f"
+    },
+    {
+      "url": "https://developer.nvidia.com/gpugems/gpugems3/part-ii-light-and-shadows/chapter-13-volumetric-light-scattering-post-process",
+      "status": 200,
+      "bytes": 46141,
+      "sha256": "8da869c8e519022e8089a8e033bcffbb3f4d7cdf93ebb28e233cbd6422e143c2"
+    },
+    {
+      "url": "https://dev.epicgames.com/documentation/en-us/unreal-engine/volumetric-fog-in-unreal-engine",
+      "status": 200,
+      "bytes": 156232,
+      "sha256": "49294531f56e0e1f5ce66e931a992142b79c19278b5f52ffed7d31e0318da03b"
+    },
+    {
+      "url": "https://discourse.threejs.org/t/help-with-persistent-volumetric-light-god-rays-light-shafts-sunbeam-sunburst-for-underground-cave-scene/79085.json",
+      "status": 200,
+      "bytes": 33215,
+      "sha256": "540f2f095d3e9f472a9cd64f593b60cbbda375edfad658870244d64cb1bccce1"
+    }
+  ],
+  "scope": "HTTP/source audit only; no demo visual/performance capture"
+}

@@ -100,7 +100,7 @@
     "2026-09-16 concurrency policy revision: docs/23 added at 2f39ff9, WORK_RESUME_POLICY v1.2 at 0d38797, AGENTS updated at aabfd19",
     "Existing ECG 6-hour automation prompt updated to policy v1.2; repository-wide lock removed and resource-scoped conflict checks retained"
   ],
-  "current_request": "D-147: provide a fast separate real-time archive lighting study with azimuth/elevation sliders while preserving baked reference.",
+  "current_request": "D-148: 조사 근거를 갖춘 서고 빛 커튼의 실시간 슬라이더 구현 설계 계획 수립 (runtime 구현은 이번 범위 아님).",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",
@@ -136,7 +136,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "Complete D-147 staging and local/public browser checks; deploy light-study.html without changing baked reference, record measurements and unverified scope, then commit and push.",
+  "next_action": "후속 볼륨 구현은 PLAN-R1-ARCHIVE-VOLUMETRIC-20261019.md의 S0 optical bench부터 시작한다. 기존 D-147 Pages queued/공개 검증 미완료 상태는 별도 유지한다. Story 소유 파일·기본값·r8/D-084 변경 없음.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -149,7 +149,7 @@
     "verification": "Current UI-01/03/04 source, 98×600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "in_progress",
+  "request_status": "completed",
   "schema_version": 3,
   "updated_at": "2026-10-19",
   "verification": [
@@ -523,5 +523,21 @@
         "result": "Initial PC/ECG were un-bevelled self-authored boxes, background had distinct PH materials; original archive GLB identical to current branch"
       }
     }
+  },
+  "archive_volumetric_planning": {
+    "status": "research_design_completed_runtime_not_implemented",
+    "decision": "D-148",
+    "reference": "REF-016",
+    "baseline_commit": "fe402dc48b1c2308f301d93513ac6f9c341c2a11",
+    "plan": "docs/uiux_system/rounds/R1/PLAN-R1-ARCHIVE-VOLUMETRIC-20261019.md",
+    "evidence": "verification/r1-archive-volumetric-plan-20261019/README.md",
+    "route": "adapt existing project shadow-map raymarch in independent study module; low-resolution depth-aware filtering, local anisotropic medium noise, shared slider light state",
+    "unverified": [
+      "new runtime/visual quality",
+      "actual GPU/Edge frame timing",
+      "B3 GLB caster/aperture correctness",
+      "Cycles equivalence",
+      "external library Three0.186 compatibility"
+    ]
   }
 }

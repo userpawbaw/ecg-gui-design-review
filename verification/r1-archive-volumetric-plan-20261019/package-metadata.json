@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-19",
+  "postprocessing": {
+    "version": "6.39.5",
+    "peerDependencies": {
+      "three": ">= 0.168.0 < 0.187.0"
+    },
+    "license": "Zlib"
+  },
+  "three-good-godrays": {
+    "version": "0.12.1",
+    "peerDependencies": {
+      "@types/three": ">= 0.125.0",
+      "postprocessing": "^6.33.4",
+      "three": ">= 0.125.0 <= 0.182.0"
+    }
+  },
+  "project_three": "0.186.0",
+  "license_note": "Godrays npm metadata has no license field in this query; inspected upstream LICENSE text (Zlib-style conditions), no code adopted"
+}

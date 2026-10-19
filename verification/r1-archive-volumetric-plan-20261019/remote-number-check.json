@@ -1,0 +1,229 @@
+{
+  "refresh": "explicit heads wildcard; default fetch refspec covers main only",
+  "refs": [
+    {
+      "ref": "refs/remotes/origin/HEAD",
+      "sha": "35286311ca0965cfb9f0c45caf4ac18ff3706e20",
+      "max_decision": 15,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/ccr-efb769e0-o5cmli",
+      "sha": "f7f74b1fe58a00346af92d2418b9bc962833e1a1",
+      "max_decision": 48,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/ci/uiux-records-check-20260918",
+      "sha": "3497b7eb02259fe5fe0b6c33b15445742066d879",
+      "max_decision": 8,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/claude/archive-light-r7",
+      "sha": "3d594120ceaa597fe2b75f616ef1926134b1d68c",
+      "max_decision": 66,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/claude/archive-light-r7-ag2rja",
+      "sha": "fe402dc48b1c2308f301d93513ac6f9c341c2a11",
+      "max_decision": 147,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/claude/live-tab-iframe",
+      "sha": "e1bd75ec0f64ba7900e3ef0678d482c3d86dd932",
+      "max_decision": 16,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/claude/optimistic-goldberg-jnzpni",
+      "sha": "82b268b3d568bf3457b5b62c009dd0d8e3ad6f0d",
+      "max_decision": 37,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/claude/r1-autopilot-impl-3d1b78",
+      "sha": "647af740e3341325a9b62c93c777b6b7df0d3a8b",
+      "max_decision": 48,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/claude/r1-autopilot-recommended",
+      "sha": "259a15c998f9e75aefbf71afa0f3636001acb82a",
+      "max_decision": 79,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/claude/wave-display-explore",
+      "sha": "9c1920b12c002b75e2d60614c912364db3129d1a",
+      "max_decision": 44,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/codex/abc-light-design-20261004",
+      "sha": "0c3299f2e0366bf9221c1ec0ef3a60a6f01b8238",
+      "max_decision": 140,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/codex/reference-to-ecg-workflow-20260927",
+      "sha": "8eb3f72558a597a10bb5ec549231a151bb5b048a",
+      "max_decision": 38,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/codex/scenario-abc-feedback-20261003",
+      "sha": "572361fe3bc52210bbfd2f7f56b7cbf6d1ed6dc8",
+      "max_decision": 49,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/alpha-beta-creative-tracks-20260923",
+      "sha": "83a342271da88eb52594ff55b88d7c51e5a164a8",
+      "max_decision": 15,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/dual-director-records-20260918",
+      "sha": "703554557896da6dff84967a713d9e4429150b08",
+      "max_decision": 11,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/dual-director-work-handoff-20260918",
+      "sha": "fdc815d5c4dc41fabf58f60d4da9be548f81b7a0",
+      "max_decision": 9,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/reference-mining-v1-20260918",
+      "sha": "25b5ebb973c889b44b25b13701927f568837434d",
+      "max_decision": 8,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/reference-source-registry-20260920",
+      "sha": "e4ef7eacb86072010d393c43d6b492fb4c0e91e7",
+      "max_decision": 13,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/superdesign-final-validation-20260918",
+      "sha": "53a9ce8a903f9174123359969818b5ddd3e2774e",
+      "max_decision": 9,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/superdesign-generator-layer-20260918",
+      "sha": "e13ed17433037bb91b76a56c48224a1d3cea2369",
+      "max_decision": 9,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/uiux-record-system-v2-20260917",
+      "sha": "f07fc3903cbe391fe8e92c3653d1ba7ea9f4d28d",
+      "max_decision": 6,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/uiux-system-v1-20260916",
+      "sha": "c071a0615ef8e3b32a7b583c4ba5387892a6847b",
+      "max_decision": null,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/experiment/dual-attract-20260919",
+      "sha": "e1f86d1a679492f73321bdce293cfb16e6162da0",
+      "max_decision": 12,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/experiments/uiux-a-f-baseline-20260917",
+      "sha": "5c822ad1a360e041fb73cb9eaf1c684320fb3f34",
+      "max_decision": 6,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/feat/attract-vnext-recovered-20260924",
+      "sha": "21381ce349845c337297072e762808e104aaa58b",
+      "max_decision": 16,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/feat/attract-vnext-variants-20260920",
+      "sha": "cc977b0216f9cfdfd784554bb353e13fd1da3a34",
+      "max_decision": 14,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/feat/dual-director-runtime-20260919",
+      "sha": "9958abc5ede0790505867830bb15065513982942",
+      "max_decision": 12,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/feat/dual-director-runtime-main-20260919",
+      "sha": "b8f01dfa7781a14e9166a48533d2d071a26c9c5c",
+      "max_decision": 12,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/feat/r1-attic-fork",
+      "sha": "03eefb0fd42c52ae3e985af2d8dfc7bc7e95ae2c",
+      "max_decision": 49,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/main",
+      "sha": "35286311ca0965cfb9f0c45caf4ac18ff3706e20",
+      "max_decision": 15,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/preview/lite-baseline",
+      "sha": "5053161f2ab78b60a3ec8d3a4b3b36a0d8562dc3",
+      "max_decision": 6,
+      "D148_present": false,
+      "REF016_files": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/v2-interrupted-20260911",
+      "sha": "f8b63004f54d29700b101d1e25599d62bc4e6e35",
+      "max_decision": null,
+      "D148_present": false,
+      "REF016_files": []
+    }
+  ]
+}

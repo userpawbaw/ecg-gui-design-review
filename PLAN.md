@@ -350,3 +350,11 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - Add isolated `light-study.html` for immediate azimuth/elevation exploration using original PBR maps and dynamic shadow map; stage only that additional page with existing approved GLB/runtime.
 - Verify load/material map counts, slider changes, shadow behavior, public Pages deployment. Record measured limits and “확인 안 함” in the verification README. Do not alter Story-owned files/defaults or B3 bake inputs.
 - After selecting a direction, validate the candidate at final quality with Blender 4.5.3 Cycles.
+
+## Archive volumetric light research/design (2026-10-19, D-148)
+
+- [x] 기존 Story 48-step 볼륨/먼지·현행 study·Three0.186 shadow 구조를 읽고 외부 GodraysPass 원문과 비교. source mesh 기반 GodRaysEffect와의 혼동을 정정.
+- [x] remote32ref 명시 갱신 후 D-148/REF-016 번호 충돌 검사, 효과 카드·독립 raw depth/공간 clip/noise/linear HDR/자동품질 구현 계획 기록.
+- [x] 계획: `docs/uiux_system/rounds/R1/PLAN-R1-ARCHIVE-VOLUMETRIC-20261019.md`; source audit·측정/확인 안 함: `verification/r1-archive-volumetric-plan-20261019/README.md`.
+- [ ] 후속 구현 S0 optical bench → S1 depth/HDR → S2 가림 빛줄기 → S3 결/슬라이더/품질 → S4 검수/Pages → S5 Cycles·필요 시 key SpotLight 비교. 이번 요청은 계획 수립이며 runtime 변경/배포는 하지 않음. Story 소유 파일·r8/D-084/baked 기본값 보호.
+- 현재 요청 완료 기준: 문서 검사·로컬 링크·JSON·diff PASS, commit/push 및 원격 commit 확인. 효과 외관·GPU FPS는 후속 단계까지 확인 안 함.

@@ -2432,3 +2432,40 @@ D-084 후보는 잎을 납작한 타원 14개로 만들어 그림자가 둥근 �
 - bake 전용 조명이 study 페이지에 남아 새 방향 그림자와 중복되거나 albedo/normal/roughness map이 로드되지 않으면 미리보기 통과로 기록하지 않고 고친다.
 - 모바일/SwiftShader/실제 GPU에서 프레임 속도와 그림자 품질을 확인하지 않았다면 보편적인 실시간 성능을 주장하지 않는다.
 - Story 소유 파일·기본값, r8/D-084 값을 건드리거나 승인 없이 public baked default를 대체하면 즉시 격리/복구한다.
+
+## D-148. 서고 빛 커튼은 기존 그림자맵 볼륨 방식을 별도 study 모듈로 적응하는 계획을 세운다
+
+| | |
+|---|---|
+| 시점 | 2026-10-19 `[대화]` — “구현 방식을 구체적으로 조사해서 설계 계획을 수립해줘” |
+| 상태 | 잠정 설계 — 조사·구현 계획 수립, 새 런타임/효과 구현·배포는 아직 하지 않음 |
+| 연결 | D-147, REF-016; `rounds/R1/PLAN-R1-ARCHIVE-VOLUMETRIC-20261019.md` |
+| CASE | 불필요 — 장면 전용 렌더링 경로의 설계이며 역할·검증 방법론·권한 규약을 변경하지 않음 |
+| 번호 | main만 갱신하던 기본 fetch refspec 대신 `git fetch origin refs/heads/*:refs/remotes/origin/* --prune`로 명시 갱신 후 remote32ref 확인. D-148 충돌 없음. REF-011~015는 타 브랜치 사용 중이라 REF-016 사용. SHA별 근거 `verification/r1-archive-volumetric-plan-20261019/remote-number-check.json` |
+
+### 갈림길
+사용자는 자유 카메라와 방위/고도 슬라이더에서 결이 살아있는 햇빛의 경로를 보고 싶다. `[코드]` Story archive.ts에 48단계 shadow-depth raymarch·HG·noise·먼지가 이미 있다. 이를 보호된 Story에서 직접 수정할지, 외부 라이브러리/renderer를 도입할지, 분리된 study에 적응할지 선택한다.
+
+### 검토한 선택지
+1. 기존 프로젝트의 볼륨 알고리즘을 새 study 모듈에 적응하고, 광원 depth 갱신·clip·저해상도·경계 보존·선형 합성을 보완한다.
+2. three-good-godrays v0.12.1 + pmndrs postprocessing을 바로 도입한다.
+3. 광원 mesh를 이용한 radial GodRaysEffect, 투명 plane/cone로 근사한다.
+4. WebGPU/TSL 또는 froxel renderer로 전환한다.
+
+### 고른 것과 근거
+- 1번을 주력 계획으로 선택한다 `[추론]`. 이미 있는 프로젝트 구현의 HG/공간 noise/입자 제어를 살리고 공식 Three addons와 현재0.186을 유지할 수 있다. Story 소유 파일은 읽기만 하며 source 경로를 명시한 새 독립 모듈로 적응한다.
+- 외부 원문코드/데모에셋은 저장소에 넣지 않는다. three-good-godrays source SHA `70ad1c41c78796637064b3bb9246be08e81ee777`에서 low-res·light-volume clip·joint bilateral upsample 원리를 조사했다. 정확한 pass/파일/데이터 계약·수식·모드·임시 예산·bench 관문은 계획에 기록했다.
+- 현재 slab/frustum과 depth 검사, 원본 GLB 개구부·caster 조사부터 한다. 빛의 결은 약한 world-space 매질 noise로 만들고, 공간 가림이 만드는 틈을 noise로 대신하지 않는다.
+- 초기 범위는 D-147의 방향광 슬라이더. B3 bake의 near key SpotLight 재현은 source 메타데이터·cone·falloff를 갖춘 별도 후속 단계다. 두 종류를 섞어 B3 일치로 주장하지 않는다.
+- 별도 raw 광원depth RT를 dirty-cache하는 설계로 Three0.186 PCF 비교 sampler/private framebuffer 결합을 피한다. scene+volume은 linear HDR로 합성 후 한 번만 출력 변환한다. 제안 parameter/FPS와 관측값을 구분한다.
+
+### 버린 것과 이유
+- 2번은 검증 없이 도입하지 않는다. peer Three ≤0.182, 현행0.186과 다르고, 국소 density/결·phase·먼지 확장은 별도 필요하다. 호환 불가능을 증명한 것은 아니며 기존 적응이 실패하면 C4 격리 비교 후보로 남긴다.
+- 3번은 source가 화면 밖인 자유 카메라·물체 가림/beam 내부 진입에 약해 주력에서 제외한다.
+- 4번은 현행 WebGL/정적 package의 교체 비용과 기기 검증 범위를 늘린다. 현행 경로가 실측 예산을 못 맞출 때 재검토한다.
+- `[정정]` 종전 “three-good-godrays는 화면 밖이면 사라진다”는 설명은 pmndrs GodRaysEffect와 혼동했다. GodraysPass는 DirectionalLight/PointLight의 shadowmap을 적분한다. 과거 문서는 삭제하지 않고 재조사 addendum으로 연결한다.
+
+### 되돌려야 하는 조건
+- 실제 GLB 광학 구조가 의도와 다르거나, 3회 TUNE 뒤 가림/시간안정성/실제 GPU 예산을 만족하지 못하면 caster 모델·광원 종류·외부 C4 비교부터 재판단한다.
+- Story 파일/default/r8/D-084 변경이 필요해지면 이 격리 범위로 실행하지 않는다. 이번 설계를 해당 변경의 승인으로 쓰지 않는다.
+- 설계 문서·HTTP/source audit만으로 새 효과의 미감·성능 PASS를 선언하지 않는다. 사용자 화면 수준과 Cycles 비교는 구현 후 별도 게이트다.

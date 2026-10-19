@@ -178,3 +178,10 @@ S1–S3는 정지 렌더라 지금 바로 할 수 있다. S4는 웹 반영 방�
 1. S1–S3(정지 렌더: 광원 그룹 도구 → 해 되튐 조정 → 웅덩이 경계 복귀)을 바로 진행할지.
 2. wow 묶음 W1(빛이 들어오는 순간) + W2(빛줄기 먼지) + W3(사람 그림자)이 방향으로 맞는지, 빼거나 더할 것이 있는지.
 3. 웹 굽기 방식(S4): 권장은 광원 그룹별 조도 굽기 + 커스텀 AgX Punchy. REF처럼 최종 색 굽기를 고르면 W1·W3은 할 수 없다.
+
+
+## 2026-10-19 재조사 정정 — 화면 밖 광원과 라이브러리 구분 (D-148)
+
+원래 §5/§6에서 “three-good-godrays는 광원이 화면 밖이면 사라짐”이라고 쓴 판단은 철회한다. 당시 연결한 cave 포럼의 사례는 **pmndrs GodRaysEffect**의 source mesh가 화면 밖으로 나가는 경우다. **three-good-godrays GodraysPass**의 실제 v0.12.1 source는 방향광/점광의 shadow map을 따라 world-space 구간을 적분한다. 광원 mesh가 화면에 있어야 한다는 결론을 이 패키지에 적용하지 않는다. 원문은 판단 이력으로 남긴다.
+
+기존 archive.ts에도 독립 광원depth + raymarch + noise/HG/먼지가 있다는 관찰은 유지한다. 이를 현행 자유시점·슬라이더 study에 옮기려면 depth dirty 갱신, room clip, alpha/caster·linear 합성·저해상도 업샘플링을 검수해야 한다. [후속 설계](PLAN-R1-ARCHIVE-VOLUMETRIC-20261019.md), [REF-016](../../references/REF-016_SHADOW_MARCHED_SUN_SHAFTS.md), [검증 범위](../../../../verification/r1-archive-volumetric-plan-20261019/README.md)를 따른다. 이번 정정은 외부 패키지 도입/현재 장면 시각·성능 PASS 선언이 아니다.

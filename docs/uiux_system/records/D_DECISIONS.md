@@ -2500,3 +2500,29 @@ D-084 후보는 잎을 납작한 타원 14개로 만들어 그림자가 둥근 �
 
 ### D-149 실행 결과
 독립 runtime21fd8b9, Pages39299691498 공개 완료. 신규 개구부3개 ray 통과/바깥 solid 보존, 동일시점 산란평균+51.2%, 기존 regression PASS. 공개20file hash/HTTP·browser 입력·bake 왕복 PASS. 신규형상의 direct/HDR parity 평균RGB1.276은 기존≤1 관문 미통과로 남김. 사용자 미감·실제GPU·Cycles는 확인 안 함. 근거 `verification/r1-archive-aisle-apertures-20261019/README.md`.
+
+## D-150. 왼쪽 창 확대·실루엣 가림과 거리 기반 반그림자를 독립 study에서 비교한다
+
+| | |
+|---|---|
+| 시점 | 2026-10-20 `[대화]` 왼쪽 창 확대, 레퍼런스처럼 다양한 그림자를 만드는 물체 추가, 반그림자 해결 요청 |
+| 상태 | 구현/검증 진행, 사용자 미감 확인 전 잠정 |
+| CASE | 불필요 — 장면 전용 geometry/광학 조정이며 방법론 변경 아님 |
+| 번호 | 모든 원격heads 명시fetch 후 D-150 충돌 없음. verification/r1-archive-window-penumbra-20261020/remote-number-check.json |
+
+### 갈림길
+창 크기·가림 형태·그림자 필터가 각각 부족하다. 왼쪽 창 위치는 사용자에게 재확인하되 왼쪽 벽의 높은 창을 우선 가정하며 보호된 원본은 수정하지 않는다.
+
+### 검토한 선택지
+1. 창만 키우고 고정 PCF blur를 넓힌다.
+2. 독립 파생geometry에 큰 창과 서로 다른 실루엣/거리의 가림을 추가하고, raw directional depth에서 blocker search+거리 비례 filter(PCSS 원리)를 직접 구현한다.
+3. 전체 path tracing/Cycles 재출력으로 교체한다.
+
+### 고른 것과 근거
+2번. 가까운 물체는 선명하고 먼 창틀·잎은 부드럽게 보여야 한다. 기존 광원은 크기 없는 DirectionalLight와 PCF이며 volume도1회 binary depth 비교여서 유한 태양의 반그림자가 없다. NVIDIA PCSS integration paper(2008), 현행 Three0.186 shader/API와 기존 review §2를 원리 참고로 쓴다. 외부 코드/에셋은 복사하지 않는다. 자체 소품 스킬의 치수·clay·실루엣·실제 화면 검수를 적용한다. 창/물체와 태양 각지름을 독립 전환하고 기존0°/기본 preset·Story·GLB/r8/D-084는 유지한다. 새 비교preset만0.53°로 시작한다.
+
+### 버린 것과 이유
+고정 blur는 접촉부까지 흐려지고 가림-받음 거리에 따라 달라지지 않는다. 창 확대만으로 직사 태양의 각지름은 커지지 않는다. Cycles는 최종 검증에는 적절하나 즉시 슬라이더 탐색을 대체하지 않는다.
+
+### 되돌려야 하는 조건
+blocker/receiver 거리별 전이 폭이 증가하지 않거나 누광·shader오류·원본 변경이 생기면 soft mode를 통과로 선언하지 않고 수정/격리한다. 실제GPU/FPS와 Cycles 일치 미검증은 별도로 남긴다. 창 위치 답변이 다르면 위치 가정을 사용자 답으로 대체한다.

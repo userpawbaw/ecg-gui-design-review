@@ -37,3 +37,6 @@ D-147 독립 PBR study의 방향광·정적 GLB에 해당한다. 원본 B3의 ne
 
 ### T9 후속 관찰 — 잠정
 사용자 피드백으로 옆 시점 통과만으로 책장 방향의 가독성을 보장하지 않음을 확인했다. D-149는 통로 천창 3개와 반대/정면 관찰 시점을 추가한다. 천장 절단은 개구부 중심뿐 아니라 바깥 solid 위치도 ray 검증한다. 산란 계수/phase는 유지하므로 정면 역산란의 약함과 사용자 미감 미확인은 남는다. `verification/r1-archive-aisle-apertures-20261019/README.md`.
+
+### T10 후속 관찰 — 잠정
+D-150/J-003 T10은 고정PCF/이진depth로 반그림자가 약했던 문제를 유한태양 각지름과 가림-받음 거리로 분리했다. 창을 키우는 것과 해의 각크기는 별개다. 0.53°bench에서0.15m가림은subpixel,3m가림은5px로 관측했다. rawdepth를 거리로 복원하는surfacePCSS와4tapvolume근사를 도입하되, offset15mm 접촉부손실/얇은caster/성능을 무검증의 일반규약으로 확대하지 않는다. `verification/r1-archive-window-penumbra-20261020/README.md`.

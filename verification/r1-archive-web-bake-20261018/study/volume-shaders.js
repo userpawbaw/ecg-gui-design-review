@@ -14,13 +14,19 @@ uniform mat4 inverseProjection, cameraWorld, lightVP;
 uniform vec3 cameraPositionWorld, boundsMin, boundsMax, toSun, sunColor, basisU, basisV;
 uniform float sunIntensity, strength, grain, time, depthBias, sigmaT, sigmaS;
 uniform int steps;
+uniform float sunTangent,lightDepthRange;
+uniform vec2 lightSpan;
 float hash3(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
 float valueNoise(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);
  return mix(mix(mix(hash3(i),hash3(i+vec3(1,0,0)),f.x),mix(hash3(i+vec3(0,1,0)),hash3(i+vec3(1,1,0)),f.x),f.y),
  mix(mix(hash3(i+vec3(0,0,1)),hash3(i+vec3(1,0,1)),f.x),mix(hash3(i+vec3(0,1,1)),hash3(i+vec3(1,1,1)),f.x),f.y),f.z);}
 float visibility(vec3 p){vec4 lp=lightVP*vec4(p,1.);vec3 q=lp.xyz/lp.w*.5+.5;
  if(any(lessThan(q,vec3(0.)))||any(greaterThan(q,vec3(1.))))return 0.;
- return step(q.z-depthBias,texture2D(lightDepth,q.xy).r);}
+ float blocker=texture2D(lightDepth,q.xy).r;
+ if(sunTangent<=0.)return step(q.z-depthBias,blocker);
+ // Four stable samples at a distance-dependent disc radius; surface uses 16+32 PCSS.
+ vec2 radius=max(0.,q.z-blocker)*lightDepthRange*sunTangent/lightSpan;
+ float v=0.;for(int i=0;i<4;i++){float a=(float(i)+.5)*2.39996323;vec2 uv=q.xy+vec2(cos(a),sin(a))*.7*radius;v+=step(q.z-depthBias,texture2D(lightDepth,uv).r);}return v*.25;}
 void main(){
  float d=texture2D(viewDepth,vUv).r;
  vec4 view=inverseProjection*vec4(vUv*2.-1.,d*2.-1.,1.);view/=view.w;

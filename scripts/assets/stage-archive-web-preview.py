@@ -21,7 +21,7 @@ if not (SOURCE / 'archive.glb').is_file() or not manifest_path.is_file():
 
 manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
 files = {'archive.glb', 'manifest.json', 'preview.html', 'light-study.html'}
-files.update({'study/ceiling-apertures.js', 'study/volume-shaders.js', 'study/lighting-state.js', 'study/volumetric-light.js'})
+files.update({'study/window-study.js', 'study/contact-shadows.js', 'study/ceiling-apertures.js', 'study/volume-shaders.js', 'study/lighting-state.js', 'study/volumetric-light.js'})
 files.update(info['file'] for info in manifest['groups'].values() if info.get('file'))
 missing = [name for name in sorted(files) if not (SOURCE / name).is_file()]
 if missing:

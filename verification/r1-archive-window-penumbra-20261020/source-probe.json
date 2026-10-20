@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-20",
+  "sources": [
+    {
+      "url": "https://developer.download.nvidia.com/whitepapers/2008/PCSS_Integration.pdf",
+      "http": 200,
+      "bytes": 5472313,
+      "sha256": "7f3b11bd15de13e2b68f7f51cc5ad6f7ad558b51b952f0a368178328c463253c",
+      "use": "PCSS blocker search / penumbra size / filtering principles only; external file stays in /tmp"
+    },
+    {
+      "url": "https://threejs.org/docs/pages/LightShadow.html",
+      "http": 200,
+      "use": "shadow properties; implementation audited at installed Three0.186 shader chunks"
+    },
+    {
+      "url": "https://docs.blender.org/manual/en/latest/render/lights/light_object.html",
+      "status": "HTTP error",
+      "use": "not read; no conclusion attributed to this attempt"
+    }
+  ]
+}

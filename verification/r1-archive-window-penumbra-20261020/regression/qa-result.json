@@ -1,0 +1,1304 @@
+{
+  "result": "PASS",
+  "scope": "staged Chromium/SwiftShader functional and image-buffer checks; no physical GPU claim",
+  "errors": [],
+  "failedRequests": [],
+  "checks": {
+    "bench": {
+      "open": {
+        "mean": 0.003148846259271657,
+        "max": 0.042266845703125,
+        "litPixels": 49440,
+        "hash": 807265510,
+        "width": 480,
+        "height": 360,
+        "depthRenders": 2
+      },
+      "closed": {
+        "mean": 0,
+        "max": 0,
+        "litPixels": 0,
+        "hash": 3957811565,
+        "width": 480,
+        "height": 360,
+        "depthRenders": 3
+      },
+      "alpha": {
+        "mean": 0.01727525633552836,
+        "max": 0.06927490234375,
+        "litPixels": 124183,
+        "hash": 310356675,
+        "width": 480,
+        "height": 360,
+        "depthRenders": 4
+      },
+      "sourceOffscreen": true,
+      "resourceCounts": [
+        12,
+        12,
+        12,
+        12,
+        12
+      ]
+    },
+    "glb": {
+      "triangles": 297378,
+      "roof": {
+        "hatch": [],
+        "skylight": [],
+        "solid": [
+          0.3001186660790589,
+          0.4500438971395111
+        ]
+      },
+      "materials": [
+        {
+          "mesh": "Cube",
+          "material": "parquet",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_1",
+          "material": "plaster",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_2",
+          "material": "beam.001",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_3",
+          "material": "window_frame",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_4",
+          "material": "blind_slat",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_5",
+          "material": "stack_wood",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_6",
+          "material": "stack_wood_under",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_7",
+          "material": "label",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_8",
+          "material": "cell_paint",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_9",
+          "material": "drawer_paint",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_10",
+          "material": "brass",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_11",
+          "material": "print_0",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_12",
+          "material": "print_1",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_13",
+          "material": "print_2",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_14",
+          "material": "print_3",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_15",
+          "material": "print_4",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_16",
+          "material": "plaster_white",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_17",
+          "material": "walnut",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_18",
+          "material": "black_plastic",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_19",
+          "material": "beige_plastic",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_20",
+          "material": "crt_glass",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_21",
+          "material": "steel",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_22",
+          "material": "ecg_paper",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_23",
+          "material": "outlet",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_24",
+          "material": "strip_lamp",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_25",
+          "material": "cable",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Cube_26",
+          "material": "b2_leaf",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008",
+          "material": "painted_wooden_table",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_1",
+          "material": "wooden_stool_01",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_2",
+          "material": "desk_lamp_arm_01",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_3",
+          "material": "desk_lamp_arm_01_light",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_4",
+          "material": "binder_notebook",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_5",
+          "material": "GreenChair_01",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_6",
+          "material": "cardboard_box_01",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_7",
+          "material": "cardboard_box_01",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_8",
+          "material": "wooden_crate_01",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_9",
+          "material": "vintage_suitcase_01",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_10",
+          "material": "vintage_suitcase_02",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_11",
+          "material": "drawer_cabinet",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_12",
+          "material": "vintage_wooden_drawer_01",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_13",
+          "material": "power_box_01",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_14",
+          "material": "hanging_industrial_lamp",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_15",
+          "material": "hanging_industrial_lamp_glass",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_16",
+          "material": "hanging_industrial_lamp",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "table008_17",
+          "material": "hanging_industrial_lamp_glass",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved",
+          "material": "book_0",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_1",
+          "material": "book_1",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_2",
+          "material": "book_2",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_3",
+          "material": "book_3",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_4",
+          "material": "book_4",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_5",
+          "material": "book_5",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_6",
+          "material": "book_6",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_7",
+          "material": "book_7",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_8",
+          "material": "book_8",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_9",
+          "material": "book_9",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_10",
+          "material": "book_10",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_11",
+          "material": "book_11",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_12",
+          "material": "archive_box.001",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_13",
+          "material": "archive_box_grey.001",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_14",
+          "material": "label",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_15",
+          "material": "ecg_paper",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        },
+        {
+          "mesh": "Shelved_16",
+          "material": "binder",
+          "alphaTest": 0,
+          "transparent": false,
+          "side": 2
+        }
+      ],
+      "stats": {
+        "frames": 1,
+        "lightDepthRenders": 1,
+        "rawDepthSize": 2048,
+        "quality": "fast",
+        "scale": 0.25,
+        "steps": 16,
+        "fullScreenPasses": 4,
+        "sceneSamples": 4,
+        "casters": 92,
+        "worldBounds": {
+          "min": [
+            -4.395912170410156,
+            -0.09982497475057439,
+            -5.150000095367432
+          ],
+          "max": [
+            5.089195937041044,
+            8.277092429315147,
+            5
+          ]
+        },
+        "drawCalls": 236,
+        "size": [
+          640,
+          480
+        ],
+        "textures": 40
+      },
+      "normalMaps": 22,
+      "roughnessMaps": 21
+    },
+    "rangeInput": {
+      "state": {
+        "version": 1,
+        "windowStudy": {
+          "enabled": false,
+          "props": true
+        },
+        "apertures": false,
+        "light": {
+          "sunDiameter": 0,
+          "azimuth": 90.10000000000002,
+          "elevation": 50,
+          "strength": 1,
+          "grain": 0.15,
+          "enabled": true,
+          "quality": "auto",
+          "frozen": true
+        },
+        "camera": {
+          "position": [
+            -0.9999999999999996,
+            1.5,
+            -3.8
+          ],
+          "target": [
+            1.5,
+            3.4,
+            -3.5
+          ],
+          "fov": 52
+        }
+      },
+      "depthRenders": 2
+    },
+    "resetAndRestore": "PASS",
+    "grain": [
+      {
+        "grain": 0,
+        "mean": 0.13974097306529681,
+        "max": 0.72509765625,
+        "litPixels": 76800,
+        "hash": 2585726794,
+        "width": 320,
+        "height": 240,
+        "depthRenders": 3
+      },
+      {
+        "grain": 0.3,
+        "mean": 0.13860737405717372,
+        "max": 0.70458984375,
+        "litPixels": 76800,
+        "hash": 4219216370,
+        "width": 320,
+        "height": 240,
+        "depthRenders": 3
+      }
+    ],
+    "effectSwitchAndZeroStrength": "PASS",
+    "outputParity": {
+      "meanAbsRGB": 0.9526801215277778,
+      "maxAbsRGB": 75,
+      "channelsOver2": 62637
+    },
+    "directions": [
+      {
+        "az": 46.4,
+        "el": 54.4,
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 5
+      },
+      {
+        "az": 0,
+        "el": 35,
+        "mean": 0.0022228671765575805,
+        "max": 0.02777099609375,
+        "litPixels": 3512,
+        "hash": 464185677,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 6
+      },
+      {
+        "az": 90,
+        "el": 35,
+        "mean": 0.029510366413742304,
+        "max": 0.323974609375,
+        "litPixels": 4137,
+        "hash": 1806901222,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 7
+      },
+      {
+        "az": 180,
+        "el": 35,
+        "mean": 0.0016964668780565261,
+        "max": 0.01690673828125,
+        "litPixels": 4505,
+        "hash": 1140928476,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 8
+      },
+      {
+        "az": 225,
+        "el": 35,
+        "mean": 0.001149397228534023,
+        "max": 0.0144195556640625,
+        "litPixels": 3808,
+        "hash": 1439286544,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 9
+      },
+      {
+        "az": 270,
+        "el": 35,
+        "mean": 0.008669170439243317,
+        "max": 0.025146484375,
+        "litPixels": 19092,
+        "hash": 317960678,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 10
+      }
+    ],
+    "cameras": [
+      {
+        "name": "wide",
+        "position": [
+          8.5,
+          5.5,
+          17
+        ],
+        "mean": 0.0015302965603768825,
+        "max": 0.0193328857421875,
+        "litPixels": 3615,
+        "hash": 3052029896,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "name": "front",
+        "position": [
+          0.15,
+          1.6,
+          -0.95
+        ],
+        "mean": 0.004393000304698944,
+        "max": 0.035491943359375,
+        "litPixels": 10384,
+        "hash": 1090386477,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "name": "side",
+        "position": [
+          -1,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      }
+    ],
+    "serializedSoftwareRenderWaitMs": {
+      "fast": {
+        "samples": [
+          800.3000000119209,
+          788.5999999940395,
+          793.3000000119209,
+          808.9000000059605,
+          814.0999999940395,
+          806.4000000059605,
+          830.4000000059605,
+          829.9000000059605,
+          807.4000000059605,
+          789.9000000059605,
+          792.8000000119209,
+          805.3000000119209
+        ],
+        "p50": 805.3000000119209,
+        "p95": 830.4000000059605,
+        "scope": "640x480 paused render + gl.finish + synchronous 1px framebuffer readback wall time; not isolated GPU ms or display FPS"
+      },
+      "auto": {
+        "samples": [
+          884.0999999940395,
+          858.9000000059605,
+          902.4000000059605,
+          868.5,
+          852.7999999821186,
+          879.6999999880791,
+          1357.5,
+          1324,
+          1426.4000000059605,
+          1155.300000011921,
+          1111.300000011921,
+          1537.7000000178814
+        ],
+        "p50": 902.4000000059605,
+        "p95": 1537.7000000178814,
+        "scope": "640x480 paused render + gl.finish + synchronous 1px framebuffer readback wall time; not isolated GPU ms or display FPS"
+      }
+    },
+    "fixedFrames": [
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      },
+      {
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 11
+      }
+    ],
+    "sweep": [
+      {
+        "az": 25,
+        "mean": 0.01855740240154167,
+        "max": 0.1448974609375,
+        "litPixels": 8705,
+        "hash": 692369083,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 12
+      },
+      {
+        "az": 30,
+        "mean": 0.020479576562841734,
+        "max": 0.173583984375,
+        "litPixels": 8944,
+        "hash": 2105072294,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 13
+      },
+      {
+        "az": 35,
+        "mean": 0.02263437507984539,
+        "max": 0.21044921875,
+        "litPixels": 9016,
+        "hash": 3643809961,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 14
+      },
+      {
+        "az": 40,
+        "mean": 0.0242883726178358,
+        "max": 0.2376708984375,
+        "litPixels": 9201,
+        "hash": 1154145207,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 15
+      },
+      {
+        "az": 45,
+        "mean": 0.026794334600369136,
+        "max": 0.288818359375,
+        "litPixels": 9522,
+        "hash": 4003965839,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 16
+      },
+      {
+        "az": 50,
+        "mean": 0.02848343319259584,
+        "max": 0.34765625,
+        "litPixels": 9799,
+        "hash": 492703094,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 17
+      },
+      {
+        "az": 55,
+        "mean": 0.03551880398144325,
+        "max": 0.42919921875,
+        "litPixels": 10261,
+        "hash": 1451816680,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 18
+      },
+      {
+        "az": 60,
+        "mean": 0.04755382583787044,
+        "max": 0.658203125,
+        "litPixels": 11926,
+        "hash": 1980851001,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 19
+      },
+      {
+        "az": 65,
+        "mean": 0.04262997234861056,
+        "max": 0.44384765625,
+        "litPixels": 9926,
+        "hash": 2695795760,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 20
+      },
+      {
+        "az": 70,
+        "mean": 0.051784270976980525,
+        "max": 0.48193359375,
+        "litPixels": 10604,
+        "hash": 2820115126,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 21
+      },
+      {
+        "az": 75,
+        "mean": 0.06819653298705816,
+        "max": 0.54296875,
+        "litPixels": 12608,
+        "hash": 1742057705,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 22
+      },
+      {
+        "az": 80,
+        "mean": 0.07884915345037977,
+        "max": 0.56298828125,
+        "litPixels": 13213,
+        "hash": 1108249372,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 23
+      }
+    ],
+    "orbit": [
+      {
+        "position": [
+          -1,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.027417749523495634,
+        "max": 0.309814453125,
+        "litPixels": 9647,
+        "hash": 2068796952,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          -0.9,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.026169043506185215,
+        "max": 0.30712890625,
+        "litPixels": 9546,
+        "hash": 1691985326,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          -0.8,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.024859144917378822,
+        "max": 0.303955078125,
+        "litPixels": 9490,
+        "hash": 2636118931,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          -0.7,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.023771194213380416,
+        "max": 0.299560546875,
+        "litPixels": 9364,
+        "hash": 530933618,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          -0.6,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.023115074519688885,
+        "max": 0.298583984375,
+        "litPixels": 9170,
+        "hash": 1370336442,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          -0.5,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.022424287780498466,
+        "max": 0.277099609375,
+        "litPixels": 8723,
+        "hash": 1824026778,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          -0.3999999999999999,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.0216957308507214,
+        "max": 0.281005859375,
+        "litPixels": 7939,
+        "hash": 1866477203,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          -0.29999999999999993,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.021331208143383264,
+        "max": 0.265380859375,
+        "litPixels": 7018,
+        "hash": 2601291383,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          -0.19999999999999996,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.021130733353396255,
+        "max": 0.26171875,
+        "litPixels": 6431,
+        "hash": 3998418310,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          -0.09999999999999998,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.02132189622769753,
+        "max": 0.25,
+        "litPixels": 6244,
+        "hash": 1216981109,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          0,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.021832840085650482,
+        "max": 0.243408203125,
+        "litPixels": 6401,
+        "hash": 1477258040,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      },
+      {
+        "position": [
+          0.10000000000000009,
+          1.5,
+          -3.8
+        ],
+        "mean": 0.021582501685867707,
+        "max": 0.25048828125,
+        "litPixels": 6536,
+        "hash": 517026799,
+        "width": 160,
+        "height": 120,
+        "depthRenders": 24
+      }
+    ],
+    "cameraDepthCache": "PASS",
+    "autoQuality": [
+      "fast",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "settled",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "fast",
+      "settled",
+      "fast",
+      "settled"
+    ],
+    "highSettings": {
+      "snapshot": {
+        "version": 1,
+        "windowStudy": {
+          "enabled": false,
+          "props": true
+        },
+        "apertures": false,
+        "light": {
+          "sunDiameter": 0,
+          "azimuth": 46.398877815288756,
+          "elevation": 54.396707420556595,
+          "strength": 1,
+          "grain": 0.15,
+          "enabled": true,
+          "quality": "high",
+          "frozen": true
+        },
+        "camera": {
+          "position": [
+            -0.9999999999999996,
+            1.5,
+            -3.8
+          ],
+          "target": [
+            1.5,
+            3.4,
+            -3.5
+          ],
+          "fov": 52
+        }
+      },
+      "stats": {
+        "frames": 92,
+        "lightDepthRenders": 26,
+        "rawDepthSize": 2048,
+        "quality": "high",
+        "scale": 0.75,
+        "steps": 64,
+        "fullScreenPasses": 4,
+        "sceneSamples": 4,
+        "casters": 92,
+        "worldBounds": {
+          "min": [
+            -4.395912170410156,
+            -0.09982497475057439,
+            -5.150000095367432
+          ],
+          "max": [
+            5.089195937041044,
+            8.277092429315147,
+            5
+          ]
+        },
+        "drawCalls": 80,
+        "size": [
+          1280,
+          720
+        ],
+        "textures": 64
+      }
+    },
+    "mobileLayout": {
+      "viewport": 375,
+      "scrollWidth": 375
+    },
+    "reducedMotion": "PASS"
+  },
+  "browser": "154.0.8037.57"
+}

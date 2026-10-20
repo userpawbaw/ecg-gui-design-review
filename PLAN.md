@@ -373,3 +373,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] ray/동일시점 volume 비교; protected sources 유지.
 - [x] 기존 regression·신규geometry A/B 통과, source21fd8b9 commit/push 및 원격52files 확인, Pages39299691498 success. 공개20file hash 확인.
 - 사용자 미감·실제 GPU·최종 Cycles는 확인 안 함. 근거 verification/r1-archive-aisle-apertures-20261019/README.md.
+
+## 왼쪽 큰 창과 반그림자 (2026-10-20, D-150)
+- [x] 전체remote번호 검사·원인분리·PCSS공식paper/API 조사·자체소품스킬 적용.
+- [x] 독립 창/실루엣kit·거리 기반surface/근사volume·각지름슬라이더·전후전환 구현.
+- [x] 최종kit geometry/range/reset/restore·6방위·clay·거리bench와 기존0°회귀 검사 PASS. records/playbook/diff 검사 PASS.
+- [ ] commit/push·원격내용확인·main dispatch/공개검증.
+- 사용자 창위치 응답은 미수신(왼쪽벽뒤쪽창 가정), 미감/실제GPU/최종Cycles 확인 안 함. 신규 검수README/fidelity 참조.

@@ -32,6 +32,7 @@
 | 구간 | 지도 | 입력 모델 | 기록 범위 |
 |---|---|---|---|
 | 데모 장면 | 모델·가림체·발광 점광원·공기 빛줄기 | 로드 + 포인터(OrbitControls) + 시간(animation loop) | EFX-016-01; 전체 사이트 녹화 없음 |
+| finite-disc 비교 | 독립window/receiver와거리bench | 포인터/키보드 슬라이더 | EFX-016-02 |
 | 기타 장면/전환 | 미확인 — 실제 페이지 녹화 안 함 | 미확인 | 사이트 전체 연출 복제는 이번 대상 아님 |
 
 ## 6. 효과 카드
@@ -98,3 +99,42 @@
 - 낮은 샘플에서 고운 결과 사다리 경계가 동시에 유지되는가? ≥6방향·12frame 비교가 필요하다.
 - 사용자 Edge GPU에서 목표 frame/응답을 충족하는가? SwiftShader 기록으로 대체할 수 없다.
 - B3 key SpotLight 단계가 필요한가? 방향광 첫 구현과 최종 B3 일치를 구별해 후속 판단한다.
+
+## 2026-10-20 — D-150: finite-disc 반그림자 보완
+
+사용자 “반그림자가 거의 보이지”라는 피드백으로 depth binary/PCF와 유한 태양을 분리했다. [NVIDIA PCSS integration paper (2008)](https://developer.download.nvidia.com/whitepapers/2008/PCSS_Integration.pdf)는 blocker search → 거리 기반 penumbra 추정 → 필터 원리를 설명한다. [Three LightShadow](https://threejs.org/docs/pages/LightShadow.html)와 현행0.186 lights/shadow shader도 대조했다. 외부 shader/code/assets는 저장소에 복사하지 않았다. 기존 서고 리뷰 §2의 w≈거리×각지름과 연결한다.
+
+### EFX-016-02 — 독립 directional PCSS 비교
+직사 광원의 각지름0°는 기존PCF 경로, 새window preset0.53°는 surface16blocker+32filter disk. ortho depth는 near/far에 대해 선형이므로 normalized blocker 차×depthRange를 실제 거리로 복원한다. filter 반경=거리×tan(각지름/2), projection span으로 UV 변환한다. 추가 surface depth offset15mm는 raw depth 자체그림자 오차 완화값이며 물리 광원크기가 아니다. volume은 중앙blocker+4방향 샘플의 거리 기반 근사로 표면 PCSS와 같은 정밀도는 아니다. 완전한 다중광선 경로 추적/모든 얇은 caster 보존을 주장하지 않는다.
+
+거리0.15m/3m의 동일blocker 시험대와0°/0.53°/1.5° 프로파일, 여섯방위 capture·창/물체 A/B·claykit 검수는 `verification/r1-archive-window-penumbra-20261020/`에 기록한다. 실제GPU/FPS/Cycles는 확인 안 함.
+
+**선정 이유**: `[대화]` D-150 반그림자 부족 피드백.
+
+**지각**: 가까운 접촉은 선명하고 멀리 떨어진 창틀/잎은 부드러운 경계를 보인다.
+
+**입력 모델**: 포인터/키보드 각지름·방위/고도, 창/소품 전환, 자유camera.
+
+**판별 근거**: `[코드]` 기존0° PCF의고정폭과1회depth; `[출처]` PCSS paper의blocker/filter분리.
+
+**구현 메커니즘**: 위단락의 선형ortho depth차/유한disc. 외부shader는복사안함.
+
+**파라미터**: 각지름0~2°, preset0.53°, surface16+32tap, volume4tap, rawdepth2048², surfacebias15mm.
+
+**타임라인**: 정적/frozen 기본, 입력시에재렌더. 각지름변경은depth재생성없이filter만갱신.
+
+**에셋**: 자체창틀/원형철물/brace/가지·잎 geometry,단색PBR. 기존GLB는보존.
+
+**성능 기법**: 기존depthcache/자동resolution유지,0°는기존경로. 실제GPU측정안함.
+
+**접근성·폴백**: range키보드,reset/link복원,0°off,기존baked링크. reduced-motion동작은기존freeze유지.
+
+**근거**: `[런타임]` 신규qa-result.json/bench프로파일,기존0°regression,source-probe.json.
+
+**재현 요구사항**: 현행Three0.186/WebGL2/floatRT와rawdepth. Three shaderchunk변경은contract검사에서차단.
+
+**수용 기준**: window/roof독립ray,동일가림의거리/각크기증가시전이폭증가,shader오류0,원본보존.
+
+**ECG 번안**: 독립서고study의광학비교. ECG파형·Story기본값에는적용안함.
+
+**재현 상태**: verified — 구현/거리bench·6방위·clay검수PASS,사용자미감/실제GPU/Cycles확인안함. 세부GAP는D-150검수fidelity.

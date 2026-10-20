@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="icon" href="data:,"><script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script><style>body{margin:0}</style></head><body><script type="module">
+import * as THREE from 'three';
+import {createLightingState} from './study/lighting-state.js';
+import {createVolumetricLight} from './study/volumetric-light.js';
+const renderer=new THREE.WebGLRenderer();renderer.setSize(1024,512);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;renderer.shadowMap.autoUpdate=false;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;document.body.appendChild(renderer.domElement);
+const scene=new THREE.Scene(),root=new THREE.Group();scene.add(root);scene.add(new THREE.AmbientLight(0xffffff,.05));
+const material=new THREE.MeshStandardMaterial({color:0xaaaaaa,roughness:1});const floor=new THREE.Mesh(new THREE.BoxGeometry(4,.05,2),material);floor.position.y=-.025;floor.receiveShadow=true;root.add(floor);
+const blockers=[];for(const [x,y]of [[-.9,.15],[.9,3]]){const m=new THREE.Mesh(new THREE.BoxGeometry(.5,.02,.6),material);m.position.set(x,y,0);m.castShadow=true;root.add(m);blockers.push(m);}
+const sun=new THREE.DirectionalLight(0xffffff,3);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);scene.add(sun,sun.target);const lighting=createLightingState(sun);lighting.set({azimuth:0,elevation:85,enabled:false,grain:0});
+const camera=new THREE.OrthographicCamera(-2,2,1,-1,.01,20);camera.position.set(0,8,0);camera.up.set(0,0,-1);camera.lookAt(0,0,0);
+const engine=createVolumetricLight({renderer,scene,camera,root,sun,bounds:new THREE.Box3(new THREE.Vector3(-2,0,-1),new THREE.Vector3(2,3.2,1)),lighting,lightSize:2048});engine.resize(1024,512);
+function render(diameter){for(const m of blockers)m.visible=true;lighting.set({sunDiameter:diameter});engine.markLightDirty();engine.render();for(const m of blockers)m.visible=false;engine.render();}
+function profile(x,height){const p=new THREE.Vector3(x,0,-height/Math.tan(THREE.MathUtils.degToRad(85))).project(camera),row=Math.floor((p.y*.5+.5)*512),pixels=new Uint16Array(1024*4);renderer.readRenderTargetPixels(engine.colorRT,0,row,1024,1,pixels);return Array.from({length:1024},(_,i)=>THREE.DataUtils.fromHalfFloat(pixels[i*4]));}
+window.__penumbraBench={renderer,engine,lighting,camera,root,render,profile};render(.53);
+</script></body></html>

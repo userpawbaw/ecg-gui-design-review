@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {FullScreenQuad} from 'three/addons/postprocessing/Pass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {installContactShadows} from './contact-shadows.js';
 import {vertexShader,volumeShader,filterShader,compositeShader} from './volume-shaders.js';
 
 // D-148: independent raw light depth avoids Three's PCF comparison texture/private fields.
@@ -36,7 +37,8 @@ export function createVolumetricLight({renderer,scene,camera,root,sun,bounds,lig
   for(const p of Object.values(presets)){p.raw=hdr(1,1);p.filtered=hdr(1,1);}
   const uniform=(value)=>({value});
   const shared={viewDepth:uniform(colorRT.depthTexture),cameraNear:uniform(camera.near),cameraFar:uniform(camera.far)};
-  const volumeUniforms={...shared,lightDepth:uniform(lightRT.depthTexture),inverseProjection:uniform(new THREE.Matrix4()),cameraWorld:uniform(new THREE.Matrix4()),lightVP:uniform(new THREE.Matrix4()),cameraPositionWorld:uniform(new THREE.Vector3()),boundsMin:uniform(bounds.min.clone()),boundsMax:uniform(bounds.max.clone()),toSun:uniform(lighting.toSun),sunColor:uniform(sun.color),basisU:uniform(new THREE.Vector3()),basisV:uniform(new THREE.Vector3()),sunIntensity:uniform(sun.intensity),strength:uniform(1),grain:uniform(.15),time:uniform(0),depthBias:uniform(.0001),sigmaT:uniform(.012),sigmaS:uniform(.008),steps:uniform(48)};
+  const volumeUniforms={...shared,lightDepth:uniform(lightRT.depthTexture),inverseProjection:uniform(new THREE.Matrix4()),cameraWorld:uniform(new THREE.Matrix4()),lightVP:uniform(new THREE.Matrix4()),cameraPositionWorld:uniform(new THREE.Vector3()),boundsMin:uniform(bounds.min.clone()),boundsMax:uniform(bounds.max.clone()),toSun:uniform(lighting.toSun),sunColor:uniform(sun.color),basisU:uniform(new THREE.Vector3()),basisV:uniform(new THREE.Vector3()),sunIntensity:uniform(sun.intensity),strength:uniform(1),grain:uniform(.15),time:uniform(0),depthBias:uniform(.0001),sunTangent:uniform(0),lightSpan:uniform(new THREE.Vector2()),lightDepthRange:uniform(1),sigmaT:uniform(.012),sigmaS:uniform(.008),steps:uniform(48)};
+  const contactShadows=installContactShadows(root,{lightRT,lightCamera,lightVP:volumeUniforms.lightVP,depthBias:volumeUniforms.depthBias,lighting});
   const material=(fragmentShader,uniforms)=>new THREE.ShaderMaterial({vertexShader,fragmentShader,uniforms,depthTest:false,depthWrite:false,toneMapped:false});
   const volumeMat=material(volumeShader,volumeUniforms);
   const filterMat=material(filterShader,{...shared,volume:uniform(null),texel:uniform(new THREE.Vector2())});
@@ -66,6 +68,7 @@ export function createVolumetricLight({renderer,scene,camera,root,sun,bounds,lig
   function render({moving=false,time=0}={}){
     renderer.info.reset();
     if(lightDirty)updateLight();
+    contactShadows.update();volumeUniforms.sunTangent.value=contactShadows.uniforms.archiveSunTangent.value;volumeUniforms.lightSpan.value.copy(contactShadows.uniforms.archiveLightSpan.value);volumeUniforms.lightDepthRange.value=contactShadows.uniforms.archiveDepthRange.value;
     camera.updateMatrixWorld(true);shared.cameraNear.value=camera.near;shared.cameraFar.value=camera.far;
     renderer.setRenderTarget(colorRT);renderer.clear();renderer.render(scene,camera);
     const s=lighting.state;
@@ -85,5 +88,5 @@ export function createVolumetricLight({renderer,scene,camera,root,sun,bounds,lig
   function setSamples(samples){colorRT.samples=samples;stats.sceneSamples=samples;colorRT.dispose();}
   function readVolume(){const p=presets[stats.quality];const pixels=new Uint16Array(p.raw.width*p.raw.height*4);renderer.readRenderTargetPixels(p.raw,0,0,p.raw.width,p.raw.height,pixels);return {pixels,width:p.raw.width,height:p.raw.height};}
   return {render,resize,markLightDirty(){lightDirty=true;},stats,lightCamera,lightRT,proxies,colorRT,presets,volumeUniforms,readVolume,setSamples,
-    dispose(){for(const r of resources)r.dispose();for(const m of materials.values())m.dispose();volumeMat.dispose();filterMat.dispose();compositeMat.dispose();output.dispose();quad.dispose();proxies.clear();}};
+    dispose(){contactShadows.dispose();for(const r of resources)r.dispose();for(const m of materials.values())m.dispose();volumeMat.dispose();filterMat.dispose();compositeMat.dispose();output.dispose();quad.dispose();proxies.clear();}};
 }

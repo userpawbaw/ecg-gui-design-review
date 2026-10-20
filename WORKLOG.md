@@ -533,3 +533,6 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 사용자 요청에 따라 천창3개를 독립 study에 추가. 실제 clipping/단면과 표면·volume caster 동기화, 원래 roof A/B·통로/정면 보기 제공. 경계 정점 분류 실패를 solid ray에서 발견해 수정. 역방향 산란 평균+51.2%; 정면의 약한 역산란은 남음. 신규형상 MSAA/HDR parity 평균1.276로 기존관문 미통과를 README에 남김. 보호된 원본 유지. 검증/공개 후 결과 추가 기록.
 
 D-149 마감: source21fd8b9 원격52file 내용 검증. 기존 roof regression PASS, 신규 A/B ray·산란 검사 PASS. Pages39299691498 success, 공개20files SHA/HTTP 일치·실제 browser slider volume 변경·bake 왕복 PASS, 오류/실패요청0. 짧은SHA dispatch checkout실패는 전체SHA로 해결. 사용자 미감/물리GPU/Cycles 확인 안 함; 신규형상 출력parity 미통과는 README에 유지.
+
+## 2026-10-20 D-150 — 큰 창·반그림자
+사용자가 왼쪽창 확대/다양한 그림자물체/반그림자 해결을 요청. 왼쪽벽높은창을 가정하고 질문을 열어둔 채 독립study 구현. PCF고정blur/volume binary가 유한태양을 반영하지 않음 확인, NVIDIA2008원리/Three0.186대조. 창2.65×2.19m·자체kit·surface16+32 PCSS/volume4tap·각지름0~2°추가. 0.53°거리bench0.15m→subpixel/3m→5px,1.5°원거리13px. 자체그림자acne보정 후 clay에서 brace/ring연결 보완,6방위·geometry·입력/복원 재검수. 원본/Story와기존기본값 보존. 확인 안 함은 검수README/fidelity에 구분.

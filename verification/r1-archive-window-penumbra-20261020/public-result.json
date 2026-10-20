@@ -1,0 +1,245 @@
+{
+  "source_sha": "c3cd6af2500350ac51dbf62016760ea463a32082",
+  "run_id": 39356995241,
+  "assets": [
+    {
+      "path": "THREE-LICENSE.txt",
+      "status": 200,
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "path": "archive.glb",
+      "status": 200,
+      "bytes": 10305880,
+      "sha256": "e4b5ede9a4cd685c64bd2699bfb9d5d480839d7ac4158b36ec177a1b9ae6791f"
+    },
+    {
+      "path": "light-study.html",
+      "status": 200,
+      "bytes": 17551,
+      "sha256": "013dd62cea3572589296f610f12fc8182ae971b134c5323ab0b980dec7dbc13b"
+    },
+    {
+      "path": "light_shell.webp",
+      "status": 200,
+      "bytes": 634364,
+      "sha256": "b94ba78f5ac19bc82e2e9b180eb0618253e651e73d6c5c19cbe45cc1f26a7345"
+    },
+    {
+      "path": "manifest.json",
+      "status": 200,
+      "bytes": 1713,
+      "sha256": "a0a6749297caa04af7ff369f6d7aa29be59c80b851309a6b532d7fa895baa9a7"
+    },
+    {
+      "path": "node_modules/three/build/three.core.js",
+      "status": 200,
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "node_modules/three/build/three.module.js",
+      "status": 200,
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/controls/OrbitControls.js",
+      "status": 200,
+      "bytes": 40755,
+      "sha256": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/libs/meshopt_decoder.module.js",
+      "status": 200,
+      "bytes": 29256,
+      "sha256": "d428e73a000057c6c94bfcedc3412d0c2dc14ca8800e88553aab05113ad2bf19"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+      "status": 200,
+      "bytes": 117570,
+      "sha256": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+      "status": 200,
+      "bytes": 4184,
+      "sha256": "02e4a261af34de71338185e9e87f0cbe5cba9115608d984363e1269dec1d2272"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/postprocessing/Pass.js",
+      "status": 200,
+      "bytes": 4218,
+      "sha256": "444b409c235ead986893c472e720da1b779a56985c7d10b279c7944b52bd61c5"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/shaders/OutputShader.js",
+      "status": 200,
+      "bytes": 1876,
+      "sha256": "353479f77a8d7e2629d49ccac9fc2f5dbfdda5442e0adf867b00377a2fcb0cb2"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+      "status": 200,
+      "bytes": 37712,
+      "sha256": "9fb63427ce6641fa14fd0baff9cc4d1b5f9c3d85fd084bf2e90e803c44ec1797"
+    },
+    {
+      "path": "node_modules/three/examples/jsm/utils/SkeletonUtils.js",
+      "status": 200,
+      "bytes": 11535,
+      "sha256": "b1632a703206c3d830de9fcbe515696770d04b71a15ee6b50afa6d2c3298c86f"
+    },
+    {
+      "path": "preview.html",
+      "status": 200,
+      "bytes": 7831,
+      "sha256": "15af5b789d074535a7d89073a04121f3d12e3bc1359762b48d2fca978a80c7cb"
+    },
+    {
+      "path": "study/ceiling-apertures.js",
+      "status": 200,
+      "bytes": 3799,
+      "sha256": "f8790c840fde8385035f7c6241f93e10e0f9185802dca66748e2f0c656ace10e"
+    },
+    {
+      "path": "study/contact-shadows.js",
+      "status": 200,
+      "bytes": 3702,
+      "sha256": "06f00e06ffcc81f3d091439878ce65eaa4ea3c26784ed3b041785bcef9f3de21"
+    },
+    {
+      "path": "study/lighting-state.js",
+      "status": 200,
+      "bytes": 1290,
+      "sha256": "59a955900946644f3612e3d185232c667c8b24f86c6d2b55a567bbdd49685519"
+    },
+    {
+      "path": "study/volume-shaders.js",
+      "status": 200,
+      "bytes": 4697,
+      "sha256": "45f9c7efe06a5220cd22ed5a3ea0f42f27b23eaf4809df47ff76dd98e4a516ae"
+    },
+    {
+      "path": "study/volumetric-light.js",
+      "status": 200,
+      "bytes": 9300,
+      "sha256": "eb407e43854c751c9ea0bbcabd889e33787740845de259ca9035720727c298e3"
+    },
+    {
+      "path": "study/window-study.js",
+      "status": 200,
+      "bytes": 4274,
+      "sha256": "d63b1d167a5ab23b21de292ddcf1d0db2fbd3010cc1c65b068daf422fed548e8"
+    }
+  ],
+  "errors": [],
+  "failed_requests": [],
+  "excluded": {
+    "bench.html": 404,
+    "penumbra-bench.html": 404,
+    "README.md": 404,
+    "recipe.json": 404,
+    "qa-result.json": 404
+  },
+  "tls": "default verification with narrow session proxy CA SPKI trust",
+  "browser": "154.0.8037.57",
+  "url": "https://userpawbaw.github.io/ecg-gui-design-review/light-study.html?view=window&v=c3cd6af",
+  "initial": {
+    "state": {
+      "version": 1,
+      "windowStudy": {
+        "enabled": true,
+        "props": true
+      },
+      "apertures": true,
+      "light": {
+        "sunDiameter": 0.53,
+        "azimuth": 300,
+        "elevation": 25,
+        "strength": 1,
+        "grain": 0.15,
+        "enabled": true,
+        "quality": "auto",
+        "frozen": true
+      },
+      "camera": {
+        "position": [
+          0.6000000000000001,
+          1.7000000000000008,
+          -2.5
+        ],
+        "target": [
+          -2.4,
+          3.3500000000000005,
+          -4.4
+        ],
+        "fov": 60
+      }
+    },
+    "stats": {
+      "frames": 2,
+      "lightDepthRenders": 1,
+      "rawDepthSize": 2048,
+      "quality": "settled",
+      "scale": 0.5,
+      "steps": 48,
+      "fullScreenPasses": 4,
+      "sceneSamples": 4,
+      "casters": 94,
+      "worldBounds": {
+        "min": [
+          -4.395912170410156,
+          -0.09982497475057439,
+          -5.201413585507004
+        ],
+        "max": [
+          5.089195937041044,
+          8.277092429315147,
+          5
+        ]
+      },
+      "drawCalls": 122,
+      "size": [
+        1280,
+        720
+      ],
+      "textures": 46
+    },
+    "status": "빛 커튼 · 선명 · 실시간 조명"
+  },
+  "slider": {
+    "before": {
+      "max": 0.1153564453125,
+      "mean": 0.014305744074905912,
+      "hash": 2161676539,
+      "depthRenders": 1
+    },
+    "after": {
+      "max": 0.0267181396484375,
+      "mean": 0.006362034583516005,
+      "hash": 3039809394,
+      "depthRenders": 2
+    },
+    "pass": true
+  },
+  "sun_size_input": {
+    "before": {
+      "max": 0.1153564453125,
+      "mean": 0.014305744074905912,
+      "hash": 2161676539,
+      "depthRenders": 3
+    },
+    "after": {
+      "max": 0.1153564453125,
+      "mean": 0.014651046332437545,
+      "hash": 3034353134,
+      "depthRenders": 3
+    },
+    "pass": true
+  },
+  "baked_link_and_back": "PASS",
+  "result": "PASS"
+}

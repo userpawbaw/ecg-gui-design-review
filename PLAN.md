@@ -378,5 +378,5 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] 전체remote번호 검사·원인분리·PCSS공식paper/API 조사·자체소품스킬 적용.
 - [x] 독립 창/실루엣kit·거리 기반surface/근사volume·각지름슬라이더·전후전환 구현.
 - [x] 최종kit geometry/range/reset/restore·6방위·clay·거리bench와 기존0°회귀 검사 PASS. records/playbook/diff 검사 PASS.
-- [ ] commit/push·원격내용확인·main dispatch/공개검증.
+- [x] sourcec3cd6af commit/push 및 원격74file 내용확인, main dispatch39356995241 success·공개22file hash 확인.
 - 사용자 창위치 응답은 미수신(왼쪽벽뒤쪽창 가정), 미감/실제GPU/최종Cycles 확인 안 함. 신규 검수README/fidelity 참조.

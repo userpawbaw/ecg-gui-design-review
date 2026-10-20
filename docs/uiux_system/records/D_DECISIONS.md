@@ -2526,3 +2526,6 @@ D-084 후보는 잎을 납작한 타원 14개로 만들어 그림자가 둥근 �
 
 ### 되돌려야 하는 조건
 blocker/receiver 거리별 전이 폭이 증가하지 않거나 누광·shader오류·원본 변경이 생기면 soft mode를 통과로 선언하지 않고 수정/격리한다. 실제GPU/FPS와 Cycles 일치 미검증은 별도로 남긴다. 창 위치 답변이 다르면 위치 가정을 사용자 답으로 대체한다.
+
+### D-150 실행 결과
+Runtimec3cd6af/main dispatch39356995241 공개 완료. 창/천장 독립4조합ray,최종kit20mesh/1578tri·clay3뷰·6방위·각지름입력/복원/거리bench PASS.0.53°에서0.15m가림전이subpixel/3m가림5px,1.5°원거리13px. 기존0°regression PASS. 공개22file hash/HTTP·실제browser각지름/방위/고도·depth재사용·bake왕복PASS,오류0. 사용자 창위치·미감/실제GPU/Cycles는 확인 안 함. `verification/r1-archive-window-penumbra-20261020/README.md`.

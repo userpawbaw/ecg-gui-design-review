@@ -41,3 +41,8 @@
 ## 조사와 재현
 NVIDIA2008 PCSS paper·Three0.186 source/API: source-probe.json와 REF-016 EFX-016-02. 원문 PDF는/tmp에만 있다. 공식 Blender URL 접근은 실패해 이 조사에서 읽었다고 주장하지 않는다.
 Cloud에서 stage script로 정적 package를 만들고 이 폴더 bench.html을 임시site의 penumbra-bench.html로 복사해 serve한 뒤 scripts/assets/verify-archive-window.py 실행. bench/검수파일은 public 배포 allowlist에 포함하지 않는다.
+
+## 공개 배포
+Runtime source `c3cd6af2500350ac51dbf62016760ea463a32082`, main dispatch39356995241 success. [새 비교안](https://userpawbaw.github.io/ecg-gui-design-review/light-study.html?view=window&v=c3cd6af). Public22file HTTP/SHA256 일치. 공개browser검증은 public-result.json/public-preview.png에 기록한다. bench·README·검수JSON은 배포에서 제외한다. 원본보존 hash는 protected-source-check.json.
+
+공개 Chromium1280×720: runtime22file hash/HTTP·방위/고도 입력·해각지름0.53→1.5 volume변화/depth재사용·베이크페이지 왕복 PASS. 브라우저오류/실패요청0.

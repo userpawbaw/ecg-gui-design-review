@@ -536,3 +536,5 @@ D-149 마감: source21fd8b9 원격52file 내용 검증. 기존 roof regression P
 
 ## 2026-10-20 D-150 — 큰 창·반그림자
 사용자가 왼쪽창 확대/다양한 그림자물체/반그림자 해결을 요청. 왼쪽벽높은창을 가정하고 질문을 열어둔 채 독립study 구현. PCF고정blur/volume binary가 유한태양을 반영하지 않음 확인, NVIDIA2008원리/Three0.186대조. 창2.65×2.19m·자체kit·surface16+32 PCSS/volume4tap·각지름0~2°추가. 0.53°거리bench0.15m→subpixel/3m→5px,1.5°원거리13px. 자체그림자acne보정 후 clay에서 brace/ring연결 보완,6방위·geometry·입력/복원 재검수. 원본/Story와기존기본값 보존. 확인 안 함은 검수README/fidelity에 구분.
+
+D-150 마감: sourcec3cd6af 원격74file 내용확인/Story갱신7515f99의D150무충돌 재확인. 최종kit20mesh/1578tri·zeroarea0,거리bench와6방위/clay/기존회귀PASS. main dispatch39356995241 success. 공개22file HTTP/SHA·1280×720 browser 방위/고도/해각지름 입력→volume변화 및 depth재사용·bake왕복PASS, 오류/실패요청0. 원본6path blob일치. 사용자미감/창위치확정·물리GPU/Cycles확인안함을남기고종료.

@@ -544,3 +544,5 @@ D-150 마감: sourcec3cd6af 원격74file 내용확인/Story갱신7515f99의D150�
 
 ## 2026-10-21 D-152 실행 — 강한햇빛/큰일렁임
 사용자구현승인후 legacy/sun/flow·공통world-spacecloud·밀도띠domainwarp·elapsedclock/freeze/링크/접근성구현. TUNE1은띠의빈틈확대,TUNE2는gain2.4→1.8/정지·재생시간공유.최종3시점raw R평균같은시점증가비9.58/1.44/1.46,책장ROI대비86.2%유지.12시간점hash상이/같은시간재현,depthcache재사용,freeze·링크·reduced-motion·closed/open/alphaPASS.표면cloudprobe의동일hash를낸첫표면probe실패는남기고직사바닥을향하는camera/cloudScale3으로바꿔integrationPASS.카메라단독원인은분리검증안함.기존모드회귀PASS.검수README/fidelity에확인안함구분.
+
+D-152 검수 정정: 최초side pose도광원쪽을향함을각도점검에서발견,앞서1.44×의옆시점해석은철회.광선밖camera x2.5의정확한90°에서.004455→.016022(3.60×)확인.원래수치기록은조사흔적으로남기며새값을최종사용.동시SwiftShader검사중bench load30s timeout이발생해navigation관문을120s로통일하고독립재실행.기능assertion은완화하지않음.추가로Pages자체module import graph를contenthash로버전처리해이전cache혼합을피함.

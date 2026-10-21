@@ -393,3 +393,5 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] 최종세시점·시간축12프레임·동일시간반복·시간정지/공유·closed/open/alpha·표면cloud 동기화 검수.첫surfaceprobe실패/수정integration별도기록.
 - [ ] 기록/commit/push·원격내용확인·main dispatch·공개23files검증.
 - 보호된 원본/Story/default/r8/D-084 유지. 실제GPU/미감/Cycles는 확인 안 함.
+
+- D-152 추가: 부정확한side분류를철회하고광선밖90°에서3.60×확인.모든자체module에contenthash query를붙이는staging보완후공개검증을갱신한다.

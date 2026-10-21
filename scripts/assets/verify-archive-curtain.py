@@ -7,7 +7,7 @@ root=Path(__file__).resolve().parents[2];out=root/'verification/r1-archive-curta
 r={'errors':[],'failed_requests':[],'base':options.base,'scope':'Chromium SwiftShader; fixed-time image/readback QA, not physical GPU FPS'}
 summary='''async()=>{const a=window.__archiveLightStudy||window.__bench,T=await import('three'),d=a.engine.readVolume();let sum=0,max=0,hash=2166136261;for(let i=0;i<d.pixels.length;i++){hash=Math.imul(hash^d.pixels[i],16777619);if(i%4===0){const v=T.DataUtils.fromHalfFloat(d.pixels[i]);sum+=v;max=Math.max(max,v);}}return {mean:sum/(d.width*d.height),max,hash:hash>>>0,depthRenders:a.engine.stats.lightDepthRenders};}'''
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']);page=b.new_page(viewport={'width':640,'height':480})
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']);page=b.new_page(viewport={'width':640,'height':480});page.set_default_navigation_timeout(120000)
  page.on('pageerror',lambda e:r['errors'].append(str(e)));page.on('console',lambda m:r['errors'].append(m.text) if m.type=='error' else None);page.on('requestfailed',lambda q:r['failed_requests'].append(q.url))
  try:
   page.goto(options.base+'light-study.html?view=curtain');page.wait_for_function('window.__archiveLightStudy?.engine.stats.frames>0',timeout=120000);page.evaluate('window.__archiveLightStudy.pause()');page.locator('#panel').evaluate('(e)=>e.open=false')
@@ -19,7 +19,7 @@ with sync_playwright() as p:
   assert r['modes']['flow']['mean']>r['modes']['legacy']['mean']*2
   # Three actual room poses; compare A/B within each, do not compare raw means across poses.
   r['views']={}
-  for name,pos,target in [('away',[.7,1.6,2.5],[.7,2.7,-4.5]),('side',[.9,1.8,-2.5],[.2,3,.1]),('toward',[.7,1.6,-3.8],[.7,3,1])]:
+  for name,pos,target in [('away',[.7,1.6,2.5],[.7,2.7,-4.5]),('side',[2.5,2.2,-3.4],[-.6,2.2,-3.4]),('toward',[.7,1.6,-3.8],[.7,3,1])]:
    r['views'][name]={}
    for mode in ['legacy','sun']:
     page.evaluate('(s)=>{const a=window.__archiveLightStudy;a.positionCamera(s.pos,s.target,60);a.setState({curtainMode:s.mode,frozen:true});a.setTime(0);a.renderNow({moving:false});}',{'pos':pos,'target':target,'mode':mode});r['views'][name][mode]=page.evaluate(summary);page.screenshot(path=str(out/f'{name}-{mode}.png'),timeout=120000)

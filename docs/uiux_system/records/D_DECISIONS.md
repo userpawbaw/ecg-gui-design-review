@@ -2558,3 +2558,9 @@ Runtimec3cd6af/main dispatch39356995241 공개 완료. 창/천장 독립4조합r
 
 ### D-152 실행 승인 (2026-10-21)
 사용자 “구현 진행해줘”로 후속 구현을 승인했다. 기존/강한햇빛정지/큰흐름 비교, 공통 cloud mask와 공간밀도 운동, 시간정지/복원/접근성, 독립 Pages 반영을 진행한다. 보호된 Story/GLB/baked 기본값은 유지한다. 후속 결과는 `verification/r1-archive-curtain-motion-20261021/`에 측정값과 확인 안 함을 기록한다.
+
+### D-152 공개 캐시 보완 결정
+Pages의HTML query만바꾸면기존방문자의bare study module cache가남을수있어,staging에서모든자체study import에공통content hash를붙인다.고정Three/원본GLB는변경하지않는다.해시입력은자체study JS의경로와내용이며HTML과내부JS import에같은값을적용한다.전체public배포의HTTP/hash와실제browser입력을다시확인한다.
+
+### D-152 시점 검수 정정
+첫옆pose도광원쪽을향해1.44×를옆관찰로분류한것은잘못이었다.광선밖camera(2.5,2.2,-3.4)/target(-.6,2.2,-3.4)는toSun내적0이며rawR .004455→.016022=3.60×.검수README/side-view-correction.json에정정하고기존분류를철회한다.

@@ -1,5 +1,7 @@
 """Stage the baked archive and pinned minimal Three.js runtime for local or Pages preview."""
 import argparse
+import hashlib
+import re
 import json
 from pathlib import Path
 import shutil
@@ -50,6 +52,14 @@ missing_three = [name for name in three_files if not (THREE_ROOT / name).is_file
 if missing_three:
     raise SystemExit('Missing Three.js runtime files: ' + ', '.join(missing_three))
 
+# A page query alone does not invalidate imported ES modules in a returning browser.
+# Fingerprint the complete authored module graph; pinned Three and asset URLs stay stable.
+study_names = sorted(name for name in files if name.startswith('study/') and name.endswith('.js'))
+study_version = hashlib.sha256(b''.join(name.encode() + b'\0' + (SOURCE / name).read_bytes() for name in study_names)).hexdigest()[:12]
+study_import = re.compile(r"(['\"])(\./(?:study/)?(?:" + '|'.join(re.escape(Path(name).name) for name in study_names) + r"))\1")
+def version_imports(source):
+    return study_import.sub(lambda m: m[1] + m[2] + '?v=' + study_version + m[1], source)
+
 DEST.mkdir(parents=True, exist_ok=True)
 for name in sorted(files):
     target = DEST / name
@@ -69,7 +79,10 @@ for name in sorted(files):
         imports['three'] = './node_modules/three/build/three.module.js'
         imports['three/addons/'] = './node_modules/three/examples/jsm/'
         html = html[:json_start] + '\n    ' + json.dumps(import_map, separators=(',', ':')) + '\n  ' + html[end:]
-        target.write_text(html, encoding='utf-8')
+        target.write_text(version_imports(html), encoding='utf-8')
+        shutil.copystat(SOURCE / name, target)
+    elif name in study_names:
+        target.write_text(version_imports((SOURCE / name).read_text(encoding='utf-8')), encoding='utf-8')
         shutil.copystat(SOURCE / name, target)
     else:
         shutil.copy2(SOURCE / name, target)

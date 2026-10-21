@@ -13,7 +13,7 @@ D-078 options: --win-width C:W (window at centre y C gets width W), --open-windo
 D-080: --open-window takes several centres (';'), --wz0 Z lowers the window sills (taller windows), --sun-energy K (sun × K).
 D-154: --lab-shots v (level descents), --sun-list 'name:x,y,z[,angle];…' (one build, every shot per sun),
 --front-window x0,x1,z0,z1,mullion,transom (a front wall with one large gridded window; the front was open sky).
-D-155: --area 'x,y,z,tx,ty,tz,sx,sy,W,#hex;…' (off-screen soft area lights), --sun-list 5th value × their power, --lab-shots vs.
+D-155: --no-window C[;C] (close left-wall windows), --area 'x,y,z,tx,ty,tz,sx,sy,W,#hex;…' (off-screen soft area lights), --sun-list 5th value × their power, --lab-shots vs.
 
     python scripts/assets/archive-sun-variant.py --sun 0.746,0.5,-0.439 [--skylight x0,x1,y0,y1[;…]] [--sun-angle 0.5]
         [--no-lamps | --hidden-bulbs] [--leaves x,y,z,r,n[;…]] [--win-width C:W] [--open-window C] [--sky '#hex']
@@ -83,6 +83,13 @@ if '--win-width' in own:   # D-078: a wider window → a larger pool
     for spec in own[own.index('--win-width') + 1].split(';'):
         c, w = spec.split(':'); new, k = re.subn(rf'\({re.escape(c)}, [0-9.]+\)', f'({c}, {w})', new); assert k == 1, f'no window at y {c}'
     src = src.replace(WIN_LINE, new)
+if '--no-window' in own:    # D-155: close these left-wall windows (';' between centres) — the pier wall fills the gap (REF-002 zone C: a dark left)
+    import re
+    cur = re.search(r'^WIN = \[.*?\]', src, re.M); assert cur, 'build_archive.py: the window list changed — update this wrapper'
+    new = cur.group(0)
+    for c in own[own.index('--no-window') + 1].split(';'):
+        new, k = re.subn(rf'\({re.escape(c)}, [0-9.]+\),? ?', '', new); assert k == 1, f'no window at y {c}'
+    src = src.replace(cur.group(0), new.replace(', ]', ']'))
 if '--open-window' in own:  # D-078: no blinds on these windows (';' between centres) — clean pools with the mullion lines in them
     cs = [float(c) for c in own[own.index('--open-window') + 1].split(';')]
     assert src.count(SLAT_DEF) == 1 and src.count(ROLE_LINE) == 1, 'build_archive.py: the blind code changed — update this wrapper'

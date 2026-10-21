@@ -13,6 +13,7 @@ D-078 options: --win-width C:W (window at centre y C gets width W), --open-windo
 D-080: --open-window takes several centres (';'), --wz0 Z lowers the window sills (taller windows), --sun-energy K (sun × K).
 D-154: --lab-shots v (level descents), --sun-list 'name:x,y,z[,angle];…' (one build, every shot per sun),
 --front-window x0,x1,z0,z1,mullion,transom (a front wall with one large gridded window; the front was open sky).
+D-155: --area 'x,y,z,tx,ty,tz,sx,sy,W,#hex;…' (off-screen soft area lights), --sun-list 5th value × their power, --lab-shots vs.
 
     python scripts/assets/archive-sun-variant.py --sun 0.746,0.5,-0.439 [--skylight x0,x1,y0,y1[;…]] [--sun-angle 0.5]
         [--no-lamps | --hidden-bulbs] [--leaves x,y,z,r,n[;…]] [--win-width C:W] [--open-window C] [--sky '#hex']
@@ -43,6 +44,7 @@ def c1_at(u):
 # D-154 vertical descents (level camera looking +y at the back wall, like REF-002): v1 from the aisle front, v2 inside the aisle
 V_SHOTS = "SHOTS = {" + ', '.join(f"'v1_{int(z * 100)}': ((0.2, -4.5, {z}), (0.2, 4.5, {z}), 26)" for z in (4.0, 3.1, 2.2, 1.3)) + ', ' + \
           ', '.join(f"'v2_{int(z * 100)}': ((0.2, -1.0, {z}), (0.2, 4.5, {z}), 34)" for z in (3.5, 1.5)) + "}\n"
+VS_SHOTS = "SHOTS = {" + ', '.join(f"'vs_{int(z * 100)}': ((0.2, -4.5, {z}), (0.2, 4.5, {z}), 26)" for z in (3.9, 3.45, 3.0)) + "}\n"   # D-155: the chosen v1 segment
 LAB_SHOTS = "SHOTS = {'lab_top': ((-.2, -1.6, 3.0), (.4, 4.3, 1.4), 44), 'lab_mid': ((.3, .6, 2.5), (.35, 4.3, 1.8), 50), 'lab_low': ((.3, 1.0, .95), (.35, 4.3, .9), 50)}\n"
 
 argv = sys.argv[1:]
@@ -123,8 +125,21 @@ _lo = bpy.data.objects.new('Leaves', _lme); scene.collection.objects.link(_lo); 
 if '--lab-shots' in own:
     assert src.count(PREVIEW_LINE) == 1, 'build_archive.py: the preview block changed — update this wrapper'
     i = own.index('--lab-shots'); which = own[i + 1] if i + 1 < len(own) and not own[i + 1].startswith('--') else ''
-    shots = V_SHOTS if which == 'v' else LAB_SHOTS if which != 'c1' else 'SHOTS = {' + ', '.join(f"'c1_{int(u * 100):03d}': {c1_at(u)}" for u in (0, .24, .42, .6, .8, 1)) + '}\n'
+    shots = VS_SHOTS if which == 'vs' else V_SHOTS if which == 'v' else LAB_SHOTS if which != 'c1' else 'SHOTS = {' + ', '.join(f"'c1_{int(u * 100):03d}': {c1_at(u)}" for u in (0, .24, .42, .6, .8, 1)) + '}\n'
     src = src.replace(PREVIEW_LINE, shots + PREVIEW_LINE)
+if '--area' in own:        # D-155: off-screen soft area lights (REF-002 zone B: a large source in front/above lights the right bookcase
+    # with a slow falloff) — 'x,y,z,tx,ty,tz,sx,sy,watts,#hex;…' (position, aim point, size m, power W, colour); hidden from the camera
+    ars = [e.split(',') for e in own[own.index('--area') + 1].split(';')]
+    assert src.count(SHOTS_LINE) == 1, 'build_archive.py: the preview-shots header changed — update this wrapper'
+    code = ''
+    for k, a in enumerate(ars):
+        x, y, z, tx, ty, tz, sx, sy, w = (float(v) for v in a[:9]); col = a[9] if len(a) > 9 else '#ffd2a0'
+        code += f'''_ad = bpy.data.lights.new('AREA_{k}', 'AREA'); _ad.shape = 'RECTANGLE'; _ad.size, _ad.size_y = {sx}, {sy}; _ad.energy = {w}; _ad.color = srgb('{col}')
+_ao = bpy.data.objects.new('AREA_{k}', _ad); scene.collection.objects.link(_ao); _ao.location = ({x}, {y}, {z}); _ao['base_energy'] = {w}
+_ao.rotation_euler = (Vector(({tx}, {ty}, {tz})) - Vector(({x}, {y}, {z}))).to_track_quat('-Z', 'Y').to_euler(); _ao.visible_camera = False
+'''
+    src = src.replace(SHOTS_LINE, code + SHOTS_LINE)
+    print('area lights', ars)
 if '--front-window' in own:  # D-154: the room's front (y −5) is open sky; a front wall with one large gridded window far from the back
     # bookcase (~9.5 m) draws the soft window-grid shadows of REF-002 (archive-light F-045) when the sun comes in from the front
     BW = "box('BackWall', (2 * XW, 0.15, H), (0, Y1 + 0.075, H / 2), M_WALL, tile=2.0)\n"
@@ -147,6 +162,8 @@ if '--sun-list' in own:    # D-154: one scene build, many sun directions — 'na
     src = src.replace(RENDER, f'''        for _sn, _sd in {suns}:
             so.rotation_euler = Vector(_sd[:3]).normalized().to_track_quat('-Z', 'Y').to_euler()
             if len(_sd) > 3: sun.angle = math.radians(_sd[3])   # optional 4th value: the sun's angular size (penumbra)
+            for _al in [o for o in scene.objects if o.name.startswith('AREA_')]:   # optional 5th value: × the --area lights
+                _al.data.energy = _al['base_energy'] * (_sd[4] if len(_sd) > 4 else 1.0)
             scene.render.filepath = os.path.join(args.preview, name + '_' + _sn + tag + '.png')
             bpy.ops.render.render(write_still=True)
 ''')

@@ -44,8 +44,12 @@ const ASSET_E3=vAsset('archive-e3'),ASSET_D16=vAsset('archive-d16');
 // stack gaps), a 2.5° sun (soft far edges, crisp near ones), a front wall with one large gridded window (the front was open sky), the
 // E3 skylights, sills at 2.6 m, two centre windows without blinds, hidden warm bulbs
 const ASSET_V=vAsset('archive-v');
-export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d16'|'v'='base'){
- const A=({sun35:ASSET_SUN35,sun15:ASSET_SUN15,lab:ASSET_LAB,e3:ASSET_E3,d16:ASSET_D16,v:ASSET_V} as Record<string,Record<string,string>>)[variant]??ASSET;
+// D-155: v + a ceiling hatch over the back bay sized for this sun (one pool with crisp ladder / beam shadows, centre-right), the front
+// window on the right half only (x 0.3…3; the left front stays in shade), and a 125 W warm area light off-screen top right aimed at
+// the right of the back wall (REF-002 zone B: soft falloff on the right)
+const ASSET_W=vAsset('archive-w');
+export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d16'|'v'|'w'='base'){
+ const A=({sun35:ASSET_SUN35,sun15:ASSET_SUN15,lab:ASSET_LAB,e3:ASSET_E3,d16:ASSET_D16,v:ASSET_V,w:ASSET_W} as Record<string,Record<string,string>>)[variant]??ASSET;
  const manifest:ArchiveManifest=await (await fetch(A.manifest)).json();
  const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(A.glb);
  const tl=new THREE.TextureLoader(),lightmaps:Record<string,THREE.Texture>={};

@@ -72,8 +72,8 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const MSAA=Q.get('msaa')!==null?Number(Q.get('msaa'))||0:soft?0:4,FOG=Number(Q.get('fogres'))||.5,CAP=2.1e6;
  // ?sun=orig the original archive (D-080 default until 2026-10-21) · ?sun=lab the
  // D-079 bake (C + larger hatch) · 30 the D-077 C1 bake · 15 the D-078 bake · e3 / d16 the D-080 bakes
- // D-154 (user 2026-10-21): the default is the level-descent bake (v); ?sun=orig the original archive
- const SUN=Q.get('sun')??'v',arch=await createArchive(({lab:'lab','15':'sun15','30':'sun35',e3:'e3',d16:'d16',v:'v'} as Record<string,'lab'|'sun15'|'sun35'|'e3'|'d16'|'v'>)[SUN]??'base');arch.setFade(1);arch.renderSunDepth(renderer);
+ // D-154 (user 2026-10-21): the level-descent bake (v); D-155 its pool + right-side fill (w) is the default; ?sun=orig the original
+ const SUN=Q.get('sun')??'w',arch=await createArchive(({lab:'lab','15':'sun15','30':'sun35',e3:'e3',d16:'d16',v:'v',w:'w'} as Record<string,'lab'|'sun15'|'sun35'|'e3'|'d16'|'v'|'w'>)[SUN]??'base');arch.setFade(1);arch.renderSunDepth(renderer);
  // D-077: the Lab variant has no aisle lamps (their bulbs lit the room) → exposure ×1.8 brings the frame mean back to the
  // D-074 level (0.10–0.17 → measured in verification/lab-c1-20261018)
  if(SUN==='30')arch.shared.uExposure.value*=1.8;   // only the lamp-less D-077 bake; the later bakes keep their bulbs (F-053)

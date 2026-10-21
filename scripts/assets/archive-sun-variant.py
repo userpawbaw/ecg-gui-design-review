@@ -4,13 +4,14 @@ Why: the Lab backdrop's sun grazed the stack faces (86.5° from their normal); t
 bookcase obliquely, about 30° to its face, re-baked ("가)로 한번 해보자"). build_archive.py belongs to the archive-light
 session (WORK_STATE active_jobs), so this wrapper reads it, swaps the r1 sun line in memory and runs it; the file on disk
 and every default stay unchanged. --lab-shots replaces the preview shots with the Lab backdrop's three camera keys
-(--lab-shots c1: six frames along the C1 path of D-077).
+(--lab-shots c1: six frames along the C1 path of D-077; --lab-shots v: the D-154 level descents).
 D-077 options: several skylights (';'), --sun-angle DEG, --no-lamps (the two aisle lamps and their bulbs), --leaves
 "x,y,z,radius,count;…" (branch-and-leaf clusters above the roof: soft dappled sun, group decor so the web's sun depth map
 casts them into the shafts too).
 D-078 options: --win-width C:W (window at centre y C gets width W), --open-window C (no blinds there: one large clean pool),
 --hidden-bulbs (the aisle lamp meshes go, their warm bulbs stay — F-053: they gave half the room's light), --sky '#hex' (sky tint).
 D-080: --open-window takes several centres (';'), --wz0 Z lowers the window sills (taller windows), --sun-energy K (sun × K).
+D-154: --lab-shots v (level descents), --sun-list 'name:x,y,z;…' (one build, every shot per sun).
 
     python scripts/assets/archive-sun-variant.py --sun 0.746,0.5,-0.439 [--skylight x0,x1,y0,y1[;…]] [--sun-angle 0.5]
         [--no-lamps | --hidden-bulbs] [--leaves x,y,z,r,n[;…]] [--win-width C:W] [--open-window C] [--sky '#hex']
@@ -38,6 +39,9 @@ def c1_at(u):
     lerp = lambda a, b: tuple(round(x + (y - x) * f, 3) for x, y in zip(a, b))
     return lerp(C1[i][0], C1[i + 1][0]), lerp(C1[i][1], C1[i + 1][1]), round(C1[i][2] + (C1[i + 1][2] - C1[i][2]) * f, 1)
 # the Lab backdrop keys (prototype/v2/src/labBackdrop.ts), three (x, y, z) → Blender (x, −z, y)
+# D-154 vertical descents (level camera looking +y at the back wall, like REF-002): v1 from the aisle front, v2 inside the aisle
+V_SHOTS = "SHOTS = {" + ', '.join(f"'v1_{int(z * 100)}': ((0.2, -4.5, {z}), (0.2, 4.5, {z}), 26)" for z in (4.0, 3.1, 2.2, 1.3)) + ', ' + \
+          ', '.join(f"'v2_{int(z * 100)}': ((0.2, -1.0, {z}), (0.2, 4.5, {z}), 34)" for z in (3.5, 1.5)) + "}\n"
 LAB_SHOTS = "SHOTS = {'lab_top': ((-.2, -1.6, 3.0), (.4, 4.3, 1.4), 44), 'lab_mid': ((.3, .6, 2.5), (.35, 4.3, 1.8), 50), 'lab_low': ((.3, 1.0, .95), (.35, 4.3, .9), 50)}\n"
 
 argv = sys.argv[1:]
@@ -118,7 +122,17 @@ _lo = bpy.data.objects.new('Leaves', _lme); scene.collection.objects.link(_lo); 
 if '--lab-shots' in own:
     assert src.count(PREVIEW_LINE) == 1, 'build_archive.py: the preview block changed — update this wrapper'
     i = own.index('--lab-shots'); which = own[i + 1] if i + 1 < len(own) and not own[i + 1].startswith('--') else ''
-    shots = LAB_SHOTS if which != 'c1' else 'SHOTS = {' + ', '.join(f"'c1_{int(u * 100):03d}': {c1_at(u)}" for u in (0, .24, .42, .6, .8, 1)) + '}\n'
+    shots = V_SHOTS if which == 'v' else LAB_SHOTS if which != 'c1' else 'SHOTS = {' + ', '.join(f"'c1_{int(u * 100):03d}': {c1_at(u)}" for u in (0, .24, .42, .6, .8, 1)) + '}\n'
     src = src.replace(PREVIEW_LINE, shots + PREVIEW_LINE)
+if '--sun-list' in own:    # D-154: one scene build, many sun directions — 'name:x,y,z;…' renders every shot once per sun (file name_<sun>)
+    RENDER = "        scene.render.filepath = os.path.join(args.preview, name + tag + '.png')\n        bpy.ops.render.render(write_still=True)\n"
+    assert src.count(RENDER) == 1, 'build_archive.py: the preview render lines changed — update this wrapper'
+    suns = [(n, tuple(float(x) for x in d.split(','))) for n, d in (e.split(':') for e in own[own.index('--sun-list') + 1].split(';'))]
+    src = src.replace(RENDER, f'''        for _sn, _sd in {suns}:
+            so.rotation_euler = Vector(_sd).normalized().to_track_quat('-Z', 'Y').to_euler()
+            scene.render.filepath = os.path.join(args.preview, name + '_' + _sn + tag + '.png')
+            bpy.ops.render.render(write_still=True)
+''')
+    print('suns', len(suns))
 sys.argv = [SRC] + rest
 exec(compile(src, SRC, 'exec'), {'__name__': '__main__', '__file__': SRC})

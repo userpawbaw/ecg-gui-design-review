@@ -29,12 +29,19 @@ const V=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
 //  c2 — c1, then over the last quarter the view turns into the last gap of the left stacks, where the window light strikes
 //       a stack face at 30° (the D-075 contrast up close)
 //  c3 — the D-074 descent (top of the ladder without the ceiling lamp → upper shelves → floor)
+const Q0=new URLSearchParams(location.search);
 const PATHS:Record<string,Key[]>={
  c1:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.25,2.4,1.2),look:V(.35,1.5,-4.3),fov:48},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],
  c2:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.22,2.7,1.9),look:V(.35,1.55,-4.3),fov:47},{pos:V(.26,2.0,.4),look:V(.35,1.4,-4.3),fov:48},
   {pos:V(.3,1.25,-.75),look:V(.2,1.1,-4.3),fov:50},{pos:V(.1,1.3,-1.0),look:V(-2.7,3.0,-1.6),fov:55}],   // the window light lands high (z 2.8–4.1) on the face at y 1.55
  c3:[{pos:V(-.2,3.0,1.6),look:V(.4,1.4,-4.3),fov:44},{pos:V(.3,2.5,-.6),look:V(.35,1.8,-4.3),fov:50},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],
+ // D-154 (user 2026-10-21 "위에서 내리는 방향으로", "이동하는 거리가 너무 큰 것 같아"): a level camera that only moves down, like
+ // REF-002 (22.9°, ~8.5 m from the wall, 2.75 m down) — v1 from the aisle front (back wall 9 m away, 26°), v2 inside the aisle (34°).
+ // ?vz=top,bottom (m) trims the descent to the stretch where the light reads best (default: the chosen segment).
+ v1:vPath(-4.5,26),v2:vPath(-1.0,34),
 };
+function vPath(y:number,fov:number):Key[]{const [a,b]=(Q0.get('vz')??'3.6,2.2').split(',').map(Number);
+ return [a,b].map(z=>({pos:V(.2,z,-y),look:V(.2,z,-4.5),fov}));}
 const KEYS:Key[]=PATHS[new URLSearchParams(location.search).get('path')??'c1']??PATHS.c1;
 const SPRING=2.6;   // rad/s, critically damped: 80 % of a scroll step in ~1.2 s, settled in ~2 s (eases in and out)
 const Q=new URLSearchParams(location.search),RES_Q=Q.get('bgres');
@@ -57,7 +64,8 @@ const RAY=RAYS[Q.get('ray')??'0']??RAYS['0'];
 
 export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
- renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x05090b,1);
+ // D-154: ?tone=agx — the stills are judged in Blender AgX; the web used ACES (a missed difference, archive-light F-045)
+ renderer.toneMapping=Q.get('tone')==='agx'?THREE.AgXToneMapping:THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x05090b,1);
  const gl=renderer.getContext(),dbg=gl.getExtension('WEBGL_debug_renderer_info'),gpu=String(dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
  const soft=/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:1;
  const MSAA=Q.get('msaa')!==null?Number(Q.get('msaa'))||0:soft?0:4,FOG=Number(Q.get('fogres'))||.5,CAP=2.1e6;

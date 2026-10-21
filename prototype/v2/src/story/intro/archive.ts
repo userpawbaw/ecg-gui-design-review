@@ -196,6 +196,9 @@ export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d
    uInvProj:{value:new THREE.Matrix4()},uInvView:{value:new THREE.Matrix4()},uLightVP:{value:lightVP},uCam:{value:new THREE.Vector3()},
    uSun:{value:sunTo},uCol:{value:sunCol},uDensity:{value:.05},uIntensity:{value:1.8},uTime:{value:0},uFrame:{value:0},uOn:{value:0},
    uHaze:{value:.018},uHazeCol:{value:new THREE.Color(.22,.17,.13)},
+   // D-153 (Lab ?ray=): march length, isotropic share of the phase, density inside the beams, in-scatter compression, grain
+   // stretched along the sun, thin shadow streaks across the opening. The defaults keep the intro and Story as they were.
+   uMaxLen:{value:9},uIso:{value:0},uDensIn:{value:1},uComp:{value:0},uGrain:{value:0},uStria:{value:0},
    uCloud:{value:0},uAur:{value:0},tCloud:{value:null},tGobo:{value:null},   // replaced by the shared ambient uniforms below (ShaderPass clones)
    // D-067: optional spot-light cone (Story desk lamp) in the same pass — a second pass sampling this depth would read the
    // target it writes (feedback loop). Marched only inside a sphere around the cone; cut below uCMinY (desk top).
@@ -204,6 +207,10 @@ export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d
   fragmentShader:`precision highp float;
    uniform sampler2D tDiffuse,tDepth,tLight;uniform mat4 uInvProj,uInvView,uLightVP;uniform vec3 uCam,uSun,uCol;
    uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze,uCloud,uAur;uniform vec3 uHazeCol;uniform sampler2D tCloud,tGobo;varying vec2 vUv;
+   uniform float uMaxLen,uIso,uDensIn,uComp,uGrain,uStria;
+   #ifndef NSTEPS
+   #define NSTEPS 48
+   #endif
    uniform float uCOn,uCMinY,uCSh;uniform vec3 uCLP,uCLD,uCCol;uniform vec2 uCCos;uniform sampler2D uCDepth;uniform mat4 uCVP;
    float coneVis(vec3 p){if(uCSh<.5)return 1.;vec4 q=uCVP*vec4(p,1.);if(q.w<=0.)return 1.;vec3 l=q.xyz/q.w*.5+.5;if(l.x<0.||l.x>1.||l.y<0.||l.y>1.)return 1.;return step(l.z-.0006,texture2D(uCDepth,l.xy).x);}
    vec3 lampCone(vec3 cam,vec3 rd,float far,float j){
@@ -221,11 +228,15 @@ export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d
    float hg(float c,float g){float g2=g*g;return (1.-g2)/(4.*3.14159*pow(max(1e-4,1.+g2-2.*g*c),1.5));}
    void main(){
     vec3 col=texture2D(tDiffuse,vUv).rgb;
+    #ifdef FOG_ONLY
+    if(uOn<.002&&uCOn<.002){gl_FragColor=vec4(0.);return;}
+    #else
     if(uOn<.002&&uCOn<.002){gl_FragColor=vec4(col,1.);return;}
+    #endif
     float d=texture2D(tDepth,vUv).x;
     vec4 v=uInvProj*vec4(vUv*2.-1.,d*2.-1.,1.);v/=v.w;vec3 wp=(uInvView*v).xyz;
-    vec3 rd=wp-uCam;float len=min(length(rd),9.);rd=normalize(rd);
-    const int N=48;float dt=len/float(N),j=ign(gl_FragCoord.xy+uFrame*5.588),acc=0.,tr=1.;
+    vec3 rd=wp-uCam;float len=min(length(rd),uMaxLen);rd=normalize(rd);
+    const int N=NSTEPS;float dt=len/float(N),j=ign(gl_FragCoord.xy+uFrame*5.588),acc=0.,tr=1.;
     // D-077 S1: cross-section coordinates of the light (a, b ⟂ the sun), the same for every point along one beam
     vec3 sa=normalize(cross(uSun,vec3(0.,1.,0.))),sb=cross(sa,uSun);
     for(int i=0;i<N;i++){
@@ -238,18 +249,30 @@ export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d
       c+=.06*vec2(sin(uTime*1.1+c.y*9.),sin(uTime*.83+c.x*7.))+vec2(uTime*.004,0.);
       float g=.62*texture2D(tGobo,c).r+.38*texture2D(tGobo,c*2.3+vec2(uTime*.02,-uTime*.013)).r;
       lit*=mix(1.,.2+1.4*smoothstep(.3,.72,g),min(1.,uAur));}
+     if(uStria>0.&&lit>0.){   // D-153 ?ray=3: thin shadow streaks from leaves / glazing bars in front of the opening (0.1–0.3 m)
+      vec2 c=vec2(dot(p,sa),dot(p,sb));
+      float g=.6*texture2D(tGobo,c*.9+vec2(uTime*.003,0.)).r+.4*texture2D(tGobo,c*2.1-vec2(0.,uTime*.004)).r;
+      lit*=mix(1.,.06+1.45*smoothstep(.4,.62,g),uStria);}
+     if(uGrain>0.&&lit>0.){   // D-153 ?ray=2: dust grain stretched along the light (0.12 m across, 4 m along) → streaks in the ray direction
+      vec3 q=vec3(dot(p,sa)/.12,dot(p,sb)/.12,dot(p,uSun)/4.-uTime*.04);
+      float gr=noise(q+vec3(uTime*.05,0.,0.));lit*=mix(1.,.3+1.4*gr*gr,uGrain);}
      float n=noise(p*2.2+vec3(0.,uTime*.05,uTime*.03));
-     float dens=uDensity*(.55+.9*n);
+     float dens=uDensity*(.55+.9*n)*uDensIn;
      acc+=lit*dens*tr*dt;tr*=exp(-dens*.15*dt);
     }
     if(uCloud>0.){   // A: sun-lit surfaces (the baked sun patches) dim under the same cloud
      vec4 sp=uLightVP*vec4(wp,1.);vec3 sl=sp.xyz/sp.w*.5+.5;
      if(sl.x>0.&&sl.x<1.&&sl.y>0.&&sl.y<1.&&sl.z-.004<texture2D(tLight,sl.xy).x)col*=1.-uCloud*.6*(1.-texture2D(tCloud,sl.xy).r);}
-    float ph=hg(dot(uSun,-rd),.55)*4.*3.14159*.25+.25;
+    float ph=mix(hg(dot(uSun,-rd),.55)*4.*3.14159*.25+.25,1.,uIso);
+    if(uComp>0.)acc=(1.-exp(-acc*uComp))/uComp;   // D-153: long views along a beam saturate, short side views keep their share
     // room air lit by the bounce light (the stills' uniform volume): lifts the shade and softens saturation with depth
     float hz=(1.-exp(-uHaze*min(length(wp-uCam),14.)))*uOn;
     vec3 cone=uCOn>.002?lampCone(uCam,rd,length(wp-uCam),j):vec3(0.);
+    #ifdef FOG_ONLY
+    gl_FragColor=vec4(uCol*acc*ph*uIntensity*uOn+cone,length(wp-uCam));   // D-153: in-scatter + view distance (the Lab composites)
+    #else
     gl_FragColor=vec4(mix(col,uHazeCol,hz)+uCol*acc*ph*uIntensity*uOn+cone,1.);
+    #endif
    }`});
  vol.uniforms.uCloud=amb.cloud;vol.uniforms.uAur=amb.aur;vol.uniforms.tCloud=amb.tCloud;vol.uniforms.tGobo={value:goboTex};
  vol.uniforms.tLight.value=lightRT.depthTexture;vol.uniforms.uLightVP.value=lightVP;vol.uniforms.uSun.value=sunTo;vol.uniforms.uCol.value=sunCol;

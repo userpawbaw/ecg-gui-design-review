@@ -3,17 +3,22 @@
 // 보이게 하되 스크롤하면 … 서고가 배경으로 은은하게 바뀌는", "천장의 램프가 보이는게 마음에 들지 않아서", "사다리를 타고 쭉 내려오는 느낌",
 // "가감속"): the whole page scroll maps to one slow ladder descent, from the top of the stacks (no ceiling lamp) to the floor,
 // followed by a spring; the pointer turns the view only a little.
-// Laptop budget: draws only while the camera moves (scroll spring, pointer, resize), at 0.6 × the screen resolution and at most
-// 1.2 M pixels, not at all while a waveform plays (the last frame stays, the pointer turn waits; the waveform comes first — a
+// Laptop budget: draws only while the camera moves (scroll spring, pointer, resize), not at all while a waveform plays (the last frame stays, the pointer turn waits; the waveform comes first — a
 // software-rendered full-page capture took ~1.2 s longer per shot with the backdrop redrawing) or the large viewer covers the page; a resize
 // redraws once after it settles (a full-page screenshot or a window drag resizes many times); the sun depth map is rendered
-// once; one post pass (the archive shafts), no bloom; at most 30 frames a second.
+// once; no bloom; at most 30 frames a second.
+// D-153 (user 2026-10-21 "계단 현상이 너무 심해", F-109): the room used to be drawn at 0.6 × without anti-aliasing and stretched,
+// and the shaft march jitter was never filtered (a honeycomb over the whole air). Now the room (baked, redrawn only when the camera
+// moves) is drawn at the screen resolution (≤ 2.1 M pixels) with 4 × MSAA; the shafts are marched at half that resolution into
+// their own target (in-scatter + view distance) and composited with a 3 × 3 depth-aware blur that removes the jitter pattern;
+// the jitter no longer changes per frame (no shimmer when idle). ?msaa=0 · ?bgres= (room scale) · ?fogres= (shaft scale).
 // Software rendering (SwiftShader / llvmpipe — a machine without GPU acceleration, and the QA browser) is a low-power mode: no
 // pointer turn, 0.35 × resolution, one draw after scrolling stops. Measured 2026-10-18: with the full backdrop the Lab browser
 // test went from 11.6 s to over 45 s there, the pointer easing alone costing tens of ~1 s frames.
 // Viewpoints: verification/lab-backdrop-survey-20261018 (three frame).
 import * as THREE from 'three';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {FullScreenQuad} from 'three/addons/postprocessing/Pass.js';
 import {createArchive} from './story/intro/archive';
 
 type Key={pos:THREE.Vector3,look:THREE.Vector3,fov:number};
@@ -38,12 +43,24 @@ const Q=new URLSearchParams(location.search),RES_Q=Q.get('bgres');
 // User 2026-10-18 after the first look: wind and cloud removed (F-051), the dust smaller and sparser, nothing moves during playback.
 const lvl=(k:string)=>{const r=Q.get(k),v=Number(r);return r===null||!Number.isFinite(v)?1:Math.min(100,Math.max(0,Math.round(v/10)*10))/50;};
 const AMB={on:Q.get('amb')!=='0',forced:Q.get('amb')==='1',aur:lvl('aurora')};
+// D-153 ?ray= — how visible the light curtains are from the side (user 2026-10-21 "해 쪽을 바라보는게 아닌데도 광선의 방향이나 결이
+// 보이잖아"): 0 as before · 1 visible (two-lobe phase, denser beams with saturating in-scatter, half the room haze, 14 m march) ·
+// 2 = 1 + grain stretched along the light · 3 = 2 + thin shadow streaks across the openings. Factors on the archive defaults.
+type Ray={len:number,iso:number,dens:number,comp:number,int:number,haze:number,grain:number,stria:number};
+const RAYS:Record<string,Ray>={
+ '0':{len:9,iso:0,dens:1,comp:0,int:1,haze:1,grain:0,stria:0},
+ '1':{len:14,iso:.5,dens:2,comp:3,int:1.6,haze:.5,grain:0,stria:0},
+ '2':{len:14,iso:.5,dens:2,comp:3,int:1.7,haze:.5,grain:1,stria:0},
+ '3':{len:14,iso:.5,dens:2,comp:3,int:1.9,haze:.5,grain:1,stria:1},
+};
+const RAY=RAYS[Q.get('ray')??'0']??RAYS['0'];
 
 export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x05090b,1);
  const gl=renderer.getContext(),dbg=gl.getExtension('WEBGL_debug_renderer_info'),gpu=String(dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
- const soft=/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:.6;
+ const soft=/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:1;
+ const MSAA=Q.get('msaa')!==null?Number(Q.get('msaa'))||0:soft?0:4,FOG=Number(Q.get('fogres'))||.5,CAP=2.1e6;
  // default the original archive (user 2026-10-19: "바닥과 사다리에 빛이 비치는 처음 버젼이 제일 낫다", D-080) · ?sun=lab the
  // D-079 bake (C + larger hatch) · 30 the D-077 C1 bake · 15 the D-078 bake · e3 / d16 the D-080 bakes
  const SUN=Q.get('sun'),arch=await createArchive(({lab:'lab','15':'sun15','30':'sun35',e3:'e3',d16:'d16'} as Record<string,'lab'|'sun15'|'sun35'|'e3'|'d16'>)[SUN??'']??'base');arch.setFade(1);arch.renderSunDepth(renderer);
@@ -54,9 +71,29 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const camera=new THREE.PerspectiveCamera(50,1,.05,60);
  // D-075 frame: the room (colour + depth) is drawn into `base` only when the camera moves; every frame then adds the moving light
  // over it — shafts (+ cloud on the sun patches) into `work`, the dust into `work` against the stored depth, tone map to the screen
- const base=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)});
+ const base=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:MSAA,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)});
  const work=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
+ const fog=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false,minFilter:THREE.NearestFilter,magFilter:THREE.NearestFilter});
  const out=new OutputPass();out.renderToScreen=true;arch.vol.renderToScreen=false;
+ // D-153: the archive's shaft shader in its fog-only form, sharing the pass uniforms (arch.update keeps driving them)
+ const vu=arch.vol.uniforms,vm=arch.vol.material as THREE.ShaderMaterial;
+ const fogQuad=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:vu,vertexShader:vm.vertexShader,fragmentShader:vm.fragmentShader,defines:{FOG_ONLY:'',NSTEPS:64}}));
+ vu.uMaxLen.value=RAY.len;vu.uIso.value=RAY.iso;vu.uDensIn.value=RAY.dens;vu.uComp.value=RAY.comp;vu.uIntensity.value*=RAY.int;
+ vu.uHaze.value*=RAY.haze;vu.uGrain.value=RAY.grain;vu.uStria.value=RAY.stria;
+ const comp=new FullScreenQuad(new THREE.ShaderMaterial({
+  uniforms:{tBase:{value:base.texture},tDepth:{value:base.depthTexture},tFog:{value:fog.texture},uFogSize:{value:new THREE.Vector2(1,1)},
+   uInvProj:vu.uInvProj,uInvView:vu.uInvView,uCam:vu.uCam,uHaze:vu.uHaze,uHazeCol:vu.uHazeCol,uOn:vu.uOn},
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+  fragmentShader:`precision highp float;uniform sampler2D tBase,tDepth,tFog;uniform vec2 uFogSize;uniform mat4 uInvProj,uInvView;uniform vec3 uCam,uHazeCol;uniform float uHaze,uOn;varying vec2 vUv;
+   void main(){vec3 col=texture2D(tBase,vUv).rgb;float d=texture2D(tDepth,vUv).x;
+    vec4 v=uInvProj*vec4(vUv*2.-1.,d*2.-1.,1.);v/=v.w;float dist=length((uInvView*v).xyz-uCam);
+    float hz=(1.-exp(-uHaze*min(dist,14.)))*uOn;
+    // 3 × 3 half-resolution texels around this pixel: Gaussian in screen space × similarity of view distance (no bleed across edges)
+    vec2 f=vUv*uFogSize-.5,c=floor(f)+.5;vec3 s=vec3(0.);float w=0.;
+    for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){vec2 t=c+vec2(float(i),float(j));vec4 q=texture2D(tFog,t/uFogSize);
+     vec2 o=t-.5-f;float k=exp(-dot(o,o)*.45)*exp(-abs(q.a-dist)/(.04+.06*dist)*3.);s+=q.rgb*k;w+=k;}
+    vec3 fogc=w>1e-4?s/w:texture2D(tFog,vUv).rgb;
+    gl_FragColor=vec4(mix(col,uHazeCol,hz)+fogc,1.);}`,depthTest:false,depthWrite:false}));
  const du=arch.dustMat.uniforms;du.uDepthOn.value=1;du.tSceneDepth.value=base.depthTexture;
  if(Q.get('shaft')!==null)arch.vol.uniforms.uIntensity.value*=lvl('shaft');   // ?shaft= 0–100, 50 = designed
  arch.amb.aur.value=AMB.aur;
@@ -64,10 +101,11 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const ambient=AMB.on&&!(matchMedia('(prefers-reduced-motion: reduce)').matches)&&(!soft||AMB.forced);
  const curve=(pick:(k:Key)=>THREE.Vector3)=>new THREE.CatmullRomCurve3(KEYS.map(pick),false,'centripetal');
  const posC=curve(k=>k.pos),lookC=curve(k=>k.look);
- let p=0,ps=0,pv=0,px=0,pxShown=0,dirty=true,raf=0,last=0,frame=0,playing=false,paused=false,lastT=0,clock=0,settle:ReturnType<typeof setTimeout>|undefined;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches||soft;
+ let p=0,ps=0,pv=0,px=0,pxShown=0,dirty=true,raf=0,last=0,playing=false,paused=false,lastT=0,clock=0,settle:ReturnType<typeof setTimeout>|undefined;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches||soft;
  if(!ambient)arch.amb.aur.value=0;
- function resize(){const w=innerWidth,h=innerHeight,pr=Math.min(Math.min(2,devicePixelRatio||1)*RES,Math.sqrt(1.2e6/(w*h)));renderer.setPixelRatio(pr);renderer.setSize(w,h,false);
+ function resize(){const w=innerWidth,h=innerHeight,pr=Math.min(Math.min(2,devicePixelRatio||1)*RES,Math.sqrt(CAP/(w*h)));renderer.setPixelRatio(pr);renderer.setSize(w,h,false);
   const W=Math.max(1,Math.round(w*pr)),H=Math.max(1,Math.round(h*pr));base.setSize(W,H);work.setSize(W,H);du.uRes.value.set(W,H);
+  const fw=Math.max(1,Math.round(W*FOG)),fh=Math.max(1,Math.round(H*FOG));fog.setSize(fw,fh);(comp.material as THREE.ShaderMaterial).uniforms.uFogSize.value.set(fw,fh);
   camera.aspect=w/h;camera.updateProjectionMatrix();arch.setPx(h,pr*.6);dirty=true;kick();}   // motes 0.6 × the intro size
  function place(){
   const u=Math.min(1,Math.max(0,ps)),seg=u*(KEYS.length-1),i=Math.min(KEYS.length-2,Math.floor(seg)),f=seg-i;
@@ -80,9 +118,10 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  function draw(camMoved:boolean,dt:number){
   if(camMoved){place();renderer.setRenderTarget(base);renderer.clear();renderer.render(roomScene,camera);}
   if(ambient){clock+=dt;arch.stepAmbient(renderer,clock,dt);}
-  arch.update(clock,frame++,camera,base.depthTexture,1);
-  arch.vol.render(renderer,work,base,0,false);
-  renderer.setRenderTarget(work);renderer.autoClear=false;renderer.render(dustScene,camera);renderer.autoClear=true;
+  arch.update(clock,0,camera,base.depthTexture,1);   // D-153: a fixed jitter pattern (the composite blur removes it; no shimmer)
+  renderer.setRenderTarget(fog);fogQuad.render(renderer);
+  renderer.setRenderTarget(work);comp.render(renderer);
+  renderer.autoClear=false;renderer.render(dustScene,camera);renderer.autoClear=true;
   out.render(renderer,null as unknown as THREE.WebGLRenderTarget,work,0,false);
  }
  function tick(now:number){raf=0;if(paused||playing){lastT=0;return;}   // playback: the waveform comes first (user video 2 at 28 s)
@@ -112,7 +151,7 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   setPlaying(v:boolean){playing=v;if(!v){dirty=true;kick();}},
   /** stop drawing (the large viewer covers the page) */
   setPaused(v:boolean){paused=v;if(!v){dirty=true;kick();}},
-  dispose(){cancelAnimationFrame(raf);clearTimeout(settle);removeEventListener('resize',onResize);arch.dispose();base.dispose();work.dispose();out.dispose();renderer.dispose();},
+  dispose(){cancelAnimationFrame(raf);clearTimeout(settle);removeEventListener('resize',onResize);arch.dispose();base.dispose();work.dispose();fog.dispose();fogQuad.dispose();comp.dispose();out.dispose();renderer.dispose();},
  };
 }
 export type LabBackdrop=Awaited<ReturnType<typeof createLabBackdrop>>;

@@ -37,7 +37,7 @@ git checkout claude/r1-autopilot-recommended
 | `npm run spike -- video-scrub` | video-scrub spike 실행 | 의존성·클립 준비 후 실행. `attic`, `ref-repro`, `lab-corner`, `scroll-globe`도 같은 방식 |
 | `npm run py -- tools/video-qa/check_video.py <영상> --brief <json>` | — | 맞는 Python(py → python → python3)을 찾아 UTF-8로 실행 |
 
-Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `?reduced=1`(움직임 줄이기).
+Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `?reduced=1`(움직임 줄이기). 주소 뒤에 붙이는 값 전체(실험실 배경 `sun`·`path`·`ray`·`vz` 등)는 `docs/URL_PARAMS.md`.
 
 ## 3. 자주 나는 오류와 원인
 

@@ -37,12 +37,13 @@ const PATHS:Record<string,Key[]>={
  c3:[{pos:V(-.2,3.0,1.6),look:V(.4,1.4,-4.3),fov:44},{pos:V(.3,2.5,-.6),look:V(.35,1.8,-4.3),fov:50},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],
  // D-154 (user 2026-10-21 "위에서 내리는 방향으로", "이동하는 거리가 너무 큰 것 같아"): a level camera that only moves down, like
  // REF-002 (22.9°, ~8.5 m from the wall, 2.75 m down) — v1 from the aisle front (back wall 9 m away, 26°), v2 inside the aisle (34°).
- // ?vz=top,bottom (m) trims the descent to the stretch where the light reads best (default: the chosen segment).
+ // ?vz=top,bottom (m) trims the descent; default 3.9 → 3.0 m, where the web frames had the widest light pool (18–23 %), the
+ // darkest shade (27–30 %) and the largest stop range (4.4–4.9) of the 4.0 → 1.3 m sweep (verification/lab-descent-sweep-20261021).
  v1:vPath(-4.5,26),v2:vPath(-1.0,34),
 };
-function vPath(y:number,fov:number):Key[]{const [a,b]=(Q0.get('vz')??'3.6,2.2').split(',').map(Number);
+function vPath(y:number,fov:number):Key[]{const [a,b]=(Q0.get('vz')??'3.9,3.0').split(',').map(Number);
  return [a,b].map(z=>({pos:V(.2,z,-y),look:V(.2,z,-4.5),fov}));}
-const KEYS:Key[]=PATHS[new URLSearchParams(location.search).get('path')??'c1']??PATHS.c1;
+const KEYS:Key[]=PATHS[new URLSearchParams(location.search).get('path')??'v1']??PATHS.v1;   // D-154: the level descent by default
 const SPRING=2.6;   // rad/s, critically damped: 80 % of a scroll step in ~1.2 s, settled in ~2 s (eases in and out)
 const Q=new URLSearchParams(location.search),RES_Q=Q.get('bgres');
 // D-075 ambient: ?amb=0 off (?amb=1 forces it on in the low-power mode); ?aurora= (D-077 S1, replaced ?silk=) ?shaft= 0–100 in
@@ -69,9 +70,10 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const gl=renderer.getContext(),dbg=gl.getExtension('WEBGL_debug_renderer_info'),gpu=String(dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
  const soft=/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:1;
  const MSAA=Q.get('msaa')!==null?Number(Q.get('msaa'))||0:soft?0:4,FOG=Number(Q.get('fogres'))||.5,CAP=2.1e6;
- // default the original archive (user 2026-10-19: "바닥과 사다리에 빛이 비치는 처음 버젼이 제일 낫다", D-080) · ?sun=lab the
+ // ?sun=orig the original archive (D-080 default until 2026-10-21) · ?sun=lab the
  // D-079 bake (C + larger hatch) · 30 the D-077 C1 bake · 15 the D-078 bake · e3 / d16 the D-080 bakes
- const SUN=Q.get('sun'),arch=await createArchive(({lab:'lab','15':'sun15','30':'sun35',e3:'e3',d16:'d16'} as Record<string,'lab'|'sun15'|'sun35'|'e3'|'d16'>)[SUN??'']??'base');arch.setFade(1);arch.renderSunDepth(renderer);
+ // D-154 (user 2026-10-21): the default is the level-descent bake (v); ?sun=orig the original archive
+ const SUN=Q.get('sun')??'v',arch=await createArchive(({lab:'lab','15':'sun15','30':'sun35',e3:'e3',d16:'d16',v:'v'} as Record<string,'lab'|'sun15'|'sun35'|'e3'|'d16'|'v'>)[SUN]??'base');arch.setFade(1);arch.renderSunDepth(renderer);
  // D-077: the Lab variant has no aisle lamps (their bulbs lit the room) → exposure ×1.8 brings the frame mean back to the
  // D-074 level (0.10–0.17 → measured in verification/lab-c1-20261018)
  if(SUN==='30')arch.shared.uExposure.value*=1.8;   // only the lamp-less D-077 bake; the later bakes keep their bulbs (F-053)

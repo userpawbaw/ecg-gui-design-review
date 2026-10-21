@@ -1,0 +1,206 @@
+{
+  "errors": [],
+  "failed_requests": [],
+  "base": "http://127.0.0.1:8768/",
+  "scope": "Chromium SwiftShader; fixed-time image/readback QA, not physical GPU FPS",
+  "initial": {
+    "version": 1,
+    "animationTime": 7.075700000017882,
+    "windowStudy": {
+      "enabled": false,
+      "props": true
+    },
+    "apertures": true,
+    "light": {
+      "curtainMode": "flow",
+      "phaseG": 0.15,
+      "airDensity": 0.032,
+      "beamGain": 1.8,
+      "flowSpeed": 0.16,
+      "sway": 0.75,
+      "cloudContrast": 0.55,
+      "cloudScale": 1.2,
+      "sunDiameter": 0.53,
+      "azimuth": 0,
+      "elevation": 35,
+      "strength": 1,
+      "grain": 0.15,
+      "enabled": true,
+      "quality": "auto",
+      "frozen": false
+    },
+    "camera": {
+      "position": [
+        0.7,
+        1.5999999999999994,
+        2.5
+      ],
+      "target": [
+        0.7,
+        2.6999999999999997,
+        -4.5
+      ],
+      "fov": 60
+    }
+  },
+  "modes": {
+    "legacy": {
+      "mean": 0.01416576787829399,
+      "max": 0.0288848876953125,
+      "hash": 3898513978,
+      "depthRenders": 1
+    },
+    "sun": {
+      "mean": 0.09350630487004916,
+      "max": 0.29541015625,
+      "hash": 1829123857,
+      "depthRenders": 1
+    },
+    "flow": {
+      "mean": 0.09350630487004916,
+      "max": 0.29541015625,
+      "hash": 1829123857,
+      "depthRenders": 1
+    }
+  },
+  "views": {
+    "away": {
+      "legacy": {
+        "mean": 0.014188010046879451,
+        "max": 0.0288543701171875,
+        "hash": 2222328247,
+        "depthRenders": 1
+      },
+      "sun": {
+        "mean": 0.13592841664950053,
+        "max": 0.367919921875,
+        "hash": 3177221373,
+        "depthRenders": 1
+      }
+    },
+    "side": {
+      "legacy": {
+        "mean": 0.040377124880906196,
+        "max": 0.31982421875,
+        "hash": 2091794940,
+        "depthRenders": 1
+      },
+      "sun": {
+        "mean": 0.05803970427174742,
+        "max": 0.95263671875,
+        "hash": 2510956161,
+        "depthRenders": 1
+      }
+    },
+    "toward": {
+      "legacy": {
+        "mean": 0.050352495020876326,
+        "max": 0.42431640625,
+        "hash": 1665993372,
+        "depthRenders": 1
+      },
+      "sun": {
+        "mean": 0.07351187274015199,
+        "max": 0.87548828125,
+        "hash": 4165327121,
+        "depthRenders": 1
+      }
+    }
+  },
+  "frames": [
+    {
+      "mean": 0.13592841664950053,
+      "max": 0.367919921875,
+      "hash": 3177221373,
+      "depthRenders": 1,
+      "time": 0
+    },
+    {
+      "mean": 0.11374819497267405,
+      "max": 0.356689453125,
+      "hash": 474630956,
+      "depthRenders": 1,
+      "time": 2
+    },
+    {
+      "mean": 0.10094471767544747,
+      "max": 0.34912109375,
+      "hash": 404334670,
+      "depthRenders": 1,
+      "time": 4
+    },
+    {
+      "mean": 0.09547309279441833,
+      "max": 0.357666015625,
+      "hash": 257778633,
+      "depthRenders": 1,
+      "time": 6
+    },
+    {
+      "mean": 0.09350630487004916,
+      "max": 0.29541015625,
+      "hash": 1829123857,
+      "depthRenders": 1,
+      "time": 8
+    },
+    {
+      "mean": 0.09235389441251755,
+      "max": 0.349609375,
+      "hash": 3068779358,
+      "depthRenders": 1,
+      "time": 10
+    },
+    {
+      "mean": 0.09066649744908015,
+      "max": 0.6455078125,
+      "hash": 3074408192,
+      "depthRenders": 1,
+      "time": 12
+    },
+    {
+      "mean": 0.08738872967660427,
+      "max": 0.529296875,
+      "hash": 1582473860,
+      "depthRenders": 1,
+      "time": 14
+    },
+    {
+      "mean": 0.09147629991173745,
+      "max": 0.4033203125,
+      "hash": 755469814,
+      "depthRenders": 1,
+      "time": 16
+    },
+    {
+      "mean": 0.13669581949710846,
+      "max": 0.432861328125,
+      "hash": 1090204498,
+      "depthRenders": 1,
+      "time": 18
+    },
+    {
+      "mean": 0.13980827689170838,
+      "max": 0.393798828125,
+      "hash": 1837894069,
+      "depthRenders": 1,
+      "time": 20
+    },
+    {
+      "mean": 0.11239393596847852,
+      "max": 0.412841796875,
+      "hash": 4257974180,
+      "depthRenders": 1,
+      "time": 22
+    }
+  ],
+  "deterministic_repeat": "PASS",
+  "freeze_last_time": 22.40070000001788,
+  "range_share_reset_legacy_restore": "PASS",
+  "clock_transitions": {
+    "played": 1,
+    "held": 1,
+    "resumed": 1,
+    "next": 1.1
+  },
+  "reduced_motion": "PASS"
+}

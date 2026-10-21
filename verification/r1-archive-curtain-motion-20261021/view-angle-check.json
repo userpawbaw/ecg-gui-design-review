@@ -1,0 +1,47 @@
+{
+  "kind": "geometric target-ray calculation; actual side runtime cosine also in side-view-correction.json",
+  "views": {
+    "away": {
+      "position": [
+        0.7,
+        1.6,
+        2.5
+      ],
+      "target": [
+        0.7,
+        2.7,
+        -4.5
+      ],
+      "cosToSun": -0.7201808031733543,
+      "degreesToSun": 136.06940989958102
+    },
+    "side": {
+      "position": [
+        2.5,
+        2.2,
+        -3.4
+      ],
+      "target": [
+        -0.6,
+        2.2,
+        -3.4
+      ],
+      "cosToSun": 0.0,
+      "degreesToSun": 90.0
+    },
+    "toward": {
+      "position": [
+        0.7,
+        1.6,
+        -3.8
+      ],
+      "target": [
+        0.7,
+        3,
+        1
+      ],
+      "cosToSun": 0.946987364695725,
+      "degreesToSun": 18.73979529168805
+    }
+  }
+}

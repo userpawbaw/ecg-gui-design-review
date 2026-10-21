@@ -5,7 +5,7 @@
   "scope": "Chromium SwiftShader; fixed-time image/readback QA, not physical GPU FPS",
   "initial": {
     "version": 1,
-    "animationTime": 11.13940000000596,
+    "animationTime": 6.828699999988078,
     "windowStudy": {
       "enabled": false,
       "props": true
@@ -80,15 +80,15 @@
     },
     "side": {
       "legacy": {
-        "mean": 0.040377124880906196,
-        "max": 0.31982421875,
-        "hash": 2091794940,
+        "mean": 0.004455465415958315,
+        "max": 0.08740234375,
+        "hash": 735086855,
         "depthRenders": 1
       },
       "sun": {
-        "mean": 0.05803970427174742,
-        "max": 0.95263671875,
-        "hash": 2510956161,
+        "mean": 0.016021509440615773,
+        "max": 0.4697265625,
+        "hash": 643845997,
         "depthRenders": 1
       }
     },
@@ -194,7 +194,7 @@
     }
   ],
   "deterministic_repeat": "PASS",
-  "freeze_last_time": 15.479799999982118,
+  "freeze_last_time": 15.618299999982117,
   "range_share_reset_legacy_restore": "PASS",
   "clock_transitions": {
     "played": 1,
@@ -223,6 +223,72 @@
       "depthRenders": 4
     }
   },
+  "basis_continuity": [
+    {
+      "elevation": 75,
+      "u": [
+        -1,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        -0.25881904510252074,
+        0.9659258262890683
+      ]
+    },
+    {
+      "elevation": 76,
+      "u": [
+        -1,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        -0.24192189559966767,
+        0.9702957262759965
+      ]
+    },
+    {
+      "elevation": 77,
+      "u": [
+        -1,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        -0.22495105434386492,
+        0.9743700647852352
+      ]
+    },
+    {
+      "elevation": 85,
+      "u": [
+        -1,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        -0.08715574274765814,
+        0.9961946980917455
+      ]
+    }
+  ],
   "shared_field": true,
-  "result": "PARTIAL: room/time/optical/uniform checks pass; original surface probe failed; corrected probe and stable-basis checks in integration-result.json"
+  "surface_cloud_time": {
+    "first": {
+      "hash": 934320633,
+      "mean": 0.0014729147171601653,
+      "depth": 6
+    },
+    "second": {
+      "hash": 2875963885,
+      "mean": 0.001491164102529486,
+      "depth": 6
+    }
+  },
+  "result": "PASS"
 }

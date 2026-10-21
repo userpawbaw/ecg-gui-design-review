@@ -22,7 +22,9 @@ with sync_playwright() as p:
   for name,pos,target in [('away',[.7,1.6,2.5],[.7,2.7,-4.5]),('side',[2.5,2.2,-3.4],[-.6,2.2,-3.4]),('toward',[.7,1.6,-3.8],[.7,3,1])]:
    r['views'][name]={}
    for mode in ['legacy','sun']:
-    page.evaluate('(s)=>{const a=window.__archiveLightStudy;a.positionCamera(s.pos,s.target,60);a.setState({curtainMode:s.mode,frozen:true});a.setTime(0);a.renderNow({moving:false});}',{'pos':pos,'target':target,'mode':mode});r['views'][name][mode]=page.evaluate(summary);page.screenshot(path=str(out/f'{name}-{mode}.png'),timeout=120000)
+    page.evaluate('(s)=>{const a=window.__archiveLightStudy;a.positionCamera(s.pos,s.target,60);a.setState({curtainMode:s.mode,frozen:true});a.setTime(0);a.renderNow({moving:false});}',{'pos':pos,'target':target,'mode':mode});r['views'][name][mode]=page.evaluate(summary);r['views'][name][mode]['cosToSun']=page.evaluate('window.__archiveLightStudy.camera.getWorldDirection(window.__archiveLightStudy.lighting.toSun.clone()).dot(window.__archiveLightStudy.lighting.toSun)');page.screenshot(path=str(out/f'{name}-{mode}.png'),timeout=120000)
+  assert abs(r['views']['side']['sun']['cosToSun'])<1e-6
+  assert r['views']['away']['sun']['cosToSun']<0 and r['views']['toward']['sun']['cosToSun']>.8
   assert r['views']['away']['sun']['mean']>r['views']['away']['legacy']['mean']
   assert r['views']['side']['sun']['mean']>r['views']['side']['legacy']['mean']
   # Twelve time samples and a deterministic repeat, with unchanged light-depth generation.

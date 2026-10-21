@@ -20,7 +20,7 @@ Chromium/SwiftShader640×480, 정지0.5/48steps, strength1, 동일광원/동일c
 | 시점 | 기존 | 강한 햇빛 | 같은시점 A/B 비 |
 |---|---:|---:|---:|
 | 광원 반대쪽 | .01419 | .13593 | 9.58× |
-| 옆 | .04038 | .05804 | 1.44× |
+| 광선밖의 정확한 옆(90°) | .00446 | .01602 | 3.60× |
 | 광원쪽 | .05035 | .07351 | 1.46× |
 
 시간8의 같은정면 ROI(화면비율 x.28~.58/y.31~.76)의 luminance p10/p90 대비 `(p90-p10)/(p90+p10)`는 기존.5494 → 새.4733(약86.2% 유지), 흰색클리핑0%. ROI는 책장+기둥/그림자를포함하며 전시전체미감기준이아니다. 시각검수상 밝은띠가추가됐지만 책장대비 감소는 남는다. 사용자가 농도/밝기를 더 높이면 대비가 더 낮아질수있다.
@@ -32,8 +32,8 @@ Chromium/SwiftShader640×480, 정지0.5/48steps, strength1, 동일광원/동일c
 
 ## 근거·실패와 보완
 
-- `qa-result.json`: 최종gain1.8의3시점/12시간점/정지/링크/clock/reduced-motion/광학/공유uniform검사. 첫surface probe는동일hash로시간변화를검출하지못해실패했다. 이파일을전체PASS로소급표시하지않는다.
-- `integration-result.json`: 실제직사바닥을바라보고cloudScale3으로변화를검사한수정probe PASS, optical/field축연속/공유uniform 재검사 PASS. 테스트대상을보이는직사면으로고쳤으며hash변화·depth재사용기준은유지했다. 최종광학/동기화관문은두기록을함께본다.
+- `qa-result.json`: 수정probe와정확한side pose를포함해전체스크립트를새로실행한최종PASS.3시점/12시간점/정지/링크/clock/reduced-motion/광학/basis/표면cloud시간검사.최초probe실패는 `qa-initial-probe-failure.json`에보존한다.
+- `integration-result.json`: 첫실패후실제직사바닥을바라보고cloudScale3으로변화를검사한수정probe PASS, optical/field축연속/공유uniform 재검사 PASS. 테스트대상을보이는직사면으로고쳤으며hash변화·depth재사용기준은유지했다. 후속전체실행에서도동일관문을다시통과했다.
 - `regression/qa-result.json`: 기존모드 optical·12고정/방위/회전·range/reset/share·출력parity·cache·quality·viewport/reduced-motion PASS. 이검사는새모드이미지품질PASS가아니다.
 - `image-metrics.json`/`tuning-notes.json`: 초기gain2.4 정지후보의책장대비저하를발견해gain1.8과공통시간field로보완한기록.초기측정은탐색값이며최종관문이아니다.
 - `frames/`, 3시점A/B, `flow-preview.webp`: 마지막것은2초간격12장으로조립한24초프리뷰이며실측FPS영상이아니다.
@@ -51,3 +51,12 @@ PBR/노멀/거칠기/톤매핑/노출/PCSS/geometry는기존대로. 새surface�
 stage script로임시site를만들고 기존 `verification/r1-archive-volumetric-20261019/bench.html`만임시site로복사해serve한뒤 `scripts/assets/verify-archive-curtain.py`를실행한다. 검수fixture/README/JSON은public allowlist에없다. 기존회귀는 `npm run verify:archive-volume`과환경변수 ARCHIVE_VOLUME_RESULTS를쓴다.
 
 첫probe실패의원인이camera단독인지cloud패턴범위/좌표의영향인지분리검증하지않았다.수정probe는카메라와cloudScale을함께바꿔실제직사면의시간변화를검출했다.
+
+### 시점 분류 정정
+초기 “옆” pose도광원쪽을향하고있어그분류와1.44×값의옆시점해석을철회했다.새side camera(2.5,2.2,-3.4),target(-.6,2.2,-3.4)는toSun과내적0/90°이며천창beam x범위밖이다.실제A/B는.004455→.016022(3.60×). `side-view-correction.json`에원시값/카메라저장.
+
+두번째전체실행의동시소프트웨어렌더링중bench load30s timeout은 `qa-navigation-timeout.json`에보존한다. navigation한도를120s로맞추고독립재실행한최종qa-result.json이PASS이며기능assertion은완화하지않았다.
+
+## 공개 결과
+최종runtime source `2fe68622edf6edcc6e4f87ea4c6e8efb5451de45`(shader구현12be06b+modulecache보완),main dispatch39557898363 success. [새보기](https://userpawbaw.github.io/ecg-gui-design-review/light-study.html?view=curtain&v=2fe6862).
+공개23file HTTP/SHA256 일치,실제browser1280×720 방위/고도·해크기·흐름속도/시간변화·정지·depth재사용·baked왕복PASS.자체7module모두contenthash query로로드,오류/실패요청0. `public-result.json`, `public-preview.png`(입력검사후조정상태). `protected-source-check.json`의원본6path hash일치.

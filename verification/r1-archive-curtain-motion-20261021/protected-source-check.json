@@ -1,0 +1,38 @@
+[
+  {
+    "path": "verification/r1-archive-web-bake-20261018/archive.glb",
+    "before_blob": "0b04b97f0edfe361b2dcf401d97b28eaba9b842f",
+    "current_blob": "0b04b97f0edfe361b2dcf401d97b28eaba9b842f",
+    "unchanged": true
+  },
+  {
+    "path": "verification/r1-archive-web-bake-20261018/preview.html",
+    "before_blob": "95038139966e40595ec7a18ff8f1651ddbce1d91",
+    "current_blob": "95038139966e40595ec7a18ff8f1651ddbce1d91",
+    "unchanged": true
+  },
+  {
+    "path": "verification/r1-archive-web-bake-20261018/light_shell.webp",
+    "before_blob": "a76dde1517ec6fa190adb8a2586655a352e62d0a",
+    "current_blob": "a76dde1517ec6fa190adb8a2586655a352e62d0a",
+    "unchanged": true
+  },
+  {
+    "path": "prototype/v2/src/story/intro/archive.ts",
+    "before_blob": "0431a86292f23397160d1e8059ac034040cb6ad6",
+    "current_blob": "0431a86292f23397160d1e8059ac034040cb6ad6",
+    "unchanged": true
+  },
+  {
+    "path": "scripts/blender/build_archive.py",
+    "before_blob": "b7e822feb0c3bf9520fa7a0ca037ba79c5fe4440",
+    "current_blob": "b7e822feb0c3bf9520fa7a0ca037ba79c5fe4440",
+    "unchanged": true
+  },
+  {
+    "path": "prototype/v2/src/story/intro/introStage.ts",
+    "before_blob": "0880af3d1a40cadb67641c377e068cbb4cd3c6ed",
+    "current_blob": "0880af3d1a40cadb67641c377e068cbb4cd3c6ed",
+    "unchanged": true
+  }
+]

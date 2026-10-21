@@ -46,3 +46,5 @@ D-152/J-003 T11에서 HG g.5 위상항의 최대시점비27과 frozen기본/3.33
 
 ### T11 실행 보완 — 부분 채택
 D-152승인후새비교모드/공통cloud/밀도띠·clock을구현했다. 초기gain2.4후보는책장대비를크게낮춰1.8로보완했고,정지/재생을같은시간field로맞췄다. 새값의시점가독성과12시간프레임·freeze·닫힘천창을검증했다. 최초surfaceprobe의실패를버리지않고실제직사면으로probe를수정해검수했다. `verification/r1-archive-curtain-motion-20261021/README.md`.사용자미감/물리GPU/모든장면에통하는고정권장값으로승격하지않는다.
+
+T11 수치정정: 최초side로이름붙인pose도광원쪽을향했다.그분류를철회하고camera-ray·toSun내적0인실제90°/beam밖pose에서3.60×를확인했다.기존수치로일반옆가독성을주장하지않는다.새전체검수와surfaceprobe는PASS,실패/timeout기록은보존한다.

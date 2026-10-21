@@ -2564,3 +2564,6 @@ Pages의HTML query만바꾸면기존방문자의bare study module cache가남을
 
 ### D-152 시점 검수 정정
 첫옆pose도광원쪽을향해1.44×를옆관찰로분류한것은잘못이었다.광선밖camera(2.5,2.2,-3.4)/target(-.6,2.2,-3.4)는toSun내적0이며rawR .004455→.016022=3.60×.검수README/side-view-correction.json에정정하고기존분류를철회한다.
+
+### D-152 실행 결과
+shader구현12be06b/cache보완2fe6862,Pages39557898363 공개완료.최종전체QA/기존회귀/공개23file hash·7module version·실browser입력/흐름/정지/depth재사용/bake왕복PASS.시점별rawR A/B는반대9.58×/정확한90°3.60×/광원쪽1.46×,책장ROI대비86.2%유지.12시간점변화·같은시간재현·closed천창0·surfacecloud동기화PASS.초기side분류/probe실패/timeout기록을보존하고최종검사와구분한다.사용자미감·실제GPU/FPS·Cycles는확인안함. `verification/r1-archive-curtain-motion-20261021/README.md`.

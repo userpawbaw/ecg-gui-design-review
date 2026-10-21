@@ -4,13 +4,15 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,"><title>서고 · 빛 커튼 실시간 탐색</title>
 <style>
 :root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#111720;color:#eee9df}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}canvas{display:block;width:100%;height:100%;touch-action:none}
-aside{position:fixed;z-index:2;top:16px;left:16px;width:min(340px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;padding:14px;border:1px solid #ffffff2b;border-radius:10px;background:#111720eb;backdrop-filter:blur(9px)}summary{font-weight:650;cursor:pointer}p{color:#bdc4cb;font-size:12px;margin:8px 0}.row{display:grid;grid-template-columns:66px 1fr 47px;gap:8px;align-items:center;margin:13px 0}label{font-size:13px}input[type=range]{width:100%;accent-color:#e2b878}output{text-align:right;font-variant-numeric:tabular-nums}.actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}button,a,select{border:1px solid #ffffff40;border-radius:5px;color:#f4eee4;background:#252b33;padding:7px 9px;font:inherit;text-decoration:none;cursor:pointer}a{font-size:12px}.toggles{display:flex;flex-wrap:wrap;gap:13px}input[type=checkbox]{accent-color:#e2b878}#status{position:fixed;right:16px;bottom:16px;color:#e7ddcd;background:#111720d9;padding:7px 10px;border-radius:6px;font-size:12px;pointer-events:none}#error{position:fixed;z-index:3;left:16px;bottom:50px;color:#ff9999;white-space:pre-wrap;max-width:90vw}pre{white-space:pre-wrap;font:11px/1.5 ui-monospace,monospace;color:#b7c4d1}#shareLink{word-break:break-all}@media(max-height:520px){aside{top:8px;left:8px;padding:10px;max-height:calc(100vh - 16px)}.row{margin:7px 0}}
+aside{position:fixed;z-index:2;top:16px;left:16px;width:min(340px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;padding:14px;border:1px solid #ffffff2b;border-radius:10px;background:#111720eb;backdrop-filter:blur(9px)}summary{font-weight:650;cursor:pointer}p{color:#bdc4cb;font-size:12px;margin:8px 0}.row{display:grid;grid-template-columns:66px 1fr 47px;gap:8px;align-items:center;margin:13px 0}label{font-size:13px}input[type=range]{width:100%;accent-color:#e2b878}output{text-align:right;font-variant-numeric:tabular-nums}.actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}button[aria-pressed=true]{border-color:#e2b878;background:#51412c}button,a,select{border:1px solid #ffffff40;border-radius:5px;color:#f4eee4;background:#252b33;padding:7px 9px;font:inherit;text-decoration:none;cursor:pointer}a{font-size:12px}.toggles{display:flex;flex-wrap:wrap;gap:13px}input[type=checkbox]{accent-color:#e2b878}#status{position:fixed;right:16px;bottom:16px;color:#e7ddcd;background:#111720d9;padding:7px 10px;border-radius:6px;font-size:12px;pointer-events:none}#error{position:fixed;z-index:3;left:16px;bottom:50px;color:#ff9999;white-space:pre-wrap;max-width:90vw}pre{white-space:pre-wrap;font:11px/1.5 ui-monospace,monospace;color:#b7c4d1}#shareLink{word-break:break-all}@media(max-height:520px){aside{top:8px;left:8px;padding:10px;max-height:calc(100vh - 16px)}.row{margin:7px 0}}
 </style>
 <script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
 </head>
 <body>
 <aside><details id="panel" open><summary>서고 · 빛 커튼 탐색</summary>
 <p>드래그로 둘러보기 · 휠로 거리 · 우클릭으로 이동<br>천창에서 들어오는 햇빛의 경로를 조절합니다.<br>통로 천창을 추가해 책장과 빛의 경로를 함께 살펴보세요.</p>
+<div class="actions"><button id="legacyCurtain" type="button">기존 커튼</button><button id="sunCurtain" type="button">강한 햇빛</button><button id="flowCurtain" type="button">큰 일렁임</button></div>
+<p id="motionNotice" hidden>동작 줄이기 설정에 따라 공기 흐름을 정지했습니다.</p>
 <div class="row"><label for="azimuth">방위각</label><input id="azimuth" type="range" min="0" max="359.9" step=".1" value="225"><output id="azimuthValue">225°</output></div>
 <div class="row"><label for="elevation">고도각</label><input id="elevation" type="range" min="5" max="85" step=".1" value="35"><output id="elevationValue">35°</output></div>
 <div class="row"><label for="strength">빛줄기</label><input id="strength" type="range" min="0" max="2" step=".05" value="1"><output id="strengthValue">1.00</output></div>
@@ -21,6 +23,15 @@ aside{position:fixed;z-index:2;top:16px;left:16px;width:min(340px,calc(100vw - 3
 <div class="actions"><button id="windowView" type="button">큰 창·그림자 보기</button><button id="windowReceiver" type="button">그림자 받는 책장 보기</button></div>
 <div class="row"><label for="sunDiameter">해 크기</label><input id="sunDiameter" type="range" min="0" max="2" step=".01" value="0"><output id="sunDiameterValue">0°</output></div>
 <p>해의 각지름: 0°는 기존 그림자, 실제 해는 약 0.53°. 먼 물체의 그림자부터 부드러워집니다.</p>
+<details id="curtainSettings"><summary>커튼·흐름 조절</summary>
+<div class="row"><label for="phaseG">방향 편차</label><input id="phaseG" type="range" min="0" max=".6" step=".01" value=".15"><output id="phaseGValue">0.15</output></div>
+<div class="row"><label for="airDensity">공기 농도</label><input id="airDensity" type="range" min=".005" max=".08" step=".001" value=".032"><output id="airDensityValue">0.032</output></div>
+<div class="row"><label for="beamGain">커튼 밝기</label><input id="beamGain" type="range" min="0" max="6" step=".1" value="1.8"><output id="beamGainValue">1.8</output></div>
+<div class="row"><label for="flowSpeed">흐름 속도</label><input id="flowSpeed" type="range" min="0" max=".6" step=".01" value=".16"><output id="flowSpeedValue">0.16</output></div>
+<div class="row"><label for="sway">일렁임 폭</label><input id="sway" type="range" min="0" max="1.5" step=".05" value=".75"><output id="swayValue">0.75</output></div>
+<div class="row"><label for="cloudContrast">구름 대비</label><input id="cloudContrast" type="range" min="0" max="1" step=".05" value=".55"><output id="cloudContrastValue">0.55</output></div>
+<p>방향 편차가 작을수록 옆·뒤에서도 보입니다. 흐르는 밀도 띠를 표현하며, 햇빛 자체가 휘거나 발광하는 오로라는 아닙니다. 새 조절값은 ‘강한 햇빛’과 ‘큰 일렁임’에 적용됩니다.</p>
+</details>
 <details><summary>결·품질 설정</summary>
 <div class="row"><label for="grain">결의 세기</label><input id="grain" type="range" min="0" max=".3" step=".01" value=".15"><output id="grainValue">15%</output></div>
 <label for="quality">품질</label> <select id="quality"><option value="auto">자동 — 조작 후 선명하게</option><option value="high">높음</option><option value="fast">빠름</option></select>
@@ -36,7 +47,8 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
-import {createLightingState} from './study/lighting-state.js';
+import {createCurtainClock} from './study/curtain-field.js';
+import {DEFAULTS,createLightingState} from './study/lighting-state.js';
 import {createWindowStudy} from './study/window-study.js';
 import {createCeilingApertures} from './study/ceiling-apertures.js';
 import {createVolumetricLight} from './study/volumetric-light.js';
@@ -49,7 +61,7 @@ try{
  const controls=new OrbitControls(camera,renderer.domElement);controls.target.copy(initialTarget);controls.enableDamping=true;controls.dampingFactor=.07;controls.minDistance=.3;controls.maxDistance=35;controls.maxPolarAngle=Math.PI*.95;controls.update();
  scene.add(new THREE.HemisphereLight(0xc4d9ff,0x39291c,1.15));scene.add(new THREE.AmbientLight(0xffffff,.22));
  const sun=new THREE.DirectionalLight(0xffe0b5,3.2);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.bias=-.00025;sun.shadow.normalBias=.025;sun.target.position.set(0,2,-1.5);scene.add(sun,sun.target);
- const lighting=createLightingState(sun);
+ const lighting=createLightingState(sun),clock=createCurtainClock(),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
  const [gltf,manifest]=await Promise.all([new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync('./archive.glb'),fetch('./manifest.json').then(r=>{if(!r.ok)throw new Error(`manifest HTTP ${r.status}`);return r.json()})]);
  let meshes=0,removedVertexColorAttributes=0,normalMaps=0,roughnessMaps=0;
  const materialAudit=[];
@@ -63,32 +75,36 @@ try{
  let frameId=null,settleTimer=null,lastMotion=-Infinity,paused=false,disposed=false,dirty=true;
  const frameTimes=[],submitTimes=[],qualityEvents=[];
  let lastFrame=null;
- function syncUI(){document.querySelector('#sunDiameterValue').value=lighting.state.sunDiameter.toFixed(2)+'°';for(const key of ['azimuth','elevation','strength','grain','sunDiameter'])document.querySelector('#'+key).value=lighting.state[key];for(const key of ['enabled','frozen'])document.querySelector('#'+key).checked=lighting.state[key];document.querySelector('#quality').value=lighting.state.quality;document.querySelector('#azimuthValue').value=lighting.state.azimuth.toFixed(1)+'°';document.querySelector('#elevationValue').value=lighting.state.elevation.toFixed(1)+'°';document.querySelector('#strengthValue').value=lighting.state.strength.toFixed(2);document.querySelector('#grainValue').value=Math.round(lighting.state.grain*100)+'%';}
+ const curtainKeys=['phaseG','airDensity','beamGain','flowSpeed','sway','cloudContrast'];
+ function syncUI(){for(const key of curtainKeys){document.querySelector('#'+key).value=lighting.state[key];document.querySelector('#'+key+'Value').value=lighting.state[key].toFixed(key==='airDensity'?3:2);}for(const [id,mode]of [['legacyCurtain','legacy'],['sunCurtain','sun'],['flowCurtain','flow']])document.querySelector('#'+id).setAttribute('aria-pressed',String(lighting.state.curtainMode===mode));document.querySelector('#motionNotice').hidden=!reducedMotion.matches;document.querySelector('#frozen').disabled=reducedMotion.matches;document.querySelector('#sunDiameterValue').value=lighting.state.sunDiameter.toFixed(2)+'°';for(const key of ['azimuth','elevation','strength','grain','sunDiameter'])document.querySelector('#'+key).value=lighting.state[key];for(const key of ['enabled','frozen'])document.querySelector('#'+key).checked=lighting.state[key];document.querySelector('#quality').value=lighting.state.quality;document.querySelector('#azimuthValue').value=lighting.state.azimuth.toFixed(1)+'°';document.querySelector('#elevationValue').value=lighting.state.elevation.toFixed(1)+'°';document.querySelector('#strengthValue').value=lighting.state.strength.toFixed(2);document.querySelector('#grainValue').value=Math.round(lighting.state.grain*100)+'%';}
  function motion(){lastMotion=performance.now();clearTimeout(settleTimer);settleTimer=setTimeout(invalidate,230);invalidate();}
  function invalidate(){dirty=true;if(!paused&&!disposed&&!document.hidden&&frameId===null)frameId=requestAnimationFrame(tick);}
  function renderNow(options={}){
   const now=performance.now(),start=now;
-  engine.render({moving:now-lastMotion<200,time:now*.001,...options});
+  engine.render({moving:now-lastMotion<200,time:clock.sample(now,!lighting.state.frozen&&!paused&&!document.hidden),...options});
   qualityEvents.push({time:now,quality:engine.stats.quality});if(qualityEvents.length>600)qualityEvents.shift();
   submitTimes.push(performance.now()-start);if(submitTimes.length>600)submitTimes.shift();
-  status.textContent=lighting.state.enabled?`빛 커튼 · ${engine.stats.quality==='fast'?'빠름':engine.stats.quality==='high'?'높음':'선명'} · 실시간 조명`:'빛 커튼 끔 · PBR 실시간 조명';
+  status.textContent=lighting.state.enabled?`빛 커튼 · ${engine.stats.quality==='fast'?'빠름':engine.stats.quality==='high'?'높음':'선명'} · ${lighting.state.curtainMode==='legacy'?'기존':lighting.state.curtainMode==='sun'?'강한 햇빛':lighting.state.frozen?'큰 일렁임 · 정지':'큰 일렁임 · 재생'}`:'빛 커튼 끔 · PBR 실시간 조명';
   if(document.querySelector('#diagnostics').open)document.querySelector('#metrics').textContent=JSON.stringify({...engine.stats,normalMaps,roughnessMaps},null,2);
   dirty=false;
  }
  function tick(now){frameId=null;if(disposed||paused||document.hidden)return;const changed=controls.update();if(dirty||changed||!lighting.state.frozen){if(lastFrame!==null&&now-lastFrame<500)frameTimes.push(now-lastFrame);lastFrame=now;renderNow();}if(changed||!lighting.state.frozen)invalidate();}
- function setState(partial){const oldA=lighting.state.azimuth,oldE=lighting.state.elevation;lighting.set(partial);if(oldA!==lighting.state.azimuth||oldE!==lighting.state.elevation)engine.markLightDirty();syncUI();motion();}
+ function setState(partial){clock.sample(performance.now(),!lighting.state.frozen&&!paused&&!document.hidden);if(reducedMotion.matches&&partial.frozen===false)partial={...partial,frozen:true};const oldA=lighting.state.azimuth,oldE=lighting.state.elevation;lighting.set(partial);if(oldA!==lighting.state.azimuth||oldE!==lighting.state.elevation)engine.markLightDirty();syncUI();motion();}
  function setApertures(value){apertures.setEnabled(value);document.querySelector('#apertures').checked=apertures.enabled;engine.markLightDirty();motion();}
  function setWindow(value,props=windowStudy.props){windowStudy.setEnabled(value);windowStudy.setProps(props);document.querySelector('#windowStudy').checked=windowStudy.enabled;document.querySelector('#shadowProps').checked=windowStudy.props;engine.markLightDirty();motion();}
  const disposers=[];
  function on(target,name,fn){target.addEventListener(name,fn);disposers.push(()=>target.removeEventListener(name,fn));}
- for(const key of ['azimuth','elevation','strength','grain','sunDiameter'])on(document.querySelector('#'+key),'input',e=>setState({[key]:+e.target.value}));
+ for(const key of ['azimuth','elevation','strength','grain','sunDiameter',...curtainKeys])on(document.querySelector('#'+key),'input',e=>setState({[key]:+e.target.value}));
  for(const key of ['enabled','frozen'])on(document.querySelector('#'+key),'change',e=>setState({[key]:e.target.checked}));
  on(document.querySelector('#windowStudy'),'change',e=>setWindow(e.target.checked));
  on(document.querySelector('#shadowProps'),'change',e=>setWindow(windowStudy.enabled,e.target.checked));
  on(document.querySelector('#apertures'),'change',e=>setApertures(e.target.checked));
  on(document.querySelector('#quality'),'change',e=>setState({quality:e.target.value}));on(controls,'change',motion);
  function positionCamera(position,target,fov){controls.enableDamping=false;controls.update();camera.position.fromArray(position);controls.target.fromArray(target);camera.fov=fov;camera.updateProjectionMatrix();controls.update();controls.enableDamping=true;motion();}
- on(document.querySelector('#reset'),'click',()=>{lighting.reset();setWindow(false,true);setApertures(true);engine.markLightDirty();syncUI();positionCamera(initialPosition.toArray(),initialTarget.toArray(),37);});
+ on(document.querySelector('#reset'),'click',()=>{lighting.reset();clock.setTime(0);setWindow(false,true);setApertures(true);engine.markLightDirty();syncUI();positionCamera(initialPosition.toArray(),initialTarget.toArray(),37);});
+ function curtainPreset(mode){setState({curtainMode:mode,frozen:mode!=='flow'});}
+ for(const [id,mode]of [['legacyCurtain','legacy'],['sunCurtain','sun'],['flowCurtain','flow']])on(document.querySelector('#'+id),'click',()=>curtainPreset(mode));
+ function curtainView(){setApertures(true);setWindow(false);setState({azimuth:0,elevation:35,sunDiameter:.53});curtainPreset('flow');positionCamera([.7,1.6,2.5],[.7,2.7,-4.5],60);}
  function windowView(){setWindow(true,true);setState({azimuth:300,elevation:25,sunDiameter:.53});positionCamera([.6,1.7,-2.5],[-2.4,3.35,-4.4],60);}
  on(document.querySelector('#windowView'),'click',windowView);
  on(document.querySelector('#windowReceiver'),'click',()=>{setWindow(true,true);setState({azimuth:300,elevation:25,sunDiameter:.53});positionCamera([.4,1.6,-1.05],[-1.1,3,-4.6],65);});
@@ -98,21 +114,25 @@ try{
  function shaftsView(){const toSun=new THREE.Vector3(...manifest.sun.to_dir).negate().normalize();setState({azimuth:THREE.MathUtils.radToDeg(Math.atan2(toSun.x,toSun.z)),elevation:THREE.MathUtils.radToDeg(Math.asin(toSun.y))});positionCamera([-1,1.5,-3.8],[1.5,3.4,-3.5],52);}
  on(document.querySelector('#shaftsView'),'click',shaftsView);
  on(document.querySelector('#reference'),'click',()=>{const toSun=new THREE.Vector3(...manifest.sun.to_dir).negate().normalize();setState({azimuth:THREE.MathUtils.radToDeg(Math.atan2(toSun.x,toSun.z)),elevation:THREE.MathUtils.radToDeg(Math.asin(toSun.y))});const shot=manifest.shots.a1_front;positionCamera(shot.pos,shot.look,shot.fov_v_deg);});
- const snapshot=()=>({version:1,windowStudy:{enabled:windowStudy.enabled,props:windowStudy.props},apertures:apertures.enabled,light:{...lighting.state},camera:{position:camera.position.toArray(),target:controls.target.toArray(),fov:camera.fov}});
- function restore(value){if(value?.version!==1)throw new Error('Unknown settings version');const c=value.camera;const valid=a=>Array.isArray(a)&&a.length===3&&a.every(Number.isFinite)&&a.every(v=>Math.abs(v)<100);if(!valid(c?.position)||!valid(c?.target)||!(c.fov>=15&&c.fov<=90))throw new Error('Invalid camera settings');if(typeof value.windowStudy?.enabled==='boolean')setWindow(value.windowStudy.enabled,typeof value.windowStudy.props==='boolean'?value.windowStudy.props:true);if(typeof value.apertures==='boolean')setApertures(value.apertures);setState(value.light||{});positionCamera(c.position,c.target,c.fov);}
+ const snapshot=()=>({version:1,animationTime:clock.time,windowStudy:{enabled:windowStudy.enabled,props:windowStudy.props},apertures:apertures.enabled,light:{...lighting.state},camera:{position:camera.position.toArray(),target:controls.target.toArray(),fov:camera.fov}});
+ function restore(value){if(value?.version!==1)throw new Error('Unknown settings version');const c=value.camera;const valid=a=>Array.isArray(a)&&a.length===3&&a.every(Number.isFinite)&&a.every(v=>Math.abs(v)<100);if(!valid(c?.position)||!valid(c?.target)||!(c.fov>=15&&c.fov<=90))throw new Error('Invalid camera settings');if(typeof value.windowStudy?.enabled==='boolean')setWindow(value.windowStudy.enabled,typeof value.windowStudy.props==='boolean'?value.windowStudy.props:true);if(typeof value.apertures==='boolean')setApertures(value.apertures);setState({...DEFAULTS,...value.light,curtainMode:['legacy','sun','flow'].includes(value.light?.curtainMode)?value.light.curtainMode:'legacy'});clock.setTime(Number.isFinite(value.animationTime)&&value.animationTime>=0&&value.animationTime<=86400?value.animationTime:0);positionCamera(c.position,c.target,c.fov);}
  on(document.querySelector('#share'),'click',()=>{const url=new URL(location.href);url.hash=encodeURIComponent(JSON.stringify(snapshot()));const link=document.querySelector('#shareLink');link.href=url.href;link.hidden=false;history.replaceState(null,'',url);});
  function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);const size=renderer.getDrawingBufferSize(new THREE.Vector2());engine.resize(size.x,size.y);motion();}
- on(window,'resize',resize);on(document,'visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frameId);frameId=null;}else invalidate();});
+ on(window,'resize',resize);on(document,'visibilitychange',()=>{clock.suspend();if(document.hidden){cancelAnimationFrame(frameId);frameId=null;}else invalidate();});
  function dispose(){if(disposed)return;disposed=true;cancelAnimationFrame(frameId);clearTimeout(settleTimer);for(const d of disposers)d();controls.dispose();engine.dispose();windowStudy.dispose();const geometries=new Set(),mats=new Set(),textures=new Set();gltf.scene.traverse(o=>{if(o.isMesh){geometries.add(o.geometry);for(const m of (Array.isArray(o.material)?o.material:[o.material]))mats.add(m);}});for(const m of mats){for(const v of Object.values(m))if(v?.isTexture)textures.add(v);m.dispose();}for(const g of geometries)g.dispose();for(const t of textures)t.dispose();sun.shadow.dispose();renderer.dispose();}
- on(window,'pagehide',e=>{if(!e.persisted)dispose();else{cancelAnimationFrame(frameId);frameId=null;}});
- on(window,'pageshow',e=>{if(e.persisted)invalidate();});
- window.__archiveLightStudy={windowStudy,setWindow,apertures,setApertures,camera,controls,sun,meshes,removedVertexColorAttributes,normalMaps,roughnessMaps,renderer,root:gltf.scene,scene,engine,lighting,materialAudit,bounds,manifest,sliders:{azimuth:document.querySelector('#azimuth'),elevation:document.querySelector('#elevation')},setState,positionCamera,snapshot,restore,renderNow,invalidate,frameTimes,submitTimes,qualityEvents,
- pause(){paused=true;cancelAnimationFrame(frameId);frameId=null;},resume(){paused=false;invalidate();},dispose};
- if(matchMedia('(prefers-reduced-motion: reduce)').matches)setState({frozen:true});
+ on(reducedMotion,'change',()=>{if(reducedMotion.matches)setState({frozen:true});syncUI();});
+ on(window,'pagehide',e=>{clock.suspend();if(!e.persisted)dispose();else{cancelAnimationFrame(frameId);frameId=null;}});
+ on(window,'pageshow',e=>{clock.suspend();if(e.persisted)invalidate();});
+ window.__archiveLightStudy={clock,curtainPreset,windowStudy,setWindow,apertures,setApertures,camera,controls,sun,meshes,removedVertexColorAttributes,normalMaps,roughnessMaps,renderer,root:gltf.scene,scene,engine,lighting,materialAudit,bounds,manifest,sliders:{azimuth:document.querySelector('#azimuth'),elevation:document.querySelector('#elevation')},setState,positionCamera,snapshot,restore,renderNow,invalidate,frameTimes,submitTimes,qualityEvents,
+ setTime(value){clock.setTime(value);invalidate();},
+ pause(){clock.sample(performance.now(),!lighting.state.frozen&&!paused&&!document.hidden);clock.suspend();paused=true;cancelAnimationFrame(frameId);frameId=null;},resume(){clock.suspend();paused=false;invalidate();},dispose};
+
  if(new URLSearchParams(location.search).get('view')==='shafts')shaftsView();
  if(new URLSearchParams(location.search).get('view')==='aisle')aisleView();
  if(new URLSearchParams(location.search).get('view')==='window')windowView();
+ if(new URLSearchParams(location.search).get('view')==='curtain')curtainView();
  if(location.hash){try{restore(JSON.parse(decodeURIComponent(location.hash.slice(1))));}catch{document.querySelector('#error').textContent='설정 링크를 읽지 못했습니다. 처음 설정으로 표시합니다.';}}
+ if(reducedMotion.matches)setState({frozen:true});
  syncUI();resize();invalidate();
 }catch(e){document.querySelector('#error').textContent=String(e?.stack||e);status.textContent='로드 실패 · 베이크 기준 결과 링크를 이용해주세요.';}
 </script>

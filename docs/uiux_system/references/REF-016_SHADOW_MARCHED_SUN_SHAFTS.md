@@ -32,6 +32,7 @@
 | 구간 | 지도 | 입력 모델 | 기록 범위 |
 |---|---|---|---|
 | 데모 장면 | 모델·가림체·발광 점광원·공기 빛줄기 | 로드 + 포인터(OrbitControls) + 시간(animation loop) | EFX-016-01; 전체 사이트 녹화 없음 |
+| 강한햇빛/큰일렁임 | 독립study field/clock·cloud | 포인터/키보드/시간 | EFX-016-03 |
 | finite-disc 비교 | 독립window/receiver와거리bench | 포인터/키보드 슬라이더 | EFX-016-02 |
 | 기타 장면/전환 | 미확인 — 실제 페이지 녹화 안 함 | 미확인 | 사이트 전체 연출 복제는 이번 대상 아님 |
 
@@ -144,3 +145,37 @@
 기존g.5의위상최대비27은 실장면명도비가아니다. [PBRT공식HG source](https://github.com/mmp/pbrt-v4/blob/master/src/pbrt/util/scattering.h)와media.h를열람했고,cos벡터정의/부호차이를분리했다. [Bridson·Hourihan·Nordenstam(2007), Curl-Noise for Procedural Fluid Flow](https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph2007-curlnoise.pdf)의발산없는절차적속도장원리를읽었다. 외부원문/에셋은저장소에넣지않았다.
 
 `[추론]` 첫후보는 광원기준의저주파domain warp와밀도띠,필요하면curl속도장으로확장하는단계다. 임의warp를curl나유체해법으로표기하지않는다. 공유cloudmask는표면direct light와volume에일관되게평가하고,밀도띠의변형으로shadow ray자체를굽히지않는다. 실제동적효과의새카드/검증은후속구현에서작성한다. 지금은설계조사이며새효과재현상태를verified로올리지않는다. 근거/계산/확인안함은`verification/r1-archive-curtain-design-20261021/`와D-152계획에있다.
+
+## 2026-10-21 D-152 실행 — 새 비교모드
+
+### EFX-016-03 — 넓은시점 햇빛과 공간밀도띠의 큰 일렁임
+
+**선정 이유**: `[대화]` 광원반대쪽가독성/구름햇빛/오로라급일렁임및“구현진행”요청.
+
+**지각**: 햇빛색의밝은띠가공간속에서접히고흐르며책장뒤로가려짐.자체발광aurora동등외관은주장안함.
+
+**입력 모델**: 모드/방위/고도·고급range,Orbitcamera,시간.
+
+**판별 근거**: `[코드]` HG g.5전후최대비27/frozen기본과느린noise. `[출처]` 앞D-152 PBRT/Curl-Noise조사메모.
+
+**구현 메커니즘**: 새curtain-field.js의공통cloud GLSL과domainwarp밀도띠.표면directsun/volume에같은cloud,실제위치shadow와화면depthclip유지.광선자체는직선.
+
+**파라미터**: legacy g.5/T.012/S.008,새g.15/T.032/S.024/gain1.8/sway.75/속도계수.16/구름대비.55.48step·각축0.5정지/기존자동품질.
+
+**타임라인**: elapsedclock,freeze는마지막시간유지,hidden/pause/resume시suspend,같은field의정지/재생.
+
+**에셋**: 자체GLSL1모듈추가,기존GLB/재질보존,외부원문/코드/에셋복사없음.
+
+**성능 기법**: cloud/밀도시간변화에geometrydepth재사용,기존저해상도/AA/출력경로,legacy분기에서새field제외.실GPU시간확인안함.
+
+**접근성·폴백**: 모드버튼aria-pressed/range키보드·reset/공유/옛version1링크,동작줄이기에서는정지/안내.기존baked링크보존.
+
+**근거**: `[런타임]` verification/r1-archive-curtain-motion-20261021/qa-result.json·integration-result.json·image-metrics.json·regression/qa-result.json.최초surfaceprobe실패는별도후속검증으로기록.
+
+**재현 요구사항**: Three0.186/rawdepth/floatHDR기존요건,별도cloudfield와clock,동일시간capture.공유uniform과basis연속성검사.
+
+**수용 기준**: 반대/옆가독성,시간12장/동일시간재현,닫힌천창0,표면cloud시간변화·동일depth,freeze/링크/접근성.책장대비저하를측정하고사용자미감과분리.
+
+**ECG 번안**: 독립서고검토전용.보호된Story/파형/default/bake에적용하지않음.
+
+**재현 상태**: verified — 로컬기능·광학·시간/이미지검수.레퍼런스동등미감·실제GPU·Cycles는확인안함.공개검수는실행README에추가.

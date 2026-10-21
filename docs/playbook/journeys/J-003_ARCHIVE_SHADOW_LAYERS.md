@@ -278,3 +278,7 @@ HG g.5의 최대비27, 정지기본/느린노이즈이동을 확인했다. PBRT�
 
 ### 결과
 D-152 `verification/r1-archive-curtain-design-20261021/analytic-metrics.json`은 수식 계산이며 새장면측정이 아니다. g.15후보는 최대비약2.48이지만 전방광도 낮아져 gain/광학두께 비교가 필요하다. 새효과는 구현·배포하지 않았고 이미지/미감/GPU는 확인 안 함으로 남긴다.
+
+### T11 후속 실행 — 사용자 “구현 진행해줘” (D-152)
+
+이전T11의미구현판정은조사시점기록이다. 실행후에는별도curtain field/clock과legacy·sun·flow비교가구현됐다. `[런타임]` `verification/r1-archive-curtain-motion-20261021/README.md`: 같은시점A/B raw R평균증가9.58/1.44/1.46,책장ROI대비86.2%유지,12시간프레임재현/변화·광학/접근성통과.최초surfaceprobe는시간변화검출실패로기록하고,camera/cloudScale3을바꾼수정integration검사를별도로남겼다.카메라단독원인은분리검증안함.판정은부분채택유지:사용자미감/실제GPU/Cycles확인안함.

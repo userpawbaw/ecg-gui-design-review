@@ -1,0 +1,58 @@
+{
+  "initial_configuration": {
+    "beamGain": 2.4,
+    "sun_density_time": "fixed0 while cloud uses clock",
+    "density": "0.04 + 2.3 * ridge^4"
+  },
+  "initial_image_metrics": {
+    "legacy": {
+      "viewport": [
+        640,
+        480
+      ],
+      "roi_fraction": [
+        0.28,
+        0.31,
+        0.58,
+        0.76
+      ],
+      "p10": 0.13465019607843137,
+      "p90": 0.4630282352941176,
+      "percentile_michelson": 0.5494226024880583,
+      "clipped_fraction": 0.0
+    },
+    "sun": {
+      "viewport": [
+        640,
+        480
+      ],
+      "roi_fraction": [
+        0.28,
+        0.31,
+        0.58,
+        0.76
+      ],
+      "p10": 0.34551372549019604,
+      "p90": 0.6245474509803922,
+      "percentile_michelson": 0.2876454931486028,
+      "clipped_fraction": 0.0
+    },
+    "flow": {
+      "viewport": [
+        640,
+        480
+      ],
+      "roi_fraction": [
+        0.28,
+        0.31,
+        0.58,
+        0.76
+      ],
+      "p10": 0.21932392156862746,
+      "p90": 0.5989843137254902,
+      "percentile_michelson": 0.4639576821812194,
+      "clipped_fraction": 0.0
+    }
+  },
+  "judgment": "Static sun reduced shelf ROI contrast too far. Set gain1.8 and use shared current density time for sun/flow to prevent preset shape jumps. Exploratory measurements, not a final art PASS."
+}

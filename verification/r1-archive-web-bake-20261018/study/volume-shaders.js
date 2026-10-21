@@ -1,3 +1,4 @@
+import {curtainFieldGLSL} from './curtain-field.js';
 // D-148 / REF-016: project-owned archive.ts raymarch adapted for the independent study.
 // External shader sources are referenced in the design, not copied into this module.
 export const vertexShader = `varying vec2 vUv; void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`;
@@ -8,11 +9,11 @@ uniform sampler2D viewDepth;
 uniform float cameraNear, cameraFar;
 float linearDepth(float d){return cameraNear*cameraFar/(cameraFar+d*(cameraNear-cameraFar));}
 `;
-export const volumeShader = common + `
+export const volumeShader = common + curtainFieldGLSL + `
 uniform sampler2D lightDepth;
 uniform mat4 inverseProjection, cameraWorld, lightVP;
 uniform vec3 cameraPositionWorld, boundsMin, boundsMax, toSun, sunColor, basisU, basisV;
-uniform float sunIntensity, strength, grain, time, depthBias, sigmaT, sigmaS;
+uniform float sunIntensity, strength, grain, time, depthBias, sigmaT, sigmaS,phaseG,beamGain;
 uniform int steps;
 uniform float sunTangent,lightDepthRange;
 uniform vec2 lightSpan;
@@ -41,17 +42,17 @@ void main(){
  if(exit<=enter){gl_FragColor=vec4(0.,0.,0.,1.);return;}
  float ds=(exit-enter)/float(steps),transmittance=1.;vec3 radiance=vec3(0.);
  float jitter=fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))));
- float g=.5,c=dot(toSun,ray),phase=(1.-g*g)/pow(1.+g*g-2.*g*c,1.5);
+ float g=phaseG,c=dot(toSun,ray),phase=(1.-g*g)/pow(1.+g*g-2.*g*c,1.5);
  for(int i=0;i<64;i++){
   if(i>=steps)break;
   vec3 p=cameraPositionWorld+ray*(enter+(float(i)+jitter)*ds);
   vec3 edge=min(p-boundsMin,boundsMax-p);float fade=smoothstep(0.,.22,min(edge.x,min(edge.y,edge.z)));
   vec3 q=vec3(dot(p,basisU)*3.,dot(p,basisV)*3.,dot(p,-toSun)*.3)+vec3(0.,time*.01,0.);
   float variation=1.+grain*(2.*valueNoise(q)-1.);
-  float density=variation*fade;
+  float density=variation*fade*(cfMode>.5?curtainDensity(p,toSun):1.);
   float attenuation=exp(-sigmaT*density*ds);
   float integrated=(1.-attenuation)*(sigmaS/max(sigmaT,.000001));
-  radiance+=transmittance*integrated*visibility(p)*sunColor*sunIntensity*phase*strength;
+  radiance+=transmittance*integrated*visibility(p)*curtainCloud(p)*sunColor*sunIntensity*phase*strength*beamGain;
   transmittance*=attenuation;
  }
  gl_FragColor=vec4(radiance,transmittance);

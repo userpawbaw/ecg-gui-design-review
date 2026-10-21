@@ -541,3 +541,6 @@ D-150 마감: sourcec3cd6af 원격74file 내용확인/Story갱신7515f99의D150�
 
 ## 2026-10-21 D-152 — 빛 커튼 가독성과운동의원인분석/추천
 사용자: 광원을보지않으면약함,구름햇빛수준·오로라급일렁임질문. 현행HG g.5최대비27(수식/장면명도측정아님),sigmaT.012/m·frozen기본·noise3.33mm/s확인. PBRT공식source2파일과Bridson2007Curl-Noise논문200열람,book/Unreal403은읽지않음표시. remote갱신에서D151사용확인후D152기록. 넓은시점산란/강도·밀도분리+공통구름mask+world-space큰흐름 추천,별도emissive오로라옵션구분. 설계·검증연결을기록했으며runtime/배포는변경하지않음. 새이미지/미감/실제GPU는확인안함.
+
+## 2026-10-21 D-152 실행 — 강한햇빛/큰일렁임
+사용자구현승인후 legacy/sun/flow·공통world-spacecloud·밀도띠domainwarp·elapsedclock/freeze/링크/접근성구현. TUNE1은띠의빈틈확대,TUNE2는gain2.4→1.8/정지·재생시간공유.최종3시점raw R평균같은시점증가비9.58/1.44/1.46,책장ROI대비86.2%유지.12시간점hash상이/같은시간재현,depthcache재사용,freeze·링크·reduced-motion·closed/open/alphaPASS.표면cloudprobe의동일hash를낸첫표면probe실패는남기고직사바닥을향하는camera/cloudScale3으로바꿔integrationPASS.카메라단독원인은분리검증안함.기존모드회귀PASS.검수README/fidelity에확인안함구분.

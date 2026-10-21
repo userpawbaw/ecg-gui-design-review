@@ -1,0 +1,94 @@
+{
+  "errors": [],
+  "failed_requests": [],
+  "base": "http://127.0.0.1:8768/",
+  "scope": "Chromium SwiftShader; fixed-time image/readback QA, not physical GPU FPS",
+  "optical": {
+    "open": {
+      "mean": 0.019454926894632754,
+      "max": 0.29638671875,
+      "hash": 1809910317,
+      "depthRenders": 2
+    },
+    "closed": {
+      "mean": 0,
+      "max": 0,
+      "hash": 2356880344,
+      "depthRenders": 3
+    },
+    "alpha": {
+      "mean": 0.0830767234828737,
+      "max": 0.84716796875,
+      "hash": 197675454,
+      "depthRenders": 4
+    }
+  },
+  "basis_continuity": [
+    {
+      "elevation": 75,
+      "u": [
+        -1,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        -0.25881904510252074,
+        0.9659258262890683
+      ]
+    },
+    {
+      "elevation": 76,
+      "u": [
+        -1,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        -0.24192189559966767,
+        0.9702957262759965
+      ]
+    },
+    {
+      "elevation": 77,
+      "u": [
+        -1,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        -0.22495105434386492,
+        0.9743700647852352
+      ]
+    },
+    {
+      "elevation": 85,
+      "u": [
+        -1,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        -0.08715574274765814,
+        0.9961946980917455
+      ]
+    }
+  ],
+  "shared_field": true,
+  "surface_cloud_time": {
+    "first": {
+      "hash": 934320633,
+      "mean": 0.0014729147171601653,
+      "depth": 6
+    },
+    "second": {
+      "hash": 2875963885,
+      "mean": 0.001491164102529486,
+      "depth": 6
+    }
+  },
+  "result": "PASS"
+}

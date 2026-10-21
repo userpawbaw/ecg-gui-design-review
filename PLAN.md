@@ -386,3 +386,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] D-151타브랜치사용을확인해D-152사용, 넓은시점산란+cloudmask+공간밀도흐름 추천과 연결/검증계획 기록.
 - [ ] 후속: A기존/B넓은시점정지/C큰흐름 비교구현·3시점/시간축12프레임·실제GPU검수. 이번조사에서구현/배포하지않음.
 - source/분석값·확인 안 함: verification/r1-archive-curtain-design-20261021/README.md.
+
+## 빛 커튼 구현 (2026-10-21, D-152 실행 승인)
+- [x] legacy/sun/flow 모드·공통cloud mask·넓은시점산란·큰공간밀도띠·고급조절 구현.
+- [x] elapsed clock·freeze 현재시각유지·공유/legacy링크·reduced-motion 연결, 기존모드회귀 PASS.
+- [x] 최종세시점·시간축12프레임·동일시간반복·시간정지/공유·closed/open/alpha·표면cloud 동기화 검수.첫surfaceprobe실패/수정integration별도기록.
+- [ ] 기록/commit/push·원격내용확인·main dispatch·공개23files검증.
+- 보호된 원본/Story/default/r8/D-084 유지. 실제GPU/미감/Cycles는 확인 안 함.

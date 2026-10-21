@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {FullScreenQuad} from 'three/addons/postprocessing/Pass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {createCurtainField} from './curtain-field.js';
 import {installContactShadows} from './contact-shadows.js';
 import {vertexShader,volumeShader,filterShader,compositeShader} from './volume-shaders.js';
 
@@ -37,8 +38,9 @@ export function createVolumetricLight({renderer,scene,camera,root,sun,bounds,lig
   for(const p of Object.values(presets)){p.raw=hdr(1,1);p.filtered=hdr(1,1);}
   const uniform=(value)=>({value});
   const shared={viewDepth:uniform(colorRT.depthTexture),cameraNear:uniform(camera.near),cameraFar:uniform(camera.far)};
-  const volumeUniforms={...shared,lightDepth:uniform(lightRT.depthTexture),inverseProjection:uniform(new THREE.Matrix4()),cameraWorld:uniform(new THREE.Matrix4()),lightVP:uniform(new THREE.Matrix4()),cameraPositionWorld:uniform(new THREE.Vector3()),boundsMin:uniform(bounds.min.clone()),boundsMax:uniform(bounds.max.clone()),toSun:uniform(lighting.toSun),sunColor:uniform(sun.color),basisU:uniform(new THREE.Vector3()),basisV:uniform(new THREE.Vector3()),sunIntensity:uniform(sun.intensity),strength:uniform(1),grain:uniform(.15),time:uniform(0),depthBias:uniform(.0001),sunTangent:uniform(0),lightSpan:uniform(new THREE.Vector2()),lightDepthRange:uniform(1),sigmaT:uniform(.012),sigmaS:uniform(.008),steps:uniform(48)};
-  const contactShadows=installContactShadows(root,{lightRT,lightCamera,lightVP:volumeUniforms.lightVP,depthBias:volumeUniforms.depthBias,lighting});
+  const volumeUniforms={...shared,lightDepth:uniform(lightRT.depthTexture),inverseProjection:uniform(new THREE.Matrix4()),cameraWorld:uniform(new THREE.Matrix4()),lightVP:uniform(new THREE.Matrix4()),cameraPositionWorld:uniform(new THREE.Vector3()),boundsMin:uniform(bounds.min.clone()),boundsMax:uniform(bounds.max.clone()),toSun:uniform(lighting.toSun),sunColor:uniform(sun.color),basisU:uniform(new THREE.Vector3()),basisV:uniform(new THREE.Vector3()),sunIntensity:uniform(sun.intensity),strength:uniform(1),grain:uniform(.15),time:uniform(0),depthBias:uniform(.0001),sunTangent:uniform(0),lightSpan:uniform(new THREE.Vector2()),lightDepthRange:uniform(1),sigmaT:uniform(.012),sigmaS:uniform(.008),phaseG:uniform(.5),beamGain:uniform(1),steps:uniform(48)};
+  const field=createCurtainField(lighting);Object.assign(volumeUniforms,field.uniforms);
+  const contactShadows=installContactShadows(root,{lightRT,lightCamera,lightVP:volumeUniforms.lightVP,depthBias:volumeUniforms.depthBias,lighting,field});
   const material=(fragmentShader,uniforms)=>new THREE.ShaderMaterial({vertexShader,fragmentShader,uniforms,depthTest:false,depthWrite:false,toneMapped:false});
   const volumeMat=material(volumeShader,volumeUniforms);
   const filterMat=material(filterShader,{...shared,volume:uniform(null),texel:uniform(new THREE.Vector2())});
@@ -68,25 +70,26 @@ export function createVolumetricLight({renderer,scene,camera,root,sun,bounds,lig
   function render({moving=false,time=0}={}){
     renderer.info.reset();
     if(lightDirty)updateLight();
-    contactShadows.update();volumeUniforms.sunTangent.value=contactShadows.uniforms.archiveSunTangent.value;volumeUniforms.lightSpan.value.copy(contactShadows.uniforms.archiveLightSpan.value);volumeUniforms.lightDepthRange.value=contactShadows.uniforms.archiveDepthRange.value;
+    field.update(time);contactShadows.update();volumeUniforms.sunTangent.value=contactShadows.uniforms.archiveSunTangent.value;volumeUniforms.lightSpan.value.copy(contactShadows.uniforms.archiveLightSpan.value);volumeUniforms.lightDepthRange.value=contactShadows.uniforms.archiveDepthRange.value;
     camera.updateMatrixWorld(true);shared.cameraNear.value=camera.near;shared.cameraFar.value=camera.far;
     renderer.setRenderTarget(colorRT);renderer.clear();renderer.render(scene,camera);
     const s=lighting.state;
+    volumeUniforms.sigmaT.value=s.curtainMode==='legacy'?.012:s.airDensity;volumeUniforms.sigmaS.value=s.curtainMode==='legacy'?.008:s.airDensity*.75;volumeUniforms.phaseG.value=field.phaseG;volumeUniforms.beamGain.value=s.curtainMode==='legacy'?1:s.beamGain;
     const mode=s.quality==='high'?'high':s.quality==='fast'||moving?'fast':'settled',p=presets[mode];
     stats.quality=mode;stats.scale=p.scale;stats.steps=p.steps;
     if(!s.enabled||s.strength===0){output.render(renderer,null,colorRT);stats.fullScreenPasses=1;}
     else{
       volumeUniforms.inverseProjection.value.copy(camera.projectionMatrixInverse);volumeUniforms.cameraWorld.value.copy(camera.matrixWorld);camera.getWorldPosition(volumeUniforms.cameraPositionWorld.value);
-      volumeUniforms.strength.value=s.strength;volumeUniforms.grain.value=s.grain;volumeUniforms.time.value=s.frozen?0:time;volumeUniforms.steps.value=p.steps;volumeUniforms.sunIntensity.value=sun.intensity;
+      volumeUniforms.strength.value=s.strength;volumeUniforms.grain.value=s.grain;volumeUniforms.time.value=time;volumeUniforms.steps.value=p.steps;volumeUniforms.sunIntensity.value=sun.intensity;
       draw(volumeMat,p.raw);
       filterMat.uniforms.volume.value=p.raw.texture;filterMat.uniforms.texel.value.set(1/p.raw.width,1/p.raw.height);draw(filterMat,p.filtered);
       compositeMat.uniforms.volume.value=p.filtered.texture;compositeMat.uniforms.volumeSize.value.set(p.filtered.width,p.filtered.height);draw(compositeMat,compositeRT);
       output.render(renderer,null,compositeRT);stats.fullScreenPasses=4;
     }
-    stats.frames++;stats.drawCalls=renderer.info.render.calls;stats.size=[width,height];stats.textures=renderer.info.memory.textures;
+    stats.curtainMode=s.curtainMode;stats.animationTime=time;stats.phaseG=field.phaseG;stats.frames++;stats.drawCalls=renderer.info.render.calls;stats.size=[width,height];stats.textures=renderer.info.memory.textures;
   }
   function setSamples(samples){colorRT.samples=samples;stats.sceneSamples=samples;colorRT.dispose();}
   function readVolume(){const p=presets[stats.quality];const pixels=new Uint16Array(p.raw.width*p.raw.height*4);renderer.readRenderTargetPixels(p.raw,0,0,p.raw.width,p.raw.height,pixels);return {pixels,width:p.raw.width,height:p.raw.height};}
-  return {render,resize,markLightDirty(){lightDirty=true;},stats,lightCamera,lightRT,proxies,colorRT,presets,volumeUniforms,readVolume,setSamples,
+  return {render,resize,surfaceUniforms:contactShadows.uniforms,markLightDirty(){lightDirty=true;},stats,field,lightCamera,lightRT,proxies,colorRT,presets,volumeUniforms,readVolume,setSamples,
     dispose(){contactShadows.dispose();for(const r of resources)r.dispose();for(const m of materials.values())m.dispose();volumeMat.dispose();filterMat.dispose();compositeMat.dispose();output.dispose();quad.dispose();proxies.clear();}};
 }

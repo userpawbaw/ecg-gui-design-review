@@ -1,0 +1,42 @@
+{
+  "kind": "analytic calculation, not rendered performance",
+  "source_sha": "bdf963a7f7e070b978d2276f0881c1eda6efaacd",
+  "phase": [
+    {
+      "g": 0.5,
+      "toward_source": 6.0,
+      "sideways": 0.5366563145999494,
+      "away_from_source": 0.2222222222222222,
+      "toward_away_ratio": 27.0
+    },
+    {
+      "g": 0.15,
+      "toward_source": 1.591695501730104,
+      "sideways": 0.9454134815929202,
+      "away_from_source": 0.6427221172022685,
+      "toward_away_ratio": 2.4764909423977204
+    }
+  ],
+  "homogeneous_transmittance": [
+    {
+      "sigma_t_per_m": 0.012,
+      "T_5m": 0.9417645335842487,
+      "T_10m": 0.8869204367171575
+    },
+    {
+      "sigma_t_per_m": 0.025,
+      "T_5m": 0.8824969025845955,
+      "T_10m": 0.7788007830714049
+    },
+    {
+      "sigma_t_per_m": 0.045,
+      "T_5m": 0.7985162187593771,
+      "T_10m": 0.6376281516217733
+    }
+  ],
+  "current_noise_drift_m_per_s": 0.0033333333333333335,
+  "current_noise_density_range": [
+    0.85,
+    1.15
+  ]
+}

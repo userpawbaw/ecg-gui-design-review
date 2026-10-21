@@ -138,3 +138,9 @@
 **ECG 번안**: 독립서고study의광학비교. ECG파형·Story기본값에는적용안함.
 
 **재현 상태**: verified — 구현/거리bench·6방위·clay검수PASS,사용자미감/실제GPU/Cycles확인안함. 세부GAP는D-150검수fidelity.
+
+## 2026-10-21 — D-152 조사 메모: 시점 가독성과 큰 공기 흐름
+
+기존g.5의위상최대비27은 실장면명도비가아니다. [PBRT공식HG source](https://github.com/mmp/pbrt-v4/blob/master/src/pbrt/util/scattering.h)와media.h를열람했고,cos벡터정의/부호차이를분리했다. [Bridson·Hourihan·Nordenstam(2007), Curl-Noise for Procedural Fluid Flow](https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph2007-curlnoise.pdf)의발산없는절차적속도장원리를읽었다. 외부원문/에셋은저장소에넣지않았다.
+
+`[추론]` 첫후보는 광원기준의저주파domain warp와밀도띠,필요하면curl속도장으로확장하는단계다. 임의warp를curl나유체해법으로표기하지않는다. 공유cloudmask는표면direct light와volume에일관되게평가하고,밀도띠의변형으로shadow ray자체를굽히지않는다. 실제동적효과의새카드/검증은후속구현에서작성한다. 지금은설계조사이며새효과재현상태를verified로올리지않는다. 근거/계산/확인안함은`verification/r1-archive-curtain-design-20261021/`와D-152계획에있다.

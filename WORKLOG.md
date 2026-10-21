@@ -538,3 +538,6 @@ D-149 마감: source21fd8b9 원격52file 내용 검증. 기존 roof regression P
 사용자가 왼쪽창 확대/다양한 그림자물체/반그림자 해결을 요청. 왼쪽벽높은창을 가정하고 질문을 열어둔 채 독립study 구현. PCF고정blur/volume binary가 유한태양을 반영하지 않음 확인, NVIDIA2008원리/Three0.186대조. 창2.65×2.19m·자체kit·surface16+32 PCSS/volume4tap·각지름0~2°추가. 0.53°거리bench0.15m→subpixel/3m→5px,1.5°원거리13px. 자체그림자acne보정 후 clay에서 brace/ring연결 보완,6방위·geometry·입력/복원 재검수. 원본/Story와기존기본값 보존. 확인 안 함은 검수README/fidelity에 구분.
 
 D-150 마감: sourcec3cd6af 원격74file 내용확인/Story갱신7515f99의D150무충돌 재확인. 최종kit20mesh/1578tri·zeroarea0,거리bench와6방위/clay/기존회귀PASS. main dispatch39356995241 success. 공개22file HTTP/SHA·1280×720 browser 방위/고도/해각지름 입력→volume변화 및 depth재사용·bake왕복PASS, 오류/실패요청0. 원본6path blob일치. 사용자미감/창위치확정·물리GPU/Cycles확인안함을남기고종료.
+
+## 2026-10-21 D-152 — 빛 커튼 가독성과운동의원인분석/추천
+사용자: 광원을보지않으면약함,구름햇빛수준·오로라급일렁임질문. 현행HG g.5최대비27(수식/장면명도측정아님),sigmaT.012/m·frozen기본·noise3.33mm/s확인. PBRT공식source2파일과Bridson2007Curl-Noise논문200열람,book/Unreal403은읽지않음표시. remote갱신에서D151사용확인후D152기록. 넓은시점산란/강도·밀도분리+공통구름mask+world-space큰흐름 추천,별도emissive오로라옵션구분. 설계·검증연결을기록했으며runtime/배포는변경하지않음. 새이미지/미감/실제GPU는확인안함.

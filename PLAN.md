@@ -380,3 +380,9 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] 최종kit geometry/range/reset/restore·6방위·clay·거리bench와 기존0°회귀 검사 PASS. records/playbook/diff 검사 PASS.
 - [x] sourcec3cd6af commit/push 및 원격74file 내용확인, main dispatch39356995241 success·공개22file hash 확인.
 - 사용자 창위치 응답은 미수신(왼쪽벽뒤쪽창 가정), 미감/실제GPU/최종Cycles 확인 안 함. 신규 검수README/fidelity 참조.
+
+## 빛 커튼 가독성·일렁임 조사 (2026-10-21, D-152)
+- [x] 현행HG/광학두께/정지·noise움직임 원인분석, PBRT공식source·Curl-Noise논문 조사.
+- [x] D-151타브랜치사용을확인해D-152사용, 넓은시점산란+cloudmask+공간밀도흐름 추천과 연결/검증계획 기록.
+- [ ] 후속: A기존/B넓은시점정지/C큰흐름 비교구현·3시점/시간축12프레임·실제GPU검수. 이번조사에서구현/배포하지않음.
+- source/분석값·확인 안 함: verification/r1-archive-curtain-design-20261021/README.md.

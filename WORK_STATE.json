@@ -89,7 +89,7 @@
     "Existing ECG 6-hour automation prompt updated to policy v1.2; repository-wide lock removed and resource-scoped conflict checks retained",
     "D-148 2026-10-19: archive volumetric optical/staged input/captures PASS; Pages39295789728 source4dc59ce + public19file hashes/render/sliders/bake-back PASS. Physical GPU/Edge FPS and Cycles/key equivalence unverified."
   ],
-  "current_request": "D-150 완료: 독립 왼쪽벽뒤쪽 큰창2.65×2.19m·그림자kit·각지름/PCSS 구현. 신규geometry/6방위/clay/거리bench·기존회귀·공개22file/입력/베이크왕복 PASS. Pages39356995241 success/sourcec3cd6af. 사용자 창위치/미감 응답 및 실제GPU/Cycles 확인 안 함.",
+  "current_request": "D-152 조사/추천설계 완료: 커튼의HG시점편차27배와느린정지noise 원인분석, 넓은시점산란+cloudmask+공간밀도흐름 설계. 새runtime/배포 없음, 이미지/실제GPU/미감 확인 안 함. 후속 비교구현은 PLAN 참조.",
   "deferred_not_authorized": [
     "SWT patient-disjoint retuning and output regeneration",
     "Global font replacement",

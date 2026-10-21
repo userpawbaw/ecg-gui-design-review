@@ -40,3 +40,6 @@ D-147 독립 PBR study의 방향광·정적 GLB에 해당한다. 원본 B3의 ne
 
 ### T10 후속 관찰 — 잠정
 D-150/J-003 T10은 고정PCF/이진depth로 반그림자가 약했던 문제를 유한태양 각지름과 가림-받음 거리로 분리했다. 창을 키우는 것과 해의 각크기는 별개다. 0.53°bench에서0.15m가림은subpixel,3m가림은5px로 관측했다. rawdepth를 거리로 복원하는surfacePCSS와4tapvolume근사를 도입하되, offset15mm 접촉부손실/얇은caster/성능을 무검증의 일반규약으로 확대하지 않는다. `verification/r1-archive-window-penumbra-20261020/README.md`.
+
+### T11 조사 — 구현 전 가설
+D-152/J-003 T11에서 HG g.5 위상항의 최대시점비27과 frozen기본/3.33mm/s noise이동을 확인했다. 광원밖시점 가독성과 큰흐름은 강도만 높이는 문제로 합치지 않는다. 넓은위상 후보/광학두께·beamgain과 공통cloudmask·공간밀도흐름을 분리해 비교하도록 설계했다. 새이미지/3시점/시간프레임/성능 개선은 미검증이므로 검증된 권장값으로 승격하지 않는다. `verification/r1-archive-curtain-design-20261021/README.md`.

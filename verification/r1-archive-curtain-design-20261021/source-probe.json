@@ -1,0 +1,33 @@
+[
+  {
+    "url": "https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph2007-curlnoise.pdf",
+    "http": 200,
+    "bytes": 360080,
+    "sha256": "ac0bb333e0cf935eeb8f85a0e37503d14f9a3d026119443d718baecb27e45b30",
+    "scope": "principles only; original file in /tmp, not repository"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/mmp/pbrt-v4/master/src/pbrt/util/scattering.h",
+    "http": 200,
+    "bytes": 7656,
+    "sha256": "1c9244f2fbbca893165e8b72705791e3245aeafe07d0143c971d3de97852aa0c",
+    "scope": "principles only; original file in /tmp, not repository"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/mmp/pbrt-v4/master/src/pbrt/media.h",
+    "http": 200,
+    "bytes": 30032,
+    "sha256": "c3d5018d54549b3061e23de9bb2e14d7e9dca06268984cf21e670fb3a6e78d5f",
+    "scope": "principles only; original file in /tmp, not repository"
+  },
+  {
+    "url": "https://pbr-book.org/4ed/Volume_Scattering/Phase_Functions",
+    "http": 403,
+    "scope": "not read; no finding attributed to blocked page"
+  },
+  {
+    "url": "https://dev.epicgames.com/documentation/en-us/unreal-engine/volumetric-fog-in-unreal-engine",
+    "http": 403,
+    "scope": "not read; no finding attributed to blocked page"
+  }
+]

@@ -11,7 +11,8 @@ casts them into the shafts too).
 D-078 options: --win-width C:W (window at centre y C gets width W), --open-window C (no blinds there: one large clean pool),
 --hidden-bulbs (the aisle lamp meshes go, their warm bulbs stay — F-053: they gave half the room's light), --sky '#hex' (sky tint).
 D-080: --open-window takes several centres (';'), --wz0 Z lowers the window sills (taller windows), --sun-energy K (sun × K).
-D-154: --lab-shots v (level descents), --sun-list 'name:x,y,z;…' (one build, every shot per sun).
+D-154: --lab-shots v (level descents), --sun-list 'name:x,y,z[,angle];…' (one build, every shot per sun),
+--front-window x0,x1,z0,z1,mullion,transom (a front wall with one large gridded window; the front was open sky).
 
     python scripts/assets/archive-sun-variant.py --sun 0.746,0.5,-0.439 [--skylight x0,x1,y0,y1[;…]] [--sun-angle 0.5]
         [--no-lamps | --hidden-bulbs] [--leaves x,y,z,r,n[;…]] [--win-width C:W] [--open-window C] [--sky '#hex']
@@ -124,12 +125,28 @@ if '--lab-shots' in own:
     i = own.index('--lab-shots'); which = own[i + 1] if i + 1 < len(own) and not own[i + 1].startswith('--') else ''
     shots = V_SHOTS if which == 'v' else LAB_SHOTS if which != 'c1' else 'SHOTS = {' + ', '.join(f"'c1_{int(u * 100):03d}': {c1_at(u)}" for u in (0, .24, .42, .6, .8, 1)) + '}\n'
     src = src.replace(PREVIEW_LINE, shots + PREVIEW_LINE)
+if '--front-window' in own:  # D-154: the room's front (y −5) is open sky; a front wall with one large gridded window far from the back
+    # bookcase (~9.5 m) draws the soft window-grid shadows of REF-002 (archive-light F-045) when the sun comes in from the front
+    BW = "box('BackWall', (2 * XW, 0.15, H), (0, Y1 + 0.075, H / 2), M_WALL, tile=2.0)\n"
+    assert src.count(BW) == 1, 'build_archive.py: the back wall line changed — update this wrapper'
+    x0, x1, z0, z1, mx, mz = (float(v) for v in own[own.index('--front-window') + 1].split(','))   # opening + mullion / transom spacing
+    src = src.replace(BW, BW + f'''_fx0, _fx1, _fz0, _fz1, _fmx, _fmz = {x0}, {x1}, {z0}, {z1}, {mx}, {mz}
+for (_sx, _sz, _cx, _cz) in ((_fx0 + XW, H, (-XW + _fx0) / 2, H / 2), (XW - _fx1, H, (_fx1 + XW) / 2, H / 2),
+                             (_fx1 - _fx0, _fz0, (_fx0 + _fx1) / 2, _fz0 / 2), (_fx1 - _fx0, H - _fz1, (_fx0 + _fx1) / 2, (_fz1 + H) / 2)):
+    if _sx > .01 and _sz > .01: box('FrontWall', (_sx, 0.15, _sz), (_cx, Y0 - 0.075, _cz), M_WALL, tile=2.0)
+_n = max(1, round((_fx1 - _fx0) / _fmx))
+for _i in range(1, _n): box('WinMullion', (0.07, 0.12, _fz1 - _fz0), (_fx0 + _i * (_fx1 - _fx0) / _n, Y0 - 0.075, (_fz0 + _fz1) / 2), M_WALL)
+_m = max(1, round((_fz1 - _fz0) / _fmz))
+for _i in range(1, _m): box('WinMullion', (_fx1 - _fx0, 0.12, 0.07), ((_fx0 + _fx1) / 2, Y0 - 0.075, _fz0 + _i * (_fz1 - _fz0) / _m), M_WALL)
+''')
+    print('front window', (x0, x1, z0, z1, mx, mz))
 if '--sun-list' in own:    # D-154: one scene build, many sun directions — 'name:x,y,z;…' renders every shot once per sun (file name_<sun>)
     RENDER = "        scene.render.filepath = os.path.join(args.preview, name + tag + '.png')\n        bpy.ops.render.render(write_still=True)\n"
     assert src.count(RENDER) == 1, 'build_archive.py: the preview render lines changed — update this wrapper'
     suns = [(n, tuple(float(x) for x in d.split(','))) for n, d in (e.split(':') for e in own[own.index('--sun-list') + 1].split(';'))]
     src = src.replace(RENDER, f'''        for _sn, _sd in {suns}:
-            so.rotation_euler = Vector(_sd).normalized().to_track_quat('-Z', 'Y').to_euler()
+            so.rotation_euler = Vector(_sd[:3]).normalized().to_track_quat('-Z', 'Y').to_euler()
+            if len(_sd) > 3: sun.angle = math.radians(_sd[3])   # optional 4th value: the sun's angular size (penumbra)
             scene.render.filepath = os.path.join(args.preview, name + '_' + _sn + tag + '.png')
             bpy.ops.render.render(write_still=True)
 ''')

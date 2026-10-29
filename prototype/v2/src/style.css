@@ -87,3 +87,28 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .lab-dark .bridge-bar input{background:rgb(11 26 32 / var(--ui-a,.9));color:#dfeaec;border-color:#2c454e}
 .lab-dark .bridge-state{color:#c9b39b}.lab-dark .bridge-state.ok{color:#5fd6c2}.lab-dark .bridge-bar a{color:#5fd6c2}
 .lab-dark .bridge-help{background:rgb(9 24 32 / var(--ui-a,.9));border:1px solid #22363d}
+/* D-157 실시간 측정 B안 — 어두운 배경 위 패널(D-156). 판 색 #112b39 는 v2.2.1·원본 live.html 과 같다. */
+.live-native{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.live-status{display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:14px}
+.live-conn{font-weight:650;color:#c9b39b}.live-conn.on{color:#5fd6c2}.live-conn.lost{color:#ff9a8a}
+.live-src{color:#a9bfc4;font-size:13px}.live-note{color:#f6d18d;font-size:13px}
+.live-contract{margin:0;font-size:13px;color:#a9bfc4;max-width:980px}
+.live-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;background:#22363d;border:1px solid #22363d;border-radius:10px;overflow:hidden}
+.live-stats>div{background:rgb(7 15 19 / var(--ui-a,.9));padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.live-stats small{color:#93aab0;font-size:11px}.live-stats b{color:#dfeaec;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.live-stats .bad b{color:#ff9a8a}
+.live-tools{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:10px 12px;background:rgb(10 26 33 / var(--ui-a,.9));border:1px solid #22363d;border-radius:12px}
+.live-tools .seg-group{display:inline-flex;gap:4px;align-items:center}.live-tools .seg-group small{color:#93aab0;margin-right:4px}
+.live-tools button{min-height:36px;padding:0 12px;border-radius:8px;border:1px solid #2c454e;background:rgb(18 34 41 / var(--ui-a,.9));color:#dfeaec}
+.live-tools button[aria-pressed=true]{background:#067d72;border-color:#067d72;color:#fff}
+.live-tools label{display:inline-flex;gap:6px;align-items:center;color:#a9bfc4;font-size:13px}
+.live-tools select,.live-tools input[type=number]{min-height:36px;background:rgb(11 26 32 / var(--ui-a,.9));color:#dfeaec;border:1px solid #2c454e;border-radius:7px;padding:0 8px}
+.live-tools input[type=number]{width:84px}.live-tools small{color:#93aab0}
+.live-more summary{cursor:pointer;color:#a9bfc4;font-size:13px}.live-more[open]{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.live-legend{display:flex;flex-wrap:wrap;gap:8px}
+.live-legend button{min-height:34px;padding:0 12px;border-radius:999px;border:1px solid #2c454e;background:rgb(10 26 33 / var(--ui-a,.9));font-size:13px;display:inline-flex;align-items:center;gap:8px}
+.live-legend button i{display:inline-block;width:14px;height:3px;border-radius:2px;background:currentColor}
+.live-legend button[aria-pressed=false]{opacity:.45}
+.live-row{background:#112b39;border:1px solid #22363d;border-radius:12px;overflow:hidden}
+.live-lab{display:flex;justify-content:space-between;gap:12px;padding:8px 12px 0;font-size:13px}.live-lab span{color:#93aab0;font-family:ui-monospace,monospace}
+.live-canvas{display:block;width:100%;height:190px}.live-canvas.tall{height:min(62vh,560px)}

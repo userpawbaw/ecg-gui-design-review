@@ -80,3 +80,10 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .bridge-help{padding:26px 28px;background:#112b39;color:#c6d9df;border-radius:14px}.bridge-help h2{color:#e5f0f2}.bridge-help p{color:#acc2cd}
 .bridge-help pre{background:#0d2532;border:1px solid #304955;border-radius:10px;padding:14px;color:#e4f0ef;white-space:pre-wrap;font-size:13px}
 .bridge-help code{background:#183b4a;color:#e4f0ef}
+/* user 2026-10-29: the archive backdrop stays behind 전체 근거 and 실시간 측정 too — their panels in the dark theme */
+.lab-dark .evidence th,.lab-dark .evidence td{border-color:#22363d;color:#d6e3e6}.lab-dark .evidence th{color:#9cc4b6}
+.lab-dark .live-route>p{color:#a9bfc4}.lab-dark .live-route code{background:#183b4a;color:#e4f0ef}
+.lab-dark .bridge-bar{background:rgb(7 15 19 / var(--ui-a,.9));border-color:#22363d}
+.lab-dark .bridge-bar input{background:rgb(11 26 32 / var(--ui-a,.9));color:#dfeaec;border-color:#2c454e}
+.lab-dark .bridge-state{color:#c9b39b}.lab-dark .bridge-state.ok{color:#5fd6c2}.lab-dark .bridge-bar a{color:#5fd6c2}
+.lab-dark .bridge-help{background:rgb(9 24 32 / var(--ui-a,.9));border:1px solid #22363d}

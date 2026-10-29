@@ -317,8 +317,8 @@ D-158 `verification/r1-reference-attic-reverse-20261030/replay-result.json`: 4K�
 | 종류 | 시도 |
 | 계기 | 사용자 “복제까지 계속 진행” |
 | 가설 | 측정한 치수·자세를 새 kit로 모델링하고 새 빛을 구우면 원본자산 반입 없이 주요 구도를 재현할 수 있음 |
-| 판정 | 부분 채택 — 자체 제작 진행, 사용자 미감 확인 안 함 |
-| 다음 | 끝 — 새 bake/동일12프레임/공개검증 뒤 사용자 시각검토 |
+| 판정 | 부분 채택 — 자체 제작/로컬12프레임 기능 PASS, 미감 CONDITIONAL |
+| 다음 | 끝 — 공개검증 및 사용자 원본비교 시각검토 |
 | 기록 | D-159, `verification/r1-reference-attic-clone-20261030/README.md` |
 
 ### 한 것
@@ -326,3 +326,5 @@ D-158 `verification/r1-reference-attic-reverse-20261030/replay-result.json`: 4K�
 
 ### 결과
 `[런타임]` D-159 `verification/r1-reference-attic-clone-20261030/geometry-audit.json`: 선택 6부재 geometry preflight와 수정 clay 검수. 새 베이크/공개웹 검증은 verification README에서 실제 완료 증거와 구분한다. 사용자 미감·픽셀동등성·실제 GPU는 확인 안 함.
+
+T13 실행결과: `[런타임]` D-159 `verification/r1-reference-attic-clone-20261030/README.md`: 새4K×4/1561.65s·4mesh/130176tri/4calls. losslessWebP4/4, losslessmeshopt16view, 같은camera반복/12하강/입력/모바일PASS. 검은UV경계는1texel max로완화했고열린잎은DoubleSide로수정했다. 보호7파일/기존stage23파일byte동일. 자체Cyless와원본live동등성은구별하며,사다리명도·그림·광분포·바닥등차이를기록했다. 미감/실GPU확인안함.

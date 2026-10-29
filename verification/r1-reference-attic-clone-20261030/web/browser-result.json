@@ -1,0 +1,237 @@
+{
+  "url": "http://127.0.0.1:8771/reference-clone.html",
+  "errors": [],
+  "failed_requests": [],
+  "bad_responses": [],
+  "frames": [
+    {
+      "progress": 0.0,
+      "position": [
+        0,
+        -0.43924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "6abb5acaf93c2ca7f7c95674a9033f528ed32602f57347e947dcc3932224c1aa"
+    },
+    {
+      "progress": 0.09090909090909091,
+      "position": [
+        0,
+        -0.68924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "20cb086dc08d1cd7c492d7f64ba4b21f719564a1c35795c43d4f8bb176bc434f"
+    },
+    {
+      "progress": 0.18181818181818182,
+      "position": [
+        0,
+        -0.93924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "c003a9c1aa057eb14de07d942c9b9566fdf4119c6c8bd9c155b3aa0abba91f4a"
+    },
+    {
+      "progress": 0.2727272727272727,
+      "position": [
+        0,
+        -1.18924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "12e347d19f6cc43e31bba18694cd6f4bccbd9c32e33cc2e27f434ad08ad9c294"
+    },
+    {
+      "progress": 0.36363636363636365,
+      "position": [
+        0,
+        -1.43924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "f759f2a1af81ebb6b2a9e7dc1a9d727e64ae78d8e43b18e91573a409faf5edb9"
+    },
+    {
+      "progress": 0.45454545454545453,
+      "position": [
+        0,
+        -1.68924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "b333ca2d7d98ff57252aaa52d6fd5d8e4206f7b44747a1cab9c629de18ccdc36"
+    },
+    {
+      "progress": 0.5454545454545454,
+      "position": [
+        0,
+        -1.93924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "1d05947fb4c678be8d3b1a88ecf1430ca6aa41aedc0849b79aeff132b72a14a5"
+    },
+    {
+      "progress": 0.6363636363636364,
+      "position": [
+        0,
+        -2.18924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "1eb1519be60d86fb5cf56e4bef7c07c855721d4277a50299f379681c59a09d1c"
+    },
+    {
+      "progress": 0.7272727272727273,
+      "position": [
+        0,
+        -2.43924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "af28a8489811da0ea64c7b7838ca5f95c1eb7a392459fd3fb1f5e519847a9c35"
+    },
+    {
+      "progress": 0.8181818181818182,
+      "position": [
+        0,
+        -2.68924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "5618fcdb31155689db1326e5b496f7428d02fef1f5a89d13ca42dc72aadbe78f"
+    },
+    {
+      "progress": 0.9090909090909091,
+      "position": [
+        0,
+        -2.93924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "1a94b30949da89102c1fca9b050a5c9759a02b80afd4f82aa9f75ee8491a2a63"
+    },
+    {
+      "progress": 1.0,
+      "position": [
+        0,
+        -3.18924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "b22d2ee104a38ad3a3fdab0c209d50a00e38074689c3c2086de8a9db3d1b655f"
+    }
+  ],
+  "load_seconds": 2.181,
+  "browser": "154.0.8037.57",
+  "scene": {
+    "meshes": 4,
+    "triangles": 130176,
+    "atlas": [
+      {
+        "name": "library",
+        "width": 4096,
+        "height": 4096
+      },
+      {
+        "name": "books",
+        "width": 4096,
+        "height": 4096
+      },
+      {
+        "name": "studio",
+        "width": 4096,
+        "height": 4096
+      },
+      {
+        "name": "floor",
+        "width": 4096,
+        "height": 4096
+      }
+    ],
+    "fov": 22.8951919564,
+    "build": "0087e7ce65be",
+    "render": {
+      "frame": 11,
+      "calls": 4,
+      "triangles": 130176,
+      "points": 0,
+      "lines": 0
+    }
+  },
+  "same_position_repeat": "PASS",
+  "pointer": "PASS",
+  "orbit": "PASS",
+  "reset": "PASS",
+  "wheel": "PASS",
+  "reduced_motion_rotation": [
+    0,
+    0,
+    0
+  ],
+  "mobile": "390x844 no horizontal overflow; actual touch not tested",
+  "result": "PASS"
+}

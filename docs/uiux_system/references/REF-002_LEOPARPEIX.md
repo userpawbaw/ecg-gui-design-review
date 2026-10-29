@@ -346,3 +346,6 @@ REF-001과 겹치는 부분: 두 사이트 모두 **Lenis 관성 스크롤 + GSA
 원본2048/4096 bake7장과model을scratch에수집하고자체작성unlit분석viewer에서12카메라프레임/입력/같은progress복귀/mesh-map매칭을검사했다. 연결성기하718조각의bbox는semantic소품수와구분한다. 원본asset/code/새referencecaptures는repo에넣지않았다. 도구/측정/동일재현계약은 `verification/r1-reference-attic-reverse-20261030/README.md`와 `rounds/R1/REVERSE-R1-LEOPARPEIX-ATTIC-20261030.md`.
 
 이결과는원본데이터의독립분석재생PASS이다. EFX-002-01/03의자체제작재현상태를verified로승격하는근거가아니다. 전체sitepixel동등성·원본Blender조명rig·새자체모델/베이크·실제GPU는확인안함. 분석viewer는DOM/compositor/cloud/dust/pointer/floorhashblur를생략했으며그GAP를기록했다.
+
+### 2026-10-30 D-159 — 원본고정 자체 복제 실행
+사용자의 “복제까지 계속 진행”에 따라, 측정한 치수/자세로347개 새kit와 자체palette/그림/목재·새UV/4K×4 Cycles bake/GLB를 제작했다. 원본자산/원본코드/새원본캡처는repo·Pages미반입. 같은22.895°/2.75하강12프레임·조작검수는PASS,원본과빛/사다리명도/그림/곡면/바닥차이는CONDITIONAL. `verification/r1-reference-attic-clone-20261030/README.md` 참조. 공개페이지는원본사이트전체UI가아닌자체장면검토본이다.

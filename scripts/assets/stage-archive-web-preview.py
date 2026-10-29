@@ -92,7 +92,28 @@ for name in three_files[:-1]:
     shutil.copy2(THREE_ROOT / name, target)
 shutil.copy2(THREE_ROOT / 'LICENSE', DEST / 'THREE-LICENSE.txt')
 
-staged = [DEST / name for name in files]
+# D-159: isolated, self-authored reference reconstruction. Explicit files only.
+clone_source = ROOT / 'verification/r1-reference-attic-clone-20261030'
+clone_manifest = json.loads((clone_source / 'manifest.json').read_text(encoding='utf-8'))
+clone_names = ['reference-clone.html', 'attic-clone.glb', 'manifest.json', 'render-attic.png', 'render-upper.png', 'web/preview.png']
+clone_names += [info['file'] for info in clone_manifest['groups'].values()]
+clone_version = hashlib.sha256(b''.join((clone_source / name).read_bytes() for name in clone_names)).hexdigest()[:12]
+clone_staged = []
+for name in clone_names:
+    # Its manifest/atlas files have their own namespace; only the entry page is at root.
+    target = DEST / ('reference-clone.html' if name.endswith('.html') else 'clone/' + name)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if name.endswith('.html'):
+        html = (clone_source / name).read_text(encoding='utf-8')
+        html = html.replace('../../prototype/v2/node_modules/three/', './node_modules/three/')
+        html = html.replace('__CLONE_VERSION__', clone_version)
+        html = html.replace("new URL(name+'?v='", "new URL('clone/'+name+'?v='")
+        target.write_text(html, encoding='utf-8')
+    else:
+        shutil.copy2(clone_source / name, target)
+    clone_staged.append(target)
+
+staged = [DEST / name for name in files] + clone_staged
 staged.extend(DEST / 'node_modules/three' / name for name in three_files[:-1])
 staged.append(DEST / 'THREE-LICENSE.txt')
 print('staged', len(staged), 'web/runtime files,',

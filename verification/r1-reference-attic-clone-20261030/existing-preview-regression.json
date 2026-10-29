@@ -1,0 +1,121 @@
+{
+  "scope": "Byte equality of every prior staged file; new clone files are additive",
+  "files": [
+    {
+      "path": "THREE-LICENSE.txt",
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "unchanged": true
+    },
+    {
+      "path": "archive.glb",
+      "sha256": "e4b5ede9a4cd685c64bd2699bfb9d5d480839d7ac4158b36ec177a1b9ae6791f",
+      "unchanged": true
+    },
+    {
+      "path": "light-study.html",
+      "sha256": "b87a5b574204e425942b73707cd6f9bfe80f3566476de556a3115a599f82e5bc",
+      "unchanged": true
+    },
+    {
+      "path": "light_shell.webp",
+      "sha256": "b94ba78f5ac19bc82e2e9b180eb0618253e651e73d6c5c19cbe45cc1f26a7345",
+      "unchanged": true
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "a0a6749297caa04af7ff369f6d7aa29be59c80b851309a6b532d7fa895baa9a7",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/build/three.core.js",
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/build/three.module.js",
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/examples/jsm/controls/OrbitControls.js",
+      "sha256": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/examples/jsm/libs/meshopt_decoder.module.js",
+      "sha256": "d428e73a000057c6c94bfcedc3412d0c2dc14ca8800e88553aab05113ad2bf19",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+      "sha256": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+      "sha256": "02e4a261af34de71338185e9e87f0cbe5cba9115608d984363e1269dec1d2272",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/examples/jsm/postprocessing/Pass.js",
+      "sha256": "444b409c235ead986893c472e720da1b779a56985c7d10b279c7944b52bd61c5",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/examples/jsm/shaders/OutputShader.js",
+      "sha256": "353479f77a8d7e2629d49ccac9fc2f5dbfdda5442e0adf867b00377a2fcb0cb2",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+      "sha256": "9fb63427ce6641fa14fd0baff9cc4d1b5f9c3d85fd084bf2e90e803c44ec1797",
+      "unchanged": true
+    },
+    {
+      "path": "node_modules/three/examples/jsm/utils/SkeletonUtils.js",
+      "sha256": "b1632a703206c3d830de9fcbe515696770d04b71a15ee6b50afa6d2c3298c86f",
+      "unchanged": true
+    },
+    {
+      "path": "preview.html",
+      "sha256": "15af5b789d074535a7d89073a04121f3d12e3bc1359762b48d2fca978a80c7cb",
+      "unchanged": true
+    },
+    {
+      "path": "study/ceiling-apertures.js",
+      "sha256": "f8790c840fde8385035f7c6241f93e10e0f9185802dca66748e2f0c656ace10e",
+      "unchanged": true
+    },
+    {
+      "path": "study/contact-shadows.js",
+      "sha256": "02554424a5c61640ffc04358ef6c5d3147e8bb10e12acf95eaac97afb1bb7945",
+      "unchanged": true
+    },
+    {
+      "path": "study/curtain-field.js",
+      "sha256": "c8c31369a87c1b4e83e50980a6a2ad9652608aefaca0248cc187a9d18dcea171",
+      "unchanged": true
+    },
+    {
+      "path": "study/lighting-state.js",
+      "sha256": "bf6911e151db5a64602d4825690ae551493a9f2966ca1a8ebc84f3e3e90cf756",
+      "unchanged": true
+    },
+    {
+      "path": "study/volume-shaders.js",
+      "sha256": "17b826707ed878aaa6d0616b2dd35b2ff4c1a78c6f2c52e51cd08ddce7be0ff5",
+      "unchanged": true
+    },
+    {
+      "path": "study/volumetric-light.js",
+      "sha256": "ff5347fb68b7e9feb41dc73a3f5101b80c48f6fe0a1cb54403eb501452a1ef92",
+      "unchanged": true
+    },
+    {
+      "path": "study/window-study.js",
+      "sha256": "68a3d8ee08bf309ead39b03c5f40760a1a62b2835ade1c050ec18aeab6098911",
+      "unchanged": true
+    }
+  ],
+  "result": "PASS"
+}

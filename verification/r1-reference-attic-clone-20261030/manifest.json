@@ -1,0 +1,62 @@
+{
+  "scope": "Self-authored geometry, procedural materials, new Cycles COMBINED bakes, AgX baked once into final display colour",
+  "bpy": "4.5.3 LTS",
+  "samples": 32,
+  "display_transform": "AgX",
+  "display_look": "AgX - Medium High Contrast",
+  "groups": {
+    "library": {
+      "file": "library.webp",
+      "width": 4096,
+      "height": 4096,
+      "bake_seconds": 599.01,
+      "vertices": 7148,
+      "polygons": 7152,
+      "bytes": 2424122,
+      "sha256": "5e0910243e1e0c96626406a4f73da8a962b6eb8cf46a4ab75b1626fd031bf4c7"
+    },
+    "books": {
+      "file": "books.webp",
+      "width": 4096,
+      "height": 4096,
+      "bake_seconds": 181.46,
+      "vertices": 44576,
+      "polygons": 42984,
+      "bytes": 909452,
+      "sha256": "31ab681f6106e5614e1448c073642ef7e23b4e564f465ec60314c63274f1a481"
+    },
+    "studio": {
+      "file": "studio.webp",
+      "width": 4096,
+      "height": 4096,
+      "bake_seconds": 311.34,
+      "vertices": 15332,
+      "polygons": 15204,
+      "bytes": 3966742,
+      "sha256": "f002f60d00c6d85d53d5adab23b7892afc64638d6d5c0f6f82fa1cdde04c7c9c"
+    },
+    "floor": {
+      "file": "floor.webp",
+      "width": 4096,
+      "height": 4096,
+      "bake_seconds": 468.34,
+      "vertices": 280,
+      "polygons": 270,
+      "bytes": 4248356,
+      "sha256": "a9119be9f921874f195a4c00ffdb2f3755fbaa0ab12df2fd273721420e0e1fb3"
+    }
+  },
+  "bake_seconds": 1561.65,
+  "camera": {
+    "fov": 22.8951919564,
+    "y": 2.31075716,
+    "z": 14.7563982,
+    "attic_start": -0.43924284,
+    "drop": 2.75
+  },
+  "glb_bytes": 5124664,
+  "inputs": {
+    "kit-spec": "dcf327ca51adaf5a231b533f70218e05934b76533eb42111e9abb1557e89c930",
+    "builder": "e22f74cbdfd283702bff7abb86eda1f549c77acbf749fc5fe7e6ed563ab939de"
+  }
+}

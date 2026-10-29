@@ -1,0 +1,89 @@
+{
+  "scope": "Diagnostic image differences, not a fidelity score or original full live site compositor parity. Original captures stay scratch-only.",
+  "web_vs_new_cycles": {
+    "upper": {
+      "rgb8_mae": 2.704575300216675,
+      "psnr_db": 28.615119955018553,
+      "max_abs_error": 185.0
+    },
+    "attic": {
+      "rgb8_mae": 4.159233093261719,
+      "psnr_db": 27.702008186346134,
+      "max_abs_error": 199.0
+    }
+  },
+  "web_vs_original_analysis": [
+    {
+      "progress": 0.0,
+      "rgb8_mae": 51.726192474365234,
+      "psnr_db": 11.410244653429523,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.09090909090909091,
+      "rgb8_mae": 51.676719665527344,
+      "psnr_db": 11.406970856574109,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.18181818181818182,
+      "rgb8_mae": 52.11363983154297,
+      "psnr_db": 11.356969283021348,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.2727272727272727,
+      "rgb8_mae": 51.98705291748047,
+      "psnr_db": 11.386320099885477,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.36363636363636365,
+      "rgb8_mae": 49.17731475830078,
+      "psnr_db": 11.837365245897995,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.45454545454545453,
+      "rgb8_mae": 49.72600555419922,
+      "psnr_db": 11.807379609069478,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.5454545454545454,
+      "rgb8_mae": 48.06964111328125,
+      "psnr_db": 12.07860409302935,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.6363636363636364,
+      "rgb8_mae": 48.71294021606445,
+      "psnr_db": 12.063829136541218,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.7272727272727273,
+      "rgb8_mae": 50.4493293762207,
+      "psnr_db": 11.97643607587512,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.8181818181818182,
+      "rgb8_mae": 52.088340759277344,
+      "psnr_db": 11.740032972747638,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 0.9090909090909091,
+      "rgb8_mae": 42.26410675048828,
+      "psnr_db": 12.7454117373915,
+      "max_abs_error": 243.0
+    },
+    {
+      "progress": 1.0,
+      "rgb8_mae": 33.204341888427734,
+      "psnr_db": 13.802174640765589,
+      "max_abs_error": 243.0
+    }
+  ]
+}

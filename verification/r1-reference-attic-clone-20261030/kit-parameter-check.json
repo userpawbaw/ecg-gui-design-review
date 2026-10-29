@@ -1,0 +1,79 @@
+{
+  "scope": "Measured kit parameter comparison with prior AABB metadata, not runtime geometry or image proof. One source unit treated as 1m. OBB closure may intentionally enclose original bevel/notch voids.",
+  "parts": 323,
+  "max_center_difference": 0.03732548881530762,
+  "median_center_difference": 4.377441406244742e-06,
+  "max_enclosing_box_difference": 0.1661568230397461,
+  "median_enclosing_box_difference": 4.433746337906275e-06,
+  "projection": {
+    "width": 1280,
+    "height": 720,
+    "case_distance": 8.5163982,
+    "metres_per_pixel": 0.0047904738647932725,
+    "board_3mm_bevel_pixels": 0.6262428487603202,
+    "book_1_5mm_bevel_pixels": 0.3131214243801601,
+    "scope": "Flat frontal projection; subpixel bevels do not individually prove 1\u20132px highlights."
+  },
+  "largest_differences": [
+    {
+      "id": "TexMobilier-71",
+      "kind": "board",
+      "centre_error": 0.00014708366394033945,
+      "enclosing_box_size_difference": 0.1661568230397461
+    },
+    {
+      "id": "TexMobilier-16",
+      "kind": "board",
+      "centre_error": 6.544401168828706e-05,
+      "enclosing_box_size_difference": 0.12951133857526864
+    },
+    {
+      "id": "TexMobilier-15",
+      "kind": "board",
+      "centre_error": 0.0002317946624756928,
+      "enclosing_box_size_difference": 0.12940735957526872
+    },
+    {
+      "id": "TexMobilier-85",
+      "kind": "board",
+      "centre_error": 2.3967742919239754e-06,
+      "enclosing_box_size_difference": 0.1283990232938481
+    },
+    {
+      "id": "TexMobilier-86",
+      "kind": "board",
+      "centre_error": 4.147033691559443e-06,
+      "enclosing_box_size_difference": 0.1283990232938481
+    },
+    {
+      "id": "TexMobilier-62",
+      "kind": "board",
+      "centre_error": 4.813385009794224e-06,
+      "enclosing_box_size_difference": 0.11023420036376963
+    },
+    {
+      "id": "TexMobilier-33",
+      "kind": "board",
+      "centre_error": 0.03732548881530762,
+      "enclosing_box_size_difference": 0.07667626782812498
+    },
+    {
+      "id": "TexMobilier-34",
+      "kind": "board",
+      "centre_error": 0.03731548881530766,
+      "enclosing_box_size_difference": 0.07661613582812499
+    },
+    {
+      "id": "TexMobilier-63",
+      "kind": "board",
+      "centre_error": 0.0003659889221192536,
+      "enclosing_box_size_difference": 0.06927309526689451
+    },
+    {
+      "id": "TexMobilier-72",
+      "kind": "board",
+      "centre_error": 4.757919311426662e-06,
+      "enclosing_box_size_difference": 0.045646482323730475
+    }
+  ]
+}

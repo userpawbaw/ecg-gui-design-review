@@ -406,6 +406,7 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 ## 원본고정 자체 복제 (D-159, 사용자 “복제까지 계속 진행”)
 - [x] 원격번호검사·제작결정, 347개 자체kit 치수/자세·고정palette 분류. 원본 geometry/UV/bake 미반입.
 - [x] 자체기하 clay 수정·선택6부재 bevel preflight·새 재질/Cycles 정지 렌더 2시점.
-- [ ] 새4K atlas/GLB 베이크 진행.
-- [ ] 독립 reference-clone.html, 동일12카메라·입력·압축/색공간/보호자원 검사.
-- [ ] 문서/커밋·푸시·원격내용검사·Pages 공개검증. 원본과의 차이와 확인 안 함 기록.
+- [x] 4K×4 새 bake 1561.65s, lossless WebP4/4, GLB lossless meshopt16view 검사.
+- [x] 독립 reference-clone.html·12카메라·입력/reduced-motion/390×844, 압축·UV sampler A/B·보호7파일/기존stage23파일 검사.
+- [ ] 웹 산출물 커밋·푸시·원격내용검사·Pages 공개검증 진행. 원본 차이/확인 안 함은 verification README.
+- [ ] 사용자 미감·원본 동일성, 실제 Edge/GPU 검토. 현재 구현/기능 PASS, 시각 충실도 CONDITIONAL.

@@ -556,3 +556,5 @@ D-152 마감: source2fe6862(구현12be06b/cache보완),main dispatch39557898363 
 사용자 “복제까지 계속 진행”. 전체원격 D158까지 확인 후 D159 기록. 원본자산은 scratch에 유지, 347개 kit의 치수/자세만 분류해 새 builder를 작성했다. 최초 clay의 사다리 넓은 판/창 절단 실패를 검출해 최소체적 직교 치수·법선·polyline을 수정했다. 선택 6부재 bevel mechanical pass. 원본 baked 색을 albedo처럼 분류한 결과가 rust에 치우쳐 기각하고 자체 palette 배분을 명시했다. 새 재질/조명 시각 검수 뒤 bake/웹/공개 검증 예정. 근거 verification/r1-reference-attic-clone-20261030/README.md. Story/r8/D084 변경 없음.
 
 D-159 제작 체크포인트: 수정 clay 정면/3·4각, 재질/조명 3회 범위 내 검토 완료. 새4K Cycles COMBINED 4그룹 bake 시작. 문서검사 records/playbook PASS; stage 스크립트/웹/공개 배포는 아직 이 체크포인트에 포함하지 않는다.
+
+D-159 웹 실행:4K×4 COMBINED32sample/CPU5threads 총1561.65s. WebP11,548,672bytes·RGB8완전일치4/4. 자체GLB8,807,548→5,124,664bytes, meshopt0.22 lossless16view 전부바이트동일. 4mesh/130176tri/4calls. 새 viewer 12하강/포인터/휠/slider/orbit/reset/reduced-motion/390×844 PASS. 첫 edge seam은0/1/1.5/2texel비교후1선택(서고25.87→27.73dB), 열린 잎은DoubleSide수정, resizeCSS소유권수정. 오류/초기실패와 최종결과 분리. 자체씬 미감3회 후 종료, 원본대비 빛/사다리명도/곡면/그림/바닥 차이조건부. 보호7파일·기존stage23파일byte동일. 환경시작상태로1회exec부재후파일보존확인, bake재실행없음. 다음은웹소스원격검증·Pages공개검증.

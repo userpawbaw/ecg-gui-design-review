@@ -1,0 +1,157 @@
+{
+  "encoder": "meshoptimizer 0.22.0 (MIT)",
+  "scope": "All POSITION/NORMAL/UV/index views bit-exact after decode; no quantization, simplification or index rotation",
+  "input_bytes": 8807548,
+  "output_bytes": 5124664,
+  "reduction_percent": 41.81508860354778,
+  "input_sha256": "db7ef55a85535b0ef5426435113abf215448f9c4b0bf72fc53d0e77260a04b04",
+  "output_sha256": "c8a4fc7e4abe13418a47330271203a201ae7fd70482b18b5940daad9e1a5e423",
+  "views": [
+    {
+      "view": 0,
+      "count": 21988,
+      "stride": 12,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 263856,
+      "compressed_bytes": 91656,
+      "decoded_exact": true
+    },
+    {
+      "view": 1,
+      "count": 21988,
+      "stride": 12,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 263856,
+      "compressed_bytes": 234836,
+      "decoded_exact": true
+    },
+    {
+      "view": 2,
+      "count": 21988,
+      "stride": 8,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 175904,
+      "compressed_bytes": 116638,
+      "decoded_exact": true
+    },
+    {
+      "view": 3,
+      "count": 41712,
+      "stride": 2,
+      "mode": "INDICES",
+      "input_bytes": 83424,
+      "compressed_bytes": 44635,
+      "decoded_exact": true
+    },
+    {
+      "view": 4,
+      "count": 171936,
+      "stride": 12,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 2063232,
+      "compressed_bytes": 656947,
+      "decoded_exact": true
+    },
+    {
+      "view": 5,
+      "count": 171936,
+      "stride": 12,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 2063232,
+      "compressed_bytes": 1875809,
+      "decoded_exact": true
+    },
+    {
+      "view": 6,
+      "count": 171936,
+      "stride": 8,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 1375488,
+      "compressed_bytes": 889238,
+      "decoded_exact": true
+    },
+    {
+      "view": 7,
+      "count": 257904,
+      "stride": 4,
+      "mode": "INDICES",
+      "input_bytes": 1031616,
+      "compressed_bytes": 280196,
+      "decoded_exact": true
+    },
+    {
+      "view": 8,
+      "count": 39586,
+      "stride": 12,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 475032,
+      "compressed_bytes": 183184,
+      "decoded_exact": true
+    },
+    {
+      "view": 9,
+      "count": 39586,
+      "stride": 12,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 475032,
+      "compressed_bytes": 412788,
+      "decoded_exact": true
+    },
+    {
+      "view": 10,
+      "count": 39586,
+      "stride": 8,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 316688,
+      "compressed_bytes": 214980,
+      "decoded_exact": true
+    },
+    {
+      "view": 11,
+      "count": 89292,
+      "stride": 2,
+      "mode": "INDICES",
+      "input_bytes": 178584,
+      "compressed_bytes": 94055,
+      "decoded_exact": true
+    },
+    {
+      "view": 12,
+      "count": 1080,
+      "stride": 12,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 12960,
+      "compressed_bytes": 3969,
+      "decoded_exact": true
+    },
+    {
+      "view": 13,
+      "count": 1080,
+      "stride": 12,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 12960,
+      "compressed_bytes": 11879,
+      "decoded_exact": true
+    },
+    {
+      "view": 14,
+      "count": 1080,
+      "stride": 8,
+      "mode": "ATTRIBUTES",
+      "input_bytes": 8640,
+      "compressed_bytes": 5557,
+      "decoded_exact": true
+    },
+    {
+      "view": 15,
+      "count": 1620,
+      "stride": 2,
+      "mode": "INDICES",
+      "input_bytes": 3240,
+      "compressed_bytes": 1764,
+      "decoded_exact": true
+    }
+  ],
+  "same_camera_png_exact_after_compression": true,
+  "pixel_comparison_note": "Controlled transport-only A/B with identical shader, before the separate studio DoubleSide correction for open leaves."
+}

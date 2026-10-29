@@ -41,8 +41,8 @@ const PATHS:Record<string,Key[]>={
  // darkest shade (27–30 %) and the largest stop range (4.4–4.9) of the 4.0 → 1.3 m sweep (verification/lab-descent-sweep-20261021).
  v1:vPath(-4.5,26),v2:vPath(-1.0,34),
  // D-158: the REF-002 camera on the rebuilt attic (archive-x, reference frame): 14.756 m in front of the bookcase plane origin,
- // 22.9° vertical, level, straight down; ?rz=top,bottom (m), default the measured −0.44 → −2.7 (below −2.9 the floor edge shows)
- r:(()=>{const [a,b]=(Q0.get('rz')??'-0.44,-2.7').split(',').map(Number);return [a,b].map(z=>({pos:V(14.756,z,0),look:V(0,z,0),fov:22.9}));})(),
+ // 22.9° vertical, level, straight down; ?rz=top,bottom (m), default −0.44 → −2.45 (the measured descent ends at −3.19; below −2.5 the floor edge at x 10.25 enters the frame)
+ r:(()=>{const [a,b]=(Q0.get('rz')??'-0.44,-2.45').split(',').map(Number);return [a,b].map(z=>({pos:V(14.756,z,0),look:V(0,z,0),fov:22.9}));})(),
 };
 function vPath(y:number,fov:number):Key[]{const [a,b]=(Q0.get('vz')??'3.9,3.0').split(',').map(Number);
  return [a,b].map(z=>({pos:V(.2,z,-y),look:V(.2,z,-4.5),fov}));}

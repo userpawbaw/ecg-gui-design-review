@@ -6,7 +6,7 @@
   "books": 2048,
   "decor": 1024
  },
- "samples": 128,
+ "samples": 384,
  "groups": {
   "shell": {
    "object": "Archive_shell",
@@ -22,9 +22,9 @@
   }
  },
  "timing_s": {
-  "shell": 468.4,
-  "books": 248.5,
-  "decor": 27.3
+  "shell": 944.5,
+  "books": 481.8,
+  "decor": 54.8
  },
  "counts": {
   "books": 386,
@@ -44,7 +44,7 @@
   "sun_color": "#ffe6c4",
   "leaves": 1,
   "size": 2048,
-  "bsamples": 128
+  "bsamples": 384
  },
  "sun": {
   "to_dir": [
@@ -116,6 +116,20 @@
  "occluders": [
   "Occluder_front"
  ],
+ "occluder_boxes": [
+  {
+   "min": [
+    10.25,
+    -0.05,
+    -14.0
+   ],
+   "max": [
+    20.0,
+    0.0,
+    8.0
+   ]
+  }
+ ],
  "figure": {
   "location": [
    7.4,
@@ -139,19 +153,5 @@
    0.11
   ]
  },
- "web_encoding": "lightmaps libwebp q92 of sqrt-encoded PNG; glb gltf-transform optimize (meshopt, WebP <=1024, COLOR_0 kept, no simplify)",
- "occluder_boxes": [
-  {
-   "min": [
-    10.25,
-    -0.05,
-    -14.0
-   ],
-   "max": [
-    20.0,
-    0.0,
-    8.0
-   ]
-  }
- ]
+ "web_encoding": "lightmaps libwebp q92 of sqrt-encoded PNG; glb gltf-transform optimize (meshopt, WebP <=1024, COLOR_0 kept, no simplify)"
 }

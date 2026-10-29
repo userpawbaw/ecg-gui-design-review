@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
 test('large viewer, real sweep/scroll, hover, freeze, keyboard and download',async({page},info)=>{
- const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/?route=lab')  /* AP-12: story shell is the default start screen */;await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
  const largeAction=page.getByRole('button',{name:'크게 비교'});await expect(largeAction).toHaveCSS('background-color','rgb(6, 125, 114)');await expect(largeAction).toHaveCSS('color','rgb(255, 255, 255)');
  await page.screenshot({path:info.outputPath('01-lab.png'),fullPage:true});await page.getByRole('button',{name:'크게 비교'}).click();const dialog=page.getByRole('dialog');await expect(dialog).toBeVisible();
  await dialog.getByRole('button',{name:'재생',exact:true}).click();await expect.poll(()=>dialog.locator('canvas').getAttribute('data-time')).not.toBe('5.000');
@@ -13,12 +13,12 @@ test('large viewer, real sweep/scroll, hover, freeze, keyboard and download',asy
 });
 test('ten-minute actual replay soak',async({page},info)=>{
  test.skip(process.env.ECG_SOAK!=='1','Set ECG_SOAK=1 to run the actual ten-minute timing test.');test.setTimeout(660000);
- await page.goto('/');await expect(page.getByLabel('자료 길이')).toBeVisible();await page.getByLabel('자료 길이').selectOption('long');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();await page.getByRole('button',{name:'처음으로',exact:true}).click();await page.getByRole('button',{name:'재생',exact:true}).click();
+ await page.goto('/?route=lab')  /* AP-12: story shell is the default start screen */;await expect(page.getByLabel('자료 길이')).toBeVisible();await page.getByLabel('자료 길이').selectOption('long');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();await page.getByRole('button',{name:'처음으로',exact:true}).click();await page.getByRole('button',{name:'재생',exact:true}).click();
  await page.waitForTimeout(605000);await expect(page.getByRole('button',{name:'재생',exact:true})).toBeVisible();await expect(page.locator('canvas')).toHaveAttribute('data-time','600.000');await page.screenshot({path:info.outputPath('10-minute-end.png')});
 });
 
 test('Difference follows playback in both viewer sizes and retains physical axis ticks',async({page},info)=>{
- await page.goto('/');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
+ await page.goto('/?route=lab')  /* AP-12: story shell is the default start screen */;await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
  for(const large of [false,true]){
   if(large)await page.getByRole('button',{name:'크게 비교'}).click();
   const viewer=large?page.getByRole('dialog'):page.locator('.viewer');
@@ -56,7 +56,7 @@ test('archive, experiment evidence and legacy analysis assets are usable',async(
   const asset=await request.get('/legacy/'+name);expect(asset.ok(),name).toBeTruthy();
   if(name.endsWith('.js'))expect(asset.headers()['content-type']).toMatch(/javascript/);
  }
- await page.goto('/');await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
+ await page.goto('/?route=lab')  /* AP-12: story shell is the default start screen */;await expect(page.getByRole('button',{name:'크게 비교'})).toBeEnabled();
  await page.getByRole('button',{name:'전체 근거',exact:true}).click();
  expect(archive.evidence.rows.length).toBeGreaterThan(0);
  await expect(page.locator('.evidence tbody tr')).toHaveCount(archive.evidence.rows.length);

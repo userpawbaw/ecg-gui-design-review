@@ -1,0 +1,290 @@
+{
+ "summary": {
+  "FAIL": 8,
+  "WARN": 5
+ },
+ "issues": [
+  {
+   "kind": "strain",
+   "status": "FAIL",
+   "area_cm2": 268.18,
+   "regions": [
+    "pelvis.R",
+    "pelvis.L",
+    "spine"
+   ],
+   "centre": [
+    -0.01,
+    -0.008,
+    0.101
+   ],
+   "tris": 2350,
+   "hand": false,
+   "s1_max": 2.93,
+   "s2_min": 0.06
+  },
+  {
+   "kind": "strain",
+   "status": "FAIL",
+   "area_cm2": 180.49,
+   "regions": [
+    "upper_arm.L",
+    "spine"
+   ],
+   "centre": [
+    0.225,
+    -0.119,
+    0.409
+   ],
+   "tris": 878,
+   "hand": false,
+   "s1_max": 3.81,
+   "s2_min": 0.53
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 66.95,
+   "regions": [
+    "shin.R"
+   ],
+   "centre": [
+    -0.302,
+    -0.221,
+    0.046
+   ],
+   "tris": 320,
+   "hand": false,
+   "against": [
+    "thigh.R",
+    "forearm.R",
+    "palm"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 63.88,
+   "regions": [
+    "thigh.R"
+   ],
+   "centre": [
+    -0.309,
+    -0.189,
+    0.052
+   ],
+   "tris": 236,
+   "hand": false,
+   "against": [
+    "shin.R",
+    "forearm.R",
+    "palm"
+   ]
+  },
+  {
+   "kind": "strain",
+   "status": "FAIL",
+   "area_cm2": 63.43,
+   "regions": [
+    "upper_arm.R"
+   ],
+   "centre": [
+    -0.2,
+    0.067,
+    0.381
+   ],
+   "tris": 405,
+   "hand": false,
+   "s1_max": 3.05,
+   "s2_min": 0.76
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 40.92,
+   "regions": [
+    "thigh.L",
+    "pelvis.L",
+    "pelvis.R"
+   ],
+   "centre": [
+    0.078,
+    -0.024,
+    0.124
+   ],
+   "tris": 193,
+   "hand": false,
+   "against": [
+    "spine",
+    "pelvis.L",
+    "pelvis.R"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 33.47,
+   "regions": [
+    "forearm.R",
+    "palm",
+    "f_pinky"
+   ],
+   "centre": [
+    -0.292,
+    -0.224,
+    0.073
+   ],
+   "tris": 310,
+   "hand": false,
+   "against": [
+    "shin.R",
+    "thigh.R"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 27.46,
+   "regions": [
+    "spine",
+    "pelvis.L",
+    "pelvis.R"
+   ],
+   "centre": [
+    0.065,
+    -0.042,
+    0.165
+   ],
+   "tris": 137,
+   "hand": false,
+   "against": [
+    "thigh.L",
+    "pelvis.L",
+    "pelvis.R"
+   ]
+  },
+  {
+   "kind": "strain",
+   "status": "WARN",
+   "area_cm2": 41.96,
+   "regions": [
+    "spine",
+    "thigh.R"
+   ],
+   "centre": [
+    -0.022,
+    -0.027,
+    0.076
+   ],
+   "tris": 423,
+   "hand": false,
+   "s1_max": 1.87,
+   "s2_min": 0.13
+  },
+  {
+   "kind": "intersect",
+   "status": "WARN",
+   "area_cm2": 16.36,
+   "regions": [
+    "shin.L",
+    "thigh.L"
+   ],
+   "centre": [
+    0.198,
+    -0.278,
+    0.371
+   ],
+   "tris": 80,
+   "hand": false,
+   "against": [
+    "upper_arm.L"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "WARN",
+   "area_cm2": 14.03,
+   "regions": [
+    "thigh.L"
+   ],
+   "centre": [
+    0.158,
+    -0.267,
+    0.293
+   ],
+   "tris": 56,
+   "hand": false,
+   "against": [
+    "shin.L"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "WARN",
+   "area_cm2": 11.24,
+   "regions": [
+    "upper_arm.L"
+   ],
+   "centre": [
+    0.192,
+    -0.278,
+    0.375
+   ],
+   "tris": 84,
+   "hand": false,
+   "against": [
+    "shin.L",
+    "thigh.L"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "WARN",
+   "area_cm2": 10.14,
+   "regions": [
+    "shin.L"
+   ],
+   "centre": [
+    0.162,
+    -0.267,
+    0.292
+   ],
+   "tris": 65,
+   "hand": false,
+   "against": [
+    "thigh.L"
+   ]
+  }
+ ],
+ "limits": {
+  "strain": {
+   "body": {
+    "s1": 2.0,
+    "s2": 0.4
+   },
+   "hand": {
+    "s1": 2.6,
+    "s2": 0.3
+   }
+  },
+  "area_cm2": {
+   "strain": [
+    15,
+    60
+   ],
+   "crease": [
+    8,
+    25
+   ],
+   "intersect": [
+    8,
+    20
+   ]
+  },
+  "crease_deg": 60,
+  "floor_mm": [
+   5,
+   15
+  ]
+ }
+}

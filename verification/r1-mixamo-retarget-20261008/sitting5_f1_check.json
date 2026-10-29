@@ -1,0 +1,568 @@
+{
+ "title": "sitting5_f1",
+ "summary": {
+  "OK": 55,
+  "WARN": 4,
+  "FAIL": 3
+ },
+ "rows": [
+  {
+   "group": "ROM",
+   "name": "trunk flexion",
+   "value": 32.1,
+   "limit": 80,
+   "comfort": 50,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "trunk lateral",
+   "value": 0.5,
+   "limit": 30,
+   "comfort": 20,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "trunk rotation",
+   "value": 3.8,
+   "limit": 35,
+   "comfort": 25,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "neck extension",
+   "value": -28.0,
+   "limit": 70,
+   "comfort": 50,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "neck lateral",
+   "value": 3.2,
+   "limit": 45,
+   "comfort": 30,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "neck rotation",
+   "value": 7.9,
+   "limit": 80,
+   "comfort": 60,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "hip.L flexion",
+   "value": 147.7,
+   "limit": 125,
+   "comfort": 110,
+   "status": "FAIL",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "hip.L abduction",
+   "value": 18.7,
+   "limit": 45,
+   "comfort": 35,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "hip.L rotation internal",
+   "value": -21.4,
+   "limit": 40,
+   "comfort": 30,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "knee.L flexion",
+   "value": 92.5,
+   "limit": 150,
+   "comfort": 140,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "hinge",
+   "name": "knee.L bend direction",
+   "value": 9.9,
+   "limit": 90,
+   "comfort": 35,
+   "status": "OK",
+   "note": "0 = shin folds straight back; >90 = knee bends forward"
+  },
+  {
+   "group": "ROM",
+   "name": "ankle.L plantarflexion",
+   "value": -43.1,
+   "limit": 50,
+   "comfort": 40,
+   "status": "WARN",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "ankle.L turn",
+   "value": 5.1,
+   "limit": 35,
+   "comfort": 25,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "shoulder.L elevation",
+   "value": 104.7,
+   "limit": 180,
+   "comfort": 120,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "shoulder.L rotation internal",
+   "value": -110.7,
+   "limit": 70,
+   "comfort": 60,
+   "status": "FAIL",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "elbow.L flexion",
+   "value": 87.9,
+   "limit": 145,
+   "comfort": 125,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "hinge",
+   "name": "elbow.L bend direction",
+   "value": 0.0,
+   "limit": 90,
+   "comfort": 35,
+   "status": "OK",
+   "note": "0 = forearm folds forward onto the biceps"
+  },
+  {
+   "group": "hinge",
+   "name": "elbow.L hinge twist",
+   "value": -7.3,
+   "limit": 15,
+   "comfort": 8,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "forearm.L pronation",
+   "value": 25.7,
+   "limit": 80,
+   "comfort": 60,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "wrist.L flexion",
+   "value": 24.1,
+   "limit": 70,
+   "comfort": 50,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "wrist.L ulnar deviation",
+   "value": -12.1,
+   "limit": 35,
+   "comfort": 25,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_index.L MCP hyperextension",
+   "value": -6.8,
+   "limit": 20,
+   "comfort": 10,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_index.L PIP",
+   "value": 18.3,
+   "limit": 110,
+   "comfort": 95,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_index.L DIP",
+   "value": 39.8,
+   "limit": 80,
+   "comfort": 65,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_middle.L MCP hyperextension",
+   "value": -3.4,
+   "limit": 20,
+   "comfort": 10,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_middle.L PIP",
+   "value": 31.0,
+   "limit": 110,
+   "comfort": 95,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_middle.L DIP",
+   "value": 19.2,
+   "limit": 80,
+   "comfort": 65,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_ring.L MCP hyperextension",
+   "value": -1.7,
+   "limit": 20,
+   "comfort": 10,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_ring.L PIP",
+   "value": 43.0,
+   "limit": 110,
+   "comfort": 95,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_ring.L DIP",
+   "value": 15.4,
+   "limit": 80,
+   "comfort": 65,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_pinky.L MCP",
+   "value": 3.5,
+   "limit": 90,
+   "comfort": 75,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_pinky.L PIP",
+   "value": 30.1,
+   "limit": 110,
+   "comfort": 95,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_pinky.L DIP",
+   "value": 33.4,
+   "limit": 80,
+   "comfort": 65,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "hip.R flexion",
+   "value": 85.4,
+   "limit": 125,
+   "comfort": 110,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "hip.R abduction",
+   "value": 38.8,
+   "limit": 45,
+   "comfort": 35,
+   "status": "WARN",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "hip.R rotation external",
+   "value": 90.3,
+   "limit": 55,
+   "comfort": 45,
+   "status": "FAIL",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "knee.R flexion",
+   "value": 128.2,
+   "limit": 150,
+   "comfort": 140,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "hinge",
+   "name": "knee.R bend direction",
+   "value": 12.4,
+   "limit": 90,
+   "comfort": 35,
+   "status": "OK",
+   "note": "0 = shin folds straight back; >90 = knee bends forward"
+  },
+  {
+   "group": "ROM",
+   "name": "ankle.R plantarflexion",
+   "value": -36.3,
+   "limit": 50,
+   "comfort": 40,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "ankle.R turn",
+   "value": -20.6,
+   "limit": 35,
+   "comfort": 25,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "shoulder.R elevation",
+   "value": 62.0,
+   "limit": 180,
+   "comfort": 120,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "shoulder.R rotation internal",
+   "value": -64.0,
+   "limit": 70,
+   "comfort": 60,
+   "status": "WARN",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "elbow.R flexion",
+   "value": 66.1,
+   "limit": 145,
+   "comfort": 125,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "hinge",
+   "name": "elbow.R bend direction",
+   "value": 0.0,
+   "limit": 90,
+   "comfort": 35,
+   "status": "OK",
+   "note": "0 = forearm folds forward onto the biceps"
+  },
+  {
+   "group": "hinge",
+   "name": "elbow.R hinge twist",
+   "value": 8.9,
+   "limit": 15,
+   "comfort": 8,
+   "status": "WARN",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "forearm.R pronation",
+   "value": 6.8,
+   "limit": 80,
+   "comfort": 60,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "wrist.R extension",
+   "value": -30.1,
+   "limit": 70,
+   "comfort": 45,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "wrist.R radial deviation",
+   "value": 12.5,
+   "limit": 20,
+   "comfort": 15,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_index.R MCP",
+   "value": 12.0,
+   "limit": 90,
+   "comfort": 75,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_index.R PIP",
+   "value": 50.3,
+   "limit": 110,
+   "comfort": 95,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_index.R DIP",
+   "value": 27.6,
+   "limit": 80,
+   "comfort": 65,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_middle.R MCP",
+   "value": 25.0,
+   "limit": 90,
+   "comfort": 75,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_middle.R PIP",
+   "value": 23.1,
+   "limit": 110,
+   "comfort": 95,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_middle.R DIP",
+   "value": 6.3,
+   "limit": 80,
+   "comfort": 65,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_ring.R MCP",
+   "value": 12.9,
+   "limit": 90,
+   "comfort": 75,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_ring.R PIP",
+   "value": 30.8,
+   "limit": 110,
+   "comfort": 95,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_ring.R DIP",
+   "value": 9.6,
+   "limit": 80,
+   "comfort": 65,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_pinky.R MCP hyperextension",
+   "value": -2.3,
+   "limit": 20,
+   "comfort": 10,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_pinky.R PIP",
+   "value": 16.6,
+   "limit": 110,
+   "comfort": 95,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "ROM",
+   "name": "f_pinky.R DIP",
+   "value": 26.5,
+   "limit": 80,
+   "comfort": 65,
+   "status": "OK",
+   "note": ""
+  },
+  {
+   "group": "collide",
+   "name": "chest ↔ thigh.L penetration",
+   "value": 15.6,
+   "limit": 45,
+   "comfort": 25,
+   "status": "OK",
+   "note": "% of summed radii"
+  },
+  {
+   "group": "collide",
+   "name": "upper.L ↔ thigh.L penetration",
+   "value": 21.2,
+   "limit": 45,
+   "comfort": 25,
+   "status": "OK",
+   "note": "% of summed radii"
+  }
+ ]
+}

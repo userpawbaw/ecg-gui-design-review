@@ -1,0 +1,81 @@
+# Mixamo 동작 → v3 Rigify 리그 리타깃 시험 (2026-10-08)
+
+사용자 지시(REVIEW-R1-WEB-20261008 §3-1): 도입부 사람을 story와 같은 모델로, 사다리 오르는 자세로 나타났다 사라진 뒤 사다리 오른쪽 바닥에 무릎을 안고 앉음. 사다리 오르기는 멈춘 한 자세(나타나고 사라지는 효과만), 필요하면 사다리 쪽을 고침. story는 의자 자세 그대로.
+원본: 사용자가 준 Mixamo `Climbing_Ladder.fbx`(24프레임), `Sitting_Idle.fbx`(327프레임) — 저장소에 넣지 않음(Adobe 약관상 원본 재배포 불가).
+만들기: `python scripts/assets/retarget-mixamo-v3.py <fbx> <frame> <out> [floor|free]`.
+
+## 방법
+뼈마다(부모부터) Mixamo 뼈의 월드 회전 변화(포즈 · 기본⁻¹)를, 우리 뼈를 Mixamo 기본(T자) 방향으로 먼저 돌린 틀에 적용 → 뼈 방향을 Mixamo 포즈 방향에 맞추는 보정. 팔·다리 FK, 척추는 FK 세 마디에 나눔, 손가락 포함 52 조절점. 엉덩이 이동은 키 비율(0.933). 바닥 자세는 가장 낮은 피부 점을 바닥에.
+
+## 결과 (`retarget_sheet.jpg`, 점토 정지)
+| 자세 | 관문 | 판단 |
+|---|---|---|
+| 사다리 오르기 1프레임 | FAIL 0, WARN 4(팔꿈치 비틀림, 손가락 MCP 과신전 −10°) | 그대로 쓸 만함 |
+| 바닥에 앉기 1프레임 | FAIL 3: 왼 엉덩관절 굽힘 148°(한계 125), 왼 어깨 안쪽 돌림 −111°(한계 70), 오른 엉덩관절 바깥 돌림 90°(한계 55) | 모션캡처의 실제 자세 값이라 우리 검증기 한계(보수적)를 넘는 것. 무릎을 끌어안은 자세의 특성. 피부: 왼쪽 옆구리·엉덩이 바닥 쪽에 접힘이 조금 남음 |
+
+## 고친 결함
+- 등 피부가 갈라짐: 척추 굽힘을 가슴 조절점 하나에 몰아 넣음 → FK 척추 세 마디에 나눔 + 피부 접힘 완화(Corrective Smooth, 다른 자세 렌더와 같은 설정).
+- 기본 자세 차이(Mixamo T자, 우리 A자): 우리 뼈를 T자 방향으로 먼저 돌린 뒤 회전 변화를 적용.
+
+## 남은 일
+1. 바닥 자세 FAIL 3을 모션캡처 예외로 받을지, 몸을 조금 뒤로 기울여 엉덩관절 굽힘을 줄일지(사용자 판단).
+2. 사다리: Mixamo 동작의 손·발 높이에서 가로대 간격을 재 우리 서고 사다리와 비교 → 사다리 간격을 고치거나 손발을 가로대에 붙임.
+3. 서고 배치(사다리 위 / 사다리 오른쪽 바닥), H5 고리 속성 넣어 웹 glb 내보내기, 심장 크기 조정(story에도 반영), 도입부 카메라·나타나기/사라지기 연출.
+
+## 2026-10-08 (later) — direct route: our mesh on a Mixamo skeleton (`scripts/assets/mixamo-rig-v3.py`)
+Run in parallel with the user's Mixamo auto-rig upload (user: "계획은 병렬로 시행해줘"). Result `direct_mixamo_skeleton_sheet.jpg`
+(4 views + buttock side, buttock back, chest close-ups), settings `WEIGHTS=auto ARMLEAK=0 MORPH=1 CS=1 BUTT=0 IRON=1 FLAT=0.035`.
+
+| Step | What changed | Effect |
+|---|---|---|
+| Same skeleton | Mixamo names/hierarchy; trunk and clavicles at the Y Bot's relative positions on our trunk | Back curve, head tilt and arm root follow the source (user review: hunch / turtle neck / dropped shoulder) |
+| MORPH=1 | Elbow at the Y Bot's upper-arm/forearm split of our arm length (mesh follows) | Left elbow–knee joint distance 11.8 cm vs source 11.0 cm (was 16.8 cm) |
+| Bone-heat weights | Fresh Blender automatic weights on the Mixamo skeleton instead of our Rigify DEF weights summed | Armpit webbing, back flaps and belly tears gone |
+| IRON | Taubin smoothing only around flipped triangles | Chest/belly specks: 678 → 5 flipped triangles (75 after the floor pass) |
+| FLAT | 3.5 cm soft floor contact | Buttock bottom flattened on the floor instead of pointed |
+
+Fidelity (cm, joints vs scaled source, pelvis-relative): knee 2.3, ankle 2.4, chest 3.4, neck 2.6, head 1.3, shoulder joints 3.7–3.9,
+elbows 4.3–4.6, wrists 4.7–4.8.
+
+deform-check (8 FAIL) — what is left:
+- strain clusters in the rest-fold zones (perineum 268 cm², left/right armpit 180/63 cm²): smooth in the close-ups (deform-qa.md §2 blind spot);
+- leg-leg intersections of the folded right leg (calf in hamstring, 64–67 cm²) and the right hand on the shin (contact): hidden from the
+  intro cameras, left as game rigs leave them (user: Y Bot reads natural because it does not squash overlaps);
+- thigh into lower belly at the groin fold (27–41 cm²).
+Not yet checked: the user's auto-rigged file (pending), the ladder pose on this rig, web export.
+
+## 2026-10-08 (later) — Mixamo auto-rig of our mesh (user upload) vs the direct route
+Files from the user: our `ecg_figure_v3_for_mixamo.fbx` auto-rigged on mixamo.com, downloaded with `Sitting_Idle` and `Climbing_Ladder`
+(kept outside the repository like the other Mixamo files). Same 53,286 vertices, same order and faces as `body_v3`, so results drop into
+our tools unchanged. 65-bone Mixamo skeleton, weights on 52 bones, ≤ 4 influences per vertex.
+
+`autorig_vs_direct_sheet.jpg`: row 1 auto-rig sitting, row 2 direct route (m9), row 3 auto-rig ladder frame 1.
+`autorig_vs_direct_closeups.jpg`: top auto-rig, bottom direct — chest, buttock side, buttock back, left armpit.
+
+User verdict: "자동 리깅이 훨씬 퀄리티가 높은 것 같은데." AI comparison agrees:
+- buttock: round on the floor (direct: pointed V at the thigh–buttock junction even after flattening);
+- armpit and back: smooth, natural fold (direct: a web toward the lat);
+- chest/belly: clean without any ironing pass (direct needed a flip-iron pass);
+- elbow on the knee: the forearm rests on the knee as in the source (elbow–knee joint distance 6.9 cm).
+Where Mixamo put the joints: elbow at a 50/50 split of shoulder→wrist (0.238 / 0.239 m); our Rigify fit had 0.32 / 0.21 m — the elbow
+was ≈ 4.9 cm too low, one cause of the earlier arm problems.
+
+**deform-check disagrees with the eye here** (`autorig_sit_deform.json`: 10 FAIL vs direct 8). Its FAILs are the rest-fold strain
+(perineum, armpits) and *intended contacts* (forearm on the knee, hand on the shin, folded leg). So deform-check is a locator, not a
+ranking: compare candidates with the close-ups. It needs contact allow-lists and rest-fold normalisation (deform-qa.md §2).
+Ladder export faces +y (180° from the sitting file) — yaw to fix when placing it in the archive.
+
+Decision (user): continue with the auto-rig; the direct route stops here (script kept for reference).
+
+## 2026-10-08 (later) — story chair pose + fist on the auto-rig (user: "의자 자세랑 주먹 테스트 렌더해서 비교해줘")
+`story_chair_fist_rigify_vs_autorig.jpg`, columns: Rigify open · auto-rig open · Rigify fist · auto-rig fist; rows: 3/4, right side,
+three hand close-ups (each centred on its own hand).
+- How: `chair-motion-v3.py` (`SAVE_NPY`) writes the story pose as Rigify bone world matrices (open, fist);
+  `scripts/assets/pose-to-mixamo-v3.py` gives each Mixamo bone the same world rotation from rest, the pelvis the same
+  translation, then a 2-bone IK puts each wrist back on the Rigify wrist (copied angles alone left the right hand ~5 cm
+  off, because the Mixamo elbow is ~5 cm higher). No Mixamo motion is used, only the auto-rig's skeleton and weights.
+- Flipped triangles (micro crumples): body 279 → 20 (open), 326 → 55 (fist); right hand 0 in all four.
+- By eye: the body is the same pose; the auto-rig hip/belly fold is smoother. The fist reads the same overall; the Rigify fist
+  has slightly crisper knuckles because Rigify has palm (metacarpal) bones and Mixamo does not. Small lumps on the back of the
+  auto-rig fist are the price.
+- Not done: breath keys on the auto-rig, the fist sequence's mid frames, chair contact check, web export.

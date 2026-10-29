@@ -1,0 +1,177 @@
+{
+ "made": "2026-10-17",
+ "baseline_dir": "A route captures (scripts/qa/frame-capture.cjs, no query) — kept outside the repo; re-derive from a fresh capture",
+ "keep": 0.8,
+ "allow": 1.25,
+ "note": "A route (D-070, adopted 2026-10-17), build at 4126f3d, SwiftShader msaa=0; dark%/lit% as bands after C2 round 1",
+ "frames": {
+  "bw@6": {
+   "baseline": {
+    "dark%": 11.0,
+    "L25": 15.3,
+    "lit%": 9.9,
+    "crisp20‰": 6.7,
+    "soft_area%": 11.9,
+    "edge": 14.9,
+    "empty%": 19.6
+   },
+   "min": {
+    "dark%": 8.8,
+    "lit%": 7.92,
+    "crisp20‰": 5.36,
+    "soft_area%": 9.52,
+    "edge": 11.92
+   },
+   "max": {
+    "L25": 20.12,
+    "empty%": 27.5,
+    "dark%": 19.3,
+    "lit%": 22.8
+   }
+  },
+  "ma@6": {
+   "baseline": {
+    "dark%": 37.6,
+    "L25": 5.4,
+    "lit%": 12.2,
+    "crisp20‰": 6.9,
+    "soft_area%": 6.9,
+    "edge": 14.6,
+    "empty%": 0.8
+   },
+   "min": {
+    "dark%": 30.08,
+    "lit%": 9.76,
+    "crisp20‰": 5.52,
+    "soft_area%": 5.52,
+    "edge": 11.68
+   },
+   "max": {
+    "L25": 7.75,
+    "empty%": 4.0,
+    "dark%": 53.88,
+    "lit%": 27.4
+   }
+  },
+  "pli@11": {
+   "baseline": {
+    "dark%": 48.9,
+    "L25": 7.2,
+    "lit%": 5.1,
+    "crisp20‰": 7.3,
+    "soft_area%": 3.6,
+    "edge": 15.9,
+    "empty%": 14.8
+   },
+   "min": {
+    "dark%": 39.12,
+    "lit%": 4.08,
+    "crisp20‰": 5.84,
+    "soft_area%": 2.88,
+    "edge": 12.72
+   },
+   "max": {
+    "L25": 10.0,
+    "empty%": 21.5,
+    "dark%": 68.57,
+    "lit%": 13.2
+   }
+  },
+  "pli@16": {
+   "baseline": {
+    "dark%": 22.0,
+    "L25": 11.2,
+    "lit%": 7.7,
+    "crisp20‰": 10.2,
+    "soft_area%": 18.1,
+    "edge": 22.0,
+    "empty%": 7.9
+   },
+   "min": {
+    "dark%": 17.6,
+    "lit%": 6.16,
+    "crisp20‰": 8.16,
+    "soft_area%": 14.48,
+    "edge": 17.6
+   },
+   "max": {
+    "L25": 15.0,
+    "empty%": 12.88,
+    "dark%": 33.6,
+    "lit%": 18.4
+   }
+  },
+  "pli@5": {
+   "baseline": {
+    "dark%": 45.7,
+    "L25": 0.5,
+    "lit%": 8.4,
+    "crisp20‰": 13.1,
+    "soft_area%": 7.5,
+    "edge": 21.5,
+    "empty%": 3.1
+   },
+   "min": {
+    "dark%": 36.56,
+    "lit%": 6.72,
+    "crisp20‰": 10.48,
+    "soft_area%": 6.0,
+    "edge": 17.2
+   },
+   "max": {
+    "L25": 1.62,
+    "empty%": 6.88,
+    "dark%": 64.41,
+    "lit%": 19.8
+   }
+  },
+  "pli@7": {
+   "baseline": {
+    "dark%": 45.4,
+    "L25": 3.1,
+    "lit%": 5.3,
+    "crisp20‰": 10.6,
+    "soft_area%": 7.5,
+    "edge": 19.8,
+    "empty%": 8.9
+   },
+   "min": {
+    "dark%": 36.32,
+    "lit%": 4.24,
+    "crisp20‰": 8.48,
+    "soft_area%": 6.0,
+    "edge": 15.84
+   },
+   "max": {
+    "L25": 4.88,
+    "empty%": 14.12,
+    "dark%": 64.02,
+    "lit%": 13.6
+   }
+  },
+  "pli@8.5": {
+   "baseline": {
+    "dark%": 41.8,
+    "L25": 2.2,
+    "lit%": 10.5,
+    "crisp20‰": 9.7,
+    "soft_area%": 9.8,
+    "edge": 19.6,
+    "empty%": 6.6
+   },
+   "min": {
+    "dark%": 33.44,
+    "lit%": 8.4,
+    "crisp20‰": 7.76,
+    "soft_area%": 7.84,
+    "edge": 15.68
+   },
+   "max": {
+    "L25": 3.75,
+    "empty%": 11.25,
+    "dark%": 59.34,
+    "lit%": 24.0
+   }
+  }
+ }
+}

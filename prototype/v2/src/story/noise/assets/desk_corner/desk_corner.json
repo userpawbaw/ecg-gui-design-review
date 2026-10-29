@@ -1,0 +1,35 @@
+{
+ "source": "scripts/assets/desk-corner-set.py",
+ "encoding": "webp sqrt(linear colour x light / scale)",
+ "scale": 0.87266,
+ "sun_to": [
+  -0.4216,
+  0.4015,
+  -0.8131
+ ],
+ "sun_angle_deg": 2.2,
+ "samples": 128,
+ "groups": {
+  "furn": {
+   "file": "furn.webp",
+   "size": 2048,
+   "fireflies": 315
+  },
+  "rug": {
+   "file": "rug.webp",
+   "size": 1024,
+   "fireflies": 57
+  },
+  "small": {
+   "file": "small.webp",
+   "size": 1024,
+   "fireflies": 186
+  },
+  "wall": {
+   "file": "wall.webp",
+   "size": 2048,
+   "fireflies": 228
+  }
+ },
+ "tris": 26676
+}

@@ -1,0 +1,131 @@
+{
+ "lm_scale": 4.0,
+ "encoding": "png sqrt(linear / lm_scale), albedo-free full lighting (direct + indirect)",
+ "size": 2048,
+ "samples": 128,
+ "groups": {
+  "shell": {
+   "object": "Archive_shell",
+   "file": "light_shell.webp"
+  },
+  "books": {
+   "object": "Archive_books",
+   "vertex_color": "COLOR_0 = sqrt(light / lm_scale)"
+  },
+  "decor": {
+   "object": "Archive_decor",
+   "vertex_color": "COLOR_0 = sqrt(light / lm_scale)"
+  }
+ },
+ "timing_s": {
+  "shell": 317.3,
+  "books": 37.0,
+  "decor": 87.3
+ },
+ "counts": {
+  "books": 5914,
+  "boxes": 227,
+  "binders": 624,
+  "rolls": 331
+ },
+ "sun": {
+  "to_dir": [
+   0.6488,
+   -0.5738,
+   -0.4998
+  ],
+  "color": [
+   1.0,
+   0.6938717365264893,
+   0.3915724754333496
+  ],
+  "energy": 11.0
+ },
+ "shots": {
+  "i1_wide": {
+   "pos": [
+    -0.35,
+    1.8,
+    -1.0
+   ],
+   "look": [
+    1.05,
+    1.2,
+    -4.0
+   ],
+   "fov_v_deg": 46
+  },
+  "i2_climb": {
+   "pos": [
+    -0.1,
+    1.9,
+    -1.3
+   ],
+   "look": [
+    0.55,
+    1.6,
+    -3.8
+   ],
+   "fov_v_deg": 46
+  },
+  "i3_floor": {
+   "pos": [
+    0.95,
+    0.65,
+    -2.7392
+   ],
+   "look": [
+    1.5,
+    0.38,
+    -4.4392
+   ],
+   "fov_v_deg": 38
+  }
+ },
+ "room": {
+  "min": [
+   -3.6,
+   0.0,
+   -5.0
+  ],
+  "max": [
+   3.6,
+   5.0,
+   5.0
+  ]
+ },
+ "figure": {
+  "location": [
+   1.5061,
+   -0.0006,
+   -4.4952
+  ],
+  "heart": [
+   1.5488,
+   0.2943,
+   -4.4832
+  ],
+  "heart_q_wxyz_blender": [
+   0.95615,
+   0.27406,
+   -0.03505,
+   -0.09716
+  ],
+  "hand_r": [
+   1.2547,
+   0.0647,
+   -4.1683
+  ]
+ },
+ "climb": {
+  "location": [
+   -0.44,
+   -0.1898,
+   -3.3102
+  ],
+  "pitch_x_rad": -0.32288591161895097,
+  "glb": "body_v3_ar_climb.glb",
+  "rung_dz": 0.2449996708846891
+ },
+ "web_encoding": "lightmaps libwebp q92 of sqrt-encoded PNG; glb gltf-transform optimize (meshopt, WebP <=1024, COLOR_0 kept, no simplify)"
+}

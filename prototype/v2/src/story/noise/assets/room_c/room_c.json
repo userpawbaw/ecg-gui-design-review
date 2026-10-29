@@ -1,0 +1,86 @@
+{
+ "source": "scripts/assets/desk-room-c.py",
+ "encoding": "webp sqrt(linear colour x light / scale)",
+ "scale": 1.81972,
+ "sun_to": [
+  -0.4501,
+  -0.2001,
+  -0.8703
+ ],
+ "sun_angle_deg": 1.0,
+ "samples": 128,
+ "room": {
+  "min": [
+   -3.6,
+   0.2,
+   0
+  ],
+  "max": [
+   2.6,
+   5.0,
+   3.9
+  ]
+ },
+ "window": [
+  2.6,
+  4.2,
+  0.0
+ ],
+ "skylights": [
+  [
+   -1.356,
+   4.106,
+   2.876
+  ],
+  [
+   1.046,
+   4.393,
+   3.666
+  ]
+ ],
+ "groups": {
+  "floor": {
+   "file": "floor.webp",
+   "size": 2048,
+   "fireflies": 682,
+   "saturated_pct": 0.0
+  },
+  "front": {
+   "file": "front.webp",
+   "size": 512,
+   "fireflies": 19,
+   "saturated_pct": 0.0
+  },
+  "furn": {
+   "file": "furn.webp",
+   "size": 2048,
+   "fireflies": 289,
+   "saturated_pct": 0.0
+  },
+  "roof": {
+   "file": "roof.webp",
+   "size": 2048,
+   "fireflies": 252,
+   "saturated_pct": 7.229
+  },
+  "rug": {
+   "file": "rug.webp",
+   "size": 1024,
+   "fireflies": 0,
+   "saturated_pct": 0.0
+  },
+  "small": {
+   "file": "small.webp",
+   "size": 1024,
+   "fireflies": 6,
+   "saturated_pct": 0.0
+  },
+  "walls": {
+   "file": "walls.webp",
+   "size": 2048,
+   "fireflies": 86,
+   "saturated_pct": 0.001
+  }
+ },
+ "tris": 64724
+}

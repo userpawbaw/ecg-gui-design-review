@@ -205,10 +205,11 @@
         "sha256": "2ac8389afc1519449a9cfdf7efd9fa36780a2177bb47ab58f7a7dda7d247dc8c",
         "bytes": 4453
       },
-      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene)",
+      "processing": "consumed by scripts/blender/build_lab_corner.py (joined into the baked lab-corner scene); scripts/assets/desk-lamp-story.py rebuilds it for the Story desk corner (moved to the desk front-right, turned to the keyboard, WebP textures; D-067)",
       "processed": null,
       "used_by": [
-        "prototype/spikes/lab-corner"
+        "prototype/spikes/lab-corner",
+        "prototype/v2/src/story/noise/assets/desk_lamp.glb"
       ],
       "review": "CC0 prop for the isometric lab-corner bake test (2026-09-25)."
     },
@@ -397,12 +398,13 @@
         "sha256": "f55226d46d27e05511f2118dc6aa24f5dbf9b6b2cddc87cc6e0e7dd067c00b11",
         "bytes": 1617810
       },
-      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder)",
+      "processing": "consumed by prototype/spikes/ref-repro build scripts (cropped/resized/encoded into the spike public folder); scripts/assets/build-intro.py → prototype/v2/src/story/intro/assets/",
       "processed": null,
       "used_by": [
-        "prototype/spikes/ref-repro"
+        "prototype/spikes/ref-repro",
+        "prototype/v2 R1 intro"
       ],
-      "review": "Globe colour source for the REF-004 repro (restyled in shader). NASA imagery is public domain; credit \"NASA Earth Observatory\" shown on the page."
+      "review": "Globe colour source for the REF-004 repro (restyled in shader). NASA imagery is public domain; credit \"NASA Earth Observatory\" shown on the page. 2026-10-09: the intro globe day map now uses nasa-bluemarble-200401-5400 (January); this file stays for the spikes."
     },
     {
       "id": "nasa-bluemarble-200407-B2",
@@ -1286,6 +1288,632 @@
       "processing": "none (source only)",
       "used_by": [],
       "review": "2026-09-26 download smoke test for a site without an API (D-022 follow-up). License.txt in the Drive folder: CC0 1.0. Not used by any page."
+    },
+    {
+      "id": "nasa-blackmarble-2012-3600",
+      "title": "NASA Black Marble 2012 (night lights, land/ocean/ice), 3600x1800",
+      "kind": "scene-source",
+      "status": "superseded",
+      "source": {
+        "type": "url",
+        "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/79000/79765/dnb_land_ocean_ice.2012.3600x1800.jpg",
+        "page": "https://visibleearth.nasa.gov/images/79765"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/nasa-blackmarble-2012-3600/dnb_land_ocean_ice.2012.3600x1800.jpg",
+        "sha256": "373e5a08c9f378a2ce6320214a613148e4b1e3946b3f39a516c9093b76cb7124",
+        "bytes": 794479
+      },
+      "processing": "scripts/assets/build-intro.py resizes into prototype/v2/public/intro/",
+      "processed": null,
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "Night side of the backlit globe (REF-001 EFX-001-02 night term). Credit NASA Earth Observatory. Superseded 2026-10-09 by nasa-blackmarble-2016-3km (globe v2)."
+    },
+    {
+      "id": "nasa-clouds-2048",
+      "title": "NASA Blue Marble clouds (combined), 2048x1024",
+      "kind": "scene-source",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57747/cloud_combined_2048.jpg",
+        "page": "https://visibleearth.nasa.gov/images/57747"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/nasa-clouds-2048/cloud_combined_2048.jpg",
+        "sha256": "daddaad84d7a33bbbc86cdda3f591099f57cee8607b7bcf3b67eb7e4f7a1c793",
+        "bytes": 829367
+      },
+      "processing": "packed into the globe channel texture by scripts/assets/build-intro.py",
+      "processed": null,
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "Cloud layer (REF-001 bump pack b channel equivalent). Credit NASA Earth Observatory."
+    },
+    {
+      "id": "makehuman-base-mesh",
+      "title": "MakeHuman base mesh (base.obj)",
+      "kind": "model",
+      "status": "superseded",
+      "source": {
+        "type": "url",
+        "url": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/3dobjs/base.obj",
+        "page": "https://github.com/makehumancommunity/makehuman/blob/master/LICENSE.md"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/makehuman-base-mesh/base.obj",
+        "sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
+        "bytes": 1749303
+      },
+      "processing": "scripts/assets/build-intro.py (Blender bpy): body group only, arms lowered, decimated, exported to prototype/v2/public/intro/body.glb + front silhouette polyline",
+      "processed": null,
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "MakeHuman assets (base mesh) are CC0 per LICENSE.md section C. Shown only as a rim-lit outline, no face. Superseded 2026-10-01 by blender-human-base-meshes (O-007: head/eye/mouth quality)."
+    },
+    {
+      "id": "blender-human-base-meshes",
+      "title": "Blender Studio Human Base Meshes bundle v1.0.0 (GEO-body_male_realistic: v2 and v3)",
+      "kind": "model",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://archive.org/download/human-base-meshes-bundle-v1.0.0/human-base-meshes-bundle-v1.0.0.zip",
+        "page": "https://archive.org/details/human-base-meshes-bundle-v1.0.0"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/blender-human-base-meshes/bundle.zip",
+        "sha256": "46a912c0524072ac3b78c35d5d2471df7b8df102394a050ca8cd7184e3393648",
+        "bytes": 34586814
+      },
+      "processing": "scripts/assets/build-intro-figure.py (bpy): multires applied, eyes removed, face/ears projected onto a smooth egg head, arms relaxed 6°, voxel remesh 3.2 mm, decimated to 105k tris, scaled to 1.666 m, shape key 'breath' → prototype/v2/src/story/intro/assets/body.glb",
+      "processed": "prototype/v2/src/story/intro/assets/body.glb",
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "Blender Studio release, CC0 (archive.org licenseurl publicdomain/zero/1.0). Featureless mannequin head by user request 2026-10-01.",
+      "processing_v3": "scripts/assets/build-figure-v3.py (bpy): GEO-body_male_realistic (user choice A 2026-10-03; --source stylized keeps candidate B), multires applied, egg head, arms relaxed 6°, voxel remesh 3.2 mm, decimate .2, 1.666 m, rig + seated on the archive ladder, right hand wrapped around the stile (geometric wrap), keys breath + grip, _SLICE → prototype/v2/src/story/intro/assets/body_seated_v3.glb (D-048)",
+      "processed_v3": "prototype/v2/src/story/intro/assets/body_seated_v3.glb"
+    },
+    {
+      "id": "hra-heart-male",
+      "title": "HuBMAP HRA reference organ: heart, male v1.3 (3d-vh-m-heart.glb)",
+      "kind": "model",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://cdn.humanatlas.io/digital-objects/ref-organ/heart-male/v1.3/assets/3d-vh-m-heart.glb",
+        "page": "https://3d.nih.gov/entries/3DPX-021000"
+      },
+      "licence": "CC-BY-4.0",
+      "attribution_required": true,
+      "attribution": "Heart model: HuBMAP Human Reference Atlas 3D reference organ (heart, male), CC BY 4.0, created using data from the Visible Human Male, provided by the National Library of Medicine. Modified (chambers unioned, openings closed, vessel stubs added, scaled 1.25×).",
+      "original": {
+        "file": "assets/source/hra-heart-male/3d-vh-m-heart.glb",
+        "sha256": "689df039c8bc264ea06a44cd926762976f0666c0ff2dc532d046409b185e6b0c",
+        "bytes": 4071772
+      },
+      "processing": "scripts/assets/build-intro-figure.py (bpy): atria/ventricles/septum + valve plugs unioned, atrial through-holes closed (voxel closing r 9 mm), short aorta/pulmonary trunk stubs, outer shell only, decimated → prototype/v2/src/story/intro/assets/heart.glb",
+      "processed": "prototype/v2/src/story/intro/assets/heart.glb",
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "CC BY 4.0 (cdn.humanatlas.io metadata). Attribution must appear in the exhibit credits. Cite Ackerman 1998 / Spitzer et al. 1996 per NIH 3D entry."
+    },
+    {
+      "id": "ph-wooden_ladder",
+      "title": "Poly Haven model wooden_ladder (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_ladder/wooden_ladder_1k.gltf",
+        "page": "https://polyhaven.com/a/wooden_ladder"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-wooden_ladder/wooden_ladder_1k.gltf",
+        "sha256": "ad20acb57354f726ef0970ba8e1e02ac12028581173d02b941a8dcf0325c333c",
+        "bytes": 4390
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-cardboard_box_01",
+      "title": "Poly Haven model cardboard_box_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cardboard_box_01/cardboard_box_01_1k.gltf",
+        "page": "https://polyhaven.com/a/cardboard_box_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-cardboard_box_01/cardboard_box_01_1k.gltf",
+        "sha256": "6038bcc5bba5a08a5f6643a265977e37e3d14553e62981e144c33a89f10b78e1",
+        "bytes": 2903
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-binder_notebook",
+      "title": "Poly Haven model binder_notebook (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/binder_notebook/binder_notebook_1k.gltf",
+        "page": "https://polyhaven.com/a/binder_notebook"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-binder_notebook/binder_notebook_1k.gltf",
+        "sha256": "714596552fad383ae3ca76d42038b03a20b6864d6ef5bc6d12620ac21fef1b1e",
+        "bytes": 4309
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-drawer_cabinet",
+      "title": "Poly Haven model drawer_cabinet (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/drawer_cabinet/drawer_cabinet_1k.gltf",
+        "page": "https://polyhaven.com/a/drawer_cabinet"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-drawer_cabinet/drawer_cabinet_1k.gltf",
+        "sha256": "899581e6a041644139a138f909c6ba001684cc55b5d1702e08f01094e20d0617",
+        "bytes": 8031
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-vintage_wooden_drawer_01",
+      "title": "Poly Haven model vintage_wooden_drawer_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_wooden_drawer_01/vintage_wooden_drawer_01_1k.gltf",
+        "page": "https://polyhaven.com/a/vintage_wooden_drawer_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-vintage_wooden_drawer_01/vintage_wooden_drawer_01_1k.gltf",
+        "sha256": "d39f4172d6fcbb285272168d585f4929c3ed27f05e7101d4fe1c4580408fb8e1",
+        "bytes": 11491
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-hanging_industrial_lamp",
+      "title": "Poly Haven model hanging_industrial_lamp (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_industrial_lamp/hanging_industrial_lamp_1k.gltf",
+        "page": "https://polyhaven.com/a/hanging_industrial_lamp"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-hanging_industrial_lamp/hanging_industrial_lamp_1k.gltf",
+        "sha256": "97e31aac7c350bc40294e78f39f66d5aa998ac2703be1d09b5dab9ae7027876f",
+        "bytes": 5436
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-television_02",
+      "title": "Poly Haven model television_02 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/television_02/television_02_1k.gltf",
+        "page": "https://polyhaven.com/a/television_02"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-television_02/television_02_1k.gltf",
+        "sha256": "8e7d7cb6bbdb5713b7d4ed21ece7c0f9c41912359c2c0f5065b7e77f5bf4cdcf",
+        "bytes": 2767
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-power_box_01",
+      "title": "Poly Haven model power_box_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/power_box_01/power_box_01_1k.gltf",
+        "page": "https://polyhaven.com/a/power_box_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-power_box_01/power_box_01_1k.gltf",
+        "sha256": "edb54e68fb1229e9f59906459d782c2ddc576f6bd1141cf09ad864f48d7cb93b",
+        "bytes": 4417
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-modular_electric_cables",
+      "title": "Poly Haven model modular_electric_cables (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modular_electric_cables/modular_electric_cables_1k.gltf",
+        "page": "https://polyhaven.com/a/modular_electric_cables"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-modular_electric_cables/modular_electric_cables_1k.gltf",
+        "sha256": "f9292a9eff5bea32dde06356633da84615c508c9c0ee0246fc96c301cfd71fe8",
+        "bytes": 82607
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-wooden_crate_01",
+      "title": "Poly Haven model wooden_crate_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_crate_01/wooden_crate_01_1k.gltf",
+        "page": "https://polyhaven.com/a/wooden_crate_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-wooden_crate_01/wooden_crate_01_1k.gltf",
+        "sha256": "fd9c6073acfc671e12b64666053f2805ae33aff5d3dbbcfe5c97c08c06644927",
+        "bytes": 5612
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-vintage_suitcase",
+      "title": "Poly Haven model vintage_suitcase (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_suitcase/vintage_suitcase_1k.gltf",
+        "page": "https://polyhaven.com/a/vintage_suitcase"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-vintage_suitcase/vintage_suitcase_1k.gltf",
+        "sha256": "5d040fdb26c5d97d5d60518ef4875cc72effcabe0a5f68f50e8970013e57a589",
+        "bytes": 15481
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-painted_wooden_table",
+      "title": "Poly Haven model painted_wooden_table (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_table/painted_wooden_table_1k.gltf",
+        "page": "https://polyhaven.com/a/painted_wooden_table"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-painted_wooden_table/painted_wooden_table_1k.gltf",
+        "sha256": "7e1ba86ae2c570e3464c42556e4e6cc09186a99127b86eaf54e7dbecb2fbafc3",
+        "bytes": 2830
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-wooden_stool_01",
+      "title": "Poly Haven model wooden_stool_01 (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_stool_01/wooden_stool_01_1k.gltf",
+        "page": "https://polyhaven.com/a/wooden_stool_01"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-wooden_stool_01/wooden_stool_01_1k.gltf",
+        "sha256": "f28566454af27175839c10645a37a2a16b373e4be8aecddd0d8a3d704cfc0330",
+        "bytes": 2715
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "ph-medical_box",
+      "title": "Poly Haven model medical_box (1k glTF)",
+      "kind": "model",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/medical_box/medical_box_1k.gltf",
+        "page": "https://polyhaven.com/a/medical_box"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-medical_box/medical_box_1k.gltf",
+        "sha256": "ae52391cf95b6ec6505530ad00c098a5bafb173f39371296da3ce9db6808f01f",
+        "bytes": 8820
+      },
+      "processing": "scripts/blender/build_archive.py: imported, scaled to a target height, placed in the R1 archive stacks (D-046)",
+      "processed": null,
+      "used_by": [
+        "R1 archive stills (verification/r1-archive-20261001)"
+      ],
+      "review": "Poly Haven assets are CC0."
+    },
+    {
+      "id": "quaternius-ubc",
+      "title": "Quaternius Universal Base Characters (Standard, free) — Superhero_Male_FullBody",
+      "kind": "model",
+      "status": "candidate-not-selected",
+      "source": {
+        "type": "url",
+        "url": "https://quaternius.itch.io/universal-base-characters",
+        "page": "https://quaternius.itch.io/universal-base-characters"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/quaternius-ubc/Universal Base Characters[Standard]/Base Characters/Godot - UE/Superhero_Male_FullBody.gltf",
+        "sha256": "e7fcea214ecf8855afbf910b50de6f9c7d1decfb71ca28bad8a4481452dafeb4",
+        "bytes": 30989
+      },
+      "processing": "scripts/assets/figure-lineup.py (comparison render only)",
+      "used_by": [
+        "verification/r1-figure-v3-20261002 lineup (C)"
+      ],
+      "review": "License_Standard.txt in the pack: CC0 1.0. Game T-pose, muscular; not selected (D-048)."
+    },
+    {
+      "id": "oga-mannequiny",
+      "title": "Mannequiny — The Open 3D Mannequin 0.4.0 (GDQuest)",
+      "kind": "model",
+      "status": "candidate-not-selected",
+      "source": {
+        "type": "url",
+        "url": "https://opengameart.org/sites/default/files/glb-mannequiny-0.4.0.zip",
+        "page": "https://opengameart.org/node/184427"
+      },
+      "licence": "CC-BY-4.0",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/oga-mannequiny/glb-mannequiny-0.4.0.zip",
+        "sha256": "a592a9caad6ec2b6f191dbcaf3d1b4807b0aa4806b5d61114bcb75169cab0c0c",
+        "bytes": 452803
+      },
+      "processing": "scripts/assets/figure-lineup.py (comparison render only)",
+      "used_by": [
+        "verification/r1-figure-v3-20261002 lineup (D)"
+      ],
+      "review": "OpenGameArt page licence CC-BY 4.0. Mitten hands without fingers — the fist scene (F-030) is impossible; not selected (D-048)."
+    },
+    {
+      "id": "oga-basemesh-yw",
+      "title": "Base Rigged Stylized Humanoid Character (YW) by Girush",
+      "kind": "model",
+      "status": "rejected",
+      "source": {
+        "type": "url",
+        "url": "https://opengameart.org/sites/default/files/basemesh_a1_human_yw_by_girush_2.7z",
+        "page": "https://opengameart.org/node/190293"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/oga-basemesh-yw/basemesh.7z",
+        "sha256": "89b885ce4acb7663c236d4602b4f6e44e3384e153049f897f9b383ceee16aacb",
+        "bytes": 4577846
+      },
+      "processing": "none",
+      "used_by": [],
+      "review": "Anime-style low-poly base with hair; style mismatch, dropped from the lineup (D-048)."
+    },
+    {
+      "id": "ph-GreenChair_01",
+      "title": "Poly Haven — Green Chair 01 (1k glTF)",
+      "kind": "scene-source",
+      "status": "test-only",
+      "source": {
+        "type": "polyhaven",
+        "slug": "GreenChair_01",
+        "asset_type": "gltf",
+        "resolution": "1k",
+        "format": "gltf",
+        "page": "https://polyhaven.com/a/GreenChair_01",
+        "resolved_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/GreenChair_01/GreenChair_01_1k.gltf"
+      },
+      "licence": "CC0-1.0",
+      "attribution_required": false,
+      "original": {
+        "file": "assets/source/ph-GreenChair_01/GreenChair_01_1k.gltf",
+        "sha256": "d1e4946ac99ab9e64c82d802fe5cd49d962750e34b8d284762b3fe2b00ba8a45",
+        "bytes": 2695
+      },
+      "processing": "consumed by scripts/assets/chair-motion-v3.py (placed by ray casts under the R1 story figure; native scale)",
+      "processed": null,
+      "used_by": [
+        "verification/r1-chair-motion-20261006"
+      ],
+      "review": "CC0 open-frame wooden armchair: seat 0.464 m, armrests 0.21 m above the seat (seated elbow height) — replaces modern_arm_chair_01 for the D-053 story pose (its armrests sit 0.15 m over the seat, below the seated elbow). User 2026-10-06: '팔걸이 높은 의자로 바꿔서'."
+    },
+    {
+      "id": "nasa-blackmarble-2016-3km",
+      "title": "NASA Black Marble 2016 (night lights), 13500x6750",
+      "kind": "scene-source",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/144000/144898/BlackMarble_2016_3km.jpg",
+        "page": "https://visibleearth.nasa.gov/images/144898"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/nasa-blackmarble-2016-3km/BlackMarble_2016_3km.jpg",
+        "sha256": "230aac448ae68c358be433dd518888cccb3a85ccf66f7b44326441c324ad6725",
+        "bytes": 8106233
+      },
+      "processing": "scripts/assets/build-globe-textures.py: lights only (R - 0.55 B mask), 8192x4096 -> prototype/v2/src/story/intro/assets/earth_night.jpg",
+      "processed": null,
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "Night side of the backlit globe v2 (user 2026-10-09: too few city lights vs REF-001). Replaces nasa-blackmarble-2012-3600 in the intro. Credit NASA Earth Observatory."
+    },
+    {
+      "id": "nasa-gebco08-elev-5400",
+      "title": "NASA Blue Marble NG topography (GEBCO_08 land elevation), 5400x2700",
+      "kind": "scene-source",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/topography/gebco_08_rev_elev_5400x2700.jpg",
+        "page": "https://visibleearth.nasa.gov/images/73934/topography"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/nasa-gebco08-elev-5400/gebco_08_rev_elev_5400x2700.jpg",
+        "sha256": "97828a87bcb6549a527232455e478c5f9e4556f761b37d620a46446da17593ab",
+        "bytes": 1244508
+      },
+      "processing": "scripts/assets/build-globe-textures.py: grey 4096x2048 -> prototype/v2/src/story/intro/assets/earth_height.jpg",
+      "processed": null,
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "Relief height of the globe v2 (user 2026-10-09: polar relief barely visible). Credit NASA Earth Observatory / GEBCO."
+    },
+    {
+      "id": "nasa-bluemarble-200401-5400",
+      "title": "NASA Blue Marble Next Generation, January 2004, 5400x2700",
+      "kind": "scene-source",
+      "status": "active",
+      "source": {
+        "type": "url",
+        "url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/bmng-base/january/world.200401.3x5400x2700.jpg",
+        "page": "https://visibleearth.nasa.gov/images/73938/january-blue-marble-next-generation"
+      },
+      "licence": "public-domain",
+      "attribution_required": true,
+      "original": {
+        "file": "assets/source/nasa-bluemarble-200401-5400/world.200401.3x5400x2700.jpg",
+        "sha256": "99f5faad74efe985fbf1714c8be7296ca9999759a1215b65f99b7f1df278dde5",
+        "bytes": 1884678
+      },
+      "processing": "scripts/assets/build-globe-textures.py: 4096x2048 -> prototype/v2/src/story/intro/assets/earth_day.jpg",
+      "processed": null,
+      "used_by": [
+        "prototype/v2 R1 intro"
+      ],
+      "review": "Day side of the globe v2: January snow and ice make the backlit northern band bright as in REF-001 (July left it green). Credit NASA Earth Observatory."
     }
   ],
   "rejected": [

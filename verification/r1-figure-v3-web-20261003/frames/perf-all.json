@@ -1,0 +1,33 @@
+{
+ "label": "perf-all",
+ "extra": "",
+ "loadMs": 1128,
+ "bytes": {
+  "archive.json": 8684587,
+  "earth_day-BwYaYthw.jpg": 234590,
+  "earth_night-BmwY3jaA.jpg": 191271,
+  "earth_clouds-Bj8rsds_.jpg": 650620,
+  "floor_light-DvZlFicE.png": 130613,
+  "manifest.json": 9,
+  "figure-BsF5ifj1.json": 10292,
+  "body-DPatXu2U.glb": 2063564,
+  "heart-wJ2kQIC4.glb": 525080,
+  "light_shell-JsMZ5HJj.webp": 537130,
+  "rig_v3-mqSMpK66.glb": 65916
+ },
+ "errors": [
+  "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "timing": [
+  {
+   "p": 0.57,
+   "t": 3,
+   "ms": 869.5
+  },
+  {
+   "p": 0.62,
+   "t": 3,
+   "ms": 881.8
+  }
+ ]
+}

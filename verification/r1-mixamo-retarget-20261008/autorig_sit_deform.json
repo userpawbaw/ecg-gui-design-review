@@ -1,0 +1,310 @@
+{
+ "summary": {
+  "FAIL": 10,
+  "WARN": 4
+ },
+ "issues": [
+  {
+   "kind": "strain",
+   "status": "FAIL",
+   "area_cm2": 380.63,
+   "regions": [
+    "pelvis.R",
+    "spine",
+    "pelvis.L"
+   ],
+   "centre": [
+    -0.067,
+    -0.082,
+    0.114
+   ],
+   "tris": 1437,
+   "hand": false,
+   "s1_max": 8.64,
+   "s2_min": 0.11
+  },
+  {
+   "kind": "strain",
+   "status": "FAIL",
+   "area_cm2": 212.62,
+   "regions": [
+    "upper_arm.L",
+    "spine"
+   ],
+   "centre": [
+    0.199,
+    -0.084,
+    0.413
+   ],
+   "tris": 808,
+   "hand": false,
+   "s1_max": 7.55,
+   "s2_min": 0.2
+  },
+  {
+   "kind": "strain",
+   "status": "FAIL",
+   "area_cm2": 113.24,
+   "regions": [
+    "upper_arm.R",
+    "spine"
+   ],
+   "centre": [
+    -0.167,
+    0.08,
+    0.394
+   ],
+   "tris": 283,
+   "hand": false,
+   "s1_max": 3.76,
+   "s2_min": 0.86
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 81.26,
+   "regions": [
+    "shin.R",
+    "thigh.R"
+   ],
+   "centre": [
+    -0.264,
+    -0.263,
+    0.081
+   ],
+   "tris": 358,
+   "hand": false,
+   "against": [
+    "thumb",
+    "thigh.R",
+    "palm"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 75.3,
+   "regions": [
+    "thigh.R"
+   ],
+   "centre": [
+    -0.279,
+    -0.207,
+    0.099
+   ],
+   "tris": 221,
+   "hand": false,
+   "against": [
+    "shin.R",
+    "forearm.R",
+    "palm"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 68.7,
+   "regions": [
+    "thigh.L",
+    "pelvis.R",
+    "pelvis.L"
+   ],
+   "centre": [
+    0.037,
+    -0.07,
+    0.17
+   ],
+   "tris": 137,
+   "hand": false,
+   "against": [
+    "spine",
+    "pelvis.L",
+    "pelvis.R"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 51.55,
+   "regions": [
+    "thigh.L",
+    "shin.L"
+   ],
+   "centre": [
+    0.163,
+    -0.317,
+    0.365
+   ],
+   "tris": 260,
+   "hand": false,
+   "against": [
+    "upper_arm.L",
+    "forearm.L"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 42.88,
+   "regions": [
+    "upper_arm.L",
+    "forearm.L"
+   ],
+   "centre": [
+    0.159,
+    -0.314,
+    0.364
+   ],
+   "tris": 243,
+   "hand": false,
+   "against": [
+    "thigh.L",
+    "shin.L"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 40.18,
+   "regions": [
+    "forearm.R",
+    "thumb",
+    "palm"
+   ],
+   "centre": [
+    -0.249,
+    -0.254,
+    0.103
+   ],
+   "tris": 453,
+   "hand": true,
+   "against": [
+    "shin.R",
+    "thigh.R"
+   ]
+  },
+  {
+   "kind": "intersect",
+   "status": "FAIL",
+   "area_cm2": 35.04,
+   "regions": [
+    "spine",
+    "pelvis.L",
+    "pelvis.R"
+   ],
+   "centre": [
+    0.043,
+    -0.071,
+    0.173
+   ],
+   "tris": 178,
+   "hand": false,
+   "against": [
+    "thigh.L",
+    "pelvis.R",
+    "pelvis.L"
+   ]
+  },
+  {
+   "kind": "strain",
+   "status": "WARN",
+   "area_cm2": 26.52,
+   "regions": [
+    "spine"
+   ],
+   "centre": [
+    -0.015,
+    -0.055,
+    0.219
+   ],
+   "tris": 349,
+   "hand": false,
+   "s1_max": 1.01,
+   "s2_min": 0.06
+  },
+  {
+   "kind": "intersect",
+   "status": "WARN",
+   "area_cm2": 14.13,
+   "regions": [
+    "thigh.L"
+   ],
+   "centre": [
+    0.155,
+    -0.3,
+    0.309
+   ],
+   "tris": 51,
+   "hand": false,
+   "against": [
+    "shin.L",
+    "thigh.L"
+   ]
+  },
+  {
+   "kind": "crease",
+   "status": "WARN",
+   "area_cm2": 13.79,
+   "regions": [
+    "pelvis.R"
+   ],
+   "centre": [
+    -0.141,
+    -0.056,
+    0.16
+   ],
+   "tris": 13,
+   "hand": false
+  },
+  {
+   "kind": "intersect",
+   "status": "WARN",
+   "area_cm2": 10.82,
+   "regions": [
+    "shin.L",
+    "thigh.L"
+   ],
+   "centre": [
+    0.156,
+    -0.3,
+    0.312
+   ],
+   "tris": 75,
+   "hand": false,
+   "against": [
+    "thigh.L"
+   ]
+  }
+ ],
+ "limits": {
+  "strain": {
+   "body": {
+    "s1": 2.0,
+    "s2": 0.4
+   },
+   "hand": {
+    "s1": 2.6,
+    "s2": 0.3
+   }
+  },
+  "area_cm2": {
+   "strain": [
+    15,
+    60
+   ],
+   "crease": [
+    8,
+    25
+   ],
+   "intersect": [
+    8,
+    20
+   ]
+  },
+  "crease_deg": 60,
+  "floor_mm": [
+   5,
+   15
+  ]
+ }
+}

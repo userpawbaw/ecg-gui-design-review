@@ -222,3 +222,7 @@ CASE  cases/CASE-*.md
 규약을 만드는 것으로 끝내지 않는다. `scripts/check-uiux-records.cjs`를 `npm test`에 포함해 **기록 구조·근거·연결·provenance가 실제로 유지되는지 기계로 확인**한다.
 
 CASE는 프로젝트 사양이 아니다. 커리어/방법론/다른 프로젝트 이식을 위해 "왜 이런 시스템이 생겼는가"를 설명하는 해설 계층이다.
+
+## 경험 플레이북 (2026-10-09, D-057)
+
+작업 전에 `../playbook/README.md`의 권장 카드(P-*)를 먼저 본다. 카드의 근거는 여정(J-*)이 시행착오 순서대로 F/D/O/R을 꿰어 보여 준다. 형식·검사: `../playbook/01_FORMAT.md`, `npm run playbook:check`.

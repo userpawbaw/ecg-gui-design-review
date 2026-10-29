@@ -65,11 +65,21 @@ User-approved workflow: source-project analysis → independent design/prototype
 
 - Methodology-level changes to AI roles, tool orchestration, source of truth, validation, handoff, creative methods, or recording require a CASE update in the same work unit. Every D/R must have a valid CASE link or an explicit reason/deferral under `10_RECORD_KEEPING.md`; preserve the user → initial AI response → challenge → revised judgment → system sequence. The user authorized Dual Director orchestration implementation on 2026-09-19; historical approval-waiting notes describe the previous stage.
 
+## Experience playbook (2026-10-09)
+
+- `docs/playbook/` turns trial and error into reusable guidance: recommendation cards `P-*` ("when you are about to do X, do this, and this is the quality it reached") and journeys `J-*` (the chain of attempts that led there, each with its trigger, hypothesis, verdict and why it led to the next). Design rules and the user's framework review: `docs/playbook/00_DESIGN_RULES.md`; format and checks: `01_FORMAT.md` (D-057, CASE-007).
+- **Before starting** a production or improvement task, scan the `언제 읽나` column of `docs/playbook/README.md` and read the matching card. Taking a different route than a valid card requires stating which `재검토 조건` applies.
+- **When an improvement reaches a conclusion** (the user accepts a result, or one approach is dropped for another, or a result is accepted below the bar), in the same commit: add the journey node(s) and create/update the card. Verdicts: 채택 / 부분 채택 / 기각 / 타협 / 대체됨. Without the user's confirmation the card status is `잠정`. Never delete a superseded card; mark it `대체됨 → P-nnn`.
+- Journeys link F/D/O/R/verification instead of copying them. A user's later recollection that differs from the contemporaneous record is added beside it, not over it.
+- `npm run playbook:check` (in `npm test`) blocks missing fields/sections/chains/citations and padded content (placeholders, untraced generic advice, vague bullets, copied sentences). Do not pre-create empty cards; list unprocessed topics under README "정리 대기".
+
 ## Alpha / Beta creative tracks (2026-09-23)
 
 - Alpha/Beta are not renamed Director A/B. Both use explicit references; they differ by representation: Alpha is implementation-aware from the start, Beta is image-first then translated back to real UI.
 - Use the same Common Creative Packet and Reference Pack. If Beta is run after Alpha, do not leak Alpha-specific layout/component answers into Beta first pass unless the user explicitly requests a derivative image.
 - Freeze Alpha and Beta before cross-review. User visual alignment precedes final implementation choice.
+- Screen ideation from references is co-ideation with the user (`20` Step 5A, D-039, 2026-09-29): per beat, offer 2–4 grounded options (at least one bold) with implementation know-how and data-contract risk, record the user's reactions in `rounds/<R>/IDEA-*.md`, and concretize only the directions the user keeps. Never proxy this step in autopilot; feasibility review looks for ways to reach the target, not reasons to shrink it.
+- Text is designed, not placed (D-044, 2026-09-29/30): whenever a screen has text (titles, labels, annotations, numbers, hints, buttons, footnotes), research references and propose layout, size contrast, type tiers and motion so text reads at the same level as the visual data — including text elements the user did not point out. Checklist `11_CHECKLISTS.md` §14.
 - For Beta, image generation is a cheap design artifact, not the goal. Actual implementation must reuse canonical waveform/data/state and rebuild components/motion in code.
 - Chat owns creative/reference/image generation and cross-review; Work/Codex own multi-file implementation, runtime, screenshots, Playwright and target-like QA.
 

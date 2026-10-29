@@ -19,6 +19,16 @@
       "id": "UI-02",
       "status": "approved_in_redesign_2026-09-26",
       "task": "Sweep leading-edge glow inside the redesign; spec after comparison per docs/22 §4 (D-035)"
+    },
+    {
+      "id": "R1-INTRO",
+      "status": "archive_space_in_progress_2026-10-02",
+      "task": "R1 intro rework per docs/uiux_system/rounds/R1/PLAN-R1-INTRO-STORY-V2.md (single plan; §9 = resume checklist). Done: P0 Hangul tracking, P1 human (Blender Studio CC0 featureless mannequin) + heart (HRA CC BY), user chose ring look; P2 grid space rejected by user (\"space is empty\") -> D-046 ECG record archive stacks (R3) + blind sunlight (R2) + figure seated on ladder (S1), scenario rounds/R1/SPACE-R1-ARCHIVE.md. In progress: archive rebake/packaging, H3b+H3c vs H5 comparison stills (user then decides mesh remake with own reference images), web integration opt-in ?look=archive (archive.ts + introStage, unverified). Later: P3 globe+descent, P4 text round, P5 story scenes."
+    },
+    {
+      "id": "R1-NEXT-SCREENS",
+      "status": "flow_recorded_queued_after_R1-INTRO",
+      "task": "Noise-by-noise scenes after the intro (PLI -> baseline wander -> muscle): user flow and AI flow analysis recorded in docs/uiux_system/rounds/R1/IDEA-R1-NOISE.md (F-028). After the intro is implemented: option round, stack check, then the user's further feedback on grid/bars/Lab handoff. | 2026-10-02: story re-planned inside the archive (SPACE-R1-ARCHIVE §4; split screen, camera signatures, grip = hand on ladder stile, F-030)."
     }
   ],
   "automation": {
@@ -30,7 +40,14 @@
     "timezone": "Asia/Seoul",
     "verified": "Automation update succeeded on 2026-09-16: repository-wide lock instructions removed; remote-SHA refresh, Git conflict checks and resource-scoped duplicate avoidance retained."
   },
-  "active_jobs": [],
+  "active_jobs": [
+    {
+      "resource": "archive light/art stills: scripts/blender/build_archive.py (--art r3..r6, --dress), verification/r1-archive-art-*, docs/uiux_system/rounds/R1/REVIEW-R1-ARCHIVE-ART-20261009.md",
+      "owner": "separate archive-light session (handoff docs/uiux_system/handoffs/HANDOFF_ARCHIVE_LIGHT_2026-10-10.md)",
+      "since": "2026-10-10",
+      "note": "Story work continues in the R1 session; it does not edit these files. Records (D/F/PLAN/WORKLOG) are shared: check the latest number before committing."
+    }
+  ],
   "concurrency": {
     "mode": "git_and_resource_scoped",
     "policy_version": "1.2",
@@ -102,7 +119,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "R4 target-PC verification remains an independent blocked task. Other documentation, UI/UX design and branch-based code work may proceed after refreshing remote refs and checking only actual file/resource conflicts.",
+  "next_action": "R1 (2026-10-06): D-053 — story all on the measurement chair, intro only differs; fist at video speed (close ~0.56 s, open ~0.39 s); breath 2 per 10 s (2.0 s in / 3.0 s out). Fist finger closure being rebuilt (middle/ring/pinky together). Read PLAN-R1-INTRO-STORY-V2 §9.8, §9.7, §9.6. Next: chair pose + fist on thigh + breath preview, per-noise inflow markers plan, then brief 3.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -117,7 +134,7 @@
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
   "request_status": "completed",
   "schema_version": 3,
-  "updated_at": "2026-09-27T12:00:00+09:00",
+  "updated_at": "2026-10-05",
   "verification": [
     {
       "evidence": "docs/18_swt_audit_and_ui_revision.md",
@@ -387,7 +404,7 @@
       }
     },
     "round1": {
-      "status": "step1 FROZEN 2026-09-27",
+      "status": "autopilot branch: steps 3–10 done, awaiting user review",
       "doc": "docs/uiux_system/rounds/R1/R1_STEP1_PACKET_AND_REFERENCE_PACK.md",
       "decision": "D-036",
       "reference_pack": [
@@ -400,7 +417,7 @@
       ],
       "central_story": "S1",
       "user_questions": [],
-      "next": "Step 3 BETA-R1-001 in a separate agent context (packet + REF records only, never ALPHA-R1-001); test the image generator with one still first; then Step 4 cross-review",
+      "next": "user reviews the autopilot result; fix per AP feedback on this branch, or restart from claude/optimistic-goldberg-jnzpni 1570dd4 at Step 4",
       "input_device": "mouse wheel + click",
       "ref006": "effect record REF-006 (EFX-006-01..05)",
       "alpha": "ALPHA-R1-001 frozen first pass (docs/uiux_system/rounds/R1/ALPHA-R1-001.md)",
@@ -409,7 +426,13 @@
       "restart_point": {
         "note": "User away for hours (2026-09-27). Autopilot continues on branch claude/r1-autopilot-recommended with every user decision taken as the recommended option. If that result is unrecoverable, the user restarts HERE and reviews each decision point from Step 3 (Beta breakdown) onward.",
         "autopilot_branch": "claude/r1-autopilot-recommended"
-      }
+      },
+      "beta": "BETA-R1-001 frozen",
+      "cross_review": "AB-R1-001 (AI proxy alignment)",
+      "hybrid": "HYB-R1-001 (D-038, auto-adopted)",
+      "implementation": "prototype/v2/src/story/",
+      "report": "docs/uiux_system/handoffs/R1_AUTOPILOT_REPORT_2026-09-27.md",
+      "auto_decisions": "docs/uiux_system/rounds/R1/AUTOPILOT_DECISIONS.md"
     }
   }
 }

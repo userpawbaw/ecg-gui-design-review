@@ -116,3 +116,9 @@ Awwwards/Godly/SiteInspire/Land-book/Lapa Ninja/CSS Design Awards 같은 공개 
 - 현재 설치된 Superdesign plugin 0.6.0 SKILL.md를 읽어 shell preflight/auth, init/resume, generation/refinement 구분을 확인했다. 과거 upstream pin은 위 이력이며 최신 upstream SHA를 새로 검증했다는 뜻이 아니다.
 - skill 작성은 설치된 skill-creator 지침을 사용했다. docs/skill 오프라인 검증이며 유료 generation/login/서비스 실측은 하지 않았다.
 - Chat/Codex/Work는 project-local Claude skill의 자동 발견을 가정하지 않고 AGENTS/MASTER/16을 직접 읽는다. 계정 전체 설치/hook은 이번 산출물이 아니다.
+
+## 자세 해부학 (2026-10-05)
+
+- project-local `pose-anatomy`: `.claude/skills/pose-anatomy/SKILL.md` + `references/rom.md`. 자체 작성(사용자 요청 2026-10-05, D-051 갱신, R-020). 수치 출처: AAOS 정상 관절 운동 범위, Luttgens & Hamilton 1997(WikEM 표), 일상동작 기능 범위 연구 2편, 양반다리 3D 동작 분석(BMC Musculoskelet Disord 2021), 아래팔 엎침 측정(PMC9091929). URL은 rom.md에 있다.
+- 공개 skill 검색 결과(2026-10-05): 리깅 기초(관절 종류·계층)와 MIT 라이선스 "blender-motion-state-inspection"(접지·발 미끄러짐·꼬임)만 있고 정지 자세 가동 범위 판정은 없었다. 후자는 "꼬임을 휘두름과 분리해 본다"는 생각만 참고했고 글·코드는 복제하지 않았다.
+- 실행 코드는 skill 밖 `scripts/assets/pose-check-v3.py`(빌드 관문)와 `pose-check-selftest.py`에 있다.

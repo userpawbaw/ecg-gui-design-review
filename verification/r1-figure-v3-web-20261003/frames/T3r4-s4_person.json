@@ -1,0 +1,27 @@
+{
+ "label": "T3r4-s4_person",
+ "extra": "&look=archive&shot=s4_person",
+ "loadMs": 3776,
+ "bytes": {
+  "archive.json": 8684587,
+  "manifest.json": 9,
+  "earth_night-BmwY3jaA.jpg": 191271,
+  "earth_day-BwYaYthw.jpg": 234590,
+  "earth_clouds-Bj8rsds_.jpg": 650620,
+  "floor_light-DvZlFicE.png": 130613,
+  "figure-BsF5ifj1.json": 10292,
+  "body-DPatXu2U.glb": 2063564,
+  "heart-wJ2kQIC4.glb": 525080,
+  "light_shell-B1D1nmva.webp": 524934
+ },
+ "errors": [
+  "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "timing": [
+  {
+   "p": 0.55,
+   "t": 3,
+   "ms": 3076
+  }
+ ]
+}

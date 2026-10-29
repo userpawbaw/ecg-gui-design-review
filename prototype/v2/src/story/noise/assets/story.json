@@ -1,0 +1,103 @@
+{
+ "source": "scripts/assets/story-export-v3.py (fist-v3 chair pose, gate FAIL 0)",
+ "frame": "blender figure frame (z up)",
+ "figure_anchor": [
+  0.0,
+  0.0087,
+  0.4313
+ ],
+ "morphs": [
+  "fist25",
+  "fist50",
+  "fist75",
+  "fist100",
+  "breath"
+ ],
+ "fist_s": [
+  0.25,
+  0.5,
+  0.75,
+  1.0
+ ],
+ "breath_scale": 0.8,
+ "ra_arc_m": 0.5585,
+ "sternum_v": 38609,
+ "electrodes": {
+  "RA": {
+   "v": 13670,
+   "p": [
+    -0.1215,
+    -0.0667,
+    0.9751
+   ],
+   "n": [
+    -0.3307,
+    -0.8529,
+    0.404
+   ]
+  },
+  "LA": {
+   "v": 40202,
+   "p": [
+    0.0877,
+    -0.0645,
+    1.0033
+   ],
+   "n": [
+    0.2679,
+    -0.8466,
+    0.4598
+   ]
+  },
+  "LL": {
+   "v": 33729,
+   "p": [
+    0.0922,
+    -0.0723,
+    0.6639
+   ],
+   "n": [
+    0.5465,
+    -0.8362,
+    0.0459
+   ]
+  }
+ },
+ "heart_approx": [
+  0.0184,
+  -0.0331,
+  0.873
+ ],
+ "cams": {
+  "ma": {
+   "loc": [
+    -0.06,
+    -0.72,
+    0.76
+   ],
+   "rot_euler": [
+    1.71059,
+    0.0,
+    -0.27372
+   ],
+   "type": "persp",
+   "lens": 16.0,
+   "sensor_width": 36.0
+  },
+  "side": {
+   "loc": [
+    -1.2,
+    -0.0145,
+    0.861
+   ],
+   "rot_euler": [
+    1.5708,
+    0.0,
+    -1.5708
+   ],
+   "type": "ortho",
+   "ortho_scale": 1.9
+  }
+ },
+ "archive_spot_note": "build_archive.py r2 chair_fit: anchor (-0.7505, 3.0995, 0.4372), yaw -0.0106 rad; web archive.glb (r1 bake) has no chair"
+}

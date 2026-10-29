@@ -1,0 +1,197 @@
+LIGHT-AWARE
+MODELING GUIDELINE
+조각난 빛을 위한 모델링 설계 · 차광 · 수광 · 깊이 · 핸드오프 매뉴얼
+목표: “모델링 후에 조명을 얹는” 방식에서 벗어나, 모델링 단계부터 어떤 빛이 어디서 잘리고 어디에 걸릴지 설계한다.
+Companion document to: 「조각난 빛의 설계 매뉴얼」 · 작성 기준 2026-10-04
+# 0. 이 가이드의 역할
+이 문서는 모델러가 Lookdev/Lighting 팀에 넘기기 전에 장면을 “빛에 반응할 준비가 된 상태”로 만드는 기준서다. 업계의 단일 표준 용어라기보다, film lighting의 flag/cutter/gobo/cucoloris 관행과 3D의 shadow linking·volumetric rendering·camera blocking을 하나의 모델링 프로세스로 묶은 실무 프레임워크다.
+핵심 문장: 모델은 형태만 만드는 것이 아니라, 빛이 통과할 구멍(aperture), 빛을 자를 물체(blocker), 빛이 머물 표면(receiver), 그리고 카메라가 읽을 깊이(layer)를 함께 만든다.
+모델러가 결정해야 할 것 | 질문 | 실패 신호
+Aperture | 빛은 어디서 들어오는가? | 광선 시작점이 화면 밖의 “마법의 빛”처럼 보임
+Blocker | 무엇이 빛을 큰 덩어리/중간/미세로 자르는가? | 모든 shaft가 같은 폭·간격
+Receiver | 어떤 면이 빛의 방향을 증명하는가? | 벽이 평평해 큰 밝기 패치만 생김
+Depth | FG/MID/BG가 서로 다른 속도로 가려지는가? | 카메라 이동에도 카드 한 장처럼 보임
+Handoff | Lighting이 geometry를 다시 뜯지 않고 조절 가능한가? | lookdev 단계에서 proxy blocker를 급조함
+권장 순서. 모델링 완료가 아니라 clay-light 검증까지를 “모델링 완료”로 본다.
+# 1. 핵심 사고방식: geometry는 빛의 필터다
+빛줄기 자체는 형태가 없다. 관객은 광선이 어디서 잘리고, 공기에서 어떻게 드러나며, 어느 면에 부딪혀 멈추는지를 통해 빛을 읽는다. 따라서 모델링 단계의 성공 여부는 polygon 수가 아니라 “명암 사건(light event)”의 수와 위계로 평가하는 편이 유용하다.
+큰 명암 사건: 창/보/벽이 주광을 2~4개의 명확한 덩어리로 나눈다.
+중간 사건: 프레임·난간·책·기둥이 큰 shaft 내부에 리듬을 만든다.
+작은 사건: 잎, perforation, wire, 얇은 패널이 texture를 부여한다.
+접촉 사건: bevel, recess, ledge가 surface 위에서 빛을 다시 끊는다.
+깊이 사건: foreground blocker가 카메라 이동 중 hero light를 잠깐 가린다.
+광원을 더하기 전에 blocker와 receiver 관계를 먼저 설계한다.
+# 2. 역할 분리: 보이는 구조와 빛을 만드는 구조
+고퀄리티 장면에서는 모든 그림자가 서사적으로 보이는 물체에서만 나올 필요가 없다. 실제 세트에서도 flag, cutter, gobo, cucoloris처럼 카메라 밖의 도구로 빛을 제어한다. 3D도 같은 방식으로 visible geometry와 lighting utility geometry를 분리하면 반복 속도와 통제력이 크게 좋아진다. Rosco는 gobo/cucoloris를 그림자와 texture를 만드는 도구로, ARRI는 flags/cutters를 spill을 자르는 grip 도구로 설명한다. [R1][R2]
+레이어 | 카메라 가시성 | 그림자 | 용도 | 네이밍 예
+SET_VISIBLE | 보임 | 필요 시 | 건축/가구/소품 | SET_wall_A
+BLOCKER_HERO | 대개 숨김 | 강함 | 큰 shaft 형태 | BLK_hero_01
+BLOCKER_BREAKUP | 숨김/부분 보임 | 중간 | 불규칙 texture | BLK_break_03
+RECEIVER_HERO | 보임 | 수광 | 핵심 밝기 패치 | RCV_frame_01
+NEGATIVE_FILL | 숨김 | 간접광 억제 | 어두운 기준점 확보 | NEG_fill_L
+규칙: 숨은 blocker는 “치팅”이 아니라 art-direction 장비다. 단, 카메라 이동 범위·반사·GI에 예상치 못하게 보이지 않도록 collection/visibility를 명확히 관리한다.
+# 3. Blocker 설계: 패턴 문법을 만든다
+## 3.1 대·중·소 3단계
+빛을 산산이 흩뜨리는 느낌은 작은 구멍을 많이 만드는 것으로 생기지 않는다. 먼저 큰 덩어리의 shadow composition이 있어야 작은 breakup이 의미를 가진다.
+1.  Hero cutter로 화면의 밝은 면적을 크게 두세 구역으로 나눈다.
+2.  건축적 blocker를 넣어 중간 리듬을 만든다. 간격을 완전 등분하지 않는다.
+3.  마지막에 organic/micro breakup을 10~20% 정도의 시각적 비중으로 더한다.
+4.  clay render에서 small breakup을 끄고도 composition이 성립하는지 확인한다.
+## 3.2 규칙성은 구조에, 불규칙성은 edge에
+창틀·보 같은 구조는 큰 방향을 설명하므로 비교적 규칙적이어도 된다.
+하지만 모든 칸의 폭·간격·두께가 같으면 procedural 패턴처럼 보인다. 한두 구간을 비워 hierarchy를 만든다.
+유기 blocker는 silhouette가 중요하다. 내부 mesh detail보다 구멍의 크기 분포와 edge frequency를 먼저 조절한다.
+“랜덤”을 목표로 하지 말고, 시선이 hero receiver 쪽으로 흐르도록 비대칭을 설계한다.
+# 4. Blocker 거리와 penumbra: 위치가 그림자 성격을 만든다
+광원 크기가 0이 아닌 경우 blocker 위치와 source size가 그림자 경계의 softness를 바꾼다.
+실무적으로는 그림자 패턴의 “모양”만 모델링하고 끝내지 말고, blocker를 어느 깊이에 둘지까지 asset의 일부로 본다. 얇은 프레임을 receiver 바로 앞에 두면 그래픽한 cut이 되고, 광원 쪽에 두면 더 넓고 부드러운 penumbra가 생긴다.
+원하는 인상 | Blocker 위치 경향 | 광원 경향 | 모델링/배치 메모
+선명한 architectural slit | receiver에 비교적 가까움 | 작거나 방향성 강함 | slat 두께와 실제 간격이 중요
+부드러운 잎 그림자 | receiver에서 떨어짐 | 면적 있는 source | 실루엣의 큰 덩어리 우선
+구름 사이 shaft | 매우 큰 원거리 occlusion | 태양형 directional | 실제 mesh보다 density/volume과 병행
+불규칙한 실내 햇빛 | 서로 다른 depth의 blocker 혼합 | hard key + 약한 fill | 한 plane에 모든 blocker를 놓지 않음
+# 5. Aperture 모델링: “빛의 출처”를 공간적으로 설명한다
+고급스러운 shaft는 출발점이 납득된다. 창문·천창·문틈·루버·구조 사이의 gap처럼 광원과 실내 사이에 aperture가 있어야 광선의 방향과 폭이 공간 구조에 묶인다.
+창문을 단순 plane hole로 끝내지 말고 depth를 준다: reveal, sill, lintel, frame 두께가 각각 다른 그림자 edge를 만든다.
+aperture 주변에 작은 bevel을 주면 grazing light에서 edge가 살아나고, 완전한 CG cutout 느낌이 줄어든다.
+태양 방향이 변할 예정이면 aperture 폭과 blocker depth가 애니메이션 범위 전체에서 shadow를 유지하는지 테스트한다.
+카메라가 source를 직접 보지 않아도, shaft가 어느 틈에서 시작했는지 추적 가능한 composition을 만든다.
+# 6. Receiver 모델링: 빛이 “걸리는” surface event를 설계한다
+수광면은 high-poly일 필요가 없다. 오히려 큰 평면과 얕은 깊이 변화의 대비가 중요하다. 한 벽에서 너무 많은 noise를 모델링하면 광선보다 geometry가 먼저 읽힌다.
+## 6.1 권장 구성
+큰 평면: shaft의 큰 밝기/어둠 패치를 읽을 canvas.
+얕은 recess: 내부가 0.5~수 cm만 들어가도 screen-space에서 contact shadow와 occlusion cue가 생긴다. 실제 크기에 맞춰 조절한다.
+ledge / trim / frame: 빛의 경계를 한 번 더 끊고 방향을 증명한다.
+bevel: 모든 모서리를 둥글게 하는 장식이 아니라, highlight가 걸릴 최소 폭을 확보하는 장치.
+두께(thickness): 완전한 single plane은 역광/틈새광에서 종이처럼 보이기 쉽다.
+## 6.2 비율은 “실제 단위 + 화면 단위”로 동시에 판단
+bevel 폭이나 recess 깊이는 하나의 숫자로 표준화하기 어렵다. 모델 실제 단위가 맞더라도 카메라에서 1~2px이면 의미가 없다. 반대로 너무 큰 bevel은 장난감처럼 보인다. 따라서 최종 카메라와 렌더 해상도에서 edge가 최소 몇 픽셀을 차지하는지 확인한다.
+# 7. 깊이와 Parallax: 카메라 이동에서 차이가 난다
+스크롤 기반 웹이나 카메라 이동 장면에서는 “빛이 보이는가”보다 “빛과 blocker가 서로 다른 깊이에서 움직이는가”가 공간감을 좌우한다. foreground에 얇은 구조를 하나 두고, mid structure와 hero receiver를 충분히 떨어뜨리면 작은 카메라 이동에도 가림 순서가 바뀐다.
+Layer | 역할 | 모델링 체크
+Foreground breaker | 빠른 parallax / 순간 가림 | 프레임 외부까지 mesh를 이어 camera pan에서 edge popping 방지
+Mid structure | 공간 스케일·occlusion | 보/난간/계단 등 실제 기능을 가진 구조 우선
+Hero receiver | 주요 light patch | 너무 많은 작은 detail 금지
+Background | negative space / bounce | 명도 기준점이 남도록 단순화
+# 8. Material-ready Modeling: 재질을 위한 구조
+모델링 단계에서 material ID 또는 face set을 미리 분리하면 lookdev가 roughness와 albedo variation을 표면 의미에 맞게 조절할 수 있다. shaft가 닿는 hero receiver 전체가 동일 roughness이면 명암 구조가 평평해 보일 수 있다.
+프레임의 front/side/recess를 별도 material slot 또는 face set으로 분리한다.
+실제 마모/먼지가 쌓일 법한 ledge와 cavity를 선택 가능하게 둔다.
+hero receiver에는 지나치게 작은 displacement를 모델로 굳히지 말고 shader 단계로 남긴다.
+glossy hero surface와 matte support surface를 구조적으로 구분하면 빛이 서로 다른 방식으로 읽힌다.
+# 9. Invisible Art-Direction Geometry: 읽히는 빛을 우선할 때
+실제 geometry만으로 원하는 light breakup이 나오지 않을 때, 카메라에 보이지 않는 shadow-only blocker를 쓸 수 있다. Blender는 Light Linking과 Shadow Linking을 통해 어떤 물체가 특정 광원을 받거나 막는지 분리할 수 있으며, 이 기능은 direct/indirect 경로를 다르게 다룰 수 있어 렌더 비용에 영향이 있을 수 있다. [R3]
+1.  우선 visible geometry만으로 clay test를 한다.
+2.  구성이 약하면 기존 구조를 억지로 변형하기보다 BLK_hero proxy를 추가한다.
+3.  proxy는 단순한 low-poly silhouette로 유지하고, viewport 색/collection을 명확히 분리한다.
+4.  카메라·reflection·shadow linking 조건에서 숨은 geometry가 노출되지 않는지 확인한다.
+5.  최종 handoff에 “art-direction blocker” 목록을 별도로 첨부한다.
+# 10. 모델링과 Volume: 안개가 geometry를 구해주지 않는다
+Blender의 Volume Scatter는 density와 anisotropy 등으로 광선이 매질에서 어떻게 산란되는지를 제어하며, Unreal의 Volumetric Fog는 camera frustum 안의 참여 매질과 조명을 계산한다. [R4][R5] 하지만 geometry가 만드는 occlusion pattern이 약하면 density를 올릴수록 “fog soup”만 강해진다.
+모델러는 volume을 끈 상태에서 blocker pattern을 먼저 통과시킨다.
+Local fog가 들어갈 공간은 별도 volume proxy나 빈 공간으로 확보한다. 빽빽한 set geometry가 모든 volume을 가리지 않도록 한다.
+beam이 지나갈 corridor를 의도적으로 남긴다. “빈 공간”도 모델링 결과물이다.
+먼지 particle이 보일 구간은 배경 대비가 확보되는지 확인한다.
+# 11. 소품과 가구 설계: 빛을 받을 이유가 있는 물체를 만든다
+책, 프레임, 계단, 난간 같은 소품은 장식이 아니라 secondary receiver다. hero shaft와 교차할 때 표면 방향이 여러 번 바뀌면 shaft가 공간 속에 실제로 존재한다는 증거가 된다.
+형태 | 빛에서 좋은 이유 | 주의점
+책/세로 오브젝트 | 연속된 얇은 밝음/어둠 edge | 모든 높이·두께를 같게 만들지 않음
+액자/프레임 | front·side·inner recess 3개의 명암 | 프레임이 너무 두꺼우면 hero artwork를 압도
+사다리/난간 | foreground occlusion + 반복 리듬 | 완전 등간격은 인공적
+계단/선반 | 수평 ledge가 grazing light를 여러 번 받음 | specular 과다 시 시선 분산
+천/식물 | organic breakup·soft edge | poly density보다 silhouette 품질 우선
+# 12. 모델링 테스트 매트릭스: 4장의 렌더로 문제를 분리
+Test | 켜는 것 | 끄는 것 | 판단
+A. Silhouette | flat unlit | 재질·GI·volume | 구멍·edge·depth 구조
+B. Clay direct | key + hard shadow | GI·volume·bloom | 차광 패턴/receiver event
+C. Clay GI | key + GI | volume·post | bounce가 shadow를 죽이는지
+D. Volume preview | volume + key | 강한 post | shaft와 geometry 연결
+A~B에서 실패하면 모델링/배치를 수정한다. C에서 실패하면 albedo/GI/negative fill을 조정한다. D에서만 실패하면 volume/shading 문제다. 이 분리를 지키면 “무엇이 문제인지 모른 채 bloom을 올리는” 시간을 줄일 수 있다.
+# 13. Asset 규격과 네이밍: Lighting 재작업을 막는다
+Prefix | 의미 | 예
+APR_ | 빛 입구/aperture | APR_skylight_A
+BLK_ | shadow blocker | BLK_hero_window_01
+RCV_ | 주요 receiver | RCV_wall_gallery
+NEG_ | negative fill / bounce blocker | NEG_left_01
+VOL_ | volume 경계 proxy | VOL_beam_corridor
+SET_ | 일반 visible set | SET_shelf_B
+Blocker는 modifier를 apply하기 전 원본을 보존한다. 패턴 폭/회전 조정이 빠르게 가능해야 한다.
+카메라 기준 collection과 world-space 기준 collection을 혼합하지 않는다.
+hero blocker의 pivot은 회전/슬라이드 조절이 자연스러운 위치에 둔다.
+UV보다 먼저 scale을 확정한다. non-uniform scale은 bevel/texture 밀도/normal에 문제를 만들 수 있다.
+LOD가 필요한 실시간 장면은 visible geo와 shadow proxy의 LOD 정책을 별도 정의한다.
+# 14. Blender 구현 루틴
+Blender에서는 blocker collection, receiver collection, light/shadow linking collection을 분리해두면 실험 속도가 빠르다. Blender 5.x의 Shadow Linking은 어떤 물체가 특정 emitter를 block하는지 제어할 수 있다. [R3]
+1.  Camera를 잠그고 key light 하나만 남긴다.
+2.  APR_/BLK_/RCV_ collection을 생성한다.
+3.  visible set에서 hero blocker를 복제해 단순 silhouette proxy를 만든다.
+4.  Cycles 또는 EEVEE clay material로 direct shadow를 본다.
+5.  Light/Shadow Linking이 필요하면 전용 linking collection을 만들어 scene collection과 분리한다.
+6.  마지막에 Principled Volume/Volume Scatter를 넣고 density는 낮게 시작한다. [R4]
+Blender 5.0 이후 Cycles volume rendering은 새로운 null-scattering 기반 알고리즘을 기본으로 사용해 overlapping volume artifact를 줄이는 방향으로 개선되었다. [R6]
+# 15. Unreal Engine 구현 루틴
+Unreal에서는 모델링 단계부터 “global fog로 해결할 영역”과 “local fog/volumetric shadow가 필요한 영역”을 분리한다. Local Fog Volume은 국소 fog를 배치하기 쉽고, Volumetric Fog와 함께 사용할 수 있으나 volumetric shadowing 여부와 플랫폼 비용이 다르다. [R5][R7]
+Nanite/고밀도 set이라도 shadow-only proxy는 단순하게 유지해 art-direction 회전/스케일 조절을 쉽게 한다.
+복잡한 foliage shadow가 필요하면 hero silhouette와 background foliage를 분리해 shadow cost를 통제한다.
+Local Fog Volume을 쓸 위치는 set geometry에 의해 완전히 막히지 않도록 빈 공간을 설계한다.
+camera rail/scroll path 전체에서 blocker popping과 LOD shadow 변화가 없는지 테스트한다.
+# 16. Three.js/WebGL 구현용 모델링 원칙
+웹에서는 오프라인 path tracing처럼 모든 geometry를 그대로 유지하기 어렵다. 따라서 “보이는 mesh”와 “빛/그림자용 proxy mesh”를 분리하는 것이 특히 유리하다.
+hero shadow를 만드는 mesh는 polygon 수보다 silhouette를 우선한다.
+실제 물체 mesh가 너무 복잡하면 shadow-only proxy를 별도 export한다.
+glTF export에서 blocker node 이름과 receiver node 이름을 유지해 런타임에서 쉽게 선택한다.
+screen-space god rays를 사용하더라도 실제 depth/occlusion mask를 만드는 3D blocker가 있어야 카메라 이동에서 설득력이 유지된다.
+모바일/전시 PC 성능 목표가 다르면 shadow map resolution과 blocker count를 별도 preset으로 둔다.
+# 17. ECG 전시 UI에 적용하는 모델링 규칙
+ECG 전시 도입부처럼 사람 윤곽·심장·전자기기·실내 구조가 순차적으로 등장하는 장면에서는, 빛도 정보 계층을 따라가게 설계하는 편이 좋다. 여기서 빛은 장식이 아니라 “원인 → 신호 → 정제” 전환을 강화하는 시선 장치가 된다.
+장면 요소 | Light-aware Modeling 제안 | 의도
+사람 윤곽 | 외곽 silhouette 뒤에 1~2개의 큰 blocker gap | 심장/가슴 주변에 집중된 shaft
+심장 오브젝트 | 작은 bevel·layered shell·얕은 recess | 박동 때 highlight가 명확히 변화
+전자기기/콘센트 | vertical edge와 케이블 silhouette | 60 Hz interference 장면에서 broken shadow 리듬
+ECG 파형 영역 | 주변 3D geometry는 낮은 contrast receiver | 파형 자체가 hero로 유지
+스크롤 transition | foreground blocker를 scroll에 따라 지나가게 배치 | 장면 전환을 wipe가 아닌 occlusion reveal로 보이게
+특히 foreground blocker가 스크롤 중 hero shaft를 잠시 가렸다가 다시 열어주면, 단순 fade보다 훨씬 물리적인 transition이 된다. 기존 도입부의 parallax/occlusion 언어와도 잘 맞는다.
+# 18. 실패 패턴과 수정 순서
+증상 | 원인 가능성 | 모델링 쪽 수정
+shaft가 많지만 의미가 없음 | micro breakup부터 시작 | hero cutter로 큰 2~3개 덩어리부터 재설계
+벽이 빛을 못 받는 느낌 | receiver가 완전 flat | recess/ledge/bevel을 큰 단위로 추가
+장면이 장난감처럼 보임 | bevel이 과대 / 반복 규칙적 | screen-space 폭 재조정, 간격 불균등화
+카메라 이동이 2D처럼 보임 | 모든 blocker가 같은 depth | FG/MID/BG 분리
+volume 켜면 뿌옇기만 함 | occlusion contrast가 약함 | volume off clay test로 되돌아가 blocker 수정
+lookdev가 model을 계속 수정 | utility geometry 규격 부재 | BLK_/RCV_/NEG_ asset layer 제공
+# 19. 모델러 납품 체크리스트
+☐ 최종 카메라에서 aperture의 출처가 논리적으로 읽힌다.
+☐ 주광을 만드는 hero blocker가 1~3개로 명확히 존재한다.
+☐ 중간/미세 breakup이 hero pattern을 방해하지 않는다.
+☐ receiver에 최소 두 종류 이상의 surface depth event가 있다.
+☐ foreground/mid/background가 카메라 이동에서 다른 속도로 가려진다.
+☐ volume을 꺼도 clay direct render가 아름답다.
+☐ hidden blocker와 visible set이 collection/네이밍으로 분리되어 있다.
+☐ hero blocker pivot과 modifier가 비파괴 편집에 적합하다.
+☐ material ID/face set이 lookdev가 필요한 구역대로 분리되어 있다.
+☐ 실시간 사용 시 shadow proxy와 LOD 정책이 정리되어 있다.
+☐ camera path 전체에서 blocker popping/반사 노출이 없다.
+☐ lookdev handoff 메모에 “절대 움직이면 안 되는 blocker”와 “조절용 blocker”가 구분되어 있다.
+# 20. 작업 시작 전 10분 Brief Template
+항목 | 작성 예
+Hero message | “창 틈의 햇빛이 심장 오브젝트를 드러낸다.”
+Camera | 1920×1080, 35 mm 상당, 느린 vertical scroll
+Key direction | 우상단 → 좌하단, 25~35° 하강
+Aperture | 천장 gap + 상부 보
+Hero blocker | 큰 보 1, 숨은 cutter 1
+Secondary blocker | 사다리/난간/프레임
+Hero receiver | 벽 + 심장/액자 주변
+Negative space | 우하단 서가 주변
+Movement | FG slat가 1회 hero shaft를 가로지름
+Clay gate | Volume OFF / Bloom OFF / key only에서 승인
+# 21. 참고 자료
+[R1] Rosco — The Basics of Film Lighting — https://spectrum.rosco.com/the-basics-of-film-lighting
+[R2] ARRI — Grip: flags, cutters, dots and fingers — https://www.arri.com/en/lighting/accessories/grip
+[R3] Blender 5.0 Manual — Light Linking / Shadow Linking — https://docs.blender.org/manual/en/5.0/render/lights/light_linking.html
+[R4] Blender 5.2 LTS Manual — Volume Scatter — https://docs.blender.org/manual/en/5.2/render/shader_nodes/shader/volume_scatter.html
+[R5] Epic Games — Volumetric Fog in Unreal Engine — https://dev.epicgames.com/documentation/en-us/unreal-engine/volumetric-fog-in-unreal-engine
+[R6] Blender 5.0 Release — Rendering / Cycles Volumes — https://www.blender.org/download/releases/5-0/
+[R7] Epic Games — Local Fog Volumes in Unreal Engine — https://dev.epicgames.com/documentation/unreal-engine/local-fog-volumes-in-unreal-engine
+[R8] Rosco — Let Your Camera See The Light — https://spectrum.rosco.com/index.php/2013/06/let-your-camera-see-the-light
+[R9] ARRI — Orbiter Projection Optics (gobo/cutter/shutter shaping) — https://www.arri.com/en/lighting/led-spotlights/orbiter/accessories/optics/projection
+메모: 이 문서의 수치·비율 표현은 절대 규격이 아니라 art-direction을 위한 휴리스틱이다. 최종 판단은 실제 장면 스케일, 광원 크기, 카메라 FOV/해상도, 렌더러에 맞춰 clay test로 확인한다.

@@ -4,6 +4,20 @@
 
 **원칙: 터미널에는 `npm run …` 한 줄만 친다.** `&&`, `python3`, 경로 이동, UTF-8 설정, 의존성 설치, 자료 준비는 `scripts/local/run.mjs`가 대신 한다. 명령을 치기 싫으면 VS Code에서 `Ctrl+Shift+P` → **Tasks: Run Task** → 아래 작업 이름을 고르면 된다(`.vscode/tasks.json`, Windows에서는 cmd.exe로 실행).
 
+## 0. 어느 폴더에서 치나
+
+`npm run story`는 **이 저장소(`userpawbaw/ecg-gui-design-review`) 폴더**에서 친다. 원본 연구 저장소(`ECG_denoising_method_comparision`)에서 치면 `Could not read package.json`(ENOENT)이 난다(2026-10-16 사용자 보고).
+
+처음 받을 때(한 줄씩, 받을 상위 폴더에서):
+
+```
+git clone https://github.com/userpawbaw/ecg-gui-design-review.git
+cd ecg-gui-design-review
+git checkout claude/r1-autopilot-recommended
+```
+
+이미 받았다면 그 폴더로 옮긴 뒤 `git pull`. 600초 replay 자료(선택)는 릴리스 `archive-v2.2.1-recovery`의 zip에서 `app/replay/`를 `prototype/v2/public/replay/`로 풀어 둔다. 없으면 10초 자료로 돈다.
+
 ## 1. 처음 한 번
 
 | 순서 | 명령 | 하는 일 |
@@ -23,7 +37,7 @@
 | `npm run spike -- video-scrub` | video-scrub spike 실행 | 의존성·클립 준비 후 실행. `attic`, `ref-repro`, `lab-corner`, `scroll-globe`도 같은 방식 |
 | `npm run py -- tools/video-qa/check_video.py <영상> --brief <json>` | — | 맞는 Python(py → python → python3)을 찾아 UTF-8로 실행 |
 
-Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `?reduced=1`(움직임 줄이기).
+Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `?reduced=1`(움직임 줄이기). 주소 뒤에 붙이는 값 전체(실험실 배경 `sun`·`path`·`ray`·`vz` 등)는 `docs/URL_PARAMS.md`.
 
 ## 3. 자주 나는 오류와 원인
 

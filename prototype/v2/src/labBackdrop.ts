@@ -19,7 +19,7 @@
 import * as THREE from 'three';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {FullScreenQuad} from 'three/addons/postprocessing/Pass.js';
-import {createArchive} from './story/intro/archive';
+import {createArchive,type ArchiveVariant} from './story/intro/archive';
 
 type Key={pos:THREE.Vector3,look:THREE.Vector3,fov:number};
 const V=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
@@ -40,10 +40,15 @@ const PATHS:Record<string,Key[]>={
  // ?vz=top,bottom (m) trims the descent; default 3.9 → 3.0 m, where the web frames had the widest light pool (18–23 %), the
  // darkest shade (27–30 %) and the largest stop range (4.4–4.9) of the 4.0 → 1.3 m sweep (verification/lab-descent-sweep-20261021).
  v1:vPath(-4.5,26),v2:vPath(-1.0,34),
+ // D-158: the REF-002 camera on the rebuilt attic (archive-x, reference frame): 14.756 m in front of the bookcase plane origin,
+ // 22.9° vertical, level, straight down; ?rz=top,bottom (m), default the measured −0.44 → −2.7 (below −2.9 the floor edge shows)
+ r:(()=>{const [a,b]=(Q0.get('rz')??'-0.44,-2.7').split(',').map(Number);return [a,b].map(z=>({pos:V(14.756,z,0),look:V(0,z,0),fov:22.9}));})(),
 };
 function vPath(y:number,fov:number):Key[]{const [a,b]=(Q0.get('vz')??'3.9,3.0').split(',').map(Number);
  return [a,b].map(z=>({pos:V(.2,z,-y),look:V(.2,z,-4.5),fov}));}
-const KEYS:Key[]=PATHS[new URLSearchParams(location.search).get('path')??'v1']??PATHS.v1;   // D-154: the level descent by default
+// D-158: the rebuilt REF-002 attic (x) and its camera (r) by default; ?sun=w keeps the D-155 room with the D-154 descent (v1)
+const SUN0=Q0.get('sun')??'x';
+const KEYS:Key[]=PATHS[Q0.get('path')??(SUN0==='x'?'r':'v1')]??PATHS.v1;
 const SPRING=2.6;   // rad/s, critically damped: 80 % of a scroll step in ~1.2 s, settled in ~2 s (eases in and out)
 const Q=new URLSearchParams(location.search),RES_Q=Q.get('bgres');
 // D-075 ambient: ?amb=0 off (?amb=1 forces it on in the low-power mode); ?aurora= (D-077 S1, replaced ?silk=) ?shaft= 0–100 in
@@ -62,6 +67,7 @@ const RAYS:Record<string,Ray>={
  '3':{len:14,iso:.5,dens:2,comp:3,int:1.9,haze:.5,grain:1,stria:1},
 };
 const RAY=RAYS[Q.get('ray')??'0']??RAYS['0'];
+const SHAFT_X=.6,SAT_X=.85;
 
 export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
@@ -73,10 +79,12 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  // ?sun=orig the original archive (D-080 default until 2026-10-21) · ?sun=lab the
  // D-079 bake (C + larger hatch) · 30 the D-077 C1 bake · 15 the D-078 bake · e3 / d16 the D-080 bakes
  // D-154 (user 2026-10-21): the level-descent bake (v); D-155 its pool + right-side fill (w) is the default; ?sun=orig the original
- const SUN=Q.get('sun')??'w',arch=await createArchive(({lab:'lab','15':'sun15','30':'sun35',e3:'e3',d16:'d16',v:'v',w:'w'} as Record<string,'lab'|'sun15'|'sun35'|'e3'|'d16'|'v'|'w'>)[SUN]??'base');arch.setFade(1);arch.renderSunDepth(renderer);
+ // D-158: the rebuilt REF-002 attic (x) is the default; ?sun=w the D-155 room
+ const SUN=SUN0,arch=await createArchive(({lab:'lab','15':'sun15','30':'sun35',e3:'e3',d16:'d16',v:'v',w:'w',x:'x'} as Record<string,ArchiveVariant>)[SUN]??'base');arch.setFade(1);arch.renderSunDepth(renderer);
  // D-077: the Lab variant has no aisle lamps (their bulbs lit the room) → exposure ×1.8 brings the frame mean back to the
  // D-074 level (0.10–0.17 → measured in verification/lab-c1-20261018)
  if(SUN==='30')arch.shared.uExposure.value*=1.8;   // only the lamp-less D-077 bake; the later bakes keep their bulbs (F-053)
+ if(SUN==='x')arch.shared.uSat.value=SAT_X;   // D-158: the pastel books carry the frame (REF-002 saturation 0.40–0.47 vs 0.37 at .72)
  const roomScene=new THREE.Scene(),dustScene=new THREE.Scene();roomScene.add(arch.room);dustScene.add(arch.dust);
  const camera=new THREE.PerspectiveCamera(50,1,.05,60);
  // D-075 frame: the room (colour + depth) is drawn into `base` only when the camera moves; every frame then adds the moving light
@@ -106,6 +114,8 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
     gl_FragColor=vec4(mix(col,uHazeCol,hz)+fogc,1.);}`,depthTest:false,depthWrite:false}));
  const du=arch.dustMat.uniforms;du.uDepthOn.value=1;du.tSceneDepth.value=base.depthTexture;
  if(Q.get('shaft')!==null)arch.vol.uniforms.uIntensity.value*=lvl('shaft');   // ?shaft= 0–100, 50 = designed
+ // D-158 (user 2026-10-29 "빛 커튼이 좀 강한 감"): the rebuilt attic starts with softer curtains
+ else if(SUN==='x')arch.vol.uniforms.uIntensity.value*=SHAFT_X;
  arch.amb.aur.value=AMB.aur;
  arch.dust.geometry.setDrawRange(0,1100);   // 2600 motes in the intro; the Lab keeps 1100 (user: "먼지도 약간 과한 감")
  const ambient=AMB.on&&!(matchMedia('(prefers-reduced-motion: reduce)').matches)&&(!soft||AMB.forced);

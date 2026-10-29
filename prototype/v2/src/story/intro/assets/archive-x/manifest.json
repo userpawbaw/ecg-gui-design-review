@@ -1,0 +1,157 @@
+{
+ "lm_scale": 4.0,
+ "encoding": "png sqrt(linear / lm_scale), albedo-free full lighting (direct + indirect)",
+ "size": {
+  "shell": 2048,
+  "books": 2048,
+  "decor": 1024
+ },
+ "samples": 128,
+ "groups": {
+  "shell": {
+   "object": "Archive_shell",
+   "file": "light_shell.webp"
+  },
+  "books": {
+   "object": "Archive_books",
+   "file": "light_books.webp"
+  },
+  "decor": {
+   "object": "Archive_decor",
+   "file": "light_decor.webp"
+  }
+ },
+ "timing_s": {
+  "shell": 468.4,
+  "books": 248.5,
+  "decor": 27.3
+ },
+ "counts": {
+  "books": 386,
+  "stacks": 15
+ },
+ "source": "scripts/blender/build_attic_match.py (D-158)",
+ "args": {
+  "samples": 64,
+  "res": "960x540",
+  "zs": "-0.44,-1.815,-3.19",
+  "seed": 7,
+  "sun_energy": 6.0,
+  "sun_angle": 3.0,
+  "sun_dir": "-0.44,-0.845,-0.30",
+  "sky": 0.12,
+  "exposure": 0.0,
+  "sun_color": "#ffe6c4",
+  "leaves": 1,
+  "size": 2048,
+  "bsamples": 128
+ },
+ "sun": {
+  "to_dir": [
+   -0.4405,
+   -0.3004,
+   0.846
+  ],
+  "color": [
+   1.0,
+   0.7912979125976562,
+   0.5520114302635193
+  ],
+  "energy": 6.0,
+  "angle_deg": 3.0
+ },
+ "shots": {
+  "z-0.44": {
+   "pos": [
+    14.756,
+    -0.44,
+    0.0
+   ],
+   "look": [
+    0.0,
+    -0.44,
+    0.0
+   ],
+   "fov_v_deg": 22.9
+  },
+  "z-1.81": {
+   "pos": [
+    14.756,
+    -1.815,
+    0.0
+   ],
+   "look": [
+    0.0,
+    -1.815,
+    0.0
+   ],
+   "fov_v_deg": 22.9
+  },
+  "z-3.19": {
+   "pos": [
+    14.756,
+    -3.19,
+    0.0
+   ],
+   "look": [
+    0.0,
+    -3.19,
+    0.0
+   ],
+   "fov_v_deg": 22.9
+  }
+ },
+ "room": {
+  "min": [
+   -0.012,
+   -3.428,
+   -7.202
+  ],
+  "max": [
+   15.256,
+   5.0,
+   7.596
+  ]
+ },
+ "occluders": [
+  "Occluder_front"
+ ],
+ "figure": {
+  "location": [
+   7.4,
+   -3.428,
+   0.31
+  ],
+  "heart": [
+   7.4,
+   -2.228,
+   0.31
+  ],
+  "heart_q_wxyz_blender": [
+   1,
+   0,
+   0,
+   0
+  ],
+  "hand_r": [
+   7.4,
+   -2.428,
+   0.11
+  ]
+ },
+ "web_encoding": "lightmaps libwebp q92 of sqrt-encoded PNG; glb gltf-transform optimize (meshopt, WebP <=1024, COLOR_0 kept, no simplify)",
+ "occluder_boxes": [
+  {
+   "min": [
+    10.25,
+    -0.05,
+    -14.0
+   ],
+   "max": [
+    20.0,
+    0.0,
+    8.0
+   ]
+  }
+ ]
+}

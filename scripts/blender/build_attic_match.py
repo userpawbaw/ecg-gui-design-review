@@ -434,8 +434,11 @@ if args.bake:
     b2t = lambda v: [round(float(v[0]), 4), round(float(v[2]), 4), round(float(-v[1]), 4)]
     man['sun'] = {'to_dir': b2t(SUN_TO), 'color': list(sun.color), 'energy': sun.energy, 'angle_deg': args.sun_angle}
     man['shots'] = {f'z{z:+.2f}': {'pos': b2t((CAM_X, 0, z)), 'look': b2t((0, 0, z)), 'fov_v_deg': FOV_V} for z in ZS}
-    man['room'] = {'min': b2t((WALL_X, UP_Y1, FLOOR_Z)), 'max': b2t((HIDDEN_WALL[1], UP_Y0, CEIL_Z))}
+    man['room'] = {'min': b2t((WALL_X, UP_Y1, FLOOR_Z)), 'max': b2t((CAM_X + .5, UP_Y0, CEIL_Z))}   # to the camera: the sun map must cover the air it looks through
     man['occluders'] = ['Occluder_front']
+    # web only: a shade-only lid over the air in front of the lower room (x 10.25..20, z 0) — the camera stands there, and
+    # without it the web light shafts fill that sunlit air and wash the whole frame (the bake has no air, nothing changes there)
+    man['occluder_boxes'] = [{'min': b2t((HIDDEN_WALL[0], 14.0, -0.05)), 'max': b2t((20.0, -8.0, 0.0))}]
     # the loader expects a figure entry (intro); the Lab never shows one — parked at the foot of the ladder
     man['figure'] = {'location': b2t(BOT + Vector((7.4, 0, 0))), 'heart': b2t(BOT + Vector((7.4, 0, 1.2))), 'heart_q_wxyz_blender': [1, 0, 0, 0], 'hand_r': b2t(BOT + Vector((7.4, .2, 1.0)))}
     json.dump(man, open(os.path.join(OUT, 'manifest.json'), 'w', encoding='utf-8'), indent=1)

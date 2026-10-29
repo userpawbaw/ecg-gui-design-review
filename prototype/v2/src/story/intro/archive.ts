@@ -14,7 +14,9 @@ export type ArchiveManifest={lm_scale:number,groups:Record<string,{object:string
  sun:{to_dir:number[],color:number[]},shots:Record<string,{pos:number[],look:number[],fov_v_deg:number}>,
  room:{min:number[],max:number[]},figure:{location:number[],heart:number[],heart_q_wxyz_blender:number[],hand_r:number[]},
  // intro2 (REVIEW-R1-WEB-20261008 I-4/I-5): the climber on the ladder, before the floor-sitter (figure) appears
- climb?:{location:number[],pitch_x_rad:number,glb:string,rung_dz:number}};
+ climb?:{location:number[],pitch_x_rad:number,glb:string,rung_dz:number},
+ // D-158: meshes that only shade (sun depth map), never drawn
+ occluders?:string[],occluder_boxes?:{min:number[],max:number[]}[]};
 
 // Packaged assets live in src/story/intro/assets/archive/ (tracked; prototype/v2/public/ is gitignored). Static URLs so
 // Vite fingerprints them; lightmap files are looked up by name from the manifest.
@@ -48,8 +50,13 @@ const ASSET_V=vAsset('archive-v');
 // window on the right half only (x 0.3…3; the left front stays in shade), and a 125 W warm area light off-screen top right aimed at
 // the right of the back wall (REF-002 zone B: soft falloff on the right)
 const ASSET_W=vAsset('archive-w');
-export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d16'|'v'|'w'='base'){
- const A=({sun35:ASSET_SUN35,sun15:ASSET_SUN15,lab:ASSET_LAB,e3:ASSET_E3,d16:ASSET_D16,v:ASSET_V,w:ASSET_W} as Record<string,Record<string,string>>)[variant]??ASSET;
+// D-158: the REF-002 attic rebuilt with our assets at the measured layout (scripts/blender/build_attic_match.py) — every group
+// texel-baked, and a hidden front wall that only shades (kept out of the camera view, drawn into the sun depth map)
+const ASSET_X={...vAsset('archive-x'),'light_books.webp':new URL('./assets/archive-x/light_books.webp',import.meta.url).href,
+ 'light_decor.webp':new URL('./assets/archive-x/light_decor.webp',import.meta.url).href};
+export type ArchiveVariant='base'|'sun35'|'sun15'|'lab'|'e3'|'d16'|'v'|'w'|'x';
+export async function createArchive(variant:ArchiveVariant='base'){
+ const A=({sun35:ASSET_SUN35,sun15:ASSET_SUN15,lab:ASSET_LAB,e3:ASSET_E3,d16:ASSET_D16,v:ASSET_V,w:ASSET_W,x:ASSET_X} as Record<string,Record<string,string>>)[variant]??ASSET;
  const manifest:ArchiveManifest=await (await fetch(A.manifest)).json();
  const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(A.glb);
  const tl=new THREE.TextureLoader(),lightmaps:Record<string,THREE.Texture>={};
@@ -67,9 +74,10 @@ export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d
   uScrCol:{value:[new THREE.Vector3(),new THREE.Vector3()]},
   // lamp shadow (H1, LIGHT-REF-R1-DESK): depth seen from the bulb, compared like the sun map; off (0) = unshadowed
   uLampSh:{value:0},uLampDepth:{value:null as THREE.Texture|null},uLampVP:{value:new THREE.Matrix4()}};
- const mats:THREE.ShaderMaterial[]=[];
+ const mats:THREE.ShaderMaterial[]=[],occluders:THREE.Object3D[]=[];
  room.traverse(o=>{
   const m=o as THREE.Mesh;if(!m.isMesh)return;
+  if(manifest.occluders?.some(n=>m.name===n||m.name.startsWith(n+'_')||m.parent?.name===n)){m.visible=false;occluders.push(m);return;}   // D-158: shade only
   const g=groupOf(m),src=m.material as THREE.MeshStandardMaterial,vc=!lightmaps[g],map=src.map;if(map)map.updateMatrix();
   const mat=new THREE.ShaderMaterial({
    uniforms:{...shared,map:{value:map},useMap:{value:!!map},color:{value:src.color.clone()},lm:{value:lightmaps[g]??null},
@@ -119,6 +127,8 @@ export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d
   m.material=mat;mats.push(mat);
  });
 
+ for(const b of manifest.occluder_boxes??[]){const lo=new THREE.Vector3(...b.min),hi=new THREE.Vector3(...b.max),sz=hi.clone().sub(lo).toArray().map(Math.abs) as [number,number,number];
+  const m=new THREE.Mesh(new THREE.BoxGeometry(...sz));m.position.copy(lo.add(hi).multiplyScalar(.5));m.visible=false;room.add(m);occluders.push(m);}
  // sun depth map (static room → rendered once, figure excluded so it casts no shadow)
  const sunTo=new THREE.Vector3(...manifest.sun.to_dir).normalize();
  const sunCol=new THREE.Color(...(manifest.sun.color as [number,number,number]));
@@ -131,7 +141,9 @@ export async function createArchive(variant:'base'|'sun35'|'sun15'|'lab'|'e3'|'d
  const depthOnly=new THREE.MeshBasicMaterial({colorWrite:false});
  function renderSunDepth(renderer:THREE.WebGLRenderer,obj:THREE.Object3D=room){
   const sc=new THREE.Scene();const parent=obj.parent,vis=obj.visible;obj.visible=true;sc.add(obj);sc.overrideMaterial=depthOnly;
+  for(const o of occluders)o.visible=true;
   renderer.setRenderTarget(lightRT);renderer.clear();renderer.render(sc,lightCam);renderer.setRenderTarget(null);
+  for(const o of occluders)o.visible=false;
   sc.remove(obj);if(parent)parent.add(obj);obj.visible=vis;
  }
  // D-071 (Story route C): another baked room with its own sun takes over the sun map. The direction and light matrix are

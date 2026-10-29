@@ -112,3 +112,16 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .live-row{background:#112b39;border:1px solid #22363d;border-radius:12px;overflow:hidden}
 .live-lab{display:flex;justify-content:space-between;gap:12px;padding:8px 12px 0;font-size:13px}.live-lab span{color:#93aab0;font-family:ui-monospace,monospace}
 .live-canvas{display:block;width:100%;height:190px}.live-canvas.tall{height:min(62vh,560px)}
+/* 2026-10-29 실시간 측정 머리 · 연결 안 됨 — 글을 줄이고 그림 하나(사용자: "간결하고 AI티 나지 않게") */
+.live-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:6px 0 4px}
+.live-head h2{margin:0;font-size:20px;font-weight:650;letter-spacing:-.01em}.live-head p{margin:0;font-size:14px;color:#8fa9a2}
+.lab-dark .live-head p{color:#8fa9a2}
+.live-offline{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:340px;margin-top:14px;
+ background:rgb(9 24 32 / var(--ui-a,.9));border:1px solid #22363d;border-radius:14px;color:#5f7f86}
+.live-offline svg{color:#6f9097}.live-offline .trace{color:#5fd6c2;stroke:#5fd6c2;opacity:.55}.live-offline .cut{opacity:.6}
+.live-offline b{font-size:17px;font-weight:600;color:#dfeaec}
+.live-offline small{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:#7f9aa0}
+.live-offline small i{width:6px;height:6px;border-radius:50%;background:#c9b39b;animation:live-blink 1.6s ease-in-out infinite}
+@keyframes live-blink{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.live-offline small i{animation:none}}
+.live-src{border:1px solid #2c454e;border-radius:999px;padding:2px 10px;cursor:help}

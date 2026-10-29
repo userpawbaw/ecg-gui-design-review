@@ -39,6 +39,18 @@ git checkout claude/r1-autopilot-recommended
 
 Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `?reduced=1`(움직임 줄이기). 주소 뒤에 붙이는 값 전체(실험실 배경 `sun`·`path`·`ray`·`vz` 등)는 `docs/URL_PARAMS.md`.
 
+### 실시간 측정 탭 (D-157)
+
+화면에는 연결 상태만 나온다. 보드 신호를 보려면 **원본 저장소(`ECG_denoising_method_comparision`) 폴더**에서 브리지를 먼저 띄우고, 이 저장소에서 `npm run story`로 앱을 연 뒤 «실시간 측정» 탭을 누른다. 앱 서버가 `127.0.0.1:8765`로 이어 준다.
+
+| 할 일 | 원본 저장소에서 칠 명령 |
+|---|---|
+| 실제 보드 | `python scripts\serial_bridge.py --port COM13 --ascii --board-fs 250 --methods M_FE,M04,M05S --serve` |
+| 보드 없이 화면만 확인(합성 신호 — 실측 아님) | `python scripts\serial_bridge.py --replay synth --methods M_FE,M04,M05S --serve` |
+
+- 다른 PC·포트의 브리지는 앱을 띄우기 전에 환경 변수 `ECG_BRIDGE`(예: `http://192.168.0.5:8765`)로 정한다.
+- 브리지 자체 화면(A안)으로 보려면 주소 뒤에 `?live=iframe`(`docs/URL_PARAMS.md`).
+
 ## 3. 자주 나는 오류와 원인
 
 | 증상 | 원인 | 이 저장소의 처리 / 할 일 |

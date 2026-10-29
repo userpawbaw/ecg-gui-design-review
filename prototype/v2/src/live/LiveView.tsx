@@ -8,6 +8,20 @@ import {LiveStream, LABEL, RAW_COLOR} from './liveStream';
 import {drawSplit, drawOverlay, type View} from './livePlot';
 import * as AX from './liveAxis';
 
+/** 연결 안 됨 — 글 대신 그림 하나와 짧은 말(사용자 2026-10-29 "간결하고 AI티 나지 않게"). 실행 방법은 docs/LOCAL_WINDOWS.md. */
+export function LiveOffline({checking = false}: {checking?: boolean}) {
+  return <div className="live-offline" role="status">
+    <svg viewBox="0 0 160 64" width="210" height="84" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path className="trace" d="M4 36h22l5-10 6 22 6-30 5 18h20"/>
+      <path className="cut" d="M74 36h8" strokeDasharray="2 5"/>
+      <path d="M92 28h10a8 8 0 0 1 0 16H92z"/><path d="M84 32h8M84 40h8"/>
+      <path d="M110 36h18a10 10 0 0 0 10-10V14"/><path d="M138 14h10M138 14v-6"/>
+    </svg>
+    <b>{checking ? '찾는 중' : '연결되지 않음'}</b>
+    <small><i/>다시 찾는 중</small>
+  </div>;
+}
+
 type FeModes = Record<string, {label: string, note?: string}>;
 type Conn = 'checking' | 'on' | 'retry' | 'down' | 'lost';
 const WINDOWS = [2.5, 5, 10];
@@ -94,16 +108,16 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
 
   const st = S.stat, names = S.names(), shown = names.filter(n => !S.hidden.has(n));
   const connected = conn === 'on' || conn === 'retry' || conn === 'lost';
-  if (!connected && conn !== 'checking' && !names.length) return <>{help}</>;
-  const src = st.src === 'serial' ? '실보드 실측' : st.src === 'replay' ? '재생(합성·기록) — 실측 아님' : '브리지 출력 · 출처는 브리지 실행 방식(실보드 = 실측, --replay = 합성)';
+  if (!connected && !names.length) return conn === 'checking' ? <LiveOffline checking/> : <>{help}</>;
+  const src = st.src === 'serial' ? '실보드' : st.src === 'replay' ? '재생 · 실측 아님' : '브리지 출력';
+  const srcTip = '출처는 브리지 실행 방식을 따릅니다 — 보드면 실측, --replay면 합성. 성능 수치는 띄우지 않고, 받은 신호는 기록하지 않습니다.';
   const fmt = (v: number | undefined, d = 0) => v == null || !Number.isFinite(v) ? '—' : v.toFixed(d);
   return <div className="live-native">
     <div className="live-status" role="status">
       <span className={'live-conn ' + conn}>{conn === 'on' ? '● 연결됨' : conn === 'retry' ? '○ 끊김 — 다시 붙는 중' : conn === 'lost' ? '○ 선 끊김' : '○ 확인 중'}</span>
-      <span className="live-src">{src}</span>
+      <span className="live-src" title={srcTip}>{src}</span>
       {note && <span className="live-note">{note}</span>}
     </div>
-    <p className="live-contract">이 화면에는 성능 수치가 없습니다. 실측에는 참값(clean)이 없어 SNR을 계산할 수 없습니다 — 보이는 것은 파형과 처리 상태뿐입니다. 이 앱은 받은 신호를 기록하지 않습니다.</p>
     <div className="live-stats">
       {[['지연', fmt(st.lat_ms) + ' ms'], ['경과', fmt(st.elapsed, 1) + ' s'], ['손실', fmt(st.lost) + ' 샘플'], ['lead-off', fmt(st.leadoff) + ' 샘플'],
         ['프레임 깨짐', fmt(st.bad) + ' B'], ['재동기', fmt(st.resync)], ['처리 밀림', fmt(st.qdrop) + ' 블록', (st.qdrop ?? 0) > 0],
@@ -128,8 +142,8 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       </details>
     </div>
     <div className="live-legend">{names.map(n => <button key={n} aria-pressed={!S.hidden.has(n)} onClick={() => toggle(n)} style={{color: n === 'raw' ? (view.mode === 'overlay' ? '#8fa3ad' : RAW_COLOR) : S.color(n)}}>
-      <i/>{n === 'raw' ? '입력 (잡음)' : n} · {LABEL[n] ?? ''}</button>)}</div>
-    {!names.length && <p className="subtle">브리지에 붙었습니다. 첫 블록을 기다리는 중입니다.</p>}
+      <i/>{n === 'raw' ? '입력 · front-end 이전' : `${n} · ${LABEL[n] ?? ''}`}</button>)}</div>
+    {!names.length && <p className="subtle">신호를 기다리는 중</p>}
     {view.mode === 'overlay'
       ? <div className="live-row"><div className="live-lab"><b>겹쳐 보기 — 모든 방법이 같은 축·같은 이득, 불투명도 85 %</b><span>입력은 옅은 회색 — 전극 DC만 뺐고 이득은 같다</span></div>
           <canvas ref={el => { overlay.current = el; }} className="live-canvas tall" data-mode={view.play}/></div>

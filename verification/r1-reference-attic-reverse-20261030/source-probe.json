@@ -1,0 +1,116 @@
+{
+  "scope": "Scratch-only reference collection; not production assets",
+  "observed_at_utc": "2026-10-29T15:53:32.222706+00:00",
+  "files": [
+    {
+      "url": "https://www.leoparpeix.com/assets/index-djk_Apyr.js",
+      "file": "index-djk_Apyr.js",
+      "status": 200,
+      "bytes": 1397157,
+      "sha256": "00716ae45aaa0e0228549f8fad19b4e16df83b6e927feb3688c4078b2816cf97"
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/models/home/scene_v9.glb",
+      "file": "scene_v9.glb",
+      "status": 200,
+      "bytes": 141924,
+      "sha256": "f6751078ccf60e0e73e9557df281fab37999e70fbbc3915662cd933d63da69ee"
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/2048/TexFleur.ktx2",
+      "file": "TexFleur.ktx2",
+      "status": 200,
+      "bytes": 171501,
+      "sha256": "ad90bf2f32251802851ef1bb6bcc0c70ae01bded38d2c38dda9c75cf97605b9d"
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/2048/TexProps.ktx2",
+      "file": "TexProps.ktx2",
+      "status": 200,
+      "bytes": 210361,
+      "sha256": "49b9bb8025ae87848f43712aa5eb66ca29e6bdeda9cad62235fdd4ca49a89e3c"
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/2048/TexMobilier.ktx2",
+      "file": "TexMobilier.ktx2",
+      "status": 200,
+      "bytes": 327665,
+      "sha256": "d0461ce772f3c7416e4afd04fd8ad69579d38b3a103711572e062c49c01479e7"
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/2048/TexTableaux.ktx2",
+      "file": "TexTableaux.ktx2",
+      "status": 200,
+      "bytes": 314449,
+      "sha256": "55c3afc3f46cdc4c84bddb2c8eaf3af3bcd4d6092b8455d2785233af3b76c281"
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/2048/TexBibli.ktx2",
+      "file": "TexBibli.ktx2",
+      "status": 200,
+      "bytes": 199771,
+      "sha256": "3f7d377ac53b036a2b7bd7e3d01104ee1f0b9c5ae4cbd910d5bac5f114c1a538"
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/2048/TexFloor.ktx2",
+      "file": "TexFloor.ktx2",
+      "status": 200,
+      "bytes": 393553,
+      "sha256": "aa75f09023e50a6d07a829fb8c871a56c0bb3dd858a94570b92774121f8b6f91"
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/2048/TexWalls.ktx2",
+      "file": "TexWalls.ktx2",
+      "status": 200,
+      "bytes": 177815,
+      "sha256": "704c86b7b6c4d1b5079fc076e47372e1289b8195278ac533d238e70d533b8281"
+    }
+  ],
+  "page_status": 200,
+  "page_url": "https://www.leoparpeix.com/",
+  "browser_replay_4k_files": [
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/4096/TexFleur.ktx2",
+      "status": 200,
+      "bytes": 481376
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/4096/TexProps.ktx2",
+      "status": 200,
+      "bytes": 590196
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/4096/TexMobilier.ktx2",
+      "status": 200,
+      "bytes": 1237532
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/4096/TexTableaux.ktx2",
+      "status": 200,
+      "bytes": 1205983
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/4096/TexBibli.ktx2",
+      "status": 200,
+      "bytes": 722653
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/4096/TexFloor.ktx2",
+      "status": 200,
+      "bytes": 1527651
+    },
+    {
+      "url": "https://cdn.leoparpeix.com/assets/textures/home/scene-ktx/4096/TexWalls.ktx2",
+      "status": 200,
+      "bytes": 572053
+    }
+  ],
+  "simple_http_probe": {
+    "status": 403,
+    "site_error": "Cloudflare1010",
+    "environment_policy": "unrestricted/enforced; observed current",
+    "normal_browser_status": 200,
+    "causal_scope": "Client-path difference observed; exact server rule not isolated"
+  },
+  "user_browser": "User confirmed scene opens normally"
+}

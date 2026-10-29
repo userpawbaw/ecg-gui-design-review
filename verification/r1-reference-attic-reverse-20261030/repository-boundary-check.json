@@ -1,0 +1,17 @@
+[
+  {
+    "script": "inspect-reference-attic.py",
+    "repo_asset_input": "rejected",
+    "message": "Reference inputs/viewer must stay outside the repository"
+  },
+  {
+    "script": "collect-reference-attic.py",
+    "repo_asset_input": "rejected",
+    "message": "Reference material must stay outside the repository"
+  },
+  {
+    "script": "verify-reference-attic.py",
+    "repo_capture_output": "rejected",
+    "message": "Original-data captures must stay outside the repository"
+  }
+]

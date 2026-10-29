@@ -1,0 +1,307 @@
+{
+  "scope": "Original-asset analysis replay; not self-authored assets/full website clone",
+  "errors": [],
+  "failed_requests": [],
+  "frames": [
+    {
+      "position": [
+        14.75639820098877,
+        -0.4392428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 13,
+      "progress": 0.0
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -0.6892428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 13,
+      "progress": 0.09090909090909091
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -0.9392428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 13,
+      "progress": 0.18181818181818182
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -1.1892428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 12,
+      "progress": 0.2727272727272727
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -1.4392428398132329,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 11,
+      "progress": 0.36363636363636365
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -1.6892428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 11,
+      "progress": 0.45454545454545453
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -1.9392428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 11,
+      "progress": 0.5454545454545454
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -2.1892428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 11,
+      "progress": 0.6363636363636364
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -2.4392428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 11,
+      "progress": 0.7272727272727273
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -2.6892428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 11,
+      "progress": 0.8181818181818182
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -2.9392428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 10,
+      "progress": 0.9090909090909091
+    },
+    {
+      "position": [
+        14.75639820098877,
+        -3.1892428398132324,
+        0
+      ],
+      "fov": 22.895191956401895,
+      "quaternion": [
+        5.954808672699645e-06,
+        0.7071070671081159,
+        5.90953140695389e-06,
+        0.7071064952150957
+      ],
+      "drawCalls": 10,
+      "progress": 1.0
+    }
+  ],
+  "omitted": [
+    "floor hash blur3",
+    "website DOM/postprocessing",
+    "cloud/dust overlays",
+    "pointer motion playback"
+  ],
+  "audit": {
+    "meshes": [
+      {
+        "name": "TexTableaux",
+        "texture": "TexTableaux",
+        "vertices": 140,
+        "triangles": 66
+      },
+      {
+        "name": "TexTableaux001",
+        "texture": "TexTableaux",
+        "vertices": 140,
+        "triangles": 66
+      },
+      {
+        "name": "TexTableaux002",
+        "texture": "TexTableaux",
+        "vertices": 140,
+        "triangles": 66
+      },
+      {
+        "name": "TexFleur",
+        "texture": "TexFleur",
+        "vertices": 4600,
+        "triangles": 7238
+      },
+      {
+        "name": "TexFloor",
+        "texture": "TexFloor",
+        "vertices": 62,
+        "triangles": 50
+      },
+      {
+        "name": "TexWalls001",
+        "texture": "TexWalls",
+        "vertices": 316,
+        "triangles": 222
+      },
+      {
+        "name": "TexWalls",
+        "texture": "TexWalls",
+        "vertices": 1612,
+        "triangles": 870
+      },
+      {
+        "name": "TexBibli",
+        "texture": "TexBibli",
+        "vertices": 5787,
+        "triangles": 3019
+      },
+      {
+        "name": "TexMobilier001",
+        "texture": "TexMobilier",
+        "vertices": 260,
+        "triangles": 128
+      },
+      {
+        "name": "TexMobilier",
+        "texture": "TexMobilier",
+        "vertices": 9354,
+        "triangles": 5864
+      },
+      {
+        "name": "TexProps002",
+        "texture": "TexProps",
+        "vertices": 776,
+        "triangles": 386
+      },
+      {
+        "name": "TexProps001",
+        "texture": "TexProps",
+        "vertices": 3329,
+        "triangles": 1663
+      },
+      {
+        "name": "TexProps",
+        "texture": "TexProps",
+        "vertices": 2227,
+        "triangles": 3158
+      }
+    ],
+    "base": {
+      "x": 14.75639820098877,
+      "y": 2.3107571601867676,
+      "z": 0
+    },
+    "rotation": {
+      "isQuaternion": true,
+      "_x": 5.954808672699645e-06,
+      "_y": 0.7071070671081159,
+      "_z": 5.90953140695389e-06,
+      "_w": 0.7071064952150957
+    }
+  },
+  "progress_input": [
+    14.75639820098877,
+    -1.4704928398132324,
+    0
+  ],
+  "same_progress_repeat": "PASS",
+  "component_count": 718,
+  "result": "PASS"
+}

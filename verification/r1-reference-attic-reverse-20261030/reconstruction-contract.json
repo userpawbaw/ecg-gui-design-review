@@ -1,0 +1,57 @@
+{
+  "target_url": "https://leoparpeix.com/",
+  "scope": "Measured reconstruction contract, not a model or copied geometry",
+  "reference_id": "REF-002",
+  "coordinate_system": "glTF right-handed Y-up; Blender conversion(X,Y,Z)->(X,-Z,Y)",
+  "camera": {
+    "base_position": [
+      14.75639820098877,
+      2.3107571601867676,
+      0
+    ],
+    "base_quaternion_xyzw": [
+      5.954807875241386e-06,
+      0.7071070671081543,
+      5.909531409997726e-06,
+      0.7071065902709961
+    ],
+    "vertical_fov_degrees": 22.895191956401895,
+    "world_view_direction": "approximately -X",
+    "attic_start_y": -0.4392428398132324,
+    "attic_end_y": -3.1892428398132324,
+    "vertical_drop": 2.75,
+    "pointer_yaw_max_degrees": 0.75,
+    "pointer_pitch_max_degrees": 0.2,
+    "pointer_follow_rate_per_second": 2
+  },
+  "scene_layers": [
+    "upper arched-window studio / flower sculpture / table / folding ladder / plinths",
+    "upper floor hatch + open lid",
+    "diagonal ladder through hatch",
+    "single lower bookcase wall + overhead cabinetry + inset doors/drawers + books/prints/sculptures",
+    "lower floor with baked distant-window shadows"
+  ],
+  "web_shading": {
+    "lighting": "baked final colour; unlit",
+    "normals_in_original_wire_asset": false,
+    "tone_mapping": "none in the room surface shader",
+    "edge_sampling_groups": [
+      "TexBibli",
+      "TexProps",
+      "TexWalls"
+    ],
+    "floor_filter": "desktop hash blur radius3 observed in source; omitted in analysis viewer"
+  },
+  "rebuild_constraints": [
+    "author geometry/materials anew for repository/public delivery",
+    "do not copy original triangles/UVs/textures/artwork/bundle into repository",
+    "freeze measured camera and composition before changing material/light",
+    "compare12normalized camera positions; retain mismatch list"
+  ],
+  "unknowns": [
+    "original Blender/Cycles light setup and pre-bake material parameters",
+    "semantic identities of all connected components",
+    "pixel parity with full live site compositor/overlays",
+    "self-authored reconstruction visual fidelity"
+  ]
+}

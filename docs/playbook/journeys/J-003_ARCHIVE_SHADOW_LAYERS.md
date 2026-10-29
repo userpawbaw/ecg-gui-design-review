@@ -270,7 +270,7 @@ D-150 `verification/r1-archive-window-penumbra-20261020/qa-result.json`: 거리0
 | 계기 | 사용자 “구름을 뚫고 나오는 햇빛 … 오로라 수준으로 일렁이는” |
 | 가설 | 넓은시점 산란과 공간밀도띠의 큰 흐름을 분리하면 단순밝기증폭보다 목적에 맞는 비교를 설계할 수 있음 |
 | 판정 | 부분 채택 — 원인분석/추천설계만, 새효과 구현·검증 없음 |
-| 다음 | 끝 — 비교구현·3시점·시간프레임 검증 |
+| 다음 | T12 — 사용자 원본다락방 그대로의 역설계 요청 |
 | 기록 | D-152, `verification/r1-archive-curtain-design-20261021/README.md` |
 
 ### 한 것
@@ -284,3 +284,24 @@ D-152 `verification/r1-archive-curtain-design-20261021/analytic-metrics.json`은
 이전T11의미구현판정은조사시점기록이다. 실행후에는별도curtain field/clock과legacy·sun·flow비교가구현됐다. `[런타임]` `verification/r1-archive-curtain-motion-20261021/README.md`: 같은시점A/B raw R평균증가9.58/1.44/1.46,책장ROI대비86.2%유지,12시간프레임재현/변화·광학/접근성통과.최초surfaceprobe는시간변화검출실패로기록하고,camera/cloudScale3을바꾼수정integration검사를별도로남겼다.카메라단독원인은분리검증안함.판정은부분채택유지:사용자미감/실제GPU/Cycles확인안함.
 
 T11 시점정정: 초기9.58/1.44/1.46중1.44의side명칭은철회했다.정확한90°/beam밖pose에서3.60×,나머지두값은유지.새전체검수script PASS,최초surfaceprobe/중간navigationtimeout 기록은보존.가독성값을뷰이름으로분류하기전에camera-ray·toSun각도를검사하도록회귀assert추가. `verification/r1-archive-curtain-motion-20261021/view-angle-check.json`.
+
+### 왜 다음으로
+사용자가레퍼런스사이트자체/다락방풍경그대로를요청해원본고정역설계로이어졌다. 기존빛커튼결과를원본동일재현으로간주하지않는다.
+
+## T12. 원본 장면을 분해하고 독립 재생으로 검증
+
+| | |
+|---|---|
+| 날짜 | 2026-10-30 |
+| 종류 | 시도 |
+| 계기 | 사용자 “leoparpeix … 다락방 풍경 그대로” |
+| 가설 | 현재원본의카메라·geometry·bake·sampling을고정하면동일재현의기준을확보할수있음 |
+| 판정 | 부분 채택 — 원본분석재생/수치검수PASS,새자체제작재현은미실행 |
+| 다음 | 끝 — 원본고정명세로자체geometry/베이크제작및동일프레임비교 |
+| 기록 | D-158, REF-002, `verification/r1-reference-attic-reverse-20261030/README.md` |
+
+### 한 것
+정상browser200으로실제scene/텍스처/번들을scratch에수집해분석했다.13mesh/22796tri/7bake/22.895°카메라와2.75하강을고정하고독립unlitviewer를직접작성했다. 원본데이터를repo/public에넣지않는수집/검수도구경계도검사했다.
+
+### 결과
+D-158 `verification/r1-reference-attic-reverse-20261030/replay-result.json`: 4K자료/12카메라프레임/같은progress동일hash/입력/매칭PASS.718기하조각bbox측정은소품수로해석하지않는다. 원본자료재생과자체새제작을구별하고,원본Blender조명rig/전체sitepixel동등성/실GPU를확인안함으로남겼다.

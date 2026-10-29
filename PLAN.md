@@ -395,3 +395,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 보호된 원본/Story/default/r8/D-084 유지. 실제GPU/미감/Cycles는 확인 안 함.
 
 - D-152 추가: 부정확한side분류를철회하고광선밖90°에서3.60×확인.모든자체module에contenthash query를붙이는staging보완후공개검증을갱신한다.
+
+## leoparpeix 다락방 역설계 (2026-10-30, D-158)
+- [x] 현재정상browser200/원본자료재수집,13mesh·22796tri·7bake·카메라/scroll/샘플링검증.
+- [x] scratch-only독립원본재생:4K/12카메라프레임·입력·같은위치반복·718기하조각측정PASS.원본capture/asset/code는repo미반입.
+- [x] 수집/분석/검수도구와원본고정재구성계약·측정값/확인안함기록.
+- [ ] 후속자체제작:clay모델/새재질·베이크/동일프레임웹재생/사용자미감검수.원본재생성공과구별한다.
+- 현재역설계결과: verification/r1-reference-attic-reverse-20261030/README.md 및 rounds/R1/REVERSE-R1-LEOPARPEIX-ATTIC-20261030.md.

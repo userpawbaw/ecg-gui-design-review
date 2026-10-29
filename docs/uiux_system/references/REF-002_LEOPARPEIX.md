@@ -338,3 +338,11 @@ REF-001과 겹치는 부분: 두 사이트 모두 **Lenis 관성 스크롤 + GSA
 - 베이크에 쓴 도구(Blender Cycles 추정)와 텍스처 UV 배치(아틀라스 여부)는 KTX2를 풀어 봐야 알 수 있다 — 저작권상 저장소에는 넣지 않고 분석만 가능.
 - 실제 GPU에서의 fps·GPU 메모리(4096 KTX2 × 8장 이상)는 측정하지 못했다.
 - WebGL 미지원 시 폴백 화면이 있는지 확인하지 않았다.
+
+## 2026-10-30 재확인 — D-158 원본장면 역설계
+
+사용자가“다락방풍경그대로”를요청했다. 현재정상Chromium방문/asset200과사용자의정상표시를확인했다. 단순HTTP는403/Cloudflare1010이었지만환경정책은unrestricted/current/enforced였다. 원본141924byteGLB를다시읽어13mesh/22796tri/카메라FOV22.8951919564°를확인했다. 카메라worldY는2.310757160−2.75−2.75p로−.439242840→−3.189242840. sourcevertexattributes는POSITION/UV이며NORMAL/TANGENT가없다.
+
+원본2048/4096 bake7장과model을scratch에수집하고자체작성unlit분석viewer에서12카메라프레임/입력/같은progress복귀/mesh-map매칭을검사했다. 연결성기하718조각의bbox는semantic소품수와구분한다. 원본asset/code/새referencecaptures는repo에넣지않았다. 도구/측정/동일재현계약은 `verification/r1-reference-attic-reverse-20261030/README.md`와 `rounds/R1/REVERSE-R1-LEOPARPEIX-ATTIC-20261030.md`.
+
+이결과는원본데이터의독립분석재생PASS이다. EFX-002-01/03의자체제작재현상태를verified로승격하는근거가아니다. 전체sitepixel동등성·원본Blender조명rig·새자체모델/베이크·실제GPU는확인안함. 분석viewer는DOM/compositor/cloud/dust/pointer/floorhashblur를생략했으며그GAP를기록했다.

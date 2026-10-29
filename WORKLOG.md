@@ -548,3 +548,6 @@ D-150 마감: sourcec3cd6af 원격74file 내용확인/Story갱신7515f99의D150�
 D-152 검수 정정: 최초side pose도광원쪽을향함을각도점검에서발견,앞서1.44×의옆시점해석은철회.광선밖camera x2.5의정확한90°에서.004455→.016022(3.60×)확인.원래수치기록은조사흔적으로남기며새값을최종사용.동시SwiftShader검사중bench load30s timeout이발생해navigation관문을120s로통일하고독립재실행.기능assertion은완화하지않음.추가로Pages자체module import graph를contenthash로버전처리해이전cache혼합을피함.
 
 D-152 마감: source2fe6862(구현12be06b/cache보완),main dispatch39557898363 success.수정된전체QA스크립트PASS,기존모드회귀PASS,공개23file HTTP/SHA와실browser1280×720 angle/sun/flow/time/freeze/depthcache/bake왕복PASS,7자체module version query확인·오류0.최종시점분류는내적0인정확한90°3.60×/반대9.58×/광원쪽1.46×.초기side분류오류/표면probe실패/navigationtimeout을삭제하지않고별도보존.사용자미감/실제GPU/Cycles는확인안함.원본6path hash일치.
+
+## 2026-10-30 D-158 — 원본다락방 역설계
+사용자“leoparpeix사이트자체/다락방풍경그대로”요청. 단순HTTP403/Cloudflare1010이었으나정상Chromium방문/asset200,환경unrestricted현재확인.사용자도정상열림확인.현재scene_v9.glb141924bytes/13mesh22796tris/7bake,GLBFOV22.8951919564°/height−.43924→−3.18924를읽고sourcefilter/scroll식을대조했다.2048/4096수집재검증,4K독립unlit재생12프레임·입력·동일progress반복·기하718조각bbox측정PASS.원본기반이미지/model/texture/bundle은/tmp에만두고repo에자체도구/수치/명세만기록.새자체제작씬/원본Blender조명rig/전체사이트pixel동등성/실GPU는미확인.원본데이터재생을제작완료로표기하지않는다.

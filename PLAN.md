@@ -400,7 +400,8 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] 현재정상browser200/원본자료재수집,13mesh·22796tri·7bake·카메라/scroll/샘플링검증.
 - [x] scratch-only독립원본재생:4K/12카메라프레임·입력·같은위치반복·718기하조각측정PASS.원본capture/asset/code는repo미반입.
 - [x] 수집/분석/검수도구와원본고정재구성계약·측정값/확인안함기록.
-- [ ] 후속자체제작:clay모델/새재질·베이크/동일프레임웹재생/사용자미감검수.원본재생성공과구별한다.
+- [x] D-159 자체clay/새재질·4K bake/동일12프레임웹/공개검증 완료. 원본재생 성공과 구별한다.
+- [ ] 사용자 원본비교 미감·실제GPU검수는 후속.
 - 현재역설계결과: verification/r1-reference-attic-reverse-20261030/README.md 및 rounds/R1/REVERSE-R1-LEOPARPEIX-ATTIC-20261030.md.
 
 ## 원본고정 자체 복제 (D-159, 사용자 “복제까지 계속 진행”)
@@ -408,5 +409,5 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] 자체기하 clay 수정·선택6부재 bevel preflight·새 재질/Cycles 정지 렌더 2시점.
 - [x] 4K×4 새 bake 1561.65s, lossless WebP4/4, GLB lossless meshopt16view 검사.
 - [x] 독립 reference-clone.html·12카메라·입력/reduced-motion/390×844, 압축·UV sampler A/B·보호7파일/기존stage23파일 검사.
-- [ ] 웹 산출물 커밋·푸시·원격내용검사·Pages 공개검증 진행. 원본 차이/확인 안 함은 verification README.
+- [x] c4b69c8 웹소스 push·원격58파일 내용일치, Pages40927081950 success·공개33파일hash/12프레임·조작 PASS. 원본 차이/확인 안 함은 verification README.
 - [ ] 사용자 미감·원본 동일성, 실제 Edge/GPU 검토. 현재 구현/기능 PASS, 시각 충실도 CONDITIONAL.

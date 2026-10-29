@@ -2,7 +2,9 @@
 
 사용자 “복제까지 계속 진행”에 따라 D-158의 원본자료 분석 다음으로 **자체 모델·재질·UV·Cycles 베이크·웹 장면을 제작했다**. 레퍼런스: https://leoparpeix.com/ . 원본 자료 분석은 [D-158 검증](../r1-reference-attic-reverse-20261030/README.md).
 
-**판정: 구현/로컬 기능 PASS, 시각 충실도 CONDITIONAL.** 공개 배포는 아래 배포 기록이 생기기 전까지 확인 안 함. 원본과 같은 주요 구도/공간/하강 경로의 자체 복제이며, 픽셀 동일성이나 최종 미감 합격을 주장하지 않는다.
+**판정: 구현/공개 기능 PASS, 시각 충실도 CONDITIONAL.** Pages 배포와 공개 패키지/브라우저 검증을 완료했다. 원본과 같은 주요 구도/공간/하강 경로의 자체 복제이며, 픽셀 동일성이나 최종 미감 합격을 주장하지 않는다.
+
+[공개 복제 장면](https://userpawbaw.github.io/ecg-gui-design-review/reference-clone.html?v=c4b69c8) · [공개 웹 캡처](https://userpawbaw.github.io/ecg-gui-design-review/clone/web/preview.png?v=c4b69c8)
 
 ## 결과와 조작
 
@@ -83,3 +85,12 @@ Blender **4.5.3 LTS**, CPU5threads, COMBINED32samples, AgX / Medium High Contras
 ## 재현
 
 클라우드: builder --stage clay → 시각 검수 → --stage finish → 시각 검수 → --stage bake. `compress-reference-attic-clone.mjs`로 자체 GLB를 lossless meshopt 처리하고 `package-reference-attic-clone.py`로 atlas를 패키징한다. `stage-archive-web-preview.py`는 명시한33파일만 복사한다. `verify-reference-attic-clone.py`는 local/public URL을 받아 같은12위치와 조작을 검사한다. 원본 파일 없이 kit-spec으로 다시 제작할 수 있다. 사용자 Windows 실행 지시는 이 문서에 제공하지 않는다.
+
+## 공개 배포 기록
+
+- 소스 `c4b69c82c6c248c9728eaf480bcdf566cccfc9d1`, main workflow_dispatch [40927081950](https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/40927081950) success. feature push의 skipped run은 별개다. main은 workflow 실행 기준이며 공개 자산 소스 SHA는 위 값이다.
+- `remote-source-check.json`: 작업 시작5cb0ac4 이후 변경58파일의 원격 내용/로컬 바이트 일치.
+- `public-package-result.json`: 공개33파일 HTTP200/전부SHA일치. 금지 원본/문서 경로6개404. 표준 TLS검증을 유지했다.
+- `public-browser-result.json`: 공개 URL Chromium/SwiftShader에서 실제4mesh/4K4장/130176tri/4calls,12하강·위치재방문·입력·reset·reduced-motion·390×844 PASS. JS/실패요청/실패응답0, 원본사이트 에셋 요청0.
+- 공개 확인 캡처: [실제 공개 화면](public-preview.png), [공개 모바일 크기](public-mobile.png). Pages의 빠른 캡처 링크는 배포 패키지의 로컬 웹 캡처다.
+- 공개 로딩은 이 headless 검사에서 7.11s. 실제 PC/GPU 성능으로 일반화하지 않는다. 로컬/공개12쌍 중 PNG/RGB동일4쌍, 나머지는 RGB8 MAE최대 0.000756/255의 미세 차이가 있었다. 이 차이의 원인은 분리 확인 안 함. 모든 공개자산은 바이트일치하며 픽셀완전동일성은 주장하지 않는다.

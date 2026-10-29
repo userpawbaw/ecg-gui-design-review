@@ -1,0 +1,214 @@
+{
+  "base": "https://userpawbaw.github.io/ecg-gui-design-review/",
+  "source_sha": "c4b69c82c6c248c9728eaf480bcdf566cccfc9d1",
+  "assets": [
+    {
+      "path": "THREE-LICENSE.txt",
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "bytes": 1081,
+      "status": 200
+    },
+    {
+      "path": "archive.glb",
+      "sha256": "e4b5ede9a4cd685c64bd2699bfb9d5d480839d7ac4158b36ec177a1b9ae6791f",
+      "bytes": 10305880,
+      "status": 200
+    },
+    {
+      "path": "clone/attic-clone.glb",
+      "sha256": "c8a4fc7e4abe13418a47330271203a201ae7fd70482b18b5940daad9e1a5e423",
+      "bytes": 5124664,
+      "status": 200
+    },
+    {
+      "path": "clone/books.webp",
+      "sha256": "31ab681f6106e5614e1448c073642ef7e23b4e564f465ec60314c63274f1a481",
+      "bytes": 909452,
+      "status": 200
+    },
+    {
+      "path": "clone/floor.webp",
+      "sha256": "a9119be9f921874f195a4c00ffdb2f3755fbaa0ab12df2fd273721420e0e1fb3",
+      "bytes": 4248356,
+      "status": 200
+    },
+    {
+      "path": "clone/library.webp",
+      "sha256": "5e0910243e1e0c96626406a4f73da8a962b6eb8cf46a4ab75b1626fd031bf4c7",
+      "bytes": 2424122,
+      "status": 200
+    },
+    {
+      "path": "clone/manifest.json",
+      "sha256": "e4954e6cebdc85140a51bbc48813bf503f8bc9e94bc2f29f33ede8e09a3c4ea6",
+      "bytes": 1757,
+      "status": 200
+    },
+    {
+      "path": "clone/render-attic.png",
+      "sha256": "04da75525205407efe7e70332afe276a9dfcbf15699118e628d13601586ac583",
+      "bytes": 1124271,
+      "status": 200
+    },
+    {
+      "path": "clone/render-upper.png",
+      "sha256": "c90efe12b0556dec9102c41caacf9032e0d3b533eb1447df6f3e3014eb30e43b",
+      "bytes": 1132697,
+      "status": 200
+    },
+    {
+      "path": "clone/studio.webp",
+      "sha256": "f002f60d00c6d85d53d5adab23b7892afc64638d6d5c0f6f82fa1cdde04c7c9c",
+      "bytes": 3966742,
+      "status": 200
+    },
+    {
+      "path": "clone/web/preview.png",
+      "sha256": "5291d2002074abca7cb0a6111a65ed39080c8617246a2a96aef8f583f49d1325",
+      "bytes": 601330,
+      "status": 200
+    },
+    {
+      "path": "light-study.html",
+      "sha256": "b87a5b574204e425942b73707cd6f9bfe80f3566476de556a3115a599f82e5bc",
+      "bytes": 21691,
+      "status": 200
+    },
+    {
+      "path": "light_shell.webp",
+      "sha256": "b94ba78f5ac19bc82e2e9b180eb0618253e651e73d6c5c19cbe45cc1f26a7345",
+      "bytes": 634364,
+      "status": 200
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "a0a6749297caa04af7ff369f6d7aa29be59c80b851309a6b532d7fa895baa9a7",
+      "bytes": 1713,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/build/three.core.js",
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "bytes": 1458113,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/build/three.module.js",
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "bytes": 662772,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/examples/jsm/controls/OrbitControls.js",
+      "sha256": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b",
+      "bytes": 40755,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/examples/jsm/libs/meshopt_decoder.module.js",
+      "sha256": "d428e73a000057c6c94bfcedc3412d0c2dc14ca8800e88553aab05113ad2bf19",
+      "bytes": 29256,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+      "sha256": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16",
+      "bytes": 117570,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+      "sha256": "02e4a261af34de71338185e9e87f0cbe5cba9115608d984363e1269dec1d2272",
+      "bytes": 4184,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/examples/jsm/postprocessing/Pass.js",
+      "sha256": "444b409c235ead986893c472e720da1b779a56985c7d10b279c7944b52bd61c5",
+      "bytes": 4218,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/examples/jsm/shaders/OutputShader.js",
+      "sha256": "353479f77a8d7e2629d49ccac9fc2f5dbfdda5442e0adf867b00377a2fcb0cb2",
+      "bytes": 1876,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+      "sha256": "9fb63427ce6641fa14fd0baff9cc4d1b5f9c3d85fd084bf2e90e803c44ec1797",
+      "bytes": 37712,
+      "status": 200
+    },
+    {
+      "path": "node_modules/three/examples/jsm/utils/SkeletonUtils.js",
+      "sha256": "b1632a703206c3d830de9fcbe515696770d04b71a15ee6b50afa6d2c3298c86f",
+      "bytes": 11535,
+      "status": 200
+    },
+    {
+      "path": "preview.html",
+      "sha256": "15af5b789d074535a7d89073a04121f3d12e3bc1359762b48d2fca978a80c7cb",
+      "bytes": 7831,
+      "status": 200
+    },
+    {
+      "path": "reference-clone.html",
+      "sha256": "e36a91a6f04a892cdf66fb0686ca6c66ab5153dd2b2939978bd1b3871f590ab3",
+      "bytes": 7672,
+      "status": 200
+    },
+    {
+      "path": "study/ceiling-apertures.js",
+      "sha256": "f8790c840fde8385035f7c6241f93e10e0f9185802dca66748e2f0c656ace10e",
+      "bytes": 3799,
+      "status": 200
+    },
+    {
+      "path": "study/contact-shadows.js",
+      "sha256": "02554424a5c61640ffc04358ef6c5d3147e8bb10e12acf95eaac97afb1bb7945",
+      "bytes": 3855,
+      "status": 200
+    },
+    {
+      "path": "study/curtain-field.js",
+      "sha256": "c8c31369a87c1b4e83e50980a6a2ad9652608aefaca0248cc187a9d18dcea171",
+      "bytes": 2937,
+      "status": 200
+    },
+    {
+      "path": "study/lighting-state.js",
+      "sha256": "bf6911e151db5a64602d4825690ae551493a9f2966ca1a8ebc84f3e3e90cf756",
+      "bytes": 1807,
+      "status": 200
+    },
+    {
+      "path": "study/volume-shaders.js",
+      "sha256": "17b826707ed878aaa6d0616b2dd35b2ff4c1a78c6f2c52e51cd08ddce7be0ff5",
+      "bytes": 4868,
+      "status": 200
+    },
+    {
+      "path": "study/volumetric-light.js",
+      "sha256": "ff5347fb68b7e9feb41dc73a3f5101b80c48f6fe0a1cb54403eb501452a1ef92",
+      "bytes": 9931,
+      "status": 200
+    },
+    {
+      "path": "study/window-study.js",
+      "sha256": "68a3d8ee08bf309ead39b03c5f40760a1a62b2835ade1c050ec18aeab6098911",
+      "bytes": 4289,
+      "status": 200
+    }
+  ],
+  "excluded": {
+    "scene_v9.glb": 404,
+    "TexProps.ktx2": 404,
+    "index-djk_Apyr.js": 404,
+    "README.md": 404,
+    "clone/README.md": 404,
+    "clone/kit-spec.json": 404
+  },
+  "tls": "Default system CA verification",
+  "result": "PASS"
+}

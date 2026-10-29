@@ -1,0 +1,239 @@
+{
+  "source_sha": "c4b69c82c6c248c9728eaf480bcdf566cccfc9d1",
+  "remote_ref": "origin/claude/archive-light-r7-ag2rja",
+  "files": [
+    {
+      "path": "PLAN.md",
+      "sha256": "17d49a668926e14dea48b73c7126979a4a3c1c8be09d91a0e5e164cf25c89239"
+    },
+    {
+      "path": "WORKLOG.md",
+      "sha256": "463a13a36b471d5bd7cb4d0b68793c3a94bd8ad65ea39198ace5560ba61973ab"
+    },
+    {
+      "path": "WORK_STATE.json",
+      "sha256": "978b04d8481d1edf80f5b7b691f8a8b2e01faa711186c3bceabf51e657bb31d4"
+    },
+    {
+      "path": "docs/playbook/P-006_ARCHIVE_SHADOW_LAYERS.md",
+      "sha256": "2fe7c05c9c9c191b453571373ca91167ab9fa5f1bb581e3ecf12609bef48ea4e"
+    },
+    {
+      "path": "docs/playbook/journeys/J-003_ARCHIVE_SHADOW_LAYERS.md",
+      "sha256": "bb8d14805a0564ebce5e428d6d908cccb5b78d89bedb7ca8c9d99528e96c5526"
+    },
+    {
+      "path": "docs/uiux_system/records/D_DECISIONS.md",
+      "sha256": "bb159d688da14584d250d7725479e9d7388b5cdb01ed8fc06513cbf712fc5cad"
+    },
+    {
+      "path": "docs/uiux_system/references/REF-002_LEOPARPEIX.md",
+      "sha256": "c230cf5eda036336efd449349d35a9506224877ee6adb13b528842efec02b0d7"
+    },
+    {
+      "path": "scripts/assets/compress-reference-attic-clone.mjs",
+      "sha256": "c44d8b28f905f63ae469e78c2d88e9f95cd4cd461e94dc45ae29f8bd33d9a8ad"
+    },
+    {
+      "path": "scripts/assets/package-reference-attic-clone.py",
+      "sha256": "5129449ad631f3475cb2ef368a9ac5b0ae84754a78adc54d677b6ed1fe961820"
+    },
+    {
+      "path": "scripts/assets/stage-archive-web-preview.py",
+      "sha256": "4297b93227c6fb8cd0953d0e2e6a374379e3e0964333fbe555586797952fd9a4"
+    },
+    {
+      "path": "scripts/assets/verify-reference-attic-clone.py",
+      "sha256": "2aafc0fb343e644af69a7d96295f4df90ecf8077ae6204dc3746e7c7291d8821"
+    },
+    {
+      "path": "scripts/blender/build_reference_attic_clone.py",
+      "sha256": "e22f74cbdfd283702bff7abb86eda1f549c77acbf749fc5fe7e6ed563ab939de"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/README.md",
+      "sha256": "98e7b244d47d223e892c092440e1a76ddfea82753d05d3fc095acc556d1d7857"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/asset-boundary-result.json",
+      "sha256": "ebc4a4b9b591e02b167a66de51031391bc4d5893e65def3c4be79c3e87b9c4ee"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/attic-clone.glb",
+      "sha256": "c8a4fc7e4abe13418a47330271203a201ae7fd70482b18b5940daad9e1a5e423"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/books.webp",
+      "sha256": "31ab681f6106e5614e1448c073642ef7e23b4e564f465ec60314c63274f1a481"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/clay-attic.png",
+      "sha256": "caa59f71d80c80c481e904882ff08783ae5a7e51ff34acffb8e51a0135bd9803"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/clay-initial-fail.jpg",
+      "sha256": "c9dc217732f19383c7dae84c7f48fd90792458ae746f51c8554c7d22f2d88625"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/clay-three-quarter.png",
+      "sha256": "bfbf9947fa816a2c6ab5c219ef338ade4bb0b772e7577409e5b764851a6396e9"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/clay-upper.png",
+      "sha256": "76f6e3b4c08730cc176cd4b563edb93c5c6c473a7889f1f4862dc6d3645dcaf9"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/existing-preview-regression.json",
+      "sha256": "76d88d247c25a612109955e31b0455cea273510d8a9f41862cf937d7fa977dec"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/floor.webp",
+      "sha256": "a9119be9f921874f195a4c00ffdb2f3755fbaa0ab12df2fd273721420e0e1fb3"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/geometry-audit.json",
+      "sha256": "87631914ff061dcec96371d6d4a36058a19eccff9dbf6a1aa98807f95d6ff9c7"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/image-comparison.json",
+      "sha256": "0f429c5008f623e115f7cea5c54f61d8c9a3514adc7d8e11fa130ba75a730f57"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/kit-parameter-check.json",
+      "sha256": "32ed17ff6bdc95fc5110199d477b6b8f731350f2bdd542d57e4a7fc4e92437cc"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/kit-spec.json",
+      "sha256": "dcf327ca51adaf5a231b533f70218e05934b76533eb42111e9abb1557e89c930"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/library.webp",
+      "sha256": "5e0910243e1e0c96626406a4f73da8a962b6eb8cf46a4ab75b1626fd031bf4c7"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/manifest.json",
+      "sha256": "e4954e6cebdc85140a51bbc48813bf503f8bc9e94bc2f29f33ede8e09a3c4ea6"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/mesh-compression-result.json",
+      "sha256": "7386466fcdf934b8fa2bb53ea05a7c313d0fe796fd636c779ce3f6d0d5ef984b"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/packaging-result.json",
+      "sha256": "63cf594ea23f2957f2533fe8b5500abbfef8c04d3e267afbf7d2554de23f25e3"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/protected-sources.json",
+      "sha256": "1fa9b97ca37425dc82a072253586d2ffa522d84a74e4d8a2c5e8c15b09105b17"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/raw-sampling-result.json",
+      "sha256": "ec51ddd67eb7c84874046cdf0a84d37e5d396539b792eb41410f41dd35b199c9"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/reference-clone.html",
+      "sha256": "b266a41032a667462288d1366334d832286c7c119d94f3f5ae14ac87d5eb1564"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/remote-number-check.json",
+      "sha256": "6d1ac6cad22834b3f586e182e0116db4409a752d9c12d08955dbe7e27753e05c"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/render-attic.png",
+      "sha256": "04da75525205407efe7e70332afe276a9dfcbf15699118e628d13601586ac583"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/render-upper.png",
+      "sha256": "c90efe12b0556dec9102c41caacf9032e0d3b533eb1447df6f3e3014eb30e43b"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/sampling-before.png",
+      "sha256": "d0d4afe8288077626dbec92e17c1830dcba782cab4a50993fc48d34e4d7525d9"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/sampling-comparison.json",
+      "sha256": "ae0211de3a3e8fe04afd0d8722ec96521c469ea9c638fe762a5936dc2df2c228"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/studio.webp",
+      "sha256": "f002f60d00c6d85d53d5adab23b7892afc64638d6d5c0f6f82fa1cdde04c7c9c"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/attic-midpoint.png",
+      "sha256": "6748b68483a4939cfb8a4c8e9ea7be1da4f2c63deab5702c1a8741fca5a5275b"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/browser-result.json",
+      "sha256": "03a654a79e57fd2d2e5c63dea21152bc6f82de92ed3c9b15a6f38c4c20ba8fc4"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-00.png",
+      "sha256": "6abb5acaf93c2ca7f7c95674a9033f528ed32602f57347e947dcc3932224c1aa"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-01.png",
+      "sha256": "20cb086dc08d1cd7c492d7f64ba4b21f719564a1c35795c43d4f8bb176bc434f"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-02.png",
+      "sha256": "c003a9c1aa057eb14de07d942c9b9566fdf4119c6c8bd9c155b3aa0abba91f4a"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-03.png",
+      "sha256": "12e347d19f6cc43e31bba18694cd6f4bccbd9c32e33cc2e27f434ad08ad9c294"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-04.png",
+      "sha256": "f759f2a1af81ebb6b2a9e7dc1a9d727e64ae78d8e43b18e91573a409faf5edb9"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-05.png",
+      "sha256": "b333ca2d7d98ff57252aaa52d6fd5d8e4206f7b44747a1cab9c629de18ccdc36"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-06.png",
+      "sha256": "1d05947fb4c678be8d3b1a88ecf1430ca6aa41aedc0849b79aeff132b72a14a5"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-07.png",
+      "sha256": "1eb1519be60d86fb5cf56e4bef7c07c855721d4277a50299f379681c59a09d1c"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-08.png",
+      "sha256": "af28a8489811da0ea64c7b7838ca5f95c1eb7a392459fd3fb1f5e519847a9c35"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-09.png",
+      "sha256": "5618fcdb31155689db1326e5b496f7428d02fef1f5a89d13ca42dc72aadbe78f"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-10.png",
+      "sha256": "1a94b30949da89102c1fca9b050a5c9759a02b80afd4f82aa9f75ee8491a2a63"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/descent-11.png",
+      "sha256": "b22d2ee104a38ad3a3fdab0c209d50a00e38074689c3c2086de8a9db3d1b655f"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/mobile.png",
+      "sha256": "31eadbdffac54010835d86fbfbc1c949a2365fadae4426b3a518624435f2f64a"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/preview.png",
+      "sha256": "5291d2002074abca7cb0a6111a65ed39080c8617246a2a96aef8f583f49d1325"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/repeat-1.png",
+      "sha256": "6748b68483a4939cfb8a4c8e9ea7be1da4f2c63deab5702c1a8741fca5a5275b"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/repeat-2.png",
+      "sha256": "6748b68483a4939cfb8a4c8e9ea7be1da4f2c63deab5702c1a8741fca5a5275b"
+    },
+    {
+      "path": "verification/r1-reference-attic-clone-20261030/web/upper.png",
+      "sha256": "9f93880eb0f632df72fc6eb34436230b500aa01e74a479b79dffd8f096ff5693"
+    }
+  ],
+  "result": "PASS"
+}

@@ -125,7 +125,7 @@
     "verification/release-recovery-20260915.json",
     "verification/browser-qa-20260915/"
   ],
-  "next_action": "D-159: finish new 4K atlases, lossless package, 12-frame staged QA and isolated Pages deployment. Original Story/r8/D084 remain unchanged.",
+  "next_action": "공개 reference-clone.html?v=c4b69c8에서 자체 복제 시안 검토. 원본 대비 사다리 명도/광분포/곡면/바닥 차이와 실제 Edge/GPU는 미확인. Story/default 통합은 별도 범위.",
   "not_started": [],
   "overall_project_status": "conditional_pass_external_verification_pending",
   "plan": "PLAN.md",
@@ -138,7 +138,7 @@
     "verification": "Current UI-01/03/04 source, 98×600-second replay, ZIP CRC and extracted-package headless non-soak QA verified; target-PC headed and ten-minute soak remain"
   },
   "repository": "https://github.com/userpawbaw/ecg-gui-design-review",
-  "request_status": "in_progress",
+  "request_status": "completed_conditional_visual_review",
   "schema_version": 3,
   "updated_at": "2026-10-30",
   "verification": [
@@ -539,17 +539,22 @@
     }
   },
   "reference_attic_clone": {
-    "status": "local_verified_deploying",
+    "status": "public_verified_visual_review_pending",
     "decision": "D-159",
     "scope": "Self-authored clone from measured poses, new geometry/material/bake; no reference asset reuse",
-    "checkpoint": "New GLB/4K bakes/lossless package/12-frame browser QA pass; studio DoubleSide and sampler1 fixes included",
+    "checkpoint": "New scene and public package/browser checks complete; original-fidelity/user/target-device review remains conditional",
     "evidence": "verification/r1-reference-attic-clone-20261030/",
-    "next": "commit/push web deliverables, main Pages dispatch, public asset and browser checks",
-    "checkpoint_commit": "bd96139e1458920f5048bea7ecd6cfeb7e87ef6f",
+    "next": "사용자 시각 검토; 원본과 남은 광분포/재질/세부 차이는 README에 기록. 보호된 Story/default는 유지.",
+    "checkpoint_commit": "c4b69c82c6c248c9728eaf480bcdf566cccfc9d1",
     "remote_checkpoint_verified": true,
     "bake_seconds": 1561.65,
     "triangles": 130176,
     "draw_calls": 4,
-    "visual_status": "CONDITIONAL: palette/light/rail brightness/artwork/leaf curves/floor footprint differ; user and target GPU not verified"
+    "visual_status": "CONDITIONAL: palette/light/rail brightness/artwork/leaf curves/floor footprint differ; user and target GPU not verified",
+    "source_sha": "c4b69c82c6c248c9728eaf480bcdf566cccfc9d1",
+    "public_url": "https://userpawbaw.github.io/ecg-gui-design-review/reference-clone.html?v=c4b69c8",
+    "deployment_run": 40927081950,
+    "public_package_files": 33,
+    "public_browser": "PASS; 12 positions, inputs, reset, reduced motion, 390x844; no failed requests/JS errors"
   }
 }

@@ -1,0 +1,351 @@
+{
+  "url": "https://userpawbaw.github.io/ecg-gui-design-review/reference-clone.html?v=c4b69c8",
+  "errors": [],
+  "failed_requests": [],
+  "bad_responses": [],
+  "requests": [
+    "https://userpawbaw.github.io/ecg-gui-design-review/reference-clone.html?v=c4b69c8",
+    "https://userpawbaw.github.io/ecg-gui-design-review/node_modules/three/build/three.module.js",
+    "https://userpawbaw.github.io/ecg-gui-design-review/node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+    "https://userpawbaw.github.io/ecg-gui-design-review/node_modules/three/examples/jsm/libs/meshopt_decoder.module.js",
+    "https://userpawbaw.github.io/ecg-gui-design-review/node_modules/three/examples/jsm/controls/OrbitControls.js",
+    "https://userpawbaw.github.io/ecg-gui-design-review/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+    "https://userpawbaw.github.io/ecg-gui-design-review/node_modules/three/examples/jsm/utils/SkeletonUtils.js",
+    "https://userpawbaw.github.io/ecg-gui-design-review/node_modules/three/build/three.core.js",
+    "https://userpawbaw.github.io/ecg-gui-design-review/clone/manifest.json?v=677046ae50e8",
+    "https://userpawbaw.github.io/ecg-gui-design-review/clone/attic-clone.glb?v=677046ae50e8",
+    "https://userpawbaw.github.io/ecg-gui-design-review/clone/library.webp?v=677046ae50e8",
+    "https://userpawbaw.github.io/ecg-gui-design-review/clone/books.webp?v=677046ae50e8",
+    "https://userpawbaw.github.io/ecg-gui-design-review/clone/studio.webp?v=677046ae50e8",
+    "https://userpawbaw.github.io/ecg-gui-design-review/clone/floor.webp?v=677046ae50e8"
+  ],
+  "frames": [
+    {
+      "progress": 0.0,
+      "position": [
+        0,
+        -0.43924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "3aa3287f69e5cc6447565730d368ed59b0873f40ac71ac1a563b770d6b70a210"
+    },
+    {
+      "progress": 0.09090909090909091,
+      "position": [
+        0,
+        -0.68924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "1f4c672868c4d56c9c4bba22f44673b36bf81cb9a89dd4065f0d979548f14433"
+    },
+    {
+      "progress": 0.18181818181818182,
+      "position": [
+        0,
+        -0.93924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "0ee3a6a336e665078854c2e93495cbe9cf2f2a8804cdeba3bd99fda0119423c5"
+    },
+    {
+      "progress": 0.2727272727272727,
+      "position": [
+        0,
+        -1.18924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "7443f557a478b3e98dfaf64241fbb0efb96a5a5b62f96c4cfa26a4b1bd2a726b"
+    },
+    {
+      "progress": 0.36363636363636365,
+      "position": [
+        0,
+        -1.43924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "19f5881feaa7108e6bd61026872a3db8e33eb840f931dd9b4346ea5b2c997505"
+    },
+    {
+      "progress": 0.45454545454545453,
+      "position": [
+        0,
+        -1.68924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "e0a1cfffcdb6ed2ebaf96c47f8009e8ae350551c25aee96119fec6bf1ab6091b"
+    },
+    {
+      "progress": 0.5454545454545454,
+      "position": [
+        0,
+        -1.93924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "116df1a11101d012f0a62ed31f9d305b4519016db6dae8fef23f05b02fac2d8e"
+    },
+    {
+      "progress": 0.6363636363636364,
+      "position": [
+        0,
+        -2.18924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "7f77c39caf549ae9dfaa0e252211f050bde26d405b168d392e7b34edbf2c7ee6"
+    },
+    {
+      "progress": 0.7272727272727273,
+      "position": [
+        0,
+        -2.43924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "af28a8489811da0ea64c7b7838ca5f95c1eb7a392459fd3fb1f5e519847a9c35"
+    },
+    {
+      "progress": 0.8181818181818182,
+      "position": [
+        0,
+        -2.68924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "5618fcdb31155689db1326e5b496f7428d02fef1f5a89d13ca42dc72aadbe78f"
+    },
+    {
+      "progress": 0.9090909090909091,
+      "position": [
+        0,
+        -2.93924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "1a94b30949da89102c1fca9b050a5c9759a02b80afd4f82aa9f75ee8491a2a63"
+    },
+    {
+      "progress": 1.0,
+      "position": [
+        0,
+        -3.18924284,
+        14.7563982
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "sha256": "b22d2ee104a38ad3a3fdab0c209d50a00e38074689c3c2086de8a9db3d1b655f"
+    }
+  ],
+  "load_seconds": 7.11,
+  "browser": "154.0.8037.57",
+  "scene": {
+    "meshes": 4,
+    "triangles": 130176,
+    "atlas": [
+      {
+        "name": "library",
+        "width": 4096,
+        "height": 4096
+      },
+      {
+        "name": "books",
+        "width": 4096,
+        "height": 4096
+      },
+      {
+        "name": "studio",
+        "width": 4096,
+        "height": 4096
+      },
+      {
+        "name": "floor",
+        "width": 4096,
+        "height": 4096
+      }
+    ],
+    "fov": 22.8951919564,
+    "build": "677046ae50e8",
+    "render": {
+      "frame": 156,
+      "calls": 4,
+      "triangles": 130176,
+      "points": 0,
+      "lines": 0
+    }
+  },
+  "same_position_repeat": "PASS",
+  "pointer": "PASS",
+  "orbit": "PASS",
+  "reset": "PASS",
+  "wheel": "PASS",
+  "reduced_motion_rotation": [
+    0,
+    0,
+    0
+  ],
+  "mobile": "390x844 no horizontal overflow; actual touch not tested",
+  "result": "PASS",
+  "local_public_frame_comparison": [
+    {
+      "frame": 0,
+      "png_exact": false,
+      "public_sha256": "3aa3287f69e5cc6447565730d368ed59b0873f40ac71ac1a563b770d6b70a210",
+      "rgb8_exact": false,
+      "rgb8_mae": 1.1574074074074073e-05,
+      "max_abs_error": 10
+    },
+    {
+      "frame": 1,
+      "png_exact": false,
+      "public_sha256": "1f4c672868c4d56c9c4bba22f44673b36bf81cb9a89dd4065f0d979548f14433",
+      "rgb8_exact": false,
+      "rgb8_mae": 0.0007559317129629629,
+      "max_abs_error": 37
+    },
+    {
+      "frame": 2,
+      "png_exact": false,
+      "public_sha256": "0ee3a6a336e665078854c2e93495cbe9cf2f2a8804cdeba3bd99fda0119423c5",
+      "rgb8_exact": false,
+      "rgb8_mae": 3.5445601851851854e-05,
+      "max_abs_error": 42
+    },
+    {
+      "frame": 3,
+      "png_exact": false,
+      "public_sha256": "7443f557a478b3e98dfaf64241fbb0efb96a5a5b62f96c4cfa26a4b1bd2a726b",
+      "rgb8_exact": false,
+      "rgb8_mae": 8.644386574074075e-05,
+      "max_abs_error": 34
+    },
+    {
+      "frame": 4,
+      "png_exact": false,
+      "public_sha256": "19f5881feaa7108e6bd61026872a3db8e33eb840f931dd9b4346ea5b2c997505",
+      "rgb8_exact": false,
+      "rgb8_mae": 0.00036530671296296295,
+      "max_abs_error": 33
+    },
+    {
+      "frame": 5,
+      "png_exact": false,
+      "public_sha256": "e0a1cfffcdb6ed2ebaf96c47f8009e8ae350551c25aee96119fec6bf1ab6091b",
+      "rgb8_exact": false,
+      "rgb8_mae": 7.2337962962962966e-06,
+      "max_abs_error": 9
+    },
+    {
+      "frame": 6,
+      "png_exact": false,
+      "public_sha256": "116df1a11101d012f0a62ed31f9d305b4519016db6dae8fef23f05b02fac2d8e",
+      "rgb8_exact": false,
+      "rgb8_mae": 0.0006586371527777777,
+      "max_abs_error": 38
+    },
+    {
+      "frame": 7,
+      "png_exact": false,
+      "public_sha256": "7f77c39caf549ae9dfaa0e252211f050bde26d405b168d392e7b34edbf2c7ee6",
+      "rgb8_exact": false,
+      "rgb8_mae": 7.957175925925925e-06,
+      "max_abs_error": 11
+    },
+    {
+      "frame": 8,
+      "png_exact": true,
+      "public_sha256": "af28a8489811da0ea64c7b7838ca5f95c1eb7a392459fd3fb1f5e519847a9c35",
+      "rgb8_exact": true,
+      "rgb8_mae": 0.0,
+      "max_abs_error": 0
+    },
+    {
+      "frame": 9,
+      "png_exact": true,
+      "public_sha256": "5618fcdb31155689db1326e5b496f7428d02fef1f5a89d13ca42dc72aadbe78f",
+      "rgb8_exact": true,
+      "rgb8_mae": 0.0,
+      "max_abs_error": 0
+    },
+    {
+      "frame": 10,
+      "png_exact": true,
+      "public_sha256": "1a94b30949da89102c1fca9b050a5c9759a02b80afd4f82aa9f75ee8491a2a63",
+      "rgb8_exact": true,
+      "rgb8_mae": 0.0,
+      "max_abs_error": 0
+    },
+    {
+      "frame": 11,
+      "png_exact": true,
+      "public_sha256": "b22d2ee104a38ad3a3fdab0c209d50a00e38074689c3c2086de8a9db3d1b655f",
+      "rgb8_exact": true,
+      "rgb8_mae": 0.0,
+      "max_abs_error": 0
+    }
+  ]
+}

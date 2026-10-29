@@ -1,0 +1,15 @@
+{
+  "id": 40927081950,
+  "status": "completed",
+  "conclusion": "success",
+  "created_at": "2026-10-29T18:02:52Z",
+  "html_url": "https://github.com/userpawbaw/ecg-gui-design-review/actions/runs/40927081950",
+  "event": "workflow_dispatch",
+  "head_sha": "35286311ca0965cfb9f0c45caf4ac18ff3706e20",
+  "source_sha": "c4b69c82c6c248c9728eaf480bcdf566cccfc9d1",
+  "source_ref": "claude/archive-light-r7-ag2rja",
+  "public_url": "https://userpawbaw.github.io/ecg-gui-design-review/reference-clone.html?v=c4b69c8",
+  "package_result": "public-package-result.json",
+  "browser_result": "public-browser-result.json",
+  "build": "677046ae50e8"
+}

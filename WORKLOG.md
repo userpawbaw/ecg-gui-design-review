@@ -558,3 +558,5 @@ D-152 마감: source2fe6862(구현12be06b/cache보완),main dispatch39557898363 
 D-159 제작 체크포인트: 수정 clay 정면/3·4각, 재질/조명 3회 범위 내 검토 완료. 새4K Cycles COMBINED 4그룹 bake 시작. 문서검사 records/playbook PASS; stage 스크립트/웹/공개 배포는 아직 이 체크포인트에 포함하지 않는다.
 
 D-159 웹 실행:4K×4 COMBINED32sample/CPU5threads 총1561.65s. WebP11,548,672bytes·RGB8완전일치4/4. 자체GLB8,807,548→5,124,664bytes, meshopt0.22 lossless16view 전부바이트동일. 4mesh/130176tri/4calls. 새 viewer 12하강/포인터/휠/slider/orbit/reset/reduced-motion/390×844 PASS. 첫 edge seam은0/1/1.5/2texel비교후1선택(서고25.87→27.73dB), 열린 잎은DoubleSide수정, resizeCSS소유권수정. 오류/초기실패와 최종결과 분리. 자체씬 미감3회 후 종료, 원본대비 빛/사다리명도/곡면/그림/바닥 차이조건부. 보호7파일·기존stage23파일byte동일. 환경시작상태로1회exec부재후파일보존확인, bake재실행없음. 다음은웹소스원격검증·Pages공개검증.
+
+D-159 공개 완료: c4b69c8 push·원격58파일내용검증PASS, main dispatch40927081950 success. 공개33파일HTTP200/SHA일치·금지경로6개404, 실제공개browser12하강/반복/입력/reset/reduced-motion/390×844 PASS, 원본자산요청0. 이환경load7.11s·실제GPU일반화안함. 로컬/공개PNG4/12동일,나머지MAE최대0.000756/255·원인분리확인안함. 원본전체동일/사용자미감/실EdgeGPU/Story통합은확인안함. 실제공개캡처와계측은 verification/r1-reference-attic-clone-20261030/README.md. 이번구현·배포요청완료, 시각충실도조건부.

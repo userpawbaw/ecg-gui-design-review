@@ -2599,7 +2599,7 @@ shader구현12be06b/cache보완2fe6862,Pages39557898363 공개완료.최종전�
 | | |
 |---|---|
 | 시점 | 2026-10-30 `[대화]` “복제까지 계속 진행” |
-| 상태 | 자체모델/4K bake/웹 기능검수 완료·공개 배포 진행, 사용자 미감 확인 안 함 |
+| 상태 | 자체모델/4K bake/웹·공개 기능검수 완료, 시각 충실도 CONDITIONAL·사용자 미감 확인 안 함 |
 | CASE | 불필요 — 고정 레퍼런스 장면의 자산·베이크 구현이며 방법론 변경 없음 |
 | 번호 | 모든remote heads갱신/최고D158확인후D159사용. verification/r1-reference-attic-clone-20261030/remote-number-check.json |
 
@@ -2622,3 +2622,5 @@ clay에서사다리/해치/책장대분할/상층실루엣이틀리면베이크�
 
 ### D-159 실행 결과
 자체347kit·4K×4 COMBINED32sample/새UV/새GLB 제작. bake1561.65s,4mesh/130176tri/4calls. 원본baked색 probe의rust편향은기각해선반별고정palette(seed159)로추론했다. losslessWebP전픽셀동일4/4, meshopt0.22로GLB41.82%감소·16viewbyte동일. 새viewer의1texel경계guard/열린잎DoubleSide/resize보정을실제캡처로검사했다. 12카메라·입력·초기화·reduced-motion·모바일레이아웃PASS. Story/default7파일·기존stage23파일byte불변. 원본과빛/그림/곡면/사다리명도/바닥범위차이는조건부이며사용자미감·실GPU·픽셀동등성확인안함. 공개상태는 `verification/r1-reference-attic-clone-20261030/README.md` 배포기록참조.
+
+D-159 공개 결과: c4b69c8/Pages40927081950 success, 공개33file bytehash/12camera·조작PASS. 원격58file내용일치. `verification/r1-reference-attic-clone-20261030/public-package-result.json`, `public-browser-result.json`, `deployment-result.json`. 로컬/공개소수pixel차이·원본미감차이는별도조건부로유지한다.

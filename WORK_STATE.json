@@ -537,5 +537,13 @@
       "public_evidence": "verification/r1-archive-volumetric-20261019/public-result.json",
       "public_url": "https://userpawbaw.github.io/ecg-gui-design-review/light-study.html?view=shafts&v=4dc59ce"
     }
+  },
+  "reference_attic_clone": {
+    "status": "in_progress",
+    "decision": "D-159",
+    "scope": "Self-authored clone from measured poses, new geometry/material/bake; no reference asset reuse",
+    "checkpoint": "clay correction, 6-part bevel preflight, three material/light review rounds complete; new 4K Cycles bake running",
+    "evidence": "verification/r1-reference-attic-clone-20261030/",
+    "next": "finish bakes, lossless package, staged 12-frame QA and public Pages"
   }
 }

@@ -551,3 +551,8 @@ D-152 마감: source2fe6862(구현12be06b/cache보완),main dispatch39557898363 
 
 ## 2026-10-30 D-158 — 원본다락방 역설계
 사용자“leoparpeix사이트자체/다락방풍경그대로”요청. 단순HTTP403/Cloudflare1010이었으나정상Chromium방문/asset200,환경unrestricted현재확인.사용자도정상열림확인.현재scene_v9.glb141924bytes/13mesh22796tris/7bake,GLBFOV22.8951919564°/height−.43924→−3.18924를읽고sourcefilter/scroll식을대조했다.2048/4096수집재검증,4K독립unlit재생12프레임·입력·동일progress반복·기하718조각bbox측정PASS.원본기반이미지/model/texture/bundle은/tmp에만두고repo에자체도구/수치/명세만기록.새자체제작씬/원본Blender조명rig/전체사이트pixel동등성/실GPU는미확인.원본데이터재생을제작완료로표기하지않는다.
+
+## 2026-10-30 — D-159 원본고정 자체 복제 제작
+사용자 “복제까지 계속 진행”. 전체원격 D158까지 확인 후 D159 기록. 원본자산은 scratch에 유지, 347개 kit의 치수/자세만 분류해 새 builder를 작성했다. 최초 clay의 사다리 넓은 판/창 절단 실패를 검출해 최소체적 직교 치수·법선·polyline을 수정했다. 선택 6부재 bevel mechanical pass. 원본 baked 색을 albedo처럼 분류한 결과가 rust에 치우쳐 기각하고 자체 palette 배분을 명시했다. 새 재질/조명 시각 검수 뒤 bake/웹/공개 검증 예정. 근거 verification/r1-reference-attic-clone-20261030/README.md. Story/r8/D084 변경 없음.
+
+D-159 제작 체크포인트: 수정 clay 정면/3·4각, 재질/조명 3회 범위 내 검토 완료. 새4K Cycles COMBINED 4그룹 bake 시작. 문서검사 records/playbook PASS; stage 스크립트/웹/공개 배포는 아직 이 체크포인트에 포함하지 않는다.

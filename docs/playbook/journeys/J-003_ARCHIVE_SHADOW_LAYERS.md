@@ -297,7 +297,7 @@ T11 시점정정: 초기9.58/1.44/1.46중1.44의side명칭은철회했다.정확
 | 계기 | 사용자 “leoparpeix … 다락방 풍경 그대로” |
 | 가설 | 현재원본의카메라·geometry·bake·sampling을고정하면동일재현의기준을확보할수있음 |
 | 판정 | 부분 채택 — 원본분석재생/수치검수PASS,새자체제작재현은미실행 |
-| 다음 | 끝 — 원본고정명세로자체geometry/베이크제작및동일프레임비교 |
+| 다음 | T13 — 원본고정명세로자체geometry/베이크제작및동일프레임비교 |
 | 기록 | D-158, REF-002, `verification/r1-reference-attic-reverse-20261030/README.md` |
 
 ### 한 것
@@ -305,3 +305,24 @@ T11 시점정정: 초기9.58/1.44/1.46중1.44의side명칭은철회했다.정확
 
 ### 결과
 D-158 `verification/r1-reference-attic-reverse-20261030/replay-result.json`: 4K자료/12카메라프레임/같은progress동일hash/입력/매칭PASS.718기하조각bbox측정은소품수로해석하지않는다. 원본자료재생과자체새제작을구별하고,원본Blender조명rig/전체sitepixel동등성/실GPU를확인안함으로남겼다.
+
+### 왜 다음으로
+사용자가 원본자료 분석에서 실제 복제까지 계속 진행하도록 요청해, D-159의 자체 kit·새 베이크 제작으로 이어졌다.
+
+## T13. 원본고정 치수로 자체 장면 제작
+
+| | |
+|---|---|
+| 날짜 | 2026-10-30 |
+| 종류 | 시도 |
+| 계기 | 사용자 “복제까지 계속 진행” |
+| 가설 | 측정한 치수·자세를 새 kit로 모델링하고 새 빛을 구우면 원본자산 반입 없이 주요 구도를 재현할 수 있음 |
+| 판정 | 부분 채택 — 자체 제작 진행, 사용자 미감 확인 안 함 |
+| 다음 | 끝 — 새 bake/동일12프레임/공개검증 뒤 사용자 시각검토 |
+| 기록 | D-159, `verification/r1-reference-attic-clone-20261030/README.md` |
+
+### 한 것
+199책/122판재 등 347개 치수·자세를 자체 geometry로 제작했다. 처음 clay에서 사다리 직교 치수와 창 절단 오류를 잡고 수정했다. 원본 baked 색 probe는 albedo와 조명 분리가 안 돼 rust 편향을 내므로 기각했고 선반 영역별 고정 palette를 배분했다.
+
+### 결과
+`[런타임]` D-159 `verification/r1-reference-attic-clone-20261030/geometry-audit.json`: 선택 6부재 geometry preflight와 수정 clay 검수. 새 베이크/공개웹 검증은 verification README에서 실제 완료 증거와 구분한다. 사용자 미감·픽셀동등성·실제 GPU는 확인 안 함.

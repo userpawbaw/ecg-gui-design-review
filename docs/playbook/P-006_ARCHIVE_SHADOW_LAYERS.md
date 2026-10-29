@@ -45,3 +45,6 @@ B3 렌더를 완료했다. L2의 해치 연출·사용자 최종 미감·웹 굽
 
 ### T12 원본고정 역설계 보완
 사용자의“원본다락방그대로”요청은카메라/공간이달라지는재검토조건에해당한다. D-158에서원본scene의22.895°/2.75하강/13mesh·7bake를다시검증했다. sourcegeometry·베이크를재생한분석결과를자체모델/조명제작의합격으로승격하지않는다. `verification/r1-reference-attic-reverse-20261030/README.md`와J-003 T12.
+
+### T13 자체 제작 실행
+D-159에서 347개 치수/자세를 새 kit로 제작한다. 첫 clay의 잘못된 사다리 판재는 수정 후 재촬영했고, baked 색을 albedo로 해석한 rust 편향은 기각했다. 원본 빛/색의 관찰과 새 제작의 합격을 분리하며 최종 검수는 `verification/r1-reference-attic-clone-20261030/README.md`에 둔다. 사용자 미감 확인 전 잠정 유지.

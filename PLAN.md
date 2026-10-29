@@ -402,3 +402,10 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - [x] 수집/분석/검수도구와원본고정재구성계약·측정값/확인안함기록.
 - [ ] 후속자체제작:clay모델/새재질·베이크/동일프레임웹재생/사용자미감검수.원본재생성공과구별한다.
 - 현재역설계결과: verification/r1-reference-attic-reverse-20261030/README.md 및 rounds/R1/REVERSE-R1-LEOPARPEIX-ATTIC-20261030.md.
+
+## 원본고정 자체 복제 (D-159, 사용자 “복제까지 계속 진행”)
+- [x] 원격번호검사·제작결정, 347개 자체kit 치수/자세·고정palette 분류. 원본 geometry/UV/bake 미반입.
+- [x] 자체기하 clay 수정·선택6부재 bevel preflight·새 재질/Cycles 정지 렌더 2시점.
+- [ ] 새4K atlas/GLB 베이크 진행.
+- [ ] 독립 reference-clone.html, 동일12카메라·입력·압축/색공간/보호자원 검사.
+- [ ] 문서/커밋·푸시·원격내용검사·Pages 공개검증. 원본과의 차이와 확인 안 함 기록.

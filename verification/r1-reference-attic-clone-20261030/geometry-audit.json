@@ -1,0 +1,113 @@
+{
+  "scene": "/tmp/ecg-authored-attic/authored.blend",
+  "objects": [
+    {
+      "name": "TexMobilier-85",
+      "dimensions_m": [
+        0.2235,
+        0.0405,
+        3.9605
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [
+        "BEVEL",
+        "WEIGHTED_NORMAL"
+      ],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "MECHANICAL_PASS",
+      "issues": []
+    },
+    {
+      "name": "TexMobilier-86",
+      "dimensions_m": [
+        0.2235,
+        0.0398,
+        3.9605
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [
+        "BEVEL",
+        "WEIGHTED_NORMAL"
+      ],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "MECHANICAL_PASS",
+      "issues": []
+    },
+    {
+      "name": "TexBibli-1",
+      "dimensions_m": [
+        6.6727,
+        0.5423,
+        0.0455
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [
+        "BEVEL",
+        "WEIGHTED_NORMAL"
+      ],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "MECHANICAL_PASS",
+      "issues": []
+    },
+    {
+      "name": "TexBibli-30 recessed field",
+      "dimensions_m": [
+        0.9908,
+        0.0317,
+        0.2278
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [
+        "BEVEL",
+        "WEIGHTED_NORMAL"
+      ],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "MECHANICAL_PASS",
+      "issues": []
+    },
+    {
+      "name": "TexBibli-30 rail",
+      "dimensions_m": [
+        0.932,
+        0.0317,
+        0.0384
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [
+        "BEVEL",
+        "WEIGHTED_NORMAL"
+      ],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "MECHANICAL_PASS",
+      "issues": []
+    },
+    {
+      "name": "TexProps001-1 pages",
+      "dimensions_m": [
+        0.0814,
+        0.3435,
+        0.2418
+      ],
+      "vertices": 8,
+      "polygons": 6,
+      "modifiers": [
+        "BEVEL",
+        "WEIGHTED_NORMAL"
+      ],
+      "smooth_faces": 0,
+      "primitive_box": true,
+      "status": "MECHANICAL_PASS",
+      "issues": []
+    }
+  ]
+}

@@ -33,7 +33,7 @@ const V=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
 // the 2026-10-18 video (fd13a24, ?sun=0&silk=100): the original archive, the D-074 descent (c3) from 0.4 to the end (the video's
 // 0:05–0:13; the user corrected the first frame match 0.35–0.60 on 2026-11-04), silk curtains, no motes, no leaf sway.
 // v18 is the default; x = the D-158 rebuilt attic.
-const BG_PRESETS:Record<string,Record<string,string>>={v18:{sun:'orig',path:'c3',seg:'.4,1',silk:'100',dust:'0',aurora:'0'},x:{sun:'x'}};
+const BG_PRESETS:Record<string,Record<string,string>>={v18:{sun:'orig',path:'c3',seg:'.4,1',silk:'100',dust:'0',aurora:'0',boost:'.5,.8,1.7'},x:{sun:'x'}};
 const Q0=(()=>{const q=new URLSearchParams(location.search);for(const [k,v] of Object.entries(BG_PRESETS[q.get('bg')??'v18']??{}))if(!q.has(k))q.set(k,v);return q;})();
 const PATHS:Record<string,Key[]>={
  c1:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.25,2.4,1.2),look:V(.35,1.5,-4.3),fov:48},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],
@@ -124,6 +124,11 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  if(Q.get('shaft')!==null)arch.vol.uniforms.uIntensity.value*=lvl('shaft');   // ?shaft= 0–100, 50 = designed
  // D-158 (user 2026-10-29 "빛 커튼이 좀 강한 감"): the rebuilt attic starts with softer curtains
  else if(SUN==='x')arch.vol.uniforms.uIntensity.value*=SHAFT_X;
+ // 2026-11-04 ?boost=a,b,k — curtains k × stronger where the camera is between path a and b (absolute 0–1 on the whole path; full
+ // strength inside, easing over 0.05 outside) (user: "빛 커튼 좀 더 강하게 해줘. 0.5~0.8부분만"); v18 = .5,.8,1.7
+ const SHAFT0=vu.uIntensity.value,BOOST=(Q.get('boost')??'').split(',').map(Number);
+ const boostAt=(u:number)=>{if(BOOST.length<3||!BOOST.every(Number.isFinite))return 1;const [a,b,k]=BOOST,e=.05;
+  const w=THREE.MathUtils.smoothstep(u,a-e,a)*(1-THREE.MathUtils.smoothstep(u,b,b+e));return 1+(k-1)*w;};
  arch.amb.aur.value=AMB.aur;
  arch.amb.silk.value=Q.get('silk')!==null?lvl('silk'):0;   // 2026-11-04: D-075 silk folds back as an option (?silk=100 = the 2026-10-18 video)
  arch.dust.geometry.setDrawRange(0,Q.get('dust')==='0'?0:1100);   // ?dust=0: no motes   // 2600 motes in the intro; the Lab keeps 1100 (user: "먼지도 약간 과한 감")
@@ -138,6 +143,7 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   camera.aspect=w/h;camera.updateProjectionMatrix();arch.setPx(h,pr*.6);dirty=true;kick();}   // motes 0.6 × the intro size
  function place(){
   const u=SEG[0]+(SEG[1]-SEG[0])*Math.min(1,Math.max(0,ps)),seg=u*(KEYS.length-1),i=Math.min(KEYS.length-2,Math.floor(seg)),f=seg-i;
+  vu.uIntensity.value=SHAFT0*boostAt(u);
   const pos=posC.getPoint(u),look=lookC.getPoint(u);camera.fov=THREE.MathUtils.lerp(KEYS[i].fov,KEYS[i+1].fov,f);camera.updateProjectionMatrix();
   // pointer: turn the view ±3° about the camera and slide it ±0.06 m sideways (user 2026-10-18 "약하게 좌우로")
   const d=look.clone().sub(pos),right=d.clone().cross(new THREE.Vector3(0,1,0)).normalize();

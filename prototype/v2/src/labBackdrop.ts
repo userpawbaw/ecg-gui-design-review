@@ -29,7 +29,12 @@ const V=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
 //  c2 — c1, then over the last quarter the view turns into the last gap of the left stacks, where the window light strikes
 //       a stack face at 30° (the D-075 contrast up close)
 //  c3 — the D-074 descent (top of the ladder without the ceiling lamp → upper shelves → floor)
-const Q0=new URLSearchParams(location.search);
+// 2026-11-04 ?bg= presets (an explicit parameter wins over its preset). User: "이 방향(D-158)은 여기까지 … 이전 방향으로 다시 돌아가서",
+// the 2026-10-18 video (fd13a24, ?sun=0&silk=100): the original archive, the D-074 descent (c3) only between 0:05 and 0:13 of the
+// video (path 0.35–0.60, matched frame by frame — the video also carries the pointer turn), silk curtains, no motes, no leaf sway.
+// v18 is the default; x = the D-158 rebuilt attic.
+const BG_PRESETS:Record<string,Record<string,string>>={v18:{sun:'orig',path:'c3',seg:'.35,.6',silk:'100',dust:'0',aurora:'0'},x:{sun:'x'}};
+const Q0=(()=>{const q=new URLSearchParams(location.search);for(const [k,v] of Object.entries(BG_PRESETS[q.get('bg')??'v18']??{}))if(!q.has(k))q.set(k,v);return q;})();
 const PATHS:Record<string,Key[]>={
  c1:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.25,2.4,1.2),look:V(.35,1.5,-4.3),fov:48},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],
  c2:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.22,2.7,1.9),look:V(.35,1.55,-4.3),fov:47},{pos:V(.26,2.0,.4),look:V(.35,1.4,-4.3),fov:48},
@@ -49,8 +54,10 @@ function vPath(y:number,fov:number):Key[]{const [a,b]=(Q0.get('vz')??'3.9,3.0').
 // D-158: the rebuilt REF-002 attic (x) and its camera (r) by default; ?sun=w keeps the D-155 room with the D-154 descent (v1)
 const SUN0=Q0.get('sun')??'x';
 const KEYS:Key[]=PATHS[Q0.get('path')??(SUN0==='x'?'r':'v1')]??PATHS.v1;
+// 2026-11-04 ?seg=a,b — the page scroll covers only this part (0–1) of the path, up and down (user: "0:05~0:13 부분의 동선만")
+const SEG=((Q0.get('seg')??'0,1').split(',').map(Number).filter(Number.isFinite).concat([0,1])).slice(0,2) as [number,number];
 const SPRING=2.6;   // rad/s, critically damped: 80 % of a scroll step in ~1.2 s, settled in ~2 s (eases in and out)
-const Q=new URLSearchParams(location.search),RES_Q=Q.get('bgres');
+const Q=Q0,RES_Q=Q.get('bgres');
 // D-075 ambient: ?amb=0 off (?amb=1 forces it on in the low-power mode); ?aurora= (D-077 S1, replaced ?silk=) ?shaft= 0–100 in
 // 10 % steps, 50 = designed.
 // User 2026-10-18 after the first look: wind and cloud removed (F-051), the dust smaller and sparser, nothing moves during playback.
@@ -118,7 +125,8 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  // D-158 (user 2026-10-29 "빛 커튼이 좀 강한 감"): the rebuilt attic starts with softer curtains
  else if(SUN==='x')arch.vol.uniforms.uIntensity.value*=SHAFT_X;
  arch.amb.aur.value=AMB.aur;
- arch.dust.geometry.setDrawRange(0,1100);   // 2600 motes in the intro; the Lab keeps 1100 (user: "먼지도 약간 과한 감")
+ arch.amb.silk.value=Q.get('silk')!==null?lvl('silk'):0;   // 2026-11-04: D-075 silk folds back as an option (?silk=100 = the 2026-10-18 video)
+ arch.dust.geometry.setDrawRange(0,Q.get('dust')==='0'?0:1100);   // ?dust=0: no motes   // 2600 motes in the intro; the Lab keeps 1100 (user: "먼지도 약간 과한 감")
  const ambient=AMB.on&&!(matchMedia('(prefers-reduced-motion: reduce)').matches)&&(!soft||AMB.forced);
  const curve=(pick:(k:Key)=>THREE.Vector3)=>new THREE.CatmullRomCurve3(KEYS.map(pick),false,'centripetal');
  const posC=curve(k=>k.pos),lookC=curve(k=>k.look);
@@ -129,7 +137,7 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   const fw=Math.max(1,Math.round(W*FOG)),fh=Math.max(1,Math.round(H*FOG));fog.setSize(fw,fh);(comp.material as THREE.ShaderMaterial).uniforms.uFogSize.value.set(fw,fh);
   camera.aspect=w/h;camera.updateProjectionMatrix();arch.setPx(h,pr*.6);dirty=true;kick();}   // motes 0.6 × the intro size
  function place(){
-  const u=Math.min(1,Math.max(0,ps)),seg=u*(KEYS.length-1),i=Math.min(KEYS.length-2,Math.floor(seg)),f=seg-i;
+  const u=SEG[0]+(SEG[1]-SEG[0])*Math.min(1,Math.max(0,ps)),seg=u*(KEYS.length-1),i=Math.min(KEYS.length-2,Math.floor(seg)),f=seg-i;
   const pos=posC.getPoint(u),look=lookC.getPoint(u);camera.fov=THREE.MathUtils.lerp(KEYS[i].fov,KEYS[i+1].fov,f);camera.updateProjectionMatrix();
   // pointer: turn the view ±3° about the camera and slide it ±0.06 m sideways (user 2026-10-18 "약하게 좌우로")
   const d=look.clone().sub(pos),right=d.clone().cross(new THREE.Vector3(0,1,0)).normalize();

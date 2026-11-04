@@ -163,7 +163,8 @@ export async function createArchive(variant:ArchiveVariant='base'){
  // ladder and the floor), kept here behind uCloud for a later fix.
  // D-077 S1 "aurora": the light's cross-section carries a leaf/streak pattern that sways a little (leaves moving in front of the
  // openings). The pattern is constant along the beam, so summing along a view ray keeps the streaks; strength uAur (0 = off).
- const amb={cloud:{value:0},aur:{value:0},cloudT:{value:0},
+ // 2026-11-04 (user: back to the 2026-10-18 video look, "커튼만"): the D-075 silk folds are restored behind uSilk (0 = off)
+ const amb={cloud:{value:0},aur:{value:0},silk:{value:0},cloudT:{value:0},
   cloudDir:{value:new THREE.Vector2(1,0)},tCloud:{value:null as THREE.Texture|null}};
  const goboTex=(()=>{const S=128,C=8,g=new Uint8Array(S*S*4),r=(i:number,j:number)=>{const x=Math.sin(((i%C)+C)%C*127.1+(((j%C)+C)%C)*311.7)*43758.5453;return x-Math.floor(x);};
   for(let y=0;y<S;y++)for(let x=0;x<S;x++){const fx=x/S*C,fy=y/S*C,i=Math.floor(fx),j=Math.floor(fy),u=fx-i,v=fy-j,su=u*u*(3-2*u),sv=v*v*(3-2*v);
@@ -219,14 +220,14 @@ export async function createArchive(variant:ArchiveVariant='base'){
    // D-153 (Lab ?ray=): march length, isotropic share of the phase, density inside the beams, in-scatter compression, grain
    // stretched along the sun, thin shadow streaks across the opening. The defaults keep the intro and Story as they were.
    uMaxLen:{value:9},uIso:{value:0},uDensIn:{value:1},uComp:{value:0},uGrain:{value:0},uStria:{value:0},
-   uCloud:{value:0},uAur:{value:0},tCloud:{value:null},tGobo:{value:null},   // replaced by the shared ambient uniforms below (ShaderPass clones)
+   uCloud:{value:0},uAur:{value:0},uSilk:{value:0},tCloud:{value:null},tGobo:{value:null},   // replaced by the shared ambient uniforms below (ShaderPass clones)
    // D-067: optional spot-light cone (Story desk lamp) in the same pass — a second pass sampling this depth would read the
    // target it writes (feedback loop). Marched only inside a sphere around the cone; cut below uCMinY (desk top).
    uCOn:{value:0},uCLP:{value:new THREE.Vector3()},uCLD:{value:new THREE.Vector3(0,-1,0)},uCCos:{value:new THREE.Vector2(.8,.93)},uCCol:{value:new THREE.Vector3(1,.78,.52)},uCMinY:{value:0},uCSh:{value:0},uCDepth:{value:null as THREE.Texture|null},uCVP:{value:new THREE.Matrix4()}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
   fragmentShader:`precision highp float;
    uniform sampler2D tDiffuse,tDepth,tLight;uniform mat4 uInvProj,uInvView,uLightVP;uniform vec3 uCam,uSun,uCol;
-   uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze,uCloud,uAur;uniform vec3 uHazeCol;uniform sampler2D tCloud,tGobo;varying vec2 vUv;
+   uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze,uCloud,uAur,uSilk;uniform vec3 uHazeCol;uniform sampler2D tCloud,tGobo;varying vec2 vUv;
    uniform float uMaxLen,uIso,uDensIn,uComp,uGrain,uStria;
    #ifndef NSTEPS
    #define NSTEPS 48
@@ -276,7 +277,12 @@ export async function createArchive(variant:ArchiveVariant='base'){
      if(uGrain>0.&&lit>0.){   // D-153 ?ray=2: dust grain stretched along the light (0.12 m across, 4 m along) → streaks in the ray direction
       vec3 q=vec3(dot(p,sa)/.12,dot(p,sb)/.12,dot(p,uSun)/4.-uTime*.04);
       float gr=noise(q+vec3(uTime*.05,0.,0.));lit*=mix(1.,.3+1.4*gr*gr,uGrain);}
-     float n=noise(p*2.2+vec3(0.,uTime*.05,uTime*.03));
+     float n;
+     if(uSilk>0.){   // D-075 B silk: noise stretched along the beam and folded across it, the folds drifting slowly
+      float u=dot(p,sa),v=dot(p,sb),s=dot(p,uSun);
+      n=noise(vec3(u*1.6+uTime*.035,s*.25-uTime*.02,v*1.6));
+      float fold=.5+.5*sin(u*5.5+v*2.3+n*4.+uTime*.16);n=mix(n,fold*fold*(.6+.8*n),min(1.,uSilk));}
+     else n=noise(p*2.2+vec3(0.,uTime*.05,uTime*.03));
      float dens=uDensity*(.55+.9*n)*uDensIn;
      acc+=lit*dens*tr*dt;tr*=exp(-dens*.15*dt);
     }
@@ -294,7 +300,7 @@ export async function createArchive(variant:ArchiveVariant='base'){
     gl_FragColor=vec4(mix(col,uHazeCol,hz)+uCol*acc*ph*uIntensity*uOn+cone,1.);
     #endif
    }`});
- vol.uniforms.uCloud=amb.cloud;vol.uniforms.uAur=amb.aur;vol.uniforms.tCloud=amb.tCloud;vol.uniforms.tGobo={value:goboTex};
+ vol.uniforms.uCloud=amb.cloud;vol.uniforms.uAur=amb.aur;vol.uniforms.uSilk=amb.silk;vol.uniforms.tCloud=amb.tCloud;vol.uniforms.tGobo={value:goboTex};
  vol.uniforms.tLight.value=lightRT.depthTexture;vol.uniforms.uLightVP.value=lightVP;vol.uniforms.uSun.value=sunTo;vol.uniforms.uCol.value=sunCol;
 
  const V=(a:number[])=>new THREE.Vector3(...a);

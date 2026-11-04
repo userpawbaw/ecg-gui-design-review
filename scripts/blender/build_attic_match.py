@@ -29,6 +29,7 @@ ap.add_argument('--sun-dir', default='-0.44,-0.845,-0.30', help='travel directio
 ap.add_argument('--sky', type=float, default=0.0, help='world strength (the reference windows are black)')
 ap.add_argument('--exposure', type=float, default=0.0)
 ap.add_argument('--sun-color', default='#ffe6c4')
+ap.add_argument('--wall-top', type=float, default=-1.2, help='top z of the hidden front wall (D-158 r2: −1.2 lets sun onto the front floor strip and the cabinets like the reference top view; 0 = the first fit)')
 ap.add_argument('--leaves', type=int, default=1, help='foliage gobo outside the front strip')
 ap.add_argument('--bake', default='')
 ap.add_argument('--size', type=int, default=2048)
@@ -159,7 +160,7 @@ box('UpperBack', WALL_X - .1, WALL_X, UP_Y0 - .8, UP_Y1 + .8, 0, CEIL_Z, M_WALL)
 box('UpperLeft', WALL_X, UP_X1, UP_Y0 - .9, UP_Y0 - .8, 0, CEIL_Z, M_WALL)
 box('UpperCeil', WALL_X, UP_X1, UP_Y0 - .8, UP_Y1 + .8, CEIL_Z, CEIL_Z + .1, M_WALL)
 # hidden lower front wall: casts shadow, never seen by the camera (and not exported as a visible surface)
-hw = box('Occluder_front', HIDDEN_WALL[0], HIDDEN_WALL[1], -8.0, 11.0, FLOOR_Z - .1, 0.0, M_WALL, group='occluder')   # measured: y −8..11
+hw = box('Occluder_front', HIDDEN_WALL[0], HIDDEN_WALL[1], -8.0, 11.0, FLOOR_Z - .1, args.wall_top, M_WALL, group='occluder')   # measured: y −8..11
 hw.visible_camera = False
 
 # upper back wall windows: openings cut as frames over a dark void (the reference windows read black)
@@ -331,8 +332,8 @@ for (x, y) in ((2.65, 3.75), (3.55, 3.75), (2.65, 5.75), (3.55, 5.75)): box('Tab
 if args.leaves:
     N = 512; img = bpy.data.images.new('leafmask', N, N, alpha=True); yy, xx = np.mgrid[0:N, 0:N] / N; a = np.zeros((N, N), np.float32)
     r = random.Random(5)
-    for _ in range(140):
-        cx, cy, s, t = r.random(), r.random(), r.uniform(.025, .06), r.uniform(0, math.pi)
+    for _ in range(int(os.environ.get('LEAVES_N', 70))):
+        cx, cy, s, t = r.random(), r.random(), r.uniform(.035, .09), r.uniform(0, math.pi)
         u = (xx - cx) * math.cos(t) + (yy - cy) * math.sin(t); v = -(xx - cx) * math.sin(t) + (yy - cy) * math.cos(t)
         a[(u / s) ** 2 + (v / (s * .45)) ** 2 < 1] = 1
     img.pixels = np.stack([a * .2, a * .3, a * .15, a], -1).ravel().astype(np.float32); img.pack()
@@ -340,8 +341,12 @@ if args.leaves:
     t = nt.nodes.new('ShaderNodeTexImage'); t.image = img; bs = nt.nodes['Principled BSDF']
     nt.links.new(t.outputs['Color'], bs.inputs['Base Color']); nt.links.new(t.outputs['Alpha'], bs.inputs['Alpha'])
     sun_to = Vector(tuple(float(v) for v in args.sun_dir.split(','))).normalized()
-    for (cx, cy, cz, sz) in ((11.6, 5.6, 0.9, 3.2), (12.4, 3.8, 1.6, 2.6)):
-        bpy.ops.mesh.primitive_plane_add(size=sz, location=(cx, cy, cz)); g = bpy.context.active_object; g.name = 'Gobo'
+    # D-158 r2: leaf clusters on the sun path to the lower cabinets / front floor (the reference top view shows dappled leaf
+    # light on the front floor strip), 5.5 m up-sun of a target point on the case front (a 3° sun blurs 0.14 m there; at 9 m the
+    # leaves melted into a flat dim), sparse enough to leave gaps
+    for (ty, tz, sz) in ((-2.4, -2.6, 3.0), (0.6, -2.9, 2.6), (2.8, -2.2, 2.4)):
+        c = Vector((FRONT_X + .06, ty, tz)) - sun_to * 5.5
+        bpy.ops.mesh.primitive_plane_add(size=sz, location=c); g = bpy.context.active_object; g.name = 'Gobo'
         g.rotation_euler = (-sun_to).to_track_quat('Z', 'Y').to_euler(); g.data.materials.append(M_LEAF); g['group'] = 'gobo'
         g.visible_camera = False
 

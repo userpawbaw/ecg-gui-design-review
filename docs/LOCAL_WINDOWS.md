@@ -56,6 +56,7 @@ Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `
 | 증상 | 원인 | 이 저장소의 처리 / 할 일 |
 |---|---|---|
 | `'&&' 토큰은 이 버전에서 올바른 문 구분 기호가 아닙니다` | Windows PowerShell 5.1은 `&&`를 모른다 | 문서의 명령을 `npm run …` 한 줄로 바꿨다. 직접 칠 때는 줄을 나누거나 `;`를 쓴다(단 `;`는 앞 명령이 실패해도 계속 실행) |
+| `npm error Missing script: "dev"` (2026-11-04 사용자 보고, `.claude\worktrees\r1-autopilot-impl-…`에서) | `dev`는 `prototype/v2/package.json`에만 있다. 저장소 루트의 실행 명령은 `npm run story`다(채팅 안내가 `npm run dev`로 잘못 적었음). 또 `.claude\worktrees\…` 폴더는 Claude Code가 만든 **별도 작업 트리**라 다른 브랜치가 체크아웃돼 있다 | 루트 폴더에서 `npm run story`. 이 세션의 작업을 보려면 먼저 `git fetch origin` 다음 줄에 `git switch claude/optimistic-goldberg-jnzpni`(작업 트리가 아닌 원래 clone 폴더에서). 지금 브랜치는 `git branch --show-current`로 확인 |
 | `이 시스템에서 스크립트를 실행할 수 없으므로 …npm.ps1…` | PowerShell 실행 정책 | 한 번만: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`. 또는 VS Code 작업(cmd.exe로 실행)을 쓴다 |
 | `UnicodeDecodeError: 'cp949' codec …` | Python이 Windows 기본 인코딩(cp949)으로 파일을 읽음 | 모든 Python 파일에 `encoding='utf-8'`(O-004, `npm test`가 검사) + `npm run py`와 VS Code 터미널이 `PYTHONUTF8=1`을 켠다 |
 | `python3`를 찾을 수 없음 / Microsoft Store가 열림 | Windows에는 `python3`가 없거나 스토어 안내용 가짜 실행 파일 | npm 스크립트에서 `python3`를 없애고 `run.mjs py`로 `py -3` → `python` 순서로 찾는다 |

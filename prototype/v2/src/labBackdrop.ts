@@ -67,7 +67,8 @@ const RAYS:Record<string,Ray>={
  '3':{len:14,iso:.5,dens:2,comp:3,int:1.9,haze:.5,grain:1,stria:1},
 };
 const RAY=RAYS[Q.get('ray')??'0']??RAYS['0'];
-const SHAFT_X=.6,SAT_X=.85;
+// D-158 next round: the room air lifted the darkest 5 % to 0.17 (REF-002 0.05) → .35 of the archive haze on x; ?haze= 0–100 (50 = archive)
+const SHAFT_X=.6,SAT_X=.85,HAZE_X=.35;
 
 export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
@@ -97,7 +98,7 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const vu=arch.vol.uniforms,vm=arch.vol.material as THREE.ShaderMaterial;
  const fogQuad=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:vu,vertexShader:vm.vertexShader,fragmentShader:vm.fragmentShader,defines:{FOG_ONLY:'',NSTEPS:64}}));
  vu.uMaxLen.value=RAY.len;vu.uIso.value=RAY.iso;vu.uDensIn.value=RAY.dens;vu.uComp.value=RAY.comp;vu.uIntensity.value*=RAY.int;
- vu.uHaze.value*=RAY.haze;vu.uGrain.value=RAY.grain;vu.uStria.value=RAY.stria;
+ vu.uHaze.value*=RAY.haze*(SUN0==='x'&&Q.get('haze')===null?HAZE_X:1);if(Q.get('haze')!==null)vu.uHaze.value*=lvl('haze');vu.uGrain.value=RAY.grain;vu.uStria.value=RAY.stria;
  const comp=new FullScreenQuad(new THREE.ShaderMaterial({
   uniforms:{tBase:{value:base.texture},tDepth:{value:base.depthTexture},tFog:{value:fog.texture},uFogSize:{value:new THREE.Vector2(1,1)},
    uInvProj:vu.uInvProj,uInvView:vu.uInvView,uCam:vu.uCam,uHaze:vu.uHaze,uHazeCol:vu.uHazeCol,uOn:vu.uOn},
@@ -105,13 +106,13 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   fragmentShader:`precision highp float;uniform sampler2D tBase,tDepth,tFog;uniform vec2 uFogSize;uniform mat4 uInvProj,uInvView;uniform vec3 uCam,uHazeCol;uniform float uHaze,uOn;varying vec2 vUv;
    void main(){vec3 col=texture2D(tBase,vUv).rgb;float d=texture2D(tDepth,vUv).x;
     vec4 v=uInvProj*vec4(vUv*2.-1.,d*2.-1.,1.);v/=v.w;float dist=length((uInvView*v).xyz-uCam);
-    float hz=(1.-exp(-uHaze*min(dist,14.)))*uOn;
+    float hz=(1.-exp(-uHaze*min(dist,14.)))*uOn*step(d,.99999);   // D-158: no room air on the empty background (window voids stay black)
     // 3 × 3 half-resolution texels around this pixel: Gaussian in screen space × similarity of view distance (no bleed across edges)
     vec2 f=vUv*uFogSize-.5,c=floor(f)+.5;vec3 s=vec3(0.);float w=0.;
     for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){vec2 t=c+vec2(float(i),float(j));vec4 q=texture2D(tFog,t/uFogSize);
      vec2 o=t-.5-f;float k=exp(-dot(o,o)*.45)*exp(-abs(q.a-dist)/(.04+.06*dist)*3.);s+=q.rgb*k;w+=k;}
     vec3 fogc=w>1e-4?s/w:texture2D(tFog,vUv).rgb;
-    gl_FragColor=vec4(mix(col,uHazeCol,hz)+fogc,1.);}`,depthTest:false,depthWrite:false}));
+    gl_FragColor=vec4(mix(col,uHazeCol,hz)+fogc*step(d,.99999),1.);}`,depthTest:false,depthWrite:false}));
  const du=arch.dustMat.uniforms;du.uDepthOn.value=1;du.tSceneDepth.value=base.depthTexture;
  if(Q.get('shaft')!==null)arch.vol.uniforms.uIntensity.value*=lvl('shaft');   // ?shaft= 0–100, 50 = designed
  // D-158 (user 2026-10-29 "빛 커튼이 좀 강한 감"): the rebuilt attic starts with softer curtains

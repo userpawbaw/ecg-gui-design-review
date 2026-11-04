@@ -22,9 +22,9 @@
   }
  },
  "timing_s": {
-  "shell": 944.5,
-  "books": 481.8,
-  "decor": 54.8
+  "shell": 929.8,
+  "books": 531.4,
+  "decor": 51.2
  },
  "counts": {
   "books": 386,
@@ -42,6 +42,7 @@
   "sky": 0.12,
   "exposure": 0.0,
   "sun_color": "#ffe6c4",
+  "wall_top": -1.2,
   "leaves": 1,
   "size": 2048,
   "bsamples": 384

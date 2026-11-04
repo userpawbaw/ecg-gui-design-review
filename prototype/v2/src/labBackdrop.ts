@@ -30,10 +30,10 @@ const V=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
 //       a stack face at 30° (the D-075 contrast up close)
 //  c3 — the D-074 descent (top of the ladder without the ceiling lamp → upper shelves → floor)
 // 2026-11-04 ?bg= presets (an explicit parameter wins over its preset). User: "이 방향(D-158)은 여기까지 … 이전 방향으로 다시 돌아가서",
-// the 2026-10-18 video (fd13a24, ?sun=0&silk=100): the original archive, the D-074 descent (c3) only between 0:05 and 0:13 of the
-// video (path 0.35–0.60, matched frame by frame — the video also carries the pointer turn), silk curtains, no motes, no leaf sway.
+// the 2026-10-18 video (fd13a24, ?sun=0&silk=100): the original archive, the D-074 descent (c3) from 0.4 to the end (the video's
+// 0:05–0:13; the user corrected the first frame match 0.35–0.60 on 2026-11-04), silk curtains, no motes, no leaf sway.
 // v18 is the default; x = the D-158 rebuilt attic.
-const BG_PRESETS:Record<string,Record<string,string>>={v18:{sun:'orig',path:'c3',seg:'.35,.6',silk:'100',dust:'0',aurora:'0'},x:{sun:'x'}};
+const BG_PRESETS:Record<string,Record<string,string>>={v18:{sun:'orig',path:'c3',seg:'.4,1',silk:'100',dust:'0',aurora:'0'},x:{sun:'x'}};
 const Q0=(()=>{const q=new URLSearchParams(location.search);for(const [k,v] of Object.entries(BG_PRESETS[q.get('bg')??'v18']??{}))if(!q.has(k))q.set(k,v);return q;})();
 const PATHS:Record<string,Key[]>={
  c1:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.25,2.4,1.2),look:V(.35,1.5,-4.3),fov:48},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],

@@ -26,3 +26,4 @@
 .ns-qa span{min-width:110px;color:rgba(239,233,223,.7)}
 .ns-qa button{font:inherit;color:inherit;background:rgba(255,255,255,.06);border:1px solid rgba(255,214,170,.25);border-radius:5px;padding:2px 6px;cursor:pointer}
 .ns-qa button.on{background:rgba(255,120,110,.35);border-color:rgba(255,150,130,.8)}
+.ns-notice{text-align:right}

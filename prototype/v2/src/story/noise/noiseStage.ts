@@ -181,7 +181,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   og.strokeStyle='rgba(255,98,112,1)';og.lineWidth=2.4;og.shadowColor='rgba(255,60,80,.9)';og.shadowBlur=10;og.stroke();og.shadowBlur=0;
   og.strokeStyle='rgba(255,214,170,.25)';og.lineWidth=1;og.beginPath();og.moveTo(sx,sy);og.lineTo(sx+sw,sy);og.stroke();
   og.fillStyle='#fff3e6';og.font=`600 ${Math.round(bh*.17)}px Pretendard, sans-serif`;og.textBaseline='alphabetic';og.fillText('교류 60 Hz',sx,by+bh*.73);
-  og.fillStyle='rgba(255,233,210,.6)';og.font=`500 ${Math.max(10,Math.round(bh*.075))}px 'IBM Plex Mono', monospace`;og.fillText('AC · 물결 속도는 상징',sx,by+bh*.89);
+  og.fillStyle='rgba(255,233,210,.6)';og.font=`500 ${Math.max(10,Math.round(bh*.075))}px 'IBM Plex Mono', monospace`;og.fillText('AC · power line',sx,by+bh*.89);
   og.restore();
  }
 

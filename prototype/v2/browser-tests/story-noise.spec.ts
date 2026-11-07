@@ -12,12 +12,12 @@ test('story noise: wheel never changes the scene; overlay and next are buttons',
  await expect(actions).toHaveClass(/\bon\b/,{timeout:240000});                         // clean end reached after the auto pass
  await wheel(-120,10);await expect(actions).not.toHaveClass(/\bon\b/,{timeout:20000});                 // back toward the noisy input
  await wheel(120,12);await expect(actions).toHaveClass(/\bon\b/,{timeout:60000});
- await page.getByRole('button',{name:'두 신호 겹쳐 보기'}).click();
- await expect(page.getByRole('button',{name:'한 신호로 보기'})).toBeVisible({timeout:30000});
- await wheel(-120,10);await expect(page.getByRole('button',{name:'한 신호로 보기'})).toBeVisible({timeout:30000});   // scroll ignored while overlaid
- await page.getByRole('button',{name:'한 신호로 보기'}).click();await expect(page.getByRole('button',{name:'두 신호 겹쳐 보기'})).toBeVisible({timeout:30000});
+ await page.getByRole('button',{name:'중첩 표시'}).click();
+ await expect(page.getByRole('button',{name:'단일 표시'})).toBeVisible({timeout:30000});
+ await wheel(-120,10);await expect(page.getByRole('button',{name:'단일 표시'})).toBeVisible({timeout:30000});   // scroll ignored while overlaid
+ await page.getByRole('button',{name:'단일 표시'}).click();await expect(page.getByRole('button',{name:'중첩 표시'})).toBeVisible({timeout:30000});
  await expect(title).toHaveText('전원 간섭');
- await page.getByRole('button',{name:'다음 장면 →'}).click();
+ await page.getByRole('button',{name:'다음 잡음 →'}).click();
  await expect(title).toHaveText('기저선 변동',{timeout:15000});
  expect(errors).toEqual([]);
 });
@@ -31,18 +31,18 @@ test('story noise: keyboard-only control with reduced motion',async({page})=>{
  await page.goto('/?story=noise&cond=all');await page.waitForFunction(()=>(window as any).__noise?.ready,null,{timeout:120000});
  const actions=page.locator('.ns-actions');const title=page.locator('.ns-title b');
  await expect(actions).toHaveClass(/\bon\b/,{timeout:240000});                         // reduced: the auto pass lands at once
- const overlay=page.getByRole('button',{name:'두 신호 겹쳐 보기'});
+ const overlay=page.getByRole('button',{name:'중첩 표시'});
  await page.keyboard.press('PageUp');await expect(actions).not.toHaveClass(/\bon\b/,{timeout:20000});
  for(const b of await actions.locator('button').all())expect(await b.getAttribute('tabindex')).toBe('-1');   // hidden (aria-hidden) buttons stay out of the Tab order
  await page.keyboard.press('PageDown');await page.keyboard.press('PageDown');await expect(actions).toHaveClass(/\bon\b/,{timeout:20000});
  let hit=false;for(let i=0;i<8&&!hit;i++){await page.keyboard.press('Tab');hit=await overlay.evaluate(e=>e===document.activeElement);}
  expect(hit).toBe(true);
  expect(await overlay.evaluate(e=>e.matches(':focus-visible'))).toBe(true);
- await page.keyboard.press('Enter');await expect(page.getByRole('button',{name:'한 신호로 보기'})).toBeVisible({timeout:30000});
- await page.getByRole('button',{name:'한 신호로 보기'}).focus();await page.keyboard.press('Space');
+ await page.keyboard.press('Enter');await expect(page.getByRole('button',{name:'단일 표시'})).toBeVisible({timeout:30000});
+ await page.getByRole('button',{name:'단일 표시'}).focus();await page.keyboard.press('Space');
  await expect(overlay).toBeVisible({timeout:30000});
  await page.keyboard.press('Tab');
- const next=page.getByRole('button',{name:'다음 장면 →'});
+ const next=page.getByRole('button',{name:'다음 잡음 →'});
  expect(await next.evaluate(e=>e===document.activeElement)).toBe(true);
  await page.keyboard.press('Enter');await expect(title).toHaveText('기저선 변동',{timeout:15000});
  expect(errors).toEqual([]);

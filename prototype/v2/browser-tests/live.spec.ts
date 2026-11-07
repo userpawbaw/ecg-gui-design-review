@@ -45,15 +45,16 @@ test('live tab draws the bridge stream itself, switches front-end, shows no metr
   await expect.poll(ink, {timeout: 10000}).toBeGreaterThan(500);
   await expect(page.locator('.live-native')).not.toContainText(/SNR\s*개선|dB 개선|차이 보기/);
   await expect(page.locator('.live-src')).not.toHaveText(/^실보드 실측/);
+  await expect(page.locator('.live-stats')).toContainText('처리 지연'); await expect(page.locator('.live-diag')).not.toHaveAttribute('open', '');
   const tools = page.getByRole('group', {name: '실시간 표시 도구'});
 
   const before = await tools.locator('button[aria-pressed=true]').allTextContents();
   const target = before.some(t => t.includes('인과')) ? '블록 영위상' : '인과';
   await tools.getByRole('button', {name: new RegExp(target)}).click();
-  await expect(page.locator('.live-note')).toContainText('바꿨다');
+  await expect(page.locator('.live-note')).toContainText('공통 전처리 변경');
   await expect(tools.getByRole('button', {name: new RegExp(target)})).toHaveAttribute('aria-pressed', 'true');
 
-  await tools.getByRole('button', {name: '겹치기', exact: true}).click();
+  await tools.getByRole('button', {name: '중첩', exact: true}).click();
   await expect(page.locator('canvas.live-canvas.tall')).toBeVisible();
   await page.getByRole('button', {name: '출처·규약'}).click();
   await expect(page.locator('.source-dialog pre')).toContainText('LIVE_BRIDGE_STREAM');

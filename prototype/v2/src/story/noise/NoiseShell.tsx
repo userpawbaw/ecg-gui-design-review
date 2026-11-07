@@ -2,6 +2,7 @@
 // in the main flow: intro → power line → baseline wander → muscle artifact → Lab, on one stage so the camera carries on
 // from scene to scene (user 2026-10-08: "장면 사이도 카메라로 이어지게 해줘").
 import {useEffect,useMemo,useRef,useState} from 'react';
+import {StateChip} from '../../Glyph';
 import {decode} from '../../engine';
 import type {Bank} from '../../data';
 import {loadLong,type LongScene} from '../longData';
@@ -73,14 +74,14 @@ function NoiseShellInner({bank,order,long,onLab}:{bank:Bank,order:Cond[],long?:L
  return <div className="ns-root">
   {debug&&<QaPanel stage={()=>stageRef.current}/>}
   <canvas ref={gl} className="ns-gl"/><canvas ref={overlay} className="ns-overlay"/><canvas ref={grid} className="ns-grid"/><canvas ref={sweep} className="ns-sweep"/>
-  <div ref={strip} className="ns-strip" aria-label="입력에서 출력으로 처리 단계"><i/><i/><i/><i/><span>{ui.overlay?'겹쳐 보기 · 입력 + 출력':ui.phase==='auto'?'박동마다 한 겹 · '+cur.winner:'입력 → 출력 · '+cur.winner}</span></div>
+  <div ref={strip} className="ns-strip" aria-label="입력에서 출력으로 처리 단계"><i/><i/><i/><i/><span>{ui.overlay?'중첩 표시 · 입력 · 출력':ui.phase==='auto'?'박동 단위 처리 · '+cur.winner:'입력 → 출력 · '+cur.winner}</span></div>
   <div className={'ns-actions'+(ui.atEnd?' on':'')} aria-hidden={!ui.atEnd}>
-   <p className="ns-hint">{ui.overlay?'두 신호를 겹쳐 보는 중 · 스크롤은 멈춤':'스크롤을 올리면 잡음 섞인 입력으로 돌아감'}</p>
-   <button type="button" className="ns-btn ghost" onClick={toggle} tabIndex={ui.atEnd?0:-1}>{ui.overlay?'한 신호로 보기':'두 신호 겹쳐 보기'}</button>
-   <button type="button" className="ns-btn" onClick={next} tabIndex={ui.atEnd?0:-1}>{i+1<order.length?'다음 장면 →':onLab?'실험실로 →':'처음으로'}</button>
+   <p className="ns-hint">{ui.overlay?'중첩 표시 중 · 스크롤 정지':'위로 스크롤: 입력 신호로 복귀'}</p>
+   <button type="button" className="ns-btn ghost" onClick={toggle} tabIndex={ui.atEnd?0:-1}>{ui.overlay?'단일 표시':'중첩 표시'}</button>
+   <button type="button" className="ns-btn" onClick={next} tabIndex={ui.atEnd?0:-1}>{i+1<order.length?'다음 잡음 →':onLab?'실험실로 이동':'처음으로'}</button>
   </div>
   <div className="ns-title" key={order[i]}><b>{info.ko}</b><small>{info.en} · INPUT −5 dB · {cur.s.record}</small></div>
-  <p className="ns-notice">{info.synthetic?'합성 잡음 · 설명용 연출 · ':''}저장된 입력과 잡음 제거 출력 · 사람의 움직임·빨간 표시는 설명용 · 실제 장치 연결 없음</p>
+  <p className="ns-notice"><StateChip kind="stored" tone="stored" label="저장 신호 재생" note={info.synthetic?'합성 잡음':undefined}/></p>
  </div>;
 }
 

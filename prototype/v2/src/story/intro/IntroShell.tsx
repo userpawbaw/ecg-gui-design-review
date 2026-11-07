@@ -1,6 +1,7 @@
 // R1 intro (IDEA-R1-INTRO, D-041): backlit globe → person outline → heart → neon sweep, noisy input → stored output.
 // React renders the static DOM once and hands refs to the vanilla engine (D-028); no per-frame React state.
 import {useEffect,useMemo,useRef,useState} from 'react';
+import {StateChip} from '../../Glyph';
 import {decode,metric} from '../../engine';
 import type {Bank} from '../../data';
 import {rankScene} from '../storyData';
@@ -65,23 +66,23 @@ function IntroShellInner({bank,onNext,onLab,long}:Props&{long:LongScene|null}){
   <div ref={refs.sweepWrap} className="it-sweep-wrap">
    <canvas ref={refs.grid} className="it-grid" aria-hidden="true"/>
    <canvas ref={refs.sweep} className="it-sweep" aria-hidden="true"/>
-   <div ref={refs.ann} className="it-ann" aria-hidden="true"><i/><span><b>R 피크</b><small>심장이 수축하는 순간</small></span></div>
+   <div ref={refs.ann} className="it-ann" aria-hidden="true"><i/><span><b>R 피크</b><small>심실 탈분극(QRS군) 정점</small></span></div>
    <div ref={refs.scale} className="it-scale" aria-hidden="true"><span>큰 칸 0.2 s × 0.5 mV</span><span>작은 칸 0.04 s × 0.1 mV</span></div>
   </div>
   <h1 ref={refs.title} className="it-title"><small>ECG DENOISING</small>심전도 <span ref={refs.noise} className="it-noise">{[...'잡음'].map((c,i)=><i key={i}>{c}</i>)}</span> 제거</h1>
-  <p ref={refs.sub} className="it-sub">잡음이 섞인 심전도에서 원래 신호를 되살리는 방법들을, 같은 기록으로 비교합니다.</p>
+  <p ref={refs.sub} className="it-sub">동일 기록 기반 심전도 잡음 제거 기법 비교</p>
   <div ref={refs.hint} className="it-hint"><span className="wheel" aria-hidden="true"/>스크롤</div>
   <div ref={refs.labels} className="it-labels" aria-live="polite">
-   <div ref={refs.labelIn} className="it-lab in is-current"><i className="bar"/><b>잡음 섞인 입력</b><small>INPUT · WHITE NOISE {scene.s.snr} dB · {scene.s.record}</small></div>
+   <div ref={refs.labelIn} className="it-lab in is-current"><i className="bar"/><b>입력 신호(잡음 포함)</b><small>INPUT · WHITE NOISE {scene.s.snr} dB · {scene.s.record}</small></div>
    <div ref={refs.labelOut} className="it-lab out"><i className="bar"/><b>잡음 제거 출력</b><small ref={refs.outMono as never}>OUTPUT · STORED</small></div>
    <div ref={refs.steps} className="it-steps" aria-hidden="true"><i/><i/><i/><i/><em>입력 ↔ 출력</em></div>
   </div>
   <div ref={refs.end} className="it-end">
-   <p>같은 심장, 같은 기록 — 잡음을 걷어내기 전과 후.</p>
-   <div><button onClick={onNext}>잡음마다 다를까요? →</button><button className="ghost" onClick={lab}>직접 비교해 보기</button></div>
+   <p>동일 기록의 잡음 제거 전후</p>
+   <div><button onClick={onNext}>잡음 유형별 비교 →</button><button className="ghost" onClick={lab}>실험실에서 비교</button></div>
   </div>
-  <button className="it-skip" onClick={lab}>바로 실험실 →</button>
-  <p className="it-notice">합성 기록 {scene.record} · 저장된 입력과 잡음 제거 출력 · {((scene.loop.end-scene.loop.start)/bank.fs).toFixed(1)} s 반복 재생 · 실제 장치 연결 없음</p>
+  <button className="it-skip" onClick={lab}>실험실로 이동</button>
+  <p className="it-notice"><StateChip kind="stored" tone="stored" label="저장 신호 재생" note={`합성 기록 ${scene.record} · ${((scene.loop.end-scene.loop.start)/bank.fs).toFixed(1)} s 반복`}/></p>
   <p className="it-credit">심장 모델 HuBMAP HRA · Visible Human Male(NLM) · CC BY 4.0 · 지구 NASA Earth Observatory</p>
   {failed&&<p className="it-failed" role="alert">3D 장면을 불러오지 못했습니다: {failed}</p>}
   <div ref={refs.wrapper} className="it-scroll"><div ref={refs.content} className="it-scroll-content"/></div>

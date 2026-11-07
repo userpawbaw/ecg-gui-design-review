@@ -44,7 +44,7 @@ test('intro: labels, stored-output note and Lab handoff (10 s bank: stored metri
  await expect(page.locator('.it-lab.out small')).toHaveText('SNR 0 dB → 12.44 dB · cc 0.971');
  await expect(page.locator('.it-steps i.on')).toHaveCount(4);
  await expect(page.getByText(/합성 기록 S038/)).toBeVisible();
- await page.getByRole('button',{name:'직접 비교해 보기'}).click();
+ await page.getByRole('button',{name:'실험실에서 비교'}).click();
  const lab=page.locator('.large-dialog canvas.ecg-canvas');await expect(lab).toHaveAttribute('aria-label',/M06 출력/,{timeout:30000});
 });
 

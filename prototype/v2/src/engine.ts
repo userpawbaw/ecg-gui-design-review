@@ -26,7 +26,7 @@ export function visiblePoints(time:number,span:number,fs:number,n:number,mode:Mo
  }return out;
 }
 export function decode(encoded:string,scale:number,n:number){
- if(!(scale>0&&Number.isFinite(scale)))throw Error('Invalid scale');const b=atob(encoded);if(b.length!==n*2)throw Error('파형 길이가 manifest와 다릅니다.');const a=new Float32Array(n);
+ if(!(scale>0&&Number.isFinite(scale)))throw Error('Invalid scale');const b=atob(encoded);if(b.length!==n*2)throw Error('파형 길이 불일치(목록 기준)');const a=new Float32Array(n);
  for(let i=0;i<n;i++){let v=b.charCodeAt(i*2)|(b.charCodeAt(i*2+1)<<8);if(v&32768)v-=65536;a[i]=v*scale;}return a;
 }
 export function metric(ref:Float32Array,out?:Float32Array,input?:Float32Array){

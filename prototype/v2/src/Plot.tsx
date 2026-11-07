@@ -2,6 +2,8 @@ import {useEffect,useRef} from 'react';
 import {Transport,visiblePoints,type Mode} from './engine';
 import {amplitudeTicks} from './plot-scale';
 import type {Loaded} from './data';
+import methodData from './methods.json';
+const NAME:Record<string,string>=Object.fromEntries(Object.entries(methodData as Record<string,{name:string}>).map(([k,v])=>[k,v.name]));
 import {ageGradient,freshGradient,paper,createGlow,rgb,BAND_S,type Box} from './labFx';
 type Props={data:Loaded;transport:Transport;mode:Mode;span:number;inspect:boolean;amplitude:number;reference:number;method:string;preview:string|null;comparison:string|null;large?:boolean;soft:boolean;residual?:boolean;gain?:number};
 const BG='#0a1a21',GAP_S=.12;
@@ -18,8 +20,8 @@ export function Plot(p:Props){
  const sig=[t,q.mode,q.span,q.inspect,q.amplitude,q.reference,q.method,q.preview,q.comparison,q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,rect.width,rect.height,dpr,fx.current.level].join('|');
  // a collapsed canvas (0 × 0 while the layout changes) is skipped: drawImage of a 0-size static layer throws
  if(sig!==signature&&rect.width>=1&&rect.height>=1){signature=sig;const W=Math.round(rect.width*dpr),H=Math.round(rect.height*dpr);if(c.width!==W||c.height!==H){c.width=W;c.height=H;}g.setTransform(dpr,0,0,dpr,0,0);const w=rect.width,h=rect.height;
- const rows=[{id:'input',label:'입력 · Noisy',color:'#ffbc79'},{id:q.method,label:q.method+' · 선택 출력',color:'#67e7c3'}];if(q.comparison)rows.push({id:q.comparison,label:q.comparison+' · 고정 비교',color:'#97c2ff'});
- const count=rows.length;const rh=(h-(q.residual?144:0))/count;if(q.residual)rows.push({id:q.method,label:`Reference와 차이 · Output − Reference · 표시 ×${q.gain||1}`,color:'#c0ced7'});g.font='11px system-ui';const labelWidth=Math.max(...amplitudeTicks(q.amplitude,q.residual?q.gain||1:1).concat(amplitudeTicks(q.amplitude)).map(t=>g.measureText(t.label).width));const left=Math.max(72,labelWidth+26),right=w-18,pw=right-left;
+ const rows=[{id:'input',label:'입력',color:'#ffbc79'},{id:q.method,label:(NAME[q.method]??q.method)+' · 선택 기법',color:'#67e7c3'}];if(q.comparison)rows.push({id:q.comparison,label:(NAME[q.comparison]??q.comparison)+' · 비교 고정',color:'#97c2ff'});
+ const count=rows.length;const rh=(h-(q.residual?144:0))/count;if(q.residual)rows.push({id:q.method,label:`차이 신호(출력 − Reference) · 표시 ×${q.gain||1}`,color:'#c0ced7'});g.font='11px system-ui';const labelWidth=Math.max(...amplitudeTicks(q.amplitude,q.residual?q.gain||1:1).concat(amplitudeTicks(q.amplitude)).map(t=>g.measureText(t.label).width));const left=Math.max(72,labelWidth+26),right=w-18,pw=right-left;
  const boxes:Box[]=rows.map((_,r)=>{const isDiff=q.residual&&r===count,top=r*rh+36;return{l:left,r:right,t:top,b:isDiff?top+72:(r+1)*rh-30};});
  // static layer (background, ECG paper, labels, amplitude ticks) + a brighter paper copy for A — redrawn only when the layout changes
  const clearBg=document.body.classList.contains('lab-dark')&&!c.closest('.large-dialog');   // D-074: the panel shows the archive faintly through
@@ -60,7 +62,7 @@ export function Plot(p:Props){
  // head marker: a small hot point at the newest sample (brighter on the selected output)
  if(fxOn&&!isDiff&&q.data.traces[row.id]){const hi=Math.min(q.data.n-1,Math.floor(t*q.data.fs))-q.data.offset,a=q.data.traces[row.id]!;if(hi>=0&&hi<a.length){const x=headX,y=yOf(a,hi+q.data.offset,false),R=r===1?16:11;
   const rg=g.createRadialGradient(x,y,0,x,y,R);rg.addColorStop(0,`rgba(255,255,255,${r===1?.75:.4})`);rg.addColorStop(1,'rgba(255,255,255,0)');g.globalCompositeOperation='lighter';g.fillStyle=rg;g.fillRect(x-R,y-R,2*R,2*R);g.globalCompositeOperation='source-over';}}
- g.restore();const values=q.data.traces[row.id];const clipped=values?pts.filter(p=>Math.abs(isDiff?(values[p.index-q.data.offset]-q.data.traces.clean[p.index-q.data.offset])*(q.gain||1):values[p.index-q.data.offset])>q.amplitude).length:0;g.font='11px system-ui';g.textAlign='left';g.textBaseline='alphabetic';if(clipped){g.fillStyle='#ffbc79';g.fillText('표시 범위 밖 '+clipped+' samples · 범위 맞춤',left+10,top+18);}if(!q.data.traces[row.id]){g.fillStyle='#ffbc79';g.fillText('이 방법 출력 없음',left+10,top+30);}
+ g.restore();const values=q.data.traces[row.id];const clipped=values?pts.filter(p=>Math.abs(isDiff?(values[p.index-q.data.offset]-q.data.traces.clean[p.index-q.data.offset])*(q.gain||1):values[p.index-q.data.offset])>q.amplitude).length:0;g.font='11px system-ui';g.textAlign='left';g.textBaseline='alphabetic';if(clipped){g.fillStyle='#ffbc79';g.fillText('표시 범위 초과 '+clipped+' 샘플',left+10,top+18);}if(!q.data.traces[row.id]){g.fillStyle='#ffbc79';g.fillText('출력 없음',left+10,top+30);}
  g.fillStyle='#adc3ce';g.font='12px system-ui';for(let k=0;k<=4;k++){const at=q.inspect?Math.max(0,t-q.span)+k*Math.min(t,q.span)/4:t-q.span+k*q.span/4;const label=q.mode==='sweep'&&!q.inspect?(k*q.span/4).toFixed(1)+'s 위치':at<0?'—':at.toFixed(1)+'s';g.fillText(label,left+k*pw/4-(k===4?55:0),bottom+20);}
  // reduced motion: the plain sweep line stays (no light column)
  if(q.mode==='sweep'&&live&&!fxOn){g.strokeStyle='#bfd8e0';g.lineWidth=1;g.beginPath();g.moveTo(headX,top);g.lineTo(headX,bottom);g.stroke();}
@@ -69,5 +71,5 @@ export function Plot(p:Props){
   if(FX_PIN===null&&f.frames>90&&f.level>0&&f.ema>26){f.level--;f.frames=0;}}
  }if(q.transport.playing)raf=requestAnimationFrame(draw);};draw();const resize=new ResizeObserver(()=>{cancelAnimationFrame(raf);signature='';draw();});resize.observe(c);return()=>{cancelAnimationFrame(raf);resize.disconnect();};
  },[p.data,p.transport.playing,p.mode,p.span,p.inspect,p.amplitude,p.reference,p.method,p.preview,p.comparison,p.large,p.soft,p.residual,p.gain]);
- return <canvas ref={canvas} className={'ecg-canvas '+(p.large?'large':'')+(p.comparison?' three':'')+(p.residual?' difference':'')} role="img" aria-label={`동일 시간·진폭의 입력 및 ${p.method} 출력과 회색 Reference${p.preview?' · 점선 '+p.preview:''}${p.residual?' · Output − Reference 차이':''}`}/>;
+ return <canvas ref={canvas} className={'ecg-canvas '+(p.large?'large':'')+(p.comparison?' three':'')+(p.residual?' difference':'')} role="img" aria-label={`동일 시간축 · 진폭의 입력, ${p.method} 출력과 회색 Reference${p.preview?' · 점선 '+p.preview:''}${p.residual?' · 차이 신호':''}`}/>;
 }

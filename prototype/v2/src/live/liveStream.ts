@@ -12,10 +12,10 @@ export type Note = {kind: 'reset' | 'link' | 'overflow', text: string, at: numbe
 
 /** 방법 이름표 — 원본 저장소 live.html LABEL 그대로. 모르는 이름은 이름 그대로 쓴다. */
 export const LABEL: Record<string, string> = {
-  raw: '입력 — 전극에서 온 그대로 (front-end 이전)', M_FE: '공통 front-end (0.5–100 Hz + auto notch)', M01: '대역통과 + notch',
-  M02: 'Savitzky–Golay', M03: 'DWT', M04: 'SWT + QRS 보호', M05: 'Sameni EKS (창 · hop 128)',
-  M05S: 'Sameni EKF · 스트리밍 (미래 144 ms + 고정 지연 평활)', M06: 'ResUNet1D (딥러닝)', M06L6: 'ResUNet1D · clean 보존 손실',
-  M08: 'wavelet-subband U-Net', M09: 'CNN + Transformer',
+  raw: '입력 신호(공통 전처리 이전)', M_FE: '공통 전처리(0.5–100 Hz, 조건부 노치)', M01: '대역통과 · 노치 필터',
+  M02: 'Savitzky–Golay 필터', M03: 'DWT 임계값 처리', M04: 'SWT 적응 임계값 처리(QRS 구간 임계값 완화)', M05: '확장 칼만 필터(블록 처리)',
+  M05S: '확장 칼만 필터(스트리밍, 144 ms 고정 지연)', M06: '잔차 학습 U-Net', M06L6: '잔차 학습 U-Net(무잡음 입력 보존 손실)',
+  M08: '웨이블릿 부대역 U-Net', M09: 'CNN · Transformer 결합 모델',
 };
 /** 겹치기 색 — v2.2.1 출력·고정 비교·미리보기 색 + 넷째(D-41). 넷까지만 색각 대비를 통과한다. 입력은 주황. */
 export const SLOTS = ['#67e7c3', '#97c2ff', '#f6d18d', '#d7a6ff'], RAW_COLOR = '#f2a35e', OVER_MAX = SLOTS.length;
@@ -46,10 +46,10 @@ export class LiveStream {
     if (typeof m === 'string') { try { m = JSON.parse(m); } catch { return false; } }
     if (typeof m === 'string') { try { m = JSON.parse(m); } catch { return false; } }
     if (!m || typeof m !== 'object') return false;
-    if (m.link_lost) { this.notes.push({kind: 'link', text: '보드와의 선이 끊겼다 — ' + m.link_lost, at: now}); return true; }
+    if (m.link_lost) { this.notes.push({kind: 'link', text: '보드 연결 끊김: ' + m.link_lost, at: now}); return true; }
     if (m.reset) {                                   // front-end 전환: 옛 필터와 새 필터의 파형이 한 화면에 섞이지 않게 비운다
       this.clear(); this.feMode = m.fe ?? this.feMode;
-      this.notes.push({kind: 'reset', text: `${m.fe_label ?? m.fe} 로 바꿨다 (+${m.fe_lat_ms ?? '?'} ms) — 화면을 다시 채우는 중`, at: now});
+      this.notes.push({kind: 'reset', text: `공통 전처리 변경: ${m.fe_label ?? m.fe}(지연 +${m.fe_lat_ms ?? '?'} ms) · 화면 갱신 중`, at: now});
       return true;
     }
     if (m.fs && m.fs !== this.fs) { this.fs = m.fs; this.cap = Math.round(this.winS * this.fs); this.clear(); }   // fs 없는 프레임으로 cap 을 NaN 으로 만들지 않는다

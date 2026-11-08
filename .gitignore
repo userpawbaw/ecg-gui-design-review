@@ -12,3 +12,6 @@ assets/.npm-cache/
 # Python bytecode
 __pycache__/
 *.pyc
+
+# 재생 브리지 신호 CSV(npm run bridge:replay -- --signal …, 다시 만들 수 있음)
+.cache/

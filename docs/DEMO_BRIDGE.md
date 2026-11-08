@@ -1,7 +1,7 @@
 # 발표 자료용 — 실시간 측정 화면을 재생 브리지로 띄워 캡처하기
 
 보드 없이 「실시간 측정」 탭을 실제 처리 화면처럼 띄워 스크린샷을 찍는 방법이다(2026-11-08 사용자 요청).
-화면에 나오는 파형은 원본 저장소 브리지의 **재생 모드**(`--replay synth`)가 만든다. 모의 보드가 실제 보드와 같은 선 규격으로 합성 심전도(+ 잡음)를 흘리고, 실제 처리 경로(공통 전처리 + 선택한 기법)가 그 신호를 처리해 보낸다. 출력 파형은 진짜 처리 결과이고, 입력은 합성 신호다(실측 아님).
+화면에 나오는 파형은 원본 저장소 브리지의 **재생 모드**가 만든다. 모의 보드가 실제 보드와 같은 선 규격으로 신호를 흘리고, 실제 처리 경로(공통 전처리 + 선택한 기법)가 그 신호를 처리해 보낸다. 출력 파형은 진짜 처리 결과이고, 입력은 저장 · 합성 신호다(실측 아님). 입력 신호(합성 심전도 · MIT-BIH 기록)와 잡음 종류 · SNR을 고를 수 있다(§4.1).
 
 예시 화면: `verification/demo-bridge-20261108/`(3840 × 2160).
 
@@ -25,7 +25,7 @@ npm run doctor
 npm run bridge:setup
 ```
 
-`bridge:setup`은 재생 모드에 필요한 Python 패키지(numpy · scipy · PyWavelets · PyYAML · pandas · matplotlib)를 설치한다. torch는 기본 기법(M_FE · M04 · M05S)에 필요 없다.
+`bridge:setup`은 재생 모드에 필요한 Python 패키지(numpy · scipy · PyWavelets · PyYAML · pandas · matplotlib · wfdb)를 설치한다. torch는 기본 기법(M_FE · M04 · M05S)에 필요 없다.
 
 원본 저장소 브랜치 맞추기(원본 저장소 폴더에서, 한 줄씩):
 
@@ -65,9 +65,30 @@ git switch claude/adoring-cray-nv6pvq
 
 딥러닝 기법(M06 등)은 torch와 학습 체크포인트가 필요하다. 이 안내에서는 확인하지 않았다.
 
+### 4.1 입력 신호 · 잡음 · SNR 고르기
+
+원본 브리지의 기본 재생(`--replay synth`)은 「합성 심전도 + 무작위 혼합 잡음 8 dB, 120 s」 하나로 고정돼 있다. 아래 옵션을 붙이면 이 저장소의 `scripts/local/replay_signal.py`가 원본 저장소의 자료 · 잡음 · 혼합 코드로 신호 파일(`.cache/replay/*.csv`)을 만들고, 브리지를 `--replay csv`로 띄운다(원본 저장소는 고치지 않는다).
+
+```
+npm run bridge:replay -- --signal mitdb:100 --noise ma --snr 5
+```
+
+| 옵션 | 값 | 기본 |
+|---|---|---|
+| `--signal` | `synth`(원본 합성 심전도) · `mitdb:<기록>`(MIT-BIH, MLII 유도, 250 Hz로 리샘플). 기록 48개: 100–109 · 111–119 · 121–124 · 200–203 · 205 · 207–210 · 212–215 · 217 · 219–223 · 228 · 230–234 | `synth` |
+| `--noise` | `none`(잡음 없음) · `mixed`(1~3종 무작위 혼합, 원본 기본과 같음) · 합성 `pli`(전원 간섭) · `bw_synth`(기저선 변동) · `ma_synth`(근육) · `em_synth`(전극 움직임) · `awgn`(백색) · `impulse` · **실제 NSTDB 기록** `bw` · `ma` · `em` | `mixed` |
+| `--snr` | 입력 SNR [dB] | `8` |
+| `--start` · `--sec` | MIT-BIH 기록에서 시작 시각 · 길이 [s]. 끝까지 가면 처음으로 되돌아간다 | `0` · `120` |
+| `--seed` | 잡음 뽑기 씨앗(같은 값이면 같은 화면) | `7` |
+
+- 실험실 탭과 맞추려면 같은 기록 · 잡음 · SNR을 고른다(예: 「D1 · 근육 잡음 · 5 dB」 ↔ `--signal mitdb:<기록> --noise ma --snr 5`). 잡음 구간을 뽑는 위치(씨앗)는 실험실 저장 자료와 다르다.
+- 원본 브리지 옵션과 함께 쓸 수 있다: `npm run bridge:replay -- --signal mitdb:208 --noise em --snr 0 --leadoff-every 10`.
+- 신호 진폭은 상대값이다. 브리지가 모의 보드 ADC 범위(10 bit, 중앙 512)에 맞춰 다시 늘이고 줄인다. 화면의 mV 눈금은 브리지 증폭 설정(`--gain` 1100, `--vref` 5 V)으로 환산한 값이다.
+- 예시: `verification/demo-bridge-20261108/live_sweep_mitdb100_ma5dB_3840x2160.jpg`(MIT-BIH 100 + NSTDB 근육 잡음 5 dB).
+
 ## 5. 슬라이드에 넣을 때
 
-화면 위쪽 출처 칩은 「브리지 출력」으로 나온다(브리지가 보드인지 재생인지 알려 주지 않기 때문). 캡처 아래 출처 줄에는 **「합성 신호 재생(serial_bridge.py --replay synth) · 실제 처리 경로」**처럼 입력이 합성 신호임을 적는다. 이 프로젝트는 합성 입력을 실측으로 표기하지 않는다(`AGENTS.md`). 화면 자체에는 방어 문구를 넣지 않는다(D-160).
+화면 위쪽 출처 칩은 「브리지 출력」으로 나온다(브리지가 보드인지 재생인지 알려 주지 않기 때문). 캡처 아래 출처 줄에는 입력이 저장 · 합성 신호임을 적는다. 예: **「MIT-BIH 100 + NSTDB 근육 잡음 5 dB 재생 · 실제 처리 경로」**, 기본 재생이면 **「합성 신호 재생(serial_bridge.py --replay synth) · 실제 처리 경로」**. 이 프로젝트는 합성 입력을 실측으로 표기하지 않는다(`AGENTS.md`). 화면 자체에는 방어 문구를 넣지 않는다(D-160).
 
 ## 6. 문제 해결
 
@@ -77,6 +98,7 @@ git switch claude/adoring-cray-nv6pvq
 | `[확인] 원본 저장소 브랜치가 …` 뒤 `KeyError: unknown method 'M05S'` | 원본 저장소가 기본 브랜치다. §2의 `git switch claude/adoring-cray-nv6pvq` |
 | `ModuleNotFoundError: No module named …` | `npm run bridge:setup`을 다시. 그래도 같으면 그 모듈 이름을 `npm run py -- -m pip install <이름>` |
 | 앱의 상태가 「브리지 연결 없음」에서 안 바뀜 | 터미널 ①에 「-> http://127.0.0.1:8765/live.html」이 떴는지 확인. 포트 8765를 다른 프로그램이 쓰면 `npm run bridge:replay -- --http-port 8766` 하고, 앱을 띄우기 전에 환경 변수 `ECG_BRIDGE=http://127.0.0.1:8766` |
+| `MIT-BIH 기록 … 없음` · `알 수 없는 잡음 …` | 메시지에 쓸 수 있는 기록 · 잡음 목록이 나온다. 그중에서 고른다 |
 | `Missing script: "dev"` · `Could not read package.json` | 이 저장소 **루트 폴더**에서 `npm run …`을 친다(`docs/LOCAL_WINDOWS.md`) |
 
 ## 7. 쓰지 말 것
@@ -88,6 +110,8 @@ git switch claude/adoring-cray-nv6pvq
 | 파일 | 역할 |
 |---|---|
 | `scripts/local/run.mjs` (`bridge:setup` · `bridge:replay`) | 원본 저장소를 찾아 맞는 Python으로 브리지를 띄운다 |
+| `scripts/local/replay_signal.py` | 신호 · 잡음 · SNR 옵션으로 재생 신호 CSV를 만든다(원본 `ecgdn.data`의 `mitdb` · `nstdb` · `noise` · `mixer`) |
+| 원본 `data/raw/mitdb` · `data/raw/nstdb` | MIT-BIH 48 기록 · NSTDB 잡음 기록(원본 저장소에 들어 있음) |
 | `prototype/v2/vite.config.ts` | 앱의 `/bridge/…` 요청을 `127.0.0.1:8765`(또는 `ECG_BRIDGE`)로 이어 준다 |
 | `prototype/v2/src/live/` | 실시간 측정 화면(스트림 수신 · 축 · 그리기) |
 | 원본 `scripts/serial_bridge.py` | 브리지(재생 모드 · SSE `/stream` · 공통 전처리 전환 `/fe`) |

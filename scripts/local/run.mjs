@@ -84,9 +84,10 @@ function py(argv){const p=findPython();if(!p){bad('Python 3를 찾지 못함 —
 function pySetup(){const p=findPython();if(!p){bad('Python 3를 찾지 못함');process.exit(1);}run(p.bin,[...p.pre,'-m','pip','install','--upgrade','-r',join(root,'tools/video-qa/requirements-local.txt')]);}
 
 // 원본 저장소의 브리지(scripts/serial_bridge.py)를 이 저장소에서 한 줄로 띄운다(docs/DEMO_BRIDGE.md).
-//   npm run bridge:setup   — 원본 브리지 재생 모드에 필요한 Python 패키지 설치(numpy · scipy · PyWavelets · PyYAML · pandas · matplotlib)
+//   npm run bridge:setup   — 원본 브리지 재생 모드에 필요한 Python 패키지 설치(numpy · scipy · PyWavelets · PyYAML · pandas · matplotlib · wfdb)
 //   npm run bridge:replay  — 보드 없이 합성 심전도를 실제 처리 경로로 흘리는 재생 브리지(127.0.0.1:8765)
 //   npm run bridge:replay -- --methods M_FE,M04 --leadoff-every 8   — 뒤에 원본 브리지 옵션을 그대로 붙인다
+//   npm run bridge:replay -- --signal mitdb:100 --noise ma --snr 5    — 신호(합성 · MIT-BIH) · 잡음 · SNR 고르기(replay_signal.py)
 function sourceDir(){
  const cands=[process.env.ECG_SOURCE,join(root,'..','ECG_denoising_method_comparision'),join(root,'..','ecg_denoising_method_comparision')].filter(Boolean);
  for(const d of cands)if(existsSync(join(d,'scripts','serial_bridge.py')))return d;
@@ -94,12 +95,23 @@ function sourceDir(){
  say('  찾아본 곳: '+cands.join(' | '));process.exit(1);
 }
 function bridgeSetup(){const p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}
- run(p.bin,[...p.pre,'-m','pip','install','--upgrade','numpy','scipy','PyWavelets','PyYAML','pandas','matplotlib']);ok('원본 브리지 재생 모드 준비 완료. 다음: npm run bridge:replay');}
+ run(p.bin,[...p.pre,'-m','pip','install','--upgrade','numpy','scipy','PyWavelets','PyYAML','pandas','matplotlib','wfdb']);ok('원본 브리지 재생 모드 준비 완료. 다음: npm run bridge:replay');}
 function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}
  const br=capture('git',['-C',d,'branch','--show-current']);
  if(br&&br!=='claude/adoring-cray-nv6pvq')warn(`원본 저장소 브랜치가 ${br} — 실시간 측정 화면은 claude/adoring-cray-nv6pvq 기준(M05S 등). 원본 폴더에서: git fetch origin 다음 줄에 git switch claude/adoring-cray-nv6pvq`);
- const has=k=>extra.includes(k),argv=['scripts/serial_bridge.py','--replay','synth','--serve',...(has('--methods')?[]:['--methods','M_FE,M04,M05S']),...extra];
- say(`\n재생 브리지(합성 심전도 → 실제 처리 경로, 실측 아님): ${d}\n  ${[p.bin,...p.pre,...argv].join(' ')}\n  앱은 다른 터미널에서 npm run story → «실시간 측정» 탭. 멈추려면 Ctrl+C\n`);
+ // 신호 · 잡음 고르기(--signal · --noise · --snr · --start · --sec · --seed): replay_signal.py 로 CSV 를 만들어 --replay csv 로 흘린다
+ const own=['--signal','--noise','--snr','--start','--sec','--seed'],pick={},rest=[];
+ for(let i=0;i<extra.length;i++){if(own.includes(extra[i])&&i+1<extra.length){pick[extra[i]]=extra[++i];}else rest.push(extra[i]);}
+ let src=['--replay','synth'];
+ if(Object.keys(pick).length){
+  const slug=[pick['--signal']||'synth',pick['--noise']||'mixed',(pick['--snr']||'8')+'dB'].join('_').replace(/[^\w.-]+/g,'-');
+  const out=join(root,'.cache','replay',slug+'.csv');
+  const code=run(p.bin,[...p.pre,join(root,'scripts','local','replay_signal.py'),...Object.entries(pick).flat(),'--out',out],{cwd:d,allowFail:true});
+  if(code!==0){bad('재생 신호를 만들지 못함(위 메시지). 패키지가 없으면 npm run bridge:setup');process.exit(code);}
+  src=['--replay','csv','--csv',out];
+ }
+ const has=k=>rest.includes(k),argv=['scripts/serial_bridge.py',...src,'--serve',...(has('--methods')?[]:['--methods','M_FE,M04,M05S']),...rest];
+ say(`\n재생 브리지(${src[1]==='csv'?'고른 신호':'합성 심전도'} → 실제 처리 경로, 실측 아님): ${d}\n  ${[p.bin,...p.pre,...argv].join(' ')}\n  앱은 다른 터미널에서 npm run story → «실시간 측정» 탭. 멈추려면 Ctrl+C\n`);
  const code=run(p.bin,[...p.pre,...argv],{cwd:d,allowFail:true});process.exit(code);}
 
 const table={doctor,'bridge:setup':bridgeSetup,'bridge:replay':()=>bridgeReplay(args),story:()=>story(null),'story:wave-prev':()=>story('prev'),'story:wave-all':()=>story('all'),'story:wave-live':()=>story('live'),'story:check':storyCheck,spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};

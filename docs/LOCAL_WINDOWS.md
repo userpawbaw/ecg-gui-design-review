@@ -33,8 +33,8 @@ git checkout claude/r1-autopilot-recommended
 |---|---|---|
 | `npm run story` | ② R1 Story 실행 | 자료 준비(처음만) → 의존성 설치(처음만) → http://127.0.0.1:5173/ 을 Edge로 엶. 끝낼 때 `Ctrl+C` |
 | `npm run story:wave-prev` | 파형 비교 ① 이전 버전 | 실시간 측정 · 실험실 모두 최적화 전 그리기(D-161) |
-| `npm run story:wave-all` | 파형 비교 ② 최적화를 실험실 탭에도 | 두 탭 모두 링 스트립 그리기 |
-| `npm run story:wave-live` | 파형 비교 ③ 실시간 탭에만 최적화 | 실시간 측정만 새 그리기, 실험실은 기존 그대로(지금 `npm run story` 기본값과 같음) |
+| `npm run story:wave-all` | 파형 비교 ② 최적화를 실험실 탭에도 | 두 탭 모두 링 스트립 그리기. **기본값**(`npm run story`와 같음, 2026-11-08 사용자 선택) |
+| `npm run story:wave-live` | 파형 비교 ③ 실시간 탭에만 최적화 | 실시간 측정만 새 그리기, 실험실은 기존 그대로 |
 | `npm run story:check` | ③ R1 Story 검사 | 빌드 + 단위 테스트 + 브라우저 테스트. 600초 replay 자료가 없으면 chunk 테스트 1개와 10분 soak는 원래 실패/건너뜀 |
 | `npm test` | 저장소 전체 테스트 | 기록·인코딩·Windows 호환성 검사 |
 | `npm run spike -- video-scrub` | video-scrub spike 실행 | 의존성·클립 준비 후 실행. `attic`, `ref-repro`, `lab-corner`, `scroll-globe`도 같은 방식 |
@@ -50,6 +50,8 @@ Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `
 |---|---|
 | 실제 보드 | `python scripts\serial_bridge.py --port COM13 --ascii --board-fs 250 --methods M_FE,M04,M05S --serve` |
 | 보드 없이 화면만 확인(합성 신호 — 실측 아님) | `python scripts\serial_bridge.py --replay synth --methods M_FE,M04,M05S --serve` |
+
+**이 저장소에서 한 줄로**(2026-11-08): 두 저장소를 같은 폴더에 두고 `npm run bridge:setup`(처음 한 번), 그다음 `npm run bridge:replay`. 원본 저장소는 `claude/adoring-cray-nv6pvq` 브랜치여야 한다. 발표 캡처 절차 전체는 `docs/DEMO_BRIDGE.md`.
 
 - 다른 PC·포트의 브리지는 앱을 띄우기 전에 환경 변수 `ECG_BRIDGE`(예: `http://192.168.0.5:8765`)로 정한다.
 - 브리지 자체 화면(A안)으로 보려면 주소 뒤에 `?live=iframe`(`docs/URL_PARAMS.md`).

@@ -18,6 +18,8 @@
     "story:wave-all": "node scripts/local/run.mjs story:wave-all",
     "story:wave-live": "node scripts/local/run.mjs story:wave-live",
     "story:check": "node scripts/local/run.mjs story:check",
+    "bridge:setup": "node scripts/local/run.mjs bridge:setup",
+    "bridge:replay": "node scripts/local/run.mjs bridge:replay",
     "spike": "node scripts/local/run.mjs spike",
     "py": "node scripts/local/run.mjs py",
     "py:setup": "node scripts/local/run.mjs py:setup",

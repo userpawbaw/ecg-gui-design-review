@@ -1,0 +1,94 @@
+# 발표 자료용 — 실시간 측정 화면을 재생 브리지로 띄워 캡처하기
+
+보드 없이 「실시간 측정」 탭을 실제 처리 화면처럼 띄워 스크린샷을 찍는 방법이다(2026-11-08 사용자 요청).
+화면에 나오는 파형은 원본 저장소 브리지의 **재생 모드**(`--replay synth`)가 만든다. 모의 보드가 실제 보드와 같은 선 규격으로 합성 심전도(+ 잡음)를 흘리고, 실제 처리 경로(공통 전처리 + 선택한 기법)가 그 신호를 처리해 보낸다. 출력 파형은 진짜 처리 결과이고, 입력은 합성 신호다(실측 아님).
+
+예시 화면: `verification/demo-bridge-20261108/`(3840 × 2160).
+
+## 1. 필요한 것
+
+| 무엇 | 어디 | 비고 |
+|---|---|---|
+| 이 저장소 | `userpawbaw/ecg-gui-design-review`, 브랜치 `claude/optimistic-goldberg-jnzpni` | 앱 화면. `npm run story`로 연다 |
+| 원본 저장소 | `userpawbaw/ECG_denoising_method_comparision`, 브랜치 **`claude/adoring-cray-nv6pvq`** | 브리지 `scripts/serial_bridge.py`와 처리 코드(`ecgdn/`). 기본 브랜치에는 M05S(스트리밍 칼만)가 없어 기본 명령이 멈춘다 |
+| Node.js 22 이상 | — | `npm run doctor`로 확인 |
+| Python 3 | — | `npm run doctor`가 찾는다(py → python → python3) |
+
+**두 저장소를 같은 폴더 안에 나란히 둔다**(예: `C:\Users\…\Documents\GitHub\ecg-gui-design-review`와 `…\GitHub\ECG_denoising_method_comparision`). 다른 곳에 두었다면 환경 변수 `ECG_SOURCE`에 원본 저장소 폴더 경로를 넣는다.
+
+## 2. 처음 한 번만
+
+이 저장소 폴더의 터미널에서:
+
+```
+npm run doctor
+npm run bridge:setup
+```
+
+`bridge:setup`은 재생 모드에 필요한 Python 패키지(numpy · scipy · PyWavelets · PyYAML · pandas · matplotlib)를 설치한다. torch는 기본 기법(M_FE · M04 · M05S)에 필요 없다.
+
+원본 저장소 브랜치 맞추기(원본 저장소 폴더에서, 한 줄씩):
+
+```
+git fetch origin
+git switch claude/adoring-cray-nv6pvq
+```
+
+## 3. 띄우기 — 터미널 두 개
+
+| 터미널 | 이 저장소 폴더에서 | 하는 일 |
+|---|---|---|
+| ① | `npm run bridge:replay` | 재생 브리지를 `127.0.0.1:8765`에 띄운다. 「-> http://127.0.0.1:8765/live.html」이 나오면 준비 완료(처음 약 4 s 데움) |
+| ② | `npm run story` | 앱을 Edge로 연다(`http://127.0.0.1:5173/`) |
+
+앱에서 오른쪽 위 **「실험실로 이동」**(또는 주소 `http://127.0.0.1:5173/?route=lab`) → 위쪽 **「실시간 측정」** 탭. 상태 칩이 「연결됨」이 되고 몇 초 뒤 파형이 차오른다. 끝낼 때는 두 터미널에서 `Ctrl+C`.
+
+## 4. 캡처 요령
+
+- **5 s 이상 기다린 뒤** 찍는다(표시 구간 5 s가 다 차야 화면 전체에 파형이 있다).
+- 전체 화면: Edge에서 `F11`. 더 큰 해상도가 필요하면 `Ctrl` + `+`로 확대한 뒤 찍거나, 고해상도 모니터에서 찍는다.
+- 화면 조작(모두 화면 안 버튼):
+  - 표시 방식 「분리」(기법마다 한 칸) / 「중첩」(한 칸에 겹침)
+  - 갱신 방식 「스크롤」 / 「스윕」
+  - 공통 전처리(인과 · 블록 영위상 · 중앙값) — 바꾸면 화면이 한 번 비워졌다가 다시 찬다
+  - 범례 칩을 눌러 기법을 켜고 끈다
+  - 「진단 정보」를 펼치면 프레임 오류 · RTF 등이 보인다
+- 3D 서고 배경 없이 파형만: 주소 뒤에 `&bg=0`(예: `http://127.0.0.1:5173/?route=lab&bg=0`).
+- 다른 장면을 만들고 싶을 때는 브리지 옵션을 `--` 뒤에 붙인다(터미널 ①을 `Ctrl+C`로 끄고 다시):
+
+| 보이고 싶은 것 | 명령 |
+|---|---|
+| 기법 고르기 | `npm run bridge:replay -- --methods M_FE,M04` |
+| 전극 분리(회색 구간) | `npm run bridge:replay -- --leadoff-every 8` (8 s마다) |
+| 샘플 손실 | `npm run bridge:replay -- --drop 0.01` (1 %) |
+| 처음 공통 전처리 | `npm run bridge:replay -- --fe causal` (`causal` · `zerophase` · `median`) |
+
+딥러닝 기법(M06 등)은 torch와 학습 체크포인트가 필요하다. 이 안내에서는 확인하지 않았다.
+
+## 5. 슬라이드에 넣을 때
+
+화면 위쪽 출처 칩은 「브리지 출력」으로 나온다(브리지가 보드인지 재생인지 알려 주지 않기 때문). 캡처 아래 출처 줄에는 **「합성 신호 재생(serial_bridge.py --replay synth) · 실제 처리 경로」**처럼 입력이 합성 신호임을 적는다. 이 프로젝트는 합성 입력을 실측으로 표기하지 않는다(`AGENTS.md`). 화면 자체에는 방어 문구를 넣지 않는다(D-160).
+
+## 6. 문제 해결
+
+| 증상 | 원인 · 해결 |
+|---|---|
+| `[문제] 원본 저장소(…)를 찾지 못함` | 두 저장소가 같은 폴더에 없다. 나란히 clone 하거나 `ECG_SOURCE`에 원본 폴더 경로 |
+| `[확인] 원본 저장소 브랜치가 …` 뒤 `KeyError: unknown method 'M05S'` | 원본 저장소가 기본 브랜치다. §2의 `git switch claude/adoring-cray-nv6pvq` |
+| `ModuleNotFoundError: No module named …` | `npm run bridge:setup`을 다시. 그래도 같으면 그 모듈 이름을 `npm run py -- -m pip install <이름>` |
+| 앱의 상태가 「브리지 연결 없음」에서 안 바뀜 | 터미널 ①에 「-> http://127.0.0.1:8765/live.html」이 떴는지 확인. 포트 8765를 다른 프로그램이 쓰면 `npm run bridge:replay -- --http-port 8766` 하고, 앱을 띄우기 전에 환경 변수 `ECG_BRIDGE=http://127.0.0.1:8766` |
+| `Missing script: "dev"` · `Could not read package.json` | 이 저장소 **루트 폴더**에서 `npm run …`을 친다(`docs/LOCAL_WINDOWS.md`) |
+
+## 7. 쓰지 말 것
+
+`verification/wave-fx-20261108/mock-bridge.cjs`는 그리기 연산량 측정용 가짜 브리지다. 기법 출력을 입력에서 계산하지 않고 **지어낸 값**(합성 파형 × 0.97 등)으로 보낸다. 발표 화면에 쓰지 않는다.
+
+## 8. 관련 파일
+
+| 파일 | 역할 |
+|---|---|
+| `scripts/local/run.mjs` (`bridge:setup` · `bridge:replay`) | 원본 저장소를 찾아 맞는 Python으로 브리지를 띄운다 |
+| `prototype/v2/vite.config.ts` | 앱의 `/bridge/…` 요청을 `127.0.0.1:8765`(또는 `ECG_BRIDGE`)로 이어 준다 |
+| `prototype/v2/src/live/` | 실시간 측정 화면(스트림 수신 · 축 · 그리기) |
+| 원본 `scripts/serial_bridge.py` | 브리지(재생 모드 · SSE `/stream` · 공통 전처리 전환 `/fe`) |
+| 원본 `requirements.txt` | 전체 패키지 목록(딥러닝 포함) |

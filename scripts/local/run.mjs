@@ -61,7 +61,7 @@ function doctor(){
 }
 
 // D-161 파형 그리기 비교: story:wave-prev / story:wave-all / story:wave-live 는 같은 앱을 ?wave=… 주소로 연다(waveMode.ts).
-const WAVE_NOTE={prev:'이전 버전 — 실시간·실험실 모두 최적화 전 그리기',all:'최적화를 실험실 탭에도 — 두 탭 모두 링 스트립',live:'실시간 탭에만 최적화 — 실험실은 기존 그리기'};
+const WAVE_NOTE={prev:'이전 버전 — 실시간·실험실 모두 최적화 전 그리기',all:'최적화를 실험실 탭에도 — 두 탭 모두 링 스트립(기본값, npm run story 와 같음)',live:'실시간 탭에만 최적화 — 실험실은 기존 그리기'};
 function story(wave){ensureV2Data();const v2=join(root,'prototype/v2');ensureDeps(v2);
  const path=wave?`/?wave=${wave}`:'/';
  say(`\nR1 Story: http://127.0.0.1:5173${path}  (Lab부터: ?route=lab, 단계 이동: ?step=3, 잡음 장면: ?story=noise&cond=pli|bw|ma)  — 멈추려면 Ctrl+C`);
@@ -83,7 +83,26 @@ function spike(name){
 function py(argv){const p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}const code=run(p.bin,[...p.pre,...argv],{allowFail:true,cwd:process.env.INIT_CWD||root});process.exit(code);}
 function pySetup(){const p=findPython();if(!p){bad('Python 3를 찾지 못함');process.exit(1);}run(p.bin,[...p.pre,'-m','pip','install','--upgrade','-r',join(root,'tools/video-qa/requirements-local.txt')]);}
 
-const table={doctor,story:()=>story(null),'story:wave-prev':()=>story('prev'),'story:wave-all':()=>story('all'),'story:wave-live':()=>story('live'),'story:check':storyCheck,spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};
+// 원본 저장소의 브리지(scripts/serial_bridge.py)를 이 저장소에서 한 줄로 띄운다(docs/DEMO_BRIDGE.md).
+//   npm run bridge:setup   — 원본 브리지 재생 모드에 필요한 Python 패키지 설치(numpy · scipy · PyWavelets · PyYAML · pandas · matplotlib)
+//   npm run bridge:replay  — 보드 없이 합성 심전도를 실제 처리 경로로 흘리는 재생 브리지(127.0.0.1:8765)
+//   npm run bridge:replay -- --methods M_FE,M04 --leadoff-every 8   — 뒤에 원본 브리지 옵션을 그대로 붙인다
+function sourceDir(){
+ const cands=[process.env.ECG_SOURCE,join(root,'..','ECG_denoising_method_comparision'),join(root,'..','ecg_denoising_method_comparision')].filter(Boolean);
+ for(const d of cands)if(existsSync(join(d,'scripts','serial_bridge.py')))return d;
+ bad('원본 저장소(ECG_denoising_method_comparision)를 찾지 못함. 이 저장소와 같은 폴더(예: Documents\\GitHub)에 clone 하거나, 환경 변수 ECG_SOURCE 에 그 폴더 경로를 넣는다');
+ say('  찾아본 곳: '+cands.join(' | '));process.exit(1);
+}
+function bridgeSetup(){const p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}
+ run(p.bin,[...p.pre,'-m','pip','install','--upgrade','numpy','scipy','PyWavelets','PyYAML','pandas','matplotlib']);ok('원본 브리지 재생 모드 준비 완료. 다음: npm run bridge:replay');}
+function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}
+ const br=capture('git',['-C',d,'branch','--show-current']);
+ if(br&&br!=='claude/adoring-cray-nv6pvq')warn(`원본 저장소 브랜치가 ${br} — 실시간 측정 화면은 claude/adoring-cray-nv6pvq 기준(M05S 등). 원본 폴더에서: git fetch origin 다음 줄에 git switch claude/adoring-cray-nv6pvq`);
+ const has=k=>extra.includes(k),argv=['scripts/serial_bridge.py','--replay','synth','--serve',...(has('--methods')?[]:['--methods','M_FE,M04,M05S']),...extra];
+ say(`\n재생 브리지(합성 심전도 → 실제 처리 경로, 실측 아님): ${d}\n  ${[p.bin,...p.pre,...argv].join(' ')}\n  앱은 다른 터미널에서 npm run story → «실시간 측정» 탭. 멈추려면 Ctrl+C\n`);
+ const code=run(p.bin,[...p.pre,...argv],{cwd:d,allowFail:true});process.exit(code);}
+
+const table={doctor,'bridge:setup':bridgeSetup,'bridge:replay':()=>bridgeReplay(args),story:()=>story(null),'story:wave-prev':()=>story('prev'),'story:wave-all':()=>story('all'),'story:wave-live':()=>story('live'),'story:check':storyCheck,spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};
 if(fileURLToPath(import.meta.url)===resolve(process.argv[1]||'')){
  if(!table[cmd]){say('사용법: npm run doctor | story | story:check | spike -- <이름> | py -- <스크립트> | py:setup | browsers | v2:prepare');process.exit(cmd?1:0);}
  table[cmd]();

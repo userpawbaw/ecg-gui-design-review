@@ -4,7 +4,12 @@ import {amplitudeTicks} from './plot-scale';
 import type {Loaded} from './data';
 import methodData from './methods.json';
 const NAME:Record<string,string>=Object.fromEntries(Object.entries(methodData as Record<string,{name:string}>).map(([k,v])=>[k,v.name]));
-import {ageGradient,freshGradient,paper,createGlow,rgb,BAND_S,type Box} from './labFx';
+import {ageGradient,freshGradient,paper,createGlow,rgb,BAND_S,ERASE_S,type Box} from './labFx';
+import {StripRow,AgeRamps,composeRow,headSprite} from './waveStrip';
+import {WAVE} from './waveMode';
+// D-161: ?wave=all 이면 재생 중 파형을 링 스트립으로(새 표본만 긋고 효과는 램프·스프라이트). 그 밖(정지 · 구간 고정 · 효과 끔)은 아래 원래 경로.
+const STRIP=WAVE==='all';
+export const labStats={frames:0,ms:0};(globalThis as unknown as {__labStats:typeof labStats}).__labStats=labStats;
 type Props={data:Loaded;transport:Transport;mode:Mode;span:number;inspect:boolean;amplitude:number;reference:number;method:string;preview:string|null;comparison:string|null;large?:boolean;soft:boolean;residual?:boolean;gain?:number};
 const BG='#0a1a21',GAP_S=.12;
 // D-073 laptop budget: glow levels 2 (three blur levels) → 1 (two) → 0 (none). Level 2 is the default again at the thinner lines (user 2026-10-18 "이 두께에선 &labfx=2가 기본값"). ?labfx= pins it; otherwise it steps down when the
@@ -16,6 +21,7 @@ export function Plot(p:Props){
  const fx=useRef({level:FX_PIN??2,ema:0,frames:0,last:0});
  useEffect(()=>{const c=canvas.current!;const g=c.getContext('2d');if(!g)return;let raf=0,signature='',bgSig='';
  const bg=document.createElement('canvas'),bgg=bg.getContext('2d')!,hot=document.createElement('canvas'),hg=hot.getContext('2d')!,glow=createGlow();
+ const strips:StripRow[]=[],ramps=new AgeRamps(),layer=(()=>{const lc=document.createElement('canvas');return{c:lc,g:lc.getContext('2d')!};})();
  const draw=()=>{const t0=performance.now(),q=latest.current,t=q.transport.time;const rect=c.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
  const sig=[t,q.mode,q.span,q.inspect,q.amplitude,q.reference,q.method,q.preview,q.comparison,q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,rect.width,rect.height,dpr,fx.current.level].join('|');
  // a collapsed canvas (0 × 0 while the layout changes) is skipped: drawImage of a 0-size static layer throws
@@ -56,17 +62,26 @@ export function Plot(p:Props){
   if(fresh.length>1){const pa=new Path2D();let run:typeof fresh=[];const flush=()=>{if(run.length>1){run.forEach((pt,i)=>{const x=left+pt.x*pw,y=yOf(a,pt.index,false);if(i)pa.lineTo(x,y);else pa.moveTo(x,y);});for(let i=run.length-1;i>=0;i--)pa.lineTo(left+run[i].x*pw,yOf(cl,run[i].index,false));pa.closePath();}run=[];};
    fresh.forEach((pt,i)=>{if(i&&(pt.breakBefore||pt.index!==fresh[i-1].index+1))flush();run.push(pt);});flush();
    g.save();g.globalCompositeOperation='lighter';g.fillStyle=freshGradient(g,left,right,rgb(row.color),ageOf,r===1?.34:.22);g.fill(pa);g.restore();}}
+ const useStrip=STRIP&&fxOn&&!!q.data.traces[row.id];
+ if(useStrip){const sr=strips[r]??=new StripRow(),off=q.data.offset,cl=q.data.traces.clean,a=q.data.traces[row.id]!,H=Math.min(q.data.n-1,Math.floor(t*q.data.fs)),cnt=count_;
+  const yv=(arr:Float32Array,res:boolean)=>(k:number)=>{const i=k-off;return top+ph/2-(res?(arr[i]-cl[i])*(q.gain||1):arr[i])/q.amplitude*ph/2;};
+  sr.configure([w,h,dpr,cnt,q.mode,q.amplitude,q.reference,q.gain,q.method,q.comparison,q.data.scene.id,off,row.id,isDiff,top,ph,left,pw].join('|'),{l:left,t:top,w:pw,h:ph,nCols:cnt,dx:pw/cnt,dpr},level);
+  sr.update(H,off,[...(isDiff?[]:[{y:yv(cl,false),color:'#c4c6c7',width:1.8,alpha:q.reference,lit:false,glow:false}]),{y:yv(a,!!isDiff),color:row.color,width:1.2,alpha:1,lit:!isDiff,glow:!isDiff&&r<2}]);
+  ramps.build(q.span,GAP_S,ERASE_S);sr.clearAhead(H,Math.floor(GAP_S*q.data.fs)-1);
+  const rightX=right-(t*q.data.fs+1-H)/cnt*pw;
+  composeRow(g,sr,ramps,layer,{sweep:q.mode==='sweep',head:H,headX:q.mode==='sweep'?headX:rightX,rightX,r:right,white:isDiff?0:r===1?1.15:.8,glow:isDiff?0:r===1?.55:r===0?.35:0,level,liveK:1,span:q.span,gapS:GAP_S,tailS:GAP_S+ERASE_S});
+ }else{
  if(!isDiff)trace(q.data.traces.clean,'#c4c6c7',1.8,q.reference);   // thinner lines (user 2026-10-18 "선 두께도 좀 더 줄여"): Reference 2.4 → 1.8, traces 1.6 → 1.2
- trace(q.data.traces[row.id],row.color,1.2,1,false,!!isDiff,isDiff?0:r===1?1.15:.8,isDiff?0:r===1?.55:r===0?.35:0);   // glow ×0.55 on the output; the input too (user 2026-10-18 "입력에도 이 효과가 포함"), lower — its dense noise stacks far more glow per pixel (intro sweep.ts)
+ trace(q.data.traces[row.id],row.color,1.2,1,false,!!isDiff,isDiff?0:r===1?1.15:.8,isDiff?0:r===1?.55:r===0?.35:0);}   // glow ×0.55 on the output; the input too (user 2026-10-18 "입력에도 이 효과가 포함"), lower — its dense noise stacks far more glow per pixel (intro sweep.ts)
  if(r===1&&q.preview&&q.preview!==q.method&&q.preview!==q.comparison)trace(q.data.traces[q.preview],'#f6d18d',1.2,1,true);
  // head marker: a small hot point at the newest sample (brighter on the selected output)
  if(fxOn&&!isDiff&&q.data.traces[row.id]){const hi=Math.min(q.data.n-1,Math.floor(t*q.data.fs))-q.data.offset,a=q.data.traces[row.id]!;if(hi>=0&&hi<a.length){const x=headX,y=yOf(a,hi+q.data.offset,false),R=r===1?16:11;
-  const rg=g.createRadialGradient(x,y,0,x,y,R);rg.addColorStop(0,`rgba(255,255,255,${r===1?.75:.4})`);rg.addColorStop(1,'rgba(255,255,255,0)');g.globalCompositeOperation='lighter';g.fillStyle=rg;g.fillRect(x-R,y-R,2*R,2*R);g.globalCompositeOperation='source-over';}}
+  if(useStrip){g.globalCompositeOperation='lighter';g.drawImage(headSprite(R,r===1?.75:.4,dpr),x-R,y-R,2*R,2*R);g.globalCompositeOperation='source-over';}else{const rg=g.createRadialGradient(x,y,0,x,y,R);rg.addColorStop(0,`rgba(255,255,255,${r===1?.75:.4})`);rg.addColorStop(1,'rgba(255,255,255,0)');g.globalCompositeOperation='lighter';g.fillStyle=rg;g.fillRect(x-R,y-R,2*R,2*R);g.globalCompositeOperation='source-over';}}}
  g.restore();const values=q.data.traces[row.id];const clipped=values?pts.filter(p=>Math.abs(isDiff?(values[p.index-q.data.offset]-q.data.traces.clean[p.index-q.data.offset])*(q.gain||1):values[p.index-q.data.offset])>q.amplitude).length:0;g.font='11px system-ui';g.textAlign='left';g.textBaseline='alphabetic';if(clipped){g.fillStyle='#ffbc79';g.fillText('표시 범위 초과 '+clipped+' 샘플',left+10,top+18);}if(!q.data.traces[row.id]){g.fillStyle='#ffbc79';g.fillText('출력 없음',left+10,top+30);}
  g.fillStyle='#adc3ce';g.font='12px system-ui';for(let k=0;k<=4;k++){const at=q.inspect?Math.max(0,t-q.span)+k*Math.min(t,q.span)/4:t-q.span+k*q.span/4;const label=q.mode==='sweep'&&!q.inspect?(k*q.span/4).toFixed(1)+'s 위치':at<0?'—':at.toFixed(1)+'s';g.fillText(label,left+k*pw/4-(k===4?55:0),bottom+20);}
  // reduced motion: the plain sweep line stays (no light column)
  if(q.mode==='sweep'&&live&&!fxOn){g.strokeStyle='#bfd8e0';g.lineWidth=1;g.beginPath();g.moveTo(headX,top);g.lineTo(headX,bottom);g.stroke();}
- });c.dataset.time=t.toFixed(3);c.dataset.mode=q.inspect?'inspect':q.mode;c.dataset.difference=String(!!q.residual);c.dataset.fx=String(fx.current.level);
+ });if(q.transport.playing){labStats.frames++;labStats.ms+=performance.now()-t0;}c.dataset.time=t.toFixed(3);c.dataset.mode=q.inspect?'inspect':q.mode;c.dataset.difference=String(!!q.residual);c.dataset.fx=String(fx.current.level);
  if(q.transport.playing){const f=fx.current,dt=t0-f.last;f.last=t0;if(dt>0&&dt<250){f.ema=f.frames?f.ema*.95+dt*.05:dt;f.frames++;}c.dataset.frameMs=f.ema.toFixed(1);
   if(FX_PIN===null&&f.frames>90&&f.level>0&&f.ema>26){f.level--;f.frames=0;}}
  }if(q.transport.playing)raf=requestAnimationFrame(draw);};draw();const resize=new ResizeObserver(()=>{cancelAnimationFrame(raf);signature='';draw();});resize.observe(c);return()=>{cancelAnimationFrame(raf);resize.disconnect();};

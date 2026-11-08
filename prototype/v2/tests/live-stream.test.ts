@@ -37,7 +37,7 @@ test('front-end 전환(reset)은 화면을 비우고 알림을 남기며, 색·�
   s.ingest(block(0, 12), 0); s.hidden.add('M04'); const c = s.color('M04');
   s.ingest({reset: true, fe: 'causal', fe_label: '인과 o1', fe_lat_ms: 0}, 50);
   assert.equal(s.head, -1); assert.equal(s.bufs.size, 0); assert.equal(s.feMode, 'causal');
-  assert.match(s.notes.at(-1)!.text, /인과 o1 로 바꿨다/);
+  assert.match(s.notes.at(-1)!.text, /공통 전처리 변경: 인과 o1/);
   assert.ok(s.hidden.has('M04')); assert.equal(s.color('M04'), c);
 });
 

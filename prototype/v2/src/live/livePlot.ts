@@ -2,24 +2,24 @@
  * v2.2.1 판 색 #112b39 · 격자 · 실제 mV/시간 눈금(D-36), 파형은 따로 한 층에 긋고 지우기 경계는 그 층을 그라데이션으로
  * 깎는다(D-46), 선단 밝기·빛점(D-41 개정), 측정값이 아닌 구간(ok=0) 음영, 스윕 커서. 프레임 값은 React 를 거치지 않는다. */
 import * as AX from './liveAxis';
-import type {LiveStream} from './liveStream';
+import {LABEL, type LiveStream} from './liveStream';
 
 export type View = {mode: 'split' | 'overlay', play: AX.Play, amp: number, eraseFrac: number, softEdge: boolean, glowOn: boolean};
-type Axis = {m: number, s: number};
-type Rect = {l: number, r: number, t: number, b: number, pw: number, ph: number};
+export type Axis = {m: number, s: number};
+export type Rect = {l: number, r: number, t: number, b: number, pw: number, ph: number};
 
-const plotRect = (w: number, h: number): Rect => { const l = 58, r = w - 14, t = 6, b = h - 20; return {l, r, t, b, pw: r - l, ph: b - t}; };
+export const plotRect = (w: number, h: number): Rect => { const l = 58, r = w - 14, t = 6, b = h - 20; return {l, r, t, b, pw: r - l, ph: b - t}; };
 
-function fit(c: HTMLCanvasElement) {
+export function fit(c: HTMLCanvasElement) {
   const dpr = window.devicePixelRatio || 1, w = c.clientWidth, h = c.clientHeight;
   if (c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)) { c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); }
   const g = c.getContext('2d')!; g.setTransform(dpr, 0, 0, dpr, 0, 0); return {g, w, h, dpr};
 }
 
-function drawFrame(g: CanvasRenderingContext2D, P: Rect, ax: Axis | undefined, winS: number, play: AX.Play) {
+export function drawFrame(g: CanvasRenderingContext2D, P: Rect, ax: Axis | undefined, winS: number, play: AX.Play, grid = true) {
   g.strokeStyle = '#304955'; g.lineWidth = .6;
-  for (let k = 0; k <= 10; k++) { const x = P.l + k * P.pw / 10; g.beginPath(); g.moveTo(x, P.t); g.lineTo(x, P.b); g.stroke(); }
-  for (let k = 0; k <= 4; k++) { const y = P.t + k * P.ph / 4; g.beginPath(); g.moveTo(P.l, y); g.lineTo(P.r, y); g.stroke(); }
+  if (grid) for (let k = 0; k <= 10; k++) { const x = P.l + k * P.pw / 10; g.beginPath(); g.moveTo(x, P.t); g.lineTo(x, P.b); g.stroke(); }
+  if (grid) for (let k = 0; k <= 4; k++) { const y = P.t + k * P.ph / 4; g.beginPath(); g.moveTo(P.l, y); g.lineTo(P.r, y); g.stroke(); }
   g.font = '11px system-ui'; g.fillStyle = '#acc2cd';
   if (ax) {                                            // 눈금은 실제 mV — 이득 하나와 그 계열의 중심으로 환산
     g.textAlign = 'right'; g.textBaseline = 'middle';
@@ -114,21 +114,23 @@ function strokeBuf(g: CanvasRenderingContext2D, S: LiveStream, a: Float32Array, 
 }
 
 /** 채운 구간(측정값 아님 — lead-off·손실을 브리지가 메운 자리)을 음영으로. */
-function shadeBad(g: CanvasRenderingContext2D, P: Rect, S: LiveStream, v: View) {
+export function shadeBad(g: CanvasRenderingContext2D, P: Rect, S: LiveStream, v: View) {
   const ok = S.okBuf; if (!ok || S.head < 0) return;
   const bad = (i: number) => { const t = AX.absAt(i, S.vh, S.cap, v.play); return S.seen(t) && ok[t % S.cap] < .5; };
   const x = (i: number) => P.l + i / (S.cap - 1) * P.pw; g.fillStyle = '#2b4350';
   for (let i = 0; i < S.cap;) { if (bad(i)) { let j = i; while (j < S.cap && bad(j)) j++; g.fillRect(x(i), P.t, Math.max(1, x(j) - x(i)), P.ph); i = j; } else i++; }
 }
-function cursorLine(g: CanvasRenderingContext2D, P: Rect, S: LiveStream, v: View) {
+export function cursorLine(g: CanvasRenderingContext2D, P: Rect, S: LiveStream, v: View) {
   if (v.play !== 'sweep' || S.vh < 0) return;
   const px = P.l + ((S.vh + 1) % S.cap) / (S.cap - 1) * P.pw;
   g.save(); g.strokeStyle = '#bfd8e0'; g.lineWidth = 1; g.beginPath(); g.moveTo(px, P.t); g.lineTo(px, P.b); g.stroke(); g.restore();
 }
 
+export const prevStats = {frames: 0, ms: 0};
+(globalThis as unknown as {__livePrevStats: typeof prevStats}).__livePrevStats = prevStats;
 /** 분리 보기 — 켠 계열마다 한 칸. 이득은 하나. */
 export function drawSplit(S: LiveStream, v: View, canvases: Map<string, HTMLCanvasElement>) {
-  const ax = S.axesFor([...canvases.keys()], v.amp);
+  const t0 = performance.now(), ax = S.axesFor([...canvases.keys()], v.amp);
   for (const [name, c] of canvases) {
     if (!c.clientWidth) continue;
     const {g, w, h, dpr} = fit(c), P = plotRect(w, h), a = S.bufs.get(name), q = ax.get(name);
@@ -138,11 +140,13 @@ export function drawSplit(S: LiveStream, v: View, canvases: Map<string, HTMLCanv
     const lg = layerBegin(w, h, dpr); strokeBuf(lg, S, a, P, q, S.color(name), 1.6, v); layerEnd(g, lg, P, dpr, S, v);
     cursorLine(g, P, S, v);
   }
+  prevStats.frames++; prevStats.ms += performance.now() - t0;
 }
 
 /** 겹쳐 보기 — 같은 축·같은 이득, 입력은 옅은 회색(전극 DC만 뺐다), 방법 이름을 직접 붙인다. */
 export function drawOverlay(S: LiveStream, v: View, c: HTMLCanvasElement) {
   if (!c.clientWidth) return;
+  const t0 = performance.now();
   const {g, w, h, dpr} = fit(c), P = plotRect(w, h);
   const on = S.names().filter(n => n !== 'raw' && !S.hidden.has(n)), raw = !S.hidden.has('raw') && S.bufs.has('raw') ? 'raw' : null;
   const ax = S.axesFor(raw ? [raw, ...on] : on, v.amp);
@@ -152,7 +156,8 @@ export function drawOverlay(S: LiveStream, v: View, c: HTMLCanvasElement) {
   if (raw && ax.has(raw)) strokeBuf(lg, S, S.bufs.get(raw)!, P, ax.get(raw)!, '#8fa3ad', 1.2, v, .55);
   for (const n of on) { const q = ax.get(n); if (q) strokeBuf(lg, S, S.bufs.get(n)!, P, q, S.color(n), 1.6, v, .85); }
   layerEnd(g, lg, P, dpr, S, v);
-  g.font = '700 11px ui-monospace,monospace'; g.textAlign = 'right';
-  on.forEach((n, k) => { g.fillStyle = S.color(n); g.fillText(n, P.r - 6, P.t + 14 + k * 14); });
+  g.font = '600 11px system-ui'; g.textAlign = 'right';
+  on.forEach((n, k) => { g.fillStyle = S.color(n); g.fillText(LABEL[n] ?? n, P.r - 6, P.t + 14 + k * 14); });
   g.textAlign = 'left'; cursorLine(g, P, S, v);
+  prevStats.frames++; prevStats.ms += performance.now() - t0;
 }

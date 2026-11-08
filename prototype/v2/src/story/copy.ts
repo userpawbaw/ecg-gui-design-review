@@ -7,7 +7,7 @@ export const COPY={
  notice:'저장 신호 재생',
  storyHeader:(record:string,snr:number)=>`합성 ECG · 기록 D0 ${record} · ${snr} dB · 저장된 10초 구간`,
  storyTitle:'잡음 유형별 최고 성능 기법',
- conclusion:'이 저장 구간에서 잡음 유형마다 최고 성능 기법이 다르다.',
+ conclusion:'이 저장 구간에서 잡음 유형마다 최고 성능 기법이 다릅니다.',
  gridTitle:'49개 장면의 기법별 순위',
  gridNote:'D1 실제 기록 · 잡음 종류마다 다른 기록 · 장면마다 저장된 10초 · 칸: 장면별 최고 성능 기법(기준 신호가 필요한 B01 제외)',
  barsTitle:'전체 실험 평균 SNR 개선량',

@@ -6,6 +6,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {LiveStream, LABEL, RAW_COLOR} from './liveStream';
 import {drawSplit, drawOverlay, type View} from './livePlot';
+import {drawSplitFx, drawOverlayFx} from './livePlotFx';
+import {WAVE} from '../waveMode';
+const FX = WAVE !== 'prev';
 import * as AX from './liveAxis';
 import {StateChip, StatePanel} from '../Glyph';
 
@@ -78,8 +81,8 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       const fading = v.play === 'sweep' && v.glowOn && since > 300 && since < 700;
       if (!dirty.current && !fading) return;
       dirty.current = false;
-      if (v.mode === 'overlay') { if (overlay.current) drawOverlay(S, v, overlay.current); }
-      else drawSplit(S, v, canvases.current);
+      if (v.mode === 'overlay') { if (overlay.current) (FX ? drawOverlayFx : drawOverlay)(S, v, overlay.current); }
+      else (FX ? drawSplitFx : drawSplit)(S, v, canvases.current);
     };
     raf = requestAnimationFrame(frame);
     const onResize = () => { dirty.current = true; }; addEventListener('resize', onResize);

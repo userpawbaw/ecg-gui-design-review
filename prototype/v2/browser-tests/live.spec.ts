@@ -33,15 +33,15 @@ test.beforeAll(async () => {
 });
 test.afterAll(() => { server?.closeAllConnections?.(); server?.close(); });
 
-test('live tab draws the bridge stream itself, switches front-end, shows no metrics (D-157)', async ({page}) => {
-  await page.goto('/?route=lab'); await expect(page.getByRole('button', {name: '크게 비교'})).toBeEnabled();
+for (const wave of ['prev', 'live'] as const) test(`live tab draws the bridge stream itself, switches front-end, shows no metrics (D-157) · wave=${wave}`, async ({page}) => {
+  await page.goto('/?route=lab&wave=' + wave); await expect(page.getByRole('button', {name: '크게 비교'})).toBeEnabled();
   await page.getByRole('button', {name: '실시간 측정', exact: true}).click();
   await expect(page.locator('.live-conn')).toHaveText(/연결됨/, {timeout: 15000});
   await expect(page.locator('canvas.live-canvas[data-series="M_FE"]')).toBeVisible();
   await expect(page.locator('canvas.lab-backdrop')).toHaveCount(1);
   const ink = () => page.locator('canvas.live-canvas[data-series="M_FE"]').evaluate((c: HTMLCanvasElement) => {
     const d = c.getContext('2d')!.getImageData(0, 0, c.width, c.height).data; let n = 0;
-    for (let i = 0; i < d.length; i += 4) if (Math.abs(d[i] - 17) + Math.abs(d[i + 1] - 43) + Math.abs(d[i + 2] - 57) > 90) n++; return n; });
+    for (let i = 0; i < d.length; i += 4) if (d[i + 3] > 40 && d[i] + d[i + 1] + d[i + 2] > 220) n++; return n; });   // 밝은 선 화소(바탕이 불투명 #112b39든 투명이든 같은 기준, D-161)
   await expect.poll(ink, {timeout: 10000}).toBeGreaterThan(500);
   await expect(page.locator('.live-native')).not.toContainText(/SNR\s*개선|dB 개선|차이 보기/);
   await expect(page.locator('.live-src')).not.toHaveText(/^실보드 실측/);

@@ -10,9 +10,10 @@ export type Block = {i: number, n: number, fs: number, raw: number[], ok: number
 export type Stat = Block['stat'] & {elapsed?: number};
 export type Note = {kind: 'reset' | 'link' | 'overflow', text: string, at: number};
 
-/** 방법 이름표 — 원본 저장소 live.html LABEL 그대로. 모르는 이름은 이름 그대로 쓴다. */
+/** 방법 이름표 — 원본 저장소 live.html LABEL을 정식 명칭으로(D-160). 전원선 처리는 브리지 `--pli`(고조파 추적 제거기 · 노치, 원본 D-52)를
+ *  스트림이 알려 주지 않으므로 두 방식 모두에 맞는 「전원선 잡음 제거」로 쓴다(D-162). 모르는 이름은 이름 그대로 쓴다. */
 export const LABEL: Record<string, string> = {
-  raw: '입력 신호(공통 전처리 이전)', M_FE: '공통 전처리(0.5–100 Hz, 조건부 노치)', M01: '대역통과 · 노치 필터',
+  raw: '입력 신호(공통 전처리 이전)', M_FE: '공통 전처리(0.5–100 Hz, 전원선 잡음 제거)', M01: '대역통과 필터 · 전원선 잡음 제거',
   M02: 'Savitzky–Golay 필터', M03: 'DWT 임계값 처리', M04: 'SWT 적응 임계값 처리(QRS 구간 임계값 완화)', M05: '확장 칼만 필터(블록 처리)',
   M05S: '확장 칼만 필터(스트리밍, 144 ms 고정 지연)', M06: '잔차 학습 U-Net', M06L6: '잔차 학습 U-Net(무잡음 입력 보존 손실)',
   M08: '웨이블릿 부대역 U-Net', M09: 'CNN · Transformer 결합 모델',

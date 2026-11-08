@@ -98,7 +98,8 @@ function bridgeSetup(){const p=findPython();if(!p){bad('Python 3를 찾지 못�
  run(p.bin,[...p.pre,'-m','pip','install','--upgrade','numpy','scipy','PyWavelets','PyYAML','pandas','matplotlib','wfdb']);ok('원본 브리지 재생 모드 준비 완료. 다음: npm run bridge:replay');}
 function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}
  const br=capture('git',['-C',d,'branch','--show-current']);
- if(br&&br!=='claude/adoring-cray-nv6pvq')warn(`원본 저장소 브랜치가 ${br} — 실시간 측정 화면은 claude/adoring-cray-nv6pvq 기준(M05S 등). 원본 폴더에서: git fetch origin 다음 줄에 git switch claude/adoring-cray-nv6pvq`);
+ const WANT='claude/pli-harmonic-canceller';   // D-162: 전원선 고조파 추적 제거기(원본 D-52) · 보드 1000 Hz(D-53). 그 앞 단계는 claude/adoring-cray-nv6pvq
+ if(br&&br!==WANT)warn(`원본 저장소 브랜치가 ${br} — 실시간 측정 화면은 ${WANT} 기준(전원선 고조파 추적 제거기 · M05S). 원본 폴더에서: git fetch origin 다음 줄에 git switch ${WANT}`);
  // 신호 · 잡음 고르기(--signal · --noise · --snr · --start · --sec · --seed): replay_signal.py 로 CSV 를 만들어 --replay csv 로 흘린다
  const own=['--signal','--noise','--snr','--start','--sec','--seed'],pick={},rest=[];
  for(let i=0;i<extra.length;i++){if(own.includes(extra[i])&&i+1<extra.length){pick[extra[i]]=extra[++i];}else rest.push(extra[i]);}

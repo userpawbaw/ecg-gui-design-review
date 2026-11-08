@@ -8,6 +8,7 @@
 잡음: none · mixed(원본 재생 기본과 같은 1~3종 무작위 혼합) · 합성 pli · bw_synth · ma_synth · em_synth · awgn · impulse
       · 실제 NSTDB bw · ma · em(시험 구간에서 자름)
 출력 CSV: `# fs_hz=250, ...` 머리줄 + `t_ms,adc_raw`. 브리지는 이 값을 ADC 카운트로 다시 맞추므로 진폭 단위는 상대값이다.
+원본 claude/pli-harmonic-canceller(D-53)부터 브리지는 CSV를 보드 표본율(기본 1000 Hz)로 리샘플해 흘리고 다시 250 Hz로 내린다.
 """
 import argparse
 import os

@@ -48,10 +48,12 @@ Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `
 
 | 할 일 | 원본 저장소에서 칠 명령 |
 |---|---|
-| 실제 보드 | `python scripts\serial_bridge.py --port COM13 --ascii --board-fs 250 --methods M_FE,M04,M05S --serve` |
+| 실제 보드(원본 `claude/pli-harmonic-canceller`, 보드 1000 Hz · BINARY · 전원선 고조파 추적 제거기) | `python scripts\serial_bridge.py --port COM13 --methods M_FE,M04,M05S --serve` |
+| 실제 보드 — 1000 Hz가 안 될 때 되돌리기(D-53 이전) | `python scripts\serial_bridge.py --port COM13 --ascii --board-fs 250 --methods M_FE,M04,M05S --serve` |
+| 전원선 처리를 고정 노치로 비교 | 위 명령 뒤에 `--pli notch` |
 | 보드 없이 화면만 확인(합성 신호 — 실측 아님) | `python scripts\serial_bridge.py --replay synth --methods M_FE,M04,M05S --serve` |
 
-**이 저장소에서 한 줄로**(2026-11-08): 두 저장소를 같은 폴더에 두고 `npm run bridge:setup`(처음 한 번), 그다음 `npm run bridge:replay`. 원본 저장소는 `claude/adoring-cray-nv6pvq` 브랜치여야 한다. 발표 캡처 절차 전체는 `docs/DEMO_BRIDGE.md`.
+**이 저장소에서 한 줄로**(2026-11-08): 두 저장소를 같은 폴더에 두고 `npm run bridge:setup`(처음 한 번), 그다음 `npm run bridge:replay`. 원본 저장소는 `claude/pli-harmonic-canceller` 브랜치여야 한다(D-162, 그 전에는 `claude/adoring-cray-nv6pvq`). 발표 캡처 절차 전체는 `docs/DEMO_BRIDGE.md`.
 
 - 다른 PC·포트의 브리지는 앱을 띄우기 전에 환경 변수 `ECG_BRIDGE`(예: `http://192.168.0.5:8765`)로 정한다.
 - 브리지 자체 화면(A안)으로 보려면 주소 뒤에 `?live=iframe`(`docs/URL_PARAMS.md`).

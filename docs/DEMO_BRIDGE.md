@@ -10,7 +10,7 @@
 | 무엇 | 어디 | 비고 |
 |---|---|---|
 | 이 저장소 | `userpawbaw/ecg-gui-design-review`, 브랜치 `claude/optimistic-goldberg-jnzpni` | 앱 화면. `npm run story`로 연다 |
-| 원본 저장소 | `userpawbaw/ECG_denoising_method_comparision`, 브랜치 **`claude/adoring-cray-nv6pvq`** | 브리지 `scripts/serial_bridge.py`와 처리 코드(`ecgdn/`). 기본 브랜치에는 M05S(스트리밍 칼만)가 없어 기본 명령이 멈춘다 |
+| 원본 저장소 | `userpawbaw/ECG_denoising_method_comparision`, 브랜치 **`claude/pli-harmonic-canceller`** | 브리지 `scripts/serial_bridge.py`와 처리 코드(`ecgdn/`). 전원선 잡음을 고조파 추적 제거기(칼만 + PLL)로 뺀다(원본 D-52, 이 앱 D-162). 기본 브랜치에는 M05S(스트리밍 칼만)가 없어 기본 명령이 멈춘다 |
 | Node.js 22 이상 | — | `npm run doctor`로 확인 |
 | Python 3 | — | `npm run doctor`가 찾는다(py → python → python3) |
 
@@ -31,7 +31,7 @@ npm run bridge:setup
 
 ```
 git fetch origin
-git switch claude/adoring-cray-nv6pvq
+git switch claude/pli-harmonic-canceller
 ```
 
 ## 3. 띄우기 — 터미널 두 개
@@ -45,7 +45,7 @@ git switch claude/adoring-cray-nv6pvq
 
 ## 4. 캡처 요령
 
-- **5 s 이상 기다린 뒤** 찍는다(표시 구간 5 s가 다 차야 화면 전체에 파형이 있다).
+- **5 s 이상 기다린 뒤** 찍는다(표시 구간 5 s가 다 차야 화면 전체에 파형이 있다). 전원선 제거기는 시작 뒤 약 3 s 동안 주파수를 잡는 중이라 그동안은 입력을 그대로 낸다(원본 D-52) — 전원 간섭 장면은 10 s쯤 기다린다.
 - 전체 화면: Edge에서 `F11`. 더 큰 해상도가 필요하면 `Ctrl` + `+`로 확대한 뒤 찍거나, 고해상도 모니터에서 찍는다.
 - 화면 조작(모두 화면 안 버튼):
   - 표시 방식 「분리」(기법마다 한 칸) / 「중첩」(한 칸에 겹침)
@@ -62,6 +62,7 @@ git switch claude/adoring-cray-nv6pvq
 | 전극 분리(회색 구간) | `npm run bridge:replay -- --leadoff-every 8` (8 s마다) |
 | 샘플 손실 | `npm run bridge:replay -- --drop 0.01` (1 %) |
 | 처음 공통 전처리 | `npm run bridge:replay -- --fe causal` (`causal` · `zerophase` · `median`) |
+| 전원선 처리 비교(고조파 추적 제거기 ↔ 고정 노치) | `npm run bridge:replay -- --signal mitdb:100 --noise pli --snr 0 --pli notch` (기본은 `--pli canceller`) |
 
 딥러닝 기법(M06 등)은 torch와 학습 체크포인트가 필요하다. 이 안내에서는 확인하지 않았다.
 
@@ -95,7 +96,8 @@ npm run bridge:replay -- --signal mitdb:100 --noise ma --snr 5
 | 증상 | 원인 · 해결 |
 |---|---|
 | `[문제] 원본 저장소(…)를 찾지 못함` | 두 저장소가 같은 폴더에 없다. 나란히 clone 하거나 `ECG_SOURCE`에 원본 폴더 경로 |
-| `[확인] 원본 저장소 브랜치가 …` 뒤 `KeyError: unknown method 'M05S'` | 원본 저장소가 기본 브랜치다. §2의 `git switch claude/adoring-cray-nv6pvq` |
+| `[확인] 원본 저장소 브랜치가 …` 뒤 `KeyError: unknown method 'M05S'` | 원본 저장소가 기본 브랜치다. §2의 `git switch claude/pli-harmonic-canceller` |
+| `포트 8765 를 열 수 없다 (… Address already in use)` | 앞서 띄운 브리지가 아직 돈다. 그 터미널에서 `Ctrl+C` 후 다시 |
 | `ModuleNotFoundError: No module named …` | `npm run bridge:setup`을 다시. 그래도 같으면 그 모듈 이름을 `npm run py -- -m pip install <이름>` |
 | 앱의 상태가 「브리지 연결 없음」에서 안 바뀜 | 터미널 ①에 「-> http://127.0.0.1:8765/live.html」이 떴는지 확인. 포트 8765를 다른 프로그램이 쓰면 `npm run bridge:replay -- --http-port 8766` 하고, 앱을 띄우기 전에 환경 변수 `ECG_BRIDGE=http://127.0.0.1:8766` |
 | `MIT-BIH 기록 … 없음` · `알 수 없는 잡음 …` | 메시지에 쓸 수 있는 기록 · 잡음 목록이 나온다. 그중에서 고른다 |

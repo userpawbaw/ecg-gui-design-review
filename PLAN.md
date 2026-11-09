@@ -1,3 +1,4 @@
+- 2026-11-09 **D-163**: 도입부 파형 단계 휠 안내 두 안 구현 — 사용자 안(휠 위아래 화살표, `?wheelhint=arrows` 기본) · 제안 안(휠 ↔ 입력 → 출력 막대, `?wheelhint=preview`). 아이콘 후보 6종 `verification/wheel-hint-20261109/`. **사용자 선택 대기**.
 - 2026-11-08 **D-162**: 실시간 측정 탭을 원본 `claude/pli-harmonic-canceller`(전원선 고조파 추적 제거기 D-52 · 보드 1000 Hz D-53)에 맞춤 — `bridge:replay` 기준 브랜치, 실보드 명령, `--pli notch` 비교, 이름표 「전원선 잡음 제거」. 확인 `verification/pli-canceller-20261108/`. 원본 브리지가 `/fe`에 전원선 방식을 보내게 되면 이름표를 방식별로.
 - 2026-11-08 **사용자 결정**: 파형 기본값 = 최적화 버전(`wave=all`, 두 탭 링 스트립), 아이콘 2차 확정 → 플레이북 P-008 · P-009(J-005 · J-006). 발표 캡처용 재생 브리지: `npm run bridge:setup` · `npm run bridge:replay`, 안내 `docs/DEMO_BRIDGE.md`.
 - 2026-11-08 **D-160 보완 + D-161**: 상태 그림 2차(파형 + 실물, D-157 그림 구도 계승), 영문 눈썹 글 복원, 서술 문장 「-입니다」. 실시간 측정 파형에 실험실 효과(용지 격자 · 잔광 · 번짐 · 빛기둥 · 빛점)를 링 스트립으로 옮김. 비교 실행 `npm run story:wave-prev` · `story:wave-all` · `story:wave-live`. **사용자 확인 대기**: 셋 중 기본값, 그림 2차 톤.

@@ -2,6 +2,7 @@
 // React renders the static DOM once and hands refs to the vanilla engine (D-028); no per-frame React state.
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {StateChip} from '../../Glyph';
+import {WheelHint,WHEEL_HINT} from './WheelHint';
 import {decode,metric} from '../../engine';
 import type {Bank} from '../../data';
 import {rankScene} from '../storyData';
@@ -40,7 +41,7 @@ function IntroShellInner({bank,onNext,onLab,long}:Props&{long:LongScene|null}){
   return{s,winner,input,output,loop,record:L?L.record:s.record,metrics:{snrIn:s.snr,snrOut:m.snr_out,cc:m.cc}};
  },[bank,long]);
  const refs={wrapper:useRef<HTMLDivElement>(null),content:useRef<HTMLDivElement>(null),gl:useRef<HTMLCanvasElement>(null),sweep:useRef<HTMLCanvasElement>(null),
-  title:useRef<HTMLHeadingElement>(null),noise:useRef<HTMLSpanElement>(null),sub:useRef<HTMLParagraphElement>(null),hint:useRef<HTMLDivElement>(null),
+  title:useRef<HTMLHeadingElement>(null),noise:useRef<HTMLSpanElement>(null),sub:useRef<HTMLParagraphElement>(null),hint:useRef<HTMLDivElement>(null),wheelHint:useRef<HTMLDivElement>(null),
   labels:useRef<HTMLDivElement>(null),labelIn:useRef<HTMLDivElement>(null),labelOut:useRef<HTMLDivElement>(null),outMono:useRef<HTMLElement>(null),steps:useRef<HTMLDivElement>(null),scale:useRef<HTMLDivElement>(null),grid:useRef<HTMLCanvasElement>(null),ann:useRef<HTMLDivElement>(null),end:useRef<HTMLDivElement>(null),
   sweepWrap:useRef<HTMLDivElement>(null)};
  const [ready,setReady]=useState(false),[failed,setFailed]=useState('');
@@ -49,7 +50,7 @@ function IntroShellInner({bank,onNext,onLab,long}:Props&{long:LongScene|null}){
   let alive=true;
   const r=Object.fromEntries(Object.entries(refs).map(([k,v])=>[k,v.current])) as Record<string,HTMLElement>;
   createIntro({wrapper:r.wrapper,content:r.content,gl:r.gl as HTMLCanvasElement,sweep:r.sweep as HTMLCanvasElement,title:r.title,
-   noiseChars:[...r.noise.querySelectorAll('i')] as HTMLElement[],sub:r.sub,hint:r.hint,labels:r.labels,labelIn:r.labelIn,labelOut:r.labelOut,outMono:r.outMono,steps:[...r.steps.querySelectorAll('i')] as HTMLElement[],scale:r.scale,grid:r.grid as HTMLCanvasElement,ann:r.ann,sweepWrap:r.sweepWrap,end:r.end,
+   noiseChars:[...r.noise.querySelectorAll('i')] as HTMLElement[],sub:r.sub,hint:r.hint,wheelHint:r.wheelHint??null,labels:r.labels,labelIn:r.labelIn,labelOut:r.labelOut,outMono:r.outMono,steps:[...r.steps.querySelectorAll('i')] as HTMLElement[],scale:r.scale,grid:r.grid as HTMLCanvasElement,ann:r.ann,sweepWrap:r.sweepWrap,end:r.end,
    parallax:[r.sweepWrap,r.title]},
    {fs:bank.fs,loop:scene.loop,input:scene.input,output:scene.output,metrics:scene.metrics},
    {reduced,look:(['v1','v2'].includes(params.get('look')??'')?params.get('look'):'archive') as 'v1'|'v2'|'archive',shot:params.get('shot'),cam:params.get('cam'),signal:(['clean','noise','off'].includes(params.get('signal')??'')?params.get('signal'):null) as 'clean'|'noise'|'off'|null,grip:Number(params.get('grip'))||0,frozenT:params.has('t')?Number(params.get('t')):null,frozenP:params.has('p')?Number(params.get('p')):null})
@@ -72,6 +73,7 @@ function IntroShellInner({bank,onNext,onLab,long}:Props&{long:LongScene|null}){
   <h1 ref={refs.title} className="it-title"><small>ECG DENOISING</small>심전도 <span ref={refs.noise} className="it-noise">{[...'잡음'].map((c,i)=><i key={i}>{c}</i>)}</span> 제거</h1>
   <p ref={refs.sub} className="it-sub">동일 기록 기반 심전도 잡음 제거 기법 비교</p>
   <div ref={refs.hint} className="it-hint"><span className="wheel" aria-hidden="true"/>스크롤</div>
+  <div ref={refs.wheelHint} className="it-wheelhint-slot"><WheelHint kind={WHEEL_HINT}/></div>
   <div ref={refs.labels} className="it-labels" aria-live="polite">
    <div ref={refs.labelIn} className="it-lab in is-current"><i className="bar"/><b>입력 신호(잡음 포함)</b><small>INPUT · WHITE NOISE {scene.s.snr} dB · {scene.s.record}</small></div>
    <div ref={refs.labelOut} className="it-lab out"><i className="bar"/><b>잡음 제거 출력</b><small ref={refs.outMono as never}>OUTPUT · STORED</small></div>

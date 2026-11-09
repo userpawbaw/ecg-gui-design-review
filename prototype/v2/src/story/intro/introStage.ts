@@ -21,7 +21,7 @@ import {createGrid,createScrollMix,mvPerBoxFor,scrambled} from './waveUi';
 
 export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Array,metrics:{snrIn:number,snrOut:number,cc:number}};
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
- title:HTMLElement,noiseChars:HTMLElement[],sub:HTMLElement,hint:HTMLElement,labels:HTMLElement,labelIn:HTMLElement,labelOut:HTMLElement,outMono:HTMLElement,steps:HTMLElement[],
+ title:HTMLElement,noiseChars:HTMLElement[],sub:HTMLElement,hint:HTMLElement,wheelHint?:HTMLElement|null,labels:HTMLElement,labelIn:HTMLElement,labelOut:HTMLElement,outMono:HTMLElement,steps:HTMLElement[],
  scale:HTMLElement,grid:HTMLCanvasElement,ann:HTMLElement,sweepWrap:HTMLElement,end:HTMLElement,parallax:HTMLElement[]};
 export type IntroOptions={reduced:boolean,frozenT:number|null,frozenP:number|null,look?:'v1'|'v2'|'archive',shot?:string|null,cam?:string|null,signal?:SignalState|null,grip?:number};
 
@@ -109,7 +109,11 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const lenis=opt.frozenP===null?new Lenis({wrapper:dom.wrapper,content:dom.content,duration:opt.reduced?.2:1.6,wheelMultiplier:1.1,autoRaf:false}):null;
  let pRaw=opt.frozenP??0,p=pRaw,spinVel=0,spinExtra=0;
  lenis?.on('scroll',(e:Lenis)=>{pRaw=e.limit>0?e.scroll/e.limit:0;});
- const onWheel=(e:WheelEvent)=>{if(p<MAP.globe[1])spinVel=clamp(spinVel+e.deltaY*.0015,-.8,.8);};   // V1: wheel impulse spins the globe
+ // D-163: 파형 단계 휠 안내 — 마지막 입력(휠 · 키)에서 1.2 s 지나야 나타난다
+ const hintEl=dom.wheelHint?.querySelector<HTMLElement>('.it-wheelhint')??null;let lastInput=performance.now(),hintA=0;
+ const onKey=(e:KeyboardEvent)=>{if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(e.key))lastInput=performance.now();};
+ addEventListener('keydown',onKey);
+ const onWheel=(e:WheelEvent)=>{lastInput=performance.now();if(p<MAP.globe[1])spinVel=clamp(spinVel+e.deltaY*.0015,-.8,.8);};   // V1: wheel impulse spins the globe
  dom.wrapper.addEventListener('wheel',onWheel,{passive:true});
  const pointer={x:0,y:0,sx:0,sy:0};
  const onMove=(e:PointerEvent)=>{pointer.x=e.clientX/innerWidth*2-1;pointer.y=e.clientY/innerHeight*2-1;};
@@ -127,6 +131,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const b=box(),mv=mvPerBoxFor(b,2.5);sweep.resize(b,mv);grid.resize(b,2.5,mv);
   Object.assign(dom.labels.style,{left:b.l+'px',top:(H*.075)+'px'});
   Object.assign(dom.scale.style,{left:b.l+'px',top:(b.b+14)+'px',width:(b.r-b.l)+'px'});
+  if(hintEl)Object.assign(hintEl.style,{left:((b.l+b.r)/2)+'px',top:(b.b+48)+'px'});
  }
  resize();addEventListener('resize',resize);
 
@@ -296,6 +301,9 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const jitter=opt.reduced?0:1.7*(1-mix.value);
   dom.noiseChars.forEach((c,i)=>{const dx=Math.sin(t*41+i*1.7)*Math.sin(t*17.3+i*.6)*jitter,dy=Math.sin(t*33.1+i*2.3)*Math.cos(t*21.7)*jitter*.8;c.style.transform=`translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px)`;});
   dom.sub.style.opacity=String(1-seg(p,.015,.07));dom.hint.style.opacity=String(1-seg(p,0,.035));
+  if(hintEl){const want=wave.state==='on'&&p>=.81&&p<.95&&performance.now()-lastInput>1200?1:0;
+   hintA+=(want-hintA)*damp(dt,want?.35:.1);hintEl.style.opacity=(hintA*.6).toFixed(3);
+   if(want&&!hintEl.classList.contains('run'))hintEl.classList.add('run');else if(!want&&hintA<.02&&hintEl.classList.contains('run'))hintEl.classList.remove('run');}
   // P1: label block (0.85) arrives first, wave stage (1.45) starts lower and overtakes; both settle at q = 1
   const q=enterA,labA=seg(p,MAP.enter[0],MAP.enter[0]+.06);
   dom.labels.style.opacity=String(labA);dom.labels.style.transform=`translateY(${((1-q)*SPEED.label*ENTER_D*H).toFixed(1)}px)`;
@@ -338,7 +346,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   set(o:{p?:number,t?:number|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;},
   scrollToEnd(){lenis?.scrollTo('bottom');},
   scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;mix.reset();},
-  dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);
+  dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);removeEventListener('keydown',onKey);
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
    globe.dispose();figure.dispose();climber?.dispose();space?.dispose();arch?.dispose();rig?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds,height].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
  };

@@ -10,6 +10,12 @@ import * as THREE from 'three';
 
 const SIM_RES = .2, STEP = 1 / 120, MAX_STEPS = 8, DT = .015 * .875, DISS = Math.pow(.98, .875), FORCE = 80 * 1.75;
 const DISTORT = .003, VEL_BLUR = 15, TAPS = 15, MARGIN = 90;
+// 2026-11-10 사용자 「마우스 효과가 내 쪽에서 재현되지 않아」: 60 fps · 포인터 800 px/s로 다시 재 보니 사이트 수치 그대로도 글자가
+// 뚜렷이 번진다(verification/title-fluid-20261110b) → 세기 문제가 아니라 켜지는 조건 문제로 본다. 켜는 조건을 넓히고, 꺼질 때 이유를 콘솔에 남긴다.
+//  ?fluid=<배율> 외력 배율(기본 1 = 사이트), 0 = 끔. 값을 주면 움직임 줄이기 · 좁은 창 · 터치 장치에서도 켠다.
+const FQ = new URLSearchParams(location.search);
+export const FLUID_FORCED = FQ.has('fluid') && Number(FQ.get('fluid')) > 0;
+export const FLUID_GAIN = FQ.has('fluid') && Number.isFinite(Number(FQ.get('fluid'))) ? Math.max(0, Number(FQ.get('fluid'))) : 1;
 
 const VERT = `varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`;
 const ADVECT = `precision highp float;varying vec2 vUv;uniform sampler2D vel;uniform float dt,diss;uniform vec2 ratio;
@@ -39,19 +45,27 @@ c.rgb=mix(c.rgb,c.rgb*1.25,min(1.,m*.75));gl_FragColor=c;}`;
 export type TitleFluid = {update(dt: number): void, dispose(): void};
 
 export function createTitleFluid(title: HTMLElement, host: HTMLElement): TitleFluid | null {
-  if (matchMedia('(pointer: coarse)').matches || innerWidth < 1025) return null;
+  // 사이트는 터치 장치 · 폭 1025 px 미만에서 끈다. 여기서는 마우스가 하나라도 있으면 켜고(터치 화면 노트북), 폭은 700 px까지 허용
+  const off = FLUID_GAIN === 0 ? '?fluid=0' : FLUID_FORCED ? '' : !matchMedia('(any-pointer: fine)').matches ? '마우스 없음(터치 전용)' : innerWidth < 700 ? `창 폭 ${innerWidth} px < 700` : '';
+  if (off) { console.info('[titleFluid] 꺼짐:', off); return null; }
   const canvas = document.createElement('canvas');
   canvas.className = 'it-title-fluid'; canvas.setAttribute('aria-hidden', 'true');
   let renderer: THREE.WebGLRenderer;
   try { renderer = new THREE.WebGLRenderer({canvas, alpha: true, premultipliedAlpha: true, antialias: false, powerPreference: 'high-performance'}); }
-  catch { return null; }
+  catch (e) { console.info('[titleFluid] 꺼짐: WebGL 생성 실패', e); return null; }
   host.appendChild(canvas);
   renderer.autoClear = false; renderer.setClearColor(0x000000, 0);
   const dpr = Math.min(devicePixelRatio || 1, 1.5); renderer.setPixelRatio(dpr);
 
   // 글자색은 투명 처리 전에 읽어 둔다
   const small = title.querySelector('small') as HTMLElement | null;
+  // 다른 인스턴스가 이미 투명 처리했으면(StrictMode 두 번째 엔진) 잠깐 풀고 읽는다
+  const had = title.classList.contains('fluid-on'); if (had) title.classList.remove('fluid-on');
   const colTitle = getComputedStyle(title).color, colSmall = small ? getComputedStyle(small).color : colTitle;
+  if (had) title.classList.add('fluid-on');
+  // 참조 수: 개발 서버(React StrictMode)는 도입부 엔진을 두 번 만들고 먼저 만든 것을 로딩이 끝난 뒤 버린다. 그 정리에서
+  // 클래스를 그냥 지우면 살아 있는 두 번째 오버레이 아래로 DOM 글자가 다시 보여 효과가 가려졌다(2026-11-10 사용자 「재현되지 않아」의 원인).
+  title.dataset.fluidRefs = String((Number(title.dataset.fluidRefs) || 0) + 1);
   title.classList.add('fluid-on');
 
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), quad = new THREE.PlaneGeometry(2, 2);
@@ -90,7 +104,7 @@ export function createTitleFluid(title: HTMLElement, host: HTMLElement): TitleFl
   // 포인터: 화면 NDC(오른쪽 +x, 위 +y), 프레임마다 이동량을 모은다
   const ptr = {x: 0, y: 0, ox: 0, oy: 0, seen: false};
   const onMove = (e: PointerEvent) => { ptr.x = e.clientX / innerWidth * 2 - 1; ptr.y = -(e.clientY / innerHeight) * 2 + 1; if (!ptr.seen) { ptr.ox = ptr.x; ptr.oy = ptr.y; ptr.seen = true; } };
-  addEventListener('pointermove', onMove, {passive: true});
+  addEventListener('pointermove', onMove, {passive: true, capture: true});   // capture: 중간 요소가 전파를 막아도 받는다
   addEventListener('resize', resize); resize();
 
   let acc = 0;
@@ -100,7 +114,7 @@ export function createTitleFluid(title: HTMLElement, host: HTMLElement): TitleFl
     const u = splatMat.uniforms, rCells = 20 * (fw / (1440 * SIM_RES));
     const cx = Math.max(-1, Math.min(1, ptr.x)), cy = Math.max(-1, Math.min(1, ptr.y));
     const lim = Math.min(rCells, (1 - Math.abs(cx)) * fw / 2, (1 - Math.abs(cy)) * fh / 2);
-    u.center.value.set(cx, cy); u.halfSize.value.set(lim * 2 / fw, lim * 2 / fh); u.force.value.set(fx / 2 * FORCE * share, fy / 2 * FORCE * share);
+    u.center.value.set(cx, cy); u.halfSize.value.set(lim * 2 / fw, lim * 2 / fh); u.force.value.set(fx / 2 * FORCE * FLUID_GAIN * share, fy / 2 * FORCE * FLUID_GAIN * share);
     renderer.setRenderTarget(vel1); renderer.render(splat, cam);
     run(diverge, div); run(pressure, pre); run(project, vel0);
   };
@@ -149,8 +163,10 @@ export function createTitleFluid(title: HTMLElement, host: HTMLElement): TitleFl
       renderer.clear(); renderer.render(compose.scene, cam); renderer.setScissorTest(false);
     },
     dispose() {
-      removeEventListener('pointermove', onMove); removeEventListener('resize', resize);
-      title.classList.remove('fluid-on'); canvas.remove();
+      removeEventListener('pointermove', onMove, {capture: true}); removeEventListener('resize', resize);
+      const refs = Math.max(0, (Number(title.dataset.fluidRefs) || 1) - 1); title.dataset.fluidRefs = String(refs);
+      if (!refs) title.classList.remove('fluid-on');
+      canvas.remove();
       for (const r of [vel0, vel1, div, pre]) r.dispose(); tex.dispose(); renderer.dispose();
     },
   };

@@ -18,7 +18,7 @@ import {createSignalRig,SIGNAL_CLEAN,SIGNAL_NOISE,SIGNAL_OFF,type SignalState} f
 import {createSweep,type SweepView} from './sweep';
 import {beatPhase,type Loop} from './beats';
 import {createGrid,createScrollMix,mvPerBoxFor,scrambled} from './waveUi';
-import {createTitleFluid} from './titleFluid';
+import {createTitleFluid,FLUID_FORCED} from './titleFluid';
 
 export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Array,metrics:{snrIn:number,snrOut:number,cc:number}};
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
@@ -112,7 +112,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  lenis?.on('scroll',(e:Lenis)=>{pRaw=e.limit>0?e.scroll/e.limit:0;});
  // D-163: 파형 단계 휠 안내 — 마지막 입력(휠 · 키)에서 1.2 s 지나야 나타난다
  // D-164: 제목 유체 왜곡 오버레이(움직임 줄이기 · 터치 · 좁은 화면 · WebGL 실패면 없음 — DOM 글자 그대로)
- const titleFluid=opt.reduced?null:createTitleFluid(dom.title,dom.title.parentElement!);
+ const titleFluid=opt.reduced&&!FLUID_FORCED?(console.info('[titleFluid] 꺼짐: 움직임 줄이기(prefers-reduced-motion — Windows 「애니메이션 효과」 끔이면 켜짐) · ?fluid=1 로 강제'),null):createTitleFluid(dom.title,dom.title.parentElement!);
  const hintEl=dom.wheelHint?.querySelector<HTMLElement>('.it-wheelhint')??null;let lastInput=performance.now(),hintA=0;
  const onKey=(e:KeyboardEvent)=>{if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(e.key))lastInput=performance.now();};
  addEventListener('keydown',onKey);

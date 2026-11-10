@@ -518,7 +518,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   og.globalAlpha=1;if(data.cond==='pli')drawBubble(t);
   const out=last&&leaveT>=0?ss(leaveT+OUTLEN-1.2,leaveT+OUTLEN,t):0;if(out>0){og.fillStyle=`rgba(0,0,0,${out})`;og.fillRect(0,0,W,H);}      // only the last scene ends in black (→ Lab)
   if(leaveT>=0&&t>=leaveT+OUTLEN&&!ended){ended=true;opt.onEnd?.();}
-  arch.update(t,frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,.6);
+  arch.update(t,frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,1);   // 2026-11-10 사용자 「3가지 잡음 … 빛 커튼이 잘 보이지 않는」: 0.6 → 1, 도입부(archShaft 1)와 같게
   grade.uniforms.uTime.value=t;composer.render();
  }
  /** REVIEW-R1-STORY-20261011 §5: run the geometry checks over the scene sequence as the viewer sees it (camera hand-over

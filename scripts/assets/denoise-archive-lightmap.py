@@ -15,6 +15,20 @@ import numpy as np
 from PIL import Image
 from scipy import ndimage
 
+def wide_bilateral(img, mask, sigma_s=6.0, sigma_r=0.25, radius=12, step=2):
+    """bilateral on log luminance; colour follows the same weights. Background (outside UV islands) never contributes."""
+    lum = np.log(img.mean(axis=2) + 1e-3)
+    acc = np.zeros_like(img); wsum = np.zeros(img.shape[:2], np.float32)
+    for dy in range(-radius, radius + 1, step):
+        for dx in range(-radius, radius + 1, step):
+            ws = np.exp(-(dx * dx + dy * dy) / (2 * sigma_s * sigma_s))
+            sh = np.roll(np.roll(img, dy, 0), dx, 1); sl = np.roll(np.roll(lum, dy, 0), dx, 1); sm = np.roll(np.roll(mask, dy, 0), dx, 1)
+            w = (ws * np.exp(-((sl - lum) / sigma_r) ** 2) * sm).astype(np.float32)
+            acc += sh * w[..., None]; wsum += w
+    out = acc / np.maximum(wsum, 1e-6)[..., None]
+    return np.where(mask[..., None], out, img)
+
+
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 DIR = os.path.join(ROOT, 'prototype', 'v2', 'src', 'story', 'intro', 'assets', 'archive')
 if len(sys.argv) > 1: DIR = os.path.abspath(sys.argv[1])   # another packaged archive (D-075: the Lab's sun variant)
@@ -38,7 +52,12 @@ for NAME in (sys.argv[2:] or ['light_shell']):
     diff = np.abs(out - blur).mean(axis=2, keepdims=True)
     w = 0.75 * np.exp(-(diff / 0.05) ** 2)
     out = out * (1 - w) + blur * w
+    # 2026-11-10 (user: 「통로의 오른쪽 왼쪽 책장 옆면이 모두 얼룩덜룩」): the stack side panels keep soft blotches a few texels
+    # wide (residual 128-sample indirect noise) that the 1.6-texel pass above cannot reach. A wider bilateral filter with a
+    # multiplicative range term (log luminance): neighbours within about ±25 % brightness are averaged (two passes) over ~6 texels, so
+    # mottling flattens while real light edges (sun stripes, shadow borders: several times brighter) stay sharp.
+    out = wide_bilateral(wide_bilateral(out, mask), mask)   # twice: speckles up to ~+30 % on the left stacks need a second pass
     out[~mask] = 0
     Image.fromarray(np.clip(out * 255 + 0.5, 0, 255).astype(np.uint8)).save(SRC, quality=94, method=6)
-    print(NAME + '.webp: fireflies replaced', int(fire.sum()), 'of', int(mask.sum()), 'lit px; grain smoothed (bilateral blend)')
+    print(NAME + '.webp: fireflies replaced', int(fire.sum()), 'of', int(mask.sum()), 'lit px; grain smoothed (bilateral blend) + wide bilateral (blotches)')
 sys.stdout.flush()

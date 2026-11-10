@@ -201,12 +201,19 @@ export async function createArchive(variant:ArchiveVariant='base'){
   vertexShader:`attribute float aSeed;uniform float uTime,uPx,uCloud;uniform sampler2D tLight,tCloud;uniform mat4 uLightVP;uniform vec3 uSun;varying float vA;
    void main(){float t=uTime*(.02+.03*aSeed)+aSeed*50.;vec3 p=position+vec3(sin(t*1.3),sin(t*.7+2.)*.5,cos(t*1.1))*.15;
     vec4 lp=uLightVP*vec4(p,1.);vec3 l=lp.xyz/lp.w*.5+.5;
-    float lit=(all(greaterThan(l.xy,vec2(0.)))&&all(lessThan(l.xy,vec2(1.))))?step(l.z-.002,texture2D(tLight,l.xy).x):0.;
+    // 2026-11-10 (user: 「먼지 입자 … 번쩍번쩍」): one hard depth test switched a drifting mote on and off at every beam / slat edge →
+    // five taps 2.5 texels apart, so a mote fades over a few cm as it crosses an edge
+    float lit=0.;if(all(greaterThan(l.xy,vec2(0.)))&&all(lessThan(l.xy,vec2(1.)))){const float o=2.5/2048.;
+     lit=(step(l.z-.002,texture2D(tLight,l.xy).x)+step(l.z-.002,texture2D(tLight,l.xy+vec2(o,0.)).x)+step(l.z-.002,texture2D(tLight,l.xy-vec2(o,0.)).x)
+         +step(l.z-.002,texture2D(tLight,l.xy+vec2(0.,o)).x)+step(l.z-.002,texture2D(tLight,l.xy-vec2(0.,o)).x))*.2;}
     if(uCloud>0.)lit*=1.-uCloud*.8*(1.-texture2D(tCloud,l.xy).r);
     vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;
     float fwd=pow(max(dot(normalize(p-cameraPosition),uSun),0.),2.);
     vA=lit*(.25+1.6*fwd)*(.4+.6*sin(uTime*1.3+aSeed*40.)*sin(uTime*1.3+aSeed*40.));
-    gl_PointSize=min(uPx*(1.+2.2*aSeed)/-mv.z,4.);}`,
+    // sub-pixel motes: drawn at 1.5 px with brightness ∝ area instead of a full-bright 1 px point that pops between pixels;
+    // motes within ~1 m of the camera (the aisle walk) fade out instead of crossing the screen large and bright
+    float sz=uPx*(1.+2.2*aSeed)/-mv.z;vA*=min(1.,sz*sz/2.25)*smoothstep(.35,1.2,-mv.z);
+    gl_PointSize=clamp(sz,1.5,4.);}`,
   fragmentShader:`uniform vec3 uCol;uniform float uFade,uDepthOn;uniform sampler2D tSceneDepth;uniform vec2 uRes;varying float vA;void main(){
    if(uDepthOn>0.&&gl_FragCoord.z>texture2D(tSceneDepth,gl_FragCoord.xy/uRes).x)discard;float d=length(gl_PointCoord-.5);gl_FragColor=vec4(uCol*vA*smoothstep(.5,0.,d)*2.2*uFade,1.);}`});
  const dust=new THREE.Points(dg,dustMat);dust.frustumCulled=false;dust.renderOrder=5;

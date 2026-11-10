@@ -33,7 +33,7 @@ const V=(x:number,y:number,z:number)=>new THREE.Vector3(x,y,z);
 // the 2026-10-18 video (fd13a24, ?sun=0&silk=100): the original archive, the D-074 descent (c3) from 0.4 to the end (the video's
 // 0:05–0:13; the user corrected the first frame match 0.35–0.60 on 2026-11-04), silk curtains, no motes, no leaf sway.
 // v18 is the default; x = the D-158 rebuilt attic.
-const BG_PRESETS:Record<string,Record<string,string>>={v18:{sun:'orig',path:'c3',seg:'.4,1',silk:'100',dust:'0',aurora:'0',boost:'.5,.8,1.7'},x:{sun:'x'}};
+const BG_PRESETS:Record<string,Record<string,string>>={v18:{sun:'orig',path:'c3',seg:'.52,.88',silk:'100',dust:'0',aurora:'0',boost:'.5,.8,1.7'},x:{sun:'x'}};   // D-165: .4,1 의 20 ~ 80 % (사용자 2026-11-10)
 const Q0=(()=>{const q=new URLSearchParams(location.search);for(const [k,v] of Object.entries(BG_PRESETS[q.get('bg')??'v18']??{}))if(!q.has(k))q.set(k,v);return q;})();
 const PATHS:Record<string,Key[]>={
  c1:[{pos:V(.15,3.3,3.4),look:V(.35,1.6,-4.3),fov:46},{pos:V(.25,2.4,1.2),look:V(.35,1.5,-4.3),fov:48},{pos:V(.3,.95,-1.0),look:V(.35,.9,-4.3),fov:50}],

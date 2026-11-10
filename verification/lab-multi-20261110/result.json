@@ -1,0 +1,36 @@
+{
+ "dialogOpenAtStart": 0,
+ "panelButton": "기법 설명 접기",
+ "selectGone": true,
+ "s0": {
+  "pressed": [
+   "M08"
+  ],
+  "h": 510
+ },
+ "s1": {
+  "pressed": [
+   "M04",
+   "M08",
+   "M09"
+  ],
+  "h": 880,
+  "focus": [
+   "M09"
+  ]
+ },
+ "s2": {
+  "pressed": [
+   "M08",
+   "M09"
+  ],
+  "h": 660
+ },
+ "s3": {
+  "pressed": [
+   "M08"
+  ],
+  "status": "M08 · 마지막 표시 기법은 유지"
+ },
+ "dialogBg": "rgb(12, 23, 28)"
+}

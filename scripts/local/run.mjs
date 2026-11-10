@@ -62,8 +62,11 @@ function doctor(){
 
 // D-161 파형 그리기 비교: story:wave-prev / story:wave-all / story:wave-live 는 같은 앱을 ?wave=… 주소로 연다(waveMode.ts).
 const WAVE_NOTE={prev:'이전 버전 — 실시간·실험실 모두 최적화 전 그리기',all:'최적화를 실험실 탭에도 — 두 탭 모두 링 스트립(기본값, npm run story 와 같음)',live:'실시간 탭에만 최적화 — 실험실은 기존 그리기'};
-function story(wave){ensureV2Data();const v2=join(root,'prototype/v2');ensureDeps(v2);
- const path=wave?`/?wave=${wave}`:'/';
+// 2026-11-10 사용자 「각 모드로 바로 진입하는 명령어」: 잡음 장면 · 실험실로 바로 연다(주소만 다르다)
+const DIRECT={'story:pli':['/?story=noise&cond=pli','잡음 장면 — 전원선 간섭'],'story:bw':['/?story=noise&cond=bw','잡음 장면 — 기저선 변동'],
+ 'story:ma':['/?story=noise&cond=ma','잡음 장면 — 근육 잡음'],'story:noise':['/?story=noise&cond=all','잡음 장면 3개 연속(전원선 → 기저선 → 근육)'],'story:lab':['/?route=lab','실험실']};
+function story(wave,direct){ensureV2Data();const v2=join(root,'prototype/v2');ensureDeps(v2);
+ const path=direct?DIRECT[direct][0]:wave?`/?wave=${wave}`:'/';if(direct)say(`\n바로 진입: ${DIRECT[direct][1]}`);
  say(`\nR1 Story: http://127.0.0.1:5173${path}  (Lab부터: ?route=lab, 단계 이동: ?step=3, 잡음 장면: ?story=noise&cond=pli|bw|ma)  — 멈추려면 Ctrl+C`);
  if(wave)say(`파형 그리기: ${WAVE_NOTE[wave]}. 실시간 측정 탭은 브리지가 떠 있어야 파형이 나옵니다.`);say('');
  run('npm',['run','dev','--','--open',path],{cwd:v2});}
@@ -115,8 +118,8 @@ function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Pyth
  say(`\n재생 브리지(${src[1]==='csv'?'고른 신호':'합성 심전도'} → 실제 처리 경로, 실측 아님): ${d}\n  ${[p.bin,...p.pre,...argv].join(' ')}\n  앱은 다른 터미널에서 npm run story → «실시간 측정» 탭. 멈추려면 Ctrl+C\n`);
  const code=run(p.bin,[...p.pre,...argv],{cwd:d,allowFail:true});process.exit(code);}
 
-const table={doctor,'bridge:setup':bridgeSetup,'bridge:replay':()=>bridgeReplay(args),story:()=>story(null),'story:wave-prev':()=>story('prev'),'story:wave-all':()=>story('all'),'story:wave-live':()=>story('live'),'story:check':storyCheck,spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};
+const table={doctor,'bridge:setup':bridgeSetup,'bridge:replay':()=>bridgeReplay(args),story:()=>story(null),'story:wave-prev':()=>story('prev'),'story:wave-all':()=>story('all'),'story:wave-live':()=>story('live'),'story:check':storyCheck,...Object.fromEntries(Object.keys(DIRECT).map(k=>[k,()=>story(null,k)])),spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};
 if(fileURLToPath(import.meta.url)===resolve(process.argv[1]||'')){
- if(!table[cmd]){say('사용법: npm run doctor | story | story:check | spike -- <이름> | py -- <스크립트> | py:setup | browsers | v2:prepare');process.exit(cmd?1:0);}
+ if(!table[cmd]){say('사용법: npm run doctor | story | story:pli | story:bw | story:ma | story:noise | story:lab | story:check | spike -- <이름> | py -- <스크립트> | py:setup | browsers | v2:prepare');process.exit(cmd?1:0);}
  table[cmd]();
 }

@@ -12,7 +12,7 @@ void main(){
  vec2 px=vec2(gl_FragCoord.x,res.y-gl_FragCoord.y);
  float R=res.x*1.35;vec2 c=vec2(res.x*.5,apexY+R);
  float d=length(px-c)-R;                              // <0 inside the disc
- float side=exp(-pow((px.x-res.x*.5)/(res.x*.42),2.));   // light concentrates near the apex
+ float side=exp(-(((px.x-res.x*.5)/(res.x*.42))*((px.x-res.x*.5)/(res.x*.42))));   // light concentrates near the apex
  vec3 bg=mix(vec3(.024,.035,.051),vec3(.016,.024,.035),px.y/res.y);
  vec3 col=bg;
  if(d<0.){col=mix(vec3(.008,.011,.016),vec3(.02,.028,.04),exp(d/(res.y*.25)));}

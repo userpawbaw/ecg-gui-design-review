@@ -27,3 +27,7 @@
 .ns-qa button{font:inherit;color:inherit;background:rgba(255,255,255,.06);border:1px solid rgba(255,214,170,.25);border-radius:5px;padding:2px 6px;cursor:pointer}
 .ns-qa button.on{background:rgba(255,120,110,.35);border-color:rgba(255,150,130,.8)}
 .ns-notice{text-align:right}
+/* 2026-11-10: 4번째 박동 뒤 첫 스크롤까지 휠 안내(WheelHint.css 공용) — 파형 패널 아래 가운데 */
+.ns-wheel{position:absolute;left:80.5%;bottom:calc(11% + 96px);transform:translateX(-50%);pointer-events:none;opacity:0;transition:opacity .6s ease}
+.ns-wheel.on{opacity:.85}
+.ns-wheel .it-wheelhint{position:relative;transform:none;opacity:1}

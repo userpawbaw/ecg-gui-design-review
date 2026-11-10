@@ -72,8 +72,8 @@ function IntroShellInner({bank,onNext,onLab,long}:Props&{long:LongScene|null}){
   </div>
   <h1 ref={refs.title} className="it-title"><small>ECG DENOISING</small>심전도 <span ref={refs.noise} className="it-noise">잡음</span> 제거</h1>
   <p ref={refs.sub} className="it-sub">동일 기록 기반 심전도 잡음 제거 기법 비교</p>
-  <div ref={refs.hint} className="it-hint"><span className="wheel" aria-hidden="true"/>스크롤</div>
-  <div ref={refs.wheelHint} className="it-wheelhint-slot"><WheelHint kind={WHEEL_HINT}/></div>
+  <div ref={refs.hint} className="it-hint" aria-label="스크롤하여 진행">{/* 2026-11-10: 첫 화면 2 s 뒤 화면 중앙(지구 위) */}<WheelHint kind="arrows" still={reduced}/></div>
+  <div ref={refs.wheelHint} className="it-wheelhint-slot"><WheelHint kind={WHEEL_HINT} still={reduced}/></div>
   <div ref={refs.labels} className="it-labels" aria-live="polite">
    <div ref={refs.labelIn} className="it-lab in is-current"><i className="bar"/><b>입력 신호(잡음 포함)</b><small>INPUT · WHITE NOISE {scene.s.snr} dB · {scene.s.record}</small></div>
    <div ref={refs.labelOut} className="it-lab out"><i className="bar"/><b>잡음 제거 출력</b><small ref={refs.outMono as never}>OUTPUT · STORED</small></div>

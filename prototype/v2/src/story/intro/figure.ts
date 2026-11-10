@@ -42,7 +42,7 @@ void main(){
  float rim=fres*back;
  // H2: conduction wave — a thin bright band leaves the heart at each R and fades as it travels
  float d=distance(vW,uHeart),front=uWaveT*1.5;
- float band=exp(-pow((d-front)/.045,2.))*exp(-uWaveT/.32)*uWaveAmp;
+ float band=exp(-(((d-front)/.045)*((d-front)/.045)))*exp(-uWaveT/.32)*uWaveAmp;
  float mf=uMirror>.5?.22*exp(-(uFeet-vW.y)/.32):1.;
  float a=(rim*(1.+uFlash)+uFill+band*(.35+fres))*uOpacity*mf;
  gl_FragColor=vec4(uColor*a,a);
@@ -82,9 +82,9 @@ void main(){
  float face=gl_FrontFacing?1.:.3;
  float rim=pow(fres,4.)*.1;                              // faint silhouette so gaps between rings still read as a body
  float reveal=smoothstep(uScan-.004,uScan+.012,y);        // visible above the scan line (top-down)
- float scanLine=exp(-pow((y-uScan)/.012,2.))*uScanOn*(.6+fres);
+ float scanLine=exp(-(((y-uScan)/.012)*((y-uScan)/.012)))*uScanOn*(.6+fres);
  float dh=distance(P,uHeart),front=uWaveT*1.5;
- float band=exp(-pow((dh-front)/.05,2.))*exp(-uWaveT/.32)*uWaveAmp;
+ float band=exp(-(((dh-front)/.05)*((dh-front)/.05)))*exp(-uWaveT/.32)*uWaveAmp;
  vec3 col=mix(uColor,uWarm,smoothstep(-.1,.9,n.y)*.55+(1.-reveal)*0.);   // warm backlight catches upward-facing rings
  // heart light: rings around the heart take its colour and brighten on each R (heart reads at full-body distance)
  float hl=exp(-dh*dh/.03);
@@ -147,7 +147,7 @@ void main(){
  col+=uLine*pow(fres,3.)*.45;                                   // brighter silhouette
  // heart light seen through the chest (glows on each R) + conduction band
  float dh=distance(vW,uHeart),hl=exp(-dh*dh/.018);
- float band=exp(-pow((dh-uWaveT*1.5)/.05,2.))*exp(-uWaveT/.32)*uWaveAmp;col+=uLine*band*.5;
+ float band=exp(-(((dh-uWaveT*1.5)/.05)*((dh-uWaveT*1.5)/.05)))*exp(-uWaveT/.32)*uWaveAmp;col+=uLine*band*.5;
  float a=mix(.7,.95,pow(fres,1.4))*(1.-.5*hl);                    // thin centre, dense edge; thinner over the heart
  a=mix(a,.96,uDense);
  // S-13 (user 2026-10-12: "가슴 부분만 투명도를 … 심장의 윤곽이 보이도록"): a soft window in the frosted chest over the heart,
@@ -161,7 +161,7 @@ void main(){
  // uScanDir 1: visible above the scan line (appear top-down); −1: visible below it (vanish from the top, the reverse of
  // appearing — REVIEW-R1-WEB-20261008 I-5 ②)
  float reveal=uScanDir>0.?smoothstep(uScan-.004,uScan+.012,y):1.-smoothstep(uScan-.012,uScan+.004,y);
- float scanLine=exp(-pow((y-uScan)/.012,2.))*uScanOn*(.6+fres);
+ float scanLine=exp(-(((y-uScan)/.012)*((y-uScan)/.012)))*uScanOn*(.6+fres);
  a=a*reveal*uOpacity;
  // heart glow scattered by the frosted surface: emitted light, so it is divided by alpha to survive the blend (the stills'
  // heart reads as a pink glow through the chest)

@@ -3,6 +3,7 @@
 // from scene to scene (user 2026-10-08: "장면 사이도 카메라로 이어지게 해줘").
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {StateChip} from '../../Glyph';
+import {WheelHint,WHEEL_HINT} from '../intro/WheelHint';
 import {decode} from '../../engine';
 import type {Bank} from '../../data';
 import {loadLong,type LongScene} from '../longData';
@@ -39,9 +40,10 @@ export function NoiseShell(p:{bank:Bank,conds?:Cond[],onLab?:(t:LabTarget)=>void
  return <NoiseShellInner {...p} order={order} long={long}/>;
 }
 function NoiseShellInner({bank,order,long,onLab}:{bank:Bank,order:Cond[],long?:Long,onLab?:(t:LabTarget)=>void}){
+ const reducedUi=useMemo(()=>new URLSearchParams(location.search).get('reduced')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches,[]);
  const q=new URLSearchParams(location.search);
  const scenes=useMemo(()=>order.map(c=>sceneData(bank,c,long)),[bank,order,long]);
- const [i,setI]=useState(0),iRef=useRef(0),[ui,setUi]=useState<WaveUi>({atEnd:false,overlay:false,phase:'wait'});
+ const [i,setI]=useState(0),iRef=useRef(0),[ui,setUi]=useState<WaveUi>({atEnd:false,overlay:false,phase:'wait',hint:false});
  const gl=useRef<HTMLCanvasElement>(null),grid=useRef<HTMLCanvasElement>(null),sweep=useRef<HTMLCanvasElement>(null),overlay=useRef<HTMLCanvasElement>(null),strip=useRef<HTMLDivElement>(null);
  const stageRef=useRef<Awaited<ReturnType<typeof createNoiseStage>>|null>(null);
  // next scene on the same stage (camera continues), or Lab after the last one
@@ -75,6 +77,7 @@ function NoiseShellInner({bank,order,long,onLab}:{bank:Bank,order:Cond[],long?:L
   {debug&&<QaPanel stage={()=>stageRef.current}/>}
   <canvas ref={gl} className="ns-gl"/><canvas ref={overlay} className="ns-overlay"/><canvas ref={grid} className="ns-grid"/><canvas ref={sweep} className="ns-sweep"/>
   <div ref={strip} className="ns-strip" aria-label="입력에서 출력으로 처리 단계"><i/><i/><i/><i/><span>{ui.overlay?'중첩 표시 · 입력 · 출력':ui.phase==='auto'?'박동 단위 처리 · '+cur.winner:'입력 → 출력 · '+cur.winner}</span></div>
+  <div className={'ns-wheel'+(ui.hint?' on':'')} aria-hidden="true"><WheelHint kind={WHEEL_HINT} run={ui.hint} still={reducedUi}/></div>
   <div className={'ns-actions'+(ui.atEnd?' on':'')} aria-hidden={!ui.atEnd}>
    <p className="ns-hint">{ui.overlay?'중첩 표시 중 · 스크롤 정지':'위로 스크롤: 입력 신호로 복귀'}</p>
    <button type="button" className="ns-btn ghost" onClick={toggle} tabIndex={ui.atEnd?0:-1}>{ui.overlay?'단일 표시':'중첩 표시'}</button>

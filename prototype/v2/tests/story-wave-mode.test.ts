@@ -2,7 +2,7 @@
 // overlay only from the clean end, and every mode change fades (no trace pops in or out).
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {createWaveMode,FADE_S,SCROLL_SPAN,SCROLL_LERP} from '../src/story/noise/waveMode';
+import {createWaveMode,FADE_S,SCROLL_SPAN,SCROLL_LERP,AWAIT_DELAY,AWAIT_FADE_S,LEAVE_S} from '../src/story/noise/waveMode';
 
 function run(m:ReturnType<typeof createWaveMode>,from:number,to:number,beats:number[],dt=1/60,procOn=true){
  let prevR=beats.filter(b=>b<=from).pop()??-1;
@@ -44,4 +44,14 @@ test('Lenis-like follow: one wheel move eases in — ~10 % of the gap on the fir
 test('reduced motion: no animation, same states',()=>{
  const m=createWaveMode();m.update({procOn:true,prevR:0,t:0,dt:1/60,reduced:true});m.update({procOn:true,prevR:0,t:.02,dt:1/60,reduced:true});
  assert.equal(m.phase,'scroll');assert.equal(m.mix,1);assert.equal(m.toggleOverlay(),true);m.update({procOn:true,prevR:0,t:.04,dt:1/60,reduced:true});assert.equal(m.overlay,1);
+});
+test('after the auto pass: hint + slow input fade-in until the first scroll, then a fast fade-out (2026-11-10)',()=>{
+ const m=createWaveMode();let t=0;const step=(d:number)=>{run(m,t,t+d,BEATS);t+=d;};
+ while(m.phase!=='scroll')step(1/60);
+ assert.equal(m.awaiting,true);assert.ok(m.weights().input<1e-6,'output only right after the 4th beat');
+ step(AWAIT_DELAY*.9);assert.ok(m.weights().input<1e-6,'nothing before the delay');
+ step(AWAIT_DELAY*.1+AWAIT_FADE_S/2);const half=m.weights().input;assert.ok(half>.15&&half<.5,'input comes back slowly ('+half+')');
+ step(AWAIT_FADE_S);assert.ok(Math.abs(m.weights().input-.62)<1e-6,'overlaid');assert.equal(m.phase,'scroll','still scroll mode');
+ m.scroll(-20);assert.equal(m.awaiting,false);step(LEAVE_S*.5);const w=m.weights().input;assert.ok(w<.45,'leaves fast');
+ assert.ok(LEAVE_S<FADE_S);step(LEAVE_S);assert.ok(m.overlay<1e-6,'overlay gone');assert.ok(m.mix<1,'scroll follows');
 });

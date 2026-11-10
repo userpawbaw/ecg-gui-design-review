@@ -9,13 +9,17 @@
 // trace appears or disappears at once (S-08). The values are display weights only; the traces are stored samples.
 export type WavePhase='wait'|'auto'|'scroll'|'overlay';
 export const STEPS=4,STEP_S=.16,SCROLL_SPAN=900,SCROLL_LERP=.1,FADE_S=.45,END_AT=.98;
+// 2026-11-10 (user): after the 4th beat the scroll hint shows; until the first scroll the input fades back in slowly (AWAIT_DELAY,
+// then over AWAIT_FADE_S) and stays overlaid; the first scroll takes it out faster than the overlay button's FADE_S (LEAVE_S)
+export const AWAIT_DELAY=.8,AWAIT_FADE_S=2.4,LEAVE_S=.18;
 const clamp=(x:number,a=0,b=1)=>Math.min(b,Math.max(a,x));
 
 export function createWaveMode(){
  let phase:WavePhase='wait',
   shown=0,from=0,goal=0,stepT=-1,lastBeat=NaN,flash=0,       // auto (beat-released quarters)
   pos=1,mix=0,                                               // scroll: wheel position and the eased mix
-  ov=0,ovGoal=0;                                             // overlay weight
+  ov=0,ovGoal=0,ovRate=FADE_S,                              // overlay weight, seconds for a full fade
+  awaiting=false,awaitT=0;                                   // auto done, no scroll yet
  return{
   /** procOn: the panel may start processing; prevR: time of the last R peak (s); t: scene clock; dt: frame time. */
   update(o:{procOn:boolean,prevR:number,t:number,dt:number,reduced:boolean}){
@@ -29,22 +33,25 @@ export function createWaveMode(){
      flash=stepT<0?0:Math.exp(-Math.max(0,t-stepT)/.15);
     }
     mix=shown;
-    if(goal>=1&&shown>=1-1e-3){phase='scroll';pos=1;mix=1;flash=0;}
+    if(goal>=1&&shown>=1-1e-3){phase='scroll';pos=1;mix=1;flash=0;awaiting=true;awaitT=t;}
    }else if(phase==='scroll'||phase==='overlay'){
     const g=pos;mix=reduced?g:mix+(g-mix)*(1-(1-SCROLL_LERP)**(Math.max(0,dt)*60));if(Math.abs(g-mix)<1e-3)mix=g;   // frame-rate independent Lenis lerp; the last 0.1 % snaps (Lenis stops the same way)
     flash=0;
    }
-   ov=reduced?ovGoal:ov+Math.sign(ovGoal-ov)*Math.min(Math.abs(ovGoal-ov),Math.max(0,dt)/FADE_S);
+   if(awaiting&&phase==='scroll'&&t-awaitT>=AWAIT_DELAY){ovGoal=1;ovRate=AWAIT_FADE_S;}
+   ov=reduced?ovGoal:ov+Math.sign(ovGoal-ov)*Math.min(Math.abs(ovGoal-ov),Math.max(0,dt)/ovRate);
   },
   /** wheel/keys: positive = forward (toward the clean output). Ignored before 'scroll' and while overlaid. */
-  scroll(deltaPx:number){if(phase!=='scroll')return false;pos=clamp(pos+deltaPx/SCROLL_SPAN);return true;},
+  scroll(deltaPx:number){if(phase!=='scroll')return false;if(awaiting){awaiting=false;ovGoal=0;ovRate=LEAVE_S;}pos=clamp(pos+deltaPx/SCROLL_SPAN);return true;},
   /** overlay toggle: only from the clean end (S-08); going back returns to scroll mode at the clean end. */
   toggleOverlay(){
-   if(phase==='scroll'&&this.atEnd){phase='overlay';ovGoal=1;return true;}
-   if(phase==='overlay'){phase='scroll';ovGoal=0;pos=1;return true;}
+   if(phase==='scroll'&&this.atEnd){phase='overlay';ovGoal=1;ovRate=FADE_S;awaiting=false;return true;}
+   if(phase==='overlay'){phase='scroll';ovGoal=0;ovRate=FADE_S;pos=1;return true;}
    return false;
   },
   get phase(){return phase;},
+  /** waiting for the first scroll after the auto pass (the scroll hint shows) */
+  get awaiting(){return awaiting&&phase==='scroll';},
   /** cross-fade 0 = input, 1 = output (scroll/auto); quarters filled for the 4-cell strip */
   get mix(){return mix;},get flash(){return flash;},get overlay(){return ov;},
   get quarters(){return phase==='wait'?0:phase==='auto'?Math.round(goal*STEPS):Math.floor(mix*STEPS+1e-6);},
@@ -55,7 +62,7 @@ export function createWaveMode(){
    const ai=(1-mix)*(1-ov)+.62*ov,ao=mix*(1-ov)+1*ov;
    return{input:ai,output:ao,blurIn:mix*(1-ov),blurOut:(1-mix)*(1-ov)};
   },
-  reset(){phase='wait';shown=from=goal=0;stepT=-1;lastBeat=NaN;flash=0;pos=1;mix=0;ov=ovGoal=0;},
+  reset(){phase='wait';shown=from=goal=0;stepT=-1;lastBeat=NaN;flash=0;pos=1;mix=0;ov=ovGoal=0;ovRate=FADE_S;awaiting=false;awaitT=0;},
  };
 }
 export type WaveMode=ReturnType<typeof createWaveMode>;

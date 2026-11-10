@@ -12,9 +12,8 @@
 .it-title small{display:block;margin-bottom:.9vh;font-size:.17em;font-weight:500;letter-spacing:.32em;color:var(--ink-2)}
 .it-noise i{display:inline-block;font-style:normal;will-change:transform}
 .it-sub{left:50%;top:calc(12vh + clamp(46px,5.2vw,100px)*1.5 + 3vh);transform:translateX(-50%);margin:0;font-size:clamp(15px,1.1vw,20px);color:var(--ink-2);white-space:nowrap;pointer-events:none}
-.it-hint{left:50%;bottom:4.5%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:0;color:var(--ink-3);pointer-events:none}
-.it-hint .wheel{width:18px;height:28px;border:1.5px solid currentColor;border-radius:9px;position:relative}
-.it-hint .wheel::after{content:"";position:absolute;left:50%;top:5px;width:2px;height:6px;margin-left:-1px;background:currentColor;border-radius:1px;animation:it-wheel 1.6s ease-in-out infinite}
+.it-hint{left:50%;top:50%;transform:translate(-50%,-50%);opacity:0;pointer-events:none}   /* 2026-11-10: 화면 중앙(지구 위), introStage 가 2 s 뒤 띄움 */
+.it-hint .it-wheelhint{position:relative;transform:none;opacity:1}
 @keyframes it-wheel{0%{transform:translateY(0);opacity:1}70%{transform:translateY(8px);opacity:0}100%{opacity:0}}
 .it-grid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
 /* L1 — two-tier labels: large Korean word (Pretendard ExtraBold, tight tracking) over a small mono HUD line (REF-010 size
@@ -56,35 +55,9 @@
 .it-skip{right:2.6%;top:3.2%;height:38px;padding:0 18px;font-size:14px;color:var(--ink-2)}
 .it-notice{left:2.4%;bottom:3%;margin:0;font-family:"Pretendard Variable",Pretendard,"Malgun Gothic",sans-serif;font-size:12px;letter-spacing:0;font-variant-numeric:tabular-nums;color:var(--ink-3);pointer-events:none}
 .it-failed{left:50%;top:50%;transform:translate(-50%,-50%);color:#ffbc79}
-.intro.reduced .it-hint .wheel::after{animation:none}
-
+.intro.reduced 
 /* D-044 · Q11: Hangul is never letter-spaced; tracking stays only on Latin-only mono lines */
 .it-steps em{font-family:"Pretendard Variable",Pretendard,"Malgun Gothic",sans-serif;font-style:normal;font-size:12px;letter-spacing:0}
 .it-credit{position:absolute;right:2.4%;bottom:3%;margin:0;font-family:"Pretendard Variable",Pretendard,"Malgun Gothic",sans-serif;font-size:11px;letter-spacing:0;color:var(--ink-3);opacity:.7;pointer-events:none;z-index:2}
-/* D-163 파형 단계 휠 안내 — 불투명도 · .run 은 introStage 가 정한다. 아래 = 출력(청록), 위 = 입력(주황) */
-.it-wheelhint{position:absolute;z-index:2;transform:translateX(-50%);display:flex;align-items:center;gap:14px;opacity:0;pointer-events:none;white-space:nowrap;
- font-family:"Pretendard Variable",Pretendard,"Malgun Gothic",sans-serif;font-size:12px;letter-spacing:0}
-.it-wheelhint svg{overflow:visible}
-.it-wheelhint .wh-body{stroke:rgba(238,240,242,.85);stroke-width:2}
-.it-wheelhint .wh-wheel{fill:rgba(238,240,242,.9);transform-box:fill-box;transform-origin:center}
-.it-wheelhint .wh-up,.it-wheelhint .wh-dn{stroke:rgba(238,240,242,.32);stroke-width:2.4;transform-box:fill-box;transform-origin:center}
-.it-wheelhint.run .wh-wheel{animation:wh-wheel 3s ease-in-out infinite}
-.it-wheelhint.run .wh-dn{animation:wh-dn 3s ease-in-out infinite}
-.it-wheelhint.run .wh-up{animation:wh-up 3s ease-in-out infinite}
-@keyframes wh-wheel{0%,8%{transform:none}20%,36%{transform:translateY(4px)}46%,52%{transform:none}64%,80%{transform:translateY(-4px)}90%,100%{transform:none}}
-@keyframes wh-dn{0%,8%{stroke:rgba(238,240,242,.32);transform:none;filter:none}
- 20%,36%{stroke:#67e7c3;transform:translateY(3px);filter:drop-shadow(0 0 4px rgba(103,231,195,.8))}46%,100%{stroke:rgba(238,240,242,.32);transform:none;filter:none}}
-@keyframes wh-up{0%,52%{stroke:rgba(238,240,242,.32);transform:none;filter:none}
- 64%,80%{stroke:#ffbc79;transform:translateY(-3px);filter:drop-shadow(0 0 4px rgba(255,188,121,.8))}90%,100%{stroke:rgba(238,240,242,.32);transform:none;filter:none}}
-.it-wheelhint .wh-bar{display:flex;align-items:center;gap:10px;color:rgba(238,240,242,.6)}
-.it-wheelhint .wh-in{color:#ffbc79}.it-wheelhint .wh-out{color:#67e7c3}
-.it-wheelhint .wh-bar i{display:block;width:120px;height:5px;border-radius:3px;background:rgba(238,240,242,.14);overflow:hidden}
-.it-wheelhint .wh-bar b{display:block;height:100%;background:linear-gradient(90deg,#ffbc79,#67e7c3);transform-origin:left;transform:scaleX(0);box-shadow:0 0 8px rgba(103,231,195,.5)}
-.it-wheelhint.run .wh-bar b{animation:wh-fill 3s ease-in-out infinite}
-@keyframes wh-fill{0%,8%{transform:scaleX(0)}36%,52%{transform:scaleX(1)}80%,100%{transform:scaleX(0)}}
-.intro.reduced .it-wheelhint *{animation:none!important}
-.intro.reduced .it-wheelhint .wh-dn{stroke:rgba(103,231,195,.8)}.intro.reduced .it-wheelhint .wh-up{stroke:rgba(255,188,121,.8)}
-.intro.reduced .it-wheelhint .wh-bar b{transform:scaleX(.5)}
 /* D-164 제목 포인터 유체 왜곡: 글자는 WebGL 오버레이가 그리고, DOM 제목은 글자색만 투명하게 남겨 배치 · 화면 읽기를 유지 */
-.it-title-fluid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
-.it-title.fluid-on,.it-title.fluid-on small{color:transparent}
+.it-screen-fluid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}   /* D-167 맨 위 층, 클릭은 통과 */

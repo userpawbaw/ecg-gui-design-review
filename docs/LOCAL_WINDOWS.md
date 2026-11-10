@@ -35,6 +35,11 @@ git checkout claude/r1-autopilot-recommended
 | `npm run story:wave-prev` | 파형 비교 ① 이전 버전 | 실시간 측정 · 실험실 모두 최적화 전 그리기(D-161) |
 | `npm run story:wave-all` | 파형 비교 ② 최적화를 실험실 탭에도 | 두 탭 모두 링 스트립 그리기. **기본값**(`npm run story`와 같음, 2026-11-08 사용자 선택) |
 | `npm run story:wave-live` | 파형 비교 ③ 실시간 탭에만 최적화 | 실시간 측정만 새 그리기, 실험실은 기존 그대로 |
+| `npm run story:pli` | 잡음 장면 바로 진입 — 전원선 간섭 | 도입부를 건너뛰고 `?story=noise&cond=pli`로 엶 |
+| `npm run story:bw` | 잡음 장면 바로 진입 — 기저선 변동 | `?story=noise&cond=bw` |
+| `npm run story:ma` | 잡음 장면 바로 진입 — 근육 잡음 | `?story=noise&cond=ma` |
+| `npm run story:noise` | 잡음 장면 3개 연속 | `?story=noise&cond=all` (전원선 → 기저선 → 근육) |
+| `npm run story:lab` | 실험실 바로 진입 | `?route=lab` |
 | `npm run story:check` | ③ R1 Story 검사 | 빌드 + 단위 테스트 + 브라우저 테스트. 600초 replay 자료가 없으면 chunk 테스트 1개와 10분 soak는 원래 실패/건너뜀 |
 | `npm test` | 저장소 전체 테스트 | 기록·인코딩·Windows 호환성 검사 |
 | `npm run spike -- video-scrub` | video-scrub spike 실행 | 의존성·클립 준비 후 실행. `attic`, `ref-repro`, `lab-corner`, `scroll-globe`도 같은 방식 |

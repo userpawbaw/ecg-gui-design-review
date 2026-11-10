@@ -15,7 +15,7 @@ import {BokehPass} from 'three/addons/postprocessing/BokehPass.js';
 import gsap from 'gsap';
 import {createArchive} from '../intro/archive';
 import {createFigure} from '../intro/figure';
-import {createGrade} from '../intro/space';
+import {createGrade,createFireflyGuard} from '../intro/space';
 import {createSweep} from '../intro/sweep';
 import {createGrid,mvPerBoxFor} from '../intro/waveUi';
 import {createFistDrive} from './fistDrive';
@@ -27,7 +27,7 @@ import {createChecker} from './storyCheck';
 export type Cond='pli'|'bw'|'ma';
 export type NoiseData={cond:Cond,fs:number,loop:Loop,input:Float32Array,output:Float32Array,clean:Float32Array};
 export type NoiseDom={gl:HTMLCanvasElement,grid:HTMLCanvasElement,sweep:HTMLCanvasElement,overlay:HTMLCanvasElement,cells:HTMLElement[]};
-export type WaveUi={atEnd:boolean,overlay:boolean,phase:string};
+export type WaveUi={atEnd:boolean,overlay:boolean,phase:string,hint:boolean};
 export type NoiseOptions={frozenT:number|null,reduced:boolean,onEnd?:()=>void,last?:boolean,onUi?:(u:WaveUi)=>void};
 type Story={figure_anchor:number[],morphs:string[],fist_s:number[],ra_arc_m:number,sternum_v:number,heart_approx:number[],
  electrodes:Record<'RA'|'LA'|'LL',{v:number,p:number[],n:number[]}>,cams:Record<string,{type:string,loc:number[],rot_euler:number[],lens?:number,sensor_width?:number,ortho_scale?:number}>};
@@ -392,7 +392,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
  // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
  const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
- composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);setLights(QA.light);
+ composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);composer.addPass(createFireflyGuard());setLights(QA.light);
  // M-b shallow focus (§10.4): focus rides the wave — fist → shoulder → RA
  const bokeh=new BokehPass(scene,camera,{focus:1,aperture:0,maxblur:.008});composer.addPass(bokeh);bokeh.enabled=false;
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.5,.35,.8);composer.addPass(bloom);composer.addPass(new OutputPass());
@@ -507,7 +507,8 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   wave.update({procOn:t>PROC,prevR:ph.prev,t,dt:dtF,reduced:opt.reduced});
   sweep.draw({t,startAbs:0,mix:wave.mix,alpha:panelK,reduced:opt.reduced,ring:null,comet:null,flash:wave.flash,gridAlpha:1,weights:wave.weights()});
   const filled=wave.quarters;dom.cells.forEach((c,i)=>c.classList.toggle('on',i<filled));
-  const u=`${wave.atEnd&&leaveT<0}|${wave.phase==='overlay'}|${wave.phase}`;if(u!==ui){ui=u;opt.onUi?.({atEnd:wave.atEnd&&leaveT<0,overlay:wave.phase==='overlay',phase:wave.phase});}
+  const hintOn=wave.awaiting&&leaveT<0;   // 2026-11-10: scroll hint from the 4th beat until the first scroll
+  const u=`${wave.atEnd&&leaveT<0}|${wave.phase==='overlay'}|${wave.phase}|${hintOn}`;if(u!==ui){ui=u;opt.onUi?.({atEnd:wave.atEnd&&leaveT<0,overlay:wave.phase==='overlay',phase:wave.phase,hint:hintOn});}
   dom.grid.style.opacity=String(panelK);const sp=dom.cells[0]?.parentElement;if(sp)sp.style.opacity=String(panelK);
   // overlay: right ~40 % darkened to 70 % (left → right ramp) + B-b thread
   og.clearRect(0,0,W,H);const gr=og.createLinearGradient(.58*W,0,.66*W,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,.7)');

@@ -26,7 +26,7 @@ void main(){
  float L=lm*inside;                                                    // fades to black well before the bake edge
  float r=length(vW.xz),fog=exp(-r/uFog);
  float minor=grid(vW.xz,uCell),major=grid(vW.xz,uCell*5.);
- float ring=exp(-pow((r-uWaveT*2.2)/.06,2.))*exp(-uWaveT/.55)*uWaveAmp;
+ float ring=exp(-(((r-uWaveT*2.2)/.06)*((r-uWaveT*2.2)/.06)))*exp(-uWaveT/.55)*uWaveAmp;
  // lit floor: warm diffuse light + grid lines that catch the light (ink on lit paper), dark where the figure shadows
  vec3 col=uWarm*L*.16+uLine*((minor*.03+major*.09)*(.25+2.2*L)+ring*(.18+major*.6)*(.4+L))*fog;
  gl_FragColor=vec4(col*uOpacity,1.);
@@ -114,6 +114,19 @@ export function createShafts(renderer:THREE.WebGLRenderer,camera:THREE.Camera,oc
   },
   setSize(w:number,h:number){rt.dispose();rt=new THREE.WebGLRenderTarget(Math.max(2,w>>1),Math.max(2,h>>1),{type:THREE.HalfFloatType});},
   dispose(){rt.dispose();black.dispose();srcMat.dispose();src.geometry.dispose();}};
+}
+
+// 2026-11-10 (user video 18:06, 「번쩍이는 입자」): single-frame round flashes ~200 px across with a saturated core and a purple tint,
+// at random heights along one screen column while the camera stood still. A dust mote (≤ 4 px, value ≤ ~4) cannot carry that
+// energy through bloom; a non-finite or huge pixel can (GLSL pow() with a negative base is NaN on ANGLE/D3D — fixed in figure.ts,
+// space.ts, horizon.ts). This pass sits before bloom: NaN / Inf → 0 and anything above MAX_HDR is scaled down, whatever its source.
+export const MAX_HDR=48;
+export function createFireflyGuard(){
+ return new ShaderPass({uniforms:{tDiffuse:{value:null}},
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+  fragmentShader:`uniform sampler2D tDiffuse;varying vec2 vUv;void main(){vec4 c=texture2D(tDiffuse,vUv);
+   if(any(isnan(c.rgb))||any(isinf(c.rgb)))c.rgb=vec3(0.);
+   float m=max(c.r,max(c.g,c.b));if(m>${MAX_HDR}.)c.rgb*=${MAX_HDR}./m;c.rgb=max(c.rgb,0.);gl_FragColor=c;}`});
 }
 
 // Grade + vignette + grain after the output transform (attic grade pass, gentler). uWarm scales with the space, so

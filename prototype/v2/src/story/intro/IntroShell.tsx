@@ -70,7 +70,7 @@ function IntroShellInner({bank,onNext,onLab,long}:Props&{long:LongScene|null}){
    <div ref={refs.ann} className="it-ann" aria-hidden="true"><i/><span><b>R 피크</b><small>심실 탈분극(QRS군) 정점</small></span></div>
    <div ref={refs.scale} className="it-scale" aria-hidden="true"><span>큰 칸 0.2 s × 0.5 mV</span><span>작은 칸 0.04 s × 0.1 mV</span></div>
   </div>
-  <h1 ref={refs.title} className="it-title"><small>ECG DENOISING</small>심전도 <span ref={refs.noise} className="it-noise">{[...'잡음'].map((c,i)=><i key={i}>{c}</i>)}</span> 제거</h1>
+  <h1 ref={refs.title} className="it-title"><small>ECG DENOISING</small>심전도 <span ref={refs.noise} className="it-noise">잡음</span> 제거</h1>
   <p ref={refs.sub} className="it-sub">동일 기록 기반 심전도 잡음 제거 기법 비교</p>
   <div ref={refs.hint} className="it-hint"><span className="wheel" aria-hidden="true"/>스크롤</div>
   <div ref={refs.wheelHint} className="it-wheelhint-slot"><WheelHint kind={WHEEL_HINT}/></div>

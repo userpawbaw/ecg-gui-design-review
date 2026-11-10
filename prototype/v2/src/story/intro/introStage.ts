@@ -18,6 +18,7 @@ import {createSignalRig,SIGNAL_CLEAN,SIGNAL_NOISE,SIGNAL_OFF,type SignalState} f
 import {createSweep,type SweepView} from './sweep';
 import {beatPhase,type Loop} from './beats';
 import {createGrid,createScrollMix,mvPerBoxFor,scrambled} from './waveUi';
+import {createTitleFluid} from './titleFluid';
 
 export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Array,metrics:{snrIn:number,snrOut:number,cc:number}};
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
@@ -110,6 +111,8 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  let pRaw=opt.frozenP??0,p=pRaw,spinVel=0,spinExtra=0;
  lenis?.on('scroll',(e:Lenis)=>{pRaw=e.limit>0?e.scroll/e.limit:0;});
  // D-163: 파형 단계 휠 안내 — 마지막 입력(휠 · 키)에서 1.2 s 지나야 나타난다
+ // D-164: 제목 유체 왜곡 오버레이(움직임 줄이기 · 터치 · 좁은 화면 · WebGL 실패면 없음 — DOM 글자 그대로)
+ const titleFluid=opt.reduced?null:createTitleFluid(dom.title,dom.title.parentElement!);
  const hintEl=dom.wheelHint?.querySelector<HTMLElement>('.it-wheelhint')??null;let lastInput=performance.now(),hintA=0;
  const onKey=(e:KeyboardEvent)=>{if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(e.key))lastInput=performance.now();};
  addEventListener('keydown',onKey);
@@ -298,8 +301,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
 
   // DOM
   titleAt(seg(p,...MAP.title));
-  const jitter=opt.reduced?0:1.7*(1-mix.value);
-  dom.noiseChars.forEach((c,i)=>{const dx=Math.sin(t*41+i*1.7)*Math.sin(t*17.3+i*.6)*jitter,dy=Math.sin(t*33.1+i*2.3)*Math.cos(t*21.7)*jitter*.8;c.style.transform=`translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px)`;});
+  titleFluid?.update(dt);   // D-164: 「잡음」 떨림 대신 포인터 유체 왜곡(leoparpeix 효과)
   dom.sub.style.opacity=String(1-seg(p,.015,.07));dom.hint.style.opacity=String(1-seg(p,0,.035));
   if(hintEl){const want=wave.state==='on'&&p>=.81&&p<.95&&performance.now()-lastInput>1200?1:0;
    hintA+=(want-hintA)*damp(dt,want?.35:.1);hintEl.style.opacity=(hintA*.6).toFixed(3);
@@ -346,7 +348,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   set(o:{p?:number,t?:number|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;},
   scrollToEnd(){lenis?.scrollTo('bottom');},
   scrollTop(){lenis?.scrollTo(0,{immediate:true});pRaw=0;p=0;wave.state='off';wave.start=null;mix.reset();},
-  dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);removeEventListener('keydown',onKey);
+  dispose(){disposed=true;gsap.ticker.remove(tick);cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);removeEventListener('keydown',onKey);titleFluid?.dispose();
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
    globe.dispose();figure.dispose();climber?.dispose();space?.dispose();arch?.dispose();rig?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds,height].forEach(x=>x.dispose());composer.dispose();renderer.dispose();},
  };

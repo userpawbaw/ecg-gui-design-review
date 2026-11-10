@@ -99,7 +99,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
  const composer=arch?new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)})):new EffectComposer(renderer);
  composer.addPass(new RenderPass(scene,camera));
- if(arch)composer.addPass(arch.vol);
+ if(arch)composer.addPass(new URLSearchParams(location.search).get('shaftfx')==='raw'?arch.vol:arch.fogPass());   // 2026-11-10: smoothed half-res fog (Lab D-153) — ?shaftfx=raw = the old full-res pass
  const shafts=space?createShafts(renderer,camera,[figure.group.children[0],figure.heartMesh]):null;if(shafts)composer.addPass(shafts.pass);
  composer.addPass(createFireflyGuard());   // NaN / Inf / huge pixels never reach bloom (2026-11-10 flashes)
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.55,.35,.78);composer.addPass(bloom);composer.addPass(new OutputPass());

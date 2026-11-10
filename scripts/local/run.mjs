@@ -114,7 +114,8 @@ function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Pyth
   if(code!==0){bad('재생 신호를 만들지 못함(위 메시지). 패키지가 없으면 npm run bridge:setup');process.exit(code);}
   src=['--replay','csv','--csv',out];
  }
- const has=k=>rest.includes(k),argv=['scripts/serial_bridge.py',...src,'--serve',...(has('--methods')?[]:['--methods','M_FE,M04,M05S']),...rest];
+ // 2026-11-10: 실시간 탭 기법 선택(최대 3개 표시)을 위해 기본 계산 기법을 5개로(고전 기법, 이 환경 측정 6개에 CPU 1코어 약 46 %)
+ const has=k=>rest.includes(k),argv=['scripts/serial_bridge.py',...src,'--serve',...(has('--methods')?[]:['--methods','M_FE,M02,M03,M04,M05S']),...rest];
  say(`\n재생 브리지(${src[1]==='csv'?'고른 신호':'합성 심전도'} → 실제 처리 경로, 실측 아님): ${d}\n  ${[p.bin,...p.pre,...argv].join(' ')}\n  앱은 다른 터미널에서 npm run story → «실시간 측정» 탭. 멈추려면 Ctrl+C\n`);
  const code=run(p.bin,[...p.pre,...argv],{cwd:d,allowFail:true});process.exit(code);}
 

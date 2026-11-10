@@ -118,3 +118,10 @@ npm run bridge:replay -- --signal mitdb:100 --noise ma --snr 5
 | `prototype/v2/src/live/` | 실시간 측정 화면(스트림 수신 · 축 · 그리기) |
 | 원본 `scripts/serial_bridge.py` | 브리지(재생 모드 · SSE `/stream` · 공통 전처리 전환 `/fe`) |
 | 원본 `requirements.txt` | 전체 패키지 목록(딥러닝 포함) |
+
+## 실시간 탭 기법 선택 (2026-11-10)
+
+- 실시간 측정 탭 오른쪽 「기법 선택」에서 브리지가 보내는 기법 중 **최대 3개**를 파형으로 표시한다. 브리지가 보내지 않는 기법은 흐리게 보이고 고를 수 없다.
+- 브리지가 계산하는 기법은 **시작할 때** 정해진다(원본 `serial_bridge.py --methods`). `npm run bridge:replay`의 기본값은 `M_FE,M02,M03,M04,M05S`(고전 기법 5개)다.
+- 딥러닝 기법을 넣으려면 torch가 설치된 Python에서 `npm run bridge:replay -- --methods M_FE,M04,M05S,M06,M08` 처럼 준다(체크포인트 축 기본 d1). 딥러닝은 CPU를 많이 쓰므로 표시는 3개로 두는 편이 좋다.
+- `M_FE`와 `M01`은 같은 출력이다(공통 전처리가 곧 필터).

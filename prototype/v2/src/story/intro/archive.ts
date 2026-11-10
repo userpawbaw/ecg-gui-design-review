@@ -8,7 +8,7 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
 import {ShaderPass} from 'three/addons/postprocessing/ShaderPass.js';
-import {FullScreenQuad} from 'three/addons/postprocessing/Pass.js';
+import {FullScreenQuad,Pass} from 'three/addons/postprocessing/Pass.js';
 
 export type ArchiveManifest={lm_scale:number,groups:Record<string,{object:string,file?:string,vertex_color?:string}>,
  sun:{to_dir:number[],color:number[]},shots:Record<string,{pos:number[],look:number[],fov_v_deg:number}>,
@@ -320,7 +320,41 @@ export async function createArchive(variant:ArchiveVariant='base'){
  const fig=manifest.figure;
  const hq=fig.heart_q_wxyz_blender;                               // Blender (w, x, y, z) z-up → three y-up: (x, z, −y)
  const heartQuat=new THREE.Quaternion(hq[1],hq[3],-hq[2],hq[0]);
- return{manifest,room,dust,dustMat,vol,mats,shared,lightRT,lightVP,sunTo,sunCol,renderSunDepth,setSun,amb,stepAmbient,
+
+ // 2026-11-10 (user videos 23:45 / 23:51: books and the book cart still flash; the pastel Lab-style assets do not): the full-res
+ // shaft pass shifts its march offset every frame (IGN × uFrame) with no smoothing, so partly shadowed air in front of the
+ // books shows a checker that changes every frame. The Lab never had it (D-153: half-res fog + depth-aware 3 × 3 smoothing).
+ // fogPass() is that Lab composite as one composer pass, for the intro and the noise scenes in place of `vol`.
+ function fogPass(){
+  const vu=vol.uniforms,vm=vol.material as THREE.ShaderMaterial;
+  const fogRT=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false,minFilter:THREE.NearestFilter,magFilter:THREE.NearestFilter});
+  const fogQ=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:vu,vertexShader:vm.vertexShader,fragmentShader:vm.fragmentShader,defines:{FOG_ONLY:'',NSTEPS:64}}));
+  const cu={tBase:{value:null as THREE.Texture|null},tDepth:vu.tDepth,tFog:{value:fogRT.texture},uFogSize:{value:new THREE.Vector2(1,1)},
+   uInvProj:vu.uInvProj,uInvView:vu.uInvView,uCam:vu.uCam,uHaze:vu.uHaze,uHazeCol:vu.uHazeCol,uOn:vu.uOn};
+  const comp=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:cu,depthTest:false,depthWrite:false,
+   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+   fragmentShader:`precision highp float;uniform sampler2D tBase,tDepth,tFog;uniform vec2 uFogSize;uniform mat4 uInvProj,uInvView;uniform vec3 uCam,uHazeCol;uniform float uHaze,uOn;varying vec2 vUv;
+    void main(){vec3 col=texture2D(tBase,vUv).rgb;float d=texture2D(tDepth,vUv).x;
+     vec4 v=uInvProj*vec4(vUv*2.-1.,d*2.-1.,1.);v/=v.w;float dist=length((uInvView*v).xyz-uCam);
+     float hz=(1.-exp(-uHaze*min(dist,14.)))*uOn;
+     vec2 f=vUv*uFogSize-.5,c=floor(f)+.5;vec3 s=vec3(0.);float w=0.;
+     for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){vec2 t=c+vec2(float(i),float(j));vec4 q=texture2D(tFog,t/uFogSize);
+      vec2 o=t-.5-f;float k=exp(-dot(o,o)*.45)*exp(-abs(q.a-dist)/(.04+.06*dist)*3.);s+=q.rgb*k;w+=k;}
+     vec3 fogc=w>1e-4?s/w:texture2D(tFog,vUv).rgb;
+     gl_FragColor=vec4(mix(col,uHazeCol,hz)+fogc,1.);}`}));
+  class FogPass extends Pass{
+   constructor(){super();this.needsSwap=true;}
+   setSize(w:number,h:number){fogRT.setSize(Math.max(1,Math.ceil(w/2)),Math.max(1,Math.ceil(h/2)));cu.uFogSize.value.set(fogRT.width,fogRT.height);}
+   render(r:THREE.WebGLRenderer,write:THREE.WebGLRenderTarget,read:THREE.WebGLRenderTarget){
+    cu.tBase.value=read.texture;
+    if(vu.uOn.value<.002&&vu.uCOn.value<.002){r.setRenderTarget(this.renderToScreen?null:write);comp.render(r);return;}   // haze only
+    r.setRenderTarget(fogRT);fogQ.render(r);
+    r.setRenderTarget(this.renderToScreen?null:write);comp.render(r);}
+   dispose(){fogRT.dispose();fogQ.dispose();comp.dispose();}
+  }
+  return new FogPass();
+ }
+ return{fogPass,manifest,room,dust,dustMat,vol,mats,shared,lightRT,lightVP,sunTo,sunCol,renderSunDepth,setSun,amb,stepAmbient,
   figureLocation:V(fig.location),heart:V(fig.heart),heartQuat,handR:V(fig.hand_r),climb:manifest.climb?{location:V(manifest.climb.location),pitch:manifest.climb.pitch_x_rad}:null,
   shot:(k:string)=>({pos:V(manifest.shots[k].pos),look:V(manifest.shots[k].look),fov:manifest.shots[k].fov_v_deg}),
   setFade(a:number){shared.uFade.value=a;room.visible=a>.002;dust.visible=a>.002;},

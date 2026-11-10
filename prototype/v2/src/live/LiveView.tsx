@@ -11,6 +11,12 @@ import {WAVE} from '../waveMode';
 const FX = WAVE !== 'prev';
 import * as AX from './liveAxis';
 import {StateChip, StatePanel} from '../Glyph';
+import methodData from '../methods.json';
+// 2026-11-10 사용자 「실험실 탭과 유사하게 오른쪽에 기법 선택 창 … 최대 3개」: 브리지가 보내는 기법 중 3개까지 그린다(그리기 비용).
+// 브리지가 계산하는 기법은 시작할 때 정해진다(--methods, 원본 저장소). 목록에 있어도 브리지가 보내지 않으면 고를 수 없다.
+const DEFAULT_ORDER = ['M_FE', 'M04', 'M05S', 'M08', 'M06', 'M02', 'M03', 'M05', 'M09', 'M06L6', 'M01'];
+const LIVE_IDS = ['M_FE', 'M01', 'M02', 'M03', 'M04', 'M05S', 'M05', 'M06', 'M06L6', 'M08', 'M09'], MAX_LIVE = 3;
+const shortName = (id: string) => (methodData as Record<string, {name: string}>)[id]?.name ?? LABEL[id] ?? id;
 
 /** 연결 안 됨 — 글 대신 그림 하나와 짧은 말(사용자 2026-10-29 "간결하고 AI티 나지 않게"; D-160에서 공통 상태 그림으로). 실행 방법은 docs/LOCAL_WINDOWS.md. */
 export function LiveOffline({checking = false}: {checking?: boolean}) {
@@ -34,6 +40,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   const [note, setNote] = useState<string>(''), [winS, setWinS] = useState(5), [ampText, setAmpText] = useState('0');
   const canvases = useRef(new Map<string, HTMLCanvasElement>()), overlay = useRef<HTMLCanvasElement | null>(null);
   const dirty = useRef(true), lastLayout = useRef(0), notesSeen = useRef(0);
+  const order = useRef<string[]>([]);   // 보이는 기법(먼저 고른 것부터)
 
   // 브리지 찾기 → SSE. 못 찾으면 5 s 마다 다시(A안과 같은 규칙).
   useEffect(() => {
@@ -96,6 +103,20 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       .catch(() => setNote('브리지 전송 실패'));
   };
   const toggle = (n: string) => { S.hidden.has(n) ? S.hidden.delete(n) : S.hidden.add(n); setLayout(l => l + 1); };
+  // 새로 들어온 기법은 3개가 찰 때까지만 보이고 나머지는 숨긴다
+  useEffect(() => {
+    let changed = false;
+    const pri = (n: string) => { const i = DEFAULT_ORDER.indexOf(n); return i < 0 ? 99 : i; };   // M_FE 와 M01 은 같은 출력이라 처음엔 겹치지 않게
+    for (const n of [...S.names()].sort((a, b) => pri(a) - pri(b))) { if (n === 'raw' || order.current.includes(n) || S.hidden.has(n)) continue;
+      if (order.current.length < MAX_LIVE) order.current.push(n); else S.hidden.add(n); changed = true; }
+    if (changed) setLayout(l => l + 1);
+  }, [layout]);
+  const pick = (id: string) => {
+    const o = order.current;
+    if (o.includes(id)) { if (o.length <= 1) { setNote('마지막 표시 기법은 유지'); return; } o.splice(o.indexOf(id), 1); S.hidden.add(id); }
+    else { o.push(id); S.hidden.delete(id); if (o.length > MAX_LIVE) S.hidden.add(o.shift()!); }
+    setLayout(l => l + 1);
+  };
   const setAmp = (raw: string) => {
     setAmpText(raw); let v = Number(raw);
     const next = Number.isFinite(v) && v > 0 ? Math.round(v * 100) / 100 : 0;
@@ -109,7 +130,17 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   if (!connected && !names.length) return conn === 'checking' ? <LiveOffline checking/> : <>{help}</>;
   const src = st.src === 'serial' ? <StateChip kind="live" tone="ok" label="보드 입력"/> : st.src === 'replay' ? <StateChip kind="stored" tone="stored" label="저장 신호 재생" note="--replay"/> : <StateChip kind="live" tone="idle" label="브리지 출력"/>;
   const fmt = (v: number | undefined, d = 0) => v == null || !Number.isFinite(v) ? '—' : v.toFixed(d);
-  return <div className="live-native">
+  const avail = new Set(names.filter(n => n !== 'raw'));
+  const aside = <aside className="method-panel live-methods" aria-label="실시간 기법 선택">
+    <div className="eyebrow">METHOD SELECT</div><h3>기법 선택</h3>
+    <p className="subtle">클릭: 파형에 추가 · 제거(최대 {MAX_LIVE}개)</p>
+    <div className="method-list">{LIVE_IDS.map(id => { const on = avail.has(id) && !S.hidden.has(id);
+      return <button key={id} className={'method' + (on ? ' selected' : '')} aria-pressed={on} disabled={!avail.has(id)} data-method={id}
+        title={avail.has(id) ? undefined : '브리지가 보내지 않는 기법 — 브리지를 --methods 에 넣어 다시 시작(docs/DEMO_BRIDGE.md)'} onClick={() => pick(id)}>
+        <strong>{id}</strong><span>{shortName(id)}</span>{on && <span aria-hidden="true">✓</span>}</button>; })}</div>
+    <p className="subtle">브리지 계산 중 {avail.size}개 · 흐린 항목은 브리지 시작 때 넣어야 고를 수 있습니다.</p>
+  </aside>;
+  return <div className="live-shell"><div className="live-native">
     <div className="live-status" role="status">
       <span className={'live-conn ' + conn}>{conn === 'on' ? <StateChip kind="linked" tone="ok" label="연결됨"/> : conn === 'retry' ? <StateChip kind="retry" tone="warn" label="연결 끊김" note="재연결 중"/>
         : conn === 'lost' ? <StateChip kind="cut" tone="err" label="보드 연결 끊김"/> : <StateChip kind="loading" tone="idle" label="확인 중"/>}</span>
@@ -143,7 +174,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
         <span className="seg-group"><small>소거 구간 비율</small>{AX.ERASE_CHOICES.map(f => <button key={f} aria-pressed={view.eraseFrac === f} onClick={() => setView(o => ({...o, eraseFrac: f}))}>{Math.round(f * 100)}%</button>)}</span>
       </details>
     </div>
-    <div className="live-legend">{names.map(n => <button key={n} aria-pressed={!S.hidden.has(n)} onClick={() => toggle(n)} style={{color: n === 'raw' ? (view.mode === 'overlay' ? '#8fa3ad' : RAW_COLOR) : S.color(n)}}>
+    <div className="live-legend">{names.filter(n => n === 'raw').map(n => <button key={n} aria-pressed={!S.hidden.has(n)} onClick={() => toggle(n)} style={{color: n === 'raw' ? (view.mode === 'overlay' ? '#8fa3ad' : RAW_COLOR) : S.color(n)}}>
       <i/>{LABEL[n] ?? n}</button>)}</div>
     {!names.length && <p className="subtle">신호 수신 대기</p>}
     {view.mode === 'overlay'
@@ -151,5 +182,5 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
           <canvas ref={el => { overlay.current = el; }} className="live-canvas tall" data-mode={view.play}/></div>
       : shown.map(n => <div key={n} className="live-row"><div className="live-lab"><b style={{color: S.color(n)}}>{n === 'raw' ? LABEL.raw : LABEL[n] ?? n}</b></div>
           <canvas ref={el => { if (el) canvases.current.set(n, el); else canvases.current.delete(n); }} className="live-canvas" data-series={n} data-mode={view.play}/></div>)}
-  </div>;
+  </div>{aside}</div>;
 }

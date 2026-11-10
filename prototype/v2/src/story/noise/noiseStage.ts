@@ -392,7 +392,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
  // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
  const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
- composer.addPass(new RenderPass(scene,camera));composer.addPass(arch.vol);composer.addPass(createFireflyGuard());setLights(QA.light);
+ composer.addPass(new RenderPass(scene,camera));composer.addPass(new URLSearchParams(location.search).get('shaftfx')==='raw'?arch.vol:arch.fogPass());composer.addPass(createFireflyGuard());setLights(QA.light);
  // M-b shallow focus (§10.4): focus rides the wave — fist → shoulder → RA
  const bokeh=new BokehPass(scene,camera,{focus:1,aperture:0,maxblur:.008});composer.addPass(bokeh);bokeh.enabled=false;
  const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.5,.35,.8);composer.addPass(bloom);composer.addPass(new OutputPass());
@@ -421,6 +421,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // stored-trace timings (per scene)
  // shell clock (B1/B2 slow it near the camera), first contact with the body and each shell's arrival (D1 inflow pulses)
  const REF_D=1.6;let sClock=0,contactT=-1;const sAt=new Map<number,number>();const arrive:number[]=[],arrived=new Set<number>();
+ let bwCarry=0,lastBwK=0;const BW_RETURN_S=2.5;   // 사용자 2026-11-10 「기저선 … 파랗게 … 근육 잡음 … 바로 바뀌어서 어색 … 천천히 하얀색」
  let T=0,bw:ReturnType<typeof breathFromBaseline>|null=null,drive:ReturnType<typeof createFistDrive>|null=null,PROC=0;
  const breathFixed=(t:number)=>{const u=t%5;return u<2?ss(0,2,u):1-ss(2,5,u);};              // D-053: 2 per 10 s
  // S-14 (user 2026-10-12): fist and red marker follow the stored muscle noise itself (fistDrive.ts) — the fist closes at a
@@ -442,7 +443,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  let t0=performance.now(),frozen=opt.frozenT,frame=0;
  /** Start a scene on the same stage: the camera path begins where the previous scene's camera is (no cut, no reload). */
  function setScene(d:NoiseData,o:{last?:boolean}={}){
-  const handover=keys.length>0;data=d;last=!!o.last;ended=false;leaveT=-1;
+  const handover=keys.length>0;bwCarry=handover?lastBwK:0;data=d;last=!!o.last;ended=false;leaveT=-1;
   T=data.input.length/data.fs;bw=data.cond==='bw'?breathFromBaseline(data.input,data.fs):null;
   drive=data.cond==='ma'?createFistDrive(data.input,data.clean,data.fs,QA.fist):null;
   HOLD={pli:18.6,bw:4,ma:31}[data.cond];OUTLEN=data.cond==='ma'?4:1.2;TP={pli:19,bw:11,ma:11}[data.cond];PROC=TP+3;   // panel (right curtain + wave) from TP; strip after the inflow
@@ -496,7 +497,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
    const target=fistP.lerp(raP,k*k*(3-2*k));(bokeh.uniforms as Record<string,{value:number}>).focus.value=camera.position.distanceTo(target);
    (bokeh.uniforms as Record<string,{value:number}>).aperture.value=t<4?.0005:.006;}
   bu.uCommon.value=common;bu.uFront.value=front;bu.uWaveK.value=waveK;
-  {const k=data.cond==='bw'?ss(1,4,t):0;bu.uEdgeK.value=LEGIB&1?BW_EDGE*k:0;bu.uDense.value=LEGIB&2?.35*k:0;
+  {const k=data.cond==='bw'?ss(1,4,t):bwCarry*(1-ss(0,BW_RETURN_S,t));lastBwK=data.cond==='bw'?k:0;   // 2026-11-10: the next scene eases the side-view look back over BW_RETURN_Sbu.uEdgeK.value=LEGIB&1?BW_EDGE*k:0;bu.uDense.value=LEGIB&2?.35*k:0;
    // S-15 (user 2026-10-12): side view — body darker ("너무 밝은 느낌") and see-through along the heart → camera line
    bu.uExposure.value=.42*(1-(1-BW_EXPO)*k);bu.uRay.value=BW_RAY*k;}
   bu.uChest.value=CHEST;   // eases in with the orbit (no pop)

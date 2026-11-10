@@ -67,13 +67,13 @@ export function Plot(p:Props){
  if(useStrip){const sr=strips[r]??=new StripRow(),off=q.data.offset,cl=q.data.traces.clean,a=q.data.traces[row.id]!,H=Math.min(q.data.n-1,Math.floor(t*q.data.fs)),cnt=count_;
   const yv=(arr:Float32Array,res:boolean)=>(k:number)=>{const i=k-off;return top+ph/2-(res?(arr[i]-cl[i])*(q.gain||1):arr[i])/q.amplitude*ph/2;};
   sr.configure([w,h,dpr,cnt,q.mode,q.amplitude,q.reference,q.gain,q.method,q.shown.join(','),q.data.scene.id,off,row.id,isDiff,top,ph,left,pw].join('|'),{l:left,t:top,w:pw,h:ph,nCols:cnt,dx:pw/cnt,dpr},level);
-  sr.update(H,off,[...(isDiff?[]:[{y:yv(cl,false),color:'#c4c6c7',width:1.8,alpha:q.reference,lit:false,glow:false}]),{y:yv(a,!!isDiff),color:row.color,width:1.2,alpha:1,lit:!isDiff,glow:!isDiff&&(r===0||foc)}]);
+  sr.update(H,off,[...(isDiff?[]:[{y:yv(cl,false),color:'#c4c6c7',width:1.8,alpha:q.reference,lit:false,glow:false}]),{y:yv(a,!!isDiff),color:row.color,width:1.2,alpha:1,lit:!isDiff,glow:!isDiff}]);
   ramps.build(q.span,GAP_S,ERASE_S);sr.clearAhead(H,Math.floor(GAP_S*q.data.fs)-1);
   const rightX=right-(t*q.data.fs+1-H)/cnt*pw;
-  composeRow(g,sr,ramps,layer,{sweep:q.mode==='sweep',head:H,headX:q.mode==='sweep'?headX:rightX,rightX,r:right,white:isDiff?0:foc?1.15:.8,glow:isDiff?0:foc?.55:r===0?.35:0,level,liveK:1,span:q.span,gapS:GAP_S,tailS:GAP_S+ERASE_S});
+  composeRow(g,sr,ramps,layer,{sweep:q.mode==='sweep',head:H,headX:q.mode==='sweep'?headX:rightX,rightX,r:right,white:isDiff?0:foc?1.15:.8,glow:isDiff?0:foc?.55:.35/* 2026-11-10 사용자: 가운데 기법 행도 입력과 같은 빛(이전 0) */,level,liveK:1,span:q.span,gapS:GAP_S,tailS:GAP_S+ERASE_S});
  }else{
  if(!isDiff)trace(q.data.traces.clean,'#c4c6c7',1.8,q.reference);   // thinner lines (user 2026-10-18 "선 두께도 좀 더 줄여"): Reference 2.4 → 1.8, traces 1.6 → 1.2
- trace(q.data.traces[row.id],row.color,1.2,1,false,!!isDiff,isDiff?0:foc?1.15:.8,isDiff?0:foc?.55:r===0?.35:0);}   // glow ×0.55 on the output; the input too (user 2026-10-18 "입력에도 이 효과가 포함"), lower — its dense noise stacks far more glow per pixel (intro sweep.ts)
+ trace(q.data.traces[row.id],row.color,1.2,1,false,!!isDiff,isDiff?0:foc?1.15:.8,isDiff?0:foc?.55:.35);}   // glow ×0.55 on the output; the input too (user 2026-10-18 "입력에도 이 효과가 포함"), lower — its dense noise stacks far more glow per pixel (intro sweep.ts)
  if(foc&&q.preview&&!q.shown.includes(q.preview))trace(q.data.traces[q.preview],'#f6d18d',1.2,1,true);
  // head marker: a small hot point at the newest sample (brighter on the selected output)
  if(fxOn&&!isDiff&&q.data.traces[row.id]){const hi=Math.min(q.data.n-1,Math.floor(t*q.data.fs))-q.data.offset,a=q.data.traces[row.id]!;if(hi>=0&&hi<a.length){const x=headX,y=yOf(a,hi+q.data.offset,false),R=foc?16:11;

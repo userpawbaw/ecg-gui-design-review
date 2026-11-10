@@ -27,11 +27,21 @@ function tick(now: number, flowing: boolean) {
   const dt = now - pace.last; pace.last = now;
   if (!flowing || !(dt > 0 && dt < 250)) return;
   pace.ema = pace.n ? pace.ema * .95 + dt * .05 : dt; pace.n++;
-  if (FX_PIN === null && pace.n > 90 && pace.level > 0 && pace.ema > 26) { pace.level--; pace.n = 0; }
+  // 2026-11-10 사용자 「실시간 처리 출력 … 주변광이 없으며 … 흐릿」: 칸 3개 + 브리지 + 배경이면 26 ms를 넘기 쉬워 번짐이 0까지 꺼졌다.
+  // 실험실과 같은 모습을 우선해 40 ms(25 fps)부터, 1단까지만 낮춘다(번짐은 남는다).
+  if (FX_PIN === null && pace.n > 90 && pace.level > 1 && pace.ema > 40) { pace.level--; pace.n = 0; }
   fxStats.level = pace.level;
 }
 (globalThis as unknown as {__liveStats: typeof fxStats}).__liveStats = fxStats;
 
+/** 2026-11-10 사용자 「모눈종이가 달라서 … 퀄리티가 떨어지는」: 실측 범위가 작으면(±0.04 mV) 0.1 mV 작은 칸이 칸 높이를 넘어 가로선이
+ *  사라지고 세로선만 남았다. 작은 칸 간격을 실험실과 비슷한 화면 밀도(약 7 px)가 되는 1 · 2 · 5 × 10ⁿ mV로 고르고, paper()에는
+ *  그 간격이 0.1 mV 칸이 되도록 환산한 범위를 넘긴다(축 숫자는 그대로 실제 mV). */
+function gridAmp(halfMv: number, halfPx: number) {
+  const want = 7 * halfMv / Math.max(1, halfPx), e = Math.pow(10, Math.floor(Math.log10(want))), m = want / e;
+  const step = (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * e;
+  return halfMv * .1 / step;
+}
 function state(c: HTMLCanvasElement): Per {
   let p = per.get(c);
   if (!p) { p = {row: new StripRow(), st: {key: '', bg: document.createElement('canvas'), hot: document.createElement('canvas')}}; per.set(c, p); }
@@ -46,7 +56,7 @@ function paintStatic(c: HTMLCanvasElement, g: CanvasRenderingContext2D, w: numbe
     for (const [cv, k] of [[s.bg, 1], [s.hot, 4.2]] as const) {
       cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); const og = cv.getContext('2d')!; og.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (k === 1) { og.fillStyle = BG; og.fillRect(0, 0, w, h); }
-      if (ax) paper(og, box, winS, ax.s, k);
+      if (ax) paper(og, box, winS, gridAmp(ax.s, (box.b - box.t) / 2), k);
       if (k === 1) drawFrame(og, P, ax, winS, play, !ax);
     }
   }

@@ -261,7 +261,13 @@ export async function createArchive(variant:ArchiveVariant='base'){
     #else
     if(uOn<.002&&uCOn<.002){gl_FragColor=vec4(col,1.);return;}
     #endif
-    float d=texture2D(tDepth,vUv).x;
+    // 2026-11-10 (user videos 22:48 / 22:52: 「정면 책들의 틈새 … 가구의 모서리 부분이 번쩍」): a pixel-thin gap reads the far depth
+    // behind it, so its ray runs up to uMaxLen through lit air and the gap alone glows; with MSAA the colour there is a blend but the
+    // depth is one sample, and the sliver blinks as the camera moves (bloom spreads it). The march uses the nearest depth of the
+    // pixel and its 4 neighbours, so rays stop at the nearer surface across thin gaps and edges.
+    vec2 dpx=1./vec2(textureSize(tDepth,0));
+    float d=min(min(texture2D(tDepth,vUv).x,min(texture2D(tDepth,vUv+vec2(dpx.x,0.)).x,texture2D(tDepth,vUv-vec2(dpx.x,0.)).x)),
+                min(texture2D(tDepth,vUv+vec2(0.,dpx.y)).x,texture2D(tDepth,vUv-vec2(0.,dpx.y)).x));
     vec4 v=uInvProj*vec4(vUv*2.-1.,d*2.-1.,1.);v/=v.w;vec3 wp=(uInvView*v).xyz;
     vec3 rd=wp-uCam;float len=min(length(rd),uMaxLen);rd=normalize(rd);
     const int N=NSTEPS;float dt=len/float(N),j=ign(gl_FragCoord.xy+uFrame*5.588),acc=0.,tr=1.;

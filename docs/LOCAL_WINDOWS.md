@@ -60,6 +60,8 @@ Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `
 
 **이 저장소에서 한 줄로**(2026-11-08): 두 저장소를 같은 폴더에 두고 `npm run bridge:setup`(처음 한 번), 그다음 `npm run bridge:replay`. 원본 저장소는 `claude/pli-harmonic-canceller` 브랜치여야 한다(D-162, 그 전에는 `claude/adoring-cray-nv6pvq`). 발표 캡처 절차 전체는 `docs/DEMO_BRIDGE.md`.
 
+**실시간 탭 기법 바꾸기**(2026-11-10): `npm run bridge:replay`로 띄우면 실시간 측정 탭 오른쪽에서 기법을 고를 때마다 브리지만 다시 뜬다(몇 초). 딥러닝 기법(M06 · M08 · M09)까지 쓰려면 처음 한 번 `npm run bridge:setup -- --dl`. 실보드는 `npm run bridge:replay -- --port COM3`.
+
 - 다른 PC·포트의 브리지는 앱을 띄우기 전에 환경 변수 `ECG_BRIDGE`(예: `http://192.168.0.5:8765`)로 정한다.
 - 브리지 자체 화면(A안)으로 보려면 주소 뒤에 `?live=iframe`(`docs/URL_PARAMS.md`).
 

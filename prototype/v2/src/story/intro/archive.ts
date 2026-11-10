@@ -321,6 +321,34 @@ export async function createArchive(variant:ArchiveVariant='base'){
  const hq=fig.heart_q_wxyz_blender;                               // Blender (w, x, y, z) z-up → three y-up: (x, z, −y)
  const heartQuat=new THREE.Quaternion(hq[1],hq[3],-hq[2],hq[0]);
 
+ // 2026-11-10 (user: B안 A로 진행, 최종 컨펌은 나중에): plaster polyhedra from the noise-scene desk set (scripts/assets/desk-corner-set.py:
+ // ico sphere subdivision 1 and a two-cube stack, plaster #cfc8bb) on four aisle shelves so the stacks read less repetitive.
+ // Positions are shelf tops found by ray casts from the aisle walk (verification/intro-fx-20261110c/props_spots.json, set A).
+ // Lit like the room: the same sun depth map (4-tap), exposure / saturation / fade; no baked bounce, so a flat ambient stands in.
+ // Original archive only; ?props=0 hides them.
+ const propsOn=variant==='base'&&new URLSearchParams(location.search).get('props')!=='0';
+ const props=new THREE.Group();props.name='AislePlasterProps';
+ if(propsOn){
+  const pm=new THREE.ShaderMaterial({uniforms:{uFade:shared.uFade,uExposure:shared.uExposure,uSat:shared.uSat,tLight:{value:lightRT.depthTexture},uLightVP:{value:lightVP},
+    uSun:{value:sunTo},uCol:{value:sunCol},uAlb:{value:new THREE.Color('#cfc8bb')},uAmb:{value:.3},uKey:{value:2.2}},
+   vertexShader:`varying vec3 vWP,vN;void main(){vec4 w=modelMatrix*vec4(position,1.);vWP=w.xyz;vN=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*w;}`,
+   fragmentShader:`uniform sampler2D tLight;uniform mat4 uLightVP;uniform vec3 uSun,uCol,uAlb;uniform float uFade,uExposure,uSat,uAmb,uKey;varying vec3 vWP,vN;
+    void main(){vec3 n=normalize(vN);vec4 lp=uLightVP*vec4(vWP+n*.025,1.);vec3 l=lp.xyz/lp.w*.5+.5;float lit=0.;
+     if(all(greaterThan(l.xy,vec2(0.)))&&all(lessThan(l.xy,vec2(1.)))){const float o=1.5/2048.;
+      lit=(step(l.z-.004,texture2D(tLight,l.xy+vec2(o,o)).x)+step(l.z-.004,texture2D(tLight,l.xy+vec2(-o,o)).x)+step(l.z-.004,texture2D(tLight,l.xy+vec2(o,-o)).x)+step(l.z-.004,texture2D(tLight,l.xy-vec2(o,o)).x))*.25;}
+     float sky=.75+.25*(n.y*.5+.5);vec3 L=vec3(uAmb*sky)+uCol*uKey*lit*max(dot(n,-uSun),0.);
+     vec3 c=uAlb*uAlb*L*uExposure*uFade;c=mix(vec3(dot(c,vec3(.2126,.7152,.0722))),c,uSat);gl_FragColor=vec4(c,1.);
+     #include <tonemapping_fragment>
+     #include <colorspace_fragment>
+    }`});
+  const SPOTS:[number[],'ico'|'stack',number,number][]=[[[1.256,1.575,.031],'ico',.1,.4],[[1.374,1.205,.03],'stack',.14,.5],[[-1.257,1.575,.017],'stack',.12,1.1],[[-1.36,.835,-1.754],'ico',.09,.9]];
+  for(const [[x,y,z],kind,sz,rot] of SPOTS){
+   if(kind==='ico'){const m=new THREE.Mesh(new THREE.IcosahedronGeometry(sz,0),pm);m.position.set(x,y+sz*.8,z);m.rotation.set(.3,rot,.2);props.add(m);}
+   else{const a=new THREE.Mesh(new THREE.BoxGeometry(sz,sz,sz),pm);a.position.set(x,y+sz/2,z);a.rotation.y=rot;
+    const c=new THREE.Mesh(new THREE.BoxGeometry(sz*.64,sz*.64,sz*.64),pm);c.position.set(x,y+sz+sz*.32,z);c.rotation.y=rot+.6;props.add(a,c);}}
+  room.add(props);
+ }
+
  // 2026-11-10 (user videos 23:45 / 23:51: books and the book cart still flash; the pastel Lab-style assets do not): the full-res
  // shaft pass shifts its march offset every frame (IGN × uFrame) with no smoothing, so partly shadowed air in front of the
  // books shows a checker that changes every frame. The Lab never had it (D-153: half-res fog + depth-aware 3 × 3 smoothing).

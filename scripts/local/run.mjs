@@ -7,7 +7,8 @@
 //   npm run spike -- video-scrub — install deps if missing and start a spike dev server
 //   npm run py -- <script> [args]— run a Python script with the right interpreter and UTF-8 forced
 //   npm run v2:prepare           — build prototype/v2/public (keeps the checked-in methods.json)
-import {spawnSync} from 'node:child_process';
+import {spawnSync,spawn} from 'node:child_process';
+import http from 'node:http';
 import {existsSync,readFileSync,readdirSync} from 'node:fs';
 import {dirname,join,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -97,8 +98,11 @@ function sourceDir(){
  bad('원본 저장소(ECG_denoising_method_comparision)를 찾지 못함. 이 저장소와 같은 폴더(예: Documents\\GitHub)에 clone 하거나, 환경 변수 ECG_SOURCE 에 그 폴더 경로를 넣는다');
  say('  찾아본 곳: '+cands.join(' | '));process.exit(1);
 }
-function bridgeSetup(){const p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}
- run(p.bin,[...p.pre,'-m','pip','install','--upgrade','numpy','scipy','PyWavelets','PyYAML','pandas','matplotlib','wfdb']);ok('원본 브리지 재생 모드 준비 완료. 다음: npm run bridge:replay');}
+function bridgeSetup(extra=[]){const p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}
+ run(p.bin,[...p.pre,'-m','pip','install','--upgrade','numpy','scipy','PyWavelets','PyYAML','pandas','matplotlib','wfdb']);
+ // 2026-11-10: 실시간 탭에서 딥러닝 기법(M06 · M08 · M09)을 고르려면 torch 가 있어야 한다 — npm run bridge:setup -- --dl (CPU 판, 수백 MB)
+ if(extra.includes('--dl'))run(p.bin,[...p.pre,'-m','pip','install','--upgrade','torch','--index-url','https://download.pytorch.org/whl/cpu']);
+ ok('원본 브리지 재생 모드 준비 완료. 다음: npm run bridge:replay'+(extra.includes('--dl')?'':' (딥러닝 기법까지: npm run bridge:setup -- --dl)'));}
 function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Python 3를 찾지 못함 — npm run doctor');process.exit(1);}
  const br=capture('git',['-C',d,'branch','--show-current']);
  const WANT='claude/pli-harmonic-canceller';   // D-162: 전원선 고조파 추적 제거기(원본 D-52) · 보드 1000 Hz(D-53). 그 앞 단계는 claude/adoring-cray-nv6pvq
@@ -106,7 +110,7 @@ function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Pyth
  // 신호 · 잡음 고르기(--signal · --noise · --snr · --start · --sec · --seed): replay_signal.py 로 CSV 를 만들어 --replay csv 로 흘린다
  const own=['--signal','--noise','--snr','--start','--sec','--seed'],pick={},rest=[];
  for(let i=0;i<extra.length;i++){if(own.includes(extra[i])&&i+1<extra.length){pick[extra[i]]=extra[++i];}else rest.push(extra[i]);}
- let src=['--replay','synth'];
+ let src=rest.includes('--port')?[]:['--replay','synth'];   // 실보드: npm run bridge:replay -- --port COM3 (기법 다시 띄우기도 같이 된다)
  if(Object.keys(pick).length){
   const slug=[pick['--signal']||'synth',pick['--noise']||'mixed',(pick['--snr']||'8')+'dB'].join('_').replace(/[^\w.-]+/g,'-');
   const out=join(root,'.cache','replay',slug+'.csv');
@@ -114,12 +118,48 @@ function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Pyth
   if(code!==0){bad('재생 신호를 만들지 못함(위 메시지). 패키지가 없으면 npm run bridge:setup');process.exit(code);}
   src=['--replay','csv','--csv',out];
  }
- // 2026-11-10: 실시간 탭 기법 선택(최대 3개 표시)을 위해 기본 계산 기법을 5개로(고전 기법, 이 환경 측정 6개에 CPU 1코어 약 46 %)
- const has=k=>rest.includes(k),argv=['scripts/serial_bridge.py',...src,'--serve',...(has('--methods')?[]:['--methods','M_FE,M02,M03,M04,M05S']),...rest];
+ // 2026-11-10: 기본 3개 — 실시간 탭에서 기법을 고르면 감독 창구가 브리지를 그 기법만으로 다시 띄운다
+ const has=k=>rest.includes(k),argv=['scripts/serial_bridge.py',...src,'--serve',...(has('--methods')?[]:['--methods','M_FE,M04,M05S']),...rest];
  say(`\n재생 브리지(${src[1]==='csv'?'고른 신호':'합성 심전도'} → 실제 처리 경로, 실측 아님): ${d}\n  ${[p.bin,...p.pre,...argv].join(' ')}\n  앱은 다른 터미널에서 npm run story → «실시간 측정» 탭. 멈추려면 Ctrl+C\n`);
- const code=run(p.bin,[...p.pre,...argv],{cwd:d,allowFail:true});process.exit(code);}
+ supervise(p,argv,d);}
 
-const table={doctor,'bridge:setup':bridgeSetup,'bridge:replay':()=>bridgeReplay(args),story:()=>story(null),'story:wave-prev':()=>story('prev'),'story:wave-all':()=>story('all'),'story:wave-live':()=>story('live'),'story:check':storyCheck,...Object.fromEntries(Object.keys(DIRECT).map(k=>[k,()=>story(null,k)])),spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};
+// 2026-11-10 사용자 「기법을 새로 선택할 때마다 브릿지를 새로 띄우도록 … 브릿지만 재로딩」: 브라우저는 프로세스를 띄울 수 없으므로
+// 이 명령이 브리지를 자식 프로세스로 들고, 127.0.0.1:8764 제어 창구(앱은 같은 출처 /bridge-ctl 프록시)로 --methods 만 바꿔 다시 띄운다.
+//  GET /status → {state, methods, err}   POST /restart {methods:[…]} → 202
+// 허용 목록 밖 이름은 받지 않는다. 새로 띄운 브리지가 바로 죽으면(포트가 아직 안 풀림 등) 1 s 간격으로 4번 다시, 그래도 안 되면 이전 목록으로.
+const LIVE_ALLOWED=new Set(['M_FE','M01','M02','M03','M04','M05','M05S','M06','M06L6','M08','M09']);
+function supervise(p,argv,cwd){
+ const CTL=Number(process.env.ECG_BRIDGE_CTL_PORT||8764),BR=new URL(process.env.ECG_BRIDGE||'http://127.0.0.1:8765');
+ const mi=argv.indexOf('--methods');let methods=argv[mi+1],prev=null,child=null,state='stopped',err='',gen=0,tries=0,since=0;
+ const args=()=>{const a=[...argv];a[mi+1]=methods;return a;};
+ const start=()=>{const g=++gen;state='starting';err='';since=Date.now();
+  say(`\n브리지 시작: --methods ${methods}`);
+  child=spawn(p.bin,[...p.pre,...args()],{cwd,env,stdio:['ignore','inherit','pipe']});
+  child.stderr.on('data',b=>{process.stderr.write(b);err=(err+b).slice(-1500);});
+  child.on('exit',code=>{if(g!==gen)return;child=null;if(state==='stopping')return;
+   const early=Date.now()-since<8000,portBusy=/address already in use|10048|WinError 10013|Errno 98/i.test(err);
+   if(early&&portBusy&&tries<4){tries++;warn(`브리지가 바로 끝남(코드 ${code}) — ${tries}/4 다시 시도`);setTimeout(start,1000);return;}
+   state='failed';tries=0;bad(`브리지 종료(코드 ${code})`+(/No module named 'torch'/.test(err)?' — 딥러닝 기법은 torch 필요: npm run bridge:setup -- --dl':''));
+   if(prev&&prev!==methods){warn(`이전 기법으로 되돌림: ${prev}`);methods=prev;prev=null;setTimeout(start,800);}});
+  const poll=()=>{if(g!==gen||state!=='starting')return;
+   http.get({host:BR.hostname,port:BR.port,path:'/fe'},r=>{r.resume();if(r.statusCode===200){state='running';prev=null;tries=0;ok('브리지 준비됨: '+methods);}else setTimeout(poll,400);})
+    .on('error',()=>setTimeout(poll,400));};
+  setTimeout(poll,500);};
+ const restart=list=>{prev=methods;methods=list.join(',');tries=0;
+  if(child){state='stopping';const c=child;c.once('exit',()=>setTimeout(start,400));c.kill();}else start();};
+ http.createServer((req,res)=>{const j=(code,o)=>{res.writeHead(code,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(o));};
+  const u=req.url.split('?')[0];
+  if(req.method==='GET'&&u==='/status')return j(200,{state,methods:methods.split(','),err:state==='failed'?err.slice(-400):''});
+  if(req.method==='POST'&&u==='/restart'){let body='';req.on('data',c=>{body+=c;if(body.length>2000)req.destroy();});req.on('end',()=>{
+   let list;try{list=JSON.parse(body).methods;}catch{return j(400,{error:'json'});}
+   if(!Array.isArray(list)||!list.length||list.length>4||!list.every(m=>typeof m==='string'&&LIVE_ALLOWED.has(m)))return j(400,{error:'methods: 1–4 of '+[...LIVE_ALLOWED].join(',')});
+   restart([...new Set(list)]);j(202,{state,methods:list});});return;}
+  j(404,{error:'not found'});}).listen(CTL,'127.0.0.1',()=>say(`브리지 제어 창구: http://127.0.0.1:${CTL} (앱의 실시간 탭이 기법을 바꿀 때 이 창구로 브리지만 다시 띄움)`));
+ const stop=()=>{state='stopping';if(child)child.kill();process.exit(0);};process.on('SIGINT',stop);process.on('SIGTERM',stop);
+ start();
+}
+
+const table={doctor,'bridge:setup':()=>bridgeSetup(args),'bridge:replay':()=>bridgeReplay(args),story:()=>story(null),'story:wave-prev':()=>story('prev'),'story:wave-all':()=>story('all'),'story:wave-live':()=>story('live'),'story:check':storyCheck,...Object.fromEntries(Object.keys(DIRECT).map(k=>[k,()=>story(null,k)])),spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};
 if(fileURLToPath(import.meta.url)===resolve(process.argv[1]||'')){
  if(!table[cmd]){say('사용법: npm run doctor | story | story:pli | story:bw | story:ma | story:noise | story:lab | story:check | spike -- <이름> | py -- <스크립트> | py:setup | browsers | v2:prepare');process.exit(cmd?1:0);}
  table[cmd]();

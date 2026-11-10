@@ -41,6 +41,10 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   const canvases = useRef(new Map<string, HTMLCanvasElement>()), overlay = useRef<HTMLCanvasElement | null>(null);
   const dirty = useRef(true), lastLayout = useRef(0), notesSeen = useRef(0);
   const order = useRef<string[]>([]);   // 보이는 기법(먼저 고른 것부터)
+  // 2026-11-10 브리지 다시 띄우기: `npm run bridge:replay` 가 띄운 감독 창구(/bridge-ctl)가 있으면 아무 기법이나 골라 브리지만 다시 시작
+  const ctlUrl = base === 'bridge' ? 'bridge-ctl' : null;
+  const [ctl, setCtl] = useState<{ok: boolean, methods: string[]}>({ok: false, methods: []});
+  const [reload, setReload] = useState<{methods: string[], t0: number, failed?: string} | null>(null);
 
   // 브리지 찾기 → SSE. 못 찾으면 5 s 마다 다시(A안과 같은 규칙).
   useEffect(() => {
@@ -63,6 +67,25 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
     return () => { alive = false; clearTimeout(timer); es?.close(); };
   }, [base]);
 
+  useEffect(() => {
+    if (!ctlUrl) return; let alive = true;
+    fetch(ctlUrl + '/status', {cache: 'no-store'}).then(r => r.ok ? r.json() : null).then(d => { if (alive && d?.methods) setCtl({ok: true, methods: d.methods}); }).catch(() => {});
+    return () => { alive = false; };
+  }, [ctlUrl]);
+  // 다시 띄우는 동안: 감독 상태를 보고, 새 기법 데이터가 들어오면 덮개를 걷는다
+  useEffect(() => {
+    if (!reload || reload.failed) return;
+    const id = window.setInterval(async () => {
+      const got = S.names().filter(n => n !== 'raw');
+      if (reload.methods.every(m => got.includes(m)) && performance.now() - S.lastData < 500) { setReload(null); return; }
+      try { const d = await (await fetch(ctlUrl + '/status', {cache: 'no-store'})).json();
+        if (d.state === 'failed' || (d.state === 'running' && d.methods.join() !== reload.methods.join() && performance.now() - reload.t0 > 4000)) {
+          setReload(r => r && {...r, failed: /torch/.test(d.err ?? '') ? '딥러닝 기법은 torch 설치가 필요합니다 — 이전 기법으로 되돌립니다' : d.err ? '브리지를 띄우지 못함 — 이전 기법으로 되돌립니다' : '이전 기법으로 되돌렸습니다'});
+          order.current = d.methods; setCtl({ok: true, methods: d.methods}); window.setTimeout(() => setReload(null), 2600); }
+      } catch { /* 감독 창구가 잠시 응답하지 않음 */ }
+    }, 500);
+    return () => clearInterval(id);
+  }, [reload]);
   // 낮은 빈도 상태(통계·알림·칸 구성)만 React 로 — 4 Hz.
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -112,6 +135,16 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
     if (changed) setLayout(l => l + 1);
   }, [layout]);
   const pick = (id: string) => {
+    if (ctl.ok && ctlUrl) {   // 브리지만 다시 띄워 고른 기법만 계산
+      const cur = order.current.length ? [...order.current] : ctl.methods.slice(0, MAX_LIVE);
+      let next = cur.includes(id) ? cur.filter(m => m !== id) : [...cur, id];
+      if (!next.length) { setNote('마지막 표시 기법은 유지'); return; }
+      if (next.length > MAX_LIVE) next = next.slice(-MAX_LIVE);
+      order.current = next; S.hidden.clear(); S.clear(); setReload({methods: next, t0: performance.now()}); setCtl(c => ({...c, methods: next}));
+      fetch(ctlUrl + '/restart', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({methods: next})})
+        .catch(() => setReload(r => r && {...r, failed: '브리지 제어 창구 연결 실패'}));
+      return;
+    }
     const o = order.current;
     if (o.includes(id)) { if (o.length <= 1) { setNote('마지막 표시 기법은 유지'); return; } o.splice(o.indexOf(id), 1); S.hidden.add(id); }
     else { o.push(id); S.hidden.delete(id); if (o.length > MAX_LIVE) S.hidden.add(o.shift()!); }
@@ -130,17 +163,26 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   if (!connected && !names.length) return conn === 'checking' ? <LiveOffline checking/> : <>{help}</>;
   const src = st.src === 'serial' ? <StateChip kind="live" tone="ok" label="보드 입력"/> : st.src === 'replay' ? <StateChip kind="stored" tone="stored" label="저장 신호 재생" note="--replay"/> : <StateChip kind="live" tone="idle" label="브리지 출력"/>;
   const fmt = (v: number | undefined, d = 0) => v == null || !Number.isFinite(v) ? '—' : v.toFixed(d);
-  const avail = new Set(names.filter(n => n !== 'raw'));
+  const avail = new Set(ctl.ok ? LIVE_IDS : names.filter(n => n !== 'raw'));
+  const isOn = (id: string) => ctl.ok ? order.current.includes(id) : avail.has(id) && !S.hidden.has(id);
   const aside = <aside className="method-panel live-methods" aria-label="실시간 기법 선택">
     <div className="eyebrow">METHOD SELECT</div><h3>기법 선택</h3>
     <p className="subtle">클릭: 파형에 추가 · 제거(최대 {MAX_LIVE}개)</p>
-    <div className="method-list">{LIVE_IDS.map(id => { const on = avail.has(id) && !S.hidden.has(id);
+    <div className="method-list">{LIVE_IDS.map(id => { const on = isOn(id);
       return <button key={id} className={'method' + (on ? ' selected' : '')} aria-pressed={on} disabled={!avail.has(id)} data-method={id}
         title={avail.has(id) ? undefined : '브리지가 보내지 않는 기법 — 브리지를 --methods 에 넣어 다시 시작(docs/DEMO_BRIDGE.md)'} onClick={() => pick(id)}>
         <strong>{id}</strong><span>{shortName(id)}</span>{on && <span aria-hidden="true">✓</span>}</button>; })}</div>
-    <p className="subtle">브리지 계산 중 {avail.size}개 · 흐린 항목은 브리지 시작 때 넣어야 고를 수 있습니다.</p>
+    <p className="subtle">{ctl.ok ? '기법을 바꾸면 브리지만 다시 띄웁니다(몇 초).' : `브리지 계산 중 ${avail.size}개 · 흐린 항목은 브리지 시작 때 넣어야 고를 수 있습니다(npm run bridge:replay 로 띄우면 화면에서 바꿀 수 있음).`}</p>
   </aside>;
-  return <div className="live-shell"><div className="live-native">
+  const reloadCover = <div className={'live-reload' + (reload ? ' on' : '')} aria-live="polite" aria-hidden={!reload}>
+    {reload && <div className="live-reload-card">
+      <svg className="lr-icon" viewBox="0 0 120 120" width="112" height="112" aria-hidden="true">
+        <circle className="lr-ring" cx="60" cy="60" r="50"/><circle className="lr-arc" cx="60" cy="60" r="50"/>
+        <path className="lr-ecg" d="M18 64h22l6-10 6 22 8-46 8 52 6-18h28"/></svg>
+      <b>{reload.failed ?? '기법 불러오는 중'}</b>
+      <span className="lr-chips">{reload.methods.map(m => <i key={m}>{shortName(m)}</i>)}</span>
+      <small>브리지만 다시 시작합니다 · 화면 설정은 그대로</small></div>}</div>;
+  return <div className="live-shell">{reloadCover}<div className="live-native">
     <div className="live-status" role="status">
       <span className={'live-conn ' + conn}>{conn === 'on' ? <StateChip kind="linked" tone="ok" label="연결됨"/> : conn === 'retry' ? <StateChip kind="retry" tone="warn" label="연결 끊김" note="재연결 중"/>
         : conn === 'lost' ? <StateChip kind="cut" tone="err" label="보드 연결 끊김"/> : <StateChip kind="loading" tone="idle" label="확인 중"/>}</span>

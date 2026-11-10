@@ -4,4 +4,6 @@ import tailwind from '@tailwindcss/vite';
 export default defineConfig({base:'./',plugins:[react(),tailwind()],build:{outDir:'../../dist/v2',emptyOutDir:true},server:{host:'127.0.0.1',
  // D-157: the live tab reads the source repo bridge (scripts/serial_bridge.py --serve) through this same-origin proxy — the bridge
  // sends no CORS headers. ECG_BRIDGE overrides the address.
- proxy:{'/bridge':{target:process.env.ECG_BRIDGE||'http://127.0.0.1:8765',changeOrigin:true,rewrite:p=>p.replace(/^\/bridge/,'')}}}});
+ // 2026-11-10: /bridge-ctl → the bridge supervisor of `npm run bridge:replay` (restarts the bridge with new --methods). Listed first:
+ // '/bridge' would also match '/bridge-ctl'.
+ proxy:{'/bridge-ctl':{target:process.env.ECG_BRIDGE_CTL||'http://127.0.0.1:8764',changeOrigin:true,rewrite:p=>p.replace(/^\/bridge-ctl/,'')},'/bridge':{target:process.env.ECG_BRIDGE||'http://127.0.0.1:8765',changeOrigin:true,rewrite:p=>p.replace(/^\/bridge/,'')}}}});

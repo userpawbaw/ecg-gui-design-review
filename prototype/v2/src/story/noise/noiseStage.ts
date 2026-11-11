@@ -392,10 +392,12 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  // post (as the intro archive): depth-carrying buffers for the shaft pass, bloom, output, grade
  // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
  const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)}));
- composer.addPass(new RenderPass(scene,camera));composer.addPass(new URLSearchParams(location.search).get('shaftfx')==='raw'?arch.vol:arch.fogPass());composer.addPass(createFireflyGuard());setLights(QA.light);
+ // QA (2026-11-11, flash hunt): ?qaoff=bloom,fog,dust,jitter switches parts off to isolate one-frame flashes (verification/bw-flash-20261111)
+ const QAOFF=new Set((new URLSearchParams(location.search).get('qaoff')??'').split(','));
+ composer.addPass(new RenderPass(scene,camera));if(!QAOFF.has('fog'))composer.addPass(new URLSearchParams(location.search).get('shaftfx')==='raw'?arch.vol:arch.fogPass());if(QAOFF.has('dust'))arch.dust.visible=false;composer.addPass(createFireflyGuard());setLights(QA.light);
  // M-b shallow focus (§10.4): focus rides the wave — fist → shoulder → RA
  const bokeh=new BokehPass(scene,camera,{focus:1,aperture:0,maxblur:.008});composer.addPass(bokeh);bokeh.enabled=false;
- const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.5,.35,.8);composer.addPass(bloom);composer.addPass(new OutputPass());
+ const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.5,.35,.8);composer.addPass(bloom);bloom.enabled=!QAOFF.has('bloom');composer.addPass(new OutputPass());
  const grade=createGrade();composer.addPass(grade);
  // wave panel (stored samples, intro sweep rules) + 4-cell processing strip above it
  const grid=createGrid(dom.grid);
@@ -524,7 +526,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   og.globalAlpha=1;if(data.cond==='pli')drawBubble(t);
   const out=last&&leaveT>=0?ss(leaveT+OUTLEN-1.2,leaveT+OUTLEN,t):0;if(out>0){og.fillStyle=`rgba(0,0,0,${out})`;og.fillRect(0,0,W,H);}      // only the last scene ends in black (→ Lab)
   if(leaveT>=0&&t>=leaveT+OUTLEN&&!ended){ended=true;opt.onEnd?.();}
-  arch.update(t,frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,1);   // 2026-11-10 사용자 「3가지 잡음 … 빛 커튼이 잘 보이지 않는」: 0.6 → 1, 도입부(archShaft 1)와 같게
+  arch.update(t,QAOFF.has('jitter')?0:frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,1);   // 2026-11-10 사용자 「3가지 잡음 … 빛 커튼이 잘 보이지 않는」: 0.6 → 1, 도입부(archShaft 1)와 같게
   grade.uniforms.uTime.value=t;composer.render();
  }
  /** REVIEW-R1-STORY-20261011 §5: run the geometry checks over the scene sequence as the viewer sees it (camera hand-over

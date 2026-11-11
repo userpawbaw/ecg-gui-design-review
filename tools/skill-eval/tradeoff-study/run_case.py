@@ -44,7 +44,7 @@ if p.returncode != 0 or "hit your" in final[:80]:
 u = res.get("usage", {})
 (out / "timing.json").write_text(json.dumps({"total_tokens": sum(u.get(k, 0) for k in ("input_tokens", "output_tokens", "cache_creation_input_tokens", "cache_read_input_tokens")),
     "output_tokens": u.get("output_tokens"), "duration_ms": int(dur * 1000), "total_duration_seconds": round(dur, 1),
-    "cost_usd": res.get("total_cost_usd"), "num_turns": res.get("num_turns"), "model": MODEL, "exit": p.returncode}, indent=1))
+    "cost_usd": res.get("total_cost_usd"), "num_turns": res.get("num_turns"), "model": MODEL, "exit": p.returncode}, indent=1), encoding="utf-8")
 (out / "skill_used.txt").write_text("\n".join(skill_used + ["read:" + r for r in reads]) or "(skill not invoked)", encoding="utf-8")
 shutil.copytree(work, out / "work", dirs_exist_ok=True, ignore=shutil.ignore_patterns(".claude", "__pycache__", "node_modules"))
 print(json.dumps({"case": case.name, "config": config, "sec": round(dur), "cost": res.get("total_cost_usd"), "skill": bool(skill_used or reads), "exit": p.returncode}))

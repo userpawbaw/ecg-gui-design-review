@@ -12,7 +12,7 @@ def run(src, n=1):
         t = time.time(); p = subprocess.run([sys.executable, "report.py"], cwd=d, capture_output=True, text=True, timeout=600); best = min(best, time.time() - t)
         if p.returncode: err = p.stderr[-400:]
     out = None
-    try: out = json.load(open(os.path.join(d, "report.json")))
+    try: out = json.load(open(os.path.join(d, "report.json"), encoding="utf-8"))
     except Exception as e: err += str(e)
     return best, out, err
 tb, ob, _ = run(base)

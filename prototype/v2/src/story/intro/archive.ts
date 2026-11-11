@@ -236,6 +236,9 @@ export async function createArchive(variant:ArchiveVariant='base'){
    uniform sampler2D tDiffuse,tDepth,tLight;uniform mat4 uInvProj,uInvView,uLightVP;uniform vec3 uCam,uSun,uCol;
    uniform float uDensity,uIntensity,uTime,uFrame,uOn,uHaze,uCloud,uAur,uSilk;uniform vec3 uHazeCol;uniform sampler2D tCloud,tGobo;varying vec2 vUv;
    uniform float uMaxLen,uIso,uDensIn,uComp,uGrain,uStria;
+   #ifdef MASKED
+   uniform vec4 uMask[8];uniform int uMaskN;   // D-172: screen rectangles (uv x0,y0,x1,y1) under opaque UI panels — no march there
+   #endif
    #ifndef NSTEPS
    #define NSTEPS 48
    #endif
@@ -258,6 +261,9 @@ export async function createArchive(variant:ArchiveVariant='base'){
     vec3 col=texture2D(tDiffuse,vUv).rgb;
     #ifdef FOG_ONLY
     if(uOn<.002&&uCOn<.002){gl_FragColor=vec4(0.);return;}
+    #ifdef MASKED
+    for(int i=0;i<8;i++){if(i>=uMaskN)break;vec4 r=uMask[i];if(vUv.x>r.x&&vUv.x<r.z&&vUv.y>r.y&&vUv.y<r.w){gl_FragColor=vec4(0.,0.,0.,1e4);return;}}
+    #endif
     #else
     if(uOn<.002&&uCOn<.002){gl_FragColor=vec4(col,1.);return;}
     #endif

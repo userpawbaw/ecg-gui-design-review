@@ -76,13 +76,21 @@ const RAYS:Record<string,Ray>={
 const RAY=RAYS[Q.get('ray')??'0']??RAYS['0'];
 // D-158 next round: the room air lifted the darkest 5 % to 0.17 (REF-002 0.05) → .35 of the archive haze on x; ?haze= 0–100 (50 = archive)
 const SHAFT_X=.6,SAT_X=.85,HAZE_X=.35;
+// D-172 (user 2026-11-11 「서고 배경 최적화 진행」, EX-001): the live tab bakes one wide frame and only turns it; the Lab draws the room at
+// half resolution while the camera moves (full quality once it settles), skips the shaft march under opaque panels, and stops the
+// curtain drift where no curtain is on screen. Switches (old behaviour): ?livebg=live · ?bgmove=full · ?bgmask=0 · ?bgidle=0.
+// QA: ?bgprof=1 (window.__bgStats, gl.finish timing) · ?bgsoft=0 (normal path on a software renderer).
+const LIVE_BAKE=Q0.get('livebg')!=='live',MOVE_LOW=Q0.get('bgmove')!=='full',MASK_ON=Q0.get('bgmask')!=='0',IDLE_GATE=Q0.get('bgidle')!=='0',PROF=Q0.get('bgprof')==='1';
+const TURN=3,TURN_PAD=.5,LOW=.5,SETTLE_MS=150;
+// brightest visible shaft (linear, 32 × 18 probe) below which the curtain drift stops; ?bgcurtain= overrides (calibrated in verification/backdrop-opt-20261111)
+const CURTAIN_MIN=Number(Q0.get('bgcurtain'))||.02;
 
 export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
  // D-154: ?tone=agx — the stills are judged in Blender AgX; the web used ACES (a missed difference, archive-light F-045)
  renderer.toneMapping=Q.get('tone')==='agx'?THREE.AgXToneMapping:THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.16;renderer.setClearColor(0x05090b,1);
  const gl=renderer.getContext(),dbg=gl.getExtension('WEBGL_debug_renderer_info'),gpu=String(dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
- const soft=/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:1;
+ const soft=Q.get('bgsoft')==='0'?false:/swiftshader|llvmpipe|software|basic render/i.test(gpu),RES=RES_Q!==null?Number(RES_Q):soft?.35:1;
  const MSAA=Q.get('msaa')!==null?Number(Q.get('msaa'))||0:soft?0:4,FOG=Number(Q.get('fogres'))||.5,CAP=2.1e6;
  // ?sun=orig the original archive (D-080 default until 2026-10-21) · ?sun=lab the
  // D-079 bake (C + larger hatch) · 30 the D-077 C1 bake · 15 the D-078 bake · e3 / d16 the D-080 bakes
@@ -103,7 +111,9 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const out=new OutputPass();out.renderToScreen=true;arch.vol.renderToScreen=false;
  // D-153: the archive's shaft shader in its fog-only form, sharing the pass uniforms (arch.update keeps driving them)
  const vu=arch.vol.uniforms,vm=arch.vol.material as THREE.ShaderMaterial;
- const fogQuad=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:vu,vertexShader:vm.vertexShader,fragmentShader:vm.fragmentShader,defines:{FOG_ONLY:'',NSTEPS:64}}));
+ vu.uMask={value:Array.from({length:8},()=>new THREE.Vector4())};vu.uMaskN={value:0};
+ const fogDefs:Record<string,string|number>={FOG_ONLY:'',NSTEPS:64};if(MASK_ON)fogDefs.MASKED='';
+ const fogQuad=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:vu,vertexShader:vm.vertexShader,fragmentShader:vm.fragmentShader,defines:fogDefs}));
  vu.uMaxLen.value=RAY.len;vu.uIso.value=RAY.iso;vu.uDensIn.value=RAY.dens;vu.uComp.value=RAY.comp;vu.uIntensity.value*=RAY.int;
  vu.uHaze.value*=RAY.haze*(SUN0==='x'&&Q.get('haze')===null?HAZE_X:1);if(Q.get('haze')!==null)vu.uHaze.value*=lvl('haze');vu.uGrain.value=RAY.grain;vu.uStria.value=RAY.stria;
  const comp=new FullScreenQuad(new THREE.ShaderMaterial({
@@ -121,6 +131,23 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
     vec3 fogc=w>1e-4?s/w:texture2D(tFog,vUv).rgb;
     gl_FragColor=vec4(mix(col,uHazeCol,hz)+fogc*step(d,.99999),1.);}`,depthTest:false,depthWrite:false}));
  const du=arch.dustMat.uniforms;du.uDepthOn.value=1;du.tSceneDepth.value=base.depthTexture;
+ // D-172: the room while the camera moves (half resolution, no MSAA); `shown` is the target the shafts, composite and dust read
+ const baseLow=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)});
+ let shown=base;
+ function show(t:THREE.WebGLRenderTarget){shown=t;const u=(comp.material as THREE.ShaderMaterial).uniforms;u.tBase.value=t.texture;u.tDepth.value=t.depthTexture;du.tSceneDepth.value=t.depthTexture;}
+ // D-172: the live tab's wide frame and the quad that turns it (rotation only: exact, F-019)
+ const bakeRT=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
+ const warpU={tBake:{value:bakeRT.texture},uM:{value:new THREE.Matrix3()},uTs:{value:new THREE.Vector2(1,1)},uTb:{value:new THREE.Vector2(1,1)}};
+ const warp=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:warpU,
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+  fragmentShader:`precision highp float;uniform sampler2D tBake;uniform mat3 uM;uniform vec2 uTs,uTb;varying vec2 vUv;
+   void main(){vec3 r=uM*vec3((vUv*2.-1.)*uTs,-1.);vec2 b=r.xy/(-r.z)/uTb;gl_FragColor=vec4(texture2D(tBake,clamp(b*.5+.5,0.,1.)).rgb,1.);}`,depthTest:false,depthWrite:false}));
+ // D-172: curtain probe — the shaft pass on a 32 × 18 target, read back once when the camera settles
+ const probe=new THREE.WebGLRenderTarget(32,18,{type:THREE.FloatType,depthBuffer:false}),probeBuf=new Float32Array(32*18*4);
+ const stats={draws:0,low:0,full:0,fogOnly:0,bakes:0,warps:0,ms:0,bakeMs:0,curtain:-1,drift:true};
+ if(PROF)(window as unknown as {__bgStats:typeof stats}).__bgStats=stats;
+ const px1=new Uint8Array(4);   // a one-pixel read waits for the GPU (gl.finish does not on every driver)
+ const timed=(f:()=>void)=>{if(!PROF){f();return 0;}const t=performance.now();f();renderer.setRenderTarget(null);gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,px1);const d=performance.now()-t;stats.ms+=d;return d;};
  if(Q.get('shaft')!==null)arch.vol.uniforms.uIntensity.value*=lvl('shaft');   // ?shaft= 0–100, 50 = designed
  // D-158 (user 2026-10-29 "빛 커튼이 좀 강한 감"): the rebuilt attic starts with softer curtains
  else if(SUN==='x')arch.vol.uniforms.uIntensity.value*=SHAFT_X;
@@ -135,49 +162,95 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
  const ambient=AMB.on&&!(matchMedia('(prefers-reduced-motion: reduce)').matches)&&(!soft||AMB.forced);
  const curve=(pick:(k:Key)=>THREE.Vector3)=>new THREE.CatmullRomCurve3(KEYS.map(pick),false,'centripetal');
  const posC=curve(k=>k.pos),lookC=curve(k=>k.look);
- let p=0,ps=0,pv=0,px=0,pxShown=0,dirty=true,raf=0,last=0,playing=false,paused=false,lastT=0,clock=0,settle:ReturnType<typeof setTimeout>|undefined;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches||soft;
+ let p=0,ps=0,pv=0,px=0,pxShown=0,dirty=true,raf=0,last=0,playing=false,paused=false,lastT=0,clock=0,settle:ReturnType<typeof setTimeout>|undefined;
+ // D-172 state: live tab bake · low-resolution room while moving · panel mask · curtain drift gate
+ let live=false,needBake=false,bakeP=-1,pChangedAt=0,warpShown=NaN,lowShown=false,lastMove=0,fogDirty=false,drift=true,upgrade:ReturnType<typeof setTimeout>|undefined;
+ let maskPx:number[][]=[];const q0=new THREE.Quaternion(),tmpM=new THREE.Matrix4();
+ function applyMask(){const w=innerWidth,h=innerHeight,m=vu.uMask.value as THREE.Vector4[];let n=0;
+  for(const r of maskPx){if(n>=8)break;const [l,t,rr,b]=r;if(rr-l<24||b-t<24)continue;m[n++].set((l+8)/w,1-(b-8)/h,(rr-8)/w,1-(t+8)/h);}vu.uMaskN.value=n;}const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches||soft;
  if(!ambient)arch.amb.aur.value=0;
+ function sizeTargets(W:number,H:number){base.setSize(W,H);baseLow.setSize(Math.max(1,Math.round(W*LOW)),Math.max(1,Math.round(H*LOW)));du.uRes.value.set(W,H);
+  const fw=Math.max(1,Math.round(W*FOG)),fh=Math.max(1,Math.round(H*FOG));fog.setSize(fw,fh);(comp.material as THREE.ShaderMaterial).uniforms.uFogSize.value.set(fw,fh);}
+ let SW=1,SH=1;
  function resize(){const w=innerWidth,h=innerHeight,pr=Math.min(Math.min(2,devicePixelRatio||1)*RES,Math.sqrt(CAP/(w*h)));renderer.setPixelRatio(pr);renderer.setSize(w,h,false);
-  const W=Math.max(1,Math.round(w*pr)),H=Math.max(1,Math.round(h*pr));base.setSize(W,H);work.setSize(W,H);du.uRes.value.set(W,H);
-  const fw=Math.max(1,Math.round(W*FOG)),fh=Math.max(1,Math.round(H*FOG));fog.setSize(fw,fh);(comp.material as THREE.ShaderMaterial).uniforms.uFogSize.value.set(fw,fh);
-  camera.aspect=w/h;camera.updateProjectionMatrix();arch.setPx(h,pr*.6);dirty=true;kick();}   // motes 0.6 × the intro size
- function place(){
+  SW=Math.max(1,Math.round(w*pr));SH=Math.max(1,Math.round(h*pr));sizeTargets(SW,SH);work.setSize(SW,SH);
+  camera.aspect=w/h;camera.updateProjectionMatrix();arch.setPx(h,pr*.6);dirty=true;if(live)needBake=true;applyMask();kick();}   // motes 0.6 × the intro size
+ function place(turn=true){
   const u=SEG[0]+(SEG[1]-SEG[0])*Math.min(1,Math.max(0,ps)),seg=u*(KEYS.length-1),i=Math.min(KEYS.length-2,Math.floor(seg)),f=seg-i;
   vu.uIntensity.value=SHAFT0*boostAt(u);
   const pos=posC.getPoint(u),look=lookC.getPoint(u);camera.fov=THREE.MathUtils.lerp(KEYS[i].fov,KEYS[i+1].fov,f);camera.updateProjectionMatrix();
   // pointer: turn the view ±3° about the camera and slide it ±0.06 m sideways (user 2026-10-18 "약하게 좌우로")
   const d=look.clone().sub(pos),right=d.clone().cross(new THREE.Vector3(0,1,0)).normalize();
-  d.applyAxisAngle(new THREE.Vector3(0,1,0),-pxShown*THREE.MathUtils.degToRad(3));pos.addScaledVector(right,pxShown*.06);
+  const k=turn?pxShown:0;d.applyAxisAngle(new THREE.Vector3(0,1,0),-k*THREE.MathUtils.degToRad(TURN));if(!live)pos.addScaledVector(right,k*.06);   // live: rotation only (D-172)
   camera.position.copy(pos);camera.lookAt(pos.clone().add(d));
  }
- function draw(camMoved:boolean,dt:number){
-  if(camMoved){place();renderer.setRenderTarget(base);renderer.clear();renderer.render(roomScene,camera);}
+ function draw(camMoved:boolean,dt:number,low=false){
+  stats.draws++;if(camMoved){if(low)stats.low++;else stats.full++;}else stats.fogOnly++;
+  if(camMoved){place();const t=low?baseLow:base;renderer.setRenderTarget(t);renderer.clear();renderer.render(roomScene,camera);show(t);lowShown=low;}
   if(ambient){clock+=dt;arch.stepAmbient(renderer,clock,dt);}
-  arch.update(clock,0,camera,base.depthTexture,1);   // D-153: a fixed jitter pattern (the composite blur removes it; no shimmer)
+  arch.update(clock,0,camera,shown.depthTexture!,1);   // D-153: a fixed jitter pattern (the composite blur removes it; no shimmer)
   renderer.setRenderTarget(fog);fogQuad.render(renderer);
   renderer.setRenderTarget(work);comp.render(renderer);
   renderer.autoClear=false;renderer.render(dustScene,camera);renderer.autoClear=true;
   out.render(renderer,null as unknown as THREE.WebGLRenderTarget,work,0,false);
  }
+ // D-172 live tab: one wide frame at full quality (room + shafts, no dust), then only its rotation per pointer move
+ function bake(){
+  place(false);const tY=Math.tan(THREE.MathUtils.degToRad(camera.fov/2)),tX=tY*innerWidth/innerHeight;
+  const tXb=Math.tan(Math.atan(tX)+THREE.MathUtils.degToRad(TURN+TURN_PAD)),tYb=tY*1.06;
+  let Wb=Math.round(SW*tXb/tX),Hb=Math.round(SH*tYb/tY);const sc=Math.min(1,Math.sqrt(CAP*1.3/(Wb*Hb)));Wb=Math.max(1,Math.round(Wb*sc));Hb=Math.max(1,Math.round(Hb*sc));
+  camera.fov=THREE.MathUtils.radToDeg(2*Math.atan(tYb));camera.aspect=tXb/tYb;camera.updateProjectionMatrix();q0.copy(camera.quaternion);
+  const n=vu.uMaskN.value;vu.uMaskN.value=0;sizeTargets(Wb,Hb);bakeRT.setSize(Wb,Hb);
+  stats.bakeMs+=timed(()=>{renderer.setRenderTarget(base);renderer.clear();renderer.render(roomScene,camera);show(base);
+   arch.update(clock,0,camera,base.depthTexture,1);renderer.setRenderTarget(fog);fogQuad.render(renderer);renderer.setRenderTarget(bakeRT);comp.render(renderer);});
+  stats.bakes++;vu.uMaskN.value=n;sizeTargets(SW,SH);camera.aspect=innerWidth/innerHeight;warpU.uTs.value.set(tX,tY);warpU.uTb.value.set(tXb,tYb);
+  bakeP=p;needBake=false;warpShown=NaN;dirty=true;}
+ function drawWarp(){
+  place(true);tmpM.makeRotationFromQuaternion(q0.clone().invert().multiply(camera.quaternion));warpU.uM.value.setFromMatrix4(tmpM);
+  timed(()=>{renderer.setRenderTarget(work);warp.render(renderer);out.render(renderer,null as unknown as THREE.WebGLRenderTarget,work,0,false);});
+  stats.warps++;warpShown=pxShown;}
+ // D-172 Lab: is any curtain visible (outside the panels) here? read once after the camera settles
+ function probeCurtain(){if(!IDLE_GATE||!ambient){drift=ambient;return;}
+  try{probeBuf.fill(-1);renderer.setRenderTarget(probe);fogQuad.render(renderer);renderer.readRenderTargetPixels(probe,0,0,32,18,probeBuf);
+   if(probeBuf.every(v=>v===-1)){drift=true;stats.drift=drift;return;}   // read-back unsupported: keep the drift
+   let mx=0;for(let i=0;i<probeBuf.length;i+=4){if(probeBuf[i+3]>1e3)continue;const l=.2126*probeBuf[i]+.7152*probeBuf[i+1]+.0722*probeBuf[i+2];if(l>mx)mx=l;}
+   stats.curtain=mx;drift=mx>=CURTAIN_MIN;}catch{drift=true;}
+  stats.drift=drift;}
+ function tickLive(now:number){
+  ps=p;pv=0;if(!reduced)pxShown+=(px-pxShown)*Math.min(1,Math.max(.001,(now-(lastT||now))/1000)*4);lastT=now;
+  if(Math.abs(px-pxShown)<=.005)pxShown=px;
+  if(needBake||bakeP!==p){if(bakeP!==p&&now-pChangedAt<200){kick();return;}bake();}
+  if(warpShown!==pxShown)drawWarp();
+  if(px!==pxShown)kick();else lastT=0;}
  function tick(now:number){raf=0;if(paused||playing){lastT=0;return;}   // playback: the waveform comes first (user video 2 at 28 s)
+  if(live){tickLive(now);return;}
   const dt=lastT?Math.min(.05,(now-lastT)/1000):1/60;lastT=now;
   // scroll: a critically damped spring follows the page position, so the descent speeds up and settles instead of jumping
   if(reduced){ps=p;pv=0;}else{pv+=(-2*SPRING*pv-SPRING*SPRING*(ps-p))*dt;ps+=pv*dt;if(Math.abs(ps-p)<1e-4&&Math.abs(pv)<1e-3){ps=p;pv=0;}}
   if(!reduced)pxShown+=(px-pxShown)*Math.min(1,dt*4);
   if(Math.abs(px-pxShown)<=.005)pxShown=px;
-  const moving=Math.abs(px-pxShown)>.005||ps!==p;if(moving)dirty=true;
-  const camMoved=dirty;
-  if(!camMoved&&!ambient){lastT=0;return;}
+  const moving=Math.abs(px-pxShown)>.005||ps!==p;if(moving){dirty=true;lastMove=now;}
+  // D-172: once the camera has rested SETTLE_MS, the low-resolution room is drawn again at full quality
+  const upgradeNow=!moving&&lowShown&&now-lastMove>=SETTLE_MS;if(upgradeNow)dirty=true;
+  const camMoved=dirty,amb=ambient&&drift;
+  if(!camMoved&&!amb&&!fogDirty){lastT=0;if(lowShown){clearTimeout(upgrade);upgrade=setTimeout(kick,SETTLE_MS);}return;}
   const gap=camMoved?33:42;                                                   // ≤ 30 fps moving · 24 idle
   if(now-last<gap){kick();return;}
-  draw(camMoved,Math.min(.1,(now-(last||now))/1000)||dt);last=now;if(camMoved)dirty=false;
-  if(moving||ambient)kick();}
+  const low=camMoved&&moving&&MOVE_LOW;
+  timed(()=>draw(camMoved,Math.min(.1,(now-(last||now))/1000)||dt,low));last=now;if(camMoved)dirty=false;fogDirty=false;
+  if(camMoved&&!low&&!moving)probeCurtain();
+  if(moving||ambient&&drift||lowShown)kick();}
  function kick(){if(!raf)raf=requestAnimationFrame(tick);}
  const onResize=()=>{clearTimeout(settle);settle=setTimeout(resize,150);};
  addEventListener('resize',onResize);resize();
  return{
   /** descent progress 0 (top of the ladder) … 1 (the floor): the whole page scroll */
-  setProgress(v:number){if(Math.abs(v-p)>1e-4){p=v;dirty=true;if(soft){clearTimeout(settle);settle=setTimeout(kick,180);}else kick();}},
+  setProgress(v:number){if(Math.abs(v-p)>1e-4){p=v;dirty=true;pChangedAt=performance.now();if(soft){clearTimeout(settle);settle=setTimeout(kick,180);}else kick();}},
+  /** D-172: the live tab shows one baked frame turned by the pointer */
+  setLive(v:boolean){if(!LIVE_BAKE||v===live)return;live=v;needBake=v;lastT=0;if(!v){dirty=true;camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}kick();},
+  /** D-172: opaque panel rectangles in CSS px [left, top, right, bottom], largest first (the shaft march is skipped inside) */
+  setMask(r:number[][]){if(!MASK_ON)return;const key=JSON.stringify(r.slice(0,8).map(a=>a.map(Math.round)));if(key===JSON.stringify(maskPx.map(a=>a.map(Math.round))))return;
+   maskPx=r.slice(0,8);applyMask();if(!live){fogDirty=true;kick();}},
   /** pointer x in −1 … 1 */
   setPointer(v:number){if(reduced)return;px=Math.max(-1,Math.min(1,v));kick();},
   /** software rendering detected (low-power mode) */
@@ -186,7 +259,7 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   setPlaying(v:boolean){playing=v;if(!v){dirty=true;kick();}},
   /** stop drawing (the large viewer covers the page) */
   setPaused(v:boolean){paused=v;if(!v){dirty=true;kick();}},
-  dispose(){cancelAnimationFrame(raf);clearTimeout(settle);removeEventListener('resize',onResize);arch.dispose();base.dispose();work.dispose();fog.dispose();fogQuad.dispose();comp.dispose();out.dispose();renderer.dispose();},
+  dispose(){cancelAnimationFrame(raf);clearTimeout(settle);removeEventListener('resize',onResize);arch.dispose();base.dispose();baseLow.dispose();bakeRT.dispose();warp.dispose();probe.dispose();clearTimeout(upgrade);work.dispose();fog.dispose();fogQuad.dispose();comp.dispose();out.dispose();renderer.dispose();},
  };
 }
 export type LabBackdrop=Awaited<ReturnType<typeof createLabBackdrop>>;

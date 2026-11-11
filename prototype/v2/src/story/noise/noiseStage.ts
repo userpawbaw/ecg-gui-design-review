@@ -441,6 +441,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   return{breath:bw?breath:breath*BREATH_WEAK,fist:data.cond==='ma'&&t>2&&drive?drive.fist(tl):0,breathOff:bw&&t>4?.015*(2*breath-1):0};
  }
  let t0=performance.now(),frozen=opt.frozenT,frame=0;
+ const PLI_FROM=(()=>{const v=Number(new URLSearchParams(location.search).get('plifrom')??10);return Number.isFinite(v)?Math.max(0,Math.min(12.5,v)):10;})();
  /** Start a scene on the same stage: the camera path begins where the previous scene's camera is (no cut, no reload). */
  function setScene(d:NoiseData,o:{last?:boolean}={}){
   const handover=keys.length>0;bwCarry=handover?lastBwK:0;data=d;last=!!o.last;ended=false;leaveT=-1;
@@ -450,7 +451,10 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   keys=keysFor(data.cond);sClock=0;contactT=-1;arrive.length=0;arrived.clear();sAt.clear();
   if(handover)keys[0]={t:0,pos:camera.position.clone(),look:cur.look.clone(),hfov:cur.h};
   bokeh.enabled=data.cond==='ma';shells.forEach(({m})=>{m.visible=false;});
-  sweep=mkSweep();wave.reset();ui='';t0=performance.now();if(frozen!==null)frozen=0;resize();
+  sweep=mkSweep();wave.reset();ui='';
+  // D-173 (user 2026-11-11 「멀티탭 장면부터 시작하게」): the power-line scene starts on the strip (t = 10 s, the old 0–10 s close-up
+  // and orbit are skipped); every later beat keeps its scene time. ?plifrom=0 restores the opening.
+  const st=data.cond==='pli'&&!handover?PLI_FROM:0;t0=performance.now()-st*1000;if(frozen!==null)frozen=st;sClock=st;lastT=st;resize();
  }
  setScene(data0,{last:opt.last});addEventListener('resize',resize);
  const clock=()=>frozen??(performance.now()-t0)/1000;

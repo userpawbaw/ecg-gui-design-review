@@ -31,7 +31,7 @@ def summary(s):
 def main(argv):
     if "--compare" in argv:
         i = argv.index("--compare")
-        a, b = (json.load(open(p)) for p in argv[i + 1:i + 3])
+        a, b = (json.load(open(p, encoding="utf-8")) for p in argv[i + 1:i + 3])
         ratio = a["median_s"] / b["median_s"] if b["median_s"] else float("inf")
         overlap = not (a["min_s"] > b["max_s"] or b["min_s"] > a["max_s"])
         verdict = "within noise: do not claim a difference" if overlap else ("after is faster" if ratio > 1 else "after is slower")
@@ -47,7 +47,7 @@ def main(argv):
     s["label"], s["command"] = get("--label", ""), cmd
     print(f"{s['label'] or ' '.join(cmd)}: median {s['median_s']*1000:.1f} ms, min {s['min_s']*1000:.1f}, max {s['max_s']*1000:.1f}, spread {s['spread']:.0%}, n={runs} (+{warmup} warm-up)")
     if "--save" in opts:
-        json.dump(s, open(get("--save", "bench.json"), "w"), indent=1)
+        json.dump(s, open(get("--save", "bench.json"), "w", encoding="utf-8"), indent=1)
 
 
 if __name__ == "__main__":

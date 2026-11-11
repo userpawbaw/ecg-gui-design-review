@@ -17,7 +17,8 @@ const clip=arg('clip')?(([x,y,w,h])=>({x,y,width:w,height:h}))(arg('clip').split
  await p.clock.install({time:new Date('2026-11-11T12:00:00Z')});
  await p.goto(URL,{waitUntil:'domcontentloaded'});
  // warm-up: let loading finish in fake time (assets load in real time meanwhile)
- for(let t=0;t<WARM;t+=250){await p.clock.runFor(250);await p.waitForTimeout(150);}
+ // fastForward jumps (due timers fire once) instead of runFor (which would render every 1/60 s frame of the warm-up)
+ for(let t=0;t<WARM;t+=500){await p.clock.fastForward(500);await p.waitForTimeout(400);}
  await p.mouse.move(W/2,H/2);const dt=1000/FPS,log=[];
  for(let i=0;i<N;i++){
   for(const a of acts)if(a.f===i){if(a.k==='wheel')await p.mouse.wheel(0,100*a.v);if(a.k==='move')await p.mouse.move(a.v*W,H/2,{steps:1});}

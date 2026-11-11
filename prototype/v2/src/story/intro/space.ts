@@ -121,12 +121,25 @@ export function createShafts(renderer:THREE.WebGLRenderer,camera:THREE.Camera,oc
 // energy through bloom; a non-finite or huge pixel can (GLSL pow() with a negative base is NaN on ANGLE/D3D — fixed in figure.ts,
 // space.ts, horizon.ts). This pass sits before bloom: NaN / Inf → 0 and anything above MAX_HDR is scaled down, whatever its source.
 export const MAX_HDR=48;
+// 2026-11-11 (user: 「기저선 변동 단계의 사다리 옆 북카트를 볼 때 가장 확연」; frame-stepped capture verification/bw-flash-20261111):
+// in the baseline-wander scene the camera bobs with the breath, a thin sunlit rod of the book cart crosses pixel edges, and single
+// pixels light up far above their surroundings for one frame — bloom turns each into a round flash (bloom off: 8371 → 277 flash px).
+// Neighbourhood clamp: an HDR pixel may not exceed SPIKE × the second-brightest of its 8 neighbours (a thin line keeps its two
+// neighbours along the line, an isolated spike has none). ?spike=0 turns it off.
+const SPIKE=(()=>{const v=new URLSearchParams(location.search).get('spike');return v===null?1.5:Number(v)||0;})();
 export function createFireflyGuard(){
  return new ShaderPass({uniforms:{tDiffuse:{value:null}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-  fragmentShader:`uniform sampler2D tDiffuse;varying vec2 vUv;void main(){vec4 c=texture2D(tDiffuse,vUv);
-   if(any(isnan(c.rgb))||any(isinf(c.rgb)))c.rgb=vec3(0.);
-   float m=max(c.r,max(c.g,c.b));if(m>${MAX_HDR}.)c.rgb*=${MAX_HDR}./m;c.rgb=max(c.rgb,0.);gl_FragColor=c;}`});
+  fragmentShader:`uniform sampler2D tDiffuse;varying vec2 vUv;
+   vec3 fix(vec3 c){if(any(isnan(c))||any(isinf(c)))return vec3(0.);float m=max(c.r,max(c.g,c.b));if(m>${MAX_HDR}.)c*=${MAX_HDR}./m;return max(c,0.);}
+   float lum(vec3 c){return max(c.r,max(c.g,c.b));}
+   void main(){vec4 c=texture2D(tDiffuse,vUv);c.rgb=fix(c.rgb);
+    ${SPIKE>0?`float l=lum(c.rgb);
+    if(l>1.){vec2 px=1./vec2(textureSize(tDiffuse,0));float a=0.,b=0.;   // a ≥ b: the two brightest neighbours
+     for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){if(i==0&&j==0)continue;float n=lum(fix(texture2D(tDiffuse,vUv+vec2(float(i),float(j))*px).rgb));
+      if(n>a){b=a;a=n;}else if(n>b)b=n;}
+     float cap=max(1.,b*${SPIKE.toFixed(2)});if(l>cap)c.rgb*=cap/l;}`:''}
+    gl_FragColor=c;}`});
 }
 
 // Grade + vignette + grain after the output transform (attic grade pass, gentler). uWarm scales with the space, so

@@ -45,6 +45,8 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   const ctlUrl = base === 'bridge' ? 'bridge-ctl' : null;
   const [ctl, setCtl] = useState<{ok: boolean, methods: string[]}>({ok: false, methods: []});
   const [reload, setReload] = useState<{methods: string[], t0: number, failed?: string} | null>(null);
+  // 2026-11-11 사용자: 「큐처럼 … 가득 찬 경우 새로 선택하면 이전 것이 해제 … 확인 버튼을 눌러서 기법 새로고침」 — 고르는 동안은 초안만 바뀐다
+  const [draft, setDraft] = useState<string[] | null>(null);
 
   // 브리지 찾기 → SSE. 못 찾으면 5 s 마다 다시(A안과 같은 규칙).
   useEffect(() => {
@@ -55,12 +57,16 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
         const r = await fetch(url('/fe'), {cache: 'no-store'}); if (!r.ok) throw new Error(String(r.status));
         const d = await r.json(); if (!alive) return;
         setFe({modes: d.modes ?? {}, current: d.current ?? null}); S.feMode = d.current ?? null; open();
-      } catch { if (!alive) return; setConn('down'); timer = window.setTimeout(probe, 5000); }
+      } catch { if (!alive) return; setConn(c => c === 'retry' ? c : 'down'); timer = window.setTimeout(probe, 1500); }
     };
     const open = () => {
       es = new EventSource(url('/stream'));
       es.onopen = () => alive && setConn('on');
-      es.onerror = () => alive && setConn(c => c === 'lost' ? c : 'retry');
+      // 2026-11-11 (사용자: 딥러닝 기법으로 바꾸면 「불러오는 중」에서 멈춤): 브리지를 다시 띄우는 동안 재연결 요청이 502 를 받으면
+      // EventSource 는 CLOSED 가 되어 스스로 다시 붙지 않는다. 고전 기법은 첫 재시도(≈3 s) 전에 브리지가 떠서 문제가 없었고,
+      // 딥러닝은 torch · 모델 적재가 길어 첫 재시도가 실패했다 → 닫히면 /fe 확인부터 다시(1.5 s 간격).
+      es.onerror = () => { if (!alive) return; setConn(c => c === 'lost' ? c : 'retry');
+        if (es && es.readyState === EventSource.CLOSED) { es.close(); es = null; clearTimeout(timer); timer = window.setTimeout(probe, 1500); } };
       es.onmessage = ev => { if (S.ingest(ev.data)) dirty.current = true; };
     };
     setConn('checking'); probe();
@@ -81,7 +87,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       try { const d = await (await fetch(ctlUrl + '/status', {cache: 'no-store'})).json();
         if (d.state === 'failed' || (d.state === 'running' && d.methods.join() !== reload.methods.join() && performance.now() - reload.t0 > 4000)) {
           setReload(r => r && {...r, failed: /torch/.test(d.err ?? '') ? '딥러닝 기법은 torch 설치가 필요합니다 — 이전 기법으로 되돌립니다' : d.err ? '브리지를 띄우지 못함 — 이전 기법으로 되돌립니다' : '이전 기법으로 되돌렸습니다'});
-          order.current = d.methods; setCtl({ok: true, methods: d.methods}); window.setTimeout(() => setReload(null), 2600); }
+          order.current = d.methods; setCtl({ok: true, methods: d.methods}); setDraft(null); window.setTimeout(() => setReload(null), 2600); }
       } catch { /* 감독 창구가 잠시 응답하지 않음 */ }
     }, 500);
     return () => clearInterval(id);
@@ -134,15 +140,21 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       if (order.current.length < MAX_LIVE) order.current.push(n); else S.hidden.add(n); changed = true; }
     if (changed) setLayout(l => l + 1);
   }, [layout]);
+  const applied = () => order.current.length ? [...order.current] : ctl.methods.slice(0, MAX_LIVE);
+  const apply = () => {
+    const next = draft; if (!next || !ctlUrl) return; setDraft(null);
+    if (next.join() === applied().join()) return;
+    order.current = next; S.hidden.clear(); S.clear(); setReload({methods: next, t0: performance.now()}); setCtl(c => ({...c, methods: next}));
+    fetch(ctlUrl + '/restart', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({methods: next})})
+      .catch(() => setReload(r => r && {...r, failed: '브리지 제어 창구 연결 실패'}));
+  };
   const pick = (id: string) => {
-    if (ctl.ok && ctlUrl) {   // 브리지만 다시 띄워 고른 기법만 계산
-      const cur = order.current.length ? [...order.current] : ctl.methods.slice(0, MAX_LIVE);
+    if (ctl.ok && ctlUrl) {   // 초안(큐): 가득 차면 가장 먼저 고른 것이 빠진다 · 적용을 눌러야 브리지를 다시 띄운다
+      const cur = draft ?? applied();
       let next = cur.includes(id) ? cur.filter(m => m !== id) : [...cur, id];
-      if (!next.length) { setNote('마지막 표시 기법은 유지'); return; }
+      if (!next.length) { setNote('최소 1개 기법은 남겨야 합니다'); return; }
       if (next.length > MAX_LIVE) next = next.slice(-MAX_LIVE);
-      order.current = next; S.hidden.clear(); S.clear(); setReload({methods: next, t0: performance.now()}); setCtl(c => ({...c, methods: next}));
-      fetch(ctlUrl + '/restart', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({methods: next})})
-        .catch(() => setReload(r => r && {...r, failed: '브리지 제어 창구 연결 실패'}));
+      setDraft(next.join() === applied().join() ? null : next);
       return;
     }
     const o = order.current;
@@ -164,15 +176,20 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   const src = st.src === 'serial' ? <StateChip kind="live" tone="ok" label="보드 입력"/> : st.src === 'replay' ? <StateChip kind="stored" tone="stored" label="저장 신호 재생" note="--replay"/> : <StateChip kind="live" tone="idle" label="브리지 출력"/>;
   const fmt = (v: number | undefined, d = 0) => v == null || !Number.isFinite(v) ? '—' : v.toFixed(d);
   const avail = new Set(ctl.ok ? LIVE_IDS : names.filter(n => n !== 'raw'));
-  const isOn = (id: string) => ctl.ok ? order.current.includes(id) : avail.has(id) && !S.hidden.has(id);
+  const isOn = (id: string) => ctl.ok ? (draft ?? order.current).includes(id) : avail.has(id) && !S.hidden.has(id);
+  const now = ctl.ok ? applied() : [], queue = ctl.ok ? (draft ?? now) : [];
   const aside = <aside className="method-panel live-methods" aria-label="실시간 기법 선택">
     <div className="eyebrow">METHOD SELECT</div><h3>기법 선택</h3>
-    <p className="subtle">클릭: 파형에 추가 · 제거(최대 {MAX_LIVE}개)</p>
-    <div className="method-list">{LIVE_IDS.map(id => { const on = isOn(id);
-      return <button key={id} className={'method' + (on ? ' selected' : '')} aria-pressed={on} disabled={!avail.has(id)} data-method={id}
+    <p className="subtle">{ctl.ok ? `클릭: 고르기 · 해제(최대 ${MAX_LIVE}개, 넘치면 먼저 고른 것부터 빠짐) → 적용` : `클릭: 파형에 추가 · 제거(최대 ${MAX_LIVE}개)`}</p>
+    <div className="method-list">{LIVE_IDS.map(id => { const on = isOn(id), q = queue.indexOf(id);
+      const st = !ctl.ok || !draft ? '' : on && !now.includes(id) ? ' adding' : !on && now.includes(id) ? ' removing' : '';
+      return <button key={id} className={'method' + (on ? ' selected' : '') + st} aria-pressed={on} disabled={!avail.has(id)} data-method={id}
         title={avail.has(id) ? undefined : '브리지가 보내지 않는 기법 — 브리지를 --methods 에 넣어 다시 시작(docs/DEMO_BRIDGE.md)'} onClick={() => pick(id)}>
-        <strong>{id}</strong><span>{shortName(id)}</span>{on && <span aria-hidden="true">✓</span>}</button>; })}</div>
-    <p className="subtle">{ctl.ok ? '기법을 바꾸면 브리지만 다시 띄웁니다(몇 초).' : `브리지 계산 중 ${avail.size}개 · 흐린 항목은 브리지 시작 때 넣어야 고를 수 있습니다(npm run bridge:replay 로 띄우면 화면에서 바꿀 수 있음).`}</p>
+        <strong>{id}</strong><span>{shortName(id)}</span>{ctl.ok && q >= 0 ? <span className="lm-q" aria-label={`${q + 1}번째`}>{q + 1}</span> : on && <span aria-hidden="true">✓</span>}
+        {st === ' adding' && <em className="lm-tag">추가</em>}{st === ' removing' && <em className="lm-tag">해제</em>}</button>; })}</div>
+    {ctl.ok && <div className="lm-actions"><button type="button" className="lm-apply" disabled={!draft || !!reload} onClick={apply}>적용 · 기법 새로고침</button>
+      {draft && <button type="button" className="lm-cancel" onClick={() => setDraft(null)}>취소</button>}</div>}
+    <p className="subtle">{ctl.ok ? (draft ? `적용하면 ${draft.join(' · ')} 으로 브리지를 다시 띄웁니다(몇 초).` : '기법을 고른 뒤 적용을 누르면 브리지만 다시 띄웁니다(몇 초).') : `브리지 계산 중 ${avail.size}개 · 흐린 항목은 브리지 시작 때 넣어야 고를 수 있습니다(npm run bridge:replay 로 띄우면 화면에서 바꿀 수 있음).`}</p>
   </aside>;
   const reloadCover = <div className={'live-reload' + (reload ? ' on' : '')} aria-live="polite" aria-hidden={!reload}>
     {reload && <div className="live-reload-card">

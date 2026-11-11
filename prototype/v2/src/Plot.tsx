@@ -49,7 +49,7 @@ export function Plot(p:Props){
  if(fxOn){const band=pw/q.span*BAND_S,top=boxes[0].t,bot=boxes[boxes.length-1].b;g.save();g.globalCompositeOperation='lighter';
   for(let i=0;i<5;i++){let x0=headX-band*(i+1)/5;const bw=band/5;if(x0+bw<left)x0+=pw;if(x0<left-1)continue;g.globalAlpha=(1-i/5)*.7;g.drawImage(hot,x0*dpr,top*dpr,bw*dpr,(bot-top)*dpr,x0,top,bw,bot-top);}
   g.restore();}
- rows.forEach((row,r)=>{const isDiff=q.residual&&r===count,b=boxes[r],top=b.t,bottom=b.b,ph=bottom-top;const foc=!isDiff&&r>0&&row.id===q.method;
+ rows.forEach((row,r)=>{const isDiff=q.residual&&r===count,b=boxes[r],top=b.t,bottom=b.b,ph=bottom-top;const foc=!isDiff&&r>0&&row.id===q.method;const lit=!isDiff&&r>0;   // 2026-11-11 사용자: 2개 이상 고르면 앞서 고른 기법이 어두움 → 모든 기법 행을 마지막 기법과 같은 빛으로
  g.save();g.beginPath();g.rect(left,top,pw,ph);g.clip();
  const yOf=(a:Float32Array,index:number,residual:boolean)=>{const i=index-q.data.offset;return top+ph/2-(residual?(a[i]-q.data.traces.clean[i])*(q.gain||1):a[i])/q.amplitude*ph/2;};
  // one path per trace (breaks where the sweep wraps or the gap opens); afterglow + leading fade come from a gradient along x
@@ -62,7 +62,7 @@ export function Plot(p:Props){
  if(fxOn&&!isDiff&&r>0&&q.data.traces[row.id]){const a=q.data.traces[row.id]!,cl=q.data.traces.clean;const fresh=pts.filter(pt=>pt.alpha>0&&ageOf(left+pt.x*pw)<.5);
   if(fresh.length>1){const pa=new Path2D();let run:typeof fresh=[];const flush=()=>{if(run.length>1){run.forEach((pt,i)=>{const x=left+pt.x*pw,y=yOf(a,pt.index,false);if(i)pa.lineTo(x,y);else pa.moveTo(x,y);});for(let i=run.length-1;i>=0;i--)pa.lineTo(left+run[i].x*pw,yOf(cl,run[i].index,false));pa.closePath();}run=[];};
    fresh.forEach((pt,i)=>{if(i&&(pt.breakBefore||pt.index!==fresh[i-1].index+1))flush();run.push(pt);});flush();
-   g.save();g.globalCompositeOperation='lighter';g.fillStyle=freshGradient(g,left,right,rgb(row.color),ageOf,foc?.34:.22);g.fill(pa);g.restore();}}
+   g.save();g.globalCompositeOperation='lighter';g.fillStyle=freshGradient(g,left,right,rgb(row.color),ageOf,lit?.34:.22);g.fill(pa);g.restore();}}
  const useStrip=STRIP&&fxOn&&!!q.data.traces[row.id];
  if(useStrip){const sr=strips[r]??=new StripRow(),off=q.data.offset,cl=q.data.traces.clean,a=q.data.traces[row.id]!,H=Math.min(q.data.n-1,Math.floor(t*q.data.fs)),cnt=count_;
   const yv=(arr:Float32Array,res:boolean)=>(k:number)=>{const i=k-off;return top+ph/2-(res?(arr[i]-cl[i])*(q.gain||1):arr[i])/q.amplitude*ph/2;};
@@ -70,14 +70,14 @@ export function Plot(p:Props){
   sr.update(H,off,[...(isDiff?[]:[{y:yv(cl,false),color:'#c4c6c7',width:1.8,alpha:q.reference,lit:false,glow:false}]),{y:yv(a,!!isDiff),color:row.color,width:1.2,alpha:1,lit:!isDiff,glow:!isDiff}]);
   ramps.build(q.span,GAP_S,ERASE_S);sr.clearAhead(H,Math.floor(GAP_S*q.data.fs)-1);
   const rightX=right-(t*q.data.fs+1-H)/cnt*pw;
-  composeRow(g,sr,ramps,layer,{sweep:q.mode==='sweep',head:H,headX:q.mode==='sweep'?headX:rightX,rightX,r:right,white:isDiff?0:foc?1.15:.8,glow:isDiff?0:foc?.55:.35/* 2026-11-10 사용자: 가운데 기법 행도 입력과 같은 빛(이전 0) */,level,liveK:1,span:q.span,gapS:GAP_S,tailS:GAP_S+ERASE_S});
+  composeRow(g,sr,ramps,layer,{sweep:q.mode==='sweep',head:H,headX:q.mode==='sweep'?headX:rightX,rightX,r:right,white:isDiff?0:lit?1.15:.8,glow:isDiff?0:lit?.55:.35/* 2026-11-10 사용자: 가운데 기법 행도 입력과 같은 빛(이전 0) */,level,liveK:1,span:q.span,gapS:GAP_S,tailS:GAP_S+ERASE_S});
  }else{
  if(!isDiff)trace(q.data.traces.clean,'#c4c6c7',1.8,q.reference);   // thinner lines (user 2026-10-18 "선 두께도 좀 더 줄여"): Reference 2.4 → 1.8, traces 1.6 → 1.2
- trace(q.data.traces[row.id],row.color,1.2,1,false,!!isDiff,isDiff?0:foc?1.15:.8,isDiff?0:foc?.55:.35);}   // glow ×0.55 on the output; the input too (user 2026-10-18 "입력에도 이 효과가 포함"), lower — its dense noise stacks far more glow per pixel (intro sweep.ts)
+ trace(q.data.traces[row.id],row.color,1.2,1,false,!!isDiff,isDiff?0:lit?1.15:.8,isDiff?0:lit?.55:.35);}   // glow ×0.55 on the output; the input too (user 2026-10-18 "입력에도 이 효과가 포함"), lower — its dense noise stacks far more glow per pixel (intro sweep.ts)
  if(foc&&q.preview&&!q.shown.includes(q.preview))trace(q.data.traces[q.preview],'#f6d18d',1.2,1,true);
  // head marker: a small hot point at the newest sample (brighter on the selected output)
- if(fxOn&&!isDiff&&q.data.traces[row.id]){const hi=Math.min(q.data.n-1,Math.floor(t*q.data.fs))-q.data.offset,a=q.data.traces[row.id]!;if(hi>=0&&hi<a.length){const x=headX,y=yOf(a,hi+q.data.offset,false),R=foc?16:11;
-  if(useStrip){g.globalCompositeOperation='lighter';g.drawImage(headSprite(R,foc?.75:.4,dpr),x-R,y-R,2*R,2*R);g.globalCompositeOperation='source-over';}else{const rg=g.createRadialGradient(x,y,0,x,y,R);rg.addColorStop(0,`rgba(255,255,255,${foc?.75:.4})`);rg.addColorStop(1,'rgba(255,255,255,0)');g.globalCompositeOperation='lighter';g.fillStyle=rg;g.fillRect(x-R,y-R,2*R,2*R);g.globalCompositeOperation='source-over';}}}
+ if(fxOn&&!isDiff&&q.data.traces[row.id]){const hi=Math.min(q.data.n-1,Math.floor(t*q.data.fs))-q.data.offset,a=q.data.traces[row.id]!;if(hi>=0&&hi<a.length){const x=headX,y=yOf(a,hi+q.data.offset,false),R=lit?16:11;
+  if(useStrip){g.globalCompositeOperation='lighter';g.drawImage(headSprite(R,lit?.75:.4,dpr),x-R,y-R,2*R,2*R);g.globalCompositeOperation='source-over';}else{const rg=g.createRadialGradient(x,y,0,x,y,R);rg.addColorStop(0,`rgba(255,255,255,${lit?.75:.4})`);rg.addColorStop(1,'rgba(255,255,255,0)');g.globalCompositeOperation='lighter';g.fillStyle=rg;g.fillRect(x-R,y-R,2*R,2*R);g.globalCompositeOperation='source-over';}}}
  g.restore();const values=q.data.traces[row.id];const clipped=values?pts.filter(p=>Math.abs(isDiff?(values[p.index-q.data.offset]-q.data.traces.clean[p.index-q.data.offset])*(q.gain||1):values[p.index-q.data.offset])>q.amplitude).length:0;g.font='11px system-ui';g.textAlign='left';g.textBaseline='alphabetic';if(clipped){g.fillStyle='#ffbc79';g.fillText('표시 범위 초과 '+clipped+' 샘플',left+10,top+18);}if(!q.data.traces[row.id]){g.fillStyle='#ffbc79';g.fillText('출력 없음',left+10,top+30);}
  g.fillStyle='#adc3ce';g.font='12px system-ui';for(let k=0;k<=4;k++){const at=q.inspect?Math.max(0,t-q.span)+k*Math.min(t,q.span)/4:t-q.span+k*q.span/4;const label=q.mode==='sweep'&&!q.inspect?(k*q.span/4).toFixed(1)+'s 위치':at<0?'—':at.toFixed(1)+'s';g.fillText(label,left+k*pw/4-(k===4?55:0),bottom+20);}
  // reduced motion: the plain sweep line stays (no light column)

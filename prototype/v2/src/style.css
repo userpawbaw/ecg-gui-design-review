@@ -175,3 +175,14 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 @keyframes lr-draw{0%{stroke-dashoffset:160;opacity:.2}45%{stroke-dashoffset:0;opacity:1}80%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-160;opacity:0}}
 @keyframes lr-in{from{transform:translateY(8px) scale(.98);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion: reduce){.lr-arc,.lr-ecg{animation:none}.lr-ecg{stroke-dashoffset:0}}
+/* 2026-11-11 실시간 기법 큐: 순번 · 추가/해제 예정 · 적용 버튼 */
+.live-methods .method{position:relative}
+.live-methods .lm-q{margin-left:auto;min-width:20px;height:20px;border-radius:10px;display:inline-grid;place-items:center;font-size:12px;font-weight:700;background:#1f6b5a;color:#d9fff2}
+.live-methods .method.adding{border-style:dashed;border-color:#5fd6b0}
+.live-methods .method.removing{opacity:.62;border-style:dashed;border-color:#d68a5f}
+.live-methods .lm-tag{position:absolute;right:34px;bottom:3px;font-style:normal;font-size:10px;letter-spacing:.04em;color:#9fe8cf}
+.live-methods .method.removing .lm-tag{color:#f0b48a}
+.live-methods .lm-actions{display:flex;gap:8px;margin-top:10px}
+.live-methods .lm-apply{flex:1;padding:9px 10px;border-radius:9px;background:#14806a;color:#f2fffb;border:1px solid #2fb592;font-weight:700}
+.live-methods .lm-apply:disabled{background:rgb(18 34 41 / .9);color:#6f8790;border-color:#2c454e;cursor:default}
+.live-methods .lm-cancel{padding:9px 12px;border-radius:9px}

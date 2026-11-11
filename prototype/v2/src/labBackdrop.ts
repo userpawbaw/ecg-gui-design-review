@@ -216,14 +216,25 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
    let mx=0;for(let i=0;i<probeBuf.length;i+=4){if(probeBuf[i+3]>1e3)continue;const l=.2126*probeBuf[i]+.7152*probeBuf[i+1]+.0722*probeBuf[i+2];if(l>mx)mx=l;}
    stats.curtain=mx;drift=mx>=CURTAIN_MIN;}catch{drift=true;}
   stats.drift=drift;}
+ // 2026-11-11 (user video 23:39 「스크롤할 때 뚝뚝 끊기는 느낌」): the live page scrolls on the user's screen (four rows); the first version
+ // snapped the camera and re-baked 200 ms after each wheel step, so the view jumped in steps. Now a scroll runs the Lab's real-time
+ // path (spring, half resolution while moving, panel mask) and the frame is baked only once the camera has rested; then the pointer
+ // turns the baked frame again.
+ let liveRT=false;
  function tickLive(now:number){
-  ps=p;pv=0;if(!reduced)pxShown+=(px-pxShown)*Math.min(1,Math.max(.001,(now-(lastT||now))/1000)*4);lastT=now;
+  if(liveRT||bakeP>=0&&bakeP!==p||ps!==p){
+   if(!liveRT){liveRT=true;dirty=true;}
+   const resting=ps===p&&!lowShown&&!dirty&&now-lastMove>=SETTLE_MS;
+   if(!resting)return false;                     // let the normal tick draw (spring + low resolution)
+   liveRT=false;needBake=true;}
+  if(!reduced)pxShown+=(px-pxShown)*Math.min(1,Math.max(.001,(now-(lastT||now))/1000)*4);lastT=now;
   if(Math.abs(px-pxShown)<=.005)pxShown=px;
-  if(needBake||bakeP!==p){if(bakeP!==p&&now-pChangedAt<200){kick();return;}bake();}
+  if(needBake||bakeP!==p)bake();
   if(warpShown!==pxShown)drawWarp();
-  if(px!==pxShown)kick();else lastT=0;}
+  if(px!==pxShown)kick();else lastT=0;
+  return true;}
  function tick(now:number){raf=0;if(paused||playing){lastT=0;return;}   // playback: the waveform comes first (user video 2 at 28 s)
-  if(live){tickLive(now);return;}
+  if(live&&tickLive(now))return;
   const dt=lastT?Math.min(.05,(now-lastT)/1000):1/60;lastT=now;
   // scroll: a critically damped spring follows the page position, so the descent speeds up and settles instead of jumping
   if(reduced){ps=p;pv=0;}else{pv+=(-2*SPRING*pv-SPRING*SPRING*(ps-p))*dt;ps+=pv*dt;if(Math.abs(ps-p)<1e-4&&Math.abs(pv)<1e-3){ps=p;pv=0;}}
@@ -232,14 +243,14 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   const moving=Math.abs(px-pxShown)>.005||ps!==p;if(moving){dirty=true;lastMove=now;}
   // D-172: once the camera has rested SETTLE_MS, the low-resolution room is drawn again at full quality
   const upgradeNow=!moving&&lowShown&&now-lastMove>=SETTLE_MS;if(upgradeNow)dirty=true;
-  const camMoved=dirty,amb=ambient&&drift;
-  if(!camMoved&&!amb&&!fogDirty){lastT=0;if(lowShown){clearTimeout(upgrade);upgrade=setTimeout(kick,SETTLE_MS);}return;}
+  const camMoved=dirty,amb=ambient&&drift&&!live;
+  if(!camMoved&&!amb&&!fogDirty){lastT=0;if(lowShown||live&&liveRT){clearTimeout(upgrade);upgrade=setTimeout(kick,SETTLE_MS);}return;}
   const gap=camMoved?33:42;                                                   // ≤ 30 fps moving · 24 idle
   if(now-last<gap){kick();return;}
   const low=camMoved&&moving&&MOVE_LOW;
   timed(()=>draw(camMoved,Math.min(.1,(now-(last||now))/1000)||dt,low));last=now;if(camMoved)dirty=false;fogDirty=false;
   if(camMoved&&!low&&!moving)probeCurtain();
-  if(moving||ambient&&drift||lowShown)kick();}
+  if(moving||ambient&&drift&&!live||lowShown||live&&liveRT)kick();}
  function kick(){if(!raf)raf=requestAnimationFrame(tick);}
  const onResize=()=>{clearTimeout(settle);settle=setTimeout(resize,150);};
  addEventListener('resize',onResize);resize();
@@ -247,7 +258,7 @@ export async function createLabBackdrop(canvas:HTMLCanvasElement){
   /** descent progress 0 (top of the ladder) … 1 (the floor): the whole page scroll */
   setProgress(v:number){if(Math.abs(v-p)>1e-4){p=v;dirty=true;pChangedAt=performance.now();if(soft){clearTimeout(settle);settle=setTimeout(kick,180);}else kick();}},
   /** D-172: the live tab shows one baked frame turned by the pointer */
-  setLive(v:boolean){if(!LIVE_BAKE||v===live)return;live=v;needBake=v;lastT=0;if(!v){dirty=true;camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}kick();},
+  setLive(v:boolean){if(!LIVE_BAKE||v===live)return;live=v;needBake=v;liveRT=false;lastT=0;if(!v){dirty=true;camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}kick();},
   /** D-172: opaque panel rectangles in CSS px [left, top, right, bottom], largest first (the shaft march is skipped inside) */
   setMask(r:number[][]){if(!MASK_ON)return;const key=JSON.stringify(r.slice(0,8).map(a=>a.map(Math.round)));if(key===JSON.stringify(maskPx.map(a=>a.map(Math.round))))return;
    maskPx=r.slice(0,8);applyMask();if(!live){fogDirty=true;kick();}},

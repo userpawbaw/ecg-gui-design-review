@@ -23,6 +23,7 @@ export const fxStats = {frames: 0, ms: 0, rebuilds: 0, level: 2};
 // 다시 올리지 않는다(깜빡임 방지). ?labfx= 로 고정.
 const FX_PIN = (() => { const v = new URLSearchParams(location.search).get('labfx'); return v === null ? null : Math.max(0, Math.min(2, Number(v) || 0)); })();
 const pace = {level: FX_PIN ?? 2, ema: 0, n: 0, last: 0};
+const LIVE_W = Number(new URLSearchParams(location.search).get('livew')) || 1.7;
 function tick(now: number, flowing: boolean) {
   const dt = now - pace.last; pace.last = now;
   if (!flowing || !(dt > 0 && dt < 250)) return;
@@ -129,8 +130,10 @@ export function drawSplitFx(S: LiveStream, v: View, canvases: Map<string, HTMLCa
   for (const [name, c] of canvases) {
     if (!c.clientWidth) continue;
     const raw = name === 'raw', on = v.glowOn;
-    drawPanel(S, v, c, [{name, color: S.color(name), width: 1.2, alpha: 1, lit: true, glow: on}], ax, ax.get(name),
-      {white: on ? (raw ? .8 : 1.15) : 0, glow: raw ? .35 : .5, dotR: raw ? 11 : 15, dotA: raw ? .4 : .7}, t0);
+    // 2026-11-11 (사용자: 실시간 파형이 실험실보다 어둡고 흐림 — 측정: 선 중심 밝기 145 vs 171, 빛 폭 3 vs 5 px): 실험실 기법 행은 회색
+    // Reference(1.8 px) 위에 겹쳐 그려 굵어 보인다. 실시간에는 Reference 가 없으므로 선을 LIVE_W 로 굵게, 빛 · 머리는 실험실 값(.55 · 16 · .75)
+    drawPanel(S, v, c, [{name, color: S.color(name), width: raw ? 1.2 : LIVE_W, alpha: 1, lit: true, glow: on}], ax, ax.get(name),
+      {white: on ? (raw ? .8 : 1.15) : 0, glow: raw ? .35 : .55, dotR: raw ? 11 : 16, dotA: raw ? .4 : .75}, t0);
   }
   fxStats.frames++; fxStats.ms += performance.now() - t0;
 }

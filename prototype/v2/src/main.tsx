@@ -26,7 +26,7 @@ const BACKDROP=new URLSearchParams(location.search).get('bg')!=='0';
 const pct=(k:string,d:number)=>{const v=Number(new URLSearchParams(location.search).get(k));if(!Number.isFinite(v)||new URLSearchParams(location.search).get(k)===null)return d;const f=v>1?v/100:v;return Math.min(1,Math.max(0,Math.round(f*10)/10));};
 const CURTAIN=pct('curtain',.7),UI_A=pct('ui',.9);
 // D-172: opaque UI panels; the backdrop skips the shaft march under them (alpha ≥ .85, largest 8)
-const MASK_SEL='header,footer,.signal-panel,.method-panel,.metric-panel,.metrics,.review,.condition-bar';
+const MASK_SEL='header,footer,.signal-panel,.method-panel,.metric-panel,.metrics,.review,.condition-bar,.live-row,.live-stats,.live-tools';
 function panelRects(){const out:number[][]=[];for(const el of document.querySelectorAll<HTMLElement>(MASK_SEL)){const m=getComputedStyle(el).backgroundColor.match(/rgba?\(([^)]+)\)/);if(!m)continue;
  const v=m[1].split(/[ ,/]+/).filter(Boolean),a=v.length>3?parseFloat(v[3]):1;if(a<.85)continue;const r=el.getBoundingClientRect();
  const l=Math.max(0,r.left),t=Math.max(0,r.top),rr=Math.min(innerWidth,r.right),b=Math.min(innerHeight,r.bottom);if(rr-l>0&&b-t>0)out.push([l,t,rr,b]);}

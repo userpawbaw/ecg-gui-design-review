@@ -1,0 +1,148 @@
+[
+ {
+  "label": "old",
+  "labScroll": {
+   "draws": 393,
+   "low": 0,
+   "full": 101,
+   "fogOnly": 292,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 174099.1,
+   "bakeMs": 0,
+   "curtain": 0,
+   "wall_s": 175.359
+  },
+  "labPointer": {
+   "draws": 444,
+   "low": 0,
+   "full": 38,
+   "fogOnly": 406,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 162842.7,
+   "bakeMs": 0,
+   "curtain": 0
+  },
+  "labIdle": {
+   "draws": 16,
+   "low": 0,
+   "full": 0,
+   "fogOnly": 16,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 5108.6,
+   "bakeMs": 0,
+   "curtain": 0,
+   "note": "ambient drift frames over 5 s"
+  },
+  "curtainAtEnd": -1,
+  "driftAtEnd": true,
+  "liveEnter": {
+   "draws": 304,
+   "low": 0,
+   "full": 14,
+   "fogOnly": 290,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 161645.6,
+   "bakeMs": 0,
+   "curtain": 0
+  },
+  "livePointer": {
+   "draws": 382,
+   "low": 0,
+   "full": 38,
+   "fogOnly": 344,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 178465.6,
+   "bakeMs": 0,
+   "curtain": 0
+  },
+  "liveIdle": {
+   "draws": 9,
+   "low": 0,
+   "full": 0,
+   "fogOnly": 9,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 3004.3,
+   "bakeMs": 0,
+   "curtain": 0
+  }
+ },
+ {
+  "label": "new",
+  "labScroll": {
+   "draws": 1130,
+   "low": 104,
+   "full": 1,
+   "fogOnly": 1025,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 133751.1,
+   "bakeMs": 0,
+   "curtain": 0,
+   "wall_s": 137.09
+  },
+  "labPointer": {
+   "draws": 1163,
+   "low": 38,
+   "full": 1,
+   "fogOnly": 1124,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 130157.5,
+   "bakeMs": 0,
+   "curtain": 0
+  },
+  "labIdle": {
+   "draws": 47,
+   "low": 0,
+   "full": 0,
+   "fogOnly": 47,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 4956.1,
+   "bakeMs": 0,
+   "curtain": 0,
+   "note": "ambient drift frames over 5 s"
+  },
+  "curtainAtEnd": 0.12384020731598137,
+  "driftAtEnd": true,
+  "liveEnter": {
+   "draws": 10,
+   "low": 0,
+   "full": 0,
+   "fogOnly": 10,
+   "bakes": 1,
+   "warps": 2,
+   "ms": 3922.6,
+   "bakeMs": 1062.8,
+   "curtain": 0
+  },
+  "livePointer": {
+   "draws": 0,
+   "low": 0,
+   "full": 0,
+   "fogOnly": 0,
+   "bakes": 0,
+   "warps": 103,
+   "ms": 2799.3,
+   "bakeMs": 0,
+   "curtain": 0
+  },
+  "liveIdle": {
+   "draws": 0,
+   "low": 0,
+   "full": 0,
+   "fogOnly": 0,
+   "bakes": 0,
+   "warps": 0,
+   "ms": 0,
+   "bakeMs": 0,
+   "curtain": 0
+  }
+ }
+]

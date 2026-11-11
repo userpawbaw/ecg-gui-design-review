@@ -65,6 +65,7 @@
 - `.claude/skills/reference-mining/SKILL.md`
 - `.claude/skills/superdesign-routing/SKILL.md`
 - `.claude/skills/dual-creative-director/SKILL.md`
+- `.claude/skills/tradeoff-study/SKILL.md` (2026-11-11, 아래 절)
 
 ### reference-mining
 
@@ -122,3 +123,9 @@ Awwwards/Godly/SiteInspire/Land-book/Lapa Ninja/CSS Design Awards 같은 공개 
 - project-local `pose-anatomy`: `.claude/skills/pose-anatomy/SKILL.md` + `references/rom.md`. 자체 작성(사용자 요청 2026-10-05, D-051 갱신, R-020). 수치 출처: AAOS 정상 관절 운동 범위, Luttgens & Hamilton 1997(WikEM 표), 일상동작 기능 범위 연구 2편, 양반다리 3D 동작 분석(BMC Musculoskelet Disord 2021), 아래팔 엎침 측정(PMC9091929). URL은 rom.md에 있다.
 - 공개 skill 검색 결과(2026-10-05): 리깅 기초(관절 종류·계층)와 MIT 라이선스 "blender-motion-state-inspection"(접지·발 미끄러짐·꼬임)만 있고 정지 자세 가동 범위 판정은 없었다. 후자는 "꼬임을 휘두름과 분리해 본다"는 생각만 참고했고 글·코드는 복제하지 않았다.
 - 실행 코드는 skill 밖 `scripts/assets/pose-check-v3.py`(빌드 관문)와 `pose-check-selftest.py`에 있다.
+
+## 제약 기반 트레이드오프 탐색 (2026-11-11)
+
+- project-local `tradeoff-study`: `.claude/skills/tradeoff-study/SKILL.md` + `references/levers.md` · `report_template.md` · `sources.md` + `examples/EX-001_*`. 자체 작성(사용자 요청 2026-11-11, D-171, R-025, CASE-008). 방법 출처: 시스템 공학 trade study · AoA, ATAM, 가치 공학(Miles, FAST), 근사 컴퓨팅 서베이(Mittal 2016, Leon 외 2023), 지각 기반 렌더링 · 포비티드 평가, DSE · 파레토, ADR/MADR, 게임 프레임 예산. URL은 `sources.md` §1.
+- 공개 skill 검색(2026-11-11): claude.ai 사용자 스킬 0건. 공개 레지스트리에서 decision-matrix(lyndonkl), skill-decision-support(nyldn, MIT), architecture-tradeoff-analysis · tradeoff-analysis(majiayu000 보관본), evaluating-trade-offs(oldwinter, 원문 없음)를 비교했다(`sources.md` §2).
+- **§4 "원문 전체를 vendoring하지 않는다"의 예외**: 사용자가 「원본 스킬과 함께 제공해줘」라고 요청해, 앞의 두 원문을 `third_party/skills/`에 출처 · 커밋 SHA · 라이선스와 함께 보관했다. `.claude/skills/` 밖이라 자동으로 불리지 않는다. 라이선스가 불분명한 보관본은 보관하지 않고 링크만 남겼다(`third_party/skills/README.md`).

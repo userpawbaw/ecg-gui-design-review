@@ -73,6 +73,12 @@ User-approved workflow: source-project analysis → independent design/prototype
 - Journeys link F/D/O/R/verification instead of copying them. A user's later recollection that differs from the contemporaneous record is added beside it, not over it.
 - `npm run playbook:check` (in `npm test`) blocks missing fields/sections/chains/citations and padded content (placeholders, untraced generic advice, vague bullets, copied sentences). Do not pre-create empty cards; list unprocessed topics under README "정리 대기".
 
+## Constraint-driven trade study (2026-11-11)
+
+- Before choosing HOW to build, optimize or restructure anything (UI effect, rendering, data pipeline, code architecture), run `.claude/skills/tradeoff-study/` (D-171, CASE-008). Scale it: skip trivial/frozen choices; LOW = 3-line report (recommendation · what is lost · flip condition); MEDIUM = full 9 steps; HIGH = full + two measurements + D record.
+- Map required functions, hard constraints, concurrent load and **slack** (where quality loss is invisible or the user said it is not needed) before comparing; widen candidates with the lever catalog instead of comparing only the first two ideas (R-025); hard constraints are filters, never offset by weighted scores.
+- Ask only questions whose answer changes the ranking (max 3); otherwise state the assumption and proceed. Report in the fixed template (`references/report_template.md`) and carry it into the D record.
+
 ## Alpha / Beta creative tracks (2026-09-23)
 
 - Alpha/Beta are not renamed Director A/B. Both use explicit references; they differ by representation: Alpha is implementation-aware from the start, Beta is image-first then translated back to real UI.

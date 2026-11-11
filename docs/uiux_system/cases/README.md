@@ -32,3 +32,7 @@ D/R은 CASE 연결 또는 `10_RECORD_KEEPING.md`에 따른 구체적 비연결 �
 ## 2026-10-09
 
 - [CASE-007](CASE-007_EXPERIENCE_PLAYBOOK.md) — 리깅 시행착오를 계기로 경험을 권장 카드 + 여정 두 층의 플레이북으로 바꾼 과정(D-057). 산출물 `docs/playbook/`
+
+## 2026-11-11
+
+- [CASE-008](CASE-008_CONSTRAINT_TRADEOFF_STUDY.md) — AI가 두 안 중 고르기를 묻자 사용자가 제약 · 필요 기능을 좁혀 더 나은 안이 나온 과정을 제약 기반 트레이드오프 탐색 스킬로 만든 과정(D-171, R-025). 산출물 `.claude/skills/tradeoff-study/`

@@ -51,6 +51,7 @@
 | 컴포넌트/디자인 시스템 | docs/15, 01/04 | Figma, design-taste |
 | 최신 Motion/React API | 03 Motion | Context7/공식 문서 |
 | 구현/코드 변경 | docs/21 + change contract | GitHub, Codex/Claude/Work 필요 시 |
+| **구현 방식 선택 · 최적화 · 성능/품질 충돌** | `.claude/skills/tradeoff-study/` (D-171) | tradeoff-study — 규모별(LOW 3줄 · MEDIUM 전체 · HIGH + 측정 · D). 후보 비교 전에 기능 · 제약 · 여유 지도 · 레버 |
 | 실제 브라우저 검증 | 04 Validation | existing Playwright, TinyFish/Work |
 | 배포 preview | 06 Handoff | Vercel 필요 시 |
 | 외부 레퍼런스 / UI 컴포넌트 inspiration | 01 Creative, 13 Reference Mining, **17 Source Registry** | task router로 Creative/Curated/Product/Scientific/Data Story source를 선택; direct URL + viewing instruction + provenance 필수 |

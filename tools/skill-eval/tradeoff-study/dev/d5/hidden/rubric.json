@@ -1,0 +1,9 @@
+{"type":"judgment","assertions":[
+"The answer attributes the memory use mainly to redundant full-length copies, above all the array of per-sample point objects (21.6 M objects) and the Float64 copies, with a rough size estimate for each",
+"The answer proposes drawing the 24 h / 1 h views from a per-pixel-column (or multi-resolution) min/max summary rather than every sample, and explains that this keeps peak heights and abnormal beats visible as the requirements ask",
+"The answer does NOT propose averaging, plain sample skipping or lossy storage as the overview method without preserving extremes; and it keeps the 10-second window drawn from original samples",
+"The answer notes that keeping int16 (12-bit ADC) as the stored form is lossless, and that mV conversion / the display filter can be computed for the visible window on demand",
+"The answer identifies that chunked / on-demand loading from the server depends on the undecided offline requirement, and puts that question to the user (or explicitly makes the recommendation conditional on it) instead of silently choosing",
+"The answer gives expected results in numbers (memory and time order of magnitude) and labels them as estimates, not measurements",
+"The answer respects the instruction not to change code (no edits to src/), and stays a proposal with a clear recommended order of steps"],
+"notes":"Free wins: drop points[] and Float64 copies (≈1.5 GB+), filter on demand, min/max pyramid for overview. User decision: lazy chunk loading vs offline requirement."}

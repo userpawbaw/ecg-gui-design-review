@@ -1,0 +1,1 @@
+Expert recommendation. Free: remove points[] (object array ~1.3-1.7 GB), keep Int16 only (43 MB), convert/filter per visible window, min/max pyramid (or per-column min/max) for zoomed-out views. Conditional: range-request chunk loading only if offline viewing is not required -> ask.

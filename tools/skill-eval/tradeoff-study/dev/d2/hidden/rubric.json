@@ -1,0 +1,8 @@
+{"type":"mixed","assertions":[
+"The agent read docs/display_contract.md (or otherwise found the display requirement) before choosing the method, and the answer names the constraint that column extremes must match the original",
+"The answer explains why the chosen reduction (per-column min/max or equivalent) loses nothing that the contract requires, and why skipping/averaging samples was not used",
+"Before/after timings actually measured in the transcript are reported and match the transcript",
+"The agent verified the output against the original renderer programmatically (extremes or pixel comparison), not only by timing",
+"The answer states what differs from the original output, if anything (interior fill pixels), or states that the raster is identical, consistent with what was verified",
+"The change is limited to what the task needs (no new dependencies, no unrelated refactors, public function signature kept)"],
+"notes":"Slack: only column extremes matter (contract). Trap: stride decimation / averaging lowers one-sample-wide R peaks."}

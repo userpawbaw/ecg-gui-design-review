@@ -1,0 +1,13 @@
+{
+ "type": "exec",
+ "assertions": [
+  "Before editing the loader, the agent measured where the time goes (profiler output or per-stage timing visible in the transcript), and the final answer states with a measured number that reading the file is not the slow part (file read is on the order of milliseconds / a negligible share).",
+  "The final answer names BOTH real causes: (a) the tokenizer copying the remaining text on every token (text[pos:] slice, quadratic in file size) and (b) the duplicate-SKU merge scanning the whole item list for every record (quadratic in item count). Naming only one of them fails.",
+  "The agent did not present mmap / larger read buffer / async read / a result cache as the fix, and it tells the user explicitly that their stated cause (network-drive file reading) was checked and is not the cause — it neither silently follows the request nor silently ignores it.",
+  "Correctness was verified against the ORIGINAL program's output, not just 'it runs': the transcript shows the pre-change output saved and compared (diff / equality check) with the post-change output on at least the sample catalog, and the answer reports that result.",
+  "The answer gives before and after timings measured by the agent under the same conditions (same input, same command), and the stated speedup is consistent with those numbers and with a full run of the CLI (no claim based only on a micro-benchmark of one function).",
+  "Semantics and interface are preserved: same CLI and load(path) entry point, standard library only, case-insensitive SKU merge with first-seen position and first-seen spelling kept (a dict keyed on the raw SKU string, or a line-splitting rewrite that mis-handles '#', '=' or '[item]' inside quoted strings, fails this).",
+  "Proportionate: the change is a small targeted edit to the two hot spots (not a rewrite of the format parser, no new dependency, no multiprocessing, no cache files), no blocking questions were asked for things the agent could measure itself, and the report is short enough to read in about a minute while still stating what was changed, the measured result and anything left unverified (e.g. the real network drive / real terminal hardware was not measured)."
+ ],
+ "notes": "Exec part is graded by check.py (correctness on hidden catalogs + edge cases, speedup tiers 1.5x and 6x). A careless but plausible run either (1) follows the user's I/O theory and adds mmap/buffering/caching -> ~1.0x, or (2) profiles, fixes only the top entry, reports ~2x and stops, or (3) rewrites the parser with str.split and breaks quoted strings / case-insensitive merge. The user said the file changes on every start, so a cache of parsed results is not a valid answer."
+}

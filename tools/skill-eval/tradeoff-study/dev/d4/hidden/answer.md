@@ -1,0 +1,1 @@
+Expert recommendation: do not optimize (or at most the 5-line dict aggregation); surface that there is no performance problem and ask what the real concern is (maybe a different step, e.g. the copy to the shared folder).

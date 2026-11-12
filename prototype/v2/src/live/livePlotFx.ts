@@ -12,7 +12,7 @@ import {WAVE} from '../waveMode';
 const NAIVE = WAVE === 'naive';
 const naiveGlow = createGlow();
 import {StripRow, AgeRamps, composeRow, headSprite, type StripTrace} from '../waveStrip';
-import {createFocus, setPointer, pick, cycle, step, emphasis, togglePin, roughness, tierOf, type Focus} from './overlayFocus';
+import {createFocus, setPointer, pick, cycle, step, emphasis, togglePin, roughness, tierOf, containment, layerDepths, layerTier, hold, COVER_MARGIN_PX, type Focus, type Held} from './overlayFocus';
 export {roughness, tierOf};
 
 const BG = 'rgba(10,26,33,.94)';
@@ -169,15 +169,21 @@ const FOCUS_ON = typeof location === 'undefined' || new URLSearchParams(location
 const OV_DBG = typeof location !== 'undefined' && new URLSearchParams(location.search).has('ovdbg');
 const TIER_ON = typeof location === 'undefined' || new URLSearchParams(location.search).get('overlaytier') !== '0';
 const TIER_STYLE = [{width: 1.6, alpha: 1, lit: true, glow: true, casing: true}, {width: 1.2, alpha: .62, lit: false, glow: false, casing: false}, {width: 1.0, alpha: .4, lit: false, glow: false, casing: false}];
-const tiers = new Map<string, {tier: number, want: number, since: number}>(); let tierAt = 0;
-function updateTiers(S: LiveStream, on: string[], now: number) {
+const tiers = new Map<string, Held>(), depths = new Map<string, Held>(); let tierAt = 0;
+function updateTiers(S: LiveStream, on: string[], now: number, geom: PanelGeom | null) {
   if (now - tierAt < 250) return; tierAt = now;
   const lo = Math.max(S.first, S.vh - S.cap + 1), r = on.map(n => roughness(S.bufs.get(n)!, S.cap, lo, S.vh));
   const ref = S.bufs.has('raw') ? roughness(S.bufs.get('raw')!, S.cap, lo, S.vh) : Math.max(...r);
-  let want0 = r.map(x => ref > 0 && x > 0 ? tierOf(x / ref) : 0); if (!want0.includes(0)) want0 = want0.map(() => 0);   // 모두 거칠면 같은 무게
-  on.forEach((n, i) => { const want = want0[i], st = tiers.get(n);
-    if (!st) { tiers.set(n, {tier: want, want, since: now}); return; }
-    if (want !== st.want) { st.want = want; st.since = now; } else if (want !== st.tier && now - st.since > 1000) st.tier = want; });
+  // D-186 포함 비율 → 깊이(0 = 맨 앞). 지난 그림의 화면 y(px)로 재므로 여유는 2 px 그대로.
+  const dep = new Map<string, number>(on.map(n => [n, 0]));
+  if (geom && on.length > 1 && on.every(n => geom.ys.has(n))) {
+    const ts: number[] = []; for (let t = S.vh; t > lo && ts.length < 500; t--) if (S.seen(t)) ts.push(t);
+    ts.reverse();
+    if (ts.length > 50) for (const [n, d] of layerDepths(on, containment(on.map(n => { const y = geom.ys.get(n)!; return ts.map(y); }), COVER_MARGIN_PX))) dep.set(n, d);
+  }
+  let want0 = r.map((x, i) => layerTier(ref > 0 && x > 0 ? tierOf(x / ref) : 0, hold(depths, on[i], dep.get(on[i])!, now)));
+  if (!want0.includes(0)) want0 = want0.map(() => 0);   // 모두 거칠면 같은 무게
+  on.forEach((n, i) => hold(tiers, n, want0[i], now));
 }
 // D-184 겹치기 강조: 계열마다 링 한 줄(최대 밝기로 구움) + 합성 배율. 마우스 판정은 지난 프레임의 기하로.
 const focusOf = new WeakMap<HTMLCanvasElement, {f: Focus, geom: PanelGeom | null, labels: {name: string, x0: number, x1: number, y0: number, y1: number}[], moving: boolean}>();
@@ -190,7 +196,7 @@ export function overlayChip(c: HTMLCanvasElement, n: string | null) { fstate(c).
 /** D-185 클릭: 다음 그림에서 마우스 아래 선들을 앞쪽부터 돌아 강조를 바꾼다(overlayFocus.cycle). */
 export function overlayClick(c: HTMLCanvasElement, x: number, y: number) { fstate(c).f.click = {x, y}; }
 export function overlayTogglePin(c: HTMLCanvasElement, n: string) { return togglePin(fstate(c).f, n); }
-export function overlayInfo(c: HTMLCanvasElement) { return {pinned: [...fstate(c).f.pinned], tier: (n: string) => TIER_ON ? tiers.get(n)?.tier ?? 0 : 0}; }
+export function overlayInfo(c: HTMLCanvasElement) { return {pinned: [...fstate(c).f.pinned], tier: (n: string) => TIER_ON ? tiers.get(n)?.v ?? 0 : 0}; }
 export function overlayBusy(c: HTMLCanvasElement) { const o = focusOf.get(c); return !!o && (o.moving || o.f.px !== null || o.f.chip !== null); }
 /** 마우스에서 각 계열 선까지 거리(px) — 커서 열 주변 ±4 표본의 선분 거리. */
 function hitDistances(S: LiveStream, geom: PanelGeom, px: number, py: number, names: string[]) {
@@ -211,13 +217,14 @@ export function drawOverlayFx(S: LiveStream, v: View, c: HTMLCanvasElement) {
   tick(t0, t0 - S.lastData < 300);
   const on = S.names().filter(n => n !== 'raw' && !S.hidden.has(n)), raw = !S.hidden.has('raw') && S.bufs.has('raw') ? 'raw' : null;
   const ax = S.axesFor(raw ? [raw, ...on] : on, v.amp);
-  if (TIER_ON && S.vh >= 0) updateTiers(S, on, t0);
-  const tierOfN = (n: string) => TIER_ON ? tiers.get(n)?.tier ?? 0 : -1;
+  const fo = fstate(c), F = fo.f;
+  if (TIER_ON && S.vh >= 0) updateTiers(S, on, t0, fo.geom);
+  const tierOfN = (n: string) => TIER_ON ? tiers.get(n)?.v ?? 0 : -1;
   const all = [...(raw ? [raw] : []), ...on];
-  // 그리는 순서(아래 → 위): 입력 → 거친 것 → 중간 → 깨끗한 것. (2026-11-13 고침: 이전 식은 입력에 10을 줘 입력이 맨 위에 그려졌다)
-  const baseRank = (n: string) => n === 'raw' ? 0 : 5 - Math.max(0, tierOfN(n)), front = new Map(all.map(n => [n, baseRank(n)]));
+  // 그리는 순서(아래 → 위): 입력 → 깊은(넓게 덮는) 층 → 앞 층. D-186: 앞 순서 = 포함 비율 깊이(같은 깊이 = 같은 층). ?overlaytier=0 이면 모두 같은 층.
+  const baseRank = (n: string) => n === 'raw' ? 0 : 5 - (TIER_ON ? depths.get(n)?.v ?? 0 : 0), front = new Map(all.map(n => [n, baseRank(n)]));
   // 강조 대상: 범례 글자 위면 그 계열, 아니면 파형까지 거리(지난 프레임 기하)
-  const fo = fstate(c), F = fo.f; let hit: string | null = null;
+  let hit: string | null = null;
   if (FOCUS_ON && F.click && fo.geom) { cycle(F, hitDistances(S, fo.geom, F.click.x, F.click.y, all), front, F.click.x, F.click.y); F.click = undefined; }
   if (FOCUS_ON && F.px !== null && F.py !== null) {
     const lab = fo.labels.find(r => F.px! >= r.x0 && F.px! <= r.x1 && F.py! >= r.y0 && F.py! <= r.y1);
@@ -226,7 +233,7 @@ export function drawOverlayFx(S: LiveStream, v: View, c: HTMLCanvasElement) {
     if (OV_DBG) (globalThis as unknown as {__ovDbg: unknown}).__ovDbg = {px: F.px, py: F.py, dd, hit};   // ?ovdbg=1: 시험이 파형 위치 · 고른 계열을 읽는다
   }
   fo.moving = FOCUS_ON && step(F, t0, all, hit);
-  c.style.cursor = F.target && F.px !== null ? 'pointer' : ''; c.dataset.focus = F.target ?? '';
+  c.style.cursor = F.target && F.px !== null ? 'pointer' : ''; c.dataset.focus = F.target ?? ''; if (OV_DBG) c.dataset.layers = all.map(n => `${n}:${front.get(n)}/${tierOfN(n)}`).join(' ');
   // 굽는 모양(단계 굵기 · 테두리)은 정적, 불투명도 · 번짐 · 흰빛은 합성 배율(D-183 단계 값 × D-184 강조)
   const base = (n: string) => { if (n === 'raw') return {a: .55, g: 0, w: 0}; const t = tierOfN(n); return t < 0 ? {a: .85, g: 1, w: 1} : {a: TIER_STYLE[t].alpha, g: TIER_STYLE[t].glow ? 1 : 0, w: t === 0 ? 1 : 0}; };
   const ser = (n: string): Series => { if (n === 'raw') return {name: n, color: '#8fa3ad', width: 1.2, alpha: 1, lit: true, glow: v.glowOn};

@@ -81,3 +81,35 @@ export function roughness(a: Float32Array, cap: number, lo: number, hi: number) 
 }
 /** 입력 대비 거칠기 비 → 단계(0 깨끗 · 1 중간 · 2 거침). */
 export function tierOf(q: number) { return q < .3 ? 0 : q < .6 ? 1 : 2; }
+
+/* D-186 앞뒤 순서 = 포함 비율(2026-11-13 사용자 안 「뒤에 배치되는 파형이 앞 파형들과 겹치지 않는 비율을 따져」, 권장안 승인 2026-11-13).
+ * cover[a][b] = b의 표본 가운데 a의 띠(±W 표본의 최소 · 최대 + 여유 M) 안에 드는 비율. a가 b를 넓게 덮으면 a를 b 뒤로 —
+ * cover[a][b] ≥ 0.75 이고 cover[a][b] − cover[b][a] ≥ 0.25 일 때만. 아니면 같은 층(앞 순서 같음 → 마우스는 가까운 것, 클릭은 거리 순).
+ * 거칠기(입력 대비) 단계는 보드 입력처럼 입력 자체가 아주 거칠면 비가 작아져 모두 「깨끗」이 되었다(사용자 영상 02:37) — 포함은 기법끼리만 비교해 그런 기준 의존이 없다. */
+export const COVER_W = 2, COVER_MARGIN_PX = 2, BEHIND_MIN = .75, BEHIND_ASYM = .25;
+/** v[i] = 계열 i의 값(모두 같은 단위 · 같은 길이). m = 여유(같은 단위). */
+export function containment(v: ArrayLike<number>[], m: number, w = COVER_W): number[][] {
+  const k = v.length, n = k ? Math.min(...v.map(a => a.length)) : 0;
+  const band = v.map(a => { const lo = new Float64Array(n), hi = new Float64Array(n);
+    for (let t = 0; t < n; t++) { let l = Infinity, h = -Infinity; for (let j = Math.max(0, t - w); j <= Math.min(n - 1, t + w); j++) { const x = a[j]; if (x < l) l = x; if (x > h) h = x; } lo[t] = l - m; hi[t] = h + m; }
+    return {lo, hi}; });
+  return v.map((_, i) => v.map((b, j) => { if (i === j || !n) return 0; let c = 0; const {lo, hi} = band[i]; for (let t = 0; t < n; t++) if (b[t] >= lo[t] && b[t] <= hi[t]) c++; return c / n; }));
+}
+/** 깊이(0 = 맨 앞 층): a가 b 뒤이면 깊이(a) ≥ 깊이(b) + 1. 가장 긴 「뒤」 사슬의 길이. 순환(이론상)은 방문 중인 것을 무시해 끊는다. */
+export function layerDepths(names: string[], cover: number[][]): Map<string, number> {
+  const behind = (i: number, j: number) => cover[i][j] >= BEHIND_MIN && cover[i][j] - cover[j][i] >= BEHIND_ASYM;
+  const memo = new Map<number, number>(), busy = new Set<number>();
+  const depth = (i: number): number => { if (memo.has(i)) return memo.get(i)!; busy.add(i); let d = 0;
+    for (let j = 0; j < names.length; j++) if (j !== i && !busy.has(j) && behind(i, j)) d = Math.max(d, depth(j) + 1);
+    busy.delete(i); memo.set(i, d); return d; };
+  return new Map(names.map((n, i) => [n, depth(i)]));
+}
+/** 깨끗 · 흐림 단계 = 거칠기 단계와 깊이 중 큰 쪽(깊이 2 이상은 2). 뒤층은 적어도 한 단계 흐리게. */
+export const layerTier = (roughTier: number, depth: number) => Math.max(roughTier, Math.min(2, depth));
+/** 바뀐 값이 ms 동안 이어질 때만 바꾼다(깜빡임 방지, D-183과 같은 1 s). */
+export type Held = {v: number, want: number, since: number};
+export function hold(m: Map<string, Held>, n: string, want: number, now: number, ms = 1000) {
+  const st = m.get(n); if (!st) { m.set(n, {v: want, want, since: now}); return want; }
+  if (want !== st.want) { st.want = want; st.since = now; } else if (want !== st.v && now - st.since > ms) st.v = want;
+  return st.v;
+}

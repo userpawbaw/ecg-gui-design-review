@@ -7,7 +7,7 @@ const NAME:Record<string,string>=Object.fromEntries(Object.entries(methodData as
 import {ageGradient,freshGradient,paper,createGlow,rgb,BAND_S,ERASE_S,type Box} from './labFx';
 import {StripRow,AgeRamps,composeRow,headSprite} from './waveStrip';
 import {WAVE} from './waveMode';
-import {createFocus,setPointer,pick,cycle,step,emphasis,roughness,tierOf} from './live/overlayFocus';
+import {createFocus,setPointer,pick,cycle,step,emphasis,roughness,tierOf,containment,layerDepths,layerTier,hold,COVER_MARGIN_PX,type Held} from './live/overlayFocus';
 // D-161: ?wave=all 이면 재생 중 파형을 링 스트립으로(새 표본만 긋고 효과는 램프·스프라이트). 그 밖(정지 · 구간 고정 · 효과 끔)은 아래 원래 경로.
 const STRIP=WAVE==='all';
 export const labStats={frames:0,ms:0};(globalThis as unknown as {__labStats:typeof labStats}).__labStats=labStats;
@@ -27,7 +27,7 @@ export function Plot(p:Props){
  const canvas=useRef<HTMLCanvasElement>(null),latest=useRef(p);latest.current=p;
  const fx=useRef({level:FX_PIN??2,ema:0,frames:0,last:0});
  const focus=useRef(createFocus()),geomRef=useRef<{left:number,right:number,pw:number,top:number,ph:number,pts:{x:number,index:number,alpha:number,breakBefore?:boolean}[],ys:Map<string,(i:number)=>number>}|null>(null),drawRef=useRef<()=>void>(()=>{});
- const tierRef=useRef(new Map<string,{tier:number,want:number,since:number}>());
+ const tierRef=useRef(new Map<string,Held>()),depthRef=useRef(new Map<string,Held>()),tierAt=useRef(-1e9);
  useEffect(()=>{const c=canvas.current!;const g=c.getContext('2d');if(!g)return;let raf=0,signature='',bgSig='';
  const bg=document.createElement('canvas'),bgg=bg.getContext('2d')!,hot=document.createElement('canvas'),hg=hot.getContext('2d')!,glow=createGlow();
  const strips:StripRow[]=[],ramps=new AgeRamps(),layer=(()=>{const lc=document.createElement('canvas');return{c:lc,g:lc.getContext('2d')!};})();
@@ -35,14 +35,14 @@ export function Plot(p:Props){
  // D-185 겹치기 강조: 지난 그림의 기하로 마우스 판정 → 강조 상태 한 걸음(고정 · 범례 단추 포함)
  const OV=!!q.overlay&&!q.residual,F=focus.current,ovNames=['input',...q.shown];let ovMoving=false;
  if(OV){F.pinned=new Set((q.pins??[]).filter(n=>ovNames.includes(n)));F.chip=q.chip??null;let hit:string|null=null;const G=geomRef.current;
-  const fr=new Map(ovNames.map(n=>[n,n==='input'?0:5-(tierRef.current.get(n)?.tier??0)]));
+  const fr=new Map(ovNames.map(n=>[n,n==='input'?0:5-(depthRef.current.get(n)?.v??0)]));
   const candAt=(px:number,py:number)=>{const cands:{name:string,dist:number}[]=[];if(!G||px<G.left||px>G.right)return cands;
    for(const [n,y] of G.ys){let best=Infinity;for(let k=1;k<G.pts.length;k++){const a=G.pts[k-1],b=G.pts[k];if(a.alpha<=0||b.alpha<=0||b.breakBefore)continue;const x0=G.left+a.x*G.pw,x1=G.left+b.x*G.pw;if(Math.max(x0,x1)<px-6||Math.min(x0,x1)>px+6)continue;
     const y0=y(a.index),y1=y(b.index),vx=x1-x0,vy=y1-y0,L=vx*vx+vy*vy,u=L>0?Math.max(0,Math.min(1,((px-x0)*vx+(py-y0)*vy)/L)):0;best=Math.min(best,Math.hypot(px-(x0+u*vx),py-(y0+u*vy)));}
     if(best<Infinity)cands.push({name:n,dist:best});}return cands;};
   if(F.click){cycle(F,candAt(F.click.x,F.click.y),fr,F.click.x,F.click.y);F.click=undefined;}
   if(F.px!==null&&F.py!==null){const cs=candAt(F.px,F.py);hit=pick(cs,F.target,fr);if(OV_DBG)c.dataset.cands=cs.map(x=>x.name+':'+x.dist.toFixed(1)).join(' ');}
-  ovMoving=step(F,t0,ovNames,hit);c.style.cursor=F.target&&F.px!==null?'pointer':'';c.dataset.focus=F.target??'';}
+  ovMoving=step(F,t0,ovNames,hit);c.style.cursor=F.target&&F.px!==null?'pointer':'';c.dataset.focus=F.target??'';if(OV_DBG)c.dataset.layers=ovNames.map(n=>`${n}:${fr.get(n)}/${tierRef.current.get(n)?.v??0}`).join(' ');}
  const sig=[t,q.mode,q.span,q.inspect,q.amplitude,q.reference,q.method,q.preview,q.shown.join(','),q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,rect.width,rect.height,dpr,fx.current.level,OV,OV?ovNames.map(n=>(F.e.get(n)??0).toFixed(3)).join(',')+F.f.toFixed(3):''].join('|');
  // a collapsed canvas (0 × 0 while the layout changes) is skipped: drawImage of a 0-size static layer throws
  if(sig!==signature&&rect.width>=1&&rect.height>=1){signature=sig;const W=Math.round(rect.width*dpr),H=Math.round(rect.height*dpr);if(c.width!==W||c.height!==H){c.width=W;c.height=H;}g.setTransform(dpr,0,0,dpr,0,0);const w=rect.width,h=rect.height;
@@ -70,14 +70,17 @@ export function Plot(p:Props){
   g.restore();}
  // D-185 겹치기: 거칠기 단계(입력 대비, D-183과 같은 기준 · 1 s 유지) → 그리는 순서(입력 → 거친 것 → 깨끗한 것, 강조가 절반을 넘으면 맨 위)와 기본 배율
  const off0=q.data.offset,lo0=pts.length?Math.max(2,pts[0].index-off0):0,hi0=pts.length?pts[pts.length-1].index-off0:0;
- if(OV&&hi0>lo0+10){const L=q.data.traces.input.length,rIn=roughness(q.data.traces.input,L,lo0,hi0);
-  for(const id of q.shown){const a=q.data.traces[id];if(!a)continue;const want=rIn>0?tierOf(roughness(a,L,lo0,hi0)/rIn):0,st=tierRef.current.get(id);
-   if(!st)tierRef.current.set(id,{tier:want,want,since:t0});else if(want!==st.want){st.want=want;st.since=t0;}else if(want!==st.tier&&t0-st.since>1000)st.tier=want;}
-  if(!q.shown.some(id=>(tierRef.current.get(id)?.tier??0)===0))for(const id of q.shown){const st=tierRef.current.get(id);if(st)st.tier=0;}   // 모두 거칠면 같은 무게
-  q.onTiers?.(Object.fromEntries(q.shown.map(id=>[id,tierRef.current.get(id)?.tier??0])));}
- const baseOf=(id:string)=>id==='input'?IN_BASE:TIER_BASE[tierRef.current.get(id)?.tier??0];
+ // D-186: 앞 순서 = 포함 비율 깊이(실시간과 같은 규칙 · 0.25 s마다 · 1 s 유지), 흐림 단계 = 거칠기 단계와 깊이 중 큰 쪽
+ if(OV&&hi0>lo0+10&&t0-tierAt.current>=250){tierAt.current=t0;const L=q.data.traces.input.length,rIn=roughness(q.data.traces.input,L,lo0,hi0);
+  const ids=q.shown.filter(id=>q.data.traces[id]),a0=Math.max(lo0,hi0-500),ph0=boxes[0].b-boxes[0].t,m=COVER_MARGIN_PX*2*q.amplitude/Math.max(1,ph0);
+  const dep=ids.length>1?layerDepths(ids,containment(ids.map(id=>q.data.traces[id]!.subarray(a0,hi0+1)),m)):new Map(ids.map(id=>[id,0]));
+  let want=ids.map(id=>layerTier(rIn>0?tierOf(roughness(q.data.traces[id]!,L,lo0,hi0)/rIn):0,hold(depthRef.current,id,dep.get(id)??0,t0)));
+  if(!want.includes(0))want=want.map(()=>0);   // 모두 거칠면 같은 무게
+  ids.forEach((id,i)=>hold(tierRef.current,id,want[i],t0));
+  q.onTiers?.(Object.fromEntries(q.shown.map(id=>[id,tierRef.current.get(id)?.v??0])));}
+ const baseOf=(id:string)=>id==='input'?IN_BASE:TIER_BASE[tierRef.current.get(id)?.v??0];
  const emOf=(id:string)=>OV?emphasis(F,id,baseOf(id)):{alphaK:1,glowK:1,whiteK:1};
- const rankOf=(r:number)=>{const id=rows[r].id;return (id==='input'?0:5-(tierRef.current.get(id)?.tier??0))+((F.e.get(id)??0)>.5?100:0);};
+ const rankOf=(r:number)=>{const id=rows[r].id;return (id==='input'?0:5-(depthRef.current.get(id)?.v??0))+((F.e.get(id)??0)>.5?100:0);};
  const order=rows.map((_,r)=>r);if(OV)order.sort((a,b)=>rankOf(a)-rankOf(b));
  const ysOv=new Map<string,(i:number)=>number>();
  // Reference: 겹치기에서는 한 번만, 강조와 무관하게 맨 아래(기준선)

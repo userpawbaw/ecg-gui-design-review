@@ -84,3 +84,34 @@ test('클릭: 겹친 자리의 선을 앞쪽부터 차례로 — 뒤 선 강조 
   // 클릭으로 바꾼 뒤 그 자리에 머물면 붙잡는다
   assert.equal(pick(c, s.target, front), 'M05S');
 });
+
+/* D-186 포함 비율 앞뒤 순서 */
+import {containment, layerDepths, layerTier, hold, type Held} from '../src/live/overlayFocus.ts';
+test('포함 비율: 넓게 흔들리는 선(공통 전처리 같은)은 매끈한 두 선을 덮어 뒤로, 서로 비슷한 두 선은 같은 층', () => {
+  const n = 600, base = (t: number) => 40 * Math.sin(t / 30);
+  const wide = Float64Array.from({length: n}, (_, t) => base(t) + 10 * Math.sin(t * 2.1));      // 굵게 흔들림
+  const s1 = Float64Array.from({length: n}, (_, t) => base(t) + 1.0 * Math.sin(t / 7));
+  const s2 = Float64Array.from({length: n}, (_, t) => base(t) - 1.0 * Math.sin(t / 7));
+  const cov = containment([wide, s1, s2], 2);
+  assert.ok(cov[0][1] > .9 && cov[0][2] > .9, `넓은 선이 덮지 못함 ${cov[0][1]}`);
+  assert.ok(cov[1][0] < .5, `매끈한 선이 넓은 선을 덮음 ${cov[1][0]}`);
+  const d = layerDepths(['W', 'S1', 'S2'], cov);
+  assert.deepEqual([d.get('W'), d.get('S1'), d.get('S2')], [1, 0, 0]);
+});
+test('포함 비율: 사용자 측정값(재생 d1 0 dB)으로 공통 전처리만 뒤, SWT · 칼만 같은 층', () => {
+  const cov = [[0, 1, .82], [.55, 0, .73], [.39, .58, 0]];
+  const d = layerDepths(['M_FE', 'M04', 'M05S'], cov);
+  assert.deepEqual([d.get('M_FE'), d.get('M04'), d.get('M05S')], [1, 0, 0]);
+});
+test('포함 비율: 사슬은 깊이가 쌓이고, 순환(이론상)이어도 끝난다', () => {
+  const chain = [[0, .9, .95], [.2, 0, .9], [.1, .3, 0]];
+  assert.deepEqual([...layerDepths(['A', 'B', 'C'], chain).values()], [2, 1, 0]);
+  const loop = [[0, .9, 0], [0, 0, .9], [.9, 0, 0]];
+  const d = layerDepths(['A', 'B', 'C'], loop); assert.equal(d.size, 3);
+});
+test('단계 = 거칠기와 깊이 중 큰 쪽, 1 s 유지', () => {
+  assert.equal(layerTier(0, 1), 1); assert.equal(layerTier(2, 1), 2); assert.equal(layerTier(0, 3), 2);
+  const m = new Map<string, Held>();
+  assert.equal(hold(m, 'a', 0, 0), 0); assert.equal(hold(m, 'a', 1, 100), 0); assert.equal(hold(m, 'a', 1, 900), 0); assert.equal(hold(m, 'a', 1, 1200), 1);
+  assert.equal(hold(m, 'a', 0, 1300), 1); assert.equal(hold(m, 'a', 1, 1400), 1);   // 잠깐 흔들려도 그대로
+});

@@ -1,7 +1,7 @@
 /* D-184 겹치기 강조 — 전환이 끊기지 않는지(엣지 케이스) 상태 · 애니메이션만 시험한다. */
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {createFocus, setPointer, pick, step, emphasis, FOCUS_GRACE_MS} from '../src/live/overlayFocus.ts';
+import {createFocus, setPointer, pick, cycle, step, emphasis, FOCUS_GRACE_MS} from '../src/live/overlayFocus.ts';
 
 const N = ['raw', 'A', 'B', 'C'], FR = 1000 / 60;
 const run = (s: ReturnType<typeof createFocus>, t0: number, ms: number, hit: string | null, rec?: {t: number, A: number, B: number, f: number}[]) => {
@@ -38,9 +38,9 @@ test('다시 들어오기(풀리는 도중 같은 파형): 지금 값에서 다�
   step(s, t + FR, N, 'A'); assert.ok(s.e.get('A')! >= mid && s.e.get('A')! - mid < .16);
 });
 
-test('고르기: 지금 강조된 것은 반경 + 8 px까지 유지, 다른 것이 6 px 이상 가까워야 넘어간다', () => {
-  assert.equal(pick([{name: 'A', dist: 18}, {name: 'B', dist: 15}], 'A'), 'A');
-  assert.equal(pick([{name: 'A', dist: 18}, {name: 'B', dist: 10}], 'A'), 'B');
+test('고르기: 지금 강조된 것은 반경 + 8 px까지 붙잡고(다른 선이 더 가까워도), 벗어나면 반경 안의 선', () => {
+  assert.equal(pick([{name: 'A', dist: 18}, {name: 'B', dist: 2}], 'A'), 'A');
+  assert.equal(pick([{name: 'A', dist: 30}, {name: 'B', dist: 10}], 'A'), 'B');
   assert.equal(pick([{name: 'A', dist: 30}, {name: 'B', dist: 20}], 'A'), null);
   assert.equal(pick([{name: 'A', dist: 12}], null), 'A');
 });
@@ -62,17 +62,25 @@ test('강조 대상은 차오르는 동안 한 번도 원래보다 어두워지�
   assert.ok(a.every((x, i) => x >= .4 - 1e-9 && (i === 0 || x >= a[i - 1] - 1e-9)), a.slice(0, 6).join(','));
 });
 
-test('겹친 자리에서는 앞(위)에 그려진 선을 먼저 고른다 — 넓게 덮는 입력 · 거친 선에 묻히지 않게 (2026-11-13)', () => {
-  const front = new Map([['raw', 0], ['M01', 3], ['M04', 5], ['M06', 5]]);
-  // 입력이 가장 가까워도 반경 안에 깨끗한 선이 있으면 그쪽
-  assert.equal(pick([{name: 'raw', dist: 1}, {name: 'M01', dist: 3}, {name: 'M04', dist: 12}], null, front), 'M04');
-  // 지금 입력이 강조돼 있어도 반경 안에 앞의 선이 오면 넘어간다
-  assert.equal(pick([{name: 'raw', dist: 2}, {name: 'M06', dist: 14}], 'raw', front), 'M06');
-  // 앞의 선이 강조돼 있으면 뒤의 선이 더 가까워도 유지
-  assert.equal(pick([{name: 'raw', dist: 1}, {name: 'M04', dist: 20}], 'M04', front), 'M04');
-  // 같은 층끼리는 기존 규칙(6 px 여유)
-  assert.equal(pick([{name: 'M04', dist: 9}, {name: 'M06', dist: 5}], 'M04', front), 'M04');
-  assert.equal(pick([{name: 'M04', dist: 12}, {name: 'M06', dist: 4}], 'M04', front), 'M06');
-  // 반경 안에 거친 선만 있으면 그 선(잡음 선도 고를 수는 있다)
-  assert.equal(pick([{name: 'raw', dist: 30}, {name: 'M01', dist: 5}, {name: 'M04', dist: 40}], null, front), 'M01');
+test('처음 올릴 때는 앞(위) 선 먼저 — 넓게 덮는 입력 · 거친 선에 묻히지 않게, 강조 중에는 겹친 선 위를 지나도 바뀌지 않는다 (2026-11-13 ① ②)', () => {
+  const front = new Map([['raw', 0], ['M_FE', 3], ['M04', 5], ['M05S', 5]]);
+  assert.equal(pick([{name: 'raw', dist: 1}, {name: 'M_FE', dist: 3}, {name: 'M04', dist: 12}], null, front), 'M04');
+  assert.equal(pick([{name: 'raw', dist: 30}, {name: 'M_FE', dist: 5}, {name: 'M04', dist: 40}], null, front), 'M_FE');
+  // 공통 전처리 강조 중 SWT와 겹친 자리를 지나도 그대로(산만하지 않게)
+  assert.equal(pick([{name: 'M_FE', dist: 6}, {name: 'M04', dist: 1}], 'M_FE', front), 'M_FE');
+});
+
+test('클릭: 겹친 자리의 선을 앞쪽부터 차례로 — 뒤 선 강조 중 첫 클릭은 가장 앞 선, 같은 자리 거듭 클릭은 한 바퀴 (2026-11-13 ②)', () => {
+  const front = new Map([['raw', 0], ['M_FE', 3], ['M04', 5], ['M05S', 5]]);
+  const c = [{name: 'M_FE', dist: 4}, {name: 'M04', dist: 2}, {name: 'M05S', dist: 6}, {name: 'raw', dist: 9}];
+  const s = createFocus(); s.target = 'M_FE';
+  assert.equal(cycle(s, c, front, 100, 50), 'M04');      // 가장 앞(같은 층이면 가까운 것)
+  assert.equal(cycle(s, c, front, 102, 51), 'M05S');     // 같은 자리 → 다음
+  assert.equal(cycle(s, c, front, 101, 50), 'M_FE');
+  assert.equal(cycle(s, c, front, 101, 50), 'raw');
+  assert.equal(cycle(s, c, front, 100, 50), 'M04');      // 한 바퀴
+  // 다른 자리의 첫 클릭: 지금 강조가 이미 가장 앞이면 그다음
+  assert.equal(cycle(s, c, front, 300, 80), 'M05S');
+  // 클릭으로 바꾼 뒤 그 자리에 머물면 붙잡는다
+  assert.equal(pick(c, s.target, front), 'M05S');
 });

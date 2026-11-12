@@ -6,7 +6,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {LiveStream, LABEL, RAW_COLOR} from './liveStream';
 import {drawSplit, drawOverlay, type View} from './livePlot';
-import {drawSplitFx, drawOverlayFx, overlayPointer, overlayBusy} from './livePlotFx';
+import {drawSplitFx, drawOverlayFx, overlayPointer, overlayBusy, overlayChip, overlayTogglePin, overlayInfo, overlayClick} from './livePlotFx';
+import {OverlayChips} from '../OverlayChips';
 import {WAVE} from '../waveMode';
 const FX = WAVE !== 'prev';
 // D-182 계측: ?livetrace=1 이면 매 프레임 (시각, 머리) 를 window.__liveTrace 에 쌓는다(부드러움 측정용)
@@ -245,10 +246,15 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       <i/>{LABEL[n] ?? n}</button>)}</div>
     {!names.length && <p className="subtle">신호 수신 대기</p>}
     {view.mode === 'overlay'
-      ? <div className="live-row"><div className="live-lab"><b>중첩 표시: 모든 기법에 동일 축 · 동일 이득(불투명도 85 %)</b><span>입력 신호(옅은 회색): 전극 직류 성분만 제거, 동일 이득</span></div>
+      ? <div className="live-row"><div className="live-lab"><b>중첩 표시: 모든 기법에 동일 축 · 동일 이득</b><span>입력 신호(옅은 회색): 전극 직류 성분만 제거, 동일 이득 · 범례에 마우스: 미리 강조, 누르면 고정</span></div>
+          {(() => { const c = overlay.current, info = c ? overlayInfo(c) : {pinned: [] as string[], tier: () => 0};
+            return <OverlayChips items={shown.filter(n => n !== 'raw').map(n => { const t = info.tier(n); return {id: n, label: LABEL[n] ?? n, color: S.color(n), note: t === 2 ? '잡음 많음' : t === 1 ? '흐리게' : undefined}; })}
+              pinned={info.pinned} onHover={id => { if (overlay.current) { overlayChip(overlay.current, id); dirty.current = true; } }}
+              onToggle={id => { if (overlay.current) { overlayTogglePin(overlay.current, id); dirty.current = true; setTick(t => t + 1); } }}/>; })()}
           <canvas ref={el => { overlay.current = el; }} className="live-canvas tall" data-mode={view.play}
             onPointerMove={e => { const r = e.currentTarget.getBoundingClientRect(); overlayPointer(e.currentTarget, e.clientX - r.left, e.clientY - r.top); dirty.current = true; }}
-            onPointerLeave={e => { overlayPointer(e.currentTarget, null, null); dirty.current = true; }}/></div>
+            onPointerLeave={e => { overlayPointer(e.currentTarget, null, null); dirty.current = true; }}
+            onClick={e => { const r = e.currentTarget.getBoundingClientRect(); overlayClick(e.currentTarget, e.clientX - r.left, e.clientY - r.top); dirty.current = true; }}/></div>
       : shown.map(n => <div key={n} className="live-row"><div className="live-lab"><b style={{color: S.color(n)}}>{n === 'raw' ? LABEL.raw : LABEL[n] ?? n}</b></div>
           <canvas ref={el => { if (el) canvases.current.set(n, el); else canvases.current.delete(n); }} className="live-canvas" data-series={n} data-mode={view.play}/></div>)}
   </div>{aside}</div>;

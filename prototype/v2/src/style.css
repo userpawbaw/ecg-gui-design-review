@@ -186,3 +186,13 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .live-methods .lm-apply{flex:1;padding:9px 10px;border-radius:9px;background:#14806a;color:#f2fffb;border:1px solid #2fb592;font-weight:700}
 .live-methods .lm-apply:disabled{background:rgb(18 34 41 / .9);color:#6f8790;border-color:#2c454e;cursor:default}
 .live-methods .lm-cancel{padding:9px 12px;border-radius:9px}
+/* D-185 겹치기 범례 단추: 한 줄 최대 3개, 누르면 고정(강조 유지) */
+.ov-chips{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,max-content));gap:6px 8px;justify-content:end;padding:6px 10px 2px}
+.ov-chip{min-height:30px;padding:3px 10px;border-radius:999px;border:1px solid #2c454e;background:rgb(10 26 33 / .88);color:#d7e4e8;font-size:12px;display:inline-flex;align-items:center;gap:7px;max-width:360px;transition:border-color .2s,background .2s,box-shadow .2s}
+.ov-chip i{flex:none;width:16px;height:3px;border-radius:2px;background:var(--c);box-shadow:0 0 0 rgba(0,0,0,0);transition:box-shadow .2s}
+.ov-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--c)}
+.ov-chip small{color:#8fa3ad;font-size:11px;white-space:nowrap}
+.ov-chip b{font-size:10px;font-weight:700;letter-spacing:.04em;color:#0a1a21;background:var(--c);border-radius:6px;padding:1px 5px}
+.ov-chip:hover,.ov-chip:focus-visible{border-color:var(--c)}
+.ov-chip.on{border-color:var(--c);background:rgb(16 40 50 / .95);box-shadow:0 0 12px -2px var(--c)}
+.ov-chip.on i{box-shadow:0 0 8px var(--c)}

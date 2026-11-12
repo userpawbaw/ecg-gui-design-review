@@ -12,7 +12,8 @@ import {WAVE} from '../waveMode';
 const NAIVE = WAVE === 'naive';
 const naiveGlow = createGlow();
 import {StripRow, AgeRamps, composeRow, headSprite, type StripTrace} from '../waveStrip';
-import {createFocus, setPointer, pick, step, emphasis, type Focus} from './overlayFocus';
+import {createFocus, setPointer, pick, cycle, step, emphasis, togglePin, roughness, tierOf, type Focus} from './overlayFocus';
+export {roughness, tierOf};
 
 const BG = 'rgba(10,26,33,.94)';
 type Per = {row: StripRow, rows: Map<string, StripRow>, st: {key: string, bg: HTMLCanvasElement, hot: HTMLCanvasElement}};
@@ -169,11 +170,6 @@ const OV_DBG = typeof location !== 'undefined' && new URLSearchParams(location.s
 const TIER_ON = typeof location === 'undefined' || new URLSearchParams(location.search).get('overlaytier') !== '0';
 const TIER_STYLE = [{width: 1.6, alpha: 1, lit: true, glow: true, casing: true}, {width: 1.2, alpha: .62, lit: false, glow: false, casing: false}, {width: 1.0, alpha: .4, lit: false, glow: false, casing: false}];
 const tiers = new Map<string, {tier: number, want: number, since: number}>(); let tierAt = 0;
-export function roughness(a: Float32Array, cap: number, lo: number, hi: number) {
-  const v: number[] = []; for (let t = Math.max(lo + 2, hi - Math.min(cap - 1, 500)); t <= hi; t++) { const x = (k: number) => a[((k % cap) + cap) % cap]; v.push(Math.abs(x(t) - 2 * x(t - 1) + x(t - 2))); }
-  if (!v.length) return 0; v.sort((p, q) => p - q); return v[v.length >> 1];
-}
-export function tierOf(q: number) { return q < .3 ? 0 : q < .6 ? 1 : 2; }
 function updateTiers(S: LiveStream, on: string[], now: number) {
   if (now - tierAt < 250) return; tierAt = now;
   const lo = Math.max(S.first, S.vh - S.cap + 1), r = on.map(n => roughness(S.bufs.get(n)!, S.cap, lo, S.vh));
@@ -189,7 +185,13 @@ const fstate = (c: HTMLCanvasElement) => { let o = focusOf.get(c); if (!o) { o =
 /** 겹치기 캔버스 위 마우스(CSS px, 캔버스 기준). 벗어나면 null. */
 export function overlayPointer(c: HTMLCanvasElement, x: number | null, y: number | null) { setPointer(fstate(c).f, x, y); }
 /** 강조 애니메이션이 진행 중이거나 마우스가 올라 있으면 true — 스트림이 멈춰도 다시 그리게. */
-export function overlayBusy(c: HTMLCanvasElement) { const o = focusOf.get(c); return !!o && (o.moving || o.f.px !== null); }
+/** D-185 범례 단추: 가리킨 계열(null = 없음) · 고정 토글 · 단추에 쓸 상태(고정 목록 · 단계). */
+export function overlayChip(c: HTMLCanvasElement, n: string | null) { fstate(c).f.chip = n; }
+/** D-185 클릭: 다음 그림에서 마우스 아래 선들을 앞쪽부터 돌아 강조를 바꾼다(overlayFocus.cycle). */
+export function overlayClick(c: HTMLCanvasElement, x: number, y: number) { fstate(c).f.click = {x, y}; }
+export function overlayTogglePin(c: HTMLCanvasElement, n: string) { return togglePin(fstate(c).f, n); }
+export function overlayInfo(c: HTMLCanvasElement) { return {pinned: [...fstate(c).f.pinned], tier: (n: string) => TIER_ON ? tiers.get(n)?.tier ?? 0 : 0}; }
+export function overlayBusy(c: HTMLCanvasElement) { const o = focusOf.get(c); return !!o && (o.moving || o.f.px !== null || o.f.chip !== null); }
 /** 마우스에서 각 계열 선까지 거리(px) — 커서 열 주변 ±4 표본의 선분 거리. */
 function hitDistances(S: LiveStream, geom: PanelGeom, px: number, py: number, names: string[]) {
   const {P, dx, H, cap, sweep, headX, ys} = geom; if (px < P.l || px > P.r || py < P.t - 8 || py > P.b + 8) return [];
@@ -216,6 +218,7 @@ export function drawOverlayFx(S: LiveStream, v: View, c: HTMLCanvasElement) {
   const baseRank = (n: string) => n === 'raw' ? 0 : 5 - Math.max(0, tierOfN(n)), front = new Map(all.map(n => [n, baseRank(n)]));
   // 강조 대상: 범례 글자 위면 그 계열, 아니면 파형까지 거리(지난 프레임 기하)
   const fo = fstate(c), F = fo.f; let hit: string | null = null;
+  if (FOCUS_ON && F.click && fo.geom) { cycle(F, hitDistances(S, fo.geom, F.click.x, F.click.y, all), front, F.click.x, F.click.y); F.click = undefined; }
   if (FOCUS_ON && F.px !== null && F.py !== null) {
     const lab = fo.labels.find(r => F.px! >= r.x0 && F.px! <= r.x1 && F.py! >= r.y0 && F.py! <= r.y1);
     const dd = fo.geom ? hitDistances(S, fo.geom, F.px, F.py, all) : [];
@@ -223,7 +226,7 @@ export function drawOverlayFx(S: LiveStream, v: View, c: HTMLCanvasElement) {
     if (OV_DBG) (globalThis as unknown as {__ovDbg: unknown}).__ovDbg = {px: F.px, py: F.py, dd, hit};   // ?ovdbg=1: 시험이 파형 위치 · 고른 계열을 읽는다
   }
   fo.moving = FOCUS_ON && step(F, t0, all, hit);
-  c.style.cursor = F.target && F.px !== null ? 'pointer' : '';
+  c.style.cursor = F.target && F.px !== null ? 'pointer' : ''; c.dataset.focus = F.target ?? '';
   // 굽는 모양(단계 굵기 · 테두리)은 정적, 불투명도 · 번짐 · 흰빛은 합성 배율(D-183 단계 값 × D-184 강조)
   const base = (n: string) => { if (n === 'raw') return {a: .55, g: 0, w: 0}; const t = tierOfN(n); return t < 0 ? {a: .85, g: 1, w: 1} : {a: TIER_STYLE[t].alpha, g: TIER_STYLE[t].glow ? 1 : 0, w: t === 0 ? 1 : 0}; };
   const ser = (n: string): Series => { if (n === 'raw') return {name: n, color: '#8fa3ad', width: 1.2, alpha: 1, lit: true, glow: v.glowOn};
@@ -234,13 +237,6 @@ export function drawOverlayFx(S: LiveStream, v: View, c: HTMLCanvasElement) {
   const groups: Group[] = ordered.map(n => { const em = FOCUS_ON ? emphasis(F, n, base(n)) : {alphaK: base(n).a, glowK: base(n).g, whiteK: base(n).w};
     return {id: n, names: [n], alphaK: em.alphaK, glowK: em.glowK, whiteK: em.whiteK}; });
   fo.geom = drawPanel(S, v, c, ordered.map(ser), ax, on.length ? ax.get(on[0]) : raw ? ax.get(raw) : undefined, {white: v.glowOn ? .9 : 0, glow: .35, dotR: 12, dotA: .5}, t0, groups);
-  const {g} = {g: c.getContext('2d')!}, P = plotRect(c.clientWidth, c.clientHeight);
-  g.font = '600 11px system-ui'; g.textAlign = 'right'; fo.labels = [];
-  on.forEach((n, k) => { const t = tierOfN(n), em = FOCUS_ON ? emphasis(F, n, {a: 1, g: 0, w: 0}) : {alphaK: 1, h: 0};
-    const text = (LABEL[n] ?? n) + (t === 2 ? ' · 잡음 많음(흐리게)' : t === 1 ? ' · 흐리게' : ''), y = P.t + 14 + k * 14, wTxt = g.measureText(text).width;
-    g.globalAlpha = (t > 0 ? .75 : 1) * Math.max(.35, em.alphaK); g.fillStyle = S.color(n); g.fillText(text, P.r - 6, y);
-    if ((em as {h: number}).h > .02) { g.globalAlpha = (em as {h: number}).h; g.fillRect(P.r - 6 - wTxt, y + 3, wTxt, 1.5); }   // 강조된 계열 밑줄
-    fo.labels.push({name: n, x0: P.r - 6 - wTxt - 4, x1: P.r - 2, y0: y - 11, y1: y + 4}); });
-  g.globalAlpha = 1; g.textAlign = 'left';
+  fo.labels = [];   // D-185: 범례는 캔버스 위 단추(OverlayChips)로 — 캔버스 글자는 그리지 않는다
   fxStats.frames++; fxStats.ms += performance.now() - t0;
 }

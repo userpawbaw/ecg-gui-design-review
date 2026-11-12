@@ -89,7 +89,8 @@ function pySetup(){const p=findPython();if(!p){bad('Python 3를 찾지 못함');
 
 // 원본 저장소의 브리지(scripts/serial_bridge.py)를 이 저장소에서 한 줄로 띄운다(docs/DEMO_BRIDGE.md).
 //   npm run bridge:setup   — 원본 브리지 재생 모드에 필요한 Python 패키지 설치(numpy · scipy · PyWavelets · PyYAML · pandas · matplotlib · wfdb)
-//   npm run bridge:replay  — 보드 없이 합성 심전도를 실제 처리 경로로 흘리는 재생 브리지(127.0.0.1:8765)
+//   npm run bridge:replay  — 보드 없이 D1 기록 100 + 혼합 잡음 0 dB(D-179)를 실제 처리 경로로 흘리는 재생 브리지(127.0.0.1:8765)
+//   npm run bridge:replay -- --synth   — 이전 기본(원본 합성 심전도 · 합성 잡음 8 dB)
 //   npm run bridge:replay -- --methods M_FE,M04 --leadoff-every 8   — 뒤에 원본 브리지 옵션을 그대로 붙인다
 //   npm run bridge:replay -- --signal mitdb:100 --noise ma --snr 5    — 신호(합성 · MIT-BIH) · 잡음 · SNR 고르기(replay_signal.py)
 function sourceDir(){
@@ -110,25 +111,29 @@ function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Pyth
  // 신호 · 잡음 고르기(--signal · --noise · --snr · --start · --sec · --seed): replay_signal.py 로 CSV 를 만들어 --replay csv 로 흘린다
  const own=['--signal','--noise','--snr','--start','--sec','--seed'],pick={},rest=[];
  for(let i=0;i<extra.length;i++){if(own.includes(extra[i])&&i+1<extra.length){pick[extra[i]]=extra[++i];}else rest.push(extra[i]);}
+ const synth=rest.includes('--synth');if(synth)rest.splice(rest.indexOf('--synth'),1);
+ // D-179(사용자 2026-11-12 「replay에서 흘리는 신호는 d1 혼합잡음 0dB」): 고른 신호가 없으면 D1 test 기록 100 + 혼합 잡음 0 dB(seed 13 = NSTDB bw · em · ma 세 종)
+ if(!synth&&!rest.includes('--port')&&!Object.keys(pick).length)Object.assign(pick,{'--signal':'mitdb:100','--noise':'mixed','--snr':'0','--sec':'600','--seed':'13'});
  let src=rest.includes('--port')?[]:['--replay','synth'];   // 실보드: npm run bridge:replay -- --port COM3 (기법 다시 띄우기도 같이 된다)
  if(Object.keys(pick).length){
-  const slug=[pick['--signal']||'synth',pick['--noise']||'mixed',(pick['--snr']||'8')+'dB'].join('_').replace(/[^\w.-]+/g,'-');
+  const slug=[pick['--signal']||'synth',pick['--noise']||'mixed',(pick['--snr']||'8')+'dB','s'+(pick['--seed']||'7'),(pick['--sec']||'120')+'s'].join('_').replace(/[^\w.-]+/g,'-');
   const out=join(root,'.cache','replay',slug+'.csv');
-  const code=run(p.bin,[...p.pre,join(root,'scripts','local','replay_signal.py'),...Object.entries(pick).flat(),'--out',out],{cwd:d,allowFail:true});
+  const code=existsSync(out)?0:run(p.bin,[...p.pre,join(root,'scripts','local','replay_signal.py'),...Object.entries(pick).flat(),'--out',out],{cwd:d,allowFail:true});
   if(code!==0){bad('재생 신호를 만들지 못함(위 메시지). 패키지가 없으면 npm run bridge:setup');process.exit(code);}
   src=['--replay','csv','--csv',out];
  }
  // 2026-11-10: 기본 3개 — 실시간 탭에서 기법을 고르면 감독 창구가 브리지를 그 기법만으로 다시 띄운다
  const has=k=>rest.includes(k),argv=['scripts/serial_bridge.py',...src,'--serve',...(has('--methods')?[]:['--methods','M_FE,M04,M05S']),...rest];
- say(`\n재생 브리지(${src[1]==='csv'?'고른 신호':'합성 심전도'} → 실제 처리 경로, 실측 아님): ${d}\n  ${[p.bin,...p.pre,...argv].join(' ')}\n  앱은 다른 터미널에서 npm run story → «실시간 측정» 탭. 멈추려면 Ctrl+C\n`);
- supervise(p,argv,d);}
+ say(`\n재생 브리지(${src[1]==='csv'?'고른 신호':src.length?'합성 심전도':'보드'} → 실제 처리 경로${src.length?', 실측 아님':''}): ${d}\n  ${[p.bin,...p.pre,...argv].join(' ')}\n  앱은 다른 터미널에서 npm run story → «실시간 측정» 탭. 멈추려면 Ctrl+C\n`);
+ const pi=rest.indexOf('--port'),label=pi>=0?{kind:'board',label:'보드 '+(rest[pi+1]||'?')}:{kind:'replay',label:src[1]==='csv'?(pick['--signal']==='mitdb:100'&&pick['--noise']==='mixed'&&pick['--snr']==='0'&&pick['--seed']==='13'?'d1 · 기록 100 · 혼합 잡음 0 dB':[pick['--signal']||'synth',pick['--noise']||'mixed',(pick['--snr']||'8')+' dB'].join(' · ')):'합성 심전도 · 합성 잡음 8 dB'};
+ supervise(p,argv,d,label);}
 
 // 2026-11-10 사용자 「기법을 새로 선택할 때마다 브릿지를 새로 띄우도록 … 브릿지만 재로딩」: 브라우저는 프로세스를 띄울 수 없으므로
 // 이 명령이 브리지를 자식 프로세스로 들고, 127.0.0.1:8764 제어 창구(앱은 같은 출처 /bridge-ctl 프록시)로 --methods 만 바꿔 다시 띄운다.
 //  GET /status → {state, methods, err}   POST /restart {methods:[…]} → 202
 // 허용 목록 밖 이름은 받지 않는다. 새로 띄운 브리지가 바로 죽으면(포트가 아직 안 풀림 등) 1 s 간격으로 4번 다시, 그래도 안 되면 이전 목록으로.
 const LIVE_ALLOWED=new Set(['M_FE','M01','M02','M03','M04','M05','M05S','M06','M06L6','M08','M09']);
-function supervise(p,argv,cwd){
+function supervise(p,argv,cwd,source={kind:'replay',label:''}){
  const CTL=Number(process.env.ECG_BRIDGE_CTL_PORT||8764),BR=new URL(process.env.ECG_BRIDGE||'http://127.0.0.1:8765');
  const mi=argv.indexOf('--methods');let methods=argv[mi+1],prev=null,child=null,state='stopped',err='',gen=0,tries=0,since=0;
  const args=()=>{const a=[...argv];a[mi+1]=methods;return a;};
@@ -149,7 +154,7 @@ function supervise(p,argv,cwd){
   if(child){state='stopping';const c=child;c.once('exit',()=>setTimeout(start,400));c.kill();}else start();};
  http.createServer((req,res)=>{const j=(code,o)=>{res.writeHead(code,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(o));};
   const u=req.url.split('?')[0];
-  if(req.method==='GET'&&u==='/status')return j(200,{state,methods:methods.split(','),err:state==='failed'?err.slice(-400):''});
+  if(req.method==='GET'&&u==='/status')return j(200,{state,methods:methods.split(','),err:state==='failed'?err.slice(-400):'',source});
   if(req.method==='POST'&&u==='/restart'){let body='';req.on('data',c=>{body+=c;if(body.length>2000)req.destroy();});req.on('end',()=>{
    let list;try{list=JSON.parse(body).methods;}catch{return j(400,{error:'json'});}
    if(!Array.isArray(list)||!list.length||list.length>4||!list.every(m=>typeof m==='string'&&LIVE_ALLOWED.has(m)))return j(400,{error:'methods: 1–4 of '+[...LIVE_ALLOWED].join(',')});

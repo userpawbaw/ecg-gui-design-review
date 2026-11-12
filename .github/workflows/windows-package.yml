@@ -90,6 +90,14 @@ jobs:
           & "$py\python.exe" -m pip install --no-warn-script-location numpy scipy PyWavelets PyYAML pyserial wfdb
           & "$py\python.exe" -c "import numpy, scipy, pywt, yaml, serial, wfdb; print('python packages ok')"
 
+      - name: Live-tab replay signal (D-179 — D1 record 100 + mixed noise 0 dB, seed 13, 600 s)
+        working-directory: srcrepo
+        run: |
+          $out = "$env:GITHUB_WORKSPACE\pkg\SignalStudio\source\replay\d1_100_mixed_0dB.csv"
+          & "$env:GITHUB_WORKSPACE\pkg\SignalStudio\python\python.exe" "$env:GITHUB_WORKSPACE\scripts\local\replay_signal.py" --signal mitdb:100 --noise mixed --snr 0 --sec 600 --seed 13 --out $out
+          if ($LASTEXITCODE -ne 0) { throw "replay signal failed" }
+          Get-Item $out | Select-Object Name, Length
+
       - name: SignalStudio.exe (Node single executable application)
         run: |
           '{"main":"scripts/package/launcher.cjs","output":"sea-prep.blob","disableExperimentalSEAWarning":true}' | Set-Content -Encoding ascii sea-config.json

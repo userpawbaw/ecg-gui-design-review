@@ -60,7 +60,9 @@ Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `
 
 **이 저장소에서 한 줄로**(2026-11-08): 두 저장소를 같은 폴더에 두고 `npm run bridge:setup`(처음 한 번), 그다음 `npm run bridge:replay`. 원본 저장소는 `claude/pli-harmonic-canceller` 브랜치여야 한다(D-162, 그 전에는 `claude/adoring-cray-nv6pvq`). 발표 캡처 절차 전체는 `docs/DEMO_BRIDGE.md`.
 
-**실시간 탭 기법 바꾸기**(2026-11-10): `npm run bridge:replay`로 띄우면 실시간 측정 탭 오른쪽에서 기법을 고를 때마다 브리지만 다시 뜬다(몇 초). 딥러닝 기법(M06 · M08 · M09)까지 쓰려면 처음 한 번 `npm run bridge:setup -- --dl`. 실보드는 `npm run bridge:replay -- --port COM3`.
+**실시간 탭 기법 바꾸기**(2026-11-10): `npm run bridge:replay`로 띄우면 실시간 측정 탭 오른쪽에서 기법을 고를 때마다 브리지만 다시 뜬다(몇 초). 딥러닝 기법(M06 · M08 · M09)까지 쓰려면 처음 한 번 `npm run bridge:setup -- --dl`. 실보드는 `npm run bridge:replay -- --port COM3`. 재생 기본 신호는 D1 기록 100 + 혼합 잡음 0 dB(D-179), 이전 합성 신호는 `npm run bridge:replay -- --synth`.
+
+**배포 패키지의 신호원**(D-179): `SignalStudio.exe`를 켜면 PyTorch 확인 뒤 신호원 메뉴가 나온다 — Enter = 재생 신호(D1 · 기록 100 · 혼합 잡음 0 dB), 숫자 = 목록의 보드 포트(예: `[1] 보드 COM3 — USB-SERIAL CH340`), 또는 `COM3`처럼 이름. 묻지 않으려면 `SignalStudio.exe --port COM3` 또는 `--replay`. 실시간 탭 위쪽에 신호원이 「저장 신호 재생 · d1 …」 / 「보드 입력 · COM3」로 표시된다. 신호원을 바꾸려면 창을 닫고 다시 켠다.
 
 - 다른 PC·포트의 브리지는 앱을 띄우기 전에 환경 변수 `ECG_BRIDGE`(예: `http://192.168.0.5:8765`)로 정한다.
 - 브리지 자체 화면(A안)으로 보려면 주소 뒤에 `?live=iframe`(`docs/URL_PARAMS.md`).

@@ -4,7 +4,10 @@
 //   web/      v2 build, served on 127.0.0.1:4173 with the same-origin proxies /bridge → 8765 and /bridge-ctl → 8764
 //   source/   bridge files from the source repository (claude/pli-harmonic-canceller), run with python/python.exe
 //   python/   embeddable Python 3.12 with numpy · scipy · PyWavelets · PyYAML · pyserial · wfdb (PyTorch is added on demand)
-// Options: --port COM3 (board instead of the synthetic replay; other bridge flags pass through) · --methods M_FE,M04,M05S
+// Signal source (D-179): at start a menu lists the serial ports (pyserial) and the replay — Enter = replay of D1 record 100 with mixed noise
+//   at 0 dB (source/replay/*.csv, made at build time by scripts/local/replay_signal.py, seed 13), a number = that board port.
+// Options: --port COM3 (board, no menu; other bridge flags pass through) · --replay (replay, no menu) · --synth (old synthetic replay)
+//          --methods M_FE,M04,M05S
 //          --no-browser · --kiosk · --install-torch · --no-torch · --selftest · --selftest-dl · --root <dir> (dev)
 'use strict';
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),{spawn,spawnSync}=require('node:child_process'),readline=require('node:readline');
@@ -38,13 +41,37 @@ async function torchStep(){
  const a=await ask('\nPyTorch가 설치되어 있지 않습니다. 딥러닝 기법(M06 · M08 · M09)을 쓰려면 필요합니다.\n지금 설치할까요? (CPU 판, 약 200 MB 내려받기) [Y/n] ');
  if(a===''||/^y/i.test(a))installTorch();else warn('설치하지 않음 — 다음에 켤 때 다시 묻습니다(고전 기법은 그대로 사용 가능)');}
 
+// ---------------------------------------------------------------- signal source: replay (D1 · mixed 0 dB) or a board port (D-179)
+const REPLAY_CSV=path.join(SRC,'replay','d1_100_mixed_0dB.csv'),REPLAY_LABEL='d1 · 기록 100 · 혼합 잡음 0 dB';
+const SRC_FLAGS=new Set(['--replay','--synth']);
+let SOURCE={kind:'replay',label:REPLAY_LABEL,args:[]};
+function listPorts(){const r=spawnSync(PY,['-c','import json,serial.tools.list_ports as L;print(json.dumps([[p.device,p.description or "",p.hwid or ""] for p in sorted(L.comports(),key=lambda p:p.device)]))'],{env:pyEnv,encoding:'utf8'});
+ try{return JSON.parse(r.stdout.trim()||'[]');}catch{return [];}}
+function replaySource(){if(has('--synth'))return{kind:'replay',label:'합성 심전도 · 합성 잡음 8 dB',args:['--replay','synth']};
+ if(fs.existsSync(REPLAY_CSV))return{kind:'replay',label:REPLAY_LABEL,args:['--replay','csv','--csv',REPLAY_CSV]};
+ warn('재생 파일 없음('+REPLAY_CSV+') — 합성 신호로 재생합니다');return{kind:'replay',label:'합성 심전도 · 합성 잡음 8 dB',args:['--replay','synth']};}
+async function sourceStep(){
+ if(argv.includes('--port')){SOURCE={kind:'board',label:'보드 '+val('--port','?'),args:[]};ok('신호원: '+SOURCE.label+' (--port)');return;}
+ if(has('--replay')||has('--synth')||SELF){SOURCE=replaySource();ok('신호원: 재생 — '+SOURCE.label);return;}
+ const ports=listPorts();
+ say('\n신호원을 고르세요');say('  [Enter] 재생 신호 — '+REPLAY_LABEL+' (보드 없이)');
+ ports.forEach(([dev,desc],i)=>say(`  [${i+1}] 보드 ${dev}${desc&&desc!=='n/a'?' — '+desc:''}`));
+ if(!ports.length)say('  (연결된 시리얼 포트 없음 — 보드를 꽂았다면 USB 케이블 · 드라이버를 확인하세요)');
+ for(;;){const a=await ask('선택: ');
+  if(a===''){SOURCE=replaySource();break;}
+  const n=Number(a),byNum=Number.isInteger(n)&&n>=1&&n<=ports.length?ports[n-1][0]:null,byName=/^(COM\d+|\/dev\/\S+)$/i.test(a)?a.toUpperCase().startsWith('COM')?a.toUpperCase():a:null,dev=byNum||byName;
+  if(dev){SOURCE={kind:'board',label:'보드 '+dev,args:['--port',dev]};break;}
+  warn((ports.length?'번호(1–'+ports.length+'), ':'')+'포트 이름(예: COM3) 또는 Enter(재생)');}
+ ok('신호원: '+(SOURCE.kind==='board'?SOURCE.label:'재생 — '+SOURCE.label));}
+
 // ---------------------------------------------------------------- bridge supervisor (scripts/local/run.mjs supervise(), D-170)
 const LIVE_ALLOWED=new Set(['M_FE','M01','M02','M03','M04','M05','M05S','M06','M06L6','M08','M09']);
 const sup={state:'stopped',methods:'',err:'',child:null};
 function bridgeArgs(methods){
  const pass=[],skip=new Set(['--no-browser','--kiosk','--install-torch','--no-torch','--selftest','--selftest-dl']);
- for(let i=0;i<argv.length;i++){const a=argv[i];if(skip.has(a))continue;if(a==='--root'||a==='--methods'){i++;continue;}pass.push(a);}
- const src=pass.includes('--port')?[]:['--replay','synth'];
+ for(let i=0;i<argv.length;i++){const a=argv[i];if(skip.has(a))continue;if(a==='--root'||a==='--methods'){i++;continue;}
+  if(SRC_FLAGS.has(a)){if(a==='--replay'&&/^(synth|csv)$/.test(argv[i+1]??''))i++;continue;}pass.push(a);}
+ const src=pass.includes('--port')?[]:SOURCE.args;
  return ['scripts/serial_bridge.py',...src,'--serve','--http-port',String(PORT_BR),'--methods',methods,...pass];}
 function supervise(initial){
  let prev=null,gen=0,tries=0,since=0;sup.methods=initial;
@@ -66,7 +93,7 @@ function supervise(initial){
   if(sup.child){sup.state='stopping';const c=sup.child;c.once('exit',()=>setTimeout(start,400));c.kill();}else start();};
  http.createServer((req,res)=>{const j=(code,o)=>{res.writeHead(code,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(o));};
   const u=req.url.split('?')[0];
-  if(req.method==='GET'&&u==='/status')return j(200,{state:sup.state,methods:sup.methods.split(','),err:sup.state==='failed'?sup.err.slice(-400):''});
+  if(req.method==='GET'&&u==='/status')return j(200,{state:sup.state,methods:sup.methods.split(','),err:sup.state==='failed'?sup.err.slice(-400):'',source:{kind:SOURCE.kind,label:SOURCE.label}});
   if(req.method==='POST'&&u==='/restart'){let body='';req.on('data',c=>{body+=c;if(body.length>2000)req.destroy();});req.on('end',()=>{
    let list;try{list=JSON.parse(body).methods;}catch{return j(400,{error:'json'});}
    if(!Array.isArray(list)||!list.length||list.length>4||!list.every(m=>typeof m==='string'&&LIVE_ALLOWED.has(m)))return j(400,{error:'methods: 1–4 of '+[...LIVE_ALLOWED].join(',')});
@@ -111,6 +138,7 @@ async function selftest(){const out={ok:false,checks:[]},check=(name,pass,info)=
   check('10-min replay manifest',man.code===200&&sc>0,`HTTP ${man.code} · ${sc} scenes`);
   if(ch){const c=await get(`http://127.0.0.1:${PORT_WEB}/replay/${ch}`,15000);check('10-min replay chunk',c.code===200&&c.body.length>1000,`${ch} ${c.body.length} B`);}
   const st=await untilRunning(null,180000);check('bridge running',true,st.methods.join(','));
+  check('signal source',st.source?.kind==='replay'&&!!st.source.label&&(has('--synth')||/d1/.test(st.source.label)),JSON.stringify(st.source));
   const fe=await get(`http://127.0.0.1:${PORT_WEB}/bridge/fe`);check('bridge /fe via proxy',fe.code===200,'HTTP '+fe.code);
   const s1=await streamKeys(6000);check('stream data',s1.frames>5&&['M_FE','M04','M05S'].every(k=>s1.keys.includes(k)),`${s1.frames} frames · ${s1.keys.join(',')}`);
   if(has('--selftest-dl')){const v=hasTorch();check('PyTorch present',!!v,v??'missing');
@@ -125,6 +153,7 @@ async function selftest(){const out={ok:false,checks:[]},check=(name,pass,info)=
  say('Signal Studio — 심전도 잡음 제거 시연\n폴더: '+ROOT);
  need(WEB,'화면 파일(web)');need(path.join(SRC,'scripts','serial_bridge.py'),'브리지(source)');if(path.isAbsolute(PY))need(PY,'내장 Python(python)');
  await torchStep();
+ await sourceStep();
  const methods=val('--methods','M_FE,M04,M05S');supervise(methods);
  await serveWeb();const url=`http://127.0.0.1:${PORT_WEB}/`;ok('화면: '+url+'  (이 창을 닫으면 모두 종료)');
  if(SELF)return selftest();

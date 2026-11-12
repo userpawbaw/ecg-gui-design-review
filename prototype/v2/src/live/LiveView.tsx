@@ -43,7 +43,8 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   const order = useRef<string[]>([]);   // 보이는 기법(먼저 고른 것부터)
   // 2026-11-10 브리지 다시 띄우기: `npm run bridge:replay` 가 띄운 감독 창구(/bridge-ctl)가 있으면 아무 기법이나 골라 브리지만 다시 시작
   const ctlUrl = base === 'bridge' ? 'bridge-ctl' : null;
-  const [ctl, setCtl] = useState<{ok: boolean, methods: string[]}>({ok: false, methods: []});
+  type Source = {kind: 'replay' | 'board', label: string};
+  const [ctl, setCtl] = useState<{ok: boolean, methods: string[], source?: Source}>({ok: false, methods: []});
   const [reload, setReload] = useState<{methods: string[], t0: number, failed?: string} | null>(null);
   // 2026-11-11 사용자: 「큐처럼 … 가득 찬 경우 새로 선택하면 이전 것이 해제 … 확인 버튼을 눌러서 기법 새로고침」 — 고르는 동안은 초안만 바뀐다
   const [draft, setDraft] = useState<string[] | null>(null);
@@ -75,7 +76,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
 
   useEffect(() => {
     if (!ctlUrl) return; let alive = true;
-    fetch(ctlUrl + '/status', {cache: 'no-store'}).then(r => r.ok ? r.json() : null).then(d => { if (alive && d?.methods) setCtl({ok: true, methods: d.methods}); }).catch(() => {});
+    fetch(ctlUrl + '/status', {cache: 'no-store'}).then(r => r.ok ? r.json() : null).then(d => { if (alive && d?.methods) setCtl({ok: true, methods: d.methods, source: d.source?.label ? d.source : undefined}); }).catch(() => {});
     return () => { alive = false; };
   }, [ctlUrl]);
   // 다시 띄우는 동안: 감독 상태를 보고, 새 기법 데이터가 들어오면 덮개를 걷는다
@@ -87,7 +88,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       try { const d = await (await fetch(ctlUrl + '/status', {cache: 'no-store'})).json();
         if (d.state === 'failed' || (d.state === 'running' && d.methods.join() !== reload.methods.join() && performance.now() - reload.t0 > 4000)) {
           setReload(r => r && {...r, failed: /torch/.test(d.err ?? '') ? '딥러닝 기법은 torch 설치가 필요합니다 — 이전 기법으로 되돌립니다' : d.err ? '브리지를 띄우지 못함 — 이전 기법으로 되돌립니다' : '이전 기법으로 되돌렸습니다'});
-          order.current = d.methods; setCtl({ok: true, methods: d.methods}); setDraft(null); window.setTimeout(() => setReload(null), 2600); }
+          order.current = d.methods; setCtl(c => ({...c, ok: true, methods: d.methods})); setDraft(null); window.setTimeout(() => setReload(null), 2600); }
       } catch { /* 감독 창구가 잠시 응답하지 않음 */ }
     }, 500);
     return () => clearInterval(id);
@@ -173,7 +174,9 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   const connected = conn === 'on' || conn === 'retry' || conn === 'lost';
   const overload = (st.rtf ?? 0) > .9 || (st.qdrop ?? 0) > 0, jitter = (st.gap_ms ?? 0) > 200;
   if (!connected && !names.length) return conn === 'checking' ? <LiveOffline checking/> : <>{help}</>;
-  const src = st.src === 'serial' ? <StateChip kind="live" tone="ok" label="보드 입력"/> : st.src === 'replay' ? <StateChip kind="stored" tone="stored" label="저장 신호 재생" note="--replay"/> : <StateChip kind="live" tone="idle" label="브리지 출력"/>;
+  // D-179: 감독 창구가 신호원(재생 파일 · 보드 포트)을 알려 주면 그 이름을 그대로 — 재생을 실측으로 보이지 않게
+  const src = ctl.source ? (ctl.source.kind === 'board' ? <StateChip kind="live" tone="ok" label="보드 입력" note={ctl.source.label.replace(/^보드 /, '')}/> : <StateChip kind="stored" tone="stored" label="저장 신호 재생" note={ctl.source.label}/>)
+    : st.src === 'serial' ? <StateChip kind="live" tone="ok" label="보드 입력"/> : st.src === 'replay' ? <StateChip kind="stored" tone="stored" label="저장 신호 재생" note="--replay"/> : <StateChip kind="live" tone="idle" label="브리지 출력"/>;
   const fmt = (v: number | undefined, d = 0) => v == null || !Number.isFinite(v) ? '—' : v.toFixed(d);
   const avail = new Set(ctl.ok ? LIVE_IDS : names.filter(n => n !== 'raw'));
   const isOn = (id: string) => ctl.ok ? (draft ?? order.current).includes(id) : avail.has(id) && !S.hidden.has(id);

@@ -21,7 +21,8 @@ const layer = (() => { const c = document.createElement('canvas'); return {c, g:
 export const fxStats = {frames: 0, ms: 0, rebuilds: 0, level: 2};
 // 실험실(D-073)과 같은 안전장치: 신호가 흐르는 동안 그리기 간격이 26 ms(약 38 fps)를 넘게 이어지면 번짐 단계를 2 → 1 → 0으로 낮추고
 // 다시 올리지 않는다(깜빡임 방지). ?labfx= 로 고정.
-const FX_PIN = (() => { const v = new URLSearchParams(location.search).get('labfx'); return v === null ? null : Math.max(0, Math.min(2, Number(v) || 0)); })();
+// D-177: 링 스트립에서는 단계 1과 2의 그리기 비용이 같아(실험실 측정) 기본은 단계 2 고정, ?labfx=auto 일 때만 낮춘다.
+const FX_PIN = (() => { const v = new URLSearchParams(location.search).get('labfx'); return v === 'auto' ? null : v === null ? 2 : Math.max(0, Math.min(2, Number(v) || 0)); })();
 const pace = {level: FX_PIN ?? 2, ema: 0, n: 0, last: 0};
 const LIVE_W = Number(new URLSearchParams(location.search).get('livew')) || 1.7;
 function tick(now: number, flowing: boolean) {

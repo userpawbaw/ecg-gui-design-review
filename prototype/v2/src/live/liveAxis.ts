@@ -82,6 +82,17 @@ export function scan(a: ArrayLike<number>, lo: number, hi: number, cap: number, 
   return {m, peak: Math.min(mx, (bin + 1) * W * mad * SPIKE), n};
 }
 
+/** D-178 위아래를 따로 — scan 과 같은 묶음(99.5 백분위 × SPIKE)을 평균 위 · 아래에 따로 적용해 [lo, hi] 를 돌려준다.
+ *  심전도는 R 피크 쪽(위)이 아래보다 훨씬 길어, 평균 ± 같은 폭이면 아래가 비었다(사용자 2026-11-12). scan 은 원본 기대값 그대로 둔다. */
+export function scanRange(a: ArrayLike<number>, lo: number, hi: number, cap: number, q = 0.995): {lo: number, hi: number, n: number} | null {
+  const n = hi - lo + 1, at = (k: number) => a[((k % cap) + cap) % cap];
+  if (n <= 0) return null;
+  const r = scan(a, lo, hi, cap, q);
+  let up = 0, dn = 0;
+  for (let k = lo; k <= hi; k++) { const v = at(k) - r.m; if (v > up) up = v; else if (-v > dn) dn = -v; }
+  return {lo: r.m - Math.min(dn, r.peak), hi: r.m + Math.min(up, r.peak), n};
+}
+
 /** 지우기 경계 — 화면 폭의 고정 비율(기본 10 %, D-42), 비움 3 : 페이드 2(v2.2.1 비). */
 export const ERASE_FRAC = 0.1, ERASE_CHOICES = [0.05, 0.1, 0.15, 0.2], ERASE_GAP_PART = 0.6;
 export function eraseSpans(cap: number, frac = ERASE_FRAC) {

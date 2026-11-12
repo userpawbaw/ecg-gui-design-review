@@ -130,3 +130,13 @@ test('스트림이 멈추면 잔광이 사라지고, 흰색 섞기가 정확하�
   assert.equal(AX.glowLive(100), 1); assert.ok(Math.abs(AX.glowLive(450) - 0.5) < 1e-9); assert.equal(AX.glowLive(700), 0);
   assert.equal(AX.mixWhite('#000000', 0.4), 'rgb(102,102,102)'); assert.equal(AX.mixWhite('#67e7c3', 0), 'rgb(103,231,195)');
 });
+
+test('D-178 위아래 따로: 심전도 모양(위로 긴 R 피크)이면 [lo, hi] 가 평균 ± 같은 폭보다 좁고 실제 값을 다 담는다', () => {
+  const n = 1250, a = new Float32Array(n);
+  for (let k = 0; k < n; k++) { const ph = k % 250; a[k] = 2.3 + (ph >= 100 && ph < 106 ? 0.9 * Math.sin((ph - 100) / 6 * Math.PI) : 0) - (ph >= 106 && ph < 110 ? 0.15 : 0) + 0.02 * Math.sin(k); }
+  const r = AX.scanRange(a, 0, n - 1, n)!, s = AX.scan(a, 0, n - 1, n);
+  let mn = Infinity, mx = -Infinity; for (const v of a) { if (v < mn) mn = v; if (v > mx) mx = v; }
+  assert.ok(r.lo <= mn + 1e-6 && r.hi >= mx - 0.25, '아래 끝은 실제 최저값, 위 끝은 R 피크 근처(백분위 묶음 안)');
+  assert.ok(r.hi - r.lo < 2 * s.peak * 0.75, '같은 폭(평균 ± peak)보다 범위가 좁다');
+  assert.ok(Math.abs((r.hi + r.lo) / 2 - s.m) > 0.1, '중심이 평균보다 위로 옮겨 간다');
+});

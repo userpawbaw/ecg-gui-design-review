@@ -98,14 +98,26 @@ export class LiveStream {
     return lo > this.head ? null : AX.scan(a, lo, this.head, this.cap);
   }
 
-  /** 화면 전체가 이득 하나, 중심은 입력·출력 둘(출력들은 같이 쓴다) — live.html axesFor 그대로. amp > 0 이면 수동 ±amp. */
+  /** 보이는 구간의 계열 아래 · 위 끝(D-178). */
+  span(name: string) {
+    const a = this.bufs.get(name);
+    if (!a || this.head < 0) return null;
+    const lo = AX.windowStart(this.first, this.head, this.cap);
+    return lo > this.head ? null : AX.scanRange(a, lo, this.head, this.cap);
+  }
+
+  /** 화면 전체가 이득 하나, 중심은 입력·출력 둘(출력들은 같이 쓴다) — live.html axesFor 구조 그대로.
+   *  D-178: 중심 = 보이는 구간의 위 끝과 아래 끝의 가운데(이전: 평균), 이득 = 그 범위의 절반(이전: 평균에서 가장 먼 쪽) — 위아래를 따로 맞춘다.
+   *  출력들은 범위를 합쳐 중심 하나. amp > 0 이면 수동 ±amp(중심은 같은 방식). */
   axesFor(names: string[], amp: number, now = performance.now()) {
-    const seen = new Map<string, {m: number}>(); let need = 0, om = 0, oc = 0;
-    for (const n of names) { const r = this.look(n); if (!r) continue; seen.set(n, r); need = Math.max(need, r.peak); if (n !== 'raw') { om += r.m; oc++; } }
+    const seen: string[] = []; let need = 0, rlo = 0, rhi = 0, olo = Infinity, ohi = -Infinity, hasRaw = false;
+    for (const n of names) { const r = this.span(n); if (!r) continue; seen.push(n);
+      if (n === 'raw') { rlo = r.lo; rhi = r.hi; hasRaw = true; need = Math.max(need, (r.hi - r.lo) / 2); } else { olo = Math.min(olo, r.lo); ohi = Math.max(ohi, r.hi); } }
+    if (ohi >= olo) need = Math.max(need, (ohi - olo) / 2);
     const s = amp > 0 ? amp : this.gain.fit(need, now);
-    const mo = this.ctr.at('out', oc ? om / oc : 0, s, now);
+    const mo = this.ctr.at('out', ohi >= olo ? (olo + ohi) / 2 : 0, s, now), mr = hasRaw ? this.ctr.at('raw', (rlo + rhi) / 2, s, now) : 0;
     const out = new Map<string, {m: number, s: number}>();
-    for (const [n, r] of seen) out.set(n, {m: n === 'raw' ? this.ctr.at('raw', r.m, s, now) : mo, s});
+    for (const n of seen) out.set(n, {m: n === 'raw' ? mr : mo, s});
     return out;
   }
 }

@@ -1,0 +1,108 @@
+name: Windows package (SignalStudio.exe)
+
+# D-176: builds the Windows package (Node single executable + embeddable Python + bridge files from the source repository),
+# runs it on a real Windows machine (self test with the bridge, then PyTorch install + M08 switch on a copy), uploads the zip.
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: 'source repo ref (ECG_denoising_method_comparision)'
+        default: 'claude/pli-harmonic-canceller'
+        required: true
+  push:
+    branches: ['claude/optimistic-goldberg-jnzpni']
+    paths:
+      - 'scripts/package/**'
+      - '.github/workflows/windows-package.yml'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      PY_VERSION: '3.12.8'
+      SOURCE_REF: ${{ github.event.inputs.source_ref || 'claude/pli-harmonic-canceller' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: userpawbaw/ECG_denoising_method_comparision
+          ref: ${{ env.SOURCE_REF }}
+          path: srcrepo
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Web build (prototype/v2 → dist/v2)
+        run: |
+          node scripts/prepare-v2.cjs
+          Set-Location prototype/v2
+          npm ci --no-audit --no-fund
+          npx vite build
+
+      - name: Assemble package folder
+        run: |
+          $pkg = "$env:GITHUB_WORKSPACE\pkg\SignalStudio"
+          New-Item -ItemType Directory -Force -Path $pkg | Out-Null
+          Copy-Item -Recurse dist\v2 "$pkg\web"
+          # bridge files from the source repository (read-only copy, minimal set verified 2026-11-12)
+          $src = "$pkg\source"
+          New-Item -ItemType Directory -Force -Path "$src\scripts" | Out-Null
+          Copy-Item -Recurse srcrepo\ecgdn, srcrepo\configs, srcrepo\demo $src
+          Copy-Item srcrepo\scripts\serial_bridge.py, srcrepo\scripts\_bootstrap.py "$src\scripts"
+          foreach ($t in 'm06_l1','m06_l6','m08_l1','m08_l6','m09_l1') {
+            New-Item -ItemType Directory -Force -Path "$src\results\d1\$t" | Out-Null
+            Copy-Item "srcrepo\results\d1\$t\best.pt" "$src\results\d1\$t\"
+          }
+          Get-ChildItem -Recurse -Directory -Filter __pycache__ $src | Remove-Item -Recurse -Force
+          $sha = git -C srcrepo rev-parse HEAD
+          "source repo: userpawbaw/ECG_denoising_method_comparision`nref: $env:SOURCE_REF`ncommit: $sha`nthis repo commit: $env:GITHUB_SHA" | Set-Content -Encoding utf8 "$pkg\SOURCE_COMMIT.txt"
+
+      - name: Embeddable Python + bridge packages (PyTorch is installed on demand by the exe)
+        run: |
+          $py = "$env:GITHUB_WORKSPACE\pkg\SignalStudio\python"
+          Invoke-WebRequest "https://www.python.org/ftp/python/$env:PY_VERSION/python-$env:PY_VERSION-embed-amd64.zip" -OutFile py.zip
+          Expand-Archive py.zip -DestinationPath $py
+          $pth = Get-ChildItem "$py\python3*._pth" | Select-Object -First 1
+          (Get-Content $pth) -replace '^#\s*import site','import site' | Set-Content $pth
+          Add-Content $pth 'Lib\site-packages'
+          Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -OutFile get-pip.py
+          & "$py\python.exe" get-pip.py --no-warn-script-location
+          & "$py\python.exe" -m pip install --no-warn-script-location numpy scipy PyWavelets PyYAML pyserial wfdb
+          & "$py\python.exe" -c "import numpy, scipy, pywt, yaml, serial, wfdb; print('python packages ok')"
+
+      - name: SignalStudio.exe (Node single executable application)
+        run: |
+          '{"main":"scripts/package/launcher.cjs","output":"sea-prep.blob","disableExperimentalSEAWarning":true}' | Set-Content -Encoding ascii sea-config.json
+          node --experimental-sea-config sea-config.json
+          $exe = "$env:GITHUB_WORKSPACE\pkg\SignalStudio\SignalStudio.exe"
+          Copy-Item (Get-Command node).Source $exe
+          npx --yes postject@1.0.0-alpha.6 $exe NODE_SEA_BLOB sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
+          Copy-Item scripts\package\README-run.txt "$env:GITHUB_WORKSPACE\pkg\SignalStudio\README-실행.txt"
+
+      - name: Self test on Windows (bridge · stream · proxy · web, no PyTorch)
+        working-directory: pkg/SignalStudio
+        run: |
+          .\SignalStudio.exe --selftest --no-torch
+          if ($LASTEXITCODE -ne 0) { throw "selftest failed" }
+
+      - name: PyTorch install + M08 switch (on a copy, so the shipped package stays without PyTorch)
+        run: |
+          Copy-Item -Recurse pkg\SignalStudio pkg-dltest
+          Set-Location pkg-dltest
+          .\SignalStudio.exe --install-torch --selftest-dl
+          if ($LASTEXITCODE -ne 0) { throw "DL selftest failed" }
+
+      - name: Zip
+        run: |
+          Compress-Archive -Path pkg\SignalStudio -DestinationPath SignalStudio-win64.zip -CompressionLevel Optimal
+          Get-Item SignalStudio-win64.zip | Select-Object Name, Length
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SignalStudio-win64
+          path: SignalStudio-win64.zip
+          retention-days: 30

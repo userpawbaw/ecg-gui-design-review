@@ -3505,3 +3505,42 @@ EX-001 표: 현상 유지 · 실시간 탭 정지 · 실행 중 굽기(A) · A +
 ### 되돌려야 하는 조건
 - 사용자 PC에서 작은 하이라이트(눈빛 · 금속 반짝임)가 죽어 보이면 배수를 1.5 → 2로.
 - 번쩍임이 남으면 같은 도구로 그 자리의 프레임을 다시 분리한다.
+
+## D-176. Windows 배포 패키지 — `SignalStudio.exe`(Node 단일 실행 파일) + 내장 Python + 원본 브리지 묶음, PyTorch는 처음 실행 때 확인 후 설치, 빌드 · 시험은 GitHub Actions Windows 러너
+
+| | |
+|---|---|
+| 시점 | 2026-11-12 `[대화]` |
+| 상태 | 구현 중 |
+| 연결 | D-170(감독 창구), D-174, O-014, `scripts/package/`, `.github/workflows/windows-package.yml` |
+| CASE | 불필요 — 배포 형태 결정 |
+
+사용자: 「python으로 켜야 하는 브릿지와 스토리를 exe 배포 패키지로 … pli canceller인가 하는 브릿지 repo도 함께 들어있도록 하고, exe를 켜면 python 없이도 브릿지를 켜서 지금처럼 동작 … pytorch 이건 설치되어있는지 확인 후 설치」.
+
+### 바꾸는 것
+1. 패키지 폴더(zip): `SignalStudio.exe` · `web/`(v2 빌드) · `python/`(python.org 내장용 Python 3.12 + numpy · scipy · PyWavelets · PyYAML · pyserial · wfdb) · `source/`(원본 저장소 `claude/pli-harmonic-canceller` 고정 커밋의 브리지 최소 묶음: `ecgdn/` · `scripts/serial_bridge.py` · `_bootstrap.py` · `configs/` · `demo/` · 딥러닝 체크포인트 5개 `results/d1/{m06_l1,m06_l6,m08_l1,m08_l6,m09_l1}`, 28 MB) · `README-실행.txt`.
+2. `SignalStudio.exe` = 지금의 `serve-v2`(정적 파일 + `/bridge` · `/bridge-ctl` 프록시) + `bridge:replay` 감독 창구 + 브리지 자식 프로세스를 한 Node 프로그램(`scripts/package/launcher.cjs`)으로 묶은 Node 단일 실행 파일(SEA). 켜면 브리지(합성 신호 재생, `--port COM3`이면 보드)와 화면 서버를 띄우고 Edge 앱 창(없으면 기본 브라우저)을 연다.
+3. PyTorch: 켤 때 `python\python.exe -c "import torch"`로 확인 → 없으면 「딥러닝 기법용 PyTorch(CPU, 약 200 MB)를 설치할까요? [Y/n]」 → `pip install torch --index-url …/cpu`를 내장 Python에 설치. `--install-torch`(묻지 않고 설치) · `--no-torch`(묻지 않음).
+4. 빌드 · 시험: `.github/workflows/windows-package.yml`(windows-latest)이 두 공개 저장소를 받아 패키지를 만들고, `--selftest`(브리지 준비 · 스트림 데이터 · 감독 창구 · 화면 파일)와 PyTorch 설치 후 M08 다시 띄우기 시험을 실제 Windows에서 돌린 뒤 zip을 아티팩트로 올린다.
+
+### 검토한 선택지
+- 브리지 실행: PyInstaller로 브리지를 exe로 얼리기 / 내장용 Python 동봉(고른 것) / 사용자 PC에 Python 설치 요구(현재).
+- 화면 · 감독: Node 단일 실행 파일(고른 것) / Electron(전용 창) / Python으로 다시 작성.
+- 빌드 위치: 이 리눅스 환경에서 교차 조립 / GitHub Actions Windows 러너(고른 것).
+
+### 갈림길
+PyTorch를 「확인 후 설치」하려면 패키지 안에 pip이 도는 실제 Python이 있어야 한다.
+
+### 고른 것과 근거
+- 내장용 Python — PyInstaller로 얼린 실행 파일에는 pip이 없어 나중에 torch를 설치할 수 없다. 내장용 Python은 사용자 PC 설치 없이 폴더째 돌고, 같은 폴더에 torch를 pip으로 넣을 수 있다.
+- Node 단일 실행 파일 — 지금 화면 서버 · 감독 창구가 이미 Node 코드라 그대로 쓰고, Edge가 전시 PC에 있으므로 Electron(약 150 MB 추가)이 필요 없다.
+- Windows 러너 — 이 환경에서는 Windows exe를 실행해 볼 수 없다. 러너에서 실제로 켜고 스트림 · M08 전환까지 시험한다. 두 저장소가 공개라 비밀 토큰이 필요 없다.
+
+### 버린 것과 이유
+- PyInstaller 브리지 — torch 나중 설치 불가, 얼리는 데 scipy · pywt 숨은 import 처리가 깨지기 쉽다.
+- torch 동봉 — 압축 후 수백 MB가 늘고 고전 기법만 쓰는 사용자에게 불필요. 「확인 후 설치」 요구와도 다르다.
+- Electron — 크기 · 빌드 복잡도 대비 이득 없음(Edge 앱 창으로 충분).
+
+### 되돌려야 하는 조건
+- 전시 PC가 인터넷 없이 운영되면 torch 동봉판(`-dl` 패키지)을 따로 만든다.
+- 백신 · SmartScreen이 서명 없는 exe를 막으면 코드 서명 또는 `.cmd` 시작 파일을 함께 둔다.

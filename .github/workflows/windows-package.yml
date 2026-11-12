@@ -92,6 +92,9 @@ jobs:
 
       - name: Live-tab replay signal (D-179 — D1 record 100 + mixed noise 0 dB, seed 13, 600 s)
         working-directory: srcrepo
+        env:
+          PYTHONUTF8: '1'
+          PYTHONIOENCODING: 'utf-8'
         run: |
           $out = "$env:GITHUB_WORKSPACE\pkg\SignalStudio\source\replay\d1_100_mixed_0dB.csv"
           & "$env:GITHUB_WORKSPACE\pkg\SignalStudio\python\python.exe" "$env:GITHUB_WORKSPACE\scripts\local\replay_signal.py" --signal mitdb:100 --noise mixed --snr 0 --sec 600 --seed 13 --out $out

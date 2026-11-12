@@ -16,7 +16,8 @@ const BG='#0a1a21',GAP_S=.12;
 // D-073 laptop budget: glow levels 2 (three blur levels) → 1 (two) → 0 (none). Level 2 is the default again at the thinner lines (user 2026-10-18 "이 두께에선 &labfx=2가 기본값"). ?labfx= pins it; otherwise it steps down when the
 // frame interval while playing stays above 26 ms (< ~38 fps) — the script part of a draw is ~2.5 ms, the cost is in rasterising
 // the glow, so the interval is what shows it — and never back up, so the picture does not pulse between levels.
-const FX_PIN=(()=>{const v=new URLSearchParams(location.search).get('labfx');return v===null?null:Math.max(0,Math.min(2,Number(v)||0));})();
+// D-177 (user 2026-11-12, several methods looked darker): no automatic step-down by default — level 2 stays; ?labfx=auto restores the step-down.
+const FX_PIN=(()=>{const v=new URLSearchParams(location.search).get('labfx');return v==='auto'?null:v===null?2:Math.max(0,Math.min(2,Number(v)||0));})();
 export function Plot(p:Props){
  const canvas=useRef<HTMLCanvasElement>(null),latest=useRef(p);latest.current=p;
  const fx=useRef({level:FX_PIN??2,ema:0,frames:0,last:0});

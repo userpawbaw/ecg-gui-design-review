@@ -1,0 +1,6 @@
+// Side-by-side comparison sheet with Korean captions (HTML → screenshot). node compose.cjs <out.png> <title> <img:caption>...
+const {chromium}=require('playwright');const fs=require('fs');const [out,title,...items]=process.argv.slice(2);
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:process.env.VERT?1240:1900,height:900}});
+ const cells=items.map(it=>{const [f,cap]=it.split('::');return `<figure><figcaption>${cap}</figcaption><img src="data:image/png;base64,${fs.readFileSync(f).toString('base64')}"></figure>`;}).join('');
+ await p.setContent(`<html><body><div id="w" style="display:inline-block;width:100%;margin:0;background:#05090b;color:#e6f0f2;font:600 22px 'Noto Sans CJK KR',system-ui"><h1 style="font-size:26px;margin:14px 18px">${title}</h1><div style="display:flex;flex-direction:${process.env.VERT?'column':'row'};gap:14px;padding:0 14px 14px;align-items:flex-start">${cells}</div></div><style>figure{margin:0;flex:1}img{width:100%;display:block;border:1px solid #234}figcaption{margin:0 0 8px;line-height:1.35}</style></body></html>`);
+ await p.locator('body>div,body>h1').first().evaluate(()=>0);await p.locator('#w').screenshot({path:out});await b.close();})();

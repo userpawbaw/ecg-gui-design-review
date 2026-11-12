@@ -61,3 +61,18 @@ test('강조 대상은 차오르는 동안 한 번도 원래보다 어두워지�
   for (let t = 0; t < 800; t += FR) { step(s, t, N, 'A'); a.push(emphasis(s, 'A', {a: .4, g: 0, w: 0}).alphaK); }
   assert.ok(a.every((x, i) => x >= .4 - 1e-9 && (i === 0 || x >= a[i - 1] - 1e-9)), a.slice(0, 6).join(','));
 });
+
+test('겹친 자리에서는 앞(위)에 그려진 선을 먼저 고른다 — 넓게 덮는 입력 · 거친 선에 묻히지 않게 (2026-11-13)', () => {
+  const front = new Map([['raw', 0], ['M01', 3], ['M04', 5], ['M06', 5]]);
+  // 입력이 가장 가까워도 반경 안에 깨끗한 선이 있으면 그쪽
+  assert.equal(pick([{name: 'raw', dist: 1}, {name: 'M01', dist: 3}, {name: 'M04', dist: 12}], null, front), 'M04');
+  // 지금 입력이 강조돼 있어도 반경 안에 앞의 선이 오면 넘어간다
+  assert.equal(pick([{name: 'raw', dist: 2}, {name: 'M06', dist: 14}], 'raw', front), 'M06');
+  // 앞의 선이 강조돼 있으면 뒤의 선이 더 가까워도 유지
+  assert.equal(pick([{name: 'raw', dist: 1}, {name: 'M04', dist: 20}], 'M04', front), 'M04');
+  // 같은 층끼리는 기존 규칙(6 px 여유)
+  assert.equal(pick([{name: 'M04', dist: 9}, {name: 'M06', dist: 5}], 'M04', front), 'M04');
+  assert.equal(pick([{name: 'M04', dist: 12}, {name: 'M06', dist: 4}], 'M04', front), 'M06');
+  // 반경 안에 거친 선만 있으면 그 선(잡음 선도 고를 수는 있다)
+  assert.equal(pick([{name: 'raw', dist: 30}, {name: 'M01', dist: 5}, {name: 'M04', dist: 40}], null, front), 'M01');
+});

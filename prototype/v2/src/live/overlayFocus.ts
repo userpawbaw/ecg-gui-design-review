@@ -15,13 +15,24 @@ export const createFocus = (): Focus => ({target: null, e: new Map(), f: 0, last
 /** 마우스 위치(캔버스 CSS px). 캔버스를 벗어나면 null. */
 export function setPointer(s: Focus, x: number | null, y: number | null) { s.px = x; s.py = y; }
 
-/** 후보(계열, 마우스까지 거리 px) 중 고르기 — 반경 · 유지 · 넘어감 규칙. */
-export function pick(cands: {name: string, dist: number}[], current: string | null): string | null {
+/** 후보(계열, 마우스까지 거리 px) 중 고르기.
+ *  2026-11-13 사용자: 「마우스를 실제 파형 위에 올려놓는 경우 실제 잡음이 가장 큰 신호 — 대부분은 입력 — 에 묻혀서 다른 신호가 강조되지 않아 …
+ *  파형들이 겹치는 위치에서는 앞에 놓인 신호가 우선 선택되도록」. 거리만 보면 화면을 넓게 덮는 거친 선이 거의 어디서나 가장 가까워
+ *  깨끗한 선을 고를 수 없었다. 그래서 반경 안의 선들 중 **앞(위)에 그려진 것**을 먼저 고르고, 같은 층이면 가까운 것.
+ *  front: 계열 → 앞 순서(클수록 위). 강조로 맨 위에 올린 순서가 아니라 원래 그리는 순서(입력 < 거침 < 중간 < 깨끗)를 쓴다 —
+ *  강조된 거친 선이 위로 올라와 계속 붙잡는 일이 없게.
+ *  유지: 지금 강조된 선은 반경 + 8 px까지 유지하되, 반경 안에 그보다 앞의 선이 있으면 그쪽으로. 같은 층끼리는 6 px 이상 가까워야 넘어간다. */
+export function pick(cands: {name: string, dist: number}[], current: string | null, front?: Map<string, number>): string | null {
+  const fr = (n: string) => front?.get(n) ?? 0;
+  const inR = cands.filter(c => c.dist <= FOCUS_R);
   let best: {name: string, dist: number} | null = null;
-  for (const c of cands) if (!best || c.dist < best.dist) best = c;
+  for (const c of inR) if (!best || fr(c.name) > fr(best.name) || (fr(c.name) === fr(best.name) && c.dist < best.dist)) best = c;
   const cur = current ? cands.find(c => c.name === current) : undefined;
-  if (cur && cur.dist <= FOCUS_R + FOCUS_KEEP && (!best || best.dist > cur.dist - FOCUS_SWITCH)) return cur.name;
-  return best && best.dist <= FOCUS_R ? best.name : null;
+  if (cur && cur.dist <= FOCUS_R + FOCUS_KEEP) {
+    if (!best || fr(best.name) < fr(cur.name)) return cur.name;
+    if (fr(best.name) === fr(cur.name) && best.dist > cur.dist - FOCUS_SWITCH) return cur.name;
+  }
+  return best ? best.name : null;
 }
 
 /** 한 프레임 진행. hit = 이번 프레임에 마우스가 가리킨 계열(없으면 null). 움직이는 중이면 true(다시 그려야 함). */

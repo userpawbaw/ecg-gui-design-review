@@ -212,13 +212,15 @@ export function drawOverlayFx(S: LiveStream, v: View, c: HTMLCanvasElement) {
   if (TIER_ON && S.vh >= 0) updateTiers(S, on, t0);
   const tierOfN = (n: string) => TIER_ON ? tiers.get(n)?.tier ?? 0 : -1;
   const all = [...(raw ? [raw] : []), ...on];
+  // 그리는 순서(아래 → 위): 입력 → 거친 것 → 중간 → 깨끗한 것. (2026-11-13 고침: 이전 식은 입력에 10을 줘 입력이 맨 위에 그려졌다)
+  const baseRank = (n: string) => n === 'raw' ? 0 : 5 - Math.max(0, tierOfN(n)), front = new Map(all.map(n => [n, baseRank(n)]));
   // 강조 대상: 범례 글자 위면 그 계열, 아니면 파형까지 거리(지난 프레임 기하)
   const fo = fstate(c), F = fo.f; let hit: string | null = null;
   if (FOCUS_ON && F.px !== null && F.py !== null) {
     const lab = fo.labels.find(r => F.px! >= r.x0 && F.px! <= r.x1 && F.py! >= r.y0 && F.py! <= r.y1);
     const dd = fo.geom ? hitDistances(S, fo.geom, F.px, F.py, all) : [];
-    if (OV_DBG) (globalThis as unknown as {__ovDbg: unknown}).__ovDbg = {px: F.px, py: F.py, dd};   // ?ovdbg=1: 시험이 파형 위치를 찾는 데 쓴다
-    hit = lab ? lab.name : fo.geom ? pick(dd, F.target) : null;
+    hit = lab ? lab.name : fo.geom ? pick(dd, F.target, front) : null;
+    if (OV_DBG) (globalThis as unknown as {__ovDbg: unknown}).__ovDbg = {px: F.px, py: F.py, dd, hit};   // ?ovdbg=1: 시험이 파형 위치 · 고른 계열을 읽는다
   }
   fo.moving = FOCUS_ON && step(F, t0, all, hit);
   c.style.cursor = F.target && F.px !== null ? 'pointer' : '';
@@ -227,7 +229,7 @@ export function drawOverlayFx(S: LiveStream, v: View, c: HTMLCanvasElement) {
   const ser = (n: string): Series => { if (n === 'raw') return {name: n, color: '#8fa3ad', width: 1.2, alpha: 1, lit: true, glow: v.glowOn};
     const t = tierOfN(n); return {name: n, color: S.color(n), width: t < 0 ? 1.2 : TIER_STYLE[t].width, alpha: 1, lit: true, glow: v.glowOn, casing: t === 0}; };
   // 아래부터: 입력 → 거친 것 → 깨끗한 것, 강조가 절반을 넘은 계열은 맨 위
-  const rank = (n: string) => (n === 'raw' ? 10 : 5 - Math.max(0, tierOfN(n))) + ((F.e.get(n) ?? 0) > .5 ? 100 : 0);
+  const rank = (n: string) => baseRank(n) + ((F.e.get(n) ?? 0) > .5 ? 100 : 0);
   const ordered = [...all].sort((a, b) => rank(a) - rank(b));
   const groups: Group[] = ordered.map(n => { const em = FOCUS_ON ? emphasis(F, n, base(n)) : {alphaK: base(n).a, glowK: base(n).g, whiteK: base(n).w};
     return {id: n, names: [n], alphaK: em.alphaK, glowK: em.glowK, whiteK: em.whiteK}; });

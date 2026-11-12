@@ -3622,7 +3622,7 @@ PyTorch를 「확인 후 설치」하려면 패키지 안에 pip이 도는 실�
 | | |
 |---|---|
 | 시점 | 2026-11-12 `[대화]` |
-| 상태 | 구현 · 리눅스에서 재생 · 가상 보드(PTY) 경로 확인, Windows 러너 시험 대기 |
+| 상태 | 구현 · 리눅스 재생 · 가상 보드(PTY) 확인, Windows 러너 자체 시험 통과(실행 43217627419, 신호원 d1 확인 포함) — 실제 COM 보드는 사용자 PC 확인 대기 |
 | 연결 | D-176(배포 패키지), D-170(감독 창구), `scripts/package/launcher.cjs`, `scripts/local/run.mjs`, `scripts/local/replay_signal.py`, `prototype/v2/src/live/LiveView.tsx`, `verification/live-source-20261112/` |
 | CASE | 불필요 — 실행 방식 결정 |
 

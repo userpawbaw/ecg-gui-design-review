@@ -135,7 +135,7 @@ jobs:
           Compress-Archive -Path pkg\SignalStudio -DestinationPath SignalStudio-win64.zip -CompressionLevel Optimal
           Get-Item SignalStudio-win64.zip | Select-Object Name, Length
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: SignalStudio-win64
           path: SignalStudio-win64.zip

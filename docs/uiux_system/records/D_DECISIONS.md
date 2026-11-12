@@ -3662,7 +3662,7 @@ PyTorch를 「확인 후 설치」하려면 패키지 안에 pip이 도는 실�
 | | |
 |---|---|
 | 시점 | 2026-11-12 `[대화]` |
-| 상태 | 구현 · 리눅스 자체 시험 통과(Windows 전용 점검 제외), Windows 러너 시험 대기 |
+| 상태 | 구현 · Windows 러너 통과(실행 43229081675: VC++ 런타임 동봉 확인, PyTorch가 패키지 python 폴더의 msvcp140.dll을 불러옴, M08 전환 4.0 s) — 런타임 없는 PC · 드라이버 감지는 사용자 PC 확인 대기 |
 | 연결 | D-176, D-179, `scripts/package/launcher.cjs`, `.github/workflows/windows-package.yml` |
 | CASE | 불필요 — 배포 점검 항목 |
 

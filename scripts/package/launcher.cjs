@@ -105,6 +105,11 @@ function streamKeys(ms){return new Promise((res,rej)=>{const keys=new Set();let 
  r.on('error',rej);setTimeout(()=>{r.destroy();res({frames:n,keys:[...keys]});},ms);});}
 async function selftest(){const out={ok:false,checks:[]},check=(name,pass,info)=>{out.checks.push({name,pass,info});console.log(`  ${pass?'PASS':'FAIL'} ${name} ${info??''}`);if(!pass)throw new Error(name);};
  try{const idx=await get(`http://127.0.0.1:${PORT_WEB}/`);check('web index.html',idx.code===200&&/<div id="root"|<script/.test(idx.body),'HTTP '+idx.code);
+  // 10-minute replay (lab «10 min»): manifest + one chunk read through the same server
+  const man=await get(`http://127.0.0.1:${PORT_WEB}/replay/manifest.json`);let mj=null;try{mj=JSON.parse(man.body);}catch{}
+  const sc=mj?.scenes?.length??0,ch=mj?.scenes?.[0]?.chunks?.[0]?.path??mj?.chunks?.[0]?.path;
+  check('10-min replay manifest',man.code===200&&sc>0,`HTTP ${man.code} · ${sc} scenes`);
+  if(ch){const c=await get(`http://127.0.0.1:${PORT_WEB}/replay/${ch}`,15000);check('10-min replay chunk',c.code===200&&c.body.length>1000,`${ch} ${c.body.length} B`);}
   const st=await untilRunning(null,180000);check('bridge running',true,st.methods.join(','));
   const fe=await get(`http://127.0.0.1:${PORT_WEB}/bridge/fe`);check('bridge /fe via proxy',fe.code===200,'HTTP '+fe.code);
   const s1=await streamKeys(6000);check('stream data',s1.frames>5&&['M_FE','M04','M05S'].every(k=>s1.keys.includes(k)),`${s1.frames} frames · ${s1.keys.join(',')}`);

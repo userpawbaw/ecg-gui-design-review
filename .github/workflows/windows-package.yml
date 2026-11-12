@@ -61,6 +61,19 @@ jobs:
           $sha = git -C srcrepo rev-parse HEAD
           "source repo: userpawbaw/ECG_denoising_method_comparision`nref: $env:SOURCE_REF`ncommit: $sha`nthis repo commit: $env:GITHUB_SHA" | Set-Content -Encoding utf8 "$pkg\SOURCE_COMMIT.txt"
 
+      - name: 10-minute replay data (release archive-v2.2.1-recovery, app/replay → web/replay)
+        run: |
+          $url = 'https://github.com/userpawbaw/ecg-gui-design-review/releases/download/archive-v2.2.1-recovery/ecg-signal-studio-v2.2.1.zip'
+          Invoke-WebRequest $url -OutFile v221.zip
+          $h = (Get-FileHash v221.zip -Algorithm SHA256).Hash.ToLower()
+          if ($h -ne '9070d4aacea61d2476473fbdf18e4df7de5621867e82d0425ca22ee0fa1e98ed') { throw "release zip digest mismatch: $h" }
+          Expand-Archive v221.zip -DestinationPath v221
+          $rep = Get-ChildItem -Recurse -Directory v221 | Where-Object { $_.Name -eq 'replay' -and $_.Parent.Name -eq 'app' } | Select-Object -First 1
+          if (-not $rep) { throw 'app/replay not found in the release zip' }
+          Copy-Item -Recurse $rep.FullName "$env:GITHUB_WORKSPACE\pkg\SignalStudio\web\replay"
+          Get-ChildItem "$env:GITHUB_WORKSPACE\pkg\SignalStudio\web\replay" | Measure-Object -Property Length -Sum | Select-Object Count, Sum
+          Remove-Item -Recurse -Force v221, v221.zip
+
       - name: Embeddable Python + bridge packages (PyTorch is installed on demand by the exe)
         run: |
           $py = "$env:GITHUB_WORKSPACE\pkg\SignalStudio\python"

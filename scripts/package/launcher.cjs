@@ -6,6 +6,7 @@
 //   python/   embeddable Python 3.12 with numpy · scipy · PyWavelets · PyYAML · pyserial · wfdb (PyTorch is added on demand)
 // Signal source (D-179): at start a menu lists the serial ports (pyserial) and the replay — Enter = replay of D1 record 100 with mixed noise
 //   at 0 dB (source/replay/*.csv, made at build time by scripts/local/replay_signal.py, seed 13), a number = that board port.
+// Start checks (D-180): PyTorch + Visual C++ runtime + path length (torch), USB-serial driver problems (board menu).
 // Options: --port COM3 (board, no menu; other bridge flags pass through) · --replay (replay, no menu) · --synth (old synthetic replay)
 //          --methods M_FE,M04,M05S
 //          --no-browser · --kiosk · --install-torch · --no-torch · --selftest · --selftest-dl · --root <dir> (dev)
@@ -27,19 +28,55 @@ const pyEnv={...process.env,PYTHONUTF8:'1',PYTHONIOENCODING:'utf-8',PYTHONDONTWR
 function need(p,what){if(!fs.existsSync(p)){bad(`${what} 없음: ${p}\n  압축을 푼 폴더 그대로 실행해야 합니다(web · python · source 폴더가 exe 옆에).`);process.exit(2);}}
 
 // ---------------------------------------------------------------- PyTorch: check, ask, install into the bundled Python
-function hasTorch(){const r=spawnSync(PY,['-c','import torch,sys;sys.stdout.write(torch.__version__)'],{env:pyEnv,encoding:'utf8'});return r.status===0?r.stdout.trim():null;}
-function installTorch(){say('\nPyTorch(CPU) 설치 중 — 약 200 MB 내려받기, 몇 분 걸릴 수 있습니다…');
+// D-180: PyTorch on Windows needs the Visual C++ runtime (msvcp140.dll …). The package ships it app-local next to python.exe;
+// if it is missing anyway (folder copied without it), the check offers Microsoft's installer. Long paths: the deepest torch file
+// is ~119 characters under site-packages, so a package unpacked deep in the tree can exceed Windows' 260-character limit.
+const TORCH_DEEPEST=145;   // "Lib\\site-packages\\" + deepest torch path, measured on torch 2.x
+function torchState(){const r=spawnSync(PY,['-c','import importlib.util,json,sys\ns={"spec":importlib.util.find_spec("torch") is not None}\ntry:\n import torch;s["ver"]=torch.__version__\nexcept Exception as e:\n s["err"]=f"{type(e).__name__}: {e}"\nsys.stdout.write(json.dumps(s))'],{env:pyEnv,encoding:'utf8'});
+ try{return JSON.parse(r.stdout);}catch{return{spec:false,err:(r.stderr||'').slice(-300)};}}
+function hasTorch(){const s=torchState();return s.ver||null;}
+const VC_DLLS=['msvcp140.dll','vcruntime140.dll','vcruntime140_1.dll'];
+function vcState(){if(!WIN)return{ok:true};const pyDir=path.dirname(PY),sys32=path.join(process.env.SystemRoot||'C:\\Windows','System32');
+ const miss=VC_DLLS.filter(d=>!fs.existsSync(path.join(pyDir,d))&&!fs.existsSync(path.join(sys32,d)));return{ok:!miss.length,miss,local:VC_DLLS.every(d=>fs.existsSync(path.join(pyDir,d)))};}
+function installVc(){const url='https://aka.ms/vs/17/release/vc_redist.x64.exe',tmp=path.join(require('node:os').tmpdir(),'vc_redist.x64.exe');
+ say('\nVisual C++ 런타임 설치 프로그램 내려받는 중(Microsoft, 약 25 MB)…');
+ const d=spawnSync('powershell',['-NoProfile','-Command',`$ProgressPreference='SilentlyContinue';Invoke-WebRequest '${url}' -OutFile '${tmp}'`],{stdio:'inherit'});
+ if(d.status!==0||!fs.existsSync(tmp)){bad('내려받기 실패 — 인터넷 연결을 확인하거나 직접 설치: '+url);return false;}
+ say('설치 창이 뜹니다(관리자 권한 확인 「예」).');const r=spawnSync(tmp,['/install','/passive','/norestart'],{stdio:'inherit'});
+ if([0,1638,3010].includes(r.status??-1)){ok('Visual C++ 런타임 설치됨'+(r.status===3010?' (다시 시작 권장)':''));return true;}
+ bad(`Visual C++ 런타임 설치 실패(코드 ${r.status}) — 직접 설치: ${url}`);return false;}
+function longPathOk(){if(!WIN)return true;const need=path.join(path.dirname(PY)).length+1+TORCH_DEEPEST;if(need<259)return true;
+ const r=spawnSync('reg',['query','HKLM\\SYSTEM\\CurrentControlSet\\Control\\FileSystem','/v','LongPathsEnabled'],{encoding:'utf8'});return /0x1\b/.test(r.stdout||'');}
+function installTorch(){
+ if(!longPathOk()){bad(`폴더 경로가 길어(${ROOT.length}자) PyTorch 파일 경로가 Windows 한도(260자)를 넘습니다 — 압축을 짧은 경로(예: C:\\SignalStudio)에 풀고 다시 실행하세요.`);return false;}
+ say('\nPyTorch(CPU) 설치 중 — 약 200 MB 내려받기, 몇 분 걸릴 수 있습니다…');
  const r=spawnSync(PY,['-m','pip','install','--no-warn-script-location','torch','--index-url','https://download.pytorch.org/whl/cpu'],{env:pyEnv,stdio:'inherit'});
- if(r.status===0&&hasTorch()){ok('PyTorch 설치 완료: '+hasTorch());return true;}
+ const st=torchState();if(r.status===0&&st.ver){ok('PyTorch 설치 완료: '+st.ver);return true;}
+ if(st.spec&&!st.ver){bad('PyTorch 는 설치됐지만 불러오지 못함: '+(st.err||'').slice(0,200));return false;}
  bad('PyTorch 설치 실패 — 인터넷 연결을 확인하세요. 고전 기법(M_FE~M05S)은 그대로 쓸 수 있습니다.');return false;}
 function ask(q){return new Promise(res=>{if(!process.stdin.isTTY)return res('');const rl=readline.createInterface({input:process.stdin,output:process.stdout});rl.question(q,a=>{rl.close();res(a.trim());});});}
+async function vcStep(why){const v=vcState();if(v.ok)return true;
+ warn(`Visual C++ 런타임 없음(${v.miss.join(', ')}) — ${why}`);if(SELF)return false;
+ const a=await ask('Microsoft Visual C++ 재배포 패키지를 지금 설치할까요? [Y/n] ');if(a===''||/^y/i.test(a))return installVc()&&vcState().ok;
+ warn('설치하지 않음 — 딥러닝 기법은 쓸 수 없습니다(고전 기법은 그대로)');return false;}
 async function torchStep(){
- const v=hasTorch();if(v){ok('PyTorch '+v+' — 딥러닝 기법(M06 · M06L6 · M08 · M09) 사용 가능');return;}
+ let st=torchState();
+ if(st.ver){ok('PyTorch '+st.ver+' — 딥러닝 기법(M06 · M06L6 · M08 · M09) 사용 가능');return;}
+ if(st.spec){bad('PyTorch 가 설치돼 있지만 불러오지 못함: '+(st.err||'').slice(0,240));
+  if(WIN&&!vcState().ok&&await vcStep('PyTorch 를 불러오려면 필요합니다')&&(st=torchState()).ver){ok('PyTorch '+st.ver+' — 사용 가능');return;}
+  warn('딥러닝 기법은 쓸 수 없습니다. 다시 설치하려면: SignalStudio.exe --install-torch');if(has('--install-torch')){spawnSync(PY,['-m','pip','uninstall','-y','torch'],{env:pyEnv,stdio:'inherit'});installTorch();}return;}
  if(has('--no-torch')){warn('PyTorch 없음 — 딥러닝 기법은 고를 수 없습니다(--no-torch)');return;}
- if(has('--install-torch')){installTorch();return;}
+ if(has('--install-torch')){if(await vcStep('PyTorch 에 필요합니다')||SELF)installTorch();return;}
  if(SELF){warn('PyTorch 없음(시험 모드: 묻지 않음)');return;}
  const a=await ask('\nPyTorch가 설치되어 있지 않습니다. 딥러닝 기법(M06 · M08 · M09)을 쓰려면 필요합니다.\n지금 설치할까요? (CPU 판, 약 200 MB 내려받기) [Y/n] ');
- if(a===''||/^y/i.test(a))installTorch();else warn('설치하지 않음 — 다음에 켤 때 다시 묻습니다(고전 기법은 그대로 사용 가능)');}
+ if(a===''||/^y/i.test(a)){if(await vcStep('PyTorch 에 필요합니다'))installTorch();}else warn('설치하지 않음 — 다음에 켤 때 다시 묻습니다(고전 기법은 그대로 사용 가능)');}
+
+// ---------------------------------------------------------------- USB serial drivers (D-180): a known USB-serial chip without a working driver
+const USB_SERIAL={'1A86':'CH340/CH341 (WCH) — https://www.wch-ic.com/downloads/CH341SER_EXE.html','2341':'Arduino — Arduino IDE 설치 또는 Windows 업데이트','2A03':'Arduino — Arduino IDE 설치 또는 Windows 업데이트','0403':'FTDI — https://ftdichip.com/drivers/vcp-drivers/','10C4':'CP210x (Silicon Labs) — https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers'};
+function driverProblems(){if(!WIN)return[];
+ const ps="Get-CimInstance Win32_PnPEntity | Where-Object { $_.DeviceID -match 'USB\\\\VID_(1A86|2341|2A03|0403|10C4)' } | Select-Object Name,DeviceID,ConfigManagerErrorCode | ConvertTo-Json -Compress";
+ const r=spawnSync('powershell',['-NoProfile','-Command',ps],{encoding:'utf8',timeout:15000});let list=[];try{list=JSON.parse(r.stdout||'[]');}catch{}
+ if(!Array.isArray(list))list=[list];return list.filter(d=>d&&d.ConfigManagerErrorCode!==0).map(d=>{const vid=(String(d.DeviceID).match(/VID_([0-9A-F]{4})/i)||[])[1]?.toUpperCase();return{name:d.Name||d.DeviceID,code:d.ConfigManagerErrorCode,hint:USB_SERIAL[vid]||''};});}
 
 // ---------------------------------------------------------------- signal source: replay (D1 · mixed 0 dB) or a board port (D-179)
 const REPLAY_CSV=path.join(SRC,'replay','d1_100_mixed_0dB.csv'),REPLAY_LABEL='d1 · 기록 100 · 혼합 잡음 0 dB';
@@ -57,6 +94,7 @@ async function sourceStep(){
  say('\n신호원을 고르세요');say('  [Enter] 재생 신호 — '+REPLAY_LABEL+' (보드 없이)');
  ports.forEach(([dev,desc],i)=>say(`  [${i+1}] 보드 ${dev}${desc&&desc!=='n/a'?' — '+desc:''}`));
  if(!ports.length)say('  (연결된 시리얼 포트 없음 — 보드를 꽂았다면 USB 케이블 · 드라이버를 확인하세요)');
+ for(const d of driverProblems())warn(`USB 직렬 장치 「${d.name}」 드라이버 문제(코드 ${d.code}) — 포트로 안 보입니다. 드라이버: ${d.hint||'장치 관리자에서 확인'}`);
  for(;;){const a=await ask('선택: ');
   if(a===''){SOURCE=replaySource();break;}
   const n=Number(a),byNum=Number.isInteger(n)&&n>=1&&n<=ports.length?ports[n-1][0]:null,byName=/^(COM\d+|\/dev\/\S+)$/i.test(a)?a.toUpperCase().startsWith('COM')?a.toUpperCase():a:null,dev=byNum||byName;
@@ -137,11 +175,14 @@ async function selftest(){const out={ok:false,checks:[]},check=(name,pass,info)=
   const sc=mj?.scenes?.length??0,ch=mj?.scenes?.[0]?.chunks?.[0]?.path??mj?.chunks?.[0]?.path;
   check('10-min replay manifest',man.code===200&&sc>0,`HTTP ${man.code} · ${sc} scenes`);
   if(ch){const c=await get(`http://127.0.0.1:${PORT_WEB}/replay/${ch}`,15000);check('10-min replay chunk',c.code===200&&c.body.length>1000,`${ch} ${c.body.length} B`);}
+  if(WIN){const v=vcState();check('Visual C++ runtime next to python.exe',v.local,v.ok?'present':'missing '+(v.miss||[]).join(','));}
   const st=await untilRunning(null,180000);check('bridge running',true,st.methods.join(','));
   check('signal source',st.source?.kind==='replay'&&!!st.source.label&&(has('--synth')||/d1/.test(st.source.label)),JSON.stringify(st.source));
   const fe=await get(`http://127.0.0.1:${PORT_WEB}/bridge/fe`);check('bridge /fe via proxy',fe.code===200,'HTTP '+fe.code);
   const s1=await streamKeys(6000);check('stream data',s1.frames>5&&['M_FE','M04','M05S'].every(k=>s1.keys.includes(k)),`${s1.frames} frames · ${s1.keys.join(',')}`);
   if(has('--selftest-dl')){const v=hasTorch();check('PyTorch present',!!v,v??'missing');
+   if(WIN){const r=spawnSync(PY,['-c','import torch,ctypes,ctypes.wintypes as w\nk=ctypes.WinDLL("kernel32");k.GetModuleHandleW.restype=w.HMODULE;k.GetModuleHandleW.argtypes=[w.LPCWSTR]\nb=ctypes.create_unicode_buffer(600);h=k.GetModuleHandleW("msvcp140.dll");k.GetModuleFileNameW(w.HMODULE(h),b,600);print(b.value)'],{env:pyEnv,encoding:'utf8'});
+    const where=(r.stdout||'').trim();check('torch loads msvcp140 from the package',where.toLowerCase().startsWith(path.dirname(PY).toLowerCase()),where||(r.stderr||'').slice(-200));}
    const r=await post(`http://127.0.0.1:${PORT_WEB}/bridge-ctl/restart`,{methods:['M_FE','M08']});check('restart accepted',r.code===202,'HTTP '+r.code);
    const t0=Date.now();await untilRunning('M_FE,M08',300000);check('bridge running with M08',true,((Date.now()-t0)/1000).toFixed(1)+' s');
    const s2=await streamKeys(8000);check('stream has M08',s2.keys.includes('M08'),`${s2.frames} frames · ${s2.keys.join(',')}`);}

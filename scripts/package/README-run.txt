@@ -25,6 +25,12 @@ Signal Studio - 심전도 잡음 제거 시연 (Windows 배포 패키지)
   --no-torch             PyTorch 를 묻지 않음
   --selftest             자체 시험 후 종료
 
+시작할 때 점검하는 것
+  - PyTorch: 없으면 설치를 묻습니다. 설치돼 있는데 불러오지 못하면 이유를 보여 줍니다.
+  - Visual C++ 런타임(PyTorch에 필요): python 폴더에 함께 들어 있습니다. 없으면 Microsoft 설치 프로그램을 받아 설치할지 묻습니다(관리자 확인 창).
+  - 폴더 경로 길이: 너무 깊은 폴더에 풀면 PyTorch 설치가 실패하므로 짧은 경로(예: C:\SignalStudio)에 풀라고 알려 줍니다.
+  - 보드 드라이버: 보드(CH340 · FTDI · CP210x · Arduino)가 꽂혀 있는데 드라이버 문제로 포트가 안 보이면 칩 이름과 드라이버 주소를 알려 줍니다.
+
 문제가 있을 때
   - 「포트 사용 불가」: 이미 켜진 Signal Studio 또는 npm run bridge:replay 를 닫고 다시 실행합니다.
   - Windows 보호(SmartScreen) 경고: 「추가 정보」 → 「실행」 (서명되지 않은 실행 파일).

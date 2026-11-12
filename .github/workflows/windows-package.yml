@@ -26,13 +26,13 @@ jobs:
       PY_VERSION: '3.12.8'
       SOURCE_REF: ${{ github.event.inputs.source_ref || 'claude/pli-harmonic-canceller' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
           repository: userpawbaw/ECG_denoising_method_comparision
           ref: ${{ env.SOURCE_REF }}
           path: srcrepo
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
 
@@ -89,6 +89,13 @@ jobs:
           & "$py\python.exe" get-pip.py --no-warn-script-location
           & "$py\python.exe" -m pip install --no-warn-script-location numpy scipy PyWavelets PyYAML pyserial wfdb
           & "$py\python.exe" -c "import numpy, scipy, pywt, yaml, serial, wfdb; print('python packages ok')"
+          # D-180: Visual C++ runtime app-local (PyTorch needs msvcp140.dll; the embeddable Python ships only vcruntime140*.dll).
+          # Microsoft allows app-local deployment of these redistributable DLLs; copied from the runner's installed redistributable.
+          foreach ($d in 'msvcp140.dll','msvcp140_1.dll','msvcp140_2.dll','msvcp140_atomic_wait.dll','msvcp140_codecvt_ids.dll','concrt140.dll','vcruntime140.dll','vcruntime140_1.dll') {
+            $src = "$env:SystemRoot\System32\$d"
+            if ((Test-Path $src) -and -not (Test-Path "$py\$d")) { Copy-Item $src "$py\" }
+          }
+          Get-ChildItem "$py\*140*.dll" | Select-Object Name, Length
 
       - name: Live-tab replay signal (D-179 — D1 record 100 + mixed noise 0 dB, seed 13, 600 s)
         working-directory: srcrepo

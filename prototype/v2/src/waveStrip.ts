@@ -188,7 +188,10 @@ export function composeRow(g: CanvasRenderingContext2D, row: StripRow, ramps: Ag
     L.setTransform(s, 0, 0, s, -a * s, -G.t * s); L.imageSmoothingEnabled = true; fn(L);
     L.globalCompositeOperation = 'destination-out'; L.globalAlpha = 1; ramps.put(L, ramps.erase.c, l, r, G.t, G.h, o.headX, o.sweep);
     g.save(); g.globalCompositeOperation = op; g.imageSmoothingEnabled = true; g.setTransform(1, 0, 0, 1, 0, 0);
-    g.drawImage(Lr.c, 0, 0, W, H, a * d, G.t * d, W / s * d, H / s * d); g.restore();
+    // 2026-11-12 사용자(사라지는 구간 오른쪽 끝이 밝게 빛남): 층은 2 px 여유를 두고 만들지만 화면에는 창 폭 [a, b]만 붙인다 —
+    // 여유까지 붙이면 그 2 px가 먼 구간(이미 그은 선 · 'lighter' 번짐) 위에 한 번 더 겹쳐 밝은 띠가 생겼다.
+    const Wd = (b - a) * s;
+    g.drawImage(Lr.c, 0, 0, Wd, H, a * d, G.t * d, (b - a) * d, H / s * d); g.restore();
   };
   if (glowOn) for (const [a, b] of fade) run(glowLayer, a, b, .5, L => { L.globalCompositeOperation = 'lighter'; L.globalAlpha = o.glow; row.blit(L, row.sum.c, 2 * d, o.sweep, o.head, o.rightX); }, 'lighter');
   for (const [a, b] of lineWins) run(layer, a, b, d, L => {

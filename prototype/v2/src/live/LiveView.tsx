@@ -9,6 +9,8 @@ import {drawSplit, drawOverlay, type View} from './livePlot';
 import {drawSplitFx, drawOverlayFx} from './livePlotFx';
 import {WAVE} from '../waveMode';
 const FX = WAVE !== 'prev';
+// D-182 계측: ?livetrace=1 이면 매 프레임 (시각, 머리) 를 window.__liveTrace 에 쌓는다(부드러움 측정용)
+const TRACE: [number, number][] | null = new URLSearchParams(location.search).get('livetrace') ? ((window as unknown as {__liveTrace: [number, number][]}).__liveTrace = []) : null;
 import * as AX from './liveAxis';
 import {StateChip, StatePanel} from '../Glyph';
 import methodData from '../methods.json';
@@ -88,7 +90,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       try { const d = await (await fetch(ctlUrl + '/status', {cache: 'no-store'})).json();
         if (d.state === 'failed' || (d.state === 'running' && d.methods.join() !== reload.methods.join() && performance.now() - reload.t0 > 4000)) {
           setReload(r => r && {...r, failed: /torch/.test(d.err ?? '') ? '딥러닝 기법은 torch 설치가 필요합니다 — 이전 기법으로 되돌립니다' : d.err ? '브리지를 띄우지 못함 — 이전 기법으로 되돌립니다' : '이전 기법으로 되돌렸습니다'});
-          order.current = d.methods; setCtl(c => ({...c, ok: true, methods: d.methods})); setDraft(null); window.setTimeout(() => setReload(null), 2600); }
+          order.current = d.methods; for (const m of d.methods) S.hidden.delete(m); setCtl(c => ({...c, ok: true, methods: d.methods})); setDraft(null); window.setTimeout(() => setReload(null), 2600); }
       } catch { /* 감독 창구가 잠시 응답하지 않음 */ }
     }, 500);
     return () => clearInterval(id);
@@ -112,8 +114,9 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
     let raf = 0;
     const frame = () => {
       raf = requestAnimationFrame(frame);
-      const now = performance.now(), vh = S.reveal.at(now);
-      if (vh !== S.vh) { S.vh = vh; dirty.current = true; }
+      const now = performance.now(), at = S.reveal.at(now), vh = Math.floor(at), frac = at < 0 ? 0 : at - vh;
+      if (vh !== S.vh || (frac !== S.vhFrac && viewRef.current.play === 'scroll')) { S.vh = vh; S.vhFrac = frac; dirty.current = true; }
+      if (TRACE) TRACE.push([now, at]);
       const since = now - S.lastData, v = viewRef.current;
       const fading = v.play === 'sweep' && v.glowOn && since > 300 && since < 700;
       if (!dirty.current && !fading) return;
@@ -137,10 +140,12 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   useEffect(() => {
     let changed = false;
     const pri = (n: string) => { const i = DEFAULT_ORDER.indexOf(n); return i < 0 ? 99 : i; };   // M_FE 와 M01 은 같은 출력이라 처음엔 겹치지 않게
+    // 감독 창구가 있으면 보이는 것은 적용한 목록뿐 — 다시 띄우는 동안 이전 브리지가 마지막으로 보낸 기법이 빈자리에 끼지 않게(2026-11-13)
+    const fixed = ctl.ok && order.current.length > 0;
     for (const n of [...S.names()].sort((a, b) => pri(a) - pri(b))) { if (n === 'raw' || order.current.includes(n) || S.hidden.has(n)) continue;
-      if (order.current.length < MAX_LIVE) order.current.push(n); else S.hidden.add(n); changed = true; }
+      if (!fixed && order.current.length < MAX_LIVE) order.current.push(n); else S.hidden.add(n); changed = true; }
     if (changed) setLayout(l => l + 1);
-  }, [layout]);
+  }, [layout, ctl.ok]);
   const applied = () => order.current.length ? [...order.current] : ctl.methods.slice(0, MAX_LIVE);
   const apply = () => {
     const next = draft; if (!next || !ctlUrl) return; setDraft(null);

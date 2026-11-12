@@ -46,10 +46,18 @@ test('선 끊김은 이유와 함께 알림으로 남는다', () => {
   assert.equal(s.notes[0].kind, 'link'); assert.match(s.notes[0].text, /serial read failed/);
 });
 
-test('색은 등장 순서로 고정되고, 다섯째부터는 겹치기에서 꺼 둔다', () => {
+test('색은 등장 순서로 고정되고, 스트림은 기법을 스스로 숨기지 않는다(몇 개를 보일지는 화면이 정한다)', () => {
   const s = new LiveStream(); s.ingest(block(0, 6, ['A', 'B', 'C', 'D', 'E']), 0);
   assert.deepEqual(['A', 'B', 'C', 'D'].map(n => s.color(n)), SLOTS);
-  assert.ok(s.hidden.has('E')); assert.ok(!s.hidden.has('D'));
+  assert.equal(s.hidden.size, 0);
+});
+
+test('브리지를 여러 번 다시 띄워(기법 바꾸기) 처음 보는 기법이 다섯째 이후로 와도 숨지 않는다 (2026-11-13 재현)', () => {
+  const s = new LiveStream();
+  const runs = [['M_FE', 'M04', 'M05S'], ['M06'], ['M01', 'M04', 'M06'], ['M06', 'M08', 'M09']];
+  let i = 0;
+  for (const run of runs) { s.hidden.clear(); s.clear(); s.ingest(block(i, 6, run), 0); i += 6;
+    for (const m of run) assert.ok(!s.hidden.has(m), `${run.join(',')} 중 ${m} 숨김`); }
 });
 
 test('표시 길이를 바꿔도 받은 최근 구간을 버리지 않는다', () => {

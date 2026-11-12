@@ -137,6 +137,46 @@ export function makeReveal(step = REVEAL_STEP) {
   };
 }
 
+/** D-182 재생 머리(지터 버퍼) — 받은 블록을 계단으로 드러내지 않고, 화면 시각에 맞춰 표본을 일정 속도(fs)로 흘린다.
+ *  makeReveal 은 블록을 REVEAL_STEP 단계로 나눠 드러내다 다음 블록이 오면 남은 단계를 건너뛰어(base = 이전 target),
+ *  도착이 흔들리면 4~5 단계를 한 프레임에 몰아 그렸다(사용자 2026-11-13 「1초에 2~3번 뭉텅이」, 60 fps 녹화 분석).
+ *  여기서는 머리가 받은 끝(target)보다 lag 표본 뒤에서 fs 속도로 움직이고, 뒤처짐이 lag 와 다르면 속도를 ±15 % 안에서 조금씩 고친다.
+ *  lag 는 최근 2 s 도착 간격 중 가장 긴 것의 1.25 배(60 ms ~ 500 ms) — 도착이 고르면 짧고, 뭉쳐 오면 그만큼 길어진다.
+ *  값을 만들지 않는다: 머리는 받은 표본을 넘지 않고(받은 것이 모자라면 멈춤), 그리는 것은 받은 표본뿐이다. */
+export const PLAY_MIN_LAG_S = 0.06, PLAY_MAX_LAG_S = 0.5, PLAY_RATE_MAX = 0.15;
+export function makePlayout() {
+  let pos = -1, target = -1, last = 0, fs = 250, lag = 0;
+  const gaps: {t: number, ms: number}[] = []; let tArr = 0;
+  const wantLag = (now: number) => {
+    while (gaps.length && now - gaps[0].t > 2000) gaps.shift();
+    const mx = gaps.reduce((m, g) => Math.max(m, g.ms), 0);
+    return Math.min(PLAY_MAX_LAG_S, Math.max(PLAY_MIN_LAG_S, 1.25 * mx / 1000)) * fs;
+  };
+  return {
+    setFs(f: number) { if (f > 0) fs = f; },
+    push(h: number, now: number) {
+      if (target >= 0 && h > target && h - target < 4096) {
+        if (tArr > 0) gaps.push({t: now, ms: now - tArr});
+      } else { gaps.length = 0; pos = -1; }              // 첫 블록 · 끊긴 시간축: 처음부터
+      target = h; tArr = now;
+      if (pos < 0) { lag = PLAY_MIN_LAG_S * fs; pos = Math.max(0, h - lag); last = now; }
+    },
+    /** 지금 화면에 보일 머리(실수, 절대 표본 인덱스). 받은 것이 없으면 -1. */
+    at(now: number) {
+      if (target < 0) return -1;
+      const dt = Math.min(100, Math.max(0, now - last)); last = now;
+      lag += (wantLag(now) - lag) * Math.min(1, dt / 500);           // lag 자체도 천천히(0.5 s) 바꾼다
+      const behind = target - pos;
+      if (behind > lag + PLAY_MAX_LAG_S * fs * 1.2) pos = target - lag;   // 아주 뒤처짐(탭을 가렸다 돌아옴 등): 한 번에 따라잡기
+      const rate = 1 + Math.max(-PLAY_RATE_MAX, Math.min(PLAY_RATE_MAX, (behind - lag) / fs));
+      pos = Math.min(target, pos + dt * fs / 1000 * rate);
+      return pos;
+    },
+    lagS: () => lag / fs,
+    reset() { pos = target = -1; gaps.length = 0; tArr = 0; },
+  };
+}
+
 /** 선단 밝기(잔광, D-41) — 폭은 그림 너비의 6 %(48~120 px), 흰색 최대 60 %, 위치가 아니라 나이로. */
 export const GLOW_FRAC = 0.06, GLOW_MIN_PX = 48, GLOW_MAX_PX = 120, GLOW_MAX = 0.6;
 export function glowWidth(pw: number, cap: number): number {

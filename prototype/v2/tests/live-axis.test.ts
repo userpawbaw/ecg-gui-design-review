@@ -140,3 +140,20 @@ test('D-178 위아래 따로: 심전도 모양(위로 긴 R 피크)이면 [lo, h
   assert.ok(r.hi - r.lo < 2 * s.peak * 0.75, '같은 폭(평균 ± peak)보다 범위가 좁다');
   assert.ok(Math.abs((r.hi + r.lo) / 2 - s.m) > 0.1, '중심이 평균보다 위로 옮겨 간다');
 });
+
+test('D-182 재생 머리: 0.45 s마다 0.18 s씩 몰려 오는 블록도 60 fps에서 매 프레임 비슷하게 나아가고 받은 것을 넘지 않는다', () => {
+  const fs = 250, p = AX.makePlayout(); p.setFs(fs);
+  // 블록: 40 ms마다 10 표본, 단 (t mod 450) < 180 ms 동안은 붙잡혔다가 180 ms에 한꺼번에 도착
+  const arrivals: [number, number][] = []; let held: number[] = [];
+  for (let k = 0, h = 9; k < 400; k++, h += 10) { const t = k * 40; if (t % 450 < 180) held.push(h); else { for (const x of held) arrivals.push([t, x]); held = []; arrivals.push([t, h]); } }
+  let ai = 0, prev = -1; const adv: number[] = [];
+  for (let now = 0; now < 15000; now += 1000 / 60) {
+    let got = -1; while (ai < arrivals.length && arrivals[ai][0] <= now) { p.push(arrivals[ai][1], arrivals[ai][0]); got = arrivals[ai][1]; ai++; }
+    const at = p.at(now); if (at < 0) continue;
+    const recv = arrivals[ai - 1][1]; assert.ok(at <= recv + 1e-9, '받은 표본을 넘지 않는다');
+    if (now > 3000 && prev >= 0) adv.push(at - prev); prev = at;
+  }
+  const exp = fs / 60, zero = adv.filter(a => a <= 1e-9).length, big = adv.filter(a => a > 2 * exp).length;
+  assert.equal(zero, 0, '멈춘 프레임'); assert.equal(big, 0, '몰아 그린 프레임');
+  const mean = adv.reduce((a, b) => a + b, 0) / adv.length; assert.ok(Math.abs(mean - exp) / exp < .05, `평균 속도 ${mean}`);
+});

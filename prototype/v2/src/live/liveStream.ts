@@ -2,6 +2,8 @@
  * 네트워크·React 와 떼어 두었다: `ingest(메시지)`가 링버퍼·상태를 바꾸고, 그리기(LivePlot)는 이 객체를 매 프레임 읽는다.
  * 프레임마다 바뀌는 값은 React 상태로 흐르지 않는다 — `onStatus` 로 낮은 빈도(연결·통계·전환 알림)만 올린다. */
 import * as AX from './liveAxis';
+/** D-182: ?livepace=reveal 이면 이전 계단식 드러내기(비교용). */
+export const PACE = typeof location !== 'undefined' && new URLSearchParams(location.search).get('livepace') === 'reveal' ? 'reveal' : 'playout';
 
 /** 브리지가 보내는 한 블록 (scripts/serial_bridge.py `payload`). */
 export type Block = {i: number, n: number, fs: number, raw: number[], ok: number[], out: Record<string, number[]>,
@@ -27,7 +29,9 @@ export class LiveStream {
   bufs = new Map<string, Float32Array>(); okBuf: Float32Array | null = null;
   colorOf = new Map<string, string>(); hidden = new Set<string>();
   stat: Stat = {}; notes: Note[] = []; feMode: string | null = null;
-  gain = AX.makeGain(); ctr = AX.makeCenter(); reveal = AX.makeReveal();
+  gain = AX.makeGain(); ctr = AX.makeCenter(); reveal = PACE === 'reveal' ? AX.makeReveal() : AX.makePlayout();
+  /** 보이는 머리의 소수 부분(0–1) — 스크롤에서 화면을 표본 사이로도 밀어 매끄럽게(D-182). */
+  vhFrac = 0;
   /** 구조가 바뀌었다(계열이 생김·전환) — 화면이 칸을 다시 짠다. */
   layoutVersion = 0;
 
@@ -63,13 +67,15 @@ export class LiveStream {
     for (const name of Object.keys(m.out ?? {})) {
       if (!this.bufs.has(name)) {
         this.bufs.set(name, new Float32Array(this.cap));
-        if (!this.colorOf.has(name)) { const k = this.colorOf.size; this.colorOf.set(name, SLOTS[k % SLOTS.length]); if (k >= OVER_MAX) this.hidden.add(name); }
+        // 2026-11-13 사용자(3개 골랐는데 마지막 기법이 안 뜸 · 실험실 다녀오면 뜸): 색 목록은 브리지를 다시 띄워도 남아 있어, 다섯째로 처음 본 기법을
+        // 여기서 숨기면 기법을 몇 번 바꾼 뒤 새로 고른 기법이 숨었다. 몇 개를 보일지는 화면(LiveView: 고른 목록 · 최대 3개)만 정한다.
+        if (!this.colorOf.has(name)) { const k = this.colorOf.size; this.colorOf.set(name, SLOTS[k % SLOTS.length]); }
         fresh = true;
       }
       this.writeAt(this.bufs.get(name)!, m.i, m.out[name]);
     }
     const n = Number.isFinite(m.n) ? m.n : m.raw.length;
-    this.head = m.i + n - 1; this.lastData = now; this.reveal.push(this.head, now);
+    this.head = m.i + n - 1; this.lastData = now; if ('setFs' in this.reveal) this.reveal.setFs(this.fs); this.reveal.push(this.head, now);
     if (m.stat && typeof m.stat === 'object') { this.stat = {...m.stat, elapsed: m.i / this.fs}; if (m.stat.fe) this.feMode = m.stat.fe; }
     if (fresh) this.layoutVersion++;
     return true;

@@ -123,6 +123,17 @@ jobs:
           .\SignalStudio.exe --selftest --no-torch
           if ($LASTEXITCODE -ne 0) { throw "selftest failed" }
 
+      - name: Self test with ports 4173 and 8764 already taken (D-181 — must move to free ports, not exit)
+        working-directory: pkg/SignalStudio
+        run: |
+          $a = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, 4173); $a.Start()
+          $b = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, 8764); $b.Start()
+          .\SignalStudio.exe --selftest --no-torch
+          $code = $LASTEXITCODE
+          $a.Stop(); $b.Stop()
+          if ($code -ne 0) { throw "selftest with busy ports failed" }
+          Remove-Item -Recurse -Force logs
+
       - name: PyTorch install + M08 switch (on a copy, so the shipped package stays without PyTorch)
         run: |
           Copy-Item -Recurse pkg\SignalStudio pkg-dltest

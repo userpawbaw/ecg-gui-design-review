@@ -19,13 +19,38 @@ const ROOT=path.resolve(val('--root',process.env.ECG_PKG_ROOT||(isSea?path.dirna
 const WEB=path.join(ROOT,'web'),SRC=path.join(ROOT,'source');
 const WIN=process.platform==='win32';
 const PY=process.env.ECG_PYTHON||(WIN?path.join(ROOT,'python','python.exe'):path.join(ROOT,'python','bin','python3'));
-const PORT_WEB=Number(process.env.ECG_WEB_PORT||4173),PORT_BR=Number(process.env.ECG_BRIDGE_PORT||8765),PORT_CTL=Number(process.env.ECG_BRIDGE_CTL_PORT||8764);
+let PORT_WEB=Number(process.env.ECG_WEB_PORT||4173),PORT_BR=Number(process.env.ECG_BRIDGE_PORT||8765),PORT_CTL=Number(process.env.ECG_BRIDGE_CTL_PORT||8764);
 const SELF=has('--selftest')||has('--selftest-dl');
+// D-181: everything printed also goes to logs/SignalStudio-<time>.log next to the exe (a double-clicked console closes with the process)
+const LOG=(()=>{try{const d=path.join(ROOT,'logs');fs.mkdirSync(d,{recursive:true});const t=new Date(),z=n=>String(n).padStart(2,'0');
+ return path.join(d,`SignalStudio-${t.getFullYear()}${z(t.getMonth()+1)}${z(t.getDate())}-${z(t.getHours())}${z(t.getMinutes())}${z(t.getSeconds())}.log`);}catch{return null;}})();
+{const orig=console.log.bind(console);console.log=(...a)=>{orig(...a);if(LOG)try{fs.appendFileSync(LOG,a.join(' ')+'\n');}catch{}};}
 const say=s=>console.log(s),ok=s=>console.log('  [OK]   '+s),warn=s=>console.log('  [주의] '+s),bad=s=>console.log('  [문제] '+s);
 if(WIN)spawnSync('cmd',['/c','chcp','65001'],{stdio:'ignore'});   // 한글 출력(콘솔 cp949 → UTF-8)
 const pyEnv={...process.env,PYTHONUTF8:'1',PYTHONIOENCODING:'utf-8',PYTHONDONTWRITEBYTECODE:'1'};
 
-function need(p,what){if(!fs.existsSync(p)){bad(`${what} 없음: ${p}\n  압축을 푼 폴더 그대로 실행해야 합니다(web · python · source 폴더가 exe 옆에).`);process.exit(2);}}
+// D-181: a fatal error never closes the window silently — the message stays until Enter (double-clicked exe), and is in the log file
+let dying=false;
+async function fatal(msg,code=1){if(dying)return;dying=true;bad(msg);if(LOG)say('  기록 파일: '+LOG);
+ try{if(sup.child){sup.state='stopping';sup.child.kill();}}catch{}
+ if(!SELF&&process.stdin.isTTY){await new Promise(res=>{const rl=readline.createInterface({input:process.stdin,output:process.stdout});rl.question('\n창을 닫으려면 Enter 를 누르세요… ',()=>{rl.close();res();});});}
+ process.exit(code);}
+process.on('uncaughtException',e=>fatal('예기치 않은 오류: '+(e&&e.stack||e)));
+process.on('unhandledRejection',e=>fatal('예기치 않은 오류: '+(e&&e.stack||e)));
+function need(p,what){if(!fs.existsSync(p)){fatal(`${what} 없음: ${p}\n  압축을 푼 폴더 그대로 실행해야 합니다(web · python · source 폴더가 exe 옆에).`,2);return false;}return true;}
+// D-181: ports — if another Signal Studio or `npm run bridge:replay` already holds 4173/8764/8765, use the next free ones
+const net=require('node:net');
+function portFree(port){return new Promise(res=>{const sv=net.createServer();sv.once('error',()=>res(false));sv.once('listening',()=>sv.close(()=>res(true)));sv.listen(port,'127.0.0.1');});}
+async function nextFree(port,taken){for(let p=port;p<port+40;p++)if(!taken.includes(p)&&await portFree(p))return p;return null;}
+async function portStep(){const want={web:PORT_WEB,br:PORT_BR,ctl:PORT_CTL},busy=[];
+ for(const [k,p] of Object.entries(want))if(!await portFree(p))busy.push(`${p}`);
+ if(!busy.length)return true;
+ let other='';try{const st=await get(`http://127.0.0.1:${PORT_CTL}/status`,1500);if(st.code===200)other=' — 다른 Signal Studio 또는 npm run bridge:replay 가 켜져 있습니다(같이 켜 두면 CPU를 두 배로 씁니다)';}catch{}
+ warn(`포트 ${busy.join(' · ')} 이(가) 이미 쓰이고 있음${other}`);
+ const taken=[];const pick=async p=>{const q=await nextFree(p,taken);if(q)taken.push(q);return q;};
+ const w=await pick(PORT_WEB),b=await pick(PORT_BR),c=await pick(PORT_CTL);
+ if(!w||!b||!c){await fatal('빈 포트를 찾지 못함 — 다른 Signal Studio 창 · npm run bridge:replay 를 닫고 다시 실행하세요',3);return false;}
+ PORT_WEB=w;PORT_BR=b;PORT_CTL=c;ok(`다른 포트로 켭니다: 화면 ${w} · 브리지 ${b} · 제어 ${c}`);return true;}
 
 // ---------------------------------------------------------------- PyTorch: check, ask, install into the bundled Python
 // D-180: PyTorch on Windows needs the Visual C++ runtime (msvcp140.dll …). The package ships it app-local next to python.exe;
@@ -136,7 +161,7 @@ function supervise(initial){
    let list;try{list=JSON.parse(body).methods;}catch{return j(400,{error:'json'});}
    if(!Array.isArray(list)||!list.length||list.length>4||!list.every(m=>typeof m==='string'&&LIVE_ALLOWED.has(m)))return j(400,{error:'methods: 1–4 of '+[...LIVE_ALLOWED].join(',')});
    restart([...new Set(list)]);j(202,{state:sup.state,methods:list});});return;}
-  j(404,{error:'not found'});}).on('error',e=>{bad(`제어 창구 포트 ${PORT_CTL} 사용 불가(${e.code}) — 다른 Signal Studio · npm run bridge:replay 가 켜져 있으면 닫으세요`);process.exit(3);})
+  j(404,{error:'not found'});}).on('error',e=>{fatal(`제어 창구 포트 ${PORT_CTL} 사용 불가(${e.code}) — 다른 Signal Studio · npm run bridge:replay 가 켜져 있으면 닫으세요`,3);})
   .listen(PORT_CTL,'127.0.0.1');
  start();}
 
@@ -153,7 +178,7 @@ function serveWeb(){return new Promise(resolve=>{http.createServer((req,res)=>{
   if(!p.startsWith(WEB+path.sep)&&p!==WEB){res.writeHead(403).end();return;}
   if(p===WEB||p.endsWith(path.sep))p=path.join(p,'index.html');
   fs.stat(p,(e,s)=>{if(e||!s.isFile()){res.writeHead(404).end('Not found');return;}res.writeHead(200,{'Content-Type':MIME[path.extname(p).toLowerCase()]||'application/octet-stream','Cache-Control':'no-store'});fs.createReadStream(p).pipe(res);});})
- .on('error',e=>{bad(`화면 포트 ${PORT_WEB} 사용 불가(${e.code}) — 이미 켜진 Signal Studio 창이 있으면 닫으세요`);process.exit(3);})
+ .on('error',e=>{fatal(`화면 포트 ${PORT_WEB} 사용 불가(${e.code}) — 이미 켜진 Signal Studio 창이 있으면 닫으세요`,3);})
  .listen(PORT_WEB,'127.0.0.1',resolve);});}
 
 function openBrowser(url){if(has('--no-browser')||SELF)return;
@@ -192,9 +217,11 @@ async function selftest(){const out={ok:false,checks:[]},check=(name,pass,info)=
 // ---------------------------------------------------------------- main
 (async()=>{
  say('Signal Studio — 심전도 잡음 제거 시연\n폴더: '+ROOT);
- need(WEB,'화면 파일(web)');need(path.join(SRC,'scripts','serial_bridge.py'),'브리지(source)');if(path.isAbsolute(PY))need(PY,'내장 Python(python)');
+ if(!need(WEB,'화면 파일(web)')||!need(path.join(SRC,'scripts','serial_bridge.py'),'브리지(source)')||(path.isAbsolute(PY)&&!need(PY,'내장 Python(python)')))return;
+ if(LOG)say('기록 파일: '+LOG);
  await torchStep();
  await sourceStep();
+ if(!await portStep())return;
  const methods=val('--methods','M_FE,M04,M05S');supervise(methods);
  await serveWeb();const url=`http://127.0.0.1:${PORT_WEB}/`;ok('화면: '+url+'  (이 창을 닫으면 모두 종료)');
  if(SELF)return selftest();

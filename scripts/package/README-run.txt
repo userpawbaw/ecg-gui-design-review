@@ -32,6 +32,8 @@ Signal Studio - 심전도 잡음 제거 시연 (Windows 배포 패키지)
   - 보드 드라이버: 보드(CH340 · FTDI · CP210x · Arduino)가 꽂혀 있는데 드라이버 문제로 포트가 안 보이면 칩 이름과 드라이버 주소를 알려 줍니다.
 
 문제가 있을 때
-  - 「포트 사용 불가」: 이미 켜진 Signal Studio 또는 npm run bridge:replay 를 닫고 다시 실행합니다.
+  - 오류가 나면 창이 바로 닫히지 않고 메시지를 보여 준 뒤 Enter 를 기다립니다. 실행 기록은 logs 폴더(SignalStudio-날짜-시각.log)에 남습니다.
+  - 다른 Signal Studio 또는 npm run bridge:replay 가 켜져 있어 포트(4173 · 8764 · 8765)가 쓰이고 있으면 빈 포트로 바꿔 켭니다.
+    같이 켜 두면 CPU 를 두 배로 쓰므로, 가능하면 먼저 켠 쪽을 닫습니다.
   - Windows 보호(SmartScreen) 경고: 「추가 정보」 → 「실행」 (서명되지 않은 실행 파일).
   - 원본 브리지 저장소의 커밋은 SOURCE_COMMIT.txt 에 적혀 있습니다.

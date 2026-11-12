@@ -6,7 +6,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {LiveStream, LABEL, RAW_COLOR} from './liveStream';
 import {drawSplit, drawOverlay, type View} from './livePlot';
-import {drawSplitFx, drawOverlayFx} from './livePlotFx';
+import {drawSplitFx, drawOverlayFx, overlayPointer, overlayBusy} from './livePlotFx';
 import {WAVE} from '../waveMode';
 const FX = WAVE !== 'prev';
 // D-182 계측: ?livetrace=1 이면 매 프레임 (시각, 머리) 를 window.__liveTrace 에 쌓는다(부드러움 측정용)
@@ -118,7 +118,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       if (vh !== S.vh || (frac !== S.vhFrac && viewRef.current.play === 'scroll')) { S.vh = vh; S.vhFrac = frac; dirty.current = true; }
       if (TRACE) TRACE.push([now, at]);
       const since = now - S.lastData, v = viewRef.current;
-      const fading = v.play === 'sweep' && v.glowOn && since > 300 && since < 700;
+      const fading = (v.play === 'sweep' && v.glowOn && since > 300 && since < 700) || (v.mode === 'overlay' && FX && !!overlay.current && overlayBusy(overlay.current));
       if (!dirty.current && !fading) return;
       dirty.current = false;
       if (v.mode === 'overlay') { if (overlay.current) (FX ? drawOverlayFx : drawOverlay)(S, v, overlay.current); }
@@ -246,7 +246,9 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
     {!names.length && <p className="subtle">신호 수신 대기</p>}
     {view.mode === 'overlay'
       ? <div className="live-row"><div className="live-lab"><b>중첩 표시: 모든 기법에 동일 축 · 동일 이득(불투명도 85 %)</b><span>입력 신호(옅은 회색): 전극 직류 성분만 제거, 동일 이득</span></div>
-          <canvas ref={el => { overlay.current = el; }} className="live-canvas tall" data-mode={view.play}/></div>
+          <canvas ref={el => { overlay.current = el; }} className="live-canvas tall" data-mode={view.play}
+            onPointerMove={e => { const r = e.currentTarget.getBoundingClientRect(); overlayPointer(e.currentTarget, e.clientX - r.left, e.clientY - r.top); dirty.current = true; }}
+            onPointerLeave={e => { overlayPointer(e.currentTarget, null, null); dirty.current = true; }}/></div>
       : shown.map(n => <div key={n} className="live-row"><div className="live-lab"><b style={{color: S.color(n)}}>{n === 'raw' ? LABEL.raw : LABEL[n] ?? n}</b></div>
           <canvas ref={el => { if (el) canvases.current.set(n, el); else canvases.current.delete(n); }} className="live-canvas" data-series={n} data-mode={view.play}/></div>)}
   </div>{aside}</div>;

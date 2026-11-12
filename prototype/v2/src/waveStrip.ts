@@ -164,6 +164,7 @@ export function headSprite(R: number, a: number, dpr: number) {
 const glowLayer = mk();
 export function composeRow(g: CanvasRenderingContext2D, row: StripRow, ramps: AgeRamps, layer: {c: HTMLCanvasElement, g: CanvasRenderingContext2D}, o: {
   sweep: boolean, head: number, headX: number, rightX: number, r: number, white: number, glow: number, level: number, liveK: number, span: number, gapS: number, tailS: number, oldK?: number,
+  /** 이 줄 전체의 불투명도 배율(D-184 겹치기 강조 · 흐리기 애니메이션 — 링을 다시 긋지 않고 합성 때만). */ alphaK?: number,
 }) {
   const G = row.geom, d = G.dpr, l = G.l, r = o.r, pw = r - l, k = pw / o.span, oldK = o.oldK ?? .72, hotS = Math.min(o.span, 3 * GLOW_TAU);
   const clipTo = (list: [number, number][]) => list.map(([a, b]) => [Math.max(l, a), Math.min(r, b)] as [number, number]).filter(([a, b]) => b > a);
@@ -172,11 +173,12 @@ export function composeRow(g: CanvasRenderingContext2D, row: StripRow, ramps: Ag
   const fade = o.sweep ? wrap(o.headX + o.gapS * k - 2, o.headX + o.tailS * k + 2) : clipTo([[o.rightX - (o.span - o.gapS) * k - 2, o.rightX - (o.span - o.tailS) * k + 2]]);
   const hot = o.sweep ? wrap(o.headX - hotS * k - 2, o.headX + 3) : clipTo([[o.rightX - hotS * k - 2, r]]);
   const lineWins = [...fade, ...hot].sort((a, b) => a[0] - b[0]);
-  const glowOn = o.level > 0 && o.glow > .003;
+  const glowOn = o.level > 0 && o.glow > .003, aK = Math.max(0, o.alphaK ?? 1);
+  if (aK <= .002) return;
   const clipOut = (wins: [number, number][]) => { g.beginPath(); let x = l; for (const [a, b] of wins) { if (a > x) g.rect(x, G.t, a - x, G.h); x = Math.max(x, b); } if (x < r) g.rect(x, G.t, r - x, G.h); g.clip(); };
   // 1) 먼 구간
-  if (glowOn) { g.save(); clipOut(fade); g.globalCompositeOperation = 'lighter'; g.globalAlpha = oldK * o.glow; row.blit(g, row.sum.c, 2 * d, o.sweep, o.head, o.rightX); g.restore(); }
-  g.save(); clipOut(lineWins); g.globalAlpha = oldK;
+  if (glowOn) { g.save(); clipOut(fade); g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, oldK * o.glow * aK); row.blit(g, row.sum.c, 2 * d, o.sweep, o.head, o.rightX); g.restore(); }
+  g.save(); clipOut(lineWins); g.globalAlpha = Math.min(1, oldK * aK);
   if (row.hasBase) row.blit(g, row.base.c, 1, o.sweep, o.head, o.rightX);
   row.blit(g, row.lit.c, 1, o.sweep, o.head, o.rightX);
   g.restore();
@@ -187,7 +189,7 @@ export function composeRow(g: CanvasRenderingContext2D, row: StripRow, ramps: Ag
     const L = Lr.g; L.setTransform(1, 0, 0, 1, 0, 0); L.globalCompositeOperation = 'source-over'; L.globalAlpha = 1; L.clearRect(0, 0, W, H);
     L.setTransform(s, 0, 0, s, -a * s, -G.t * s); L.imageSmoothingEnabled = true; fn(L);
     L.globalCompositeOperation = 'destination-out'; L.globalAlpha = 1; ramps.put(L, ramps.erase.c, l, r, G.t, G.h, o.headX, o.sweep);
-    g.save(); g.globalCompositeOperation = op; g.imageSmoothingEnabled = true; g.setTransform(1, 0, 0, 1, 0, 0);
+    g.save(); g.globalCompositeOperation = op; g.globalAlpha = Math.min(1, aK); g.imageSmoothingEnabled = true; g.setTransform(1, 0, 0, 1, 0, 0);
     // 2026-11-12 사용자(사라지는 구간 오른쪽 끝이 밝게 빛남): 층은 2 px 여유를 두고 만들지만 화면에는 창 폭 [a, b]만 붙인다 —
     // 여유까지 붙이면 그 2 px가 먼 구간(이미 그은 선 · 'lighter' 번짐) 위에 한 번 더 겹쳐 밝은 띠가 생겼다.
     const Wd = (b - a) * s;

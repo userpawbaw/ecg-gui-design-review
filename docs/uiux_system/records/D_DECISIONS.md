@@ -3706,7 +3706,7 @@ PyTorch에 필요한 Visual C++ 런타임을 패키지에 넣을지(관리자 �
 | | |
 |---|---|
 | 시점 | 2026-11-12 `[대화]` |
-| 상태 | 구현 · 리눅스 재현 확인, Windows 러너 시험 대기 — 사용자 PC 원인 확인 대기 |
+| 상태 | 구현 · Windows 러너 통과(실행 43242415984: 4173 · 8764를 점유한 채 자체 시험 통과) — 사용자 PC 원인 확인 대기 |
 | 연결 | D-176, D-179, D-180, `scripts/package/launcher.cjs`, `.github/workflows/windows-package.yml` |
 | CASE | 불필요 — 실행 안정성 |
 

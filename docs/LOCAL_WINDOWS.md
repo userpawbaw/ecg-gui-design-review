@@ -100,6 +100,6 @@ git checkout -- .
 - 사용자에게 줄 실행 안내는 이 문서의 `npm run …` 형식으로 쓴다.
 
 ## 배포 패키지 (Python · npm 없이, D-176)
-- GitHub → Actions → 「Windows package (SignalStudio.exe)」 → 최근 실행 → Artifacts 의 `SignalStudio-win64` 를 내려받아 압축을 풉니다(약 290 MB).
+- GitHub → Actions → 「Windows package (SignalStudio.exe)」 → 최근 실행 → Artifacts 의 `SignalStudio-win64` 를 내려받아 압축을 풉니다(약 620 MB, 10분 자료 포함).
 - `SignalStudio\SignalStudio.exe` 를 실행합니다. 처음에는 PyTorch 설치 여부를 묻습니다(딥러닝 기법용, CPU 판 약 130 MB 내려받기).
 - 옵션 · 문제 해결은 패키지 안 `README-실행.txt`. 원본 브리지 커밋은 `SOURCE_COMMIT.txt`.

@@ -115,3 +115,68 @@ test('단계 = 거칠기와 깊이 중 큰 쪽, 1 s 유지', () => {
   assert.equal(hold(m, 'a', 0, 0), 0); assert.equal(hold(m, 'a', 1, 100), 0); assert.equal(hold(m, 'a', 1, 900), 0); assert.equal(hold(m, 'a', 1, 1200), 1);
   assert.equal(hold(m, 'a', 0, 1300), 1); assert.equal(hold(m, 'a', 1, 1400), 1);   // 잠깐 흔들려도 그대로
 });
+
+/* D-187 높이 영역 */
+import {alignTo, zoneStep, qrsMask, zonePeaks, zoneCenter, zoneBands, zoneAt, holdZones, createZoneHold, zoneHit} from '../src/live/overlayFocus.ts';
+test('높이 영역: 비슷한 폭은 한 단계(동시), 큰 것은 바깥 단계, 위 · 아래 따로, 순간 튐 하나에 흔들리지 않음', () => {
+  const n = 1000, C = 200, wave = (amp: number, dn: number) => Float64Array.from({length: n}, (_, t) => { const v = Math.sin(t / 20); return C - (v > 0 ? amp * v : dn * v); });
+  const swt = wave(50, 20), unet = wave(55, 22), kal = wave(80, 21), raw = wave(120, 60); kal[500] = C - 300;   // 칼만에 한 표본 튐
+  const pk = zonePeaks(new Map([['SWT', swt], ['UNet', unet], ['KAL', kal], ['raw', raw]]), C);
+  assert.ok(Math.abs(pk.get('KAL')!.up - 80) < 2, `튐에 끌려감 ${pk.get('KAL')!.up}`);
+  const z = zoneBands(pk);
+  assert.deepEqual(z.up.map(b => b.names.sort().join(',')), ['SWT,UNet', 'KAL', 'raw']);
+  assert.deepEqual(z.down.map(b => b.names.sort().join(',')), ['KAL,SWT,UNet', 'raw']);   // 아래쪽은 세 기법이 비슷 → 한 단계
+  assert.deepEqual(zoneAt(z, 30)!.names.sort(), ['SWT', 'UNet']);
+  assert.deepEqual(zoneAt(z, 70)!.names, ['KAL']);
+  assert.deepEqual(zoneAt(z, 100)!.names, ['raw']);
+  assert.equal(zoneAt(z, 120 * 1.1 + 7), null);                 // 바깥 여유 너머
+  assert.equal(zoneAt(z, -15)!.names.length, 3); assert.deepEqual(zoneAt(z, -40)!.names, ['raw']);
+  assert.equal(zoneCenter([Float64Array.from([1, 2, 3]), Float64Array.from([4, 5])]), 3);
+});
+test('높이 영역: 구성 바뀜은 1 s 이어질 때만, 경계만 바뀌면 바로', () => {
+  const h = createZoneHold(), A = {up: [{names: ['a'], edge: 10}, {names: ['b'], edge: 30}], down: []}, A2 = {up: [{names: ['a'], edge: 12}, {names: ['b'], edge: 31}], down: []}, B = {up: [{names: ['a', 'b'], edge: 30}], down: []};
+  holdZones(h, A, 0); assert.equal(holdZones(h, A2, 250).up[0].edge, 12);
+  assert.equal(holdZones(h, B, 500).up.length, 2); assert.equal(holdZones(h, B, 1000).up.length, 2); assert.equal(holdZones(h, B, 1600).up.length, 1);
+});
+test('높이 영역: 같은 단계 계열 동시 강조, 클릭으로 고른 것은 그 단계 안에서 유지', () => {
+  const s = createFocus(); setPointer(s, 10, 10); const names = ['raw', 'SWT', 'UNet', 'KAL'];
+  const zIn = {key: 'up0:SWT,UNet', names: ['SWT', 'UNet']}, zK = {key: 'up1:KAL', names: ['KAL']};
+  let t = 0; for (; t < 800; t += FR) step(s, t, names, zoneHit(s, zIn));
+  assert.ok(s.e.get('SWT')! > .99 && s.e.get('UNet')! > .99 && s.e.get('KAL')! < .01);
+  cycle(s, [{name: 'UNet', dist: 3}, {name: 'SWT', dist: 4}], new Map([['SWT', 5], ['UNet', 5.001]]), 10, 10); s.clickZone = zIn.key;
+  for (const end = t + 800; t < end; t += FR) step(s, t, names, zoneHit(s, zIn));
+  assert.ok(s.e.get('UNet')! > .99 && s.e.get('SWT')! < .02, '클릭한 것만 남아야');
+  for (const end = t + 800; t < end; t += FR) step(s, t, names, zoneHit(s, zK));
+  assert.ok(s.e.get('KAL')! > .99 && s.e.get('UNet')! < .02 && s.clickZone === null, '단계를 벗어나면 단계 규칙');
+});
+test('높이 영역: 함께 강조된 묶음에서 첫 클릭은 그 중 가장 앞 하나만, 이어서 누르면 거리 · 앞 순서대로 돈다', () => {
+  const s = createFocus(); setPointer(s, 10, 10); const names = ['raw', 'SWT', 'UNet', 'KAL'], front = new Map([['raw', 0], ['SWT', 5.001], ['UNet', 5.002], ['KAL', 4]]);
+  let t = 0; for (; t < 300; t += FR) step(s, t, names, ['SWT', 'UNet']);
+  assert.equal(cycle(s, [{name: 'SWT', dist: 2}, {name: 'UNet', dist: 3}, {name: 'raw', dist: 9}], front, 10, 10), 'UNet');
+  assert.deepEqual(s.hov, ['UNet']);
+  assert.equal(cycle(s, [{name: 'SWT', dist: 2}, {name: 'UNet', dist: 3}, {name: 'raw', dist: 9}], front, 10, 10), 'SWT');
+  // 선이 반경 안에 하나도 없어도(빈 곳 클릭) 묶음이면 앞 하나로
+  for (; t < 600; t += FR) step(s, t, names, ['SWT', 'UNet']); assert.equal(cycle(s, [], front, 50, 50), 'UNet');
+});
+test('QRS 빼기: 모두 함께 큰 구간은 빼고, 한 기법만의 튐은 남긴다', () => {
+  const n = 400, C = 0, R = (t: number) => (t % 100 < 4 ? -100 : 0);
+  const a = Float64Array.from({length: n}, (_, t) => R(t) + Math.sin(t)), b = Float64Array.from({length: n}, (_, t) => R(t) - Math.sin(t)), k = Float64Array.from({length: n}, (_, t) => R(t) + (t === 250 ? -60 : 0));
+  const m = qrsMask([a, b, k], C, 3);
+  assert.equal(m[1], 1); assert.equal(m[6], 1); assert.equal(m[50], 0); assert.equal(m[250], 0);
+  const pk = zonePeaks(new Map([['a', a], ['k', k]]), C, .999, m);
+  assert.ok(pk.get('a')!.up < 2 && pk.get('k')!.up > 50);
+});
+test('높이 영역 안정: 튐으로 넓어진 값은 천천히 줄고, 묶였던 둘은 35 %를 넘어야 갈라진다', () => {
+  const h = createZoneHold(); const P = (a: number, b: number) => new Map([['A', {up: a, down: 10}], ['B', {up: b, down: 10}], ['raw', {up: 100, down: 50}]]);
+  zoneStep(h, P(20, 22), 0); assert.deepEqual(h.cur!.up[0].names.sort(), ['A', 'B']);
+  zoneStep(h, P(20, 26), 250); zoneStep(h, P(20, 26), 4000); assert.equal(h.cur!.up[0].names.length, 2, '30 % 차이로는 갈라지지 않아야');
+  const h2 = createZoneHold(); zoneStep(h2, P(20, 60), 0); zoneStep(h2, P(20, 25), 250);
+  assert.ok(h2.pk!.get('B')!.up > 55, '튐 값이 바로 사라짐'); zoneStep(h2, P(20, 25), 60000); assert.ok(h2.pk!.get('B')!.up < 30);
+});
+test('입력 중앙값 맞춤: 기저선이 치우친 입력도 제 폭으로 바깥 단계가 된다', () => {
+  const C = 100, out = Float64Array.from({length: 500}, (_, t) => C - 10 * Math.sin(t / 9)), inp = Float64Array.from({length: 500}, (_, t) => C + 40 - 30 * Math.sin(t / 3));   // 입력이 40 px 아래
+  const before = zoneBands(zonePeaks(new Map([['out', out], ['input', inp]]), C));
+  assert.equal(before.up[0].names[0], 'input');
+  const after = zoneBands(zonePeaks(new Map([['out', out], ['input', alignTo(inp, C)]]), C));
+  assert.deepEqual(after.up.map(b => b.names[0]), ['out', 'input']); assert.deepEqual(after.down.map(b => b.names[0]), ['out', 'input']);
+});

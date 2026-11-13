@@ -12,7 +12,7 @@ import {WAVE} from '../waveMode';
 const NAIVE = WAVE === 'naive';
 const naiveGlow = createGlow();
 import {StripRow, AgeRamps, composeRow, headSprite, type StripTrace} from '../waveStrip';
-import {createFocus, setPointer, pick, cycle, step, emphasis, togglePin, roughness, tierOf, containment, layerDepths, layerTier, hold, COVER_MARGIN_PX, type Focus, type Held} from './overlayFocus';
+import {createFocus, setPointer, pick, cycle, step, emphasis, togglePin, roughness, tierOf, containment, layerDepths, layerTier, hold, COVER_MARGIN_PX, zonePeaks, zoneCenter, qrsMask, zoneBands, zoneAt, holdZones, zoneStep, createZoneHold, zoneHit, scaleZones, alignTo, ZONE_OUT_PX, type Focus, type Held, type Zones} from './overlayFocus';
 export {roughness, tierOf};
 
 const BG = 'rgba(10,26,33,.94)';
@@ -168,6 +168,32 @@ export function drawSplitFx(S: LiveStream, v: View, canvases: Map<string, HTMLCa
 const FOCUS_ON = typeof location === 'undefined' || new URLSearchParams(location.search).get('overlayfocus') !== '0';
 const OV_DBG = typeof location !== 'undefined' && new URLSearchParams(location.search).has('ovdbg');
 const TIER_ON = typeof location === 'undefined' || new URLSearchParams(location.search).get('overlaytier') !== '0';
+// D-187 마우스 강조 = 높이 영역(기본). ?ovhover=near 이면 D-185 방식(선까지 거리 · 붙잡기)
+export const HOVER_NEAR = typeof location !== 'undefined' && new URLSearchParams(location.search).get('ovhover') === 'near';
+const ZONE_ALL = typeof location !== 'undefined' && new URLSearchParams(location.search).get('ovzone') === 'all';   // QRS 포함(비교용)
+const zoneHold = createZoneHold(); let zoneAtT = 0, zoneY = NaN;
+// 단계는 mV로 잰다(2026-11-13 측정: 화면 px로 재면 진폭 자동 맞춤이 배율을 바꿀 때마다 경계가 함께 움직여, 가만히 둔 마우스의 강조가 20 s에 최대 11번 바뀌었다).
+// 입력은 따로 중심을 잡아 그리므로(axesFor) 보이는 위치대로 기법 축으로 옮겨 잰다: 입력 값 − 입력 중심 + 기법 중심.
+function updateZones(S: LiveStream, all: string[], on: string[], now: number, ax: Map<string, Axis>) {
+  if (now - zoneAtT < 250 || S.vh < 0) return; zoneAtT = now;
+  const ao = ax.get(on[0] ?? all[0]); if (!ao || !all.every(n => ax.has(n) && S.bufs.has(n))) return;
+  const lo = Math.max(S.first, S.vh - S.cap + 1), ts: number[] = []; for (let t = lo; t <= S.vh; t++) if (S.seen(t)) ts.push(t);
+  if (ts.length < 50) return;
+  // zonePeaks 는 「위 = center − 값」(화면 y 방향)이라 mV 를 뒤집어 넣는다
+  const px = new Map(all.map(n => { const a = S.bufs.get(n)!, off = n === 'raw' ? ao.m - ax.get(n)!.m : 0; return [n, ts.map(t => -(a[((t % S.cap) + S.cap) % S.cap] + off))] as [string, number[]]; }));
+  const outs = (on.length ? on : all).map(n => px.get(n)!), c = zoneCenter(outs); if (!Number.isFinite(c)) return;
+  if (px.has('raw')) px.set('raw', alignTo(px.get('raw')!, c));
+  zoneY = -c; zoneStep(zoneHold, zonePeaks(px, c, undefined, ZONE_ALL ? undefined : qrsMask(outs, c, Math.round(.08 * S.fs))), now);
+}
+/** 마우스가 그래프 위에 있을 때 왼쪽 안쪽에 단계 범위 띠(계열 색 줄무늬, 지금 단계는 진하게). */
+export function drawZoneBar(c: HTMLCanvasElement, P: Rect, z: Zones, center: number, cur: string | null, color: (n: string) => string) {
+  const g = c.getContext('2d')!, dpr = c.width / Math.max(1, c.clientWidth); g.save(); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  for (const k of ['up', 'down'] as const) { let prev = 0; z[k].forEach((b, i) => {
+    const key = `${k}${i}:${[...b.names].sort().join(',')}`, y0 = k === 'up' ? center - prev : center + prev, y1 = k === 'up' ? center - b.edge : center + b.edge, top = Math.max(P.t, Math.min(y0, y1)), bot = Math.min(P.b, Math.max(y0, y1));
+    prev = b.edge; if (bot - top < 1) return; const w = 6 / b.names.length;
+    b.names.forEach((n, j) => { g.globalAlpha = key === cur ? .95 : .3; g.fillStyle = color(n); g.fillRect(P.l + 2 + j * w, top + .5, w, bot - top - 1); }); }); }
+  g.restore();
+}
 const TIER_STYLE = [{width: 1.6, alpha: 1, lit: true, glow: true, casing: true}, {width: 1.2, alpha: .62, lit: false, glow: false, casing: false}, {width: 1.0, alpha: .4, lit: false, glow: false, casing: false}];
 const tiers = new Map<string, Held>(), depths = new Map<string, Held>(); let tierAt = 0;
 function updateTiers(S: LiveStream, on: string[], now: number, geom: PanelGeom | null) {
@@ -219,21 +245,31 @@ export function drawOverlayFx(S: LiveStream, v: View, c: HTMLCanvasElement) {
   const ax = S.axesFor(raw ? [raw, ...on] : on, v.amp);
   const fo = fstate(c), F = fo.f;
   if (TIER_ON && S.vh >= 0) updateTiers(S, on, t0, fo.geom);
+  // D-187 마우스가 그래프 위에 있는 동안은 단계 고정(가만히 둔 마우스의 강조가 파형 따라 바뀌지 않게) — 밖에 있을 때만 갱신. 계열이 바뀌면 바로.
+  const allZ = [...(raw ? [raw] : []), ...on], zNames = zoneHold.cur ? [...zoneHold.cur.up.flatMap(b => b.names)].sort().join() : '';
+  const hovering = F.px !== null && F.py !== null && !!fo.geom && F.px >= fo.geom.P.l && F.px <= fo.geom.P.r && F.py >= fo.geom.P.t - 8 && F.py <= fo.geom.P.b + 8;
+  if (!HOVER_NEAR && (!hovering || zNames !== [...allZ].sort().join())) updateZones(S, allZ, on, t0, ax);
+  // 화면 y ↔ 기법 축 mV(지난 그림의 판 기하)
+  const ao = ax.get(on[0] ?? allZ[0]), Pz = fo.geom?.P, kz = ao && Pz ? (Pz.ph / 2 - 6) / ao.s : 0;
+  const mvOf = (y: number) => ao && Pz ? ao.m + (Pz.t + Pz.ph / 2 - y) / kz : NaN, pxOf = (v: number) => ao && Pz ? Pz.t + Pz.ph / 2 - (v - ao.m) * kz : NaN;
   const tierOfN = (n: string) => TIER_ON ? tiers.get(n)?.v ?? 0 : -1;
   const all = [...(raw ? [raw] : []), ...on];
   // 그리는 순서(아래 → 위): 입력 → 깊은(넓게 덮는) 층 → 앞 층. D-186: 앞 순서 = 포함 비율 깊이(같은 깊이 = 같은 층). ?overlaytier=0 이면 모두 같은 층.
-  const baseRank = (n: string) => n === 'raw' ? 0 : 5 - (TIER_ON ? depths.get(n)?.v ?? 0 : 0), front = new Map(all.map(n => [n, baseRank(n)]));
+  const baseRank = (n: string) => n === 'raw' ? 0 : 5 - (TIER_ON ? depths.get(n)?.v ?? 0 : 0), front = new Map(all.map((n, i) => [n, baseRank(n) + i / 1000]));   // 같은 층이면 나중에 그려지는(위) 것이 앞
   // 강조 대상: 범례 글자 위면 그 계열, 아니면 파형까지 거리(지난 프레임 기하)
-  let hit: string | null = null;
-  if (FOCUS_ON && F.click && fo.geom) { cycle(F, hitDistances(S, fo.geom, F.click.x, F.click.y, all), front, F.click.x, F.click.y); F.click = undefined; }
+  let hit: string | string[] | null = null, curZone: string | null = null;
+  const inPlot = (x: number, y: number) => !!fo.geom && x >= fo.geom.P.l && x <= fo.geom.P.r && y >= fo.geom.P.t - 8 && y <= fo.geom.P.b + 8;
+  const zoneOf = (x: number, y: number) => !HOVER_NEAR && zoneHold.cur && Number.isFinite(zoneY) && inPlot(x, y) && kz > 0 ? zoneAt(zoneHold.cur, mvOf(y) - zoneY, ZONE_OUT_PX / kz) : null;
+  if (FOCUS_ON && F.click && fo.geom) { cycle(F, hitDistances(S, fo.geom, F.click.x, F.click.y, all), front, F.click.x, F.click.y); F.clickZone = zoneOf(F.click.x, F.click.y)?.key ?? null; F.click = undefined; }
   if (FOCUS_ON && F.px !== null && F.py !== null) {
     const lab = fo.labels.find(r => F.px! >= r.x0 && F.px! <= r.x1 && F.py! >= r.y0 && F.py! <= r.y1);
     const dd = fo.geom ? hitDistances(S, fo.geom, F.px, F.py, all) : [];
-    hit = lab ? lab.name : fo.geom ? pick(dd, F.target, front) : null;
-    if (OV_DBG) (globalThis as unknown as {__ovDbg: unknown}).__ovDbg = {px: F.px, py: F.py, dd, hit};   // ?ovdbg=1: 시험이 파형 위치 · 고른 계열을 읽는다
+    const zn = zoneOf(F.px, F.py); curZone = zn?.key ?? null;
+    hit = lab ? lab.name : HOVER_NEAR ? (fo.geom ? pick(dd, F.target, front) : null) : zoneHit(F, zn);
+    if (OV_DBG) (globalThis as unknown as {__ovDbg: unknown}).__ovDbg = {px: F.px, py: F.py, dd, hit, zone: curZone, mv: mvOf(F.py), zy: zoneY, kz, pc: pxOf(zoneY)};   // ?ovdbg=1: 시험이 파형 위치 · 고른 계열을 읽는다
   }
   fo.moving = FOCUS_ON && step(F, t0, all, hit);
-  c.style.cursor = F.target && F.px !== null ? 'pointer' : ''; c.dataset.focus = F.target ?? ''; if (OV_DBG) c.dataset.layers = all.map(n => `${n}:${front.get(n)}/${tierOfN(n)}`).join(' ');
+  c.style.cursor = F.target && F.px !== null ? 'pointer' : ''; c.dataset.focus = F.target ?? ''; c.dataset.hov = F.hov.join(','); if (OV_DBG) c.dataset.layers = all.map(n => `${n}:${front.get(n)}/${tierOfN(n)}`).join(' ');
   // 굽는 모양(단계 굵기 · 테두리)은 정적, 불투명도 · 번짐 · 흰빛은 합성 배율(D-183 단계 값 × D-184 강조)
   const base = (n: string) => { if (n === 'raw') return {a: .55, g: 0, w: 0}; const t = tierOfN(n); return t < 0 ? {a: .85, g: 1, w: 1} : {a: TIER_STYLE[t].alpha, g: TIER_STYLE[t].glow ? 1 : 0, w: t === 0 ? 1 : 0}; };
   const ser = (n: string): Series => { if (n === 'raw') return {name: n, color: '#8fa3ad', width: 1.2, alpha: 1, lit: true, glow: v.glowOn};
@@ -244,6 +280,8 @@ export function drawOverlayFx(S: LiveStream, v: View, c: HTMLCanvasElement) {
   const groups: Group[] = ordered.map(n => { const em = FOCUS_ON ? emphasis(F, n, base(n)) : {alphaK: base(n).a, glowK: base(n).g, whiteK: base(n).w};
     return {id: n, names: [n], alphaK: em.alphaK, glowK: em.glowK, whiteK: em.whiteK}; });
   fo.geom = drawPanel(S, v, c, ordered.map(ser), ax, on.length ? ax.get(on[0]) : raw ? ax.get(raw) : undefined, {white: v.glowOn ? .9 : 0, glow: .35, dotR: 12, dotA: .5}, t0, groups);
+  if (FOCUS_ON && !HOVER_NEAR && fo.geom && zoneHold.cur && F.px !== null && Number.isFinite(zoneY) && kz > 0) drawZoneBar(c, fo.geom.P, scaleZones(zoneHold.cur, kz), pxOf(zoneY), curZone, n => n === 'raw' ? '#8fa3ad' : S.color(n));
+  if (OV_DBG) c.dataset.zones = zoneHold.cur && kz > 0 ? JSON.stringify({c: pxOf(zoneY), ...scaleZones(zoneHold.cur, kz)}) : '';   // 시험용은 화면 px
   fo.labels = [];   // D-185: 범례는 캔버스 위 단추(OverlayChips)로 — 캔버스 글자는 그리지 않는다
   fxStats.frames++; fxStats.ms += performance.now() - t0;
 }

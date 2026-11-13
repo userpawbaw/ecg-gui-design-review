@@ -1,0 +1,5 @@
+// Record SEC s of the bridge stream (raw + outputs) to a JSON file for offline zone tuning. node record.cjs <bridgeBase> <sec> <out.json>
+const http=require('node:http'),fs=require('node:fs');const [B,SEC,OUT]=[process.argv[2],Number(process.argv[3]||60),process.argv[4]];const u=new URL(B),S={};let fsr=250;
+const r=http.get({host:u.hostname,port:u.port,path:'/stream'},x=>{let buf='';x.setEncoding('utf8');x.on('data',c=>{buf+=c;let i;while((i=buf.indexOf('\n\n'))>=0){const ev=buf.slice(0,i);buf=buf.slice(i+2);const m=ev.match(/^data: (.*)$/m);if(!m)continue;let d;try{d=JSON.parse(m[1]);if(typeof d==='string')d=JSON.parse(d);}catch{continue;}
+ if(!d.raw)continue;if(d.fs)fsr=d.fs;(S.raw??=[]).push(...d.raw);for(const [k,v] of Object.entries(d.out||{}))(S[k]??=[]).push(...v);}});});
+setTimeout(()=>{r.destroy();const n=Math.min(...Object.values(S).map(a=>a.length));for(const k in S)S[k]=S[k].slice(S[k].length-n);fs.writeFileSync(OUT,JSON.stringify({fs:fsr,S}));console.log('saved',n,'samples @',fsr);},SEC*1000);

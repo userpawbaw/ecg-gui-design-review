@@ -11,8 +11,8 @@ export const FOCUS_R = 16, FOCUS_KEEP = 8, FOCUS_SWITCH = 6, FOCUS_GRACE_MS = 15
 
 /** pinned: 범례를 눌러 고정한 계열(여럿 가능, 2026-11-13 사용자 「2개정도만 강조 … 토글 형식으로 클릭하면 강조가 유지」).
  *  chip: 범례 단추 위에 마우스가 있는 계열(캔버스 밖이므로 px 는 null). 강조 대상 = 고정 ∪ 지금 가리킨 것. */
-export type Focus = {target: string | null, e: Map<string, number>, f: number, last: number, missSince: number, px: number | null, py: number | null, label: string | null, pinned: Set<string>, chip: string | null, cyc?: {x: number, y: number, list: string[]}, click?: {x: number, y: number}};
-export const createFocus = (): Focus => ({target: null, e: new Map(), f: 0, last: -1, missSince: 0, px: null, py: null, label: null, pinned: new Set(), chip: null});
+export type Focus = {target: string | null, e: Map<string, number>, f: number, last: number, missSince: number, px: number | null, py: number | null, label: string | null, pinned: Set<string>, chip: string | null, cyc?: {x: number, y: number, list: string[]}, click?: {x: number, y: number}, hov: string[], clickZone?: string | null};
+export const createFocus = (): Focus => ({target: null, e: new Map(), f: 0, last: -1, missSince: 0, px: null, py: null, label: null, pinned: new Set(), chip: null, hov: []});
 /** 고정 토글. 고정 목록을 돌려준다. */
 export function togglePin(s: Focus, n: string) { if (s.pinned.has(n)) s.pinned.delete(n); else s.pinned.add(n); return [...s.pinned]; }
 
@@ -38,27 +38,32 @@ export function pick(cands: {name: string, dist: number}[], current: string | nu
 export function cycle(s: Focus, cands: {name: string, dist: number}[], front: Map<string, number> | undefined, x: number, y: number): string | null {
   const fr = (n: string) => front?.get(n) ?? 0;
   const list = cands.filter(c => c.dist <= FOCUS_R + FOCUS_KEEP).sort((a, b) => fr(b.name) - fr(a.name) || a.dist - b.dist).map(c => c.name);
-  if (!list.length) return s.target;
+  if (!list.length && s.hov.length <= 1) return s.target;
+  // D-187(2026-11-13 사용자): 높이 영역으로 여럿이 함께 강조된 상태에서의 첫 클릭은 그 묶음 중 가장 앞(위에 그려지는) 하나만
+  if (s.hov.length > 1) { const top = [...s.hov].sort((a, b) => fr(b) - fr(a))[0];
+    s.cyc = {x, y, list: list.length ? list : [top]}; s.target = top; s.hov = [top]; s.missSince = 0; return top; }
   const same = s.cyc && Math.abs(s.cyc.x - x) < 8 && Math.abs(s.cyc.y - y) < 8 && s.cyc.list.join() === list.join();
   let idx: number;
   if (same && s.target && list.includes(s.target)) idx = (list.indexOf(s.target) + 1) % list.length;
   else idx = list[0] === s.target && list.length > 1 ? 1 : 0;
-  s.cyc = {x, y, list}; s.target = list[idx]; s.missSince = 0;
+  s.cyc = {x, y, list}; s.target = list[idx]; s.hov = [s.target]; s.missSince = 0;
   return s.target;
 }
 
-/** 한 프레임 진행. hit = 이번 프레임에 마우스가 가리킨 계열(없으면 null). 움직이는 중이면 true(다시 그려야 함). */
-export function step(s: Focus, now: number, names: string[], hit: string | null): boolean {
+/** 한 프레임 진행. hit = 이번 프레임에 마우스가 가리킨 계열(D-187: 여럿 가능 — 같은 높이 영역의 계열은 함께, 없으면 null). 움직이는 중이면 true(다시 그려야 함). */
+export function step(s: Focus, now: number, names: string[], hit: string | string[] | null): boolean {
   const dt = s.last >= 0 ? Math.min(100, Math.max(0, now - s.last)) : 16.7; s.last = now;
-  if (s.chip) hit = s.chip;                                         // 범례 단추 위가 캔버스 판정보다 먼저
-  if (hit) { s.target = hit; s.missSince = 0; }
-  else if (s.target) { if (!s.missSince) s.missSince = now; if (now - s.missSince > FOCUS_GRACE_MS || s.px === null) { s.target = null; s.missSince = 0; } }
-  if (s.target && !names.includes(s.target)) s.target = null;     // 기법이 바뀌어 사라짐
+  let H = s.chip ? [s.chip] : hit === null ? [] : Array.isArray(hit) ? hit : [hit];   // 범례 단추 위가 캔버스 판정보다 먼저
+  H = H.filter(n => names.includes(n));
+  if (H.length) { s.target = H[0]; s.hov = H; s.missSince = 0; }
+  else if (s.target) { if (!s.missSince) s.missSince = now; if (now - s.missSince > FOCUS_GRACE_MS || s.px === null) { s.target = null; s.hov = []; s.missSince = 0; } }
+  if (s.target && !names.includes(s.target)) { s.target = null; s.hov = []; }     // 기법이 바뀌어 사라짐
+  if (s.target && !s.hov.includes(s.target)) s.hov = [s.target];
   for (const p of [...s.pinned]) if (!names.includes(p)) s.pinned.delete(p);
   let moving = false;
   const approach = (v: number, want: number) => { const tau = want > v ? TAU_IN : TAU_OUT, nv = want + (v - want) * Math.exp(-dt / tau);
     const done = Math.abs(nv - want) < .002; if (!done) moving = true; return done ? want : nv; };
-  for (const n of names) s.e.set(n, approach(s.e.get(n) ?? 0, s.target === n || s.pinned.has(n) ? 1 : 0));
+  for (const n of names) s.e.set(n, approach(s.e.get(n) ?? 0, s.hov.includes(n) || s.pinned.has(n) ? 1 : 0));
   for (const n of [...s.e.keys()]) if (!names.includes(n)) s.e.delete(n);
   s.f = approach(s.f, s.target || s.pinned.size ? 1 : 0);
   return moving;
@@ -112,4 +117,79 @@ export function hold(m: Map<string, Held>, n: string, want: number, now: number,
   const st = m.get(n); if (!st) { m.set(n, {v: want, want, since: now}); return want; }
   if (want !== st.want) { st.want = want; st.since = now; } else if (want !== st.v && now - st.since > ms) st.v = want;
   return st.v;
+}
+
+/* D-187 마우스 높이 영역(2026-11-13 사용자 안 · 권장값 승인): 마우스가 선 가까이인지가 아니라 기준선(0 mV)에서 얼마나 위 · 아래인지로 강조 대상을 정한다
+ * — 마우스를 가만히 두면 파형이 지나가도 바뀌지 않는다. 계열마다 보이는 구간에서 기준선 위 · 아래로 벗어난 정도의 상위 0.5 % 값(순간 튐에 흔들리지 않게)을
+ * 위 · 아래 따로 잰다. 작은 것부터 쌓되, 묶음에서 가장 작은 값의 1.2배 안이면 같은 단계로 묶어 함께 강조한다(SWT · U-Net). 단계의 경계 = 그 단계 안 가장 큰 값.
+ * 가장 바깥 단계 바깥으로는 10 % + 6 px 까지만(그 너머는 강조 없음). 모두 화면 px. 단계 구성이 바뀐 것은 1 s 이어질 때만 받아들인다. */
+export const ZONE_Q = .995, ZONE_TOL = .2, ZONE_OUT = .1, ZONE_OUT_PX = 6;
+export type ZoneBand = {names: string[], edge: number};
+export type Zones = {up: ZoneBand[], down: ZoneBand[]};
+/** QRS 빼기(2026-11-13 측정: 위쪽 상위 0.5 %는 모든 계열이 R파 꼭짓점 0.77–0.83 mV로 같아 단계가 갈리지 않았다 — 기법 차이는 QRS 밖에 있다).
+ *  기법들의 합의(표본마다 기법 값의 중앙값)가 기준선에서 그 합의의 상위 0.5 % 값의 35 %보다 멀면 QRS로 보고 앞뒤 dil 표본까지 뺀다.
+ *  한 기법의 잡음 튐은 중앙값을 움직이지 못한다(기법 3개 이상일 때). 뺄 표본 = 1. */
+export const ZONE_QRS = .35;
+export function qrsMask(outs: ArrayLike<number>[], center: number, dil: number, q = ZONE_Q) {
+  const n = outs.length ? Math.min(...outs.map(a => a.length)) : 0, m = new Uint8Array(n); if (!n) return m;
+  const ab = new Float64Array(n); for (let t = 0; t < n; t++) { const v = outs.map(a => a[t] - center).sort((a, b) => a - b); ab[t] = Math.abs(v.length % 2 ? v[v.length >> 1] : (v[v.length / 2 - 1] + v[v.length / 2]) / 2); }
+  const lim = ZONE_QRS * [...ab].sort((a, b) => a - b)[Math.floor(q * (n - 1))];
+  for (let t = 0; t < n; t++) if (ab[t] > lim) for (let j = Math.max(0, t - dil); j <= Math.min(n - 1, t + dil); j++) m[j] = 1;
+  return m;
+}
+/** 입력은 기저선이 흔들려 기법들과 다른 높이에 놓이기 쉽다(실험실 실측: 입력이 기법들 아래로 치우쳐 위쪽 폭이 0 → 가장 안쪽 단계가 됨).
+ *  입력의 폭은 제 중앙값 기준으로 재도록 중앙값을 기준선에 맞춰 옮긴다. */
+export function alignTo(a: ArrayLike<number>, center: number) { const v = Array.from(a), s = [...v].sort((x, y) => x - y), m = s.length ? s[s.length >> 1] : center; return v.map(x => x - m + center); }
+/** px: 계열 → 화면 y 값들(px). center: 기준선 y(px). 위 = center − y. drop: 뺄 표본(QRS). */
+export function zonePeaks(px: Map<string, ArrayLike<number>>, center: number, q = ZONE_Q, drop?: Uint8Array) {
+  const qt = (v: number[]) => { if (!v.length) return 0; v.sort((a, b) => a - b); return Math.max(0, v[Math.min(v.length - 1, Math.floor(q * v.length))]); };
+  const out = new Map<string, {up: number, down: number}>();
+  for (const [n, a] of px) { const u: number[] = [], d: number[] = []; for (let i = 0; i < a.length; i++) { if (drop?.[i]) continue; u.push(center - a[i]); d.push(a[i] - center); } out.set(n, {up: qt(u), down: qt(d)}); }
+  return out;
+}
+/** 기준선: 기법(입력 제외) 화면 y 전체의 중앙값 — 실시간은 입력과 기법의 중심을 따로 잡으므로 보이는 등전위선 쪽으로. */
+export function zoneCenter(vals: ArrayLike<number>[]) { const all: number[] = []; for (const a of vals) for (let i = 0; i < a.length; i++) all.push(a[i]); if (!all.length) return NaN; all.sort((a, b) => a - b); return all[all.length >> 1]; }
+/** prev 가 있으면 묶음 이력: 이미 같은 단계였던 둘은 ZONE_TOL_KEEP(35 %)를 넘어야 갈라진다(경계 근처에서 붙었다 떨어졌다 하지 않게). */
+export const ZONE_TOL_KEEP = .35;
+export function zoneBands(peaks: Map<string, {up: number, down: number}>, tol = ZONE_TOL, prev?: Zones | null): Zones {
+  const side = (k: 'up' | 'down') => { const xs = [...peaks].map(([n, p]) => ({n, v: p[k]})).sort((a, b) => a.v - b.v), out: ZoneBand[] = []; let anchor = -1;
+    const was = (a: string[], b: string) => !!prev?.[k].some(g => g.names.includes(b) && a.some(n => g.names.includes(n)));
+    for (const x of xs) { const last = out[out.length - 1]; if (last && x.v <= anchor * (1 + (was(last.names, x.n) ? ZONE_TOL_KEEP : tol))) { last.names.push(x.n); last.edge = Math.max(last.edge, x.v); } else { out.push({names: [x.n], edge: x.v}); anchor = x.v; } }
+    return out; };
+  return {up: side('up'), down: side('down')};
+}
+/** 기준선에서 dy(px, 위 +) 인 마우스가 들어간 단계. key 는 클릭으로 고른 것을 그 단계 안에서 유지하는 데 쓴다. */
+export function zoneAt(z: Zones, dy: number, pad = ZONE_OUT_PX): {key: string, names: string[]} | null {
+  const k = dy >= 0 ? 'up' : 'down', bands = z[k], a = Math.abs(dy); if (!bands.length) return null;
+  for (let i = 0; i < bands.length; i++) if (a <= bands[i].edge) return {key: `${k}${i}:${[...bands[i].names].sort().join(',')}`, names: bands[i].names};
+  const last = bands[bands.length - 1], i = bands.length - 1;
+  return a <= last.edge * (1 + ZONE_OUT) + pad ? {key: `${k}${i}:${[...last.names].sort().join(',')}`, names: last.names} : null;
+}
+/** 단위 바꾸기(mV → px 등, 표시용). */
+export const scaleZones = (z: Zones, k: number): Zones => ({up: z.up.map(b => ({names: b.names, edge: b.edge * k})), down: z.down.map(b => ({names: b.names, edge: b.edge * k}))});
+const zsig = (z: Zones) => [...z.up, {names: ['|'], edge: 0}, ...z.down].map(b => [...b.names].sort().join(',')).join('/');
+export type ZoneHold = {cur: Zones | null, sig: string, pend: string, since: number, pk?: Map<string, {up: number, down: number}>, t?: number};
+export const createZoneHold = (): ZoneHold => ({cur: null, sig: '', pend: '', since: 0});
+/** 값 유지: 계열의 상위 값은 올라가면 바로, 내려가면 τ 20 s로 천천히(칼만의 순간 튐이 한동안 그 계열 영역을 넓혀 둔다 — 2026-11-13 사용자).
+ *  구성 바뀜은 3 s 이어질 때만. 측정(재생 70 s, sim.mts): τ 8 s · 1 s 유지는 구성이 분당 4.6번 바뀌었고, 20 s · 3 s는 3.7번 —
+ *  잡음이 실제로 세졌다 약해졌다 하므로 매개변수로는 0이 되지 않는다. 그래서 마우스가 그래프 위에 있는 동안은 단계를 아예 고정한다(부르는 쪽). */
+export const ZONE_DECAY_MS = 20000, ZONE_HOLD_MS = 3000;
+export function zoneStep(h: ZoneHold, peaks: Map<string, {up: number, down: number}>, now: number) {
+  const dt = h.t === undefined ? 0 : Math.max(0, now - h.t), k = Math.exp(-dt / ZONE_DECAY_MS), old = h.pk ?? new Map(), pk = new Map<string, {up: number, down: number}>();
+  for (const [n, p] of peaks) { const o = old.get(n); const f = (nv: number, ov?: number) => ov === undefined || nv >= ov ? nv : nv + (ov - nv) * k; pk.set(n, {up: f(p.up, o?.up), down: f(p.down, o?.down)}); }
+  h.pk = pk; h.t = now;
+  return holdZones(h, zoneBands(pk, ZONE_TOL, h.cur), now, ZONE_HOLD_MS);
+}
+/** 같은 구성이면 경계만 바로 갱신, 구성이 바뀌면 ms 동안 이어질 때만. */
+export function holdZones(h: ZoneHold, next: Zones, now: number, ms = 1000) {
+  const sg = zsig(next);
+  if (!h.cur || sg === h.sig) { h.cur = next; h.sig = sg; h.pend = ''; return h.cur; }
+  if (sg !== h.pend) { h.pend = sg; h.since = now; } else if (now - h.since > ms) { h.cur = next; h.sig = sg; h.pend = ''; }
+  return h.cur;
+}
+/** 마우스 강조 대상: 클릭으로 고른 계열은 같은 단계 안에 있는 동안 유지, 단계를 벗어나면 단계 규칙으로. */
+export function zoneHit(s: Focus, z: {key: string, names: string[]} | null): string[] | null {
+  if (!z) { s.clickZone = null; return null; }
+  if (s.clickZone === z.key && s.target) return [s.target];
+  s.clickZone = null; return z.names;
 }

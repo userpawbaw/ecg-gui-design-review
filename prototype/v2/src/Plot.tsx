@@ -7,7 +7,8 @@ const NAME:Record<string,string>=Object.fromEntries(Object.entries(methodData as
 import {ageGradient,freshGradient,paper,createGlow,rgb,BAND_S,ERASE_S,type Box} from './labFx';
 import {StripRow,AgeRamps,composeRow,headSprite} from './waveStrip';
 import {WAVE} from './waveMode';
-import {createFocus,setPointer,pick,cycle,step,emphasis,roughness,tierOf,containment,layerDepths,layerTier,hold,COVER_MARGIN_PX,type Held} from './live/overlayFocus';
+import {createFocus,setPointer,pick,cycle,step,emphasis,roughness,tierOf,containment,layerDepths,layerTier,hold,COVER_MARGIN_PX,zonePeaks,zoneCenter,qrsMask,zoneBands,zoneAt,holdZones,zoneStep,alignTo,createZoneHold,zoneHit,type Held} from './live/overlayFocus';
+import {HOVER_NEAR,drawZoneBar} from './live/livePlotFx';
 // D-161: ?wave=all 이면 재생 중 파형을 링 스트립으로(새 표본만 긋고 효과는 램프·스프라이트). 그 밖(정지 · 구간 고정 · 효과 끔)은 아래 원래 경로.
 const STRIP=WAVE==='all';
 export const labStats={frames:0,ms:0};(globalThis as unknown as {__labStats:typeof labStats}).__labStats=labStats;
@@ -18,6 +19,7 @@ type Props={data:Loaded;transport:Transport;mode:Mode;span:number;inspect:boolea
 // D-183 단계 → 기본 배율(겹치기): 깨끗 1 · 중간 .62 · 거침 .4, 번짐 · 흰빛은 깨끗한 것만. 입력은 실시간 입력과 같게 .55 · 번짐 없음
 const TIER_BASE=[{a:1,g:1,w:1},{a:.62,g:0,w:0},{a:.4,g:0,w:0}],IN_BASE={a:.55,g:0,w:0};
 const BG='#0a1a21',GAP_S=.12,OV_DBG=new URLSearchParams(location.search).has('ovdbg');
+const ZONE_ALL=new URLSearchParams(location.search).get('ovzone')==='all';   // D-187 QRS 포함(비교용)
 // D-073 laptop budget: glow levels 2 (three blur levels) → 1 (two) → 0 (none). Level 2 is the default again at the thinner lines (user 2026-10-18 "이 두께에선 &labfx=2가 기본값"). ?labfx= pins it; otherwise it steps down when the
 // frame interval while playing stays above 26 ms (< ~38 fps) — the script part of a draw is ~2.5 ms, the cost is in rasterising
 // the glow, so the interval is what shows it — and never back up, so the picture does not pulse between levels.
@@ -27,23 +29,30 @@ export function Plot(p:Props){
  const canvas=useRef<HTMLCanvasElement>(null),latest=useRef(p);latest.current=p;
  const fx=useRef({level:FX_PIN??2,ema:0,frames:0,last:0});
  const focus=useRef(createFocus()),geomRef=useRef<{left:number,right:number,pw:number,top:number,ph:number,pts:{x:number,index:number,alpha:number,breakBefore?:boolean}[],ys:Map<string,(i:number)=>number>}|null>(null),drawRef=useRef<()=>void>(()=>{});
- const tierRef=useRef(new Map<string,Held>()),depthRef=useRef(new Map<string,Held>()),tierAt=useRef(-1e9);
+ const tierRef=useRef(new Map<string,Held>()),depthRef=useRef(new Map<string,Held>()),tierAt=useRef(-1e9),zoneRef=useRef({hold:createZoneHold(),at:-1e9,y:NaN});
  useEffect(()=>{const c=canvas.current!;const g=c.getContext('2d');if(!g)return;let raf=0,signature='',bgSig='';
  const bg=document.createElement('canvas'),bgg=bg.getContext('2d')!,hot=document.createElement('canvas'),hg=hot.getContext('2d')!,glow=createGlow();
  const strips:StripRow[]=[],ramps=new AgeRamps(),layer=(()=>{const lc=document.createElement('canvas');return{c:lc,g:lc.getContext('2d')!};})();
  const draw=()=>{const t0=performance.now(),q=latest.current,t=q.transport.time;const rect=c.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
  // D-185 겹치기 강조: 지난 그림의 기하로 마우스 판정 → 강조 상태 한 걸음(고정 · 범례 단추 포함)
- const OV=!!q.overlay&&!q.residual,F=focus.current,ovNames=['input',...q.shown];let ovMoving=false;
- if(OV){F.pinned=new Set((q.pins??[]).filter(n=>ovNames.includes(n)));F.chip=q.chip??null;let hit:string|null=null;const G=geomRef.current;
-  const fr=new Map(ovNames.map(n=>[n,n==='input'?0:5-(depthRef.current.get(n)?.v??0)]));
+ const OV=!!q.overlay&&!q.residual,F=focus.current,ovNames=['input',...q.shown];let ovMoving=false,curZone:string|null=null;const Z=zoneRef.current;
+ if(OV){F.pinned=new Set((q.pins??[]).filter(n=>ovNames.includes(n)));F.chip=q.chip??null;let hit:string|string[]|null=null;const G=geomRef.current;
+  const fr=new Map(ovNames.map((n,i)=>[n,(n==='input'?0:5-(depthRef.current.get(n)?.v??0))+i/1000]));   // 같은 층이면 나중에 그려지는(위) 것이 앞
   const candAt=(px:number,py:number)=>{const cands:{name:string,dist:number}[]=[];if(!G||px<G.left||px>G.right)return cands;
    for(const [n,y] of G.ys){let best=Infinity;for(let k=1;k<G.pts.length;k++){const a=G.pts[k-1],b=G.pts[k];if(a.alpha<=0||b.alpha<=0||b.breakBefore)continue;const x0=G.left+a.x*G.pw,x1=G.left+b.x*G.pw;if(Math.max(x0,x1)<px-6||Math.min(x0,x1)>px+6)continue;
     const y0=y(a.index),y1=y(b.index),vx=x1-x0,vy=y1-y0,L=vx*vx+vy*vy,u=L>0?Math.max(0,Math.min(1,((px-x0)*vx+(py-y0)*vy)/L)):0;best=Math.min(best,Math.hypot(px-(x0+u*vx),py-(y0+u*vy)));}
     if(best<Infinity)cands.push({name:n,dist:best});}return cands;};
-  if(F.click){cycle(F,candAt(F.click.x,F.click.y),fr,F.click.x,F.click.y);F.click=undefined;}
-  if(F.px!==null&&F.py!==null){const cs=candAt(F.px,F.py);hit=pick(cs,F.target,fr);if(OV_DBG)c.dataset.cands=cs.map(x=>x.name+':'+x.dist.toFixed(1)).join(' ');}
-  ovMoving=step(F,t0,ovNames,hit);c.style.cursor=F.target&&F.px!==null?'pointer':'';c.dataset.focus=F.target??'';if(OV_DBG)c.dataset.layers=ovNames.map(n=>`${n}:${fr.get(n)}/${tierRef.current.get(n)?.v??0}`).join(' ');}
- const sig=[t,q.mode,q.span,q.inspect,q.amplitude,q.reference,q.method,q.preview,q.shown.join(','),q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,rect.width,rect.height,dpr,fx.current.level,OV,OV?ovNames.map(n=>(F.e.get(n)??0).toFixed(3)).join(',')+F.f.toFixed(3):''].join('|');
+  // D-187 높이 영역: 0.25 s마다 지난 그림의 화면 y로 단계를 재고(구성 바뀜은 1 s 유지), 마우스 높이로 강조 대상을 정한다
+  const zNames=Z.hold.cur?Z.hold.cur.up.flatMap(b=>b.names).sort().join():'',hovering=!!G&&F.px!==null&&F.py!==null&&F.px>=G.left&&F.px<=G.right&&F.py>=G.top-8&&F.py<=G.top+G.ph+8;
+  if(!HOVER_NEAR&&G&&t0-Z.at>=250&&(!hovering||zNames!==ovNames.filter(n=>G.ys.has(n)).sort().join())){   // D-187 마우스가 그래프 위면 단계 고정
+  Z.at=t0;const idx=G.pts.filter(p=>p.alpha>0).map(p=>p.index),names=ovNames.filter(n=>G.ys.has(n));
+   if(idx.length>50&&names.length){const px=new Map(names.map(n=>{const y=G.ys.get(n)!;return [n,idx.map(y)] as [string,number[]];})),outs=names.filter(n=>n!=='input');
+    const ov=(outs.length?outs:names).map(n=>px.get(n)!),cy=zoneCenter(ov);if(Number.isFinite(cy)){if(px.has('input')&&outs.length)px.set('input',alignTo(px.get('input')!,cy));Z.y=cy;zoneStep(Z.hold,zonePeaks(px,cy,undefined,ZONE_ALL?undefined:qrsMask(ov,cy,Math.round(.08*q.data.fs))),t0);}}}
+  const zoneOf=(x:number,y:number)=>!HOVER_NEAR&&G&&Z.hold.cur&&Number.isFinite(Z.y)&&x>=G.left&&x<=G.right&&y>=G.top-8&&y<=G.top+G.ph+8?zoneAt(Z.hold.cur,Z.y-y):null;
+  if(F.click){cycle(F,candAt(F.click.x,F.click.y),fr,F.click.x,F.click.y);F.clickZone=zoneOf(F.click.x,F.click.y)?.key??null;F.click=undefined;}
+  if(F.px!==null&&F.py!==null){const cs=candAt(F.px,F.py),zn=zoneOf(F.px,F.py);curZone=zn?.key??null;hit=HOVER_NEAR?pick(cs,F.target,fr):zoneHit(F,zn);if(OV_DBG)c.dataset.cands=cs.map(x=>x.name+':'+x.dist.toFixed(1)).join(' ');}
+  ovMoving=step(F,t0,ovNames,hit);c.style.cursor=F.target&&F.px!==null?'pointer':'';c.dataset.focus=F.target??'';c.dataset.hov=F.hov.join(',');if(OV_DBG)c.dataset.layers=ovNames.map(n=>`${n}:${fr.get(n)}/${tierRef.current.get(n)?.v??0}`).join(' ');}
+ const sig=[t,q.mode,q.span,q.inspect,q.amplitude,q.reference,q.method,q.preview,q.shown.join(','),q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,rect.width,rect.height,dpr,fx.current.level,OV,OV?ovNames.map(n=>(F.e.get(n)??0).toFixed(3)).join(',')+F.f.toFixed(3)+'|'+curZone+(F.px!==null)+Z.hold.sig+Math.round(Z.y):''].join('|');
  // a collapsed canvas (0 × 0 while the layout changes) is skipped: drawImage of a 0-size static layer throws
  if(sig!==signature&&rect.width>=1&&rect.height>=1){signature=sig;const W=Math.round(rect.width*dpr),H=Math.round(rect.height*dpr);if(c.width!==W||c.height!==H){c.width=W;c.height=H;}g.setTransform(dpr,0,0,dpr,0,0);const w=rect.width,h=rect.height;
  const rows=[{id:'input',label:'입력',color:'#ffbc79'},...q.shown.map((id,k)=>({id,label:(NAME[id]??id)+(id===q.method?' · 선택 기법':''),color:SHOWN_COLORS[k%SHOWN_COLORS.length]}))];   // D-165: 표시 목록 순서대로 아래에 쌓인다
@@ -126,7 +135,9 @@ export function Plot(p:Props){
  if(!OV||firstOv){g.fillStyle='#adc3ce';g.font='12px system-ui';for(let k=0;k<=4;k++){const at=q.inspect?Math.max(0,t-q.span)+k*Math.min(t,q.span)/4:t-q.span+k*q.span/4;const label=q.mode==='sweep'&&!q.inspect?(k*q.span/4).toFixed(1)+'s 위치':at<0?'—':at.toFixed(1)+'s';g.fillText(label,left+k*pw/4-(k===4?55:0),bottom+20);}}
  // reduced motion: the plain sweep line stays (no light column)
  if(q.mode==='sweep'&&live&&!fxOn&&(!OV||firstOv)){g.strokeStyle='#bfd8e0';g.lineWidth=1;g.beginPath();g.moveTo(headX,top);g.lineTo(headX,bottom);g.stroke();}
- });if(OV)geomRef.current={left,right,pw,top:boxes[0].t,ph:boxes[0].b-boxes[0].t,pts,ys:ysOv};else geomRef.current=null;if(q.transport.playing){labStats.frames++;labStats.ms+=performance.now()-t0;}c.dataset.time=t.toFixed(3);c.dataset.mode=q.inspect?'inspect':q.mode;c.dataset.difference=String(!!q.residual);c.dataset.fx=String(fx.current.level);
+ });if(OV)geomRef.current={left,right,pw,top:boxes[0].t,ph:boxes[0].b-boxes[0].t,pts,ys:ysOv};else geomRef.current=null;
+ if(OV&&!HOVER_NEAR&&F.px!==null&&Z.hold.cur&&Number.isFinite(Z.y)){const col=new Map(rows.map(r=>[r.id,r.color]));drawZoneBar(c,{l:left,r:right,t:boxes[0].t,b:boxes[0].b,pw,ph:boxes[0].b-boxes[0].t},Z.hold.cur,Z.y,curZone,n=>col.get(n)??'#ccc');}
+ if(OV_DBG)c.dataset.zones=Z.hold.cur?JSON.stringify({c:Math.round(Z.y),...Z.hold.cur}):'';if(q.transport.playing){labStats.frames++;labStats.ms+=performance.now()-t0;}c.dataset.time=t.toFixed(3);c.dataset.mode=q.inspect?'inspect':q.mode;c.dataset.difference=String(!!q.residual);c.dataset.fx=String(fx.current.level);
  if(q.transport.playing){const f=fx.current,dt=t0-f.last;f.last=t0;if(dt>0&&dt<250){f.ema=f.frames?f.ema*.95+dt*.05:dt;f.frames++;}c.dataset.frameMs=f.ema.toFixed(1);
   if(FX_PIN===null&&f.frames>90&&f.level>0&&f.ema>26){f.level--;f.frames=0;}}
  }if(q.transport.playing||ovMoving||(OV&&F.px!==null&&!!F.target))raf=requestAnimationFrame(draw);};drawRef.current=()=>{cancelAnimationFrame(raf);draw();};draw();const resize=new ResizeObserver(()=>{cancelAnimationFrame(raf);signature='';draw();});resize.observe(c);return()=>{cancelAnimationFrame(raf);resize.disconnect();};

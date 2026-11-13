@@ -72,6 +72,8 @@
 | `livetrace=1` | 실시간 탭 매 프레임 (시각, 머리)를 `window.__liveTrace`에 기록(부드러움 측정) | 끔 |
 | `overlaytier=0` | 실시간 겹치기 모드를 이전 그리기(모두 같은 무게 · 같은 층)로(D-183 · D-186 비교) | 단계 · 포함 비율 층 |
 | `overlayfocus=0` | 겹치기 모드 마우스 강조 끔(D-184) | 켬 |
+| `ovhover=near` | 겹치기 마우스 강조를 D-185 방식(선까지 거리 · 붙잡기)으로(D-187 비교) | 높이 영역 |
+| `ovzone=all` | 높이 영역의 폭을 QRS 포함 상위 0.5 %로(D-187 비교) | QRS 밖 |
 | `ovdbg=1` | 겹치기 마우스 판정 거리를 `window.__ovDbg`에, 층(이름:앞 순서/단계)을 캔버스 `data-layers`에 기록(시험용, D-186) | 끔 |
 | `wave=prev`·`live`·`all` | 파형 그리기 비교(D-161). `prev` 이전(실시간 D-157 · 실험실 D-073 그리기), `live` 실시간 탭에만 실험실 효과 + 링 스트립 최적화, `all` 실험실 탭도 링 스트립. 실행 명령 `npm run story:wave-prev` · `story:wave-live` · `story:wave-all`이 이 값으로 연다. `naive`는 측정 전용 기준선 | `all`(2026-11-08 사용자 선택) |
 | `wheelhint=arrows`·`preview`·`off` | 도입부 파형 단계 휠 안내(D-163). `arrows` 휠 위아래 화살표가 아래(출력) → 위(입력) 순서로 강조(사용자 안), `preview` 휠과 함께 「입력 → 출력」 막대가 차고 비워짐(제안 안) | `arrows` |

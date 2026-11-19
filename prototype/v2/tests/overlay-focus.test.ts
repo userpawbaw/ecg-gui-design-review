@@ -177,6 +177,6 @@ test('입력 중앙값 맞춤: 기저선이 치우친 입력도 제 폭으로 �
   const C = 100, out = Float64Array.from({length: 500}, (_, t) => C - 10 * Math.sin(t / 9)), inp = Float64Array.from({length: 500}, (_, t) => C + 40 - 30 * Math.sin(t / 3));   // 입력이 40 px 아래
   const before = zoneBands(zonePeaks(new Map([['out', out], ['input', inp]]), C));
   assert.equal(before.up[0].names[0], 'input');
-  const after = zoneBands(zonePeaks(new Map([['out', out], ['input', alignTo(inp, C)]]), C));
+  const after = zoneBands(zonePeaks(new Map<string, ArrayLike<number>>([['out', out], ['input', alignTo(inp, C)]]), C));
   assert.deepEqual(after.up.map(b => b.names[0]), ['out', 'input']); assert.deepEqual(after.down.map(b => b.names[0]), ['out', 'input']);
 });

@@ -8,10 +8,13 @@ import {LiveStream, LABEL, RAW_COLOR} from './liveStream';
 import {drawSplit, drawOverlay, type View} from './livePlot';
 import {drawSplitFx, drawOverlayFx, overlayPointer, overlayBusy, overlayChip, overlayTogglePin, overlayInfo, overlayClick} from './livePlotFx';
 import {OverlayChips} from '../OverlayChips';
+import {createHeartRate, type HrReason} from '../heart/heartRate';
+import {HeartBadge} from '../heart/HeartBadge';
 import {WAVE} from '../waveMode';
 const FX = WAVE !== 'prev';
 // D-182 계측: ?livetrace=1 이면 매 프레임 (시각, 머리) 를 window.__liveTrace 에 쌓는다(부드러움 측정용)
 const TRACE: [number, number][] | null = new URLSearchParams(location.search).get('livetrace') ? ((window as unknown as {__liveTrace: [number, number][]}).__liveTrace = []) : null;
+const HR_DBG = new URLSearchParams(location.search).has('hrdbg');   // D-188 시험용: 매 프레임 (시각, head, vh, 투표 신호, 최근 박동)을 window.__hr 에
 import * as AX from './liveAxis';
 import {StateChip, StatePanel} from '../Glyph';
 import methodData from '../methods.json';
@@ -34,6 +37,9 @@ const WINDOWS = [2.5, 5, 10];
 
 export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   const S = useRef<LiveStream>(new LiveStream(5)).current;
+  // D-188 심박: 입력 + 적용 기법 출력 투표(heartRate.ts). 새 표본을 매 프레임 밀어 넣고, 인정된 박동이 화면 머리(vh)에 닿을 때 심장을 뛰게 한다.
+  const hr = useRef<{eng: ReturnType<typeof createHeartRate>, key: string, at: number, pulsed: number} | null>(null);
+  const [hrView, setHrView] = useState<{bpm: number | null, reason: HrReason}>({bpm: null, reason: 'learning'}), [hrBeat, setHrBeat] = useState(0);
   const reduced = useRef(matchMedia('(prefers-reduced-motion: reduce)').matches).current;
   const [view, setView] = useState<View>({mode: 'split', play: 'scroll', amp: 0, eraseFrac: AX.ERASE_FRAC, softEdge: true, glowOn: !reduced});
   const viewRef = useRef(view); viewRef.current = view;
@@ -117,6 +123,18 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       raf = requestAnimationFrame(frame);
       const now = performance.now(), at = S.reveal.at(now), vh = Math.floor(at), frac = at < 0 ? 0 : at - vh;
       if (vh !== S.vh || (frac !== S.vhFrac && viewRef.current.play === 'scroll')) { S.vh = vh; S.vhFrac = frac; dirty.current = true; }
+      if (S.head >= 0) {
+        const names = [...(S.bufs.has('raw') ? ['raw'] : []), ...S.names().filter(n => n !== 'raw' && S.bufs.has(n))], key = names.join() + '@' + S.fs;
+        let h = hr.current;
+        if (names.length && (!h || h.key !== key || S.head < h.at || S.first > h.at + 1)) h = hr.current = {eng: createHeartRate(S.fs, names), key, at: Math.max(S.first, S.head - S.cap + 1) - 1, pulsed: -1};
+        if (h && names.length) {
+          for (let t = h.at + 1; t <= S.head; t++) { const v: Record<string, number> = {}; for (const n of names) v[n] = S.bufs.get(n)![t % S.cap]; h.eng.push(t, v, !S.okBuf || S.okBuf[t % S.cap] > .5); }
+          h.at = S.head; const w = h.eng.view(), nodata = now - S.lastData > 1500, nv = nodata ? {bpm: null, reason: 'nodata' as HrReason} : {bpm: w.bpm, reason: w.reason};
+          setHrView(o => o.bpm === nv.bpm && o.reason === nv.reason ? o : nv);
+          for (const b of w.beats) if (b > h.pulsed && b <= S.vh) { h.pulsed = b; if (S.vh - b < S.fs / 2 && !nodata) setHrBeat(x => x + 1); }
+          if (HR_DBG) ((globalThis as unknown as {__hr?: unknown[]}).__hr ??= []).push([Math.round(now), S.head, S.vh, h.key, w.beats.slice(-3)]);
+        }
+      }
       if (TRACE) TRACE.push([now, at]);
       const since = now - S.lastData, v = viewRef.current;
       const fading = (v.play === 'sweep' && v.glowOn && since > 300 && since < 700) || (v.mode === 'overlay' && FX && !!overlay.current && overlayBusy(overlay.current));
@@ -218,6 +236,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       {note && <span className="live-note">{note}</span>}
     </div>
     <div className="live-stats">
+      <HeartBadge bpm={hrView.bpm} reason={hrView.reason} beat={hrBeat}/>
       {[['처리 지연', fmt(st.lat_ms) + ' ms'], ['경과 시간', fmt(st.elapsed, 1) + ' s'], ['샘플 손실', fmt(st.lost) + ' 샘플', (st.lost ?? 0) > 0], ['전극 분리(lead-off)', fmt(st.leadoff) + ' 샘플', (st.leadoff ?? 0) > 0]].map(([k, v, bad]) =>
         <div key={k as string} className={bad ? 'bad' : ''}><small>{k}</small><b>{v as string}</b></div>)}
       <details className="live-diag"><summary>진단 정보</summary><div>

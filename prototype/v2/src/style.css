@@ -205,3 +205,21 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .ov-chip:hover,.ov-chip:focus-visible{border-color:var(--c)}
 .ov-chip.on{border-color:var(--c);background:rgb(16 40 50 / .95);box-shadow:0 0 12px -2px var(--c)}
 .ov-chip.on i{box-shadow:0 0 8px var(--c)}
+/* D-188 심박 카드: 작은 3D 심장 + 최근 bpm. 숫자는 표 숫자(자릿수 고정)로 박동마다 바뀌어도 흔들리지 않게, 이유는 한 단계 작은 글자 */
+.hr-badge{display:flex;align-items:center;gap:8px;min-width:150px;padding:4px 12px 4px 4px;border-radius:12px;border:1px solid #3a2730;background:linear-gradient(90deg,rgb(60 18 28 / .55),rgb(10 26 33 / .6));color:#f3dfe3}
+.hr-badge .hr-heart{width:56px;height:56px;flex:none;display:block}
+.hr-badge .hr-text{display:grid;line-height:1.1}
+.hr-badge b{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.01em;color:#ffd2d8;text-shadow:0 0 14px rgb(255 116 130 / .45)}
+.hr-badge b small{font-size:12px;font-weight:600;margin-left:4px;color:#d9a7b0;text-shadow:none}
+.hr-badge .hr-text span{font-size:11px;color:#b9939b}
+.hr-badge.off{border-color:#2c454e;background:rgb(10 26 33 / .6)}
+.hr-badge.off b{color:#8fa3ad;text-shadow:none}
+.hr-badge.off .hr-text span{color:#e0b45a}
+.hr-badge.compact{min-width:118px;padding:2px 10px 2px 2px;border-radius:10px}
+.hr-badge.compact .hr-heart{width:40px;height:40px}
+.hr-badge.compact b{font-size:20px}
+.live-stats>.hr-badge{grid-column:span 2;flex-direction:row;align-items:center;gap:8px;padding:4px 12px 4px 4px;border:0;border-radius:0}
+.live-stats .hr-badge b{font-size:26px;color:#ffd2d8}.live-stats .hr-badge.off b{color:#8fa3ad}
+.live-stats .hr-badge small{font-size:12px}
+.hr-badge .hr-heart-box{display:block;flex:none;width:56px;height:56px}.hr-badge .hr-heart-box .hr-heart{width:100%;height:100%}
+.hr-badge.compact .hr-heart-box{width:40px;height:40px}

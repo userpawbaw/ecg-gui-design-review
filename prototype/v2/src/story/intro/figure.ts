@@ -187,7 +187,7 @@ function h5Material(){
    uCommon:{value:0},uFront:{value:-1},uWaveK:{value:0},uEdgeCol:{value:new THREE.Color('#6ff3ff')},uEdgeK:{value:0},uDense:{value:0},uChest:{value:0},uRay:{value:0}}});
 }
 
-function rimMaterial(color:string,pow:number,fill:number,deform:boolean){
+export function rimMaterial(color:string,pow:number,fill:number,deform:boolean){
  return new THREE.ShaderMaterial({vertexShader:rimVert,fragmentShader:rimFrag,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
   uniforms:{uColor:{value:new THREE.Color(color)},uOpacity:{value:0},uPow:{value:pow},uFill:{value:fill},uFlash:{value:0},
    uHeart:{value:new THREE.Vector3()},uWaveT:{value:9},uWaveAmp:{value:0},uA:{value:0},uV:{value:0},uMinY:{value:-1},uMaxY:{value:1},uDeform:{value:deform?1:0},uMirror:{value:0},uFeet:{value:FEET_Y}}});

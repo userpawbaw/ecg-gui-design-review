@@ -223,3 +223,4 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .live-stats .hr-badge small{font-size:12px}
 .hr-badge .hr-heart-box{display:block;flex:none;width:56px;height:56px}.hr-badge .hr-heart-box .hr-heart{width:100%;height:100%}
 .hr-badge.compact .hr-heart-box{width:40px;height:40px}
+.transport>.display-tools:first-child{margin:0 0 12px}   /* 2026-11-20 사용자: 표시 설정을 재생 막대 위로 */

@@ -224,3 +224,23 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .hr-badge .hr-heart-box{display:block;flex:none;width:56px;height:56px}.hr-badge .hr-heart-box .hr-heart{width:100%;height:100%}
 .hr-badge.compact .hr-heart-box{width:40px;height:40px}
 .transport>.display-tools:first-child{margin:0 0 12px}   /* 2026-11-20 사용자: 표시 설정을 재생 막대 위로 */
+/* D-189 심질환 파형 탭: 왼쪽 질환 막대(기법 막대와 같은 모양) · 가운데 파형 · 오른쪽 기법 */
+.viewer-grid.with-disease{grid-template-columns:260px minmax(0,1fr) 285px}
+@media(max-width:1450px){.viewer-grid.with-disease{grid-template-columns:230px minmax(0,1fr) 250px}}
+@media(max-width:1100px){.viewer-grid.with-disease{grid-template-columns:210px minmax(0,1fr) 235px}}
+@media(max-width:780px){.viewer-grid.with-disease{grid-template-columns:1fr}}
+.disease-list{grid-template-columns:1fr}
+.disease-list .method strong{font-size:11px;font-weight:600;opacity:.75}
+.disease-reading h3{margin-bottom:4px}
+.disease-vs-head{margin:10px 0 2px;font-size:12px;font-weight:700;letter-spacing:.02em;opacity:.85}
+.disease-vs{margin:0 0 8px;padding-left:18px;font-size:13px;line-height:1.5}
+.disease-marks{font-size:13px;color:#b5822b}.lab-dark .disease-marks{color:#ffd28a}
+.disease-src{font-size:12px;color:#5c707a;align-self:center}.lab-dark .disease-src{color:#93aab0}
+.disease-panel{max-height:none}
+.disease-list{display:grid;gap:8px;margin:10px 0 12px}
+.disease-group{display:grid;gap:4px}
+.disease-group>small{font-size:11px;letter-spacing:.04em;color:#6b7f88;margin:2px 0 0}.lab-dark .disease-group>small{color:#8fa3ad}
+.disease-btn{display:flex;justify-content:space-between;align-items:center;min-height:34px;padding:5px 10px;border-radius:8px;border:1px solid #dae2de;background:white;color:inherit;text-align:left;font-size:14px}
+.lab-dark .disease-btn{background:rgb(10 26 33 / .88);border-color:#2c454e;color:#d7e4e8}
+.disease-btn:hover,.disease-btn:focus-visible{border-color:#5fc2a8}
+.disease-btn.selected{border-color:#3fa98a;background:#e6f4ef}.lab-dark .disease-btn.selected{background:rgb(16 60 52 / .9);border-color:#3fa98a;color:#eafaf4}

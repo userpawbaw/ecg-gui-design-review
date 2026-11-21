@@ -74,6 +74,7 @@
 | `overlayfocus=0` | 겹치기 모드 마우스 강조 끔(D-184) | 켬 |
 | `ovhover=near` | 겹치기 마우스 강조를 D-185 방식(선까지 거리 · 붙잡기)으로(D-187 비교) | 높이 영역 |
 | `ovzone=all` | 높이 영역의 폭을 QRS 포함 상위 0.5 %로(D-187 비교) | QRS 밖 |
+| `route=disease` · `disease=pvc` | 심질환 파형 탭으로 바로 열기 · 처음 고를 질환(normal · sbr · apc · afib · afl · pvc · bigeminy · vt · lbbb · rbbb · avb2, D-189) | 실험실 · pvc |
 | `hrdbg=1` | 실시간 심박 계산을 매 프레임 `window.__hr`에 기록(시험용, D-188) | 끔 |
 | `ovdbg=1` | 겹치기 마우스 판정 거리를 `window.__ovDbg`에, 층(이름:앞 순서/단계)을 캔버스 `data-layers`에 기록(시험용, D-186) | 끔 |
 | `wave=prev`·`live`·`all` | 파형 그리기 비교(D-161). `prev` 이전(실시간 D-157 · 실험실 D-073 그리기), `live` 실시간 탭에만 실험실 효과 + 링 스트립 최적화, `all` 실험실 탭도 링 스트립. 실행 명령 `npm run story:wave-prev` · `story:wave-live` · `story:wave-all`이 이 값으로 연다. `naive`는 측정 전용 기준선 | `all`(2026-11-08 사용자 선택) |

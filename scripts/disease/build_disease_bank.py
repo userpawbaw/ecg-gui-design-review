@@ -3,7 +3,7 @@
 원본, 잡음은 원본에 섞음(SNR과 무관한 한 번의 실현), 한 장면의 모든 파형이 같은 int16 스케일.
 구간 선택 기준은 기법 성능이 아니라 **주석 조건 + 원기록이 가장 깨끗한 후보**(잡음은 우리가 정해서 섞으므로).
 
-    cd <원본 저장소>; python3 <이 파일> <출력 폴더>        # 출력: index.json + <질환>.json
+    cd <원본 저장소>; python3 <이 파일> <이 저장소>/data/disease   # 출력: index.json + <질환>.json (prepare-v2.cjs가 public 으로 복사)
 """
 import sys, json, base64, hashlib, subprocess
 from pathlib import Path

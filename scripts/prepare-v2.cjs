@@ -15,4 +15,6 @@ if(process.argv.includes('--methods')||!fs.existsSync(methodsFile))fs.writeFileS
 fs.mkdirSync(path.join(dest,'legacy/data'),{recursive:true});
 for(const name of ['index.html','style.css','app.js','core.js']){let s=fs.readFileSync(path.join(root,'prototype',name),'utf8');if(name==='index.html')s=s.replaceAll('../data/','data/');fs.writeFileSync(path.join(dest,'legacy',name),s);}
 for(const name of ['bank.js','extension.js'])fs.copyFileSync(path.join(root,'data',name),path.join(dest,'legacy/data',name));
+// D-189 심질환 파형 탭 자료(scripts/disease/build_disease_bank.py → data/disease)
+fs.mkdirSync(path.join(dest,'disease'),{recursive:true});for(const f of fs.readdirSync(path.join(root,'data/disease')))fs.copyFileSync(path.join(root,'data/disease',f),path.join(dest,'disease',f));
 console.log('Prepared 98 archived scenes, method explanations and preserved legacy workspace.');

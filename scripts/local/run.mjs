@@ -33,7 +33,7 @@ export function pythonCandidates(platform=process.platform){return platform==='w
 function findPython(){for(const [bin,...pre] of pythonCandidates()){const v=capture(bin,[...pre,'--version']);if(v&&/^Python 3\./.test(v))return{bin,pre,version:v};}return null;}
 
 function ensureDeps(dir){if(!existsSync(join(dir,'node_modules'))){say(`의존성 설치: ${dir.replace(root,'.')}`);run('npm',['install','--no-audit','--no-fund'],{cwd:dir});}}
-function ensureV2Data(){const pub=join(root,'prototype/v2/public/archive.json');if(!existsSync(pub)){say('자료 준비: prototype/v2/public (archive.json)');run(process.execPath,[join(root,'scripts/prepare-v2.cjs')]);}}
+function ensureV2Data(){const pub=join(root,'prototype/v2/public/archive.json');if(!existsSync(pub)||!existsSync(join(root,'prototype/v2/public/disease/index.json'))){say('자료 준비: prototype/v2/public (archive.json)');run(process.execPath,[join(root,'scripts/prepare-v2.cjs')]);}}
 function browserPath(){
  // Ask the installed Playwright which browser build it expects (a different build in the cache does not count).
  if(process.env.PW_EXECUTABLE&&existsSync(process.env.PW_EXECUTABLE))return process.env.PW_EXECUTABLE;

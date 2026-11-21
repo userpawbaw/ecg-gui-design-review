@@ -4001,7 +4001,7 @@ A + B + C, 기준은 입력 대비. 첫 구현은 「가장 매끄러운 계열 
 |---|---|
 | 시점 | 2026-11-21 `[대화]` |
 | 상태 | 구현 · 화면 확인 — 사용자 확인 대기 |
-| 연결 | `docs/research/DISEASE_ECG_DATA_20261120.md`, `scripts/disease/survey_mitdb.py` · `build_disease_bank.py`, `prototype/v2/public/disease/`, `src/disease/diseases.ts`, `src/main.tsx`(route `disease`), `verification/disease-tab-20261121/` |
+| 연결 | `docs/research/DISEASE_ECG_DATA_20261120.md`, `scripts/disease/survey_mitdb.py` · `build_disease_bank.py`, `data/disease/`(→ `scripts/prepare-v2.cjs`가 `prototype/v2/public/disease/`로 복사), `src/disease/diseases.ts`, `src/main.tsx`(route `disease`), `verification/disease-tab-20261121/` |
 | CASE | 불필요 — 기능 추가 |
 
 사용자: 「새 탭으로, 1차는 MIT-BIH만으로 진행 … 지금 실험실 탭처럼 하되 … 왼쪽 툴바로 심질환 파형들을 선택하여 어떤 모양이 나타나는지 볼 수 있게 … 정상 파형을 비교할 때 어떤 특징이 있는지 질환 선택 바에 기법처럼 간략하게 설명」 `[대화]`.

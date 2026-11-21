@@ -1,0 +1,179 @@
+{
+ "schema": 1,
+ "fs": 250,
+ "n": 2500,
+ "conds": [
+  "mixed",
+  "ma_synth",
+  "em_synth"
+ ],
+ "snrs": [
+  0.0,
+  10.0,
+  20.0
+ ],
+ "diseases": [
+  {
+   "id": "normal",
+   "label": "정상 동리듬",
+   "record": "100",
+   "startSeconds": 1709.0,
+   "candidates": 745,
+   "beatCounts": {
+    "N": 13
+   },
+   "rhythm": [
+    "(N"
+   ]
+  },
+  {
+   "id": "sbr",
+   "label": "동서맥",
+   "record": "232",
+   "startSeconds": 1245.0,
+   "candidates": 717,
+   "beatCounts": {
+    "A": 4,
+    "R": 2
+   },
+   "rhythm": [
+    "(SBR"
+   ]
+  },
+  {
+   "id": "apc",
+   "label": "심방 조기 수축",
+   "record": "222",
+   "startSeconds": 1423.0,
+   "candidates": 15,
+   "beatCounts": {
+    "A": 4,
+    "N": 8
+   },
+   "rhythm": [
+    "(N"
+   ]
+  },
+  {
+   "id": "afib",
+   "label": "심방세동",
+   "record": "219",
+   "startSeconds": 751.0,
+   "candidates": 471,
+   "beatCounts": {
+    "N": 14
+   },
+   "rhythm": [
+    "(AFIB"
+   ]
+  },
+  {
+   "id": "afl",
+   "label": "심방 조동",
+   "record": "222",
+   "startSeconds": 1725.0,
+   "candidates": 84,
+   "beatCounts": {
+    "N": 17
+   },
+   "rhythm": [
+    "(AFL"
+   ]
+  },
+  {
+   "id": "pvc",
+   "label": "심실 조기 수축",
+   "record": "233",
+   "startSeconds": 5.0,
+   "candidates": 336,
+   "beatCounts": {
+    "N": 13,
+    "V": 4
+   },
+   "rhythm": [
+    "(N"
+   ]
+  },
+  {
+   "id": "bigeminy",
+   "label": "심실 이단맥",
+   "record": "200",
+   "startSeconds": 1381.0,
+   "candidates": 137,
+   "beatCounts": {
+    "N": 7,
+    "V": 8
+   },
+   "rhythm": [
+    "(B"
+   ]
+  },
+  {
+   "id": "vt",
+   "label": "심실 빈맥(짧은 연발)",
+   "record": "200",
+   "startSeconds": 1493.0,
+   "candidates": 15,
+   "beatCounts": {
+    "N": 7,
+    "V": 8
+   },
+   "rhythm": [
+    "(B",
+    "(N",
+    "(VT"
+   ]
+  },
+  {
+   "id": "lbbb",
+   "label": "좌각 차단",
+   "record": "111",
+   "startSeconds": 945.0,
+   "candidates": 842,
+   "beatCounts": {
+    "L": 12
+   },
+   "rhythm": [
+    "(N"
+   ]
+  },
+  {
+   "id": "rbbb",
+   "label": "우각 차단",
+   "record": "212",
+   "startSeconds": 1761.0,
+   "candidates": 517,
+   "beatCounts": {
+    "R": 14
+   },
+   "rhythm": [
+    "(N"
+   ]
+  },
+  {
+   "id": "avb2",
+   "label": "2도 방실 차단",
+   "record": "231",
+   "startSeconds": 135.0,
+   "candidates": 65,
+   "beatCounts": {
+    "R": 6
+   },
+   "rhythm": [
+    "(BII"
+   ]
+  }
+ ],
+ "provenance": {
+  "repository": "userpawbaw/ECG_denoising_method_comparision",
+  "sourceCommit": "a4932122c164fca8b8655f7b5c43925ce0ec09bc",
+  "builder": "scripts/disease/build_disease_bank.py",
+  "data": "MIT-BIH Arrhythmia Database (PhysioNet, ODC-By 1.0), lead MLII, resampled to 250 Hz; DS2 test records only (not used to train the DL methods)",
+  "annotations": "cardiologist beat symbols and rhythm labels (.atr)",
+  "reference": "FE(x_raw)",
+  "noise": "mixed = NSTDB test split; ma_synth/em_synth synthetic",
+  "selection": "annotation criteria per disease, then the candidate with the lowest raw roughness (not by method performance)",
+  "traceEncoding": "signed int16 little-endian base64; mV = integer * scene.scale",
+  "time": "central 10 s of a processed 20 s segment"
+ }
+}

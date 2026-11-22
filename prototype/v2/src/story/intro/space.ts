@@ -161,16 +161,22 @@ export function createGrade(){
 // D-190 ?perf=merge: 출력 변환(ACES 톤 매핑 · 노출 · sRGB) + 색보정(createGrade)을 한 단계로 — 화면 전체 처리 한 번을 줄인다.
 // 결과는 OutputPass → createGrade 와 같은 식(같은 순서). 사용자 2026-11-22 「후처리 한번에 + FXAA 적용 … 비교하게」.
 export function createFinal(exposure:number){
- return new ShaderPass({uniforms:{tDiffuse:{value:null},toneMappingExposure:{value:exposure},uTime:{value:0},uAspect:{value:1},uSpace:{value:0}},
+ // three 의 tonemapping_pars 를 끌어오면 화면에 바로 그릴 때 three 가 붙이는 toneMappingExposure 선언과 겹쳐 컴파일이 실패한다(시험에서 발견) —
+ // 같은 식(ACESFilmicToneMapping: 노출 / 0.6 → 입력 행렬 → RRT+ODT 근사 → 출력 행렬)과 sRGB OETF를 직접 쓴다.
+ const p=new ShaderPass({uniforms:{tDiffuse:{value:null},uExposure:{value:exposure},uTime:{value:0},uAspect:{value:1},uSpace:{value:0}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-  fragmentShader:`#include <tonemapping_pars_fragment>
-   #include <colorspace_pars_fragment>
-   uniform sampler2D tDiffuse;uniform float uTime,uAspect,uSpace;varying vec2 vUv;
+  fragmentShader:`uniform sampler2D tDiffuse;uniform float uExposure,uTime,uAspect,uSpace;varying vec2 vUv;
+   vec3 rrt(vec3 v){vec3 a=v*(v+.0245786)-.000090537;vec3 b=v*(.983729*v+.4329510)+.238081;return a/b;}
+   vec3 aces(vec3 c){const mat3 I=mat3(vec3(.59719,.07600,.02840),vec3(.35458,.90834,.13383),vec3(.04823,.01566,.83777));
+    const mat3 O=mat3(vec3(1.60475,-.10208,-.00327),vec3(-.53108,1.10813,-.07276),vec3(-.07367,-.00605,1.07602));
+    c*=uExposure/.6;c=I*c;c=rrt(c);c=O*c;return clamp(c,0.,1.);}
+   vec3 srgb(vec3 c){return mix(pow(c,vec3(.41666))*1.055-vec3(.055),c*12.92,vec3(lessThanEqual(c,vec3(.0031308))));}
    float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
-   void main(){vec4 o=texture2D(tDiffuse,vUv);o.rgb=ACESFilmicToneMapping(o.rgb);o=sRGBTransferOETF(o);vec3 c=o.rgb;
+   void main(){vec3 c=srgb(aces(texture2D(tDiffuse,vUv).rgb));
     float l=dot(c,vec3(.2126,.7152,.0722));
     c*=mix(vec3(1.),vec3(1.05,1.,.92),uSpace);c=mix(vec3(l),c,1.+.12*uSpace);c=mix(c,smoothstep(0.,1.,c),.35*uSpace);
     vec2 q=(vUv-.5)*vec2(uAspect,1.);c*=mix(1.,.78,smoothstep(.5,1.15,length(q))*(.4+.6*uSpace));
     c+=(h(vUv*1000.+uTime)-.5)*(.012+.014*uSpace);
     gl_FragColor=vec4(clamp(c,0.,1.),1.);}`});
+ (p.material as THREE.ShaderMaterial).toneMapped=false;return p;
 }

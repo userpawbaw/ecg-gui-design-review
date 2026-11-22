@@ -1,0 +1,6 @@
+기준                         fps 1.62
+후처리 합치기                    fps 2.32
+FXAA(MSAA 대신)              fps 3.54
+합치기 + FXAA                 fps 3.51
+MSAA 끔(비교)                 fps 3.88
+합치기 + FXAA + 픽셀 비 0.75     fps 5.72

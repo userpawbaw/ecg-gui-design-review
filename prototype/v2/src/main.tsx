@@ -60,7 +60,7 @@ function App(){
  const [overlay,setOverlay]=useState(false),[pins,setPins]=useState<string[]>([]),[chip,setChip]=useState<string|null>(null),[tiers,setTiers]=useState<Record<string,number>>({});
  const [mode,setMode]=useState<Mode>('sweep'),[span,setSpan]=useState(5),[amplitude,setAmplitude]=useState(2),[reference,setReference]=useState(.55),[inspect,setInspect]=useState(true),[soft,setSoft]=useState(true),[residual,setResidual]=useState(false);
  const [large,setLarge]=useState(false),[panel,setPanel]=useState(true),[route,setRoute]=useState(()=>new URLSearchParams(location.search).get('route')==='disease'?'disease':'lab'),[error,setError]=useState(''),[loading,setLoading]=useState(true),[retry,setRetry]=useState(0),[status,setStatus]=useState('자료 불러오는 중'),[provenance,setProvenance]=useState(false),[note,setNote]=useState(''),[bookmarks,setBookmarks]=useState<Bookmark[]>([]);
- const [story,setStory]=useState(()=>new URLSearchParams(location.search).get('route')!=='lab');
+ const [story,setStory]=useState(()=>!['lab','disease'].includes(new URLSearchParams(location.search).get('route')??''));   /* D-189: ?route=disease 도 도입 화면 없이 */
  const [intro,setIntro]=useState(()=>{const q=new URLSearchParams(location.search);return q.get('route')!=='lab'&&!q.has('step');});
  const [attract,setAttract]=useState(false),[idle,setIdle]=useState(false),[idleCountdown,setIdleCountdown]=useState<number|null>(null);const activity=useRef(Date.now());
  const [bridge,setBridge]=useState(()=>normalizeBridge(new URLSearchParams(location.search).get('bridge'))||DEFAULT_BRIDGE),[bridgeDraft,setBridgeDraft]=useState(''),[bridgeState,setBridgeState]=useState<'checking'|'ok'|'down'>('checking');

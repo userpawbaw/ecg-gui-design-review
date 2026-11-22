@@ -36,10 +36,12 @@ def only(cov, r, k=.999): return cov.get(r, 0) >= k
 DISEASES = [
     ('normal', '정상 동리듬', '100', lambda b, cov: only(cov, '(N') and all_(b, 'N')),
     ('sbr', '동서맥', '232', lambda b, cov: only(cov, '(SBR')),
-    ('apc', '심방 조기 수축', '222', lambda b, cov: only(cov, '(N') and b.count('A') >= 3 and all_(b, 'NA') and 'AA' not in ''.join(b)),
+    ('apc', '심방 조기 수축', '100',   # 60 s: 222는 후보 없음(find60.py) → 100(엄격 조건 216곳)
+     lambda b, cov: only(cov, '(N') and b.count('A') >= 3 and all_(b, 'NA') and 'AA' not in ''.join(b)),
     ('afib', '심방세동', '219', lambda b, cov: only(cov, '(AFIB') and all_(b, 'N')),
     ('afl', '심방 조동', '222', lambda b, cov: only(cov, '(AFL') and all_(b, 'N')),
-    ('pvc', '심실 조기 수축', '233', lambda b, cov: only(cov, '(N') and 4 <= b.count('V') <= 20 and all_(b, 'NV') and 'VV' not in ''.join(b)),
+    ('pvc', '심실 조기 수축', '228',   # 60 s: 233은 연속 V · 융합 박동이 섞여 후보 없음 → 228(엄격 조건 390곳)
+     lambda b, cov: only(cov, '(N') and 4 <= b.count('V') <= 20 and all_(b, 'NV') and 'VV' not in ''.join(b)),
     ('bigeminy', '심실 이단맥', '200', lambda b, cov: cov.get('(B', 0) >= .8 and all_(b, 'NV')),
     ('vt', '심실 빈맥(짧은 연발)', '200', lambda b, cov: '(VT' in cov and 'VVV' in ''.join(b) and all_(b, 'NV')),
     ('lbbb', '좌각 차단', '111', lambda b, cov: only(cov, '(N') and all_(b, 'L')),
@@ -61,8 +63,11 @@ def rhythm_spans(name, fs, n):
     return out, noise
 def q(sig, scale): return base64.b64encode(np.clip(np.round(sig / scale), -32768, 32767).astype('<i2').tobytes()).decode('ascii')
 
+import os
+ONLY = [x for x in os.environ.get('DISEASE_ONLY', '').split(',') if x]   # 일부만 다시 만들기(나머지는 기존 index 항목 유지)
 index = []
 for did, label, name, ok in DISEASES:
+    if ONLY and did not in ONLY: continue
     rec = src.get(name); fs = rec.fs; n = int(SEG_S * fs); show = int(SHOW_S * fs); g0 = int(EVAL_GUARD_S * fs)
     spans, noise = rhythm_spans(name, fs, rec.x.size)
     cands = []
@@ -104,6 +109,9 @@ for did, label, name, ok in DISEASES:
     (OUT / f'{did}.json').write_text(json.dumps(body, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     index.append({'id': did, 'label': label, 'record': name, 'startSeconds': body['startSeconds'], 'candidates': len(cands),
                   'beatCounts': {s: sum(1 for b in beats if b['s'] == s) for s in sorted({b['s'] for b in beats})}, 'rhythm': sorted({r['r'] for r in rhythm})})
+if ONLY and (OUT / 'index.json').exists():
+    old = json.loads((OUT / 'index.json').read_text(encoding='utf-8'))['diseases']; got = {d['id']: d for d in index}
+    index = [got.get(d[0]) or next((o for o in old if o['id'] == d[0]), None) for d in DISEASES]; index = [d for d in index if d]
 sha = subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
 (OUT / 'index.json').write_text(json.dumps({'schema': 1, 'fs': 250, 'n': int(SHOW_S * 250), 'seconds': SHOW_S, 'conds': CONDS, 'snrs': SNRS, 'diseases': index,
     'provenance': {'repository': 'userpawbaw/ECG_denoising_method_comparision', 'sourceCommit': sha, 'builder': 'scripts/disease/build_disease_bank.py',

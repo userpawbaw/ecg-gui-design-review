@@ -1,0 +1,1 @@
+기준(현재)                       fps 1.59 cpu 2 ms gpu-wait 0 ms n 32

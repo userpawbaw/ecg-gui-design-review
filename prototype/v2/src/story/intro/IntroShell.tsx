@@ -8,7 +8,7 @@ import type {Bank} from '../../data';
 import {rankScene} from '../storyData';
 import {loadLong,type LongScene} from '../longData';
 import {detectR,makeLoop} from './beats';
-import {createIntro,type Intro} from './introStage';
+import {createIntro,INTRO_GLOBE,type Intro} from './introStage';
 // fonts (OFL, bundled — no network at the exhibit): Pretendard for Korean display, IBM Plex Mono for the HUD tier (L1)
 import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import '@fontsource/ibm-plex-mono/400.css';
@@ -85,7 +85,7 @@ function IntroShellInner({bank,onNext,onLab,long}:Props&{long:LongScene|null}){
   </div>
   <button className="it-skip" onClick={lab}>실험실로 이동</button>
   <p className="it-notice"><StateChip kind="stored" tone="stored" label="저장 신호 재생" note={`합성 기록 ${scene.record} · ${((scene.loop.end-scene.loop.start)/bank.fs).toFixed(1)} s 반복`}/></p>
-  <p className="it-credit">심장 모델 HuBMAP HRA · Visible Human Male(NLM) · CC BY 4.0 · 지구 NASA Earth Observatory</p>
+  <p className="it-credit">심장 모델 HuBMAP HRA · Visible Human Male(NLM) · CC BY 4.0{INTRO_GLOBE?' · 지구 NASA Earth Observatory':''}</p>
   {failed&&<p className="it-failed" role="alert">3D 장면을 불러오지 못했습니다: {failed}</p>}
   <div ref={refs.wrapper} className="it-scroll"><div ref={refs.content} className="it-scroll-content"/></div>
  </div>;

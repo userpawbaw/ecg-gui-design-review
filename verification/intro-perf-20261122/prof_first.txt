@@ -1,1 +1,30 @@
 기준(현재)                       fps 1.59 cpu 2 ms gpu-wait 0 ms n 32
+유체 끔                         fps 1.48 cpu 2 ms gpu-wait 0 ms n 30
+블룸 끔                         fps 1.79 cpu 2 ms gpu-wait 0 ms n 36
+빛줄기 안개 끔                     fps 2.41 cpu 2 ms gpu-wait 0 ms n 49
+색보정 끔                        fps 1.77 cpu 2 ms gpu-wait 0 ms n 36
+과대값 가드 끔                     fps 1.70 cpu 2 ms gpu-wait 0 ms n 35
+MSAA 끔                       fps 2.64 cpu 2 ms gpu-wait 0 ms n 53
+픽셀 비 1.0                     fps 1.55 cpu 2 ms gpu-wait 0 ms n 32
+픽셀 비 0.75                    fps 2.43 cpu 0 ms gpu-wait 0 ms n 0
+먼지 끔                         fps 1.58 cpu 2 ms gpu-wait 0 ms n 32
+전극 배선 끔                      fps 1.71 cpu 2 ms gpu-wait 0 ms n 35
+사다리 사람 끔                     fps 1.57 cpu 0 ms gpu-wait 0 ms n 0
+묶음: 유체·MSAA 끔 + 픽셀 비 0.75    fps 4.28 cpu 2 ms gpu-wait 0 ms n 86
+묶음 + 블룸·가드 끔                 fps 4.80 cpu 2 ms gpu-wait 0 ms n 97
+
+relative frame cost (cpu+gpu) vs 기준:
+기준(현재)                       100 %
+유체 끔                         101 %
+블룸 끔                         96 %
+빛줄기 안개 끔                     83 %
+색보정 끔                        97 %
+과대값 가드 끔                     96 %
+MSAA 끔                       86 %
+픽셀 비 1.0                     124 %
+픽셀 비 0.75                    0 %
+먼지 끔                         108 %
+전극 배선 끔                      93 %
+사다리 사람 끔                     0 %
+묶음: 유체·MSAA 끔 + 픽셀 비 0.75    97 %
+묶음 + 블룸·가드 끔                 79 %

@@ -40,7 +40,10 @@ export const INTRO_GLOBE=IQ.get('intro')==='globe';
 const FIRST_S=.3,PV0=.25,PV1=.31,PVA=GATE_WAVE,AUTO_S=Number(IQ.get('introauto'))||9,BACK_S=2.2,DIM=IQ.has('introdim')?Number(IQ.get('introdim')):.55;
 // D-190 렉 후보 스위치(노트북에서 하나씩 시험): ?ibloom=0 ?ifog=0 ?igrade=0 ?iguard=0 ?ipr=1 (픽셀 비, 기본 1.25) ?msaa=0 ?fluid=0 ?idust=0 ?irig=0 ?iclimb=0 ?ifps=30 (프레임 상한)
 // ?fps=1 화면 왼쪽 아래 FPS · 프레임 시간 표시, ?introprof=1 window.__introProf(프레임별 CPU ms · GPU 대기 ms)
-const OFF=(k:string)=>IQ.get(k)==='0',PR_CAP=IQ.has('ipr')?Math.max(.5,Number(IQ.get('ipr'))||1.25):1.25,FPS_CAP=Number(IQ.get('ifps'))||0,PROF=IQ.get('introprof')==='1',HUD=IQ.get('fps')==='1';
+// ?perf=msaa,bloom,fog,grade,guard,dust,rig,climb,fluid,pr75,pr50,fps30 — 같은 스위치를 한 매개변수로(npm run story:perf -- msaa,pr75; Windows 셸에서 & 없이), FPS 표시 켬
+export const PERF=new Set((IQ.get('perf')??'').split(',').map(x=>x.trim()).filter(Boolean));
+const OFF=(k:string)=>IQ.get(k)==='0'||PERF.has(k.replace(/^i/,'')),PR_CAP=PERF.has('pr50')?.5:PERF.has('pr75')?.75:IQ.has('ipr')?Math.max(.5,Number(IQ.get('ipr'))||1.25):1.25,
+ FPS_CAP=PERF.has('fps30')?30:Number(IQ.get('ifps'))||0,PROF=IQ.get('introprof')==='1',HUD=IQ.get('fps')==='1'||IQ.has('perf');
 // scroll map (fraction of the whole intro). Globe segment follows REF-001 EFX-001-02 (rotation, shrink, fade).
 export const MAP={title:[.015,.11],globe:[0,.3],globeScale:[.03,.3],globeFade:[.19,.27],rim:[.15,.21],morph:[.22,.39],
  body:[.36,.45],lineOut:[.42,.56],heart:[.38,.47],cam:[.52,.72],enter:[.7,.8],waveFade:[.79,.81],mix:[.84,.95],end:[.965,.995]} as const;
@@ -109,7 +112,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  // P2: light shafts (scene-linear, before bloom) and grade/vignette/grain (after the output transform)
  // archive: the composer's buffers carry depth so the shaft pass can ray-march to the scene surface
  // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
- const composer=arch?new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)})):new EffectComposer(renderer);
+ const composer=arch?new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(PERF.has('msaa')?0:Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)})):new EffectComposer(renderer);
  composer.addPass(new RenderPass(scene,camera));
  if(arch&&!OFF('ifog'))composer.addPass(new URLSearchParams(location.search).get('shaftfx')==='raw'?arch.vol:arch.fogPass());   // 2026-11-10: smoothed half-res fog (Lab D-153) — ?shaftfx=raw = the old full-res pass
  const shafts=space?createShafts(renderer,camera,[figure.group.children[0],figure.heartMesh]):null;if(shafts)composer.addPass(shafts.pass);

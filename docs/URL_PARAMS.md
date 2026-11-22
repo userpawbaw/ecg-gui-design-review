@@ -75,6 +75,9 @@
 | `ovhover=near` | 겹치기 마우스 강조를 D-185 방식(선까지 거리 · 붙잡기)으로(D-187 비교) | 높이 영역 |
 | `ovzone=all` | 높이 영역의 폭을 QRS 포함 상위 0.5 %로(D-187 비교) | QRS 밖 |
 | `route=disease` · `disease=pvc` | 심질환 파형 탭으로 바로 열기 · 처음 고를 질환(normal · sbr · apc · afib · afl · pvc · bigeminy · vt · lbbb · rbbb · avb2, D-189) | 실험실 · pvc |
+| `intro=globe` | 이전 도입(지구 + 전 구간 스크롤, D-190 이전) | 새 도입(서고 첫 화면 · 고정 애니메이션) |
+| `introdim=0.55` · `introauto=9` | 도입 첫 화면 서고 밝기 · 심장까지 고정 애니메이션 길이(초) | 0.55 · 9 |
+| `perf=msaa,pr75,fog,bloom,grade,guard,dust,rig,climb,fluid,pr50,fps30` | 도입부 렉 후보 끄기(쉼표 목록) + 왼쪽 아래 FPS 표시. `npm run story:perf -- msaa,pr75` 가 이 주소로 연다(D-190). 같은 것을 하나씩: `ibloom=0` `ifog=0` `igrade=0` `iguard=0` `ipr=0.75` `idust=0` `irig=0` `iclimb=0` `ifps=30` `msaa=0` `fluid=0`, `fps=1` FPS 표시만, `introprof=1` 프레임 기록 | 모두 켬 |
 | `hrdbg=1` | 실시간 심박 계산을 매 프레임 `window.__hr`에 기록(시험용, D-188) | 끔 |
 | `ovdbg=1` | 겹치기 마우스 판정 거리를 `window.__ovDbg`에, 층(이름:앞 순서/단계)을 캔버스 `data-layers`에 기록(시험용, D-186) | 끔 |
 | `wave=prev`·`live`·`all` | 파형 그리기 비교(D-161). `prev` 이전(실시간 D-157 · 실험실 D-073 그리기), `live` 실시간 탭에만 실험실 효과 + 링 스트립 최적화, `all` 실험실 탭도 링 스트립. 실행 명령 `npm run story:wave-prev` · `story:wave-live` · `story:wave-all`이 이 값으로 연다. `naive`는 측정 전용 기준선 | `all`(2026-11-08 사용자 선택) |

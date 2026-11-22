@@ -18,6 +18,7 @@
     "story:wave-all": "node scripts/local/run.mjs story:wave-all",
     "story:wave-live": "node scripts/local/run.mjs story:wave-live",
     "story:check": "node scripts/local/run.mjs story:check",
+    "story:perf": "node scripts/local/run.mjs story:perf",
     "story:pli": "node scripts/local/run.mjs story:pli",
     "story:bw": "node scripts/local/run.mjs story:bw",
     "story:ma": "node scripts/local/run.mjs story:ma",

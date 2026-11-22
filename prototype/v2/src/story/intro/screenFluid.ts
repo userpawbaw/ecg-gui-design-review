@@ -20,7 +20,7 @@ const DISTORT = .003, VEL_BLUR = 15, TAPS = 15, IDLE_S = 2.5;
 //  ?fluid=<배율> 외력 배율(기본 1 = 사이트), 0 = 끔. 값을 주면 움직임 줄이기 · 좁은 창 · 터치 장치에서도 켠다.
 const FQ = new URLSearchParams(location.search);
 export const FLUID_FORCED = FQ.has('fluid') && Number(FQ.get('fluid')) > 0;
-export const FLUID_GAIN = FQ.has('fluid') && Number.isFinite(Number(FQ.get('fluid'))) ? Math.max(0, Number(FQ.get('fluid'))) : 1;
+export const FLUID_GAIN = (FQ.get('perf') ?? '').split(',').includes('fluid') ? 0 : FQ.has('fluid') && Number.isFinite(Number(FQ.get('fluid'))) ? Math.max(0, Number(FQ.get('fluid'))) : 1;   // D-190 ?perf=…,fluid
 
 const VERT = `varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`;
 const ADVECT = `precision highp float;varying vec2 vUv;uniform sampler2D vel;uniform float dt,diss;uniform vec2 ratio;

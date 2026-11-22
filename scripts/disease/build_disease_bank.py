@@ -22,26 +22,29 @@ from ecgdn.eval.engine import trim_guard
 from run_exp import build_methods
 
 OUT = Path(sys.argv[1]); OUT.mkdir(parents=True, exist_ok=True)
-SEG_S, SHOW_S = 20.0, 10.0
+SHOW_S = float(__import__('os').environ.get('DISEASE_SHOW_S', 60)); SEG_S = SHOW_S + 2 * EVAL_GUARD_S   # 2026-11-22 사용자 「10초는 너무 짧다 … 60초」: 가운데 60 s 저장(앞뒤 5 s는 처리 가장자리)
 CONDS = ['mixed', 'ma_synth', 'em_synth']; SNRS = [0.0, 10.0, 20.0]
 CFG = {"methods": ["M_FE", "M01", "M02", "M03", "M04", "M05", "B01"],
        "dl_methods": {"M06": {"ckpt": "results/{tag}/m06_l1/best.pt"}, "M06L6": {"ckpt": "results/{tag}/m06_l6/best.pt"},
                       "M08": {"ckpt": "results/{tag}/m08_l1/best.pt"}, "M09": {"ckpt": "results/{tag}/m09_l1/best.pt"}}, "frontend": True}
 
-# 질환: (id, 이름, 기록, 조건). 조건은 가운데 10 s의 박동 기호 · 리듬 문자열에 대해 본다.
-def all_(beats, s): return beats and all(b in s for b in beats)
+# 질환: (id, 이름, 기록, 조건). 조건은 가운데 구간의 박동 기호 목록 b 와 리듬 비율 cov(리듬 → 구간 중 차지하는 비율)에 대해 본다.
+# 60 s 기준(10 s 때의 「V 2–4개」 같은 개수는 길이에 맞게 바꿈). 리듬은 구간 전체가 그 리듬이어야 하는 것(심방세동 · 조동 · 2도 차단 · 동서맥)과
+# 특정 박동이 섞여 있으면 되는 것(조기 수축 · 이단맥 · 빈맥 연발)으로 나눈다.
+def all_(beats, s): return bool(beats) and all(b in s for b in beats)
+def only(cov, r, k=.999): return cov.get(r, 0) >= k
 DISEASES = [
-    ('normal', '정상 동리듬', '100', lambda b, rh: rh == {'(N'} and all_(b, 'N')),
-    ('sbr', '동서맥', '232', lambda b, rh: rh == {'(SBR'}),
-    ('apc', '심방 조기 수축', '222', lambda b, rh: rh == {'(N'} and 2 <= b.count('A') <= 4 and all_(b, 'NA')),
-    ('afib', '심방세동', '219', lambda b, rh: rh == {'(AFIB'} and all_(b, 'N')),
-    ('afl', '심방 조동', '222', lambda b, rh: rh == {'(AFL'} and all_(b, 'N')),
-    ('pvc', '심실 조기 수축', '233', lambda b, rh: rh == {'(N'} and 2 <= b.count('V') <= 4 and all_(b, 'NV') and 'VV' not in ''.join(b)),
-    ('bigeminy', '심실 이단맥', '200', lambda b, rh: rh == {'(B'} and all_(b, 'NV')),
-    ('vt', '심실 빈맥(짧은 연발)', '200', lambda b, rh: '(VT' in rh and 'VVV' in ''.join(b)),
-    ('lbbb', '좌각 차단', '111', lambda b, rh: rh == {'(N'} and all_(b, 'L')),
-    ('rbbb', '우각 차단', '212', lambda b, rh: rh == {'(N'} and all_(b, 'R')),
-    ('avb2', '2도 방실 차단', '231', lambda b, rh: rh == {'(BII'} and all_(b, 'R')),
+    ('normal', '정상 동리듬', '100', lambda b, cov: only(cov, '(N') and all_(b, 'N')),
+    ('sbr', '동서맥', '232', lambda b, cov: only(cov, '(SBR')),
+    ('apc', '심방 조기 수축', '222', lambda b, cov: only(cov, '(N') and b.count('A') >= 3 and all_(b, 'NA') and 'AA' not in ''.join(b)),
+    ('afib', '심방세동', '219', lambda b, cov: only(cov, '(AFIB') and all_(b, 'N')),
+    ('afl', '심방 조동', '222', lambda b, cov: only(cov, '(AFL') and all_(b, 'N')),
+    ('pvc', '심실 조기 수축', '233', lambda b, cov: only(cov, '(N') and 4 <= b.count('V') <= 20 and all_(b, 'NV') and 'VV' not in ''.join(b)),
+    ('bigeminy', '심실 이단맥', '200', lambda b, cov: cov.get('(B', 0) >= .8 and all_(b, 'NV')),
+    ('vt', '심실 빈맥(짧은 연발)', '200', lambda b, cov: '(VT' in cov and 'VVV' in ''.join(b) and all_(b, 'NV')),
+    ('lbbb', '좌각 차단', '111', lambda b, cov: only(cov, '(N') and all_(b, 'L')),
+    ('rbbb', '우각 차단', '212', lambda b, cov: only(cov, '(N') and all_(b, 'R')),
+    ('avb2', '2도 방실 차단', '231', lambda b, cov: only(cov, '(BII')),
 ]
 assert all(d[2] in MITDB_SPLIT['test'] for d in DISEASES), 'DL 학습 누출: 시험 기록만'
 
@@ -63,12 +66,15 @@ for did, label, name, ok in DISEASES:
     rec = src.get(name); fs = rec.fs; n = int(SEG_S * fs); show = int(SHOW_S * fs); g0 = int(EVAL_GUARD_S * fs)
     spans, noise = rhythm_spans(name, fs, rec.x.size)
     cands = []
-    for st in range(0, rec.x.size - n, int(2 * fs)):
+    for st in range(0, rec.x.size - n, int(1 * fs)):
         c0, c1 = st + g0, st + g0 + show
         if any(st <= t < st + n for t in noise): continue
         sel = (rec.r_peaks >= c0) & (rec.r_peaks < c1); beats = list(rec.symbols[sel])
-        rh = {r for r, a, b in spans if a < c1 and b > c0}
-        if not ok(beats, rh): continue
+        cov = {}
+        for r, a, b in spans:
+            o = min(b, c1) - max(a, c0)
+            if o > 0: cov[r] = cov.get(r, 0) + o / show
+        if not ok(beats, cov): continue
         w = rec.x[st:st + n]; amp = np.percentile(np.abs(w - np.median(w)), 99)
         rough = float(np.median(np.abs(np.diff(w, 2)))) / max(amp, 1e-6)
         cands.append((rough, st))
@@ -99,11 +105,11 @@ for did, label, name, ok in DISEASES:
     index.append({'id': did, 'label': label, 'record': name, 'startSeconds': body['startSeconds'], 'candidates': len(cands),
                   'beatCounts': {s: sum(1 for b in beats if b['s'] == s) for s in sorted({b['s'] for b in beats})}, 'rhythm': sorted({r['r'] for r in rhythm})})
 sha = subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
-(OUT / 'index.json').write_text(json.dumps({'schema': 1, 'fs': 250, 'n': 2500, 'conds': CONDS, 'snrs': SNRS, 'diseases': index,
+(OUT / 'index.json').write_text(json.dumps({'schema': 1, 'fs': 250, 'n': int(SHOW_S * 250), 'seconds': SHOW_S, 'conds': CONDS, 'snrs': SNRS, 'diseases': index,
     'provenance': {'repository': 'userpawbaw/ECG_denoising_method_comparision', 'sourceCommit': sha, 'builder': 'scripts/disease/build_disease_bank.py',
                    'data': 'MIT-BIH Arrhythmia Database (PhysioNet, ODC-By 1.0), lead MLII, resampled to 250 Hz; DS2 test records only (not used to train the DL methods)',
                    'annotations': 'cardiologist beat symbols and rhythm labels (.atr)', 'reference': 'FE(x_raw)', 'noise': 'mixed = NSTDB test split; ma_synth/em_synth synthetic',
                    'selection': 'annotation criteria per disease, then the candidate with the lowest raw roughness (not by method performance)',
-                   'traceEncoding': 'signed int16 little-endian base64; mV = integer * scene.scale', 'time': 'central 10 s of a processed 20 s segment'}},
+                   'traceEncoding': 'signed int16 little-endian base64; mV = integer * scene.scale', 'time': f'central {SHOW_S:g} s of a processed {SEG_S:g} s segment'}},
     ensure_ascii=False, indent=1), encoding='utf-8')
 print('done', len(index))

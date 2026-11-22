@@ -12,7 +12,8 @@ import gsap from 'gsap';
 import Lenis from 'lenis';
 import {createGlobe} from './globe';
 import {createFigure,type FigureData} from './figure';
-import {createSpace,createShafts,createGrade,createFireflyGuard} from './space';
+import {createSpace,createShafts,createGrade,createFireflyGuard,createFinal} from './space';
+import {FXAAPass} from 'three/addons/postprocessing/FXAAPass.js';
 import {createArchive} from './archive';
 import {createSignalRig,SIGNAL_CLEAN,SIGNAL_NOISE,SIGNAL_OFF,type SignalState} from './signalRig';
 import {createSweep,type SweepView} from './sweep';
@@ -112,13 +113,17 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  // P2: light shafts (scene-linear, before bloom) and grade/vignette/grain (after the output transform)
  // archive: the composer's buffers carry depth so the shaft pass can ray-march to the scene surface
  // MSAA on the composer target (2026-10-12 user: "테두리에 계단 현상"): the canvas antialias flag does not reach a post chain
- const composer=arch?new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(PERF.has('msaa')?0:Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)})):new EffectComposer(renderer);
+ const composer=arch?new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:Math.min(PERF.has('msaa')||PERF.has('fxaa')?0:Number(new URLSearchParams(location.search).get('msaa')??4),renderer.capabilities.maxSamples),depthTexture:new THREE.DepthTexture(1,1,THREE.FloatType)})):new EffectComposer(renderer);
  composer.addPass(new RenderPass(scene,camera));
  if(arch&&!OFF('ifog'))composer.addPass(new URLSearchParams(location.search).get('shaftfx')==='raw'?arch.vol:arch.fogPass());   // 2026-11-10: smoothed half-res fog (Lab D-153) — ?shaftfx=raw = the old full-res pass
  const shafts=space?createShafts(renderer,camera,[figure.group.children[0],figure.heartMesh]):null;if(shafts)composer.addPass(shafts.pass);
  if(!OFF('iguard'))composer.addPass(createFireflyGuard());   // NaN / Inf / huge pixels never reach bloom (2026-11-10 flashes)
- const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.55,.35,.78);if(!OFF('ibloom'))composer.addPass(bloom);composer.addPass(new OutputPass());
- const grade=createGrade();if(!OFF('igrade'))composer.addPass(grade);
+ const bloom=new UnrealBloomPass(new THREE.Vector2(256,256),.55,.35,.78);if(!OFF('ibloom'))composer.addPass(bloom);
+ // D-190 ?perf=merge: 출력 변환 + 색보정 한 단계(createFinal) · ?perf=fxaa: MSAA 대신 마지막에 FXAA 한 단계(sRGB 화면에서)
+ const MERGE=PERF.has('merge'),FXAA=PERF.has('fxaa');
+ const grade=MERGE?createFinal(renderer.toneMappingExposure):createGrade();
+ if(MERGE)composer.addPass(grade);else{composer.addPass(new OutputPass());if(!OFF('igrade'))composer.addPass(grade);}
+ const fxaa=FXAA?new FXAAPass():null;if(fxaa)composer.addPass(fxaa);
  const grid=createGrid(dom.grid);
  const sweep=createSweep(dom.sweep,{gridHot:grid.hot,fs:data.fs,loop:data.loop,input:{values:data.input,color:SWEEP_COLORS.input,glow:.45,core:.78,white:.35},output:{values:data.output,color:SWEEP_COLORS.output},mvPerBox:3.6});
 
@@ -150,7 +155,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  const box=()=>({l:.47*W,r:.93*W,t:.34*H,b:.72*H});
  function resize(){
   titleW=-1;W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio||1,PR_CAP);
-  renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);bloom.resolution.set(W*pr/2,H*pr/2);
+  renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);fxaa?.setSize(W*pr,H*pr);bloom.resolution.set(W*pr/2,H*pr/2);
   shafts?.setSize(W*pr,H*pr);space?.setPx(H,pr);arch?.setPx(H,pr);grade.uniforms.uAspect.value=W/H;
   camera.aspect=W/H;camera.updateProjectionMatrix();figure.setResolution(W*pr,H*pr);
   const b=box(),mv=mvPerBoxFor(b,2.5);sweep.resize(b,mv);grid.resize(b,2.5,mv);

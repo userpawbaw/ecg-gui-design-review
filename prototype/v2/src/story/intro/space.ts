@@ -157,3 +157,20 @@ export function createGrade(){
     c+=(h(vUv*1000.+uTime)-.5)*(.012+.014*uSpace);              // grain
     gl_FragColor=vec4(clamp(c,0.,1.),1.);}`});
 }
+
+// D-190 ?perf=merge: 출력 변환(ACES 톤 매핑 · 노출 · sRGB) + 색보정(createGrade)을 한 단계로 — 화면 전체 처리 한 번을 줄인다.
+// 결과는 OutputPass → createGrade 와 같은 식(같은 순서). 사용자 2026-11-22 「후처리 한번에 + FXAA 적용 … 비교하게」.
+export function createFinal(exposure:number){
+ return new ShaderPass({uniforms:{tDiffuse:{value:null},toneMappingExposure:{value:exposure},uTime:{value:0},uAspect:{value:1},uSpace:{value:0}},
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+  fragmentShader:`#include <tonemapping_pars_fragment>
+   #include <colorspace_pars_fragment>
+   uniform sampler2D tDiffuse;uniform float uTime,uAspect,uSpace;varying vec2 vUv;
+   float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
+   void main(){vec4 o=texture2D(tDiffuse,vUv);o.rgb=ACESFilmicToneMapping(o.rgb);o=sRGBTransferOETF(o);vec3 c=o.rgb;
+    float l=dot(c,vec3(.2126,.7152,.0722));
+    c*=mix(vec3(1.),vec3(1.05,1.,.92),uSpace);c=mix(vec3(l),c,1.+.12*uSpace);c=mix(c,smoothstep(0.,1.,c),.35*uSpace);
+    vec2 q=(vUv-.5)*vec2(uAspect,1.);c*=mix(1.,.78,smoothstep(.5,1.15,length(q))*(.4+.6*uSpace));
+    c+=(h(vUv*1000.+uTime)-.5)*(.012+.014*uSpace);
+    gl_FragColor=vec4(clamp(c,0.,1.),1.);}`});
+}

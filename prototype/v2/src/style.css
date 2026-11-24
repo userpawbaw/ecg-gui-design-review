@@ -274,3 +274,36 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 .disease-features:not(.reduced) .df-hl.on.thick,.disease-features:not(.reduced) .df-hl.on.ring{animation:df-pulse 1.4s ease-in-out infinite}
 @keyframes df-pulse{50%{opacity:.55}}
 .df-foot{margin:2px 0 0;font-size:12px;color:#8fa3ad}
+/* D-192 질환 특징 투어 덧층 — 캔버스 바로 위, 포인터는 통과(요약 표식만 받음) */
+.plot-wrap{position:relative}
+.dt-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:inherit}
+.dt-dim,.dt-dof{position:absolute;inset:0;visibility:hidden;opacity:0;-webkit-mask-composite:source-in;mask-composite:intersect;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat}
+.dt-dim{background:radial-gradient(120% 140% at 50% 50%,rgb(3 9 12 / .5),rgb(1 4 6 / .78))}
+.dt-dof{backdrop-filter:blur(1.8px) saturate(.55);-webkit-backdrop-filter:blur(1.8px) saturate(.55)}
+.dt-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.dt-ghost{fill:none;stroke:#a9dcff;stroke-width:1.7;stroke-dasharray:5 4;stroke-linejoin:round;filter:drop-shadow(0 0 4px rgb(143 211 255 / .55))}
+.dt-cal path{fill:none;stroke:#ffd98a;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.dt-cal.v path{stroke-dasharray:1;stroke-width:1.2;stroke:rgb(255 217 138 / .85)}
+.dt-cal text{fill:#ffe7b3;font:600 12.5px 'IBM Plex Mono','Malgun Gothic',monospace;paint-order:stroke;stroke:rgb(4 12 16 / .85);stroke-width:3px}
+.dt-lead{fill:none;stroke:rgb(255 236 200 / .7);stroke-width:1}
+.dt-dot{fill:#fff1d2;filter:drop-shadow(0 0 5px rgb(255 220 150 / .9))}
+.dt-pin{pointer-events:auto;cursor:help}.dt-pin circle{fill:rgb(10 26 33 / .85);stroke:#ffd98a;stroke-width:1.2}.dt-pin text{fill:#ffe7b3;font:700 11px 'IBM Plex Mono',monospace}
+.dt-card{position:absolute;left:0;top:0;width:max-content;max-width:min(440px,46%);display:grid;gap:4px;padding:14px 18px 15px;border-radius:12px;visibility:hidden;opacity:0;transform-origin:50% 50%;
+ background:rgb(9 22 28 / .94);border:1px solid #2e4b55;color:#eef5f6}
+.dt-card.glass{background:linear-gradient(160deg,rgb(30 52 60 / .52),rgb(8 20 26 / .62));border:1px solid rgb(255 255 255 / .08);border-top-color:rgb(255 255 255 / .2);
+ backdrop-filter:blur(10px) saturate(1.2);-webkit-backdrop-filter:blur(10px) saturate(1.2);box-shadow:0 1px 0 rgb(255 255 255 / .06) inset,0 6px 14px rgb(0 0 0 / .35),0 28px 60px rgb(0 0 0 / .5)}
+.dt-k{font:600 10px 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#ffd98a;opacity:.85}
+.dt-t{font-size:21px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.dt-v{white-space:nowrap;font:500 13px 'IBM Plex Mono','Malgun Gothic',monospace;color:#cfe0e4;line-height:1.5}
+.tour-list{list-style:none;margin:6px 0 10px;padding:0;display:grid;gap:4px;counter-reset:tl}
+.tour-list li{counter-increment:tl}
+.tour-list button{position:relative;width:100%;text-align:left;display:block;padding:9px 10px 11px 32px;border-radius:8px;border:1px solid transparent;background:none;min-height:40px;font-size:14px;font-weight:600;color:#8fa3ad;transition:color .5s,background .5s,border-color .5s;overflow:hidden}
+.tour-list button::before{content:counter(tl);position:absolute;left:11px;top:10px;font:600 12px 'IBM Plex Mono',monospace;opacity:.7}
+.tour-list li.on button{color:#fff1c2;background:rgb(255 214 102 / .08);border-color:rgb(255 214 102 / .45)}
+.tour-list i{position:absolute;left:10px;right:10px;bottom:4px;height:2px;border-radius:2px;background:#ffd98a;transform-origin:0 50%;animation:tl-prog linear forwards}
+@keyframes tl-prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.tour-opts{margin:4px 0 8px;font-size:12px}.tour-opts summary{cursor:pointer;padding:4px 0;color:#496459}
+.tour-opt{display:flex!important;align-items:center;gap:7px;padding:3px 0}.tour-opt small{margin-left:auto;font:10px 'IBM Plex Mono',monospace;color:#8a9c94}
+.tour-opts button{min-height:30px;padding:3px 10px;margin-top:4px;font-size:12px}
+.disease-noisy{min-height:36px;font-size:12px}
+@media (prefers-reduced-motion:reduce){.tour-list i{animation:none;transform:none}}

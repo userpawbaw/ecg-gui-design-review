@@ -15,7 +15,10 @@ export const labStats={frames:0,ms:0};(globalThis as unknown as {__labStats:type
 export const SHOWN_COLORS=['#67e7c3','#97c2ff','#c9a7ff','#ffa8c5','#e8d27a','#8fe3ff'];   // D-165 표시 기법 행 색(추가 순서)
 type Props={data:Loaded;transport:Transport;mode:Mode;span:number;inspect:boolean;amplitude:number;reference:number;method:string;preview:string|null;shown:string[];large?:boolean;soft:boolean;residual?:boolean;gain?:number;
  /** D-185 실험실 겹치기: 입력 · 기법을 한 칸에(동일 축 · 동일 진폭). pins = 범례 단추로 고정한 계열, chip = 범례 단추 위 계열, onTiers = 계열별 거칠기 단계 알림 */
- overlay?:boolean;pins?:string[];chip?:string|null;onTiers?:(t:Record<string,number>)=>void};
+ overlay?:boolean;pins?:string[];chip?:string|null;onTiers?:(t:Record<string,number>)=>void;
+ /** D-192 질환 탭: 입력 행 이름 · 정상 기준 행(traces.normal, 입력 바로 아래, Reference 없음) · 그린 기하를 밖으로(설명 덧층이 시각 → 화면 좌표를 계산) */
+ inputLabel?:string;normalRow?:{label:string,color:string};geomOut?:{current:PlotGeom|null}};
+export type PlotGeom={w:number,h:number,left:number,right:number,pw:number,t:number,span:number,fs:number,amplitude:number,mode:Mode,inspect:boolean,rows:{id:string,t:number,b:number}[]};
 // D-183 단계 → 기본 배율(겹치기): 깨끗 1 · 중간 .62 · 거침 .4, 번짐 · 흰빛은 깨끗한 것만. 입력은 실시간 입력과 같게 .55 · 번짐 없음
 const TIER_BASE=[{a:1,g:1,w:1},{a:.62,g:0,w:0},{a:.4,g:0,w:0}],IN_BASE={a:.55,g:0,w:0};
 const BG='#0a1a21',GAP_S=.12,OV_DBG=new URLSearchParams(location.search).has('ovdbg');
@@ -55,12 +58,12 @@ export function Plot(p:Props){
  const sig=[t,q.mode,q.span,q.inspect,q.amplitude,q.reference,q.method,q.preview,q.shown.join(','),q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,rect.width,rect.height,dpr,fx.current.level,OV,OV?ovNames.map(n=>(F.e.get(n)??0).toFixed(3)).join(',')+F.f.toFixed(3)+'|'+curZone+(F.px!==null)+Z.hold.sig+Math.round(Z.y):''].join('|');
  // a collapsed canvas (0 × 0 while the layout changes) is skipped: drawImage of a 0-size static layer throws
  if(sig!==signature&&rect.width>=1&&rect.height>=1){signature=sig;const W=Math.round(rect.width*dpr),H=Math.round(rect.height*dpr);if(c.width!==W||c.height!==H){c.width=W;c.height=H;}g.setTransform(dpr,0,0,dpr,0,0);const w=rect.width,h=rect.height;
- const rows=[{id:'input',label:'입력',color:'#ffbc79'},...q.shown.map((id,k)=>({id,label:(NAME[id]??id)+(id===q.method?' · 선택 기법':''),color:SHOWN_COLORS[k%SHOWN_COLORS.length]}))];   // D-165: 표시 목록 순서대로 아래에 쌓인다
+ const rows=[{id:'input',label:q.inputLabel??'입력',color:'#ffbc79'},...(q.normalRow&&q.data.traces.normal?[{id:'normal',...q.normalRow}]:[]),...q.shown.map((id,k)=>({id,label:(NAME[id]??id)+(id===q.method?' · 선택 기법':''),color:SHOWN_COLORS[k%SHOWN_COLORS.length]}))];   // D-165: 표시 목록 순서대로 아래에 쌓인다
  const count=rows.length;const rh=OV?h:(h-(q.residual?144:0))/count;if(q.residual)rows.push({id:q.method,label:`차이 신호(출력 − Reference) · 표시 ×${q.gain||1}`,color:'#c0ced7'});g.font='11px system-ui';const labelWidth=Math.max(...amplitudeTicks(q.amplitude,q.residual?q.gain||1:1).concat(amplitudeTicks(q.amplitude)).map(t=>g.measureText(t.label).width));const left=Math.max(72,labelWidth+26),right=w-18,pw=right-left;
  const boxes:Box[]=rows.map((_,r)=>{const isDiff=q.residual&&r===count,top=OV?36:r*rh+36;return{l:left,r:right,t:top,b:OV?h-30:isDiff?top+72:(r+1)*rh-30};});
  // static layer (background, ECG paper, labels, amplitude ticks) + a brighter paper copy for A — redrawn only when the layout changes
  const clearBg=document.body.classList.contains('lab-dark')&&!c.closest('.large-dialog');   // D-074: the panel shows the archive faintly through
- const bs=[w,h,dpr,q.amplitude,q.span,q.residual,q.gain,q.method,q.shown.join(','),clearBg,OV].join('|');
+ const bs=[w,h,dpr,q.amplitude,q.span,q.residual,q.gain,q.method,q.shown.join(','),clearBg,OV,q.inputLabel,q.normalRow?.label].join('|');
  if(bs!==bgSig){bgSig=bs;for(const [cv,cg] of [[bg,bgg],[hot,hg]] as const){cv.width=W;cv.height=H;cg.setTransform(dpr,0,0,dpr,0,0);cg.clearRect(0,0,w,h);}
   if(!clearBg){bgg.fillStyle=BG;bgg.fillRect(0,0,w,h);}
   rows.forEach((row,r)=>{if(OV&&r>0)return;const isDiff=q.residual&&r===count,b=boxes[r],amp=isDiff?q.amplitude/(q.gain||1):q.amplitude;
@@ -120,12 +123,12 @@ export function Plot(p:Props){
  if(useStrip){const sr=strips[r]??=new StripRow(),off=q.data.offset,cl=q.data.traces.clean,a=q.data.traces[row.id]!,H=Math.min(q.data.n-1,Math.floor(t*q.data.fs)),cnt=count_;
   const yv=(arr:Float32Array,res:boolean)=>(k:number)=>{const i=k-off;return top+ph/2-(res?(arr[i]-cl[i])*(q.gain||1):arr[i])/q.amplitude*ph/2;};
   sr.configure([w,h,dpr,cnt,q.mode,q.amplitude,q.reference,q.gain,q.method,q.shown.join(','),q.data.scene.id,off,row.id,isDiff,top,ph,left,pw].join('|'),{l:left,t:top,w:pw,h:ph,nCols:cnt,dx:pw/cnt,dpr},level);
-  sr.update(H,off,[...(isDiff||OV?[]:[{y:yv(cl,false),color:'#c4c6c7',width:1.8,alpha:q.reference,lit:false,glow:false}]),{y:yv(a,!!isDiff),color:row.color,width:1.2,alpha:1,lit:!isDiff,glow:!isDiff}]);
+  sr.update(H,off,[...(isDiff||OV||row.id==='normal'?[]:[{y:yv(cl,false),color:'#c4c6c7',width:1.8,alpha:q.reference,lit:false,glow:false}]),{y:yv(a,!!isDiff),color:row.color,width:1.2,alpha:1,lit:!isDiff,glow:!isDiff}]);
   ramps.build(q.span,GAP_S,ERASE_S);sr.clearAhead(H,Math.floor(GAP_S*q.data.fs)-1);
   const rightX=right-(t*q.data.fs+1-H)/cnt*pw;
   composeRow(g,sr,ramps,layer,{sweep:q.mode==='sweep',head:H,headX:q.mode==='sweep'?headX:rightX,rightX,r:right,white:(isDiff?0:OV?.6:lit?1.15:.8)*em.whiteK,glow:(isDiff?0:OV?.35:lit?.55:.35)*em.glowK/* 2026-11-10 사용자: 가운데 기법 행도 입력과 같은 빛(이전 0) */,level,liveK:1,span:q.span,gapS:GAP_S,tailS:GAP_S+ERASE_S,alphaK:em.alphaK});
  }else{
- if(!isDiff&&!OV)trace(q.data.traces.clean,'#c4c6c7',1.8,q.reference);   // thinner lines (user 2026-10-18 "선 두께도 좀 더 줄여"): Reference 2.4 → 1.8, traces 1.6 → 1.2
+ if(!isDiff&&!OV&&row.id!=='normal')trace(q.data.traces.clean,'#c4c6c7',1.8,q.reference);   // thinner lines (user 2026-10-18 "선 두께도 좀 더 줄여"): Reference 2.4 → 1.8, traces 1.6 → 1.2
  trace(q.data.traces[row.id],row.color,1.2,Math.min(1,em.alphaK),false,!!isDiff,(isDiff?0:OV?.6:lit?1.15:.8)*em.whiteK,(isDiff?0:OV?.35:lit?.55:.35)*em.glowK);}   // 겹치기: 여러 줄의 흰빛 · 번짐이 더해져 색이 하얗게 바래지 않게 실시간 겹치기 값(.6 · .35)   // glow ×0.55 on the output; the input too (user 2026-10-18 "입력에도 이 효과가 포함"), lower — its dense noise stacks far more glow per pixel (intro sweep.ts)
  if(foc&&q.preview&&!q.shown.includes(q.preview))trace(q.data.traces[q.preview],'#f6d18d',1.2,1,true);
  // head marker: a small hot point at the newest sample (brighter on the selected output)
@@ -135,14 +138,14 @@ export function Plot(p:Props){
  if(!OV||firstOv){g.fillStyle='#adc3ce';g.font='12px system-ui';for(let k=0;k<=4;k++){const at=q.inspect?Math.max(0,t-q.span)+k*Math.min(t,q.span)/4:t-q.span+k*q.span/4;const label=q.mode==='sweep'&&!q.inspect?(k*q.span/4).toFixed(1)+'s 위치':at<0?'—':at.toFixed(1)+'s';g.fillText(label,left+k*pw/4-(k===4?55:0),bottom+20);}}
  // reduced motion: the plain sweep line stays (no light column)
  if(q.mode==='sweep'&&live&&!fxOn&&(!OV||firstOv)){g.strokeStyle='#bfd8e0';g.lineWidth=1;g.beginPath();g.moveTo(headX,top);g.lineTo(headX,bottom);g.stroke();}
- });if(OV)geomRef.current={left,right,pw,top:boxes[0].t,ph:boxes[0].b-boxes[0].t,pts,ys:ysOv};else geomRef.current=null;
+ });if(q.geomOut)q.geomOut.current={w,h,left,right,pw,t,span:q.span,fs:q.data.fs,amplitude:q.amplitude,mode:q.mode,inspect:q.inspect,rows:rows.map((rw,i)=>({id:rw.id,t:boxes[i].t,b:boxes[i].b}))};if(OV)geomRef.current={left,right,pw,top:boxes[0].t,ph:boxes[0].b-boxes[0].t,pts,ys:ysOv};else geomRef.current=null;
  if(OV&&!HOVER_NEAR&&F.px!==null&&Z.hold.cur&&Number.isFinite(Z.y)){const col=new Map(rows.map(r=>[r.id,r.color]));drawZoneBar(c,{l:left,r:right,t:boxes[0].t,b:boxes[0].b,pw,ph:boxes[0].b-boxes[0].t},Z.hold.cur,Z.y,curZone,n=>col.get(n)??'#ccc');}
  if(OV_DBG)c.dataset.zones=Z.hold.cur?JSON.stringify({c:Math.round(Z.y),...Z.hold.cur}):'';if(q.transport.playing){labStats.frames++;labStats.ms+=performance.now()-t0;}c.dataset.time=t.toFixed(3);c.dataset.mode=q.inspect?'inspect':q.mode;c.dataset.difference=String(!!q.residual);c.dataset.fx=String(fx.current.level);
  if(q.transport.playing){const f=fx.current,dt=t0-f.last;f.last=t0;if(dt>0&&dt<250){f.ema=f.frames?f.ema*.95+dt*.05:dt;f.frames++;}c.dataset.frameMs=f.ema.toFixed(1);
   if(FX_PIN===null&&f.frames>90&&f.level>0&&f.ema>26){f.level--;f.frames=0;}}
  }if(q.transport.playing||ovMoving||(OV&&F.px!==null&&!!F.target))raf=requestAnimationFrame(draw);};drawRef.current=()=>{cancelAnimationFrame(raf);draw();};draw();const resize=new ResizeObserver(()=>{cancelAnimationFrame(raf);signature='';draw();});resize.observe(c);return()=>{cancelAnimationFrame(raf);resize.disconnect();};
- },[p.data,p.transport.playing,p.mode,p.span,p.inspect,p.amplitude,p.reference,p.method,p.preview,p.shown.join(','),p.large,p.soft,p.residual,p.gain,p.overlay]);
+ },[p.data,p.transport.playing,p.inputLabel,p.normalRow?.label,p.mode,p.span,p.inspect,p.amplitude,p.reference,p.method,p.preview,p.shown.join(','),p.large,p.soft,p.residual,p.gain,p.overlay]);
  useEffect(()=>{drawRef.current();},[p.pins?.join(','),p.chip]);
- const ov=!!p.overlay&&!p.residual,onMove=(e:React.PointerEvent<HTMLCanvasElement>)=>{if(!ov)return;const r=e.currentTarget.getBoundingClientRect();setPointer(focus.current,e.clientX-r.left,e.clientY-r.top);drawRef.current();},onLeave=()=>{setPointer(focus.current,null,null);drawRef.current();},onClick=(e:React.MouseEvent<HTMLCanvasElement>)=>{if(!ov)return;const r=e.currentTarget.getBoundingClientRect();focus.current.click={x:e.clientX-r.left,y:e.clientY-r.top};drawRef.current();};
- return <canvas ref={canvas} onPointerMove={onMove} onPointerLeave={onLeave} onClick={onClick} className={'ecg-canvas '+(ov?'overlay ':'')+(p.large?'large':'')+(!ov&&p.shown.length>1?' three':'')+(!ov&&p.shown.length>2?' more':'')+(p.residual?' difference':'')} style={!ov&&p.shown.length>2?{['--xr' as string]:p.shown.length-2} as React.CSSProperties:undefined} role="img" aria-label={`동일 시간축 · 진폭의 입력, ${p.shown.join(' · ')} 출력과 회색 Reference${p.preview?' · 점선 '+p.preview:''}${p.residual?' · 차이 신호':''}`}/>;
+ const nRows=p.shown.length+(p.normalRow&&p.data.traces.normal?1:0),ov=!!p.overlay&&!p.residual,onMove=(e:React.PointerEvent<HTMLCanvasElement>)=>{if(!ov)return;const r=e.currentTarget.getBoundingClientRect();setPointer(focus.current,e.clientX-r.left,e.clientY-r.top);drawRef.current();},onLeave=()=>{setPointer(focus.current,null,null);drawRef.current();},onClick=(e:React.MouseEvent<HTMLCanvasElement>)=>{if(!ov)return;const r=e.currentTarget.getBoundingClientRect();focus.current.click={x:e.clientX-r.left,y:e.clientY-r.top};drawRef.current();};
+ return <canvas ref={canvas} onPointerMove={onMove} onPointerLeave={onLeave} onClick={onClick} className={'ecg-canvas '+(ov?'overlay ':'')+(p.large?'large':'')+(!ov&&nRows>1?' three':'')+(!ov&&nRows>2?' more':'')+(p.residual?' difference':'')} style={!ov&&nRows>2?{['--xr' as string]:nRows-2} as React.CSSProperties:undefined} role="img" aria-label={`동일 시간축 · 진폭의 입력, ${p.shown.join(' · ')} 출력과 회색 Reference${p.preview?' · 점선 '+p.preview:''}${p.residual?' · 차이 신호':''}`}/>;
 }

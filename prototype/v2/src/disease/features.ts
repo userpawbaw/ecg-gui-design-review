@@ -5,7 +5,7 @@ export type Beat = {i: number, s: string};
 export type BeatGeo = {r: number, on: number, off: number, qrsSign: number, tSign: number, p: [number, number], t: [number, number], qrsS: number};
 const med = (a: number[]) => { const s = [...a].sort((x, y) => x - y); return s.length ? s[s.length >> 1] : NaN; };
 /** 기준선: R 주변 ±0.6 s 중앙값(대부분 등전위선). R 앞 짧은 구간으로 잡았더니 조기 박동은 앞 박동의 T파가 걸려 기준선이 올라갔다(PVC 시험에서 발견). */
-function baseline(x: ArrayLike<number>, r: number, fs: number) { const a: number[] = []; for (let k = r - Math.round(.6 * fs); k < r + Math.round(.6 * fs); k++) if (k >= 0 && k < x.length) a.push(x[k]); return a.length ? med(a) : 0; }
+export function baseline(x: ArrayLike<number>, r: number, fs: number) { const a: number[] = []; for (let k = r - Math.round(.6 * fs); k < r + Math.round(.6 * fs); k++) if (k >= 0 && k < x.length) a.push(x[k]); return a.length ? med(a) : 0; }
 export function beatGeo(x: ArrayLike<number>, r: number, fs: number): BeatGeo {
   const W = Math.round(.2 * fs), d = (k: number) => Math.abs((x[Math.min(x.length - 1, k + 1)] ?? 0) - (x[Math.max(0, k - 1)] ?? 0));
   let dmax = 0; for (let k = r - W; k <= r + W; k++) if (k > 0 && k < x.length - 1) dmax = Math.max(dmax, d(k));

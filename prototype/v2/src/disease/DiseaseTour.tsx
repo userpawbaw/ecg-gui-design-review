@@ -20,21 +20,22 @@ const DUR: Record<Phase, number> = {idle: 0, run: 0, decel: .5, in: .6, hold: 4,
 const clamp = (v: number) => Math.max(0, Math.min(1, v)), ease = (u: number) => u * u * (3 - 2 * u);
 const NO_MOVE_GAP = .5;   // 초점 이동을 끄면 같은 화면 특징 사이 재생(초) — 다음 박동이 들어오기 전
 
-export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMode, getMode, beginPlay, onStatus, apiRef}: {
+export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMode, getMode, setSpan, getSpan, beginPlay, onStatus, apiRef}: {
   tour: Tour, normal: NormalRow, transport: Transport, geom: {current: PlotGeom | null}, opts: TourOpts, reduced: boolean,
-  setMode: (m: Mode) => void, getMode: () => Mode, beginPlay: (t: number) => void, onStatus: (s: TourStatus) => void, apiRef: {current: TourApi | null}}) {
+  setMode: (m: Mode) => void, getMode: () => Mode, setSpan: (s: number) => void, getSpan: () => number, beginPlay: (t: number) => void, onStatus: (s: TourStatus) => void, apiRef: {current: TourApi | null}}) {
   const root = useRef<HTMLDivElement>(null), dim = useRef<HTMLDivElement>(null), dof = useRef<HTMLDivElement>(null), card = useRef<HTMLDivElement>(null), svg = useRef<SVGSVGElement>(null);
   const live = useRef({opts, reduced, onStatus});live.current = {opts, reduced, onStatus};
   useEffect(() => {
-    const S = {phase: 'idle' as Phase, k: 0, from: -1, ph0: 0, clock: 0, last: 0, lastTime: transport.time, d0: 0, stopAt: 0, prevMode: 'sweep' as Mode, userSpeed: 1, done: false, seen: new Set<number>(), seq: 0};
+    const S = {phase: 'idle' as Phase, k: 0, from: -1, ph0: 0, clock: 0, last: 0, lastTime: transport.time, d0: 0, stopAt: 0, prevMode: 'sweep' as Mode, prevSpan: 0, userSpeed: 1, done: false, seen: new Set<number>(), seq: 0};
     const steps = tour.steps;
     const stopOf = (k: number): number => !live.current.opts.move && k > 0 && Math.abs(steps[k].stop - steps[k - 1].stop) < 1e-6 ? stopOf(k - 1) + NO_MOVE_GAP : steps[k].stop;
     const status = () => live.current.onStatus(S.phase === 'idle' ? null : {k: S.k, hold: S.phase === 'hold', holdS: holdS(S.k), seq: S.seq});
     const holdS = (k: number) => (k === 0 ? 4.5 : DUR.hold);
     const go = (ph: Phase) => { S.phase = ph; S.ph0 = S.clock; if (ph === 'hold') S.seq++; if (ph === 'hold' || ph === 'in' || ph === 'idle' || ph === 'run') status(); };
-    const finish = (restore: boolean) => { transport.speed = S.userSpeed; if (restore && S.phase !== 'idle') setMode(S.prevMode); S.phase = 'idle'; status(); };
+    const finish = (restore: boolean) => { transport.speed = S.userSpeed; if (restore && S.phase !== 'idle') { setMode(S.prevMode); if (S.prevSpan && S.prevSpan !== getSpan()) setSpan(S.prevSpan); } S.phase = 'idle'; status(); };
     apiRef.current = {
-      start: (k = 0) => { if (S.phase === 'idle') { S.prevMode = getMode(); S.userSpeed = transport.speed || 1; }
+      start: (k = 0) => { if (S.phase === 'idle') { S.prevMode = getMode(); S.prevSpan = getSpan(); S.userSpeed = transport.speed || 1; }
+        if (tour.span && tour.span !== getSpan()) setSpan(tour.span);   // 긴 휴지처럼 5 s 화면에 안 들어오는 특징
         S.k = k; S.from = -1; S.done = false; if (k === 0) S.seen.clear(); transport.speed = S.userSpeed; setMode('scroll');
         const t0 = k === 0 ? tour.start : Math.max(0, stopOf(k) - 2.2); S.lastTime = t0; beginPlay(t0); go('run'); },
       stop: () => finish(true), running: () => S.phase !== 'idle', done: () => S.done};
@@ -99,10 +100,19 @@ export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMo
       // 카드: 초점 묶음 왼쪽(공간 없으면 오른쪽), 두 행 경계 높이
       const c = card.current!; const show = (ph === 'in' || ph === 'hold' || ph === 'move' || ph === 'out') && es.length > 0;
       let cardBox: {x: number, y: number, w: number, h: number} | null = null;
-      if (show) { const L = Math.min(...es.map(e => e.cx - e.rx * .7)), R = Math.max(...es.map(e => e.cx + e.rx * .7)), cw = c.offsetWidth || 300, chh = c.offsetHeight || 110;
-        const rows = g.rows.slice(0, 2), mid = rows.length > 1 ? (rows[0].b + rows[1].t) / 2 : g.h / 2;
-        let x = L - 36 - cw; if (x < g.left + 6) x = R + 36; if (x + cw > g.w - 8) x = Math.max(g.left + 6, Math.min(g.w - cw - 8, L - cw - 12));
-        const y = Math.max(8, Math.min(g.h - chh - 8, mid - chh / 2)); cardBox = {x, y, w: cw, h: chh}; }
+      if (show) {
+        // 카드 자리: 후보(초점 왼쪽 · 오른쪽 × 가운데 · 위 · 아래, 그래프 왼쪽 끝) 중 초점 타원 · 측정 표식과 가장 덜 겹치는 곳(같으면 초점에 가까운 곳).
+        // 이동 중에도 자리가 흔들리지 않게 보간 전 「이번 단계」의 초점으로 계산.
+        const fin = cur.regions.map(ell).filter(Boolean) as {cx: number, cy: number, rx: number, ry: number}[], E = fin.length ? fin : es;
+        const cw = c.offsetWidth || 300, chh = c.offsetHeight || 110, L = Math.min(...E.map(e => e.cx - e.rx * .75)), R = Math.max(...E.map(e => e.cx + e.rx * .75));
+        const rows = g.rows.slice(0, 2), mid = rows.length > 1 ? (rows[0].b + rows[1].t) / 2 : g.h / 2, top = (rows[0]?.t ?? 0) + 4, bot = g.h - chh - 26;
+        const obs: [number, number, number, number, number][] = E.map(e => [e.cx - e.rx * .8, e.cy - e.ry * .8, e.cx + e.rx * .8, e.cy + e.ry * .8, 1]);
+        if (o.caliper) for (const cp of cur.calipers) { const b = box(cp.row); if (!b) continue; const x0 = xOf(cp.t0), x1 = xOf(cp.t1); if (!Number.isFinite(x0) || !Number.isFinite(x1)) continue;
+          const y = cp.kind === 'vline' ? b.t + 30 : cp.at === 'top' ? b.t + 16 : b.b - 14; obs.push([Math.min(x0, x1) - 30, y - 24, Math.max(x0, x1) + 30, y + 24, 6]); }   // 측정 글자는 가리면 안 됨(무게 6)
+        const xs = [L - 36 - cw, R + 36, ...Array.from({length: 9}, (_, i) => g.left + 10 + i * (g.w - g.left - cw - 18) / 8)], ys = [mid - chh / 2, (rows[0]?.b ?? mid) + 12, top, bot]; let best = Infinity;
+        for (const x0 of xs) for (const y0 of ys) { const x = Math.max(g.left + 6, Math.min(g.w - cw - 8, x0)), y = Math.max(6, Math.min(g.h - chh - 6, y0));
+          let ov = 0; for (const [a, b2, c2, d, wgt] of obs) ov += wgt * Math.max(0, Math.min(x + cw, c2) - Math.max(x, a)) * Math.max(0, Math.min(y + chh, d) - Math.max(y, b2));
+          const sc = ov + .02 * Math.hypot(x + cw / 2 - (L + R) / 2, y + chh / 2 - mid) * cw; if (sc < best) { best = sc; cardBox = {x, y, w: cw, h: chh}; } } }
       const ckey = `${show}|${k}|${cardA.toFixed(3)}|${cardBox ? Math.round(cardBox.x) + ',' + Math.round(cardBox.y) : ''}|${o.glass}`;
       if (ckey !== lastCard) { lastCard = ckey;
         c.style.visibility = show && cardA > .001 ? 'visible' : 'hidden'; c.style.opacity = String(cardA);
@@ -141,7 +151,7 @@ export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMo
       el.dataset.phase = st.phase; el.dataset.step = String(st.k);
     };
     raf = requestAnimationFrame(frame);
-    return () => { cancelAnimationFrame(raf); if (S.phase !== 'idle') { transport.speed = S.userSpeed; setMode(S.prevMode); } apiRef.current = null; live.current.onStatus(null); };
+    return () => { cancelAnimationFrame(raf); if (S.phase !== 'idle') { transport.speed = S.userSpeed; setMode(S.prevMode); if (S.prevSpan) setSpan(S.prevSpan); } apiRef.current = null; live.current.onStatus(null); };
   }, [tour, normal, transport, geom]);
   return <div ref={root} className="dt-layer" aria-hidden="true">
     <div ref={dof} className="dt-dof"/><div ref={dim} className="dt-dim"/>

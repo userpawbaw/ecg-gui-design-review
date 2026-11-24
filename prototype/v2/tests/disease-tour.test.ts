@@ -3,7 +3,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {decode} from '../src/engine.ts';
-import {buildNormalRow, pvcTour} from '../src/disease/tour.ts';
+import {buildNormalRow, pvcTour, buildTour, ROW_CFG, needsRef} from '../src/disease/tour.ts';
 const f = JSON.parse(readFileSync(new URL('../../../data/disease/pvc.json', import.meta.url), 'utf8'));
 const x = decode(f.scenes[0].traces.clean, f.scenes[0].scale, f.n), fs = f.fs;
 const row = buildNormalRow(x, f.beats, fs)!;
@@ -15,7 +15,7 @@ test('normal row: one placed beat per N beat at its R, abnormal beats at prev R 
   const r = row.placed[3].r; let k = r - 25; for (let i = r - 25; i <= r + 25; i++) if (row.trace[i] > row.trace[k]) k = i; assert.ok(Math.abs(k - r) <= 5);
 });
 test('pvc tour: three steps in time order with values computed from the waveform', () => {
-  const t = pvcTour(x, f.beats, fs, row, 5)!;
+  const t = pvcTour(x, f.beats, fs, row, 5)! as Required<ReturnType<typeof pvcTour> & {}>;
   assert.deepEqual(t.steps.map(s => s.id), ['early', 'wide', 'pause']);
   assert.ok(t.early > .1 && t.early < .6, 'early ' + t.early);
   assert.ok((t.pvc.v.off - t.pvc.v.on) / fs >= .12, 'PVC QRS wide');
@@ -24,4 +24,16 @@ test('pvc tour: three steps in time order with values computed from the waveform
   assert.ok(t.start < t.steps[0].stop - 2 && t.start >= 0);
   // 멈춘 화면 오른쪽 끝(stop)보다 다음 정상 박동 R이 뒤(①에서 아직 안 보임), ③에서는 보임
   assert.ok(t.pvc.next.r / fs > t.steps[0].stop && t.pvc.next.r / fs < t.steps[2].stop);
+});
+
+const load = (id: string) => { const d = JSON.parse(readFileSync(new URL(`../../../data/disease/${id}.json`, import.meta.url), 'utf8')); return {d, x: decode(d.scenes[0].traces.clean, d.scenes[0].scale, d.n)}; };
+const ref = (() => { const {d, x: rx} = load('normal'); return {x: rx, beats: d.beats}; })();
+for (const id of Object.keys(ROW_CFG)) test(`D-193 ${id}: normal row + three steps, in order, visible at their stop`, () => {
+  const {d, x: dx} = load(id), r = buildNormalRow(dx, d.beats, d.fs, ROW_CFG[id], needsRef(id) ? ref : undefined);
+  assert.ok(r, 'row'); const span = 5, t = buildTour(id, dx, d.beats, d.fs, r!, span, d.rhythm); assert.ok(t, 'tour');
+  assert.equal(t!.steps.length, 3); const sp = t!.span ?? span, dur = d.n / d.fs;
+  t!.steps.forEach((s, i) => { assert.ok(s.stop <= dur && s.stop - sp >= -1e-6, `${s.id} stop ${s.stop}`); if (i) assert.ok(s.stop >= t!.steps[i - 1].stop);
+    for (const g of s.regions) assert.ok(g.t0 >= s.stop - sp - 1e-6 && g.t1 <= s.stop + 1e-6 && g.t1 > g.t0, `${s.id} region ${g.row} ${g.t0.toFixed(2)}–${g.t1.toFixed(2)} @${s.stop.toFixed(2)}`);
+    assert.ok(!/NaN|Infinity/.test(s.value), s.value); });
+  assert.ok(t!.start <= t!.steps[0].stop - 2);
 });

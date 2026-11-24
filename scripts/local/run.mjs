@@ -9,7 +9,7 @@
 //   npm run v2:prepare           — build prototype/v2/public (keeps the checked-in methods.json)
 import {spawnSync,spawn} from 'node:child_process';
 import http from 'node:http';
-import {existsSync,readFileSync,readdirSync} from 'node:fs';
+import {existsSync,readFileSync,readdirSync,statSync} from 'node:fs';
 import {dirname,join,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';
@@ -33,7 +33,10 @@ export function pythonCandidates(platform=process.platform){return platform==='w
 function findPython(){for(const [bin,...pre] of pythonCandidates()){const v=capture(bin,[...pre,'--version']);if(v&&/^Python 3\./.test(v))return{bin,pre,version:v};}return null;}
 
 function ensureDeps(dir){if(!existsSync(join(dir,'node_modules'))){say(`의존성 설치: ${dir.replace(root,'.')}`);run('npm',['install','--no-audit','--no-fund'],{cwd:dir});}}
-function ensureV2Data(){const pub=join(root,'prototype/v2/public/archive.json');if(!existsSync(pub)||!existsSync(join(root,'prototype/v2/public/disease/index.json'))){say('자료 준비: prototype/v2/public (archive.json)');run(process.execPath,[join(root,'scripts/prepare-v2.cjs')]);}}
+// 2026-11-24: 질환 자료가 바뀌어도(10 s → 60 s, 기록 233 → 228) 예전 복사본이 남아 새 화면이 안 보였다 — 파일 크기 · 내용이 다르면 다시 복사.
+function diseaseStale(){const src=join(root,'data/disease'),dst=join(root,'prototype/v2/public/disease');if(!existsSync(src))return false;
+ for(const f of readdirSync(src)){const a=join(src,f),b=join(dst,f);if(!existsSync(b)||statSync(a).size!==statSync(b).size)return true;if(f==='index.json'&&readFileSync(a,'utf8')!==readFileSync(b,'utf8'))return true;}return false;}
+function ensureV2Data(){const pub=join(root,'prototype/v2/public/archive.json');if(!existsSync(pub)||!existsSync(join(root,'prototype/v2/public/disease/index.json'))||diseaseStale()){say('자료 준비: prototype/v2/public (archive.json · 심질환 파형)');run(process.execPath,[join(root,'scripts/prepare-v2.cjs')]);}}
 function browserPath(){
  // Ask the installed Playwright which browser build it expects (a different build in the cache does not count).
  if(process.env.PW_EXECUTABLE&&existsSync(process.env.PW_EXECUTABLE))return process.env.PW_EXECUTABLE;

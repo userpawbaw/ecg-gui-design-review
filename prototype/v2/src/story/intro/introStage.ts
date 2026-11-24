@@ -20,6 +20,7 @@ import {createSweep,type SweepView} from './sweep';
 import {beatPhase,type Loop} from './beats';
 import {createGrid,createScrollMix,mvPerBoxFor,scrambled} from './waveUi';
 import {createScreenFluid,FLUID_FORCED} from './screenFluid';
+import {createWaveMode} from '../noise/waveMode';
 
 export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Array,metrics:{snrIn:number,snrOut:number,cc:number}};
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
@@ -38,7 +39,7 @@ export const GATE_WAVE=.8;
  * 끝나면 파형 단계는 다시 스크롤. 위로 되돌리면 짧게 거꾸로 돌아 첫 화면. ?intro=globe 이면 이전 도입(지구 + 전 구간 스크롤). */
 const IQ=new URLSearchParams(typeof location==='undefined'?'':location.search);
 export const INTRO_GLOBE=IQ.get('intro')==='globe';
-const FIRST_S=.3,PV0=.25,PV1=.31,PVA=GATE_WAVE,AUTO_S=Number(IQ.get('introauto'))||9,BACK_S=2.2,DIM=IQ.has('introdim')?Number(IQ.get('introdim')):.55;
+const FIRST_S=.3,PV0=.25,PV1=.31,PVA=GATE_WAVE,AUTO_S=Number(IQ.get('introauto'))||11,BACK_S=2.2,DIM=IQ.has('introdim')?Number(IQ.get('introdim')):.55;
 // D-190 렉 후보 스위치(노트북에서 하나씩 시험): ?ibloom=0 ?ifog=0 ?igrade=0 ?iguard=0 ?ipr=1 (픽셀 비, 기본 1.25) ?msaa=0 ?fluid=0 ?idust=0 ?irig=0 ?iclimb=0 ?ifps=30 (프레임 상한)
 // ?fps=1 화면 왼쪽 아래 FPS · 프레임 시간 표시, ?introprof=1 window.__introProf(프레임별 CPU ms · GPU 대기 ms)
 // ?perf=msaa,bloom,fog,grade,guard,dust,rig,climb,fluid,pr75,pr50,fps30 — 같은 스위치를 한 매개변수로(npm run story:perf -- msaa,pr75; Windows 셸에서 & 없이), FPS 표시 켬
@@ -137,13 +138,23 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  let mode:'first'|'auto'|'wave'|'back'='first',modeT0=0,modeP0=PV1;
  const lockAt=(s:number)=>{if(!lenis)return;lenis.scrollTo(s*lenis.limit,{immediate:true,force:true});pRaw=s;};
  if(NEW&&opt.frozenP===null){p=PV0;pRaw=0;}
+ // D-190 2차(사용자 2026-11-24 「스크롤이 아니라 아무곳이나 클릭해서 시작(실험실 버튼 제외)」, 「파형 표시도 … 자동으로 심박에 따라 1회씩 늘어나게 …
+ // 다 채워진 후 스크롤에 따라 겹침 정도가 조절되는 기능은 유지」): 첫 화면은 멈춰 있고 화면(버튼 밖)을 누르거나 Enter · Space 로 시작 →
+ // 서고 이동 + 심장까지 고정 애니메이션 → 파형은 3잡음 장면과 같은 waveMode(R 피크마다 입력 → 출력 4분의 1씩, 다 차면 휠로 겹침 조절).
+ // 새 도입에서는 스크롤(Lenis)을 쓰지 않는다 — 휠은 파형 단계의 겹침에만.
+ const wm=createWaveMode();
+ const start=()=>{if(NEW&&mode==='first'&&opt.frozenP===null){mode='auto';modeT0=performance.now()/1000;modeP0=p;}};
+ const onClick=(e:MouseEvent)=>{if((e.target as HTMLElement).closest('button,a'))return;start();};
+ if(NEW){lenis?.stop();dom.content.style.height='100%';dom.wrapper.style.cursor='pointer';(dom.wrapper.parentElement??dom.wrapper).addEventListener('click',onClick);}
  // D-163: 파형 단계 휠 안내 — 마지막 입력(휠 · 키)에서 1.2 s 지나야 나타난다
  // D-164: 제목 유체 왜곡 오버레이(움직임 줄이기 · 터치 · 좁은 화면 · WebGL 실패면 없음 — DOM 글자 그대로)
  const screenFluid=opt.reduced&&!FLUID_FORCED?(console.info('[screenFluid] 꺼짐: 움직임 줄이기(prefers-reduced-motion — Windows 「애니메이션 효과」 끔이면 켜짐) · ?fluid=1 로 강제'),null):createScreenFluid(dom.title.parentElement!);   // D-167: whole intro, top layer
  const hintEl=dom.wheelHint?.querySelector<HTMLElement>('.it-wheelhint')??null;let lastInput=performance.now(),hintA=0;const introT0=performance.now();let firstA=0;
- const onKey=(e:KeyboardEvent)=>{if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(e.key))lastInput=performance.now();};
+ const onKey=(e:KeyboardEvent)=>{if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(e.key))lastInput=performance.now();
+  if(NEW){if((e.key==='Enter'||e.key===' ')&&mode==='first'&&!(e.target as HTMLElement)?.closest?.('button,a')){e.preventDefault();start();}
+   const k=({ArrowDown:120,PageDown:300,ArrowUp:-120,PageUp:-300} as Record<string,number>)[e.key];if(k&&mode==='wave')wm.scroll(k);}};
  addEventListener('keydown',onKey);
- const onWheel=(e:WheelEvent)=>{lastInput=performance.now();if(globe&&p<MAP.globe[1])spinVel=clamp(spinVel+e.deltaY*.0015,-.8,.8);};   // V1: wheel impulse spins the globe
+ const onWheel=(e:WheelEvent)=>{lastInput=performance.now();if(NEW&&mode==='wave')wm.scroll(e.deltaY);if(globe&&p<MAP.globe[1])spinVel=clamp(spinVel+e.deltaY*.0015,-.8,.8);};   // V1: wheel impulse spins the globe
  dom.wrapper.addEventListener('wheel',onWheel,{passive:true});
  const pointer={x:0,y:0,sx:0,sy:0};
  const onMove=(e:PointerEvent)=>{pointer.x=e.clientX/innerWidth*2-1;pointer.y=e.clientY/innerHeight*2-1;};
@@ -244,19 +255,16 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const small=el.firstElementChild as HTMLElement|null;if(small)small.style.opacity=String(1-e);   // the eyebrow is unreadable once shrunk
  }
 
- const state={get mode(){return mode;},p:0,t:0,frame:0,headAbs:0,heart:{V:0,flash:0},wave:wave as Wave,get mix(){return mix.value;},get label(){return labelState.current;}};
- let raf=0,disposed=false,shaftA=0,archShaft=0;
+ const state={get mode(){return mode;},get end(){return NEW?wm.atEnd:p>.95;},p:0,t:0,frame:0,headAbs:0,heart:{V:0,flash:0},wave:wave as Wave,get mix(){return NEW?wm.mix:mix.value;},get label(){return labelState.current;}};
+ let raf=0,disposed=false,shaftA=0,archShaft=0,endK=0;
  function frame(dt:number,draw=true){
   const t=clock();
   if(opt.frozenP!==null)p=opt.frozenP;
   else if(!NEW)p+=(pRaw-p)*damp(dt,.33);
   else{
    const now=performance.now()/1000;
-   if(mode==='first'&&pRaw>=FIRST_S-1e-3){mode='auto';modeT0=now;modeP0=p;lenis?.stop();lockAt(FIRST_S);}
-   else if(mode==='wave'&&pRaw<FIRST_S-.01){mode='back';modeT0=now;modeP0=p;lenis?.stop();}
-   if(mode==='auto'){const k=clamp((now-modeT0)/(opt.reduced?2:AUTO_S));p=modeP0+(PVA-modeP0)*(.5-.5*Math.cos(Math.PI*k));if(k>=1){mode='wave';lockAt(FIRST_S);lenis?.start();}}
-   else if(mode==='back'){const k=clamp((now-modeT0)/BACK_S);p=modeP0+(PV1-modeP0)*(.5-.5*Math.cos(Math.PI*k));if(k>=1){mode='first';lockAt(FIRST_S-.02);lenis?.start();}}
-   else{const want=mode==='first'?PV0+(PV1-PV0)*clamp(pRaw/FIRST_S):PVA+(1-PVA)*clamp((pRaw-FIRST_S)/(1-FIRST_S));p+=(want-p)*damp(dt,.33);}
+   if(mode==='auto'){const k=clamp((now-modeT0)/(opt.reduced?2:AUTO_S));p=modeP0+(PVA-modeP0)*(.5-.5*Math.cos(Math.PI*k));if(k>=1)mode='wave';}
+   else p=mode==='first'?PV0:PVA;
   }
   const firstK=NEW?clamp((p-PV0)/(PV1-PV0)):seg(p,...MAP.title);   // D-190: 제목 · 첫 안내는 첫 구간 진행으로
   state.p=p;state.t=t;state.frame++;
@@ -332,13 +340,14 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const headAbs=Math.floor(t*data.fs+1e-6);state.headAbs=headAbs;
   const hs=toScreen(H3);
   // D-055: the blend follows the scroll once the trace is running (replaces T2's quarter per R peak)
-  mix.update(wave.state==='on'?seg(p,...MAP.mix):0,dt,opt.reduced);
+  if(NEW)wm.update({procOn:wave.state==='on',prevR:ph.prev,t,dt,reduced:opt.reduced});else mix.update(wave.state==='on'?seg(p,...MAP.mix):0,dt,opt.reduced);
+  const mixV=NEW?wm.mix:mix.value,flashV=NEW?wm.flash:mix.flash;
   const enterA=seg(p,...MAP.enter);
-  const v:SweepView={t,startAbs:wave.start,mix:mix.value,flash:opt.reduced?0:mix.flash,gridAlpha:enterA,alpha:wave.state==='off'?0:waveA,reduced:opt.reduced,ring:null,comet:null};
+  const v:SweepView={t,startAbs:wave.start,mix:mixV,flash:opt.reduced?0:flashV,...(NEW?{weights:wm.weights()}:{}),gridAlpha:enterA,alpha:wave.state==='off'?0:waveA,reduced:opt.reduced,ring:null,comet:null};
   if(wave.state==='flying'&&!opt.reduced&&t>=wave.t0){
    const k=clamp((t-wave.t0)/(wave.t1-wave.t0)),a1=Math.floor(wave.t1*data.fs+1e-6);
    v.ring={x:hs.x,y:hs.y,r:30+(t-wave.t0)*420,a:.85*Math.exp(-(t-wave.t0)/.32)*waveA};
-   const trace=v.mix<.5?data.input:data.output;
+   const trace=mixV<.5?data.input:data.output;
    v.comet={x0:hs.x,y0:hs.y,x1:sweep.slotX(a1),y1:sweep.yOf(valueAtAbs(trace,a1)),k,a:waveA};
   }
   if(draw)sweep.draw(v);
@@ -347,7 +356,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   titleAt(firstK);
   dom.sub.style.opacity=String(1-(NEW?clamp(firstK/.4):seg(p,.015,.07)));{const want=performance.now()-introT0>2000&&(NEW?mode==='first'&&firstK<.05:p<.02)&&!(opt.frozenP!==null&&opt.frozenP>=(NEW?PV0+.003:.02))?1:0;firstA+=(want-firstA)*damp(dt,want?.3:.06);   // 2026-11-10: first-screen wheel hint, 2 s after entry, gone on the first scroll
    dom.hint.style.opacity=(firstA*.85).toFixed(3);dom.hint.querySelector('.it-wheelhint')?.classList.toggle('run',firstA>.02);}
-  if(hintEl){const want=wave.state==='on'&&p>=.8&&p<.95&&performance.now()-lastInput>800?1:0;   // 2026-11-10 user 「나타나지 않았어」: from the wave's entry, 0.8 s idle, brighter
+  if(hintEl){const want=(NEW?wm.awaiting:wave.state==='on'&&p>=.8&&p<.95&&performance.now()-lastInput>800)?1:0;   // 2026-11-10 user 「나타나지 않았어」: from the wave's entry, 0.8 s idle, brighter
    hintA+=(want-hintA)*damp(dt,want?.35:.1);hintEl.style.opacity=(hintA*.85).toFixed(3);
    if(want&&!hintEl.classList.contains('run'))hintEl.classList.add('run');else if(!want&&hintA<.02&&hintEl.classList.contains('run'))hintEl.classList.remove('run');}
   // P1: label block (0.85) arrives first, wave stage (1.45) starts lower and overtakes; both settle at q = 1
@@ -356,14 +365,14 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   dom.sweepWrap.style.transform=`translateY(${((1-q)*SPEED.wave*ENTER_D*H).toFixed(1)}px)`;
   dom.grid.style.opacity=String(q);dom.scale.style.opacity=String(q*.9);
   // L1: the current tier is filled with its bar grown; the other is an outline (REF-007 EFX-007-01)
-  const cur=mix.value>.999?'out':'in';
+  const cur=mixV>.999?'out':'in';
   if(cur!==labelState.current){labelState.current=cur;labelState.handoff=t;
    dom.labelIn.classList.toggle('is-current',cur==='in');dom.labelOut.classList.toggle('is-current',cur==='out');}
   if(t<labelState.handoff)labelState.handoff=t;
   const hk=cur==='out'?clamp((t-labelState.handoff)/.35):0;
   const mono=cur==='out'?(opt.reduced||hk>=1?outFinal:scrambled(outFinal,hk,Math.floor(t*30))):outBase;
   if(dom.outMono.textContent!==mono)dom.outMono.textContent=mono;
-  const filled=Math.floor(mix.value*4+1e-6);dom.steps.forEach((el,i)=>el.classList.toggle('on',i<filled));   // 25/50/75/100 %
+  const filled=NEW?wm.quarters:Math.floor(mix.value*4+1e-6);dom.steps.forEach((el,i)=>el.classList.toggle('on',i<filled));   // 25/50/75/100 %
   // L2: annotation pinned to an R sample that is 0.35–1.9 s old (stays with its sample until the sweep erases it)
   let annA=0;
   if(wave.state==='on'&&wave.start!==null){
@@ -371,12 +380,12 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
    for(let k=0;k<5;k++){const age=t-r,abs=Math.floor(r*data.fs+1e-6);if(abs<wave.start)break;if(age>=.35&&age<=1.9){pick=abs;break;}r=beatPhase(L,data.fs,r-1e-3).prev;}
    if(!Number.isNaN(pick)){
     if(pick!==labelState.annAbs){labelState.annAbs=pick;dom.ann.classList.remove('flip');void dom.ann.offsetWidth;dom.ann.classList.add('flip');}
-    const x=sweep.slotX(pick),trace=mix.value<.5?data.input:data.output,y=sweep.yOf(valueAtAbs(trace,pick)),top=sweep.box.t+6;
+    const x=sweep.slotX(pick),trace=mixV<.5?data.input:data.output,y=sweep.yOf(valueAtAbs(trace,pick)),top=sweep.box.t+6;
     dom.ann.style.transform=`translate(${x.toFixed(1)}px,${top.toFixed(1)}px)`;dom.ann.style.setProperty('--h',Math.max(0,y-top-6).toFixed(1)+'px');annA=waveA;
    }
   }
   dom.ann.style.opacity=String(annA);
-  const endA=seg(p,...MAP.end);dom.end.style.opacity=String(endA);dom.end.style.pointerEvents=endA>.5?'auto':'none';
+  const endA=NEW?(endK+=((wm.atEnd||wm.phase==='overlay'?1:0)-endK)*damp(dt,.3)):seg(p,...MAP.end);dom.end.style.opacity=String(endA);dom.end.style.pointerEvents=endA>.5?'auto':'none';
   if(!opt.reduced)dom.parallax.forEach((el,i)=>{const d=i===0?6:3;el.style.translate=`${(-pointer.sx*d).toFixed(2)}px ${(-pointer.sy*d*.6).toFixed(2)}px`;});
 
   if(draw){shafts?.render(shaftA);arch?.update(t,state.frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,archShaft);composer.render(dt);screenFluid?.update(dt);}   // occlusion buffer after the camera update; D-167 fluid right after the 3D frame (it re-reads the canvases before they are presented)
@@ -399,8 +408,8 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   pause(v:boolean){paused=v;},
   set(o:{p?:number,t?:number|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;},
   scrollToEnd(){lenis?.scrollTo('bottom');},
-  scrollTop(){lenis?.scrollTo(0,{immediate:true});lenis?.start();pRaw=0;p=NEW?PV0:0;mode='first';wave.state='off';wave.start=null;mix.reset();},
-  dispose(){disposed=true;gsap.ticker.remove(tick);hud?.remove();cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);removeEventListener('keydown',onKey);screenFluid?.dispose();
+  scrollTop(){lenis?.scrollTo(0,{immediate:true});if(!NEW)lenis?.start();pRaw=0;p=NEW?PV0:0;mode='first';wm.reset();wave.state='off';wave.start=null;mix.reset();},
+  dispose(){disposed=true;gsap.ticker.remove(tick);hud?.remove();cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);(dom.wrapper.parentElement??dom.wrapper).removeEventListener('click',onClick);removeEventListener('keydown',onKey);screenFluid?.dispose();
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
    globe?.dispose();figure.dispose();climber?.dispose();space?.dispose();arch?.dispose();rig?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds,height].forEach(x=>x?.dispose());composer.dispose();renderer.dispose();},
  };

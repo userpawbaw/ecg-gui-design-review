@@ -60,7 +60,7 @@ function IntroShellInner({bank,onNext,onLab,long}:Props&{long:LongScene|null}){
    .catch(err=>{console.error(err);setFailed(String(err?.message||err));});
   return()=>{alive=false;engine.current?.dispose();engine.current=null;delete (window as unknown as {__intro?:unknown}).__intro;};
  },[]);
- useEffect(()=>{const k=(e:KeyboardEvent)=>{if(e.key==='Enter'&&engine.current&&engine.current.state.p>.95)onNext();};addEventListener('keydown',k);return()=>removeEventListener('keydown',k);},[onNext]);
+ useEffect(()=>{const k=(e:KeyboardEvent)=>{if(e.key==='Enter'&&engine.current&&engine.current.state.end)onNext();};addEventListener('keydown',k);return()=>removeEventListener('keydown',k);},[onNext]);
  const lab=()=>onLab({axis:scene.s.axis,noise:scene.s.cond,snr:scene.s.snr,method:scene.winner});
  return <div className={'intro'+(ready?' ready':'')+(reduced?' reduced':'')}>
   <canvas ref={refs.gl} className="it-gl" aria-hidden="true"/>
@@ -72,7 +72,7 @@ function IntroShellInner({bank,onNext,onLab,long}:Props&{long:LongScene|null}){
   </div>
   <h1 ref={refs.title} className="it-title"><small>ECG DENOISING</small>심전도 <span ref={refs.noise} className="it-noise">잡음</span> 제거</h1>
   <p ref={refs.sub} className="it-sub">동일 기록 기반 심전도 잡음 제거 기법 비교</p>
-  <div ref={refs.hint} className="it-hint" aria-label="스크롤하여 진행">{/* 2026-11-10: 첫 화면 2 s 뒤 화면 중앙(지구 위) */}<WheelHint kind="arrows" still={reduced}/></div>
+  <div ref={refs.hint} className="it-hint" aria-label={INTRO_GLOBE?'스크롤하여 진행':'화면을 눌러 시작'}>{/* 2026-11-10: 첫 화면 2 s 뒤 화면 중앙 · D-190 2차: 새 도입은 「눌러서 시작」 */}{INTRO_GLOBE?<WheelHint kind="arrows" still={reduced}/>:<span className="it-click"><i aria-hidden="true"/>화면을 눌러 시작</span>}</div>
   <div ref={refs.wheelHint} className="it-wheelhint-slot"><WheelHint kind={WHEEL_HINT} still={reduced}/></div>
   <div ref={refs.labels} className="it-labels" aria-live="polite">
    <div ref={refs.labelIn} className="it-lab in is-current"><i className="bar"/><b>입력 신호(잡음 포함)</b><small>INPUT · WHITE NOISE {scene.s.snr} dB · {scene.s.record}</small></div>

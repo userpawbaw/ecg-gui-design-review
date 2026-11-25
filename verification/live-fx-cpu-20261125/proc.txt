@@ -1,0 +1,6 @@
+[캔버스 숨김] CPU %/10s: browser 1 · zygote 0 · gpu-process 111 · utility 0 · renderer 11
+  10 s 동안: 스타일 재계산 600 · 레이아웃 648 · 작업 시간 1009 ms · 스크립트 376 ms
+  돌고 있는 애니메이션: [object SVGAnimatedString]:g-pulse
+[캔버스 보임] CPU %/10s: browser 1 · zygote 0 · gpu-process 111 · utility 0 · renderer 39
+  10 s 동안: 스타일 재계산 194 · 레이아웃 240 · 작업 시간 9883 ms · 스크립트 1583 ms
+  돌고 있는 애니메이션: [object SVGAnimatedString]:g-pulse

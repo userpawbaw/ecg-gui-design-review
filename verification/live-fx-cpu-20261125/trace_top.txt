@@ -1,0 +1,30 @@
+  975 ms/s Renderer / CrRendererMain / RunTask
+  955 ms/s Renderer / CrRendererMain / ThreadControllerImpl::RunTask
+  936 ms/s Renderer / CrRendererMain / ProxyMain::BeginMainFrame
+  780 ms/s Renderer / CrRendererMain / Commit
+  699 ms/s Renderer / CrRendererMain / LayerTreeHost::DoUpdateLayers
+  536 ms/s GPU Process / CrGpuMain / RunTask
+  536 ms/s GPU Process / CrGpuMain / ThreadControllerImpl::RunTask
+  535 ms/s GPU Process / CrGpuMain / Scheduler::RunTask
+  535 ms/s GPU Process / CrGpuMain / GpuChannel::ExecuteDeferredRequest
+  533 ms/s GPU Process / CrGpuMain / GPUTask
+  532 ms/s GPU Process / CrGpuMain / WebGL
+  532 ms/s GPU Process / CrGpuMain / CommandBuffer::Flush
+  532 ms/s GPU Process / CrGpuMain / CommandBufferStub::OnAsyncFlush
+  532 ms/s GPU Process / CrGpuMain / CommandBufferService:PutChanged
+  528 ms/s Renderer / CrRendererMain / GLES2::ReadPixels
+  527 ms/s Renderer / CrRendererMain / ImplementationBase::WaitForCmd
+  527 ms/s Renderer / CrRendererMain / CommandBufferHelper::Finish
+  514 ms/s GPU Process / VizCompositorThread / RunTask
+  514 ms/s GPU Process / VizCompositorThread / ThreadControllerImpl::RunTask
+  513 ms/s Renderer / CrRendererMain / CommandBufferProxyImpl::WaitForGetOffset
+  508 ms/s GPU Process / VizCompositorThread / Graphics.Pipeline
+  495 ms/s GPU Process / VizCompositorThread / DisplayScheduler::OnBeginFrameDeadline
+  495 ms/s GPU Process / VizCompositorThread / DisplayScheduler::DrawAndSwap
+  495 ms/s GPU Process / VizCompositorThread / Display::DrawAndSwap
+  486 ms/s GPU Process / VizCompositorThread / DirectRenderer::DrawRenderPass
+  486 ms/s GPU Process / VizCompositorThread / DirectRenderer::DrawFrame
+  456 ms/s GPU Process / VizCompositorThread / SoftwareRenderer::DoDrawQuad
+  163 ms/s Renderer / CrRendererMain / WebFrameWidgetImpl::BeginMainFrame
+  160 ms/s Renderer / CrRendererMain / v8.callFunction
+  152 ms/s Renderer / CrRendererMain / Blink.Animate.UpdateTime

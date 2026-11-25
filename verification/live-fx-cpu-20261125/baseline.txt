@@ -1,0 +1,5 @@
+빈 페이지: gpu-process 0 % · renderer 0 %
+빈 rAF 반복: gpu-process 1 % · renderer 2 %
+rAF마다 작은 글자 변경: gpu-process 2 % · renderer 7 %
+rAF마다 작은 캔버스(100×100) 다시 그림: gpu-process 2 % · renderer 5 %
+rAF마다 화면 크기 캔버스 다시 그림: gpu-process 14 % · renderer 19 %

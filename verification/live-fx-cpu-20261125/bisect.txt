@@ -1,0 +1,6 @@
+그대로: gpu-process 109 % · renderer 39 %
+실시간 본문 전체 숨김: gpu-process 128 % · renderer 13 %
+실시간 껍데기(.live-shell) 숨김: gpu-process 131 % · renderer 13 %
+상단 머리글 숨김: gpu-process 111 % · renderer 36 %
+배경 서고 · 커튼 숨김 + bg=0: gpu-process 101 % · renderer 37 %
+body 아래 전부 숨김: gpu-process 133 % · renderer 5 %

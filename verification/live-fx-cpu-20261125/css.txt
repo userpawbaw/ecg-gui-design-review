@@ -1,0 +1,6 @@
+그대로: gpu-process 108 % · renderer 38 %
+CSS 애니메이션 정지: gpu-process 108 % · renderer 38 %
+backdrop-filter 끔: gpu-process 102 % · renderer 38 %
+둘 다: gpu-process 103 % · renderer 38 %
+둘 다 + 파형 캔버스 숨김: gpu-process 123 % · renderer 5 %
+배경 캔버스(서고) 숨김: gpu-process 107 % · renderer 38 %

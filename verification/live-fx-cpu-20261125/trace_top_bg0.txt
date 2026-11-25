@@ -1,0 +1,14 @@
+  993 ms/s Renderer / CrRendererMain / RunTask
+  974 ms/s Renderer / CrRendererMain / ThreadControllerImpl::RunTask
+  957 ms/s Renderer / CrRendererMain / ProxyMain::BeginMainFrame
+  782 ms/s Renderer / CrRendererMain / Commit
+  778 ms/s Renderer / CrRendererMain / LayerTreeHost::DoUpdateLayers
+  598 ms/s GPU Process / CrGpuMain / RunTask
+  598 ms/s GPU Process / CrGpuMain / ThreadControllerImpl::RunTask
+  596 ms/s GPU Process / CrGpuMain / Scheduler::RunTask
+  596 ms/s GPU Process / CrGpuMain / GpuChannel::ExecuteDeferredRequest
+  592 ms/s GPU Process / CrGpuMain / GPUTask
+  590 ms/s GPU Process / CrGpuMain / WebGL
+  590 ms/s GPU Process / CrGpuMain / CommandBuffer::Flush
+  589 ms/s GPU Process / CrGpuMain / CommandBufferStub::OnAsyncFlush
+  589 ms/s GPU Process / CrGpuMain / CommandBufferService:PutChanged

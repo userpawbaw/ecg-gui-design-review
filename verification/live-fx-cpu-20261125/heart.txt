@@ -1,0 +1,4 @@
+그대로: gpu-process 106 % · renderer 39 %
+3D 심장 끔: gpu-process 73 % · renderer 73 %
+3D 심장 끔 + 파형 캔버스 숨김: gpu-process 14 % · renderer 13 %
+3D 심장 끔 + 배경 끔: gpu-process 61 % · renderer 88 %

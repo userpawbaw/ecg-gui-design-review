@@ -8,7 +8,7 @@
 # 사용: python patch_bridge.py <원본 serial_bridge.py> <출력 경로>
 import sys
 
-PATCH = 'gui-d198'
+PATCH = 'gui-d198'   # D-201 모델 고정을 더해도 이름은 그대로(자체 시험이 이 이름을 본다)
 EDITS = [
     ('ROOT', 'ROOT = Path(__file__).resolve().parents[1]\n',
      'ROOT = Path(__import__("os").environ.get("ECG_BRIDGE_ROOT") or Path(__file__).resolve().parents[1])   # [GUI 패치 D-198]\n'),
@@ -71,6 +71,34 @@ EDITS = [
      '                         "rtf_proc": round(cpu / max(el, 1e-9), 3),\n'
      '                         "lag_ms": round((now - t_last_arr) * 1000.0),\n'
      '                         "skip": skip_n, "patch": "' + PATCH + '",\n'),
+    ('dlfreeze', '        return DLDenoiser(ckpt=ck, name=mid, frontend=False)\n',
+     '        _d = DLDenoiser(ckpt=ck, name=mid, frontend=False)\n'
+     '        # [GUI 패치 D-201] 모델을 입력 모양마다 한 번 고정(TorchScript freeze + optimize_for_inference) — 출력이 같은지 확인하고,\n'
+     '        # 다르면 원래 모델 그대로. 측정: 추론 CPU 10–30 % 감소, 출력 차이 0(verification/dl-light-20261125). ECG_BRIDGE_FREEZE=0 이면 끔.\n'
+     '        if __import__("os").environ.get("ECG_BRIDGE_FREEZE", "1") != "0" and not getattr(_d.model, "needs_cond", False):\n'
+     '            import torch as _t\n'
+     '            class _Frozen(_t.nn.Module):\n'
+     '                def __init__(s, m):\n'
+     '                    super().__init__(); s.m = m; s.c = {}\n'
+     '                def forward(s, x, *a):\n'
+     '                    if a:\n'
+     '                        return s.m(x, *a)\n'
+     '                    k = tuple(x.shape); f = s.c.get(k)\n'
+     '                    if f is None:\n'
+     '                        f = s.m\n'
+     '                        try:\n'
+     '                            import warnings\n'
+     '                            with warnings.catch_warnings(), _t.no_grad():\n'
+     '                                warnings.simplefilter("ignore")\n'
+     '                                g = _t.jit.optimize_for_inference(_t.jit.freeze(_t.jit.trace(s.m.eval(), x)))\n'
+     '                                if float((g(x) - s.m(x)).abs().max()) <= 1e-4:\n'
+     '                                    f = g\n'
+     '                        except Exception:\n'
+     '                            pass\n'
+     '                        s.c[k] = f\n'
+     '                    return f(x)\n'
+     '            _d.model = _Frozen(_d.model).eval()\n'
+     '        return _d\n'),
     ('reset', '            cpu = core = 0.0\n'
               '            t_pub = now\n',
      '            cpu = core = 0.0\n'

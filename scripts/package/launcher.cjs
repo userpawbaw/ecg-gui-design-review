@@ -130,17 +130,18 @@ async function sourceStep(){
 // ---------------------------------------------------------------- bridge supervisor (scripts/local/run.mjs supervise(), D-170)
 const LIVE_ALLOWED=new Set(['M_FE','M01','M02','M03','M04','M05','M05S','M06','M06L6','M08','M09']);
 // D-198(A): 가벼운 계산 — 무거운 기법(M04 · 딥러닝) 추론 간격 16 → 32. 시작 옵션 --light 또는 화면이 밀림을 보면 /restart {light:true}
-const HEAVY=['M04','M06','M06L6','M08','M09'];
-// 2026-11-25 사용자(VS Code에서 브리지가 「--hop-for M04=32」를 권함): M04는 늘 32 — 측정상 참값 RMSE 같음(D-198 hop_compare.txt). 가벼운 계산이면 나머지 무거운 기법도 32
-const ALWAYS32=['M04'];
-const lightArgs=(methods,on)=>{const h=methods.split(',').filter(m=>on?HEAVY.includes(m):ALWAYS32.includes(m));return h.length?['--hop-for',h.map(m=>m+'=32').join(',')]:[];};
+// D-201(사용자 「딥러닝 방식은 노트북에서 너무 무거운 것 같다」): 딥러닝 기법도 늘 32(계산 절반, 참값 RMSE 같음, +64 ms), 가벼운 계산이면 딥러닝 64(+192 ms, RMSE 같거나 낮음 — verification/dl-light-20261125)
+const DLM=['M06','M06L6','M08','M09'];
+const lightArgs=(methods,on)=>{const h=methods.split(',').filter(m=>m==='M04'||DLM.includes(m)).map(m=>m+'='+(on&&DLM.includes(m)?64:32));return h.length?['--hop-for',h.join(',')]:[];};
+// D-201: torch 스레드 1개 — 2개는 추론 시간은 비슷한데 CPU를 30–50 % 더 쓴다(스레드 맞춤). 사용자가 --torch-threads 를 주면 그 값
+const THREADS=a=>a.includes('--torch-threads')?[]:['--torch-threads','1'];
 const sup={state:'stopped',methods:'',err:'',child:null,light:has('--light')};
 function bridgeArgs(methods){
  const pass=[],skip=new Set(['--no-browser','--kiosk','--install-torch','--no-torch','--selftest','--selftest-dl','--light']);
  for(let i=0;i<argv.length;i++){const a=argv[i];if(skip.has(a))continue;if(a==='--root'||a==='--methods'){i++;continue;}
   if(SRC_FLAGS.has(a)){if(a==='--replay'&&/^(synth|csv)$/.test(argv[i+1]??''))i++;continue;}pass.push(a);}
  const src=pass.includes('--port')?[]:SOURCE.args;
- return ['scripts/serial_bridge.py',...src,'--serve','--http-port',String(PORT_BR),'--methods',methods,...pass,...(pass.includes('--hop-for')?[]:lightArgs(methods,sup.light))];}
+ return ['scripts/serial_bridge.py',...src,'--serve','--http-port',String(PORT_BR),'--methods',methods,...pass,...(pass.includes('--hop-for')?[]:lightArgs(methods,sup.light)),...THREADS(pass)];}
 function supervise(initial){
  let prev=null,gen=0,tries=0,since=0;sup.methods=initial;
  const start=()=>{const g=++gen;sup.state='starting';sup.err='';since=Date.now();say(`\n브리지 시작: --methods ${sup.methods}`);

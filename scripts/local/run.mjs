@@ -144,10 +144,11 @@ function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Pyth
 // 이 명령이 브리지를 자식 프로세스로 들고, 127.0.0.1:8764 제어 창구(앱은 같은 출처 /bridge-ctl 프록시)로 --methods 만 바꿔 다시 띄운다.
 //  GET /status → {state, methods, err}   POST /restart {methods:[…]} → 202
 // 허용 목록 밖 이름은 받지 않는다. 새로 띄운 브리지가 바로 죽으면(포트가 아직 안 풀림 등) 1 s 간격으로 4번 다시, 그래도 안 되면 이전 목록으로.
-const HEAVY=['M04','M06','M06L6','M08','M09'];
-// 2026-11-25 사용자(VS Code에서 브리지가 「--hop-for M04=32」를 권함): M04는 늘 32 — 측정상 참값 RMSE 같음(D-198 hop_compare.txt). 가벼운 계산이면 나머지 무거운 기법도 32
-const ALWAYS32=['M04'];
-const lightArgs=(methods,on)=>{const h=methods.split(',').filter(m=>on?HEAVY.includes(m):ALWAYS32.includes(m));return h.length?['--hop-for',h.map(m=>m+'=32').join(',')]:[];};
+// D-201(사용자 「딥러닝 방식은 노트북에서 너무 무거운 것 같다」): 딥러닝 기법도 늘 32(계산 절반, 참값 RMSE 같음, +64 ms), 가벼운 계산이면 딥러닝 64(+192 ms, RMSE 같거나 낮음 — verification/dl-light-20261125)
+const DLM=['M06','M06L6','M08','M09'];
+const lightArgs=(methods,on)=>{const h=methods.split(',').filter(m=>m==='M04'||DLM.includes(m)).map(m=>m+'='+(on&&DLM.includes(m)?64:32));return h.length?['--hop-for',h.join(',')]:[];};
+// D-201: torch 스레드 1개 — 2개는 추론 시간은 비슷한데 CPU를 30–50 % 더 쓴다(스레드 맞춤). 사용자가 --torch-threads 를 주면 그 값
+const THREADS=a=>a.includes('--torch-threads')?[]:['--torch-threads','1'];
 const LIVE_ALLOWED=new Set(['M_FE','M01','M02','M03','M04','M05','M05S','M06','M06L6','M08','M09']);
 function supervise(p,argv,cwd,source={kind:'replay',label:''}){
  const CTL=Number(process.env.ECG_BRIDGE_CTL_PORT||8764),BR=new URL(process.env.ECG_BRIDGE||'http://127.0.0.1:8765');
@@ -155,9 +156,9 @@ function supervise(p,argv,cwd,source={kind:'replay',label:''}){
  // D-198(A): 가벼운 계산 — 무거운 기법(M04 · 딥러닝)의 추론 간격 16 → 32(계산 약 절반, 참값 RMSE 같음, 지연 +64 ms). 시작 옵션 --light 또는 화면이 밀림을 보면 /restart {light:true}
  let light=argv.includes('--light');if(light)argv.splice(argv.indexOf('--light'),1);
  const userHop=argv.includes('--hop-for');
- const args=()=>{const a=[...argv];a[mi+1]=methods;return a.concat(userHop?[]:lightArgs(methods,light));};
+ const args=()=>{const a=[...argv];a[mi+1]=methods;return a.concat(userHop?[]:lightArgs(methods,light),THREADS(a));};
  const start=()=>{const g=++gen;state='starting';err='';since=Date.now();
-  say(`\n브리지 시작: --methods ${methods}`+(userHop?'':lightArgs(methods,light).length?` · ${light?'가벼운 계산 ':''}추론 간격 32: ${lightArgs(methods,light)[1].replace(/=32/g,'')}`:''));
+  say(`\n브리지 시작: --methods ${methods}`+(userHop?'':lightArgs(methods,light).length?` · ${light?'가벼운 계산 · ':''}추론 간격 ${lightArgs(methods,light)[1]}`:''));
   child=spawn(p.bin,[...p.pre,...args()],{cwd,env,stdio:['ignore','inherit','pipe']});
   child.stderr.on('data',b=>{process.stderr.write(b);err=(err+b).slice(-1500);});
   child.on('exit',code=>{if(g!==gen)return;child=null;if(state==='stopping')return;

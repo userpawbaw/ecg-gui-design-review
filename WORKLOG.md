@@ -551,3 +551,4 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-11-25 F-112 실시간 탭 효과별 CPU 측정(verification/live-fx-cpu-20261125)
 - 2026-11-25 D-200: liveLayers.ts(블록 · 마스크 · 창), livePlotFx 층 경로, waveStrip farOff/paint 공개, heart3d 미리 렌더, lastMove 기준, verification/live-layers-20261125
 - 2026-11-25 D-200 되돌림: LAYERS 기본 끔, variants*.txt
+- 2026-11-25 D-201: patch_bridge dlfreeze, run.mjs/launcher.cjs DLM 32/64 · THREADS 1, LiveView 문구, verification/dl-light-20261125

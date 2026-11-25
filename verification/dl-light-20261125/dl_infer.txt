@@ -1,0 +1,42 @@
+/usr/local/lib/python3.11/dist-packages/torch/jit/_trace.py:1006: FutureWarning: `torch.jit.trace` is deprecated. Please switch to `torch.compile` or `torch.export`.
+/usr/local/lib/python3.11/dist-packages/torch/jit/_trace.py:1145: FutureWarning: `torch.jit.trace_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+/home/user/userpawbaw/ecg_denoising_method_comparision/ecgdn/models/blocks.py:83: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if target_len is not None and x.shape[-1] != target_len:
+/usr/local/lib/python3.11/dist-packages/torch/jit/_freeze.py:106: FutureWarning: `torch.jit.freeze` is deprecated. Please use `torch.compile` instead.
+/usr/local/lib/python3.11/dist-packages/torch/jit/_freeze.py:230: FutureWarning: `torch.jit.optimize_for_inference` is deprecated. Please use `torch.compile` instead.
+M06 (고정 출력 최대 차이 0.00e+00)
+  그대로 스레드1: CPU 7.3 ms · 벽시계 7.4 ms
+  고정 스레드1: CPU 5.5 ms · 벽시계 5.5 ms
+  그대로 스레드2: CPU 11.5 ms · 벽시계 5.9 ms
+  고정 스레드2: CPU 10.5 ms · 벽시계 5.3 ms
+/usr/local/lib/python3.11/dist-packages/torch/jit/_trace.py:1006: FutureWarning: `torch.jit.trace` is deprecated. Please switch to `torch.compile` or `torch.export`.
+/usr/local/lib/python3.11/dist-packages/torch/jit/_trace.py:1145: FutureWarning: `torch.jit.trace_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+/home/user/userpawbaw/ecg_denoising_method_comparision/ecgdn/models/blocks.py:83: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if target_len is not None and x.shape[-1] != target_len:
+M06L6 (고정 출력 최대 차이 0.00e+00)
+  그대로 스레드1: CPU 5.8 ms · 벽시계 5.8 ms
+  고정 스레드1: CPU 4.7 ms · 벽시계 4.7 ms
+  그대로 스레드2: CPU 9.8 ms · 벽시계 4.9 ms
+  고정 스레드2: CPU 8.1 ms · 벽시계 4.0 ms
+/home/user/userpawbaw/ecg_denoising_method_comparision/ecgdn/models/swt_torch.py:70: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if x.dim() != 3 or x.shape[1] != 1:
+/home/user/userpawbaw/ecg_denoising_method_comparision/ecgdn/models/swt_torch.py:73: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if n % (2 ** self.level) != 0:
+/home/user/userpawbaw/ecg_denoising_method_comparision/ecgdn/models/swt_torch.py:46: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if pad > 0:
+/home/user/userpawbaw/ecg_denoising_method_comparision/ecgdn/models/swt_torch.py:47: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  reps = int(np.ceil(pad / n))
+/home/user/userpawbaw/ecg_denoising_method_comparision/ecgdn/models/swt_torch.py:108: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if c.dim() != 3 or c.shape[1] != self.level + 1:
+M08 (고정 출력 최대 차이 0.00e+00)
+  그대로 스레드1: CPU 8.1 ms · 벽시계 8.1 ms
+  고정 스레드1: CPU 5.9 ms · 벽시계 5.9 ms
+  그대로 스레드2: CPU 16.3 ms · 벽시계 8.5 ms
+  고정 스레드2: CPU 11.8 ms · 벽시계 6.0 ms
+/home/user/userpawbaw/ecg_denoising_method_comparision/ecgdn/models/cnn_transformer.py:79: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if t.shape[1] > self.pos.shape[1]:
+M09 (고정 출력 최대 차이 0.00e+00)
+  그대로 스레드1: CPU 8.7 ms · 벽시계 8.7 ms
+  고정 스레드1: CPU 8.2 ms · 벽시계 8.4 ms
+  그대로 스레드2: CPU 16.9 ms · 벽시계 8.5 ms
+  고정 스레드2: CPU 11.8 ms · 벽시계 5.9 ms

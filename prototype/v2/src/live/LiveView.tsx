@@ -191,7 +191,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       const skipped = (st.skip ?? 0) > 0;
       if (!skipped && lag <= 1500) { lagSince.current = 0; return; }
       if (!lagSince.current) lagSince.current = now;
-      if (skipped || now - lagSince.current > 4000) { autoLight.current = true; setLight(true, 'CPU가 모자라 무거운 기법을 가볍게 계산하도록 다시 시작합니다(추론 간격 2배)'); }
+      if (skipped || now - lagSince.current > 4000) { autoLight.current = true; setLight(true, 'CPU가 모자라 딥러닝 기법을 더 가볍게 계산하도록 다시 시작합니다(추론 간격 2배)'); }
     }, 1000);
     return () => clearInterval(id);
   }, [ctl.ok, ctl.light, reload]);
@@ -268,7 +268,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       {burst && <StateChip kind="jitter" tone="warn" label="처리 결과 몰림" note={`화면 ${playLag.toFixed(1)} s 늦춰 끊김 방지`} title={`처리 결과가 최대 ${Math.round(outGap)} ms 간격으로 몰려 도착(브라우저 측정, 최근 2 s) — RTF와 별개. 끊기지 않게 화면을 그만큼 늦춰 그린다`}/>}
       {behind && <StateChip kind="overload" tone="warn" label="브리지 밀림" note={`${(lagMs / 1000).toFixed(1)} s`} title={`입력이 들어온 뒤 처리되기까지 ${(lagMs / 1000).toFixed(1)} s 늦음 — CPU가 모자랍니다(브라우저 · 다른 프로그램이 같은 CPU를 씀). 다른 프로그램을 닫거나 가벼운 기법을 고르세요.${patched ? ' 2 s를 넘으면 브리지가 쌓인 입력을 건너뛰고 지금부터 다시 그립니다.' : ''}`}/>}
       {!behind && jitter && <StateChip kind="jitter" tone="warn" label="수신 간격 불규칙" title="최근 2 s 최대 수신 간격 200 ms 초과"/>}
-      {ctl.light && <span className="live-light"><StateChip kind="overload" tone="idle" label="가벼운 계산" note="추론 간격 2배" title="딥러닝 기법의 추론 간격 16 → 32 표본(M04는 늘 32): 계산 약 절반, 지연 +64 ms, 참값 오차는 같은 수준(합성 신호 측정, D-198)"/>
+      {ctl.light && <span className="live-light"><StateChip kind="overload" tone="idle" label="가벼운 계산" note="딥러닝 간격 2배" title="딥러닝 기법의 추론 간격 32 → 64 표본(기본도 이미 16 → 32, D-201): 계산 약 절반, 지연 +64 ms, 참값 오차는 같은 수준(합성 신호 측정, D-198)"/>
         <button type="button" disabled={!!reload} onClick={() => setLight(false)}>원래대로</button></span>}
       {note && <span className="live-note">{note}</span>}
     </div>

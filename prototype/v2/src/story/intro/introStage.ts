@@ -152,7 +152,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  if(NEW){lenis?.stop();dom.content.style.height='100%';dom.wrapper.style.cursor='pointer';(dom.wrapper.parentElement??dom.wrapper).addEventListener('click',onClick);}
  // D-163: 파형 단계 휠 안내 — 마지막 입력(휠 · 키)에서 1.2 s 지나야 나타난다
  // D-164: 제목 유체 왜곡 오버레이(움직임 줄이기 · 터치 · 좁은 화면 · WebGL 실패면 없음 — DOM 글자 그대로)
- const screenFluid=video?null:opt.reduced&&!FLUID_FORCED?(console.info('[screenFluid] 꺼짐: 움직임 줄이기(prefers-reduced-motion — Windows 「애니메이션 효과」 끔이면 켜짐) · ?fluid=1 로 강제'),null):createScreenFluid(dom.title.parentElement!);   // D-167: whole intro, top layer
+ const screenFluid=opt.reduced&&!FLUID_FORCED?(console.info('[screenFluid] 꺼짐: 움직임 줄이기(prefers-reduced-motion — Windows 「애니메이션 효과」 끔이면 켜짐) · ?fluid=1 로 강제'),null):createScreenFluid(dom.title.parentElement!);   // D-167: whole intro, top layer
  const hintEl=dom.wheelHint?.querySelector<HTMLElement>('.it-wheelhint')??null;let lastInput=performance.now(),hintA=0;const introT0=performance.now();let firstA=0;
  const onKey=(e:KeyboardEvent)=>{if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(e.key))lastInput=performance.now();
   if(NEW){if((e.key==='Enter'||e.key===' ')&&mode==='first'&&!(e.target as HTMLElement)?.closest?.('button,a')){e.preventDefault();start();}
@@ -393,6 +393,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const endA=NEW?(endK+=((wm.atEnd||wm.phase==='overlay'?1:0)-endK)*damp(dt,.3)):seg(p,...MAP.end);dom.end.style.opacity=String(endA);dom.end.style.pointerEvents=endA>.5?'auto':'none';
   if(!opt.reduced)dom.parallax.forEach((el,i)=>{const d=i===0?6:3;el.style.translate=`${(-pointer.sx*d).toFixed(2)}px ${(-pointer.sy*d*.6).toFixed(2)}px`;});
 
+  if(video){video.tick(dt);if(draw)screenFluid?.update(dt);}   // D-195: 영상 경로 — 흔들림 · 유체(영상도 다시 그려 일그러뜨림)
   if(draw&&!PERF.has('nogl')&&!video){shafts?.render(shaftA);arch?.update(t,state.frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,archShaft);composer.render(dt);screenFluid?.update(dt);}   // occlusion buffer after the camera update; D-167 fluid right after the 3D frame (it re-reads the canvases before they are presented)
  }
  let paused=false;

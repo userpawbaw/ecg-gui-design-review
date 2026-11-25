@@ -85,6 +85,7 @@ export function createScreenFluid(host: HTMLElement): ScreenFluid | null {
 
   // 화면을 다시 그리는 2D 캔버스(CSS px 1:1)
   const sc = document.createElement('canvas'), sg = sc.getContext('2d')!;
+  if (FQ.has('fluiddbg')) (globalThis as unknown as {__fluidSc: HTMLCanvasElement}).__fluidSc = sc;   // 확인용: 다시 그린 화면
   const tex = new THREE.CanvasTexture(sc); tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false; tex.colorSpace = THREE.NoColorSpace;
   const screen = new THREE.Vector2();
   const compose = pass(COMPOSE, {tex: {value: tex}, vel: {value: vel0.texture}, screen: {value: screen}, distort: {value: DISTORT}, velBlur: {value: VEL_BLUR}});
@@ -172,6 +173,9 @@ export function createScreenFluid(host: HTMLElement): ScreenFluid | null {
       const a = opacityOf(el, memo); if (a <= .003) continue;
       const r = el.getBoundingClientRect(); if (r.width < 1 || r.height < 1 || r.right < 0 || r.bottom < 0 || r.left > W || r.top > H) continue;
       sg.globalAlpha = a;
+      if ((el as HTMLElement).style?.visibility === 'hidden') continue;   // D-195 영상 경로에서 숨긴 3D 캔버스
+      if (el instanceof HTMLVideoElement) { if (el.readyState >= 2 && el.videoWidth) { const s = Math.max(r.width / el.videoWidth, r.height / el.videoHeight), w = el.videoWidth * s, h = el.videoHeight * s;   // object-fit: cover
+        sg.save(); sg.beginPath(); sg.rect(r.left, r.top, r.width, r.height); sg.clip(); sg.drawImage(el, r.left + (r.width - w) / 2, r.top + (r.height - h) / 2, w, h); sg.restore(); } continue; }
       if (el instanceof HTMLCanvasElement) { if (el.width && el.height) try { sg.drawImage(el, r.left, r.top, r.width, r.height); } catch { /* 아직 그리지 않은 캔버스 */ } continue; }
       if (el instanceof SVGSVGElement) { const img = svgImage(el); if (img) sg.drawImage(img, r.left, r.top, r.width, r.height); continue; }
       if (el instanceof SVGElement) continue;

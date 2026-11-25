@@ -23,11 +23,11 @@ for j in range(FPS):
     Image.blend(fr(9 * FPS + j), fr(j), (j + 1) / FPS).save(os.path.join(tmp, f'{n:05d}.png')); n += 1
 fr(FPS).save(os.path.join(out, 'first_poster.jpg'), quality=88)
 
-def enc(pattern, dst, loop=False):
-    cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-framerate', str(FPS), '-i', pattern, '-c:v', 'libx264', '-preset', 'slow', '-crf', '21',
-           '-pix_fmt', 'yuv420p', '-g', str(FPS), '-movflags', '+faststart', dst]
+def enc(pattern, dst, loop=False, crf=21):
+    cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-framerate', str(FPS), '-i', pattern, '-c:v', 'libx264', '-preset', 'slow', '-crf', str(crf),
+           '-pix_fmt', 'yuv420p', '-g', '9999', '-x264-params', 'scenecut=0:ipratio=1.0:pbratio=1.0', '-movflags', '+faststart', dst]   # 키프레임은 처음 한 장 · I/P/B 화질 같게 — 1초마다 화질이 튀어 어두운 화면이 깜빡이던 것(이웃 프레임 차이 30장마다 1.35 vs 평소 0.17)
     subprocess.run(cmd, check=True)
-enc(os.path.join(tmp, '%05d.png'), os.path.join(out, 'first.mp4'), loop=True)
+enc(os.path.join(tmp, '%05d.png'), os.path.join(out, 'first.mp4'), loop=True)   # crf 16도 시험: 12.5 MB, 이음매가 잡음에 묻힐 뿐 차이는 그대로(loop_seam.txt) → 21 유지
 enc(os.path.join(src, 'descent', 'd%05d.jpg'), os.path.join(out, 'descent.mp4'))
 
 # 심장 박동 프레임: 쉬는 화면과의 차이 영역(모든 프레임 합) + 여백 → 잘라서 WebP

@@ -1,0 +1,1 @@
+crf 21(채택): max 0.28 · median 0.09 · seam 1.09 (0.95 MB) / crf 16: max 1.0 · median 0.73 · seam 1.4 (12.5 MB) / 이전 -g 30: 30장마다 1.33–1.37

@@ -6,15 +6,23 @@
  * 심장은 엔진의 박동 위상(파형과 같은 시계)으로 프레임을 골라 그린다 → 파형 R 피크와 박동이 맞음. */
 export type VideoManifest = {W: number, H: number, FPS: number, T0: number, AUTO_S: number, PV0: number, PVA: number,
   heart: {x: number, y: number, w: number, h: number, hv: number, ha: number, aU0: number}};
-export type IntroVideo = {clock(): number | null, k(): number | null, start(): void, reset(): void, heart(ph: {sincePrev: number, untilNext: number}): void,
+export type IntroVideo = {clock(): number | null, k(): number | null, start(): void, reset(): void, heart(ph: {sincePrev: number, untilNext: number}): void, tick(dt: number): void,
   heartScreen(): {x: number, y: number}, resize(): void, dispose(): void, manifest: VideoManifest};
 
 const BASE = './intro-video/';
+/* 시점 흔들림(사용자 2026-11-25 「화면 가장자리를 마우스 위치에 따라 드러나게 하는 leoparpeix 예제 수준 … 가속 방식」):
+ * REF-002 EFX-002-01 상수 — 영상을 6 % 크게 깔고(overscan) 그 여백 안에서 이동, 따라가기 k = 1 − exp(−2·dt)(멈춘 뒤 ≈1.5 s에 95 %),
+ * 세로 폭 = 가로 × 0.27. 포인터 쪽 가장자리가 드러난다(포인터가 오른쪽이면 화면이 왼쪽으로). 움직임 줄이기면 끔. */
+const OVERSCAN = .06, PITCH = .27;
 export async function loadIntroVideo(host: HTMLElement, reduced: boolean): Promise<IntroVideo | null> {
   let m: VideoManifest;
   try { const r = await fetch(BASE + 'manifest.json'); if (!r.ok) return null; m = await r.json(); } catch { return null; }
-  const mk = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string) => { const e = document.createElement(tag); e.className = 'it-vid ' + cls; e.setAttribute('aria-hidden', 'true'); host.insertBefore(e, host.firstChild); return e; };
+  const wrap = document.createElement('div'); wrap.className = 'it-vid-wrap'; wrap.setAttribute('aria-hidden', 'true'); host.insertBefore(wrap, host.firstChild);
+  const mk = <K extends keyof HTMLElementTagNameMap>(tag: K, cls: string) => { const e = document.createElement(tag); e.className = 'it-vid ' + cls; wrap.appendChild(e); return e; };
   const heartCv = mk('canvas', 'heart'), descent = mk('video', 'descent'), first = mk('video', 'first');
+  const target = [0, 0], gaze = [0, 0], onMove = (e: PointerEvent) => { target[0] = e.clientX / innerWidth * 2 - 1; target[1] = e.clientY / innerHeight * 2 - 1; };
+  addEventListener('pointermove', onMove);
+  const view = () => ({S: 1 + OVERSCAN, tx: -gaze[0] * OVERSCAN / 2 * innerWidth, ty: -gaze[1] * OVERSCAN / 2 * innerHeight * PITCH});
   for (const [v, src, loop] of [[first, 'first.mp4', true], [descent, 'descent.mp4', false]] as const) { v.src = BASE + src; v.muted = true; v.playsInline = true; v.loop = loop; v.preload = 'auto'; }
   first.poster = BASE + 'first_poster.jpg'; descent.style.opacity = '0'; heartCv.style.opacity = '0';
   void first.play().catch(() => {});
@@ -50,8 +58,11 @@ export async function loadIntroVideo(host: HTMLElement, reduced: boolean): Promi
       if (j < nv) drawHeart('v' + j, loaded[1][j]);
       else if (u <= m.heart.aU0 && u > m.heart.aU0 - na / m.FPS) { const a = Math.min(na - 1, Math.floor((m.heart.aU0 - u) * m.FPS)); drawHeart('a' + a, loaded[2][a]); }
       else drawHeart('idle', null); },
-    heartScreen: () => { const c = cover(); return {x: c.ox + (m.heart.x + m.heart.w / 2) * c.s, y: c.oy + (m.heart.y + m.heart.h / 2) * c.s}; },
+    heartScreen: () => { const c = cover(), v = view(), x = c.ox + (m.heart.x + m.heart.w / 2) * c.s, y = c.oy + (m.heart.y + m.heart.h / 2) * c.s;
+      return {x: innerWidth / 2 + (x - innerWidth / 2) * v.S + v.tx, y: innerHeight / 2 + (y - innerHeight / 2) * v.S + v.ty}; },   // 흔들림 변환까지
+    tick: dt => { const k = reduced ? 0 : 1 - Math.exp(-2 * dt); gaze[0] += (target[0] - gaze[0]) * k; gaze[1] += (target[1] - gaze[1]) * k;
+      const v = view(); wrap.style.transform = `translate3d(${v.tx.toFixed(2)}px,${v.ty.toFixed(2)}px,0) scale(${v.S})`; },
     resize: () => { cur = ''; },
-    dispose: () => { descent.removeEventListener('ended', onEnded); for (const e of [first, descent, heartCv]) { if (e instanceof HTMLVideoElement) { e.pause(); e.removeAttribute('src'); e.load(); } e.remove(); } },
+    dispose: () => { removeEventListener('pointermove', onMove); wrap.remove(); descent.removeEventListener('ended', onEnded); for (const e of [first, descent, heartCv]) { if (e instanceof HTMLVideoElement) { e.pause(); e.removeAttribute('src'); e.load(); } e.remove(); } },
   };
 }

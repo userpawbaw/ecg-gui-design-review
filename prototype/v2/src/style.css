@@ -164,6 +164,8 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 @media(max-width:1100px){.live-shell{grid-template-columns:1fr}}
 /* 2026-11-10 브리지 다시 띄우기 덮개: 페이드 인/아웃 · 심전도 선 그리기 · 고리 회전 */
 .live-shell{position:relative}
+/* 2026-11-25 사용자 1번: 실시간 탭 본문을 불투명하게 — 파형이 바뀔 때마다 그 아래 배경 · 커튼까지 다시 섞지 않게(같은 조건 42–46 → 52 장/s, verification/live-bg-cost-20261125 bg_cost4). 배경은 본문 밖 여백 · 머리에서만 보인다. */
+.lab-dark .live-shell{background:#0a1a21}   /* 둥근 모서리 · 바깥 그림자를 주면 불투명 판정이 깨져 이득이 사라진다(bg_cost4: 41 대 52 장/s) */
 .live-reload{position:absolute;inset:0;z-index:20;display:flex;align-items:flex-start;justify-content:center;padding-top:22vh;background:rgba(5,11,14,.0);backdrop-filter:blur(0);opacity:0;pointer-events:none;transition:opacity .45s ease,background .45s ease,backdrop-filter .45s ease}
 .live-reload.on{opacity:1;pointer-events:auto;background:rgba(5,11,14,.72);backdrop-filter:blur(6px)}
 .live-reload-card{display:flex;flex-direction:column;align-items:center;gap:12px;padding:28px 34px;border:1px solid #24414a;border-radius:18px;background:rgba(10,24,30,.9);color:#dfeaec;box-shadow:0 18px 60px rgba(0,0,0,.45);animation:lr-in .45s ease}

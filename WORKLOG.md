@@ -553,3 +553,4 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-11-25 D-200 되돌림: LAYERS 기본 끔, variants*.txt
 - 2026-11-25 D-201: patch_bridge dlfreeze, run.mjs/launcher.cjs DLM 32/64 · THREADS 1, LiveView 문구, verification/dl-light-20261125
 - 2026-11-25 실시간 탭 상태 줄 한 줄 고정 · 아이콘화(StateChip icon), verification/live-status-20261125
+- 2026-11-25 D-202: 실시간 본문 불투명(둥근 모서리 · 그림자는 이득을 없앰, bg_cost4) · 중첩 범례 입력 칩(강조 · 고정 확인) · 패키지에 PyTorch 기본 포함(workflow · README-run).

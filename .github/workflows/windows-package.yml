@@ -1,7 +1,8 @@
 name: Windows package (SignalStudio.exe)
 
 # D-176: builds the Windows package (Node single executable + embeddable Python + bridge files from the source repository),
-# runs it on a real Windows machine (self test with the bridge, then PyTorch install + M08 switch on a copy), uploads the zip.
+# runs it on a real Windows machine (self test with the bridge, then the M08 switch), uploads the zip.
+# 2026-11-25 user: PyTorch (CPU) ships inside the package by default — no download on first run.
 on:
   workflow_dispatch:
     inputs:
@@ -78,7 +79,7 @@ jobs:
           Get-ChildItem "$env:GITHUB_WORKSPACE\pkg\SignalStudio\web\replay" | Measure-Object -Property Length -Sum | Select-Object Count, Sum
           Remove-Item -Recurse -Force v221, v221.zip
 
-      - name: Embeddable Python + bridge packages (PyTorch is installed on demand by the exe)
+      - name: Embeddable Python + bridge packages + PyTorch (CPU)
         run: |
           $py = "$env:GITHUB_WORKSPACE\pkg\SignalStudio\python"
           Invoke-WebRequest "https://www.python.org/ftp/python/$env:PY_VERSION/python-$env:PY_VERSION-embed-amd64.zip" -OutFile py.zip
@@ -93,6 +94,8 @@ jobs:
           & "$py\python.exe" get-pip.py --no-warn-script-location
           & "$py\python.exe" -m pip install --no-warn-script-location numpy scipy PyWavelets PyYAML pyserial wfdb
           & "$py\python.exe" -c "import numpy, scipy, pywt, yaml, serial, wfdb; print('python packages ok')"
+          & "$py\python.exe" -m pip install --no-cache-dir --no-warn-script-location torch --index-url https://download.pytorch.org/whl/cpu
+          if ($LASTEXITCODE -ne 0) { throw "torch install failed" }
           # D-180: Visual C++ runtime app-local (PyTorch needs msvcp140.dll; the embeddable Python ships only vcruntime140*.dll).
           # Microsoft allows app-local deployment of these redistributable DLLs; copied from the runner's installed redistributable.
           foreach ($d in 'msvcp140.dll','msvcp140_1.dll','msvcp140_2.dll','msvcp140_atomic_wait.dll','msvcp140_codecvt_ids.dll','concrt140.dll','vcruntime140.dll','vcruntime140_1.dll') {
@@ -121,10 +124,10 @@ jobs:
           npx --yes postject@1.0.0-alpha.6 $exe NODE_SEA_BLOB sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
           Copy-Item scripts\package\README-run.txt "$env:GITHUB_WORKSPACE\pkg\SignalStudio\README-실행.txt"
 
-      - name: Self test on Windows (bridge · stream · proxy · web, no PyTorch)
+      - name: Self test on Windows (bridge · stream · proxy · web, PyTorch present)
         working-directory: pkg/SignalStudio
         run: |
-          .\SignalStudio.exe --selftest --no-torch
+          .\SignalStudio.exe --selftest
           if ($LASTEXITCODE -ne 0) { throw "selftest failed" }
 
       - name: Self test with ports 4173 and 8764 already taken (D-181 — must move to free ports, not exit)
@@ -138,11 +141,11 @@ jobs:
           if ($code -ne 0) { throw "selftest with busy ports failed" }
           Remove-Item -Recurse -Force logs
 
-      - name: PyTorch install + M08 switch (on a copy, so the shipped package stays without PyTorch)
+      - name: M08 switch with the bundled PyTorch (on a copy, so the shipped package has no logs or caches)
         run: |
           Copy-Item -Recurse pkg\SignalStudio pkg-dltest
           Set-Location pkg-dltest
-          .\SignalStudio.exe --install-torch --selftest-dl
+          .\SignalStudio.exe --selftest-dl
           if ($LASTEXITCODE -ne 0) { throw "DL selftest failed" }
 
       - name: Zip

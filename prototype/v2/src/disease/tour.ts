@@ -72,7 +72,7 @@ export function buildNormalRow(x: Float32Array, beats: Beat[], fs: number, cfg: 
 export type Region = {row: 'input' | 'normal', t0: number, t1: number};
 export type Caliper = {row: 'input' | 'normal', kind: 'arrow' | 'bracket' | 'vline', t0: number, t1: number, label: string, at: 'top' | 'bottom'};
 export type Ghost = {t0: number, t1: number, shift: number, base: number};   // 정상 행 [t0,t1]을 shift 초 옮겨 질환 행(기준선 base mV)에 겹침
-export type Step = {id: string, title: string, value: string, stop: number, regions: Region[], ghost?: Ghost, calipers: Caliper[], mark: {t: number}};
+export type Step = {id: string, title: string, value: string, stop: number, regions: Region[], ghost?: Ghost, calipers: Caliper[], mark: {t: number}, span?: number};
 export type Tour = {steps: Step[], start: number, span?: number, pvc?: {prev: BeatGeo, v: BeatGeo, next: BeatGeo}, normalQrs?: number, early?: number, rr: number};
 
 type Ctx = {x: Float32Array, beats: Beat[], fs: number, row: NormalRow, span: number, dur: number};
@@ -96,7 +96,22 @@ function widthStep(c: Ctx, id: string, title: string, g: BeatGeo, stop: number, 
 }
 /** 투어 계획 기본 표시 구간(초) — 사용자가 고른 구간과 무관하게 이 값으로 세우고, 질환을 고를 때 화면도 이 구간으로 맞춘다(2026-11-25 사용자: 초기 설정이 안 먹음). */
 export const TOUR_SPAN = 5;
-const finish = (steps: Step[], rr: number, extra: Partial<Tour> = {}): Tour => ({steps, start: Math.max(0, steps[0].stop - 3.5), rr, span: TOUR_SPAN, ...extra});
+/** 단계의 내용 폭(초점 구간 + 측정 표식, 두 행 합) */
+export function focusOf(s: Step) { const a = Math.min(...s.regions.map(g => g.t0), ...s.calipers.map(c => Math.min(c.t0, c.t1))), b = Math.max(...s.regions.map(g => g.t1), ...s.calipers.map(c => Math.max(c.t0, c.t1)));
+  return {a, b, c: (a + b) / 2, vis: Math.max(...s.regions.map(g => (g.t1 - g.t0) * 1.32 + .08))}; }
+/** D-194 특징별 표시 구간: 보이는 초점이 약 35 %가 되는 길이와 최소 1.5 박동(1.25 s 이상) 중 넓은 쪽, 0.25 s 단위, 상한 = 기본 구간.
+ * (측정: 5 s에서 리듬 특징 34–61 %, 형태 특징 4–11 % — verification/disease-zoom-20261125) */
+export function stepSpan(s: Step, rr: number, base: number) { const f = focusOf(s), minS = Math.max(1.25, 1.5 * rr);
+  return Math.min(base, Math.max(Math.ceil(minS * 4) / 4, Math.round(f.vis / .35 * 4) / 4)); }
+/** 확대 창: 특징 중심이 화면 55 % 자리, 오른쪽 끝은 멈춘 재생 위치를 넘지 않음(아직 재생 안 된 파형을 보이지 않게), 내용은 창 안에. */
+export function stepView(s: Step, base: number) { const span = s.span ?? base; if (span >= base - 1e-6) return {span: base, right: s.stop};
+  const f = focusOf(s); let right = Math.min(s.stop, f.c + .45 * span); if (f.b > right) right = Math.min(s.stop, f.b + .05); return {span, right}; }
+/** 마무리: 단계별 구간을 정하고, 같은 멈춤 안에서는 넓게 → 좁게(개관 → 세부) 순서로(확대는 한 방향으로만, 사용자 2026-11-25). */
+const finish = (steps: Step[], rr: number, extra: Partial<Tour> = {}): Tour => {
+  const base = extra.span ?? TOUR_SPAN;
+  steps.forEach(s => { s.span = stepSpan(s, rr, base); });
+  const order = steps.map((s, i) => ({s, i})).sort((p, q) => p.s.stop - q.s.stop || (q.s.span! - p.s.span!) || p.i - q.i).map(x => x.s);
+  return {steps: order, start: Math.max(0, order[0].stop - 3.5), rr, span: base, ...extra}; };
 
 /** 조기 박동(심실 V · 심방 A): N N X N, ③은 보상성(V) · 비보상성(A) 휴지. */
 function earlyTour(c: Ctx, sym: 'V' | 'A'): Tour | null {

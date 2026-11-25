@@ -17,7 +17,9 @@ type Props={data:Loaded;transport:Transport;mode:Mode;span:number;inspect:boolea
  /** D-185 실험실 겹치기: 입력 · 기법을 한 칸에(동일 축 · 동일 진폭). pins = 범례 단추로 고정한 계열, chip = 범례 단추 위 계열, onTiers = 계열별 거칠기 단계 알림 */
  overlay?:boolean;pins?:string[];chip?:string|null;onTiers?:(t:Record<string,number>)=>void;
  /** D-192 질환 탭: 입력 행 이름 · 정상 기준 행(traces.normal, 입력 바로 아래, Reference 없음) · 그린 기하를 밖으로(설명 덧층이 시각 → 화면 좌표를 계산) */
- inputLabel?:string;normalRow?:{label:string,color:string};geomOut?:{current:PlotGeom|null}};
+ inputLabel?:string;normalRow?:{label:string,color:string};geomOut?:{current:PlotGeom|null};
+ /** D-194 구간 확대: 있으면 그리기마다 표시 구간 · 오른쪽 끝 시각 · 격자 위상(초)을 이 값으로(매 프레임 값 — React 상태 아님). redrawOut = 같은 프레임에 다시 그리기 */
+ viewRef?:{current:{span:number,right:number,phase:number}|null};redrawOut?:{current:(()=>void)|null}};
 export type PlotGeom={w:number,h:number,left:number,right:number,pw:number,t:number,span:number,fs:number,amplitude:number,mode:Mode,inspect:boolean,rows:{id:string,t:number,b:number}[]};
 // D-183 단계 → 기본 배율(겹치기): 깨끗 1 · 중간 .62 · 거침 .4, 번짐 · 흰빛은 깨끗한 것만. 입력은 실시간 입력과 같게 .55 · 번짐 없음
 const TIER_BASE=[{a:1,g:1,w:1},{a:.62,g:0,w:0},{a:.4,g:0,w:0}],IN_BASE={a:.55,g:0,w:0};
@@ -36,7 +38,7 @@ export function Plot(p:Props){
  useEffect(()=>{const c=canvas.current!;const g=c.getContext('2d');if(!g)return;let raf=0,signature='',bgSig='';
  const bg=document.createElement('canvas'),bgg=bg.getContext('2d')!,hot=document.createElement('canvas'),hg=hot.getContext('2d')!,glow=createGlow();
  const strips:StripRow[]=[],ramps=new AgeRamps(),layer=(()=>{const lc=document.createElement('canvas');return{c:lc,g:lc.getContext('2d')!};})();
- const draw=()=>{const t0=performance.now(),q=latest.current,t=q.transport.time;const rect=c.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
+ const draw=()=>{const t0=performance.now(),q0=latest.current,vw=q0.viewRef?.current??null,q=vw?{...q0,span:vw.span}:q0,t=vw?vw.right:q0.transport.time;const rect=c.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
  // D-185 겹치기 강조: 지난 그림의 기하로 마우스 판정 → 강조 상태 한 걸음(고정 · 범례 단추 포함)
  const OV=!!q.overlay&&!q.residual,F=focus.current,ovNames=['input',...q.shown];let ovMoving=false,curZone:string|null=null;const Z=zoneRef.current;
  if(OV){F.pinned=new Set((q.pins??[]).filter(n=>ovNames.includes(n)));F.chip=q.chip??null;let hit:string|string[]|null=null;const G=geomRef.current;
@@ -63,11 +65,11 @@ export function Plot(p:Props){
  const boxes:Box[]=rows.map((_,r)=>{const isDiff=q.residual&&r===count,top=OV?36:r*rh+36;return{l:left,r:right,t:top,b:OV?h-30:isDiff?top+72:(r+1)*rh-30};});
  // static layer (background, ECG paper, labels, amplitude ticks) + a brighter paper copy for A — redrawn only when the layout changes
  const clearBg=document.body.classList.contains('lab-dark')&&!c.closest('.large-dialog');   // D-074: the panel shows the archive faintly through
- const bs=[w,h,dpr,q.amplitude,q.span,q.residual,q.gain,q.method,q.shown.join(','),clearBg,OV,q.inputLabel,q.normalRow?.label].join('|');
+ const bs=[w,h,dpr,q.amplitude,q.span,vw?.phase??0,q.residual,q.gain,q.method,q.shown.join(','),clearBg,OV,q.inputLabel,q.normalRow?.label].join('|');
  if(bs!==bgSig){bgSig=bs;for(const [cv,cg] of [[bg,bgg],[hot,hg]] as const){cv.width=W;cv.height=H;cg.setTransform(dpr,0,0,dpr,0,0);cg.clearRect(0,0,w,h);}
   if(!clearBg){bgg.fillStyle=BG;bgg.fillRect(0,0,w,h);}
   rows.forEach((row,r)=>{if(OV&&r>0)return;const isDiff=q.residual&&r===count,b=boxes[r],amp=isDiff?q.amplitude/(q.gain||1):q.amplitude;
-   paper(bgg,b,q.span,amp,1);paper(hg,b,q.span,amp,4.2);
+   paper(bgg,b,q.span,amp,1,vw?.phase??0,!!vw);paper(hg,b,q.span,amp,4.2,vw?.phase??0,!!vw);
    bgg.textAlign='left';bgg.textBaseline='alphabetic';bgg.font='11px system-ui';bgg.fillStyle='#acc2cd';bgg.fillText('[mV]',10,r*rh+22);bgg.font='600 14px system-ui';bgg.fillStyle=OV?'#d7e4e8':row.color;bgg.fillText(OV?'중첩: 입력 · 표시 기법 · Reference(동일 축 · 동일 진폭)':row.label,left,r*rh+22);
    bgg.font='11px system-ui';bgg.fillStyle='#acc2cd';bgg.textAlign='right';bgg.textBaseline='middle';for(const tick of amplitudeTicks(q.amplitude,isDiff?q.gain||1:1))bgg.fillText(tick.label,left-10,b.t+tick.fraction*(b.b-b.t));});}
  g.clearRect(0,0,w,h);g.drawImage(bg,0,0,w,h);
@@ -135,7 +137,7 @@ export function Plot(p:Props){
  if(fxOn&&!isDiff&&q.data.traces[row.id]){const hi=Math.min(q.data.n-1,Math.floor(t*q.data.fs))-q.data.offset,a=q.data.traces[row.id]!;if(hi>=0&&hi<a.length){const x=headX,y=yOf(a,hi+q.data.offset,false),R=lit?16:11;
   const hk=OV?Math.min(1,em.alphaK*Math.min(1.25,em.whiteK)):1;if(hk<.02){}else if(useStrip){g.globalCompositeOperation='lighter';g.globalAlpha=hk;g.drawImage(headSprite(R,lit?.75:.4,dpr),x-R,y-R,2*R,2*R);g.globalAlpha=1;g.globalCompositeOperation='source-over';}else{const rg=g.createRadialGradient(x,y,0,x,y,R);rg.addColorStop(0,`rgba(255,255,255,${(lit?.75:.4)*(OV?Math.min(1,em.alphaK*Math.min(1.25,em.whiteK)):1)})`);rg.addColorStop(1,'rgba(255,255,255,0)');g.globalCompositeOperation='lighter';g.fillStyle=rg;g.fillRect(x-R,y-R,2*R,2*R);g.globalCompositeOperation='source-over';}}}
  g.restore();const values=q.data.traces[row.id];const clipped=values?pts.filter(p=>Math.abs(isDiff?(values[p.index-q.data.offset]-q.data.traces.clean[p.index-q.data.offset])*(q.gain||1):values[p.index-q.data.offset])>q.amplitude).length:0;g.font='11px system-ui';g.textAlign='left';g.textBaseline='alphabetic';if(OV&&!firstOv){}else if(clipped&&!OV){g.fillStyle='#ffbc79';g.fillText('표시 범위 초과 '+clipped+' 샘플',left+10,top+18);}if(!q.data.traces[row.id]){g.fillStyle='#ffbc79';g.fillText('출력 없음',left+10,top+30);}
- if(!OV||firstOv){g.fillStyle='#adc3ce';g.font='12px system-ui';for(let k=0;k<=4;k++){const at=q.inspect?Math.max(0,t-q.span)+k*Math.min(t,q.span)/4:t-q.span+k*q.span/4;const label=q.mode==='sweep'&&!q.inspect?(k*q.span/4).toFixed(1)+'s 위치':at<0?'—':at.toFixed(1)+'s';g.fillText(label,left+k*pw/4-(k===4?55:0),bottom+20);}}
+ if(!OV||firstOv){g.fillStyle='#adc3ce';g.font='12px system-ui';for(let k=0;k<=4;k++){const at=q.inspect?Math.max(0,t-q.span)+k*Math.min(t,q.span)/4:t-q.span+k*q.span/4;const label=q.mode==='sweep'&&!q.inspect?(k*q.span/4).toFixed(1)+'s 위치':at<0?'—':at.toFixed(q.span<2.5?2:1)+'s';g.fillText(label,left+k*pw/4-(k===4?55:0),bottom+20);}}
  // reduced motion: the plain sweep line stays (no light column)
  if(q.mode==='sweep'&&live&&!fxOn&&(!OV||firstOv)){g.strokeStyle='#bfd8e0';g.lineWidth=1;g.beginPath();g.moveTo(headX,top);g.lineTo(headX,bottom);g.stroke();}
  });if(q.geomOut)q.geomOut.current={w,h,left,right,pw,t,span:q.span,fs:q.data.fs,amplitude:q.amplitude,mode:q.mode,inspect:q.inspect,rows:rows.map((rw,i)=>({id:rw.id,t:boxes[i].t,b:boxes[i].b}))};if(OV)geomRef.current={left,right,pw,top:boxes[0].t,ph:boxes[0].b-boxes[0].t,pts,ys:ysOv};else geomRef.current=null;
@@ -143,7 +145,7 @@ export function Plot(p:Props){
  if(OV_DBG)c.dataset.zones=Z.hold.cur?JSON.stringify({c:Math.round(Z.y),...Z.hold.cur}):'';if(q.transport.playing){labStats.frames++;labStats.ms+=performance.now()-t0;}c.dataset.time=t.toFixed(3);c.dataset.mode=q.inspect?'inspect':q.mode;c.dataset.difference=String(!!q.residual);c.dataset.fx=String(fx.current.level);
  if(q.transport.playing){const f=fx.current,dt=t0-f.last;f.last=t0;if(dt>0&&dt<250){f.ema=f.frames?f.ema*.95+dt*.05:dt;f.frames++;}c.dataset.frameMs=f.ema.toFixed(1);
   if(FX_PIN===null&&f.frames>90&&f.level>0&&f.ema>26){f.level--;f.frames=0;}}
- }if(q.transport.playing||ovMoving||(OV&&F.px!==null&&!!F.target))raf=requestAnimationFrame(draw);};drawRef.current=()=>{cancelAnimationFrame(raf);draw();};draw();const resize=new ResizeObserver(()=>{cancelAnimationFrame(raf);signature='';draw();});resize.observe(c);return()=>{cancelAnimationFrame(raf);resize.disconnect();};
+ }if(q.transport.playing||ovMoving||(OV&&F.px!==null&&!!F.target))raf=requestAnimationFrame(draw);};drawRef.current=()=>{cancelAnimationFrame(raf);draw();};if(p.redrawOut)p.redrawOut.current=drawRef.current;draw();const resize=new ResizeObserver(()=>{cancelAnimationFrame(raf);signature='';draw();});resize.observe(c);return()=>{cancelAnimationFrame(raf);resize.disconnect();};
  },[p.data,p.transport.playing,p.inputLabel,p.normalRow?.label,p.mode,p.span,p.inspect,p.amplitude,p.reference,p.method,p.preview,p.shown.join(','),p.large,p.soft,p.residual,p.gain,p.overlay]);
  useEffect(()=>{drawRef.current();},[p.pins?.join(','),p.chip]);
  const nRows=p.shown.length+(p.normalRow&&p.data.traces.normal?1:0),ov=!!p.overlay&&!p.residual,onMove=(e:React.PointerEvent<HTMLCanvasElement>)=>{if(!ov)return;const r=e.currentTarget.getBoundingClientRect();setPointer(focus.current,e.clientX-r.left,e.clientY-r.top);drawRef.current();},onLeave=()=>{setPointer(focus.current,null,null);drawRef.current();},onClick=(e:React.MouseEvent<HTMLCanvasElement>)=>{if(!ov)return;const r=e.currentTarget.getBoundingClientRect();focus.current.click={x:e.clientX-r.left,y:e.clientY-r.top};drawRef.current();};

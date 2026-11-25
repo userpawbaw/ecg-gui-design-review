@@ -5,13 +5,13 @@
 import React, {useEffect, useRef} from 'react';
 import type {Transport, Mode} from '../engine';
 import type {PlotGeom} from '../Plot';
-import type {NormalRow, Tour, Step, Region, Caliper} from './tour';
+import {stepView, focusOf, type NormalRow, type Tour, type Step, type Region, type Caliper} from './tour';
 
-export type TourOpts = {decel: boolean, dof: boolean, move: boolean, ghost: boolean, caliper: boolean, glass: boolean, progress: boolean, recap: boolean};
+export type TourOpts = {decel: boolean, dof: boolean, move: boolean, ghost: boolean, caliper: boolean, glass: boolean, progress: boolean, recap: boolean, zoom: boolean, minimap: boolean};
 export const TOUR_OPT_LABELS: [keyof TourOpts, string, string][] = [
   ['decel', '감속 정지 · 가속 재개', 'A1'], ['dof', '초점 밖 흐림', 'A2'], ['move', '같은 화면 안 초점 이동', 'A3'], ['ghost', '정상 유령 투영', 'A4'],
-  ['caliper', '측정선 그리기', 'A5'], ['glass', '유리 카드', 'A6'], ['progress', '왼쪽 제목 진행선', 'A7'], ['recap', '끝 요약 표식', 'A8']];
-export const TOUR_DEFAULT: TourOpts = {decel: true, dof: true, move: true, ghost: true, caliper: true, glass: true, progress: true, recap: true};
+  ['caliper', '측정선 그리기', 'A5'], ['glass', '유리 카드', 'A6'], ['progress', '왼쪽 제목 진행선', 'A7'], ['recap', '끝 요약 표식', 'A8'], ['zoom', '특징별 구간 확대 · 축소', 'A9'], ['minimap', '확대 중 개관 띠', 'A10']];
+export const TOUR_DEFAULT: TourOpts = {decel: true, dof: true, move: true, ghost: true, caliper: true, glass: true, progress: true, recap: true, zoom: true, minimap: true};
 export type TourApi = {start: (k?: number) => void, stop: () => void, running: () => boolean, done: () => boolean};
 export type TourStatus = {k: number, hold: boolean, holdS: number, seq: number} | null;
 
@@ -20,19 +20,42 @@ const DUR: Record<Phase, number> = {idle: 0, run: 0, decel: .5, in: .6, hold: 4,
 const clamp = (v: number) => Math.max(0, Math.min(1, v)), ease = (u: number) => u * u * (3 - 2 * u);
 const NO_MOVE_GAP = .5;   // 초점 이동을 끄면 같은 화면 특징 사이 재생(초) — 다음 박동이 들어오기 전
 
-export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMode, getMode, setSpan, getSpan, beginPlay, onStatus, apiRef}: {
-  tour: Tour, normal: NormalRow, transport: Transport, geom: {current: PlotGeom | null}, opts: TourOpts, reduced: boolean,
+type View = {span: number, right: number, phase: number};
+const ZOOM_S = .8, GRID_MAJOR = .2;
+
+export function DiseaseTour({tour, normal, transport, geom, viewRef, redraw, opts, reduced, setMode, getMode, setSpan, getSpan, beginPlay, onStatus, apiRef}: {
+  tour: Tour, normal: NormalRow, transport: Transport, geom: {current: PlotGeom | null}, viewRef: {current: View | null}, redraw: {current: (() => void) | null}, opts: TourOpts, reduced: boolean,
   setMode: (m: Mode) => void, getMode: () => Mode, setSpan: (s: number) => void, getSpan: () => number, beginPlay: (t: number) => void, onStatus: (s: TourStatus) => void, apiRef: {current: TourApi | null}}) {
-  const root = useRef<HTMLDivElement>(null), dim = useRef<HTMLDivElement>(null), dof = useRef<HTMLDivElement>(null), card = useRef<HTMLDivElement>(null), svg = useRef<SVGSVGElement>(null);
+  const root = useRef<HTMLDivElement>(null), zoomEl = useRef<HTMLDivElement>(null), dim = useRef<HTMLDivElement>(null), dof = useRef<HTMLDivElement>(null), card = useRef<HTMLDivElement>(null), svg = useRef<SVGSVGElement>(null);
   const live = useRef({opts, reduced, onStatus});live.current = {opts, reduced, onStatus};
   useEffect(() => {
-    const S = {phase: 'idle' as Phase, k: 0, from: -1, ph0: 0, clock: 0, last: 0, lastTime: transport.time, d0: 0, stopAt: 0, prevMode: 'sweep' as Mode, prevSpan: 0, userSpeed: 1, done: false, seen: new Set<number>(), seq: 0};
-    const steps = tour.steps;
+    const S = {phase: 'idle' as Phase, k: 0, from: -1, ph0: 0, clock: 0, last: 0, lastTime: transport.time, d0: 0, stopAt: 0, prevMode: 'sweep' as Mode, prevSpan: 0, userSpeed: 1, done: false, seen: new Set<number>(), seq: 0,
+      view: null as View | null, zoom: null as null | {from: View, to: View, c: number, t0: number, dur: number, L0: number, L1: number}, pdur: 0};
+    const steps = tour.steps, base = () => tour.span ?? getSpan();
+    // ---- D-194 구간 확대 · 축소: 멈춘 동안만, 특징 중심이 화면에서 곧게 움직이도록(구간은 log 보간), 격자 위상은 시작 · 끝 모두 왼쪽 기준이 되게 반 칸 안에서 보간 ----
+    const setView = (v: View | null) => { S.view = v; viewRef.current = v; redraw.current?.(); };
+    const nowView = (): View => S.view ?? {span: base(), right: transport.time, phase: 0};
+    const zoomTo = (to: View, c: number) => { const from = nowView(); if (Math.abs(from.span - to.span) < 1e-3 && Math.abs(from.right - to.right) < 1e-3) { S.zoom = null; return; }
+      const L0 = from.right - from.span - from.phase, L1r = to.right - to.span, L1 = L1r - GRID_MAJOR * Math.round((L1r - L0) / GRID_MAJOR);
+      S.zoom = {from, to, c, t0: S.clock, dur: live.current.reduced ? .001 : ZOOM_S, L0, L1}; };
+    const zoomStep = () => { const z = S.zoom; if (!z) return; const u = clamp((S.clock - z.t0) / z.dur), e = ease(u);
+      const span = Math.exp(Math.log(z.from.span) + (Math.log(z.to.span) - Math.log(z.from.span)) * e);
+      const f0 = (z.c - (z.from.right - z.from.span)) / z.from.span, f1 = (z.c - (z.to.right - z.to.span)) / z.to.span, f = f0 + (f1 - f0) * e;
+      const right = Math.min(transport.time, z.c + (1 - f) * span), gridT = z.L0 + (z.L1 - z.L0) * e;
+      const ph = (((gridT - (right - span)) % GRID_MAJOR) + GRID_MAJOR) % GRID_MAJOR;
+      if (u >= 1) { S.zoom = null; const done = Math.abs(z.to.span - base()) < 1e-3 && Math.abs(z.to.right - transport.time) < 1e-3; setView(done ? null : {...z.to, phase: 0}); }
+      else setView({span, right, phase: ph}); };
+    const stepTarget = (k: number): View | null => { if (!live.current.opts.zoom) return null; const v = stepView(steps[k], base()); return Math.abs(v.span - base()) < 1e-3 ? null : {...v, phase: 0}; };
+    const beginStepZoom = (k: number) => { const t = stepTarget(k); if (t) zoomTo(t, focusOf(steps[k]).c); else if (S.view) zoomTo({span: base(), right: transport.time, phase: 0}, focusOf(steps[k]).c); else S.zoom = null; };
     const stopOf = (k: number): number => !live.current.opts.move && k > 0 && Math.abs(steps[k].stop - steps[k - 1].stop) < 1e-6 ? stopOf(k - 1) + NO_MOVE_GAP : steps[k].stop;
     const status = () => live.current.onStatus(S.phase === 'idle' ? null : {k: S.k, hold: S.phase === 'hold', holdS: holdS(S.k), seq: S.seq});
     const holdS = (k: number) => (k === 0 ? 4.5 : DUR.hold);
-    const go = (ph: Phase) => { S.phase = ph; S.ph0 = S.clock; if (ph === 'hold') S.seq++; if (ph === 'hold' || ph === 'in' || ph === 'idle' || ph === 'run') status(); };
-    const finish = (restore: boolean) => { transport.speed = S.userSpeed; if (restore && S.phase !== 'idle') { setMode(S.prevMode); if (S.prevSpan && S.prevSpan !== getSpan()) setSpan(S.prevSpan); } S.phase = 'idle'; status(); };
+    const go = (ph: Phase) => { S.phase = ph; S.ph0 = S.clock;
+      if (ph === 'in') { beginStepZoom(S.k); S.pdur = (S.zoom ? S.zoom.dur : .2) + .5; }
+      else if (ph === 'move') { beginStepZoom(S.k); S.pdur = S.zoom ? S.zoom.dur + .45 : DUR.move; }
+      else if (ph === 'out') { if (S.view) zoomTo({span: base(), right: transport.time, phase: 0}, focusOf(steps[S.k]).c); else S.zoom = null; S.pdur = S.zoom ? Math.max(DUR.out, S.zoom.dur) : DUR.out; }
+      else S.pdur = 0; if (ph === 'hold') S.seq++; if (ph === 'hold' || ph === 'in' || ph === 'idle' || ph === 'run') status(); };
+    const finish = (restore: boolean) => { transport.speed = S.userSpeed; S.zoom = null; if (S.view) setView(null); if (restore && S.phase !== 'idle') { setMode(S.prevMode); if (S.prevSpan && S.prevSpan !== getSpan()) setSpan(S.prevSpan); } S.phase = 'idle'; status(); };
     apiRef.current = {
       start: (k = 0) => { if (S.phase === 'idle') { S.prevMode = getMode(); S.prevSpan = getSpan(); S.userSpeed = transport.speed || 1; }
         if (tour.span && tour.span !== getSpan()) setSpan(tour.span);   // 긴 휴지처럼 5 s 화면에 안 들어오는 특징
@@ -48,7 +71,7 @@ export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMo
         // 사용자가 탐색 막대 · 처음으로 등으로 시각을 옮기면 투어를 끝낸다(재생 흐름이 깨짐)
         if (Math.abs(transport.time - S.lastTime) > .35 + dt * 2) finish(true);
         else if (transport.playing) {
-          S.clock += dt; const dur = S.phase === 'hold' ? holdS(S.k) : DUR[S.phase] * (red ? .4 : 1), u = dur ? (S.clock - S.ph0) / dur : 0;
+          S.clock += dt; zoomStep(); const dur = S.phase === 'hold' ? holdS(S.k) : S.pdur || DUR[S.phase] * (red ? .4 : 1), u = dur ? (S.clock - S.ph0) / dur : 0;
           if (S.phase === 'run') { const st = stopOf(S.k);
             if (o.decel && !red && transport.time >= st - .25) { S.d0 = transport.time; S.stopAt = st; transport.speed = 0; go('decel'); }
             else if (transport.time >= st) { transport.time = st; transport.speed = 0; go('in'); } }
@@ -57,7 +80,7 @@ export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMo
           else if (S.phase === 'hold' && u >= 1) { S.seen.add(S.k);
             if (S.k + 1 < steps.length && o.move && Math.abs(steps[S.k + 1].stop - steps[S.k].stop) < 1e-6) { S.from = S.k; S.k++; go('move'); } else go('out'); }
           else if (S.phase === 'move' && u >= 1) { S.from = -1; go('hold'); }
-          else if (S.phase === 'out' && u >= 1) { S.from = -1;
+          else if (S.phase === 'out' && u >= 1) { S.from = -1; S.zoom = null; if (S.view) setView(null);
             if (S.k + 1 < steps.length) { S.k++; if (o.decel && !red) go('accel'); else { transport.speed = S.userSpeed; go('run'); } }
             else { S.done = true; finish(true); } }
           else if (S.phase === 'accel') { transport.speed = S.userSpeed * clamp(u) ** 2; if (u >= 1) { transport.speed = S.userSpeed; go('run'); } }
@@ -69,7 +92,8 @@ export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMo
     // ---- 그리기 ----
     let lastMask = '', lastCard = '', lastSvg = '';
     const paint = (st: typeof S, o: TourOpts, red: boolean) => {
-      const g = geom.current, el = root.current; if (!g || !el) return;
+      const g0 = geom.current, el = root.current; if (!g0 || !el) return;
+      const g = st.view ? {...g0, span: st.view.span, t: st.view.right, mode: 'scroll' as Mode, inspect: false} : g0;   // 덧층은 투어 자신의 구간 값으로(그래프와 같은 프레임)
       const count = Math.round(g.span * g.fs);
       const xOf = (T: number) => { const i = T * g.fs, t = g.t * g.fs;
         if (g.inspect) { const end = Math.round(t), s0 = Math.max(0, end - count), w = Math.max(1, Math.min(count, end)); return g.left + (i - s0) / w * g.pw; }
@@ -81,10 +105,11 @@ export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMo
       const k = st.k, ph = st.phase, D = (p: Phase) => DUR[p] * (red ? .4 : 1);
       // 투명도: 어둡게 · 카드 · 표식 · 유령
       let dimA = 0, cardA = 0, drawK = 0, ghostK = 0, oldA = 0, mix = 1;
-      if (ph === 'in') { dimA = ease(u(D('in'))); cardA = ease(clamp((st.clock - st.ph0 - .2) / .5)); drawK = ease(u(D('in'))); ghostK = ease(u(D('in'))); }
+      const lead = Math.max(0, (st.pdur || .7) - .5);   // 확대가 있으면 확대가 끝난 뒤 글자 · 측정선
+      if (ph === 'in') { dimA = ease(u(D('in'))); cardA = ease(clamp((st.clock - st.ph0 - lead) / .5)); drawK = ghostK = cardA; }
       else if (ph === 'hold') { dimA = cardA = drawK = ghostK = 1; }
-      else if (ph === 'move') { const m = u(D('move')); dimA = 1; mix = ease(m); oldA = 1 - clamp(m * 2); cardA = clamp(m * 2 - 1); drawK = ghostK = ease(clamp(m * 2 - 1)); }
-      else if (ph === 'out') { const m = u(D('out')); dimA = 1 - ease(m); cardA = 1 - clamp(m * 1.6); drawK = ghostK = cardA; }
+      else if (ph === 'move') { const T0 = st.clock - st.ph0, md = st.pdur || D('move'), zl = Math.max(.35, md - .35); dimA = 1; mix = ease(clamp(T0 / zl)); oldA = 1 - clamp(T0 / .3); cardA = ease(clamp((T0 - zl) / .35)); drawK = ghostK = cardA; }
+      else if (ph === 'out') { const m = u(st.pdur || D('out')); dimA = 1 - ease(m); cardA = 1 - clamp(m * 1.6); drawK = ghostK = cardA; }
       const cur = tour.steps[k], prev = st.from >= 0 ? tour.steps[st.from] : null;
       // 초점 타원(행마다 하나) — 이동 중에는 앞 단계 모양에서 보간
       const ell = (r: Region) => { const b = box(r.row); if (!b) return null; const x0 = xOf(r.t0), x1 = xOf(r.t1); if (!Number.isFinite(x0) || !Number.isFinite(x1)) return null;
@@ -148,7 +173,13 @@ export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMo
       const html = parts.length ? `<defs>${clip}</defs>${parts.join('')}` : '';
       if (html !== lastSvg) { lastSvg = html; svg.current!.innerHTML = html; }
       const sv = svg.current!; if (sv.getAttribute('viewBox') !== `0 0 ${g.w} ${g.h}`) sv.setAttribute('viewBox', `0 0 ${g.w} ${g.h}`);
-      el.dataset.phase = st.phase; el.dataset.step = String(st.k);
+      el.dataset.phase = st.phase; el.dataset.step = String(st.k); el.dataset.span = (st.view?.span ?? g0.span).toFixed(3);
+      // 배율 표식 · 개관 띠(D-194 Z5 · Z6): 기본 구간과 다를 때만
+      const ze = zoomEl.current!, B = tour.span ?? g0.span, zv = st.view && Math.abs(st.view.span - B) > .01 ? st.view : null;
+      if (zv) { ze.style.opacity = '1'; ze.querySelector('b')!.textContent = `${zv.span.toFixed(2)} s · ×${(B / zv.span).toFixed(1)}`;
+        const mm = ze.querySelector('i') as HTMLElement, win = mm.firstElementChild as HTMLElement, T = transport.time; mm.style.display = o.minimap ? 'block' : 'none';
+        win.style.left = `${Math.max(0, 100 * (zv.right - zv.span - (T - B)) / B)}%`; win.style.width = `${Math.min(100, 100 * zv.span / B)}%`; }
+      else ze.style.opacity = '0';
     };
     raf = requestAnimationFrame(frame);
     return () => { cancelAnimationFrame(raf); if (S.phase !== 'idle') { transport.speed = S.userSpeed; setMode(S.prevMode); if (S.prevSpan) setSpan(S.prevSpan); } apiRef.current = null; live.current.onStatus(null); };
@@ -156,6 +187,7 @@ export function DiseaseTour({tour, normal, transport, geom, opts, reduced, setMo
   return <div ref={root} className="dt-layer" aria-hidden="true">
     <div ref={dof} className="dt-dof"/><div ref={dim} className="dt-dim"/>
     <svg ref={svg} className="dt-svg"/>
+    <div ref={zoomEl} className="dt-zoom"><b/><i><span/></i></div>
     <div ref={card} className="dt-card"><span className="dt-k"/><b className="dt-t"/><span className="dt-v"/></div>
   </div>;
 }

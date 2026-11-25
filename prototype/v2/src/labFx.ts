@@ -27,11 +27,14 @@ export function freshGradient(g:CanvasRenderingContext2D,l:number,r:number,color
  return gr;
 }
 /** ECG paper (0.04 s × 0.1 mV small, 0.2 s × 0.5 mV large) in physical units of this row; small lines only when ≥ 5 px apart */
-export function paper(g:CanvasRenderingContext2D,b:Box,spanS:number,ampMv:number,k:number){
+// D-194: phaseS = 왼쪽 끝에서 첫 세로선까지(초) — 구간 확대 동안 격자가 파형과 같은 점에서 벌어지게. fadeSmall(확대 중) = 세로 칸이 3–5 px로 좁아지면 투명도로 서서히(갑자기 사라지지 않게). 기본은 예전처럼 5 px 미만이면 안 그림.
+export function paper(g:CanvasRenderingContext2D,b:Box,spanS:number,ampMv:number,k:number,phaseS=0,fadeSmall=false){
  const pxS=(b.r-b.l)/spanS,pxMv=(b.b-b.t)/2/ampMv,mid=(b.t+b.b)/2;
- const lines=(dx:number,dy:number,a:number)=>{g.beginPath();
-  if(dx>=5)for(let x=b.l;x<=b.r+.5;x+=dx){g.moveTo(Math.round(x)+.5,b.t);g.lineTo(Math.round(x)+.5,b.b);}
-  if(dy>=5){for(let y=mid;y>=b.t-.5;y-=dy){g.moveTo(b.l,Math.round(y)+.5);g.lineTo(b.r,Math.round(y)+.5);}for(let y=mid+dy;y<=b.b+.5;y+=dy){g.moveTo(b.l,Math.round(y)+.5);g.lineTo(b.r,Math.round(y)+.5);}}
+ const lines=(dx:number,dy:number,a:number)=>{
+  if(fadeSmall?dx>3:dx>=5){const f=fadeSmall?Math.min(1,(dx-3)/2):1,x0=b.l+(((phaseS*pxS)%dx)+dx)%dx;g.beginPath();g.moveTo(Math.round(b.l)+.5,b.t);g.lineTo(Math.round(b.l)+.5,b.b);   // 왼쪽 테두리는 늘
+   for(let x=x0;x<=b.r+.5;x+=dx)if(x>b.l+.5){g.moveTo(Math.round(x)+.5,b.t);g.lineTo(Math.round(x)+.5,b.b);}
+   g.strokeStyle=`rgba(103,231,195,${Math.min(1,a*k*f)})`;g.lineWidth=1;g.stroke();}
+  g.beginPath();if(dy>=5){for(let y=mid;y>=b.t-.5;y-=dy){g.moveTo(b.l,Math.round(y)+.5);g.lineTo(b.r,Math.round(y)+.5);}for(let y=mid+dy;y<=b.b+.5;y+=dy){g.moveTo(b.l,Math.round(y)+.5);g.lineTo(b.r,Math.round(y)+.5);}}
   g.strokeStyle=`rgba(103,231,195,${Math.min(1,a*k)})`;g.lineWidth=1;g.stroke();};
  lines(pxS*SQUARE.s,pxMv*SQUARE.mv,.05);lines(pxS*SQUARE.s*5,pxMv*SQUARE.mv*5,.13);
  g.beginPath();g.moveTo(b.l,Math.round(mid)+.5);g.lineTo(b.r,Math.round(mid)+.5);g.strokeStyle=`rgba(103,231,195,${Math.min(1,.16*k)})`;g.stroke();

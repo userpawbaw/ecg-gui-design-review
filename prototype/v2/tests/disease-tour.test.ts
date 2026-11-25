@@ -37,3 +37,11 @@ for (const id of Object.keys(ROW_CFG)) test(`D-193 ${id}: normal row + three ste
     assert.ok(!/NaN|Infinity/.test(s.value), s.value); });
   assert.ok(t!.start <= t!.steps[0].stop - 2);
 });
+import {stepView} from '../src/disease/tour.ts';
+for (const id of Object.keys(ROW_CFG)) test(`D-194 ${id}: step spans on a 0.25 s grid, wide → narrow within a pause, zoom window holds the focus and never passes the playhead`, () => {
+  const {d, x: dx} = load(id), r = buildNormalRow(dx, d.beats, d.fs, ROW_CFG[id], needsRef(id) ? ref : undefined)!, t = buildTour(id, dx, d.beats, d.fs, r, 5, d.rhythm)!, base = t.span!;
+  t.steps.forEach((s, i) => { assert.ok(Math.abs(s.span! * 4 - Math.round(s.span! * 4)) < 1e-9 && s.span! >= 1.25 && s.span! <= base, `${s.id} span ${s.span}`);
+    if (i && Math.abs(s.stop - t.steps[i - 1].stop) < 1e-9) assert.ok(s.span! <= t.steps[i - 1].span!, `${s.id} narrows`);
+    const v = stepView(s, base); assert.ok(v.right <= s.stop + 1e-9);
+    for (const g of s.regions) assert.ok(g.t0 >= v.right - v.span - 1e-6 && g.t1 <= v.right + 1e-6, `${s.id} ${g.row} in view`); });
+});

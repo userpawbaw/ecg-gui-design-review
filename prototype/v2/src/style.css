@@ -90,6 +90,7 @@ button{min-height:44px}.method-rail{display:flex;flex-wrap:wrap;gap:8px;margin-t
 /* D-157 실시간 측정 B안 — 어두운 배경 위 패널(D-156). 판 색 #112b39 는 v2.2.1·원본 live.html 과 같다. */
 .live-native{display:flex;flex-direction:column;gap:12px;margin-top:14px}
 .live-status{display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:14px;position:sticky;top:0;z-index:6;padding:6px 0;background:linear-gradient(rgb(10 22 28 / .92),rgb(10 22 28 / .75));backdrop-filter:blur(6px)}   /* 2026-11-25: 스크롤해도 경고 칩이 보이게 */
+.live-light{display:inline-flex;gap:6px;align-items:center}.live-light button{font:inherit;font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid rgb(255 255 255 / .25);background:rgb(255 255 255 / .06);color:inherit;cursor:pointer}.live-light button:disabled{opacity:.4;cursor:default}   /* D-198 가벼운 계산 되돌리기 */
 .live-conn{font-weight:650;color:#c9b39b}.live-conn.on{color:#5fd6c2}.live-conn.lost{color:#ff9a8a}
 .live-src{color:#a9bfc4;font-size:13px}.live-note{color:#f6d18d;font-size:13px}
 .live-contract{margin:0;font-size:13px;color:#a9bfc4;max-width:980px}

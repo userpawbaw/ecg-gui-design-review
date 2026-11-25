@@ -2,7 +2,7 @@
 # 사용: python backlog_analyze.py <trace.txt>
 import sys
 R, P = [], []
-for l in open(sys.argv[1]):
+for l in open(sys.argv[1], encoding='utf-8'):
     a = l.split()
     if a[0] == 'R': R.append((float(a[1]), int(a[3])))
     elif a[0] == 'P': P.append((float(a[1]), int(a[3]), float(a[4])))

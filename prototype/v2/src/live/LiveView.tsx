@@ -21,6 +21,8 @@ import methodData from '../methods.json';
 // 2026-11-10 사용자 「실험실 탭과 유사하게 오른쪽에 기법 선택 창 … 최대 3개」: 브리지가 보내는 기법 중 3개까지 그린다(그리기 비용).
 // 브리지가 계산하는 기법은 시작할 때 정해진다(--methods, 원본 저장소). 목록에 있어도 브리지가 보내지 않으면 고를 수 없다.
 const DEFAULT_ORDER = ['M_FE', 'M04', 'M05S', 'M08', 'M06', 'M02', 'M03', 'M05', 'M09', 'M06L6', 'M01'];
+// D-198(A): 가벼운 계산에서 추론 간격을 늘리는 기법(실행 도구 HEAVY와 같은 목록)
+const HEAVY = ['M04', 'M06', 'M06L6', 'M08', 'M09'];
 const LIVE_IDS = ['M_FE', 'M01', 'M02', 'M03', 'M04', 'M05S', 'M05', 'M06', 'M06L6', 'M08', 'M09'], MAX_LIVE = 3;
 const shortName = (id: string) => (methodData as Record<string, {name: string}>)[id]?.name ?? LABEL[id] ?? id;
 
@@ -53,8 +55,9 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   // 2026-11-10 브리지 다시 띄우기: `npm run bridge:replay` 가 띄운 감독 창구(/bridge-ctl)가 있으면 아무 기법이나 골라 브리지만 다시 시작
   const ctlUrl = base === 'bridge' ? 'bridge-ctl' : null;
   type Source = {kind: 'replay' | 'board', label: string};
-  const [ctl, setCtl] = useState<{ok: boolean, methods: string[], source?: Source}>({ok: false, methods: []});
-  const [reload, setReload] = useState<{methods: string[], t0: number, failed?: string, settling?: boolean} | null>(null);
+  const [ctl, setCtl] = useState<{ok: boolean, methods: string[], source?: Source, light?: boolean}>({ok: false, methods: []});
+  const [reload, setReload] = useState<{methods: string[], t0: number, failed?: string, settling?: boolean, why?: string} | null>(null);
+  const lagSince = useRef(0), autoLight = useRef(false);   // D-198(A): 밀림이 4 s 넘게 이어지거나 브리지가 건너뛰면 한 번 자동으로 가벼운 계산
   const readyAt = useRef(0);   // 2026-11-25: 새 기법 데이터가 처음 들어온 시각 — 재생이 고르게 될 때까지 덮개 유지
   // 2026-11-11 사용자: 「큐처럼 … 가득 찬 경우 새로 선택하면 이전 것이 해제 … 확인 버튼을 눌러서 기법 새로고침」 — 고르는 동안은 초안만 바뀐다
   const [draft, setDraft] = useState<string[] | null>(null);
@@ -86,7 +89,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
 
   useEffect(() => {
     if (!ctlUrl) return; let alive = true;
-    fetch(ctlUrl + '/status', {cache: 'no-store'}).then(r => r.ok ? r.json() : null).then(d => { if (alive && d?.methods) setCtl({ok: true, methods: d.methods, source: d.source?.label ? d.source : undefined}); }).catch(() => {});
+    fetch(ctlUrl + '/status', {cache: 'no-store'}).then(r => r.ok ? r.json() : null).then(d => { if (alive && d?.methods) setCtl({ok: true, methods: d.methods, source: d.source?.label ? d.source : undefined, light: !!d.light}); }).catch(() => {});
     return () => { alive = false; };
   }, [ctlUrl]);
   // 다시 띄우는 동안: 감독 상태를 보고, 새 기법 데이터가 들어오면 덮개를 걷는다
@@ -173,11 +176,30 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
     if (changed) setLayout(l => l + 1);
   }, [layout, ctl.ok]);
   const applied = () => order.current.length ? [...order.current] : ctl.methods.slice(0, MAX_LIVE);
+  // D-198(A): 가벼운 계산(무거운 기법 추론 간격 16 → 32, 지연 +64 ms) 켜기 · 끄기 — 브리지만 다시 띄운다
+  const setLight = (on: boolean, why?: string) => {
+    if (!ctlUrl || !ctl.ok) return; const next = applied();
+    S.clear(); readyAt.current = 0; setReload({methods: next, t0: performance.now(), why}); setCtl(c => ({...c, light: on}));
+    fetch(ctlUrl + '/restart', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({methods: next, light: on})})
+      .catch(() => setReload(r => r && {...r, failed: '브리지 제어 창구 연결 실패'}));
+  };
+  useEffect(() => {
+    if (!ctlUrl) return;
+    const id = window.setInterval(() => {
+      const st = S.stat, lag = st.lag_ms ?? st.gap_ms ?? 0, now = performance.now();
+      if (!ctl.ok || ctl.light || autoLight.current || reload || !applied().some(m => HEAVY.includes(m))) { lagSince.current = 0; return; }
+      const skipped = (st.skip ?? 0) > 0;
+      if (!skipped && lag <= 1500) { lagSince.current = 0; return; }
+      if (!lagSince.current) lagSince.current = now;
+      if (skipped || now - lagSince.current > 4000) { autoLight.current = true; setLight(true, 'CPU가 모자라 무거운 기법을 가볍게 계산하도록 다시 시작합니다(추론 간격 2배)'); }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [ctl.ok, ctl.light, reload]);
   const apply = () => {
     const next = draft; if (!next || !ctlUrl) return; setDraft(null);
     if (next.join() === applied().join()) return;
     order.current = next; S.hidden.clear(); S.clear(); readyAt.current = 0; setReload({methods: next, t0: performance.now()}); setCtl(c => ({...c, methods: next}));
-    fetch(ctlUrl + '/restart', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({methods: next})})
+    fetch(ctlUrl + '/restart', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({methods: next, light: !!ctl.light})})
       .catch(() => setReload(r => r && {...r, failed: '브리지 제어 창구 연결 실패'}));
   };
   const pick = (id: string) => {
@@ -204,6 +226,8 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   const st = S.stat, names = S.names(), shown = names.filter(n => !S.hidden.has(n));
   const connected = conn === 'on' || conn === 'retry' || conn === 'lost';
   const overload = (st.rtf ?? 0) > .9 || (st.qdrop ?? 0) > 0, jitter = (st.gap_ms ?? 0) > 200;
+  // D-198(B): 밀림 = 입력이 도착한 뒤 처리되기까지 늦은 시간. 패치 브리지는 lag_ms, 아니면 최대 수신 간격(밀리면 같이 커짐 — F-111)
+  const lagMs = st.lag_ms ?? st.gap_ms ?? 0, behind = lagMs > 1000, patched = st.patch != null;
   // 2026-11-25: RTF(평균 처리 비율)는 결과가 몰려 오는 것을 못 잡는다 — 브라우저가 잰 결과 도착 간격과 화면 버퍼(늦춘 만큼)를 따로 보인다
   const Rv = S.reveal as {lagS?: () => number, maxGapMs?: (n: number) => number}, playLag = Rv.lagS ? Rv.lagS() : 0, outGap = Rv.maxGapMs ? Rv.maxGapMs(performance.now()) : 0, burst = playLag > .6;
   if (!connected && !names.length) return conn === 'checking' ? <LiveOffline checking/> : <>{help}</>;
@@ -234,7 +258,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
         <path className="lr-ecg" d="M18 64h22l6-10 6 22 8-46 8 52 6-18h28"/></svg>
       <b>{reload.failed ?? '기법 불러오는 중'}</b>
       <span className="lr-chips">{reload.methods.map(m => <i key={m}>{shortName(m)}</i>)}</span>
-      <small>{reload.settling && !reload.failed ? '처리 속도에 맞춰 화면을 고르는 중 · 곧 시작합니다' : '브리지만 다시 시작합니다 · 화면 설정은 그대로'}</small></div>}</div>;
+      <small>{reload.settling && !reload.failed ? '처리 속도에 맞춰 화면을 고르는 중 · 곧 시작합니다' : reload.why ?? '브리지만 다시 시작합니다 · 화면 설정은 그대로'}</small></div>}</div>;
   return <div className="live-shell">{reloadCover}<div className="live-native">
     <div className="live-status" role="status">
       <span className={'live-conn ' + conn}>{conn === 'on' ? <StateChip kind="linked" tone="ok" label="연결됨"/> : conn === 'retry' ? <StateChip kind="retry" tone="warn" label="연결 끊김" note="재연결 중"/>
@@ -242,7 +266,10 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       <span className="live-src">{src}</span>
       {overload && <StateChip kind="overload" tone="warn" label="실시간 처리 한계 초과" title="실시간 계수(RTF) 0.9 초과 또는 처리 누락 블록 발생"/>}
       {burst && <StateChip kind="jitter" tone="warn" label="처리 결과 몰림" note={`화면 ${playLag.toFixed(1)} s 늦춰 끊김 방지`} title={`처리 결과가 최대 ${Math.round(outGap)} ms 간격으로 몰려 도착(브라우저 측정, 최근 2 s) — RTF와 별개. 끊기지 않게 화면을 그만큼 늦춰 그린다`}/>}
-      {jitter && <StateChip kind="jitter" tone="warn" label="수신 간격 불규칙" title="최근 2 s 최대 수신 간격 200 ms 초과"/>}
+      {behind && <StateChip kind="overload" tone="warn" label="브리지 밀림" note={`${(lagMs / 1000).toFixed(1)} s`} title={`입력이 들어온 뒤 처리되기까지 ${(lagMs / 1000).toFixed(1)} s 늦음 — CPU가 모자랍니다(브라우저 · 다른 프로그램이 같은 CPU를 씀). 다른 프로그램을 닫거나 가벼운 기법을 고르세요.${patched ? ' 2 s를 넘으면 브리지가 쌓인 입력을 건너뛰고 지금부터 다시 그립니다.' : ''}`}/>}
+      {!behind && jitter && <StateChip kind="jitter" tone="warn" label="수신 간격 불규칙" title="최근 2 s 최대 수신 간격 200 ms 초과"/>}
+      {ctl.light && <span className="live-light"><StateChip kind="overload" tone="idle" label="가벼운 계산" note="추론 간격 2배" title="무거운 기법(M04 · 딥러닝)의 추론 간격 16 → 32 표본: 계산 약 절반, 지연 +64 ms, 참값 오차는 같은 수준(합성 신호 측정, D-198)"/>
+        <button type="button" disabled={!!reload} onClick={() => setLight(false)}>원래대로</button></span>}
       {note && <span className="live-note">{note}</span>}
     </div>
     <div className="live-stats">
@@ -251,7 +278,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
         <div key={k as string} className={bad ? 'bad' : ''}><small>{k}</small><b>{v as string}</b></div>)}
       <details className="live-diag"><summary>진단 정보</summary><div>
         {[['프레임 오류', fmt(st.bad) + ' B'], ['재동기화', fmt(st.resync)], ['처리 누락 블록', fmt(st.qdrop), (st.qdrop ?? 0) > 0],
-          ['실시간 계수(RTF)', fmt(st.rtf, 2), (st.rtf ?? 0) > .9], ['결과 도착 간격(화면, 2 s)', fmt(outGap) + ' ms', outGap > 500], ['화면 버퍼', fmt(playLag, 2) + ' s', burst], ['최대 수신 간격(2 s)', fmt(st.gap_ms) + ' ms', (st.gap_ms ?? 0) > 200]].map(([k, v, bad]) =>
+          [patched ? '실시간 계수(RTF, 루프 전체)' : '실시간 계수(RTF)', fmt(st.rtf, 2), (st.rtf ?? 0) > .9], ...(patched ? [['처리기만 RTF(예전 값)', fmt(st.rtf_proc, 2), false], ['입력 밀림', fmt(st.lag_ms) + ' ms', (st.lag_ms ?? 0) > 1000], ['밀림 건너뜀', fmt(st.skip) + ' 회', (st.skip ?? 0) > 0]] : []), ['결과 도착 간격(화면, 2 s)', fmt(outGap) + ' ms', outGap > 500], ['화면 버퍼', fmt(playLag, 2) + ' s', burst], ['최대 수신 간격(2 s)', fmt(st.gap_ms) + ' ms', (st.gap_ms ?? 0) > 200]].map(([k, v, bad]) =>
           <div key={k as string} className={bad ? 'bad' : ''}><small>{k}</small><b>{v as string}</b></div>)}
       </div></details>
     </div>

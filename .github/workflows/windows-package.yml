@@ -53,6 +53,10 @@ jobs:
           New-Item -ItemType Directory -Force -Path "$src\scripts" | Out-Null
           Copy-Item -Recurse srcrepo\ecgdn, srcrepo\configs, srcrepo\demo $src
           Copy-Item srcrepo\scripts\serial_bridge.py, srcrepo\scripts\_bootstrap.py "$src\scripts"
+          # D-198(C): bridge backlog skip + whole-loop RTF, applied to the package copy (the source repo stays untouched); fails the build if the source changed
+          $env:PYTHONUTF8 = '1'
+          python scripts\bridge\patch_bridge.py srcrepo\scripts\serial_bridge.py "$src\scripts\serial_bridge.py"
+          if ($LASTEXITCODE -ne 0) { throw 'patch_bridge failed' }
           foreach ($t in 'm06_l1','m06_l6','m08_l1','m08_l6','m09_l1') {
             New-Item -ItemType Directory -Force -Path "$src\results\d1\$t" | Out-Null
             Copy-Item "srcrepo\results\d1\$t\best.pt" "$src\results\d1\$t\"

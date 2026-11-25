@@ -8,7 +8,9 @@ export const PACE = typeof location !== 'undefined' && new URLSearchParams(locat
 /** 브리지가 보내는 한 블록 (scripts/serial_bridge.py `payload`). */
 export type Block = {i: number, n: number, fs: number, raw: number[], ok: number[], out: Record<string, number[]>,
   stat: {fe?: string, lat_ms?: number, lost?: number, leadoff?: number, bad?: number, resync?: number, qdrop?: number,
-    sse_drop?: number, rtf?: number, gap_ms?: number, src?: string}};
+    sse_drop?: number, rtf?: number, gap_ms?: number, src?: string,
+    /** D-198 패치 브리지만: 처리기만 잰 예전 RTF · 지금 − 처리한 마지막 입력 도착(밀림) · 밀림 건너뛴 횟수 · 패치 이름 */
+    rtf_proc?: number, lag_ms?: number, skip?: number, patch?: string}};
 export type Stat = Block['stat'] & {elapsed?: number};
 export type Note = {kind: 'reset' | 'link' | 'overflow', text: string, at: number};
 
@@ -54,7 +56,8 @@ export class LiveStream {
     if (m.link_lost) { this.notes.push({kind: 'link', text: '보드 연결 끊김: ' + m.link_lost, at: now}); return true; }
     if (m.reset) {                                   // front-end 전환: 옛 필터와 새 필터의 파형이 한 화면에 섞이지 않게 비운다
       this.clear(); this.feMode = m.fe ?? this.feMode;
-      this.notes.push({kind: 'reset', text: `공통 전처리 변경: ${m.fe_label ?? m.fe}(지연 +${m.fe_lat_ms ?? '?'} ms) · 화면 갱신 중`, at: now});
+      this.notes.push({kind: 'reset', text: m.skip ? `처리가 ${m.skip_s ?? '?'} s 밀려 쌓인 입력을 건너뜀 · 지금부터 다시 그림(CPU 부족)`   // D-198(C)
+        : `공통 전처리 변경: ${m.fe_label ?? m.fe}(지연 +${m.fe_lat_ms ?? '?'} ms) · 화면 갱신 중`, at: now});
       return true;
     }
     if (m.fs && m.fs !== this.fs) { this.fs = m.fs; this.cap = Math.round(this.winS * this.fs); this.clear(); }   // fs 없는 프레임으로 cap 을 NaN 으로 만들지 않는다

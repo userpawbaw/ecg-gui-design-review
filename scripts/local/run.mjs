@@ -9,7 +9,7 @@
 //   npm run v2:prepare           — build prototype/v2/public (keeps the checked-in methods.json)
 import {spawnSync,spawn} from 'node:child_process';
 import http from 'node:http';
-import {existsSync,readFileSync,readdirSync,statSync} from 'node:fs';
+import {existsSync,mkdirSync,readFileSync,readdirSync,statSync} from 'node:fs';
 import {dirname,join,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';
@@ -129,7 +129,13 @@ function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Pyth
   src=['--replay','csv','--csv',out];
  }
  // 2026-11-10: 기본 3개 — 실시간 탭에서 기법을 고르면 감독 창구가 브리지를 그 기법만으로 다시 띄운다
- const has=k=>rest.includes(k),argv=['scripts/serial_bridge.py',...src,'--serve',...(has('--methods')?[]:['--methods','M_FE,M04,M05S']),...rest];
+ // D-198(C): 원본 브리지에 밀림 건너뛰기 · 루프 전체 RTF 패치를 덧댄 사본(.cache/bridge)으로 띄운다. 원본이 예상과 다르면 원본 그대로 + 경고. 끄기: --no-patch
+ let script='scripts/serial_bridge.py';
+ const noPatch=rest.includes('--no-patch');if(noPatch)rest.splice(rest.indexOf('--no-patch'),1);
+ if(!noPatch){const pp=join(root,'.cache','bridge','serial_bridge.py');mkdirSync(dirname(pp),{recursive:true});
+  if(run(p.bin,[...p.pre,join(root,'scripts','bridge','patch_bridge.py'),join(d,'scripts','serial_bridge.py'),pp],{allowFail:true})===0){script=pp;env.PYTHONPATH=join(d,'scripts');env.ECG_BRIDGE_ROOT=d;}
+  else warn('브리지 패치(D-198)를 못 덧댐 — 원본 그대로 띄웁니다(밀림 건너뛰기 없음)');}
+ const has=k=>rest.includes(k),argv=[script,...src,'--serve',...(has('--methods')?[]:['--methods','M_FE,M04,M05S']),...rest];
  say(`\n재생 브리지(${src[1]==='csv'?'고른 신호':src.length?'합성 심전도':'보드'} → 실제 처리 경로${src.length?', 실측 아님':''}): ${d}\n  ${[p.bin,...p.pre,...argv].join(' ')}\n  앱은 다른 터미널에서 npm run story → «실시간 측정» 탭. 멈추려면 Ctrl+C\n`);
  const pi=rest.indexOf('--port'),label=pi>=0?{kind:'board',label:'보드 '+(rest[pi+1]||'?')}:{kind:'replay',label:src[1]==='csv'?(pick['--signal']==='mitdb:100'&&pick['--noise']==='mixed'&&pick['--snr']==='0'&&pick['--seed']==='13'?'d1 · 기록 100 · 혼합 잡음 0 dB':[pick['--signal']||'synth',pick['--noise']||'mixed',(pick['--snr']||'8')+' dB'].join(' · ')):'합성 심전도 · 합성 잡음 8 dB'};
  supervise(p,argv,d,label);}
@@ -138,13 +144,18 @@ function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Pyth
 // 이 명령이 브리지를 자식 프로세스로 들고, 127.0.0.1:8764 제어 창구(앱은 같은 출처 /bridge-ctl 프록시)로 --methods 만 바꿔 다시 띄운다.
 //  GET /status → {state, methods, err}   POST /restart {methods:[…]} → 202
 // 허용 목록 밖 이름은 받지 않는다. 새로 띄운 브리지가 바로 죽으면(포트가 아직 안 풀림 등) 1 s 간격으로 4번 다시, 그래도 안 되면 이전 목록으로.
+const HEAVY=['M04','M06','M06L6','M08','M09'];
+const lightArgs=(methods,on)=>{const h=on?methods.split(',').filter(m=>HEAVY.includes(m)):[];return h.length?['--hop-for',h.map(m=>m+'=32').join(',')]:[];};
 const LIVE_ALLOWED=new Set(['M_FE','M01','M02','M03','M04','M05','M05S','M06','M06L6','M08','M09']);
 function supervise(p,argv,cwd,source={kind:'replay',label:''}){
  const CTL=Number(process.env.ECG_BRIDGE_CTL_PORT||8764),BR=new URL(process.env.ECG_BRIDGE||'http://127.0.0.1:8765');
  const mi=argv.indexOf('--methods');let methods=argv[mi+1],prev=null,child=null,state='stopped',err='',gen=0,tries=0,since=0;
- const args=()=>{const a=[...argv];a[mi+1]=methods;return a;};
+ // D-198(A): 가벼운 계산 — 무거운 기법(M04 · 딥러닝)의 추론 간격 16 → 32(계산 약 절반, 참값 RMSE 같음, 지연 +64 ms). 시작 옵션 --light 또는 화면이 밀림을 보면 /restart {light:true}
+ let light=argv.includes('--light');if(light)argv.splice(argv.indexOf('--light'),1);
+ const userHop=argv.includes('--hop-for');
+ const args=()=>{const a=[...argv];a[mi+1]=methods;return a.concat(lightArgs(methods,light&&!userHop));};
  const start=()=>{const g=++gen;state='starting';err='';since=Date.now();
-  say(`\n브리지 시작: --methods ${methods}`);
+  say(`\n브리지 시작: --methods ${methods}`+(light&&!userHop&&lightArgs(methods,true).length?' · 가벼운 계산(무거운 기법 추론 간격 32)':''));
   child=spawn(p.bin,[...p.pre,...args()],{cwd,env,stdio:['ignore','inherit','pipe']});
   child.stderr.on('data',b=>{process.stderr.write(b);err=(err+b).slice(-1500);});
   child.on('exit',code=>{if(g!==gen)return;child=null;if(state==='stopping')return;
@@ -156,15 +167,15 @@ function supervise(p,argv,cwd,source={kind:'replay',label:''}){
    http.get({host:BR.hostname,port:BR.port,path:'/fe'},r=>{r.resume();if(r.statusCode===200){state='running';prev=null;tries=0;ok('브리지 준비됨: '+methods);}else setTimeout(poll,400);})
     .on('error',()=>setTimeout(poll,400));};
   setTimeout(poll,500);};
- const restart=list=>{prev=methods;methods=list.join(',');tries=0;
+ const restart=(list,lt)=>{prev=methods;methods=list.join(',');tries=0;if(typeof lt==='boolean')light=lt;
   if(child){state='stopping';const c=child;c.once('exit',()=>setTimeout(start,400));c.kill();}else start();};
  http.createServer((req,res)=>{const j=(code,o)=>{res.writeHead(code,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(o));};
   const u=req.url.split('?')[0];
-  if(req.method==='GET'&&u==='/status')return j(200,{state,methods:methods.split(','),err:state==='failed'?err.slice(-400):'',source});
+  if(req.method==='GET'&&u==='/status')return j(200,{state,methods:methods.split(','),err:state==='failed'?err.slice(-400):'',source,light:light&&!userHop});
   if(req.method==='POST'&&u==='/restart'){let body='';req.on('data',c=>{body+=c;if(body.length>2000)req.destroy();});req.on('end',()=>{
-   let list;try{list=JSON.parse(body).methods;}catch{return j(400,{error:'json'});}
+   let list,lt;try{const o=JSON.parse(body);list=o.methods;lt=typeof o.light==='boolean'?o.light:undefined;}catch{return j(400,{error:'json'});}
    if(!Array.isArray(list)||!list.length||list.length>4||!list.every(m=>typeof m==='string'&&LIVE_ALLOWED.has(m)))return j(400,{error:'methods: 1–4 of '+[...LIVE_ALLOWED].join(',')});
-   restart([...new Set(list)]);j(202,{state,methods:list});});return;}
+   restart([...new Set(list)],lt);j(202,{state,methods:list,light});});return;}
   j(404,{error:'not found'});}).listen(CTL,'127.0.0.1',()=>say(`브리지 제어 창구: http://127.0.0.1:${CTL} (앱의 실시간 탭이 기법을 바꿀 때 이 창구로 브리지만 다시 띄움)`));
  const stop=()=>{state='stopping';if(child)child.kill();process.exit(0);};process.on('SIGINT',stop);process.on('SIGTERM',stop);
  start();

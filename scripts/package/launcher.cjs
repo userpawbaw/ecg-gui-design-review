@@ -129,13 +129,16 @@ async function sourceStep(){
 
 // ---------------------------------------------------------------- bridge supervisor (scripts/local/run.mjs supervise(), D-170)
 const LIVE_ALLOWED=new Set(['M_FE','M01','M02','M03','M04','M05','M05S','M06','M06L6','M08','M09']);
-const sup={state:'stopped',methods:'',err:'',child:null};
+// D-198(A): 가벼운 계산 — 무거운 기법(M04 · 딥러닝) 추론 간격 16 → 32. 시작 옵션 --light 또는 화면이 밀림을 보면 /restart {light:true}
+const HEAVY=['M04','M06','M06L6','M08','M09'];
+const lightArgs=(methods,on)=>{const h=on?methods.split(',').filter(m=>HEAVY.includes(m)):[];return h.length?['--hop-for',h.map(m=>m+'=32').join(',')]:[];};
+const sup={state:'stopped',methods:'',err:'',child:null,light:has('--light')};
 function bridgeArgs(methods){
- const pass=[],skip=new Set(['--no-browser','--kiosk','--install-torch','--no-torch','--selftest','--selftest-dl']);
+ const pass=[],skip=new Set(['--no-browser','--kiosk','--install-torch','--no-torch','--selftest','--selftest-dl','--light']);
  for(let i=0;i<argv.length;i++){const a=argv[i];if(skip.has(a))continue;if(a==='--root'||a==='--methods'){i++;continue;}
   if(SRC_FLAGS.has(a)){if(a==='--replay'&&/^(synth|csv)$/.test(argv[i+1]??''))i++;continue;}pass.push(a);}
  const src=pass.includes('--port')?[]:SOURCE.args;
- return ['scripts/serial_bridge.py',...src,'--serve','--http-port',String(PORT_BR),'--methods',methods,...pass];}
+ return ['scripts/serial_bridge.py',...src,'--serve','--http-port',String(PORT_BR),'--methods',methods,...pass,...lightArgs(methods,sup.light&&!pass.includes('--hop-for'))];}
 function supervise(initial){
  let prev=null,gen=0,tries=0,since=0;sup.methods=initial;
  const start=()=>{const g=++gen;sup.state='starting';sup.err='';since=Date.now();say(`\n브리지 시작: --methods ${sup.methods}`);
@@ -152,15 +155,15 @@ function supervise(initial){
    http.get({host:'127.0.0.1',port:PORT_BR,path:'/fe'},r=>{r.resume();if(r.statusCode===200){sup.state='running';prev=null;tries=0;ok('브리지 준비됨: '+sup.methods);}else setTimeout(poll,400);})
     .on('error',()=>setTimeout(poll,400));};
   setTimeout(poll,500);};
- const restart=list=>{prev=sup.methods;sup.methods=list.join(',');tries=0;
+ const restart=(list,lt)=>{prev=sup.methods;sup.methods=list.join(',');tries=0;if(typeof lt==='boolean')sup.light=lt;
   if(sup.child){sup.state='stopping';const c=sup.child;c.once('exit',()=>setTimeout(start,400));c.kill();}else start();};
  http.createServer((req,res)=>{const j=(code,o)=>{res.writeHead(code,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(o));};
   const u=req.url.split('?')[0];
-  if(req.method==='GET'&&u==='/status')return j(200,{state:sup.state,methods:sup.methods.split(','),err:sup.state==='failed'?sup.err.slice(-400):'',source:{kind:SOURCE.kind,label:SOURCE.label}});
+  if(req.method==='GET'&&u==='/status')return j(200,{state:sup.state,methods:sup.methods.split(','),err:sup.state==='failed'?sup.err.slice(-400):'',source:{kind:SOURCE.kind,label:SOURCE.label},light:sup.light});
   if(req.method==='POST'&&u==='/restart'){let body='';req.on('data',c=>{body+=c;if(body.length>2000)req.destroy();});req.on('end',()=>{
-   let list;try{list=JSON.parse(body).methods;}catch{return j(400,{error:'json'});}
+   let list,lt;try{const o=JSON.parse(body);list=o.methods;lt=typeof o.light==='boolean'?o.light:undefined;}catch{return j(400,{error:'json'});}
    if(!Array.isArray(list)||!list.length||list.length>4||!list.every(m=>typeof m==='string'&&LIVE_ALLOWED.has(m)))return j(400,{error:'methods: 1–4 of '+[...LIVE_ALLOWED].join(',')});
-   restart([...new Set(list)]);j(202,{state:sup.state,methods:list});});return;}
+   restart([...new Set(list)],lt);j(202,{state:sup.state,methods:list,light:sup.light});});return;}
   j(404,{error:'not found'});}).on('error',e=>{fatal(`제어 창구 포트 ${PORT_CTL} 사용 불가(${e.code}) — 다른 Signal Studio · npm run bridge:replay 가 켜져 있으면 닫으세요`,3);})
   .listen(PORT_CTL,'127.0.0.1');
  start();}
@@ -191,8 +194,8 @@ const get=(url,ms=5000)=>new Promise((res,rej)=>{const r=http.get(url,x=>{let b=
 const post=(url,o)=>new Promise((res,rej)=>{const u=new URL(url),d=JSON.stringify(o);const r=http.request({host:u.hostname,port:u.port,path:u.pathname,method:'POST',headers:{'Content-Type':'application/json','Content-Length':Buffer.byteLength(d)}},x=>{let b='';x.on('data',c=>b+=c);x.on('end',()=>res({code:x.statusCode,body:b}));});r.on('error',rej);r.end(d);});
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function untilRunning(want,limit){const t=Date.now();while(Date.now()-t<limit){const s=JSON.parse((await get(`http://127.0.0.1:${PORT_WEB}/bridge-ctl/status`)).body);if(s.state==='running'&&(!want||s.methods.join()===want))return s;if(s.state==='failed'&&!want)throw new Error('bridge failed: '+s.err);await wait(1000);}throw new Error('bridge not running within '+limit/1000+' s');}
-function streamKeys(ms){return new Promise((res,rej)=>{const keys=new Set();let n=0;const r=http.get(`http://127.0.0.1:${PORT_WEB}/bridge/stream`,x=>{let buf='';x.on('data',c=>{buf+=c;let i;while((i=buf.indexOf('\n\n'))>=0){const ev=buf.slice(0,i);buf=buf.slice(i+2);const m=ev.match(/^data: (.*)$/m);if(!m)continue;try{const d=JSON.parse(m[1]);if(d.out){n++;Object.keys(d.out).forEach(k=>keys.add(k));}}catch{}}});});
- r.on('error',rej);setTimeout(()=>{r.destroy();res({frames:n,keys:[...keys]});},ms);});}
+function streamKeys(ms){return new Promise((res,rej)=>{const keys=new Set();let n=0,patch=null;const r=http.get(`http://127.0.0.1:${PORT_WEB}/bridge/stream`,x=>{let buf='';x.on('data',c=>{buf+=c;let i;while((i=buf.indexOf('\n\n'))>=0){const ev=buf.slice(0,i);buf=buf.slice(i+2);const m=ev.match(/^data: (.*)$/m);if(!m)continue;try{const d=JSON.parse(m[1]);if(d.out){n++;Object.keys(d.out).forEach(k=>keys.add(k));if(d.stat?.patch)patch=d.stat.patch;}}catch{}}});});
+ r.on('error',rej);setTimeout(()=>{r.destroy();res({frames:n,keys:[...keys],patch});},ms);});}
 async function selftest(){const out={ok:false,checks:[]},check=(name,pass,info)=>{out.checks.push({name,pass,info});console.log(`  ${pass?'PASS':'FAIL'} ${name} ${info??''}`);if(!pass)throw new Error(name);};
  try{const idx=await get(`http://127.0.0.1:${PORT_WEB}/`);check('web index.html',idx.code===200&&/<div id="root"|<script/.test(idx.body),'HTTP '+idx.code);
   // 10-minute replay (lab «10 min»): manifest + one chunk read through the same server
@@ -205,6 +208,7 @@ async function selftest(){const out={ok:false,checks:[]},check=(name,pass,info)=
   check('signal source',st.source?.kind==='replay'&&!!st.source.label&&(has('--synth')||/d1/.test(st.source.label)),JSON.stringify(st.source));
   const fe=await get(`http://127.0.0.1:${PORT_WEB}/bridge/fe`);check('bridge /fe via proxy',fe.code===200,'HTTP '+fe.code);
   const s1=await streamKeys(6000);check('stream data',s1.frames>5&&['M_FE','M04','M05S'].every(k=>s1.keys.includes(k)),`${s1.frames} frames · ${s1.keys.join(',')}`);
+  check('bridge patch D-198 active',s1.patch==='gui-d198',String(s1.patch));
   if(has('--selftest-dl')){const v=hasTorch();check('PyTorch present',!!v,v??'missing');
    if(WIN){const r=spawnSync(PY,['-c','import torch,ctypes,ctypes.wintypes as w\nk=ctypes.WinDLL("kernel32");k.GetModuleHandleW.restype=w.HMODULE;k.GetModuleHandleW.argtypes=[w.LPCWSTR]\nb=ctypes.create_unicode_buffer(600);h=k.GetModuleHandleW("msvcp140.dll");k.GetModuleFileNameW(w.HMODULE(h),b,600);print(b.value)'],{env:pyEnv,encoding:'utf8'});
     const where=(r.stdout||'').trim();check('torch loads msvcp140 from the package',where.toLowerCase().startsWith(path.dirname(PY).toLowerCase()),where||(r.stderr||'').slice(-200));}

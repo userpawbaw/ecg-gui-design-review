@@ -80,6 +80,10 @@
 | `perf=msaa,pr75,fog,bloom,grade,guard,dust,rig,climb,fluid,pr50,fps30,merge,fxaa` | 도입부 렉 후보 끄기(쉼표 목록) · `merge` 출력 변환 + 색보정 한 단계 · `fxaa` MSAA 대신 FXAA + 왼쪽 아래 FPS 표시. `npm run story:perf -- msaa,pr75` 가 이 주소로 연다(D-190). 같은 것을 하나씩: `ibloom=0` `ifog=0` `igrade=0` `iguard=0` `ipr=0.75` `idust=0` `irig=0` `iclimb=0` `ifps=30` `msaa=0` `fluid=0`, `fps=1` FPS 표시만, `introprof=1` 프레임 기록 | 모두 켬 |
 | `introlive=1` | 도입부를 예전 실시간 3D로(기본은 D-195 영상 경로: 3D 장면 = 미리 렌더한 영상, 파형 · 글자 · 겹침 조절은 실시간). `perf=…` 렉 스위치는 이 모드에서만 의미 | 끔(영상) |
 | `zoomsnap=0` | 질환 탭 구간 확대 · 축소를 이전 방식(매 프레임 파형 층 전체 다시 그리기)으로 — D-199 비교용. 기본은 처음 · 끝 장면만 그려 늘여 섞기 |
+| `zoomsplit=0` | 질환 탭 확대 · 축소를 1차 방식(파형 전체를 처음 · 가운데 · 끝 장면에서 늘여 섞기)으로. 기본(2차)은 선은 매 프레임 새로 긋고 번짐만 늘여 섞기 — D-199 |
+| `zoomfps` | 질환 탭 확대 · 축소가 끝날 때마다 왼쪽 아래에 그 확대의 초당 프레임과 방식 표시(노트북 비교용) |
+| `zoomdbg` | 개발용: `__plotZoom.full/fast/bench` 노출(같은 보기를 방식별로 그려 비교) |
+| `rampcache=0` | 개발용: 잔광 램프 캐시 끄기(비교) |
 | `perf=nogl` · `perf=nosweep` | (실시간 3D에서) 3D 장면 · 파형 패널 그리기를 빼고 측정(D-195 판단용) | — |
 | `hrdbg=1` | 실시간 심박 계산을 매 프레임 `window.__hr`에 기록(시험용, D-188) | 끔 |
 | `ovdbg=1` | 겹치기 마우스 판정 거리를 `window.__ovDbg`에, 층(이름:앞 순서/단계)을 캔버스 `data-layers`에 기록(시험용, D-186) | 끔 |

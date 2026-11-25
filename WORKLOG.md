@@ -547,3 +547,4 @@ Recovered original Release ZIP (340775483 bytes, SHA256 9070d4aacea61d2476473fbd
 - 2026-11-25 D-198 추가: M04 항상 --hop-for M04=32 (run.mjs · launcher.cjs), LiveView HEAVY 딥러닝만
 - 2026-11-25 D-199: Plot zoomFrame(snap/bgOnly), 캔버스 재할당 제거(waveStrip · Plot), recap 기본 끔, request-status 질환 탭 숨김, verification/disease-zoom-perf-20261125
 - 2026-11-25 D-196 완료: data/noise-video(7 영상 + manifest), noise_flow 확인, loop_seam.txt
+- 2026-11-25 D-199 2차: Plot zoomFrame 나눔(snapGlow/lines, 3장면), zoomfps/zoomdbg, waveStrip glowOnly · 램프 캐시, ResizeObserver 크기, verification/disease-zoom-quality-20261125

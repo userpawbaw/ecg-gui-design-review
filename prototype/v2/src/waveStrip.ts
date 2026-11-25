@@ -14,6 +14,7 @@ export type StripGeom = {l: number, t: number, w: number, h: number, nCols: numb
 
 const mk = () => { const c = document.createElement('canvas'); return {c, g: c.getContext('2d')!}; };
 const PAD = 8;
+const RAMP_CACHE = typeof location === 'undefined' || new URLSearchParams(location.search).get('rampcache') !== '0';   // ?rampcache=0 : 비교용
 
 /** 한 칸(행)의 링 캔버스 묶음: 밝히지 않는 선(base: Reference 등) · 밝히는 선(lit) · 번짐 3단. */
 export class StripRow {
@@ -130,8 +131,16 @@ export class StripRow {
 /** 나이 램프: 왼쪽 끝 = 나이 span, 오른쪽 끝 = 나이 0. white = 잔광 흰빛 정도, erase = 1 − 세기(선단 앞 빈칸·사라짐 · 오래된 표본 0.72). */
 export class AgeRamps {
   white = mk(); erase = mk(); key = '';
+  // D-199: 구간이 매 프레임 바뀌는 축 확대에서 램프를 매번 새로 만들면 캔버스 재할당 + putImageData(GPU 캔버스에서 특히 느림)가 프레임마다 든다.
+  // 구간을 로그 0.5 % 단위로 묶어 만든 램프를 보관해 다시 쓴다(나이 축 오차 ≤ 0.25 % — 화면에서 1 px 미만).
+  private cache = new Map<string, {white: ReturnType<typeof mk>, erase: ReturnType<typeof mk>}>();
   build(span: number, gap: number, fade: number, oldK = .72) {
-    const key = [span, gap, fade, oldK].join('|'); if (key === this.key) return; this.key = key;
+    if (RAMP_CACHE) span = Math.exp(Math.round(Math.log(span) * 200) / 200);
+    const key = [span.toFixed(5), gap, fade, oldK].join('|'); if (key === this.key) return; this.key = key;
+    const hit = RAMP_CACHE ? this.cache.get(key) : undefined;
+    if (hit) { this.cache.delete(key); this.cache.set(key, hit); this.white = hit.white; this.erase = hit.erase; return; }
+    this.white = mk(); this.erase = mk(); this.cache.set(key, {white: this.white, erase: this.erase});
+    if (this.cache.size > 96) this.cache.delete(this.cache.keys().next().value!);
     const W = 1024;
     for (const L of [this.white, this.erase]) { L.c.width = W; L.c.height = 1; }
     const wi = this.white.g.createImageData(W, 1), ei = this.erase.g.createImageData(W, 1), end = span - gap;
@@ -168,6 +177,7 @@ const glowLayer = mk();
 export function composeRow(g: CanvasRenderingContext2D, row: StripRow, ramps: AgeRamps, layer: {c: HTMLCanvasElement, g: CanvasRenderingContext2D}, o: {
   sweep: boolean, head: number, headX: number, rightX: number, r: number, white: number, glow: number, level: number, liveK: number, span: number, gapS: number, tailS: number, oldK?: number,
   /** 이 줄 전체의 불투명도 배율(D-184 겹치기 강조 · 흐리기 애니메이션 — 링을 다시 긋지 않고 합성 때만). */ alphaK?: number,
+  /** D-199: 번짐만(선 없이) — 축 확대 중 번짐은 늘여 쓰고 선은 따로 긋는다 */ glowOnly?: boolean,
 }) {
   const G = row.geom, d = G.dpr, l = G.l, r = o.r, pw = r - l, k = pw / o.span, oldK = o.oldK ?? .72, hotS = Math.min(o.span, 3 * GLOW_TAU);
   const clipTo = (list: [number, number][]) => list.map(([a, b]) => [Math.max(l, a), Math.min(r, b)] as [number, number]).filter(([a, b]) => b > a);
@@ -181,10 +191,10 @@ export function composeRow(g: CanvasRenderingContext2D, row: StripRow, ramps: Ag
   const clipOut = (wins: [number, number][]) => { g.beginPath(); let x = l; for (const [a, b] of wins) { if (a > x) g.rect(x, G.t, a - x, G.h); x = Math.max(x, b); } if (x < r) g.rect(x, G.t, r - x, G.h); g.clip(); };
   // 1) 먼 구간
   if (glowOn) { g.save(); clipOut(fade); g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, oldK * o.glow * aK); row.blit(g, row.sum.c, 2 * d, o.sweep, o.head, o.rightX); g.restore(); }
-  g.save(); clipOut(lineWins); g.globalAlpha = Math.min(1, oldK * aK);
+  if (!o.glowOnly) { g.save(); clipOut(lineWins); g.globalAlpha = Math.min(1, oldK * aK);
   if (row.hasBase) row.blit(g, row.base.c, 1, o.sweep, o.head, o.rightX);
   row.blit(g, row.lit.c, 1, o.sweep, o.head, o.rightX);
-  g.restore();
+  g.restore(); }
   // 2) 창
   const run = (Lr: {c: HTMLCanvasElement, g: CanvasRenderingContext2D}, a: number, b: number, s: number, fn: (L: CanvasRenderingContext2D) => void, op: GlobalCompositeOperation) => {
     const W = Math.ceil((b - a) * s) + 2, H = Math.ceil(G.h * s);
@@ -199,7 +209,7 @@ export function composeRow(g: CanvasRenderingContext2D, row: StripRow, ramps: Ag
     g.drawImage(Lr.c, 0, 0, Wd, H, a * d, G.t * d, (b - a) * d, H / s * d); g.restore();
   };
   if (glowOn) for (const [a, b] of fade) run(glowLayer, a, b, .5, L => { L.globalCompositeOperation = 'lighter'; L.globalAlpha = o.glow; row.blit(L, row.sum.c, 2 * d, o.sweep, o.head, o.rightX); }, 'lighter');
-  for (const [a, b] of lineWins) run(layer, a, b, d, L => {
+  if (!o.glowOnly) for (const [a, b] of lineWins) run(layer, a, b, d, L => {
     row.blit(L, row.lit.c, 1, o.sweep, o.head, o.rightX);
     if (o.white > 0 && o.liveK > 0) { L.globalCompositeOperation = 'source-atop'; L.globalAlpha = Math.min(1, .75 * o.white) * o.liveK; ramps.put(L, ramps.white.c, l, r, G.t, G.h, o.headX, o.sweep); }
     if (row.hasBase) { L.globalCompositeOperation = 'destination-over'; L.globalAlpha = 1; row.blit(L, row.base.c, 1, o.sweep, o.head, o.rightX); }

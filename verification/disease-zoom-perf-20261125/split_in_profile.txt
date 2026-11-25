@@ -1,0 +1,23 @@
+[split_in_profile] pvc CPU×4 
+확대 프레임 21개 · 간격 중앙 83.3 ms(≈12 fps) · 최대 583 ms
+전체 rAF 간격 중앙 16.7 ms
+자기 시간 상위:
+48.7% (program) :-1
+20.4% (idle) :-1
+9.6% drawImage :-1
+7.4% getBoundingClientRect :-1
+6.4% B index-Fv_O7IBz.js:49
+0.7% qe index-Fv_O7IBz.js:49
+0.7% (garbage collector) :-1
+0.7% ue index-Fv_O7IBz.js:49
+0.6% X index-Fv_O7IBz.js:49
+0.6% requestAnimationFrame :-1
+0.4% (anon) index-Fv_O7IBz.js:49
+0.2% querySelector :-1
+0.2% (anon) :-1
+0.2% f :0
+0.2% nn index-Fv_O7IBz.js:49
+0.1% ne index-Fv_O7IBz.js:48
+0.1% addColorStop :-1
+0.1% et index-Fv_O7IBz.js:49
+errors none

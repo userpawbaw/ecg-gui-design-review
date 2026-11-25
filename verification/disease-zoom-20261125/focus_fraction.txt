@@ -1,0 +1,54 @@
+pvc       early    R파 조기 출현       span 5 focus 0.65s  13% spot  19%
+pvc       wide     QRS 폭 확장       span 5 focus 0.56s  11% spot  10%
+pvc       pause    보상성 휴지         span 5 focus 1.92s  38% spot  52%
+apc       early    R파 조기 출현       span 5 focus 0.53s  11% spot  16%
+apc       wide     QRS 폭 유지       span 5 focus 0.43s   9% spot   7%
+apc       pause    비보상성 휴지        span 5 focus 1.76s  35% spot  48%
+bigeminy  alt      정상 · 조기 박동 교대  span 5 focus 2.39s  48% spot  65%
+bigeminy  wide     QRS 폭 확장       span 5 focus 0.28s   6% spot   9%
+bigeminy  rr       짧은 · 긴 R–R 교대  span 5 focus 1.72s  34% spot  47%
+vt        run      넓은 QRS 연발      span 5 focus 1.56s  31% spot  43%
+vt        rate     심박수 급상승        span 5 focus 3.06s  61% spot  82%
+vt        wide     QRS 폭 확장       span 5 focus 0.51s  10% spot   8%
+sbr       pause    긴 휴지           span 10 focus 6.02s  60% spot  80%
+sbr       absent   휴지 중 박동 부재     span 10 focus 5.38s  54% spot  72%
+sbr       shape    QRS 모양 유지      span 10 focus 0.21s   2% spot   3%
+avb2      blocked  전도되지 않은 P파     span 5 focus 0.43s   9% spot  11%
+avb2      half     심실 박동수 절반      span 5 focus 1.83s  37% spot  50%
+avb2      narrow   QRS 폭 유지       span 5 focus 0.19s   4% spot   7%
+afib      irr      R–R 불규칙        span 5 focus 3.01s  60% spot  81%
+afib      nop      P파 소실          span 5 focus 0.28s   6% spot   9%
+afib      fwave    기저선 잔물결(f파)    span 5 focus 0.18s   4% spot   6%
+afl       fwave    톱니 모양 F파       span 5 focus 0.71s  14% spot  20%
+afl       cond     전도 변동          span 5 focus 1.94s  39% spot  53%
+afl       narrow   QRS 폭 유지       span 5 focus 0.20s   4% spot   7%
+lbbb      wide     QRS 폭 확장       span 5 focus 0.26s   5% spot   8%
+lbbb      shape    QRS 형태 변화      span 5 focus 0.24s   5% spot   8%
+lbbb      regular  리듬 규칙 유지       span 5 focus 2.66s  53% spot  72%
+rbbb      wide     QRS 폭 확장       span 5 focus 0.27s   5% spot   9%
+rbbb      term     QRS 말단 지연      span 5 focus 0.18s   4% spot   6%
+rbbb      regular  리듬 규칙 유지       span 5 focus 2.25s  45% spot  61%
+
+--- 제안 규칙: 5 s에서 시작, 보이는 초점(타원)이 30 % 이상이 되는 가장 넓은 구간 ∈ {5, 2.5, 1.25}; 최소 max(1.25, 1.5 × R–R); 내용이 5 s의 80 %를 넘으면 10 s
+pvc       RR 0.86 | R파 조기 출현 2.5s(37%) ←확대 → QRS 폭 확장 2.5s(20%) → 보상성 휴지 5s(52%) ←축소
+apc       RR 0.82 | R파 조기 출현 2.5s(31%) ←확대 → QRS 폭 유지 1.25s(26%) ←확대 → 비보상성 휴지 5s(48%) ←축소
+bigeminy  RR 0.64 | 정상 · 조기 박동 교대 5s(65%) → QRS 폭 확장 1.25s(36%) ←확대 → 짧은 · 긴 R–R 교대 5s(47%) ←축소
+vt        RR 0.68 | 넓은 QRS 연발 5s(43%) → 심박수 급상승 5s(82%) → QRS 폭 확장 1.25s(33%) ←확대
+sbr       RR 0.74 | 긴 휴지 10s(80%) ←축소 → 휴지 중 박동 부재 10s(72%) → QRS 모양 유지 1.25s(28%) ←확대
+avb2      RR 0.85 | 전도되지 않은 P파 2.5s(22%) ←확대 → 심실 박동수 절반 5s(50%) ←축소 → QRS 폭 유지 2.5s(13%) ←확대
+afib      RR 0.80 | R–R 불규칙 5s(81%) → P파 소실 1.25s(36%) ←확대 → 기저선 잔물결(f파) 1.25s(26%)
+afl       RR 0.58 | 톱니 모양 F파 2.5s(41%) ←확대 → 전도 변동 5s(53%) ←축소 → QRS 폭 유지 1.25s(26%) ←확대
+lbbb      RR 0.86 | QRS 폭 확장 2.5s(17%) ←확대 → QRS 형태 변화 2.5s(16%) → 리듬 규칙 유지 5s(72%) ←축소
+rbbb      RR 0.66 | QRS 폭 확장 1.25s(34%) ←확대 → QRS 말단 지연 1.25s(25%) → 리듬 규칙 유지 5s(61%) ←축소
+
+--- 연속 규칙: 구간 = 초점 ÷ 0.35, 0.25 s 단위, [max(1.25, 1.5 × R–R), 5]; 내용 > 5 s의 80 % → 10 s
+pvc       | R파 조기 출현 2.75s(34%) → QRS 폭 확장 1.5s(34%) → 보상성 휴지 5s(52%)
+apc       | R파 조기 출현 2.25s(35%) → QRS 폭 유지 1.25s(26%) → 비보상성 휴지 5s(48%)
+bigeminy  | 정상 · 조기 박동 교대 5s(65%) → QRS 폭 확장 1.25s(36%) → 짧은 · 긴 R–R 교대 5s(47%)
+vt        | 넓은 QRS 연발 5s(43%) → 심박수 급상승 5s(82%) → QRS 폭 확장 1.25s(33%)
+sbr       | 긴 휴지 10s(80%) → 휴지 중 박동 부재 10s(72%) → QRS 모양 유지 1.25s(28%)
+avb2      | 전도되지 않은 P파 1.5s(36%) → 심실 박동수 절반 5s(50%) → QRS 폭 유지 1.5s(22%)
+afib      | R–R 불규칙 5s(81%) → P파 소실 1.25s(36%) → 기저선 잔물결(f파) 1.25s(26%)
+afl       | 톱니 모양 F파 3s(34%) → 전도 변동 5s(53%) → QRS 폭 유지 1.25s(26%)
+lbbb      | QRS 폭 확장 1.5s(28%) → QRS 형태 변화 1.5s(26%) → 리듬 규칙 유지 5s(72%)
+rbbb      | QRS 폭 확장 1.25s(34%) → QRS 말단 지연 1.25s(25%) → 리듬 규칙 유지 5s(61%)

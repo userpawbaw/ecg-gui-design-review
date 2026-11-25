@@ -120,7 +120,9 @@ const SHAPE: Record<GlyphKind, React.ReactNode> = {
 };
 
 /** 상태 칩: 그림 + 상태 명사구(+ 짧은 설명). */
-export function StateChip({kind, tone, label, note, title}: {kind: GlyphKind, tone: Tone, label: string, note?: string, title?: string}) {
+export function StateChip({kind, tone, label, note, title, icon}: {kind: GlyphKind, tone: Tone, label: string, note?: string, title?: string, icon?: boolean}) {
+  // icon: 그림만(설명은 마우스를 올리면) — 실시간 탭 상태 줄처럼 한 줄을 지켜야 하는 곳
+  if (icon) { const t = [label + (note ? ' · ' + note : ''), title].filter(Boolean).join('\n'); return <span className={'state-chip icon glyph-' + tone} title={t} aria-label={t} role="img"><Glyph kind={kind} size={16}/></span>; }
   return <span className={'state-chip glyph-' + tone} title={title}><Glyph kind={kind} size={16}/><b>{label}</b>{note && <small>{note}</small>}</span>;
 }
 

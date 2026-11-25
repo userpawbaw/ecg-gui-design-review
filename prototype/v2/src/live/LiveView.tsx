@@ -232,8 +232,8 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
   const Rv = S.reveal as {lagS?: () => number, maxGapMs?: (n: number) => number}, playLag = Rv.lagS ? Rv.lagS() : 0, outGap = Rv.maxGapMs ? Rv.maxGapMs(performance.now()) : 0, burst = playLag > .6;
   if (!connected && !names.length) return conn === 'checking' ? <LiveOffline checking/> : <>{help}</>;
   // D-179: 감독 창구가 신호원(재생 파일 · 보드 포트)을 알려 주면 그 이름을 그대로 — 재생을 실측으로 보이지 않게
-  const src = ctl.source ? (ctl.source.kind === 'board' ? <StateChip kind="live" tone="ok" label="보드 입력" note={ctl.source.label.replace(/^보드 /, '')}/> : <StateChip kind="stored" tone="stored" label="저장 신호 재생" note={ctl.source.label}/>)
-    : st.src === 'serial' ? <StateChip kind="live" tone="ok" label="보드 입력"/> : st.src === 'replay' ? <StateChip kind="stored" tone="stored" label="저장 신호 재생" note="--replay"/> : <StateChip kind="live" tone="idle" label="브리지 출력"/>;
+  const src = ctl.source ? (ctl.source.kind === 'board' ? <StateChip icon kind="live" tone="ok" label="보드 입력" note={ctl.source.label.replace(/^보드 /, '')}/> : <StateChip icon kind="stored" tone="stored" label="저장 신호 재생" note={ctl.source.label}/>)
+    : st.src === 'serial' ? <StateChip icon kind="live" tone="ok" label="보드 입력"/> : st.src === 'replay' ? <StateChip icon kind="stored" tone="stored" label="저장 신호 재생" note="--replay"/> : <StateChip icon kind="live" tone="idle" label="브리지 출력"/>;
   const fmt = (v: number | undefined, d = 0) => v == null || !Number.isFinite(v) ? '—' : v.toFixed(d);
   const avail = new Set(ctl.ok ? LIVE_IDS : names.filter(n => n !== 'raw'));
   const isOn = (id: string) => ctl.ok ? (draft ?? order.current).includes(id) : avail.has(id) && !S.hidden.has(id);
@@ -261,16 +261,19 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       <small>{reload.settling && !reload.failed ? '처리 속도에 맞춰 화면을 고르는 중 · 곧 시작합니다' : reload.why ?? '브리지만 다시 시작합니다 · 화면 설정은 그대로'}</small></div>}</div>;
   return <div className="live-shell">{reloadCover}<div className="live-native">
     <div className="live-status" role="status">
-      <span className={'live-conn ' + conn}>{conn === 'on' ? <StateChip kind="linked" tone="ok" label="연결됨"/> : conn === 'retry' ? <StateChip kind="retry" tone="warn" label="연결 끊김" note="재연결 중"/>
-        : conn === 'lost' ? <StateChip kind="cut" tone="err" label="보드 연결 끊김"/> : <StateChip kind="loading" tone="idle" label="확인 중"/>}</span>
-      <span className="live-src">{src}</span>
+      {/* 2026-11-25 사용자 「상태창이 계속 쌓이는게 산만 … 연결됨, 실시간 처리 한계 초과, 처리 결과 몰림 이 셋 이외는 아이콘으로 … 두 줄과 한줄을 오르내리게 하지 마」:
+          글자 칩은 이 셋만, 나머지는 오른쪽 아이콘(설명은 마우스를 올리면). 줄은 한 줄 고정(넘치면 잘림) */}
+      {conn === 'on' && <span className="live-conn on"><StateChip kind="linked" tone="ok" label="연결됨"/></span>}
       {overload && <StateChip kind="overload" tone="warn" label="실시간 처리 한계 초과" title="실시간 계수(RTF) 0.9 초과 또는 처리 누락 블록 발생"/>}
-      {burst && <StateChip kind="jitter" tone="warn" label="처리 결과 몰림" note={`화면 ${playLag.toFixed(1)} s 늦춰 끊김 방지`} title={`처리 결과가 최대 ${Math.round(outGap)} ms 간격으로 몰려 도착(브라우저 측정, 최근 2 s) — RTF와 별개. 끊기지 않게 화면을 그만큼 늦춰 그린다`}/>}
-      {behind && <StateChip kind="overload" tone="warn" label="브리지 밀림" note={`${(lagMs / 1000).toFixed(1)} s`} title={`입력이 들어온 뒤 처리되기까지 ${(lagMs / 1000).toFixed(1)} s 늦음 — CPU가 모자랍니다(브라우저 · 다른 프로그램이 같은 CPU를 씀). 다른 프로그램을 닫거나 가벼운 기법을 고르세요.${patched ? ' 2 s를 넘으면 브리지가 쌓인 입력을 건너뛰고 지금부터 다시 그립니다.' : ''}`}/>}
-      {!behind && jitter && <StateChip kind="jitter" tone="warn" label="수신 간격 불규칙" title="최근 2 s 최대 수신 간격 200 ms 초과"/>}
-      {ctl.light && <span className="live-light"><StateChip kind="overload" tone="idle" label="가벼운 계산" note="딥러닝 간격 2배" title="딥러닝 기법의 추론 간격 32 → 64 표본(기본도 이미 16 → 32, D-201): 계산 약 절반, 지연 +64 ms, 참값 오차는 같은 수준(합성 신호 측정, D-198)"/>
-        <button type="button" disabled={!!reload} onClick={() => setLight(false)}>원래대로</button></span>}
-      {note && <span className="live-note">{note}</span>}
+      {burst && <StateChip kind="jitter" tone="warn" label="처리 결과 몰림" note={`화면 +${playLag.toFixed(1)} s`} title={`처리 결과가 최대 ${Math.round(outGap)} ms 간격으로 몰려 도착(브라우저 측정, 최근 2 s) — RTF와 별개. 끊기지 않게 화면을 그만큼 늦춰 그린다`}/>}
+      <span className="live-icons">
+      {conn !== 'on' && (conn === 'retry' ? <StateChip icon kind="retry" tone="warn" label="연결 끊김" note="재연결 중"/> : conn === 'lost' ? <StateChip icon kind="cut" tone="err" label="보드 연결 끊김"/> : <StateChip icon kind="loading" tone="idle" label="확인 중"/>)}
+      {src}
+      {behind && <StateChip icon kind="overload" tone="warn" label="브리지 밀림" note={`${(lagMs / 1000).toFixed(1)} s`} title={`입력이 들어온 뒤 처리되기까지 ${(lagMs / 1000).toFixed(1)} s 늦음 — CPU가 모자랍니다(브라우저 · 다른 프로그램이 같은 CPU를 씀). 다른 프로그램을 닫거나 가벼운 기법을 고르세요.${patched ? ' 2 s를 넘으면 브리지가 쌓인 입력을 건너뛰고 지금부터 다시 그립니다.' : ''}`}/>}
+      {!behind && jitter && <StateChip icon kind="jitter" tone="warn" label="수신 간격 불규칙" title="최근 2 s 최대 수신 간격 200 ms 초과"/>}
+      {ctl.light && <button type="button" className="live-light" disabled={!!reload} onClick={() => setLight(false)}><StateChip icon kind="overload" tone="idle" label="가벼운 계산" note="딥러닝 간격 2배" title="딥러닝 기법의 추론 간격 32 → 64 표본(기본도 이미 16 → 32, D-201): 계산 약 절반, 지연 +128 ms, 참값 오차는 같은 수준(합성 신호 측정). 누르면 원래대로"/></button>}
+      {note && <StateChip icon kind="retry" tone="warn" label={note}/>}
+      </span>
     </div>
     <div className="live-stats">
       <HeartBadge bpm={hrView.bpm} reason={hrView.reason} beat={hrBeat}/>

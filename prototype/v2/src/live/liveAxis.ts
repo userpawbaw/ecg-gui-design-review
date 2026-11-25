@@ -143,9 +143,12 @@ export function makeReveal(step = REVEAL_STEP) {
  *  여기서는 머리가 받은 끝(target)보다 lag 표본 뒤에서 fs 속도로 움직이고, 뒤처짐이 lag 와 다르면 속도를 ±15 % 안에서 조금씩 고친다.
  *  lag 는 최근 2 s 도착 간격 중 가장 긴 것의 1.25 배(60 ms ~ 500 ms) — 도착이 고르면 짧고, 뭉쳐 오면 그만큼 길어진다.
  *  값을 만들지 않는다: 머리는 받은 표본을 넘지 않고(받은 것이 모자라면 멈춤), 그리는 것은 받은 표본뿐이다. */
-export const PLAY_MIN_LAG_S = 0.06, PLAY_MAX_LAG_S = 0.5, PLAY_RATE_MAX = 0.15;
+// 2026-11-25(사용자 노트북 · 기법 전환 뒤 끊김): 딥러닝(CNN · Transformer)이 들어가면 브리지가 결과를 가장 늦은 기법에 맞춰 약 1 s마다 300 표본씩 보낸다
+// (측정 verification/live-switch-stutter-20261125). 버퍼 상한 0.5 s로는 그 사이에 비어 화면이 멈췄다 → 상한 2 s. 고르게 오는 고전 기법은
+// 도착 간격 × 1.25(≤ 0.47 s)라 지금과 같다 — 몰릴 때만 화면이 그만큼 늦어지고(경고 칩에 표시) 끊기지 않는다.
+export const PLAY_MIN_LAG_S = 0.06, PLAY_MAX_LAG_S = 2.0, PLAY_RATE_MAX = 0.15;
 export function makePlayout() {
-  let pos = -1, target = -1, last = 0, fs = 250, lag = 0;
+  let pos = -1, target = -1, last = 0, fs = 250, lag = 0, starve = -1e9;
   const gaps: {t: number, ms: number}[] = []; let tArr = 0;
   const wantLag = (now: number) => {
     while (gaps.length && now - gaps[0].t > 2000) gaps.shift();
@@ -170,10 +173,15 @@ export function makePlayout() {
       if (behind > lag + PLAY_MAX_LAG_S * fs * 1.2) pos = target - lag;   // 아주 뒤처짐(탭을 가렸다 돌아옴 등): 한 번에 따라잡기
       const rate = 1 + Math.max(-PLAY_RATE_MAX, Math.min(PLAY_RATE_MAX, (behind - lag) / fs));
       pos = Math.min(target, pos + dt * fs / 1000 * rate);
+      if (target - pos < .5) starve = now;   // 받은 것을 다 그림 = 다음 도착까지 멈춤
       return pos;
     },
     lagS: () => lag / fs,
-    reset() { pos = target = -1; gaps.length = 0; tArr = 0; },
+    /** 마지막으로 받은 것을 다 그려 멈춘 시각(ms) — 기법 전환 덮개가 이것이 한동안 없을 때 걷힌다 */
+    lastStarve: () => starve,
+    /** 최근 2 s 처리 결과 도착 간격 최대(ms, 브라우저 기준) */
+    maxGapMs: (now: number) => { while (gaps.length && now - gaps[0].t > 2000) gaps.shift(); return gaps.reduce((m, g) => Math.max(m, g.ms), 0); },
+    reset() { pos = target = -1; gaps.length = 0; tArr = 0; starve = -1e9; },
   };
 }
 

@@ -157,3 +157,18 @@ test('D-182 재생 머리: 0.45 s마다 0.18 s씩 몰려 오는 블록도 60 fps
   assert.equal(zero, 0, '멈춘 프레임'); assert.equal(big, 0, '몰아 그린 프레임');
   const mean = adv.reduce((a, b) => a + b, 0) / adv.length; assert.ok(Math.abs(mean - exp) / exp < .05, `평균 속도 ${mean}`);
 });
+
+test('2026-11-25 딥러닝 몰림: 약 1 s마다 250 표본씩(± 0.2 s) 오는 결과도, 버퍼가 맞춰진 뒤(4 s 이후)에는 멈춘 프레임 없이 재생되고 화면 지연은 2 s 이하', () => {
+  const fs = 250, p = AX.makePlayout(); p.setFs(fs);
+  const arrivals: [number, number][] = []; let t = 0, h = -1; let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  while (t < 30000) { t += 800 + 400 * rnd(); h += 250; arrivals.push([t, h]); }   // 0.8–1.2 s 간격, 평균 1 s · 250 표본(= 실시간)
+  let ai = 0, prev = -1, stalls = 0; let lagMax = 0;
+  for (let now = 0; now < 30000; now += 1000 / 60) {
+    while (ai < arrivals.length && arrivals[ai][0] <= now) { p.push(arrivals[ai][1], arrivals[ai][0]); ai++; }
+    const at = p.at(now); if (at < 0) continue;
+    if (now > 4000) { if (prev >= 0 && at - prev <= 1e-9) stalls++; lagMax = Math.max(lagMax, p.lagS()); }
+    prev = at;
+  }
+  assert.equal(stalls, 0, '멈춘 프레임'); assert.ok(lagMax <= AX.PLAY_MAX_LAG_S + 1e-9 && lagMax > 1, `화면 지연 ${lagMax}`);
+  assert.ok(p.maxGapMs(30000) > 700, '도착 간격 측정');
+});

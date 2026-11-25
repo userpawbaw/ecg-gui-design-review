@@ -41,6 +41,7 @@ git checkout claude/r1-autopilot-recommended
 | `npm run story:noise` | 잡음 장면 3개 연속 | `?story=noise&cond=all` (전원선 → 기저선 → 근육) |
 | `npm run story:lab` | 실험실 바로 진입 | `?route=lab` |
 | `npm run story:perf -- msaa,pr75` | 도입부 성능 시험(D-190): 쉼표로 끌 것 나열, 왼쪽 아래 FPS 표시. 아무것도 안 쓰면 기준. 목록: msaa · pr75 · pr50 · fog · bloom · grade · guard · dust · rig · climb · fluid · fps30, 켜는 것: merge(출력 변환 + 색보정 한 단계) · fxaa(MSAA 대신 FXAA) | `?perf=msaa,pr75` |
+| `npm run story:live` | 도입부를 예전 실시간 3D로 열기(D-195). 기본 `npm run story`는 3D 장면을 미리 렌더한 영상으로 보여 주고 파형 · 겹침 조절만 실시간으로 그린다 — 둘을 비교할 때 |
 | `npm run story:check` | ③ R1 Story 검사 | 빌드 + 단위 테스트 + 브라우저 테스트. 600초 replay 자료가 없으면 chunk 테스트 1개와 10분 soak는 원래 실패/건너뜀 |
 | `npm test` | 저장소 전체 테스트 | 기록·인코딩·Windows 호환성 검사 |
 | `npm run spike -- video-scrub` | video-scrub spike 실행 | 의존성·클립 준비 후 실행. `attic`, `ref-repro`, `lab-corner`, `scroll-globe`도 같은 방식 |

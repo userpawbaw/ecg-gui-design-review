@@ -34,8 +34,11 @@ function findPython(){for(const [bin,...pre] of pythonCandidates()){const v=capt
 
 function ensureDeps(dir){if(!existsSync(join(dir,'node_modules'))){say(`의존성 설치: ${dir.replace(root,'.')}`);run('npm',['install','--no-audit','--no-fund'],{cwd:dir});}}
 // 2026-11-24: 질환 자료가 바뀌어도(10 s → 60 s, 기록 233 → 228) 예전 복사본이 남아 새 화면이 안 보였다 — 파일 크기 · 내용이 다르면 다시 복사.
-function diseaseStale(){const src=join(root,'data/disease'),dst=join(root,'prototype/v2/public/disease');if(!existsSync(src))return false;
- for(const f of readdirSync(src)){const a=join(src,f),b=join(dst,f);if(!existsSync(b)||statSync(a).size!==statSync(b).size)return true;if(f==='index.json'&&readFileSync(a,'utf8')!==readFileSync(b,'utf8'))return true;}return false;}
+// D-195: 도입부 영상(data/intro-video, 하위 폴더 포함)도 같은 방식으로.
+function dirStale(rel){const src=join(root,'data',rel),dst=join(root,'prototype/v2/public',rel);if(!existsSync(src))return false;
+ for(const f of readdirSync(src)){const a=join(src,f),b=join(dst,f);if(statSync(a).isDirectory()){if(!existsSync(b)||dirStale(join(rel,f)))return true;continue;}
+  if(!existsSync(b)||statSync(a).size!==statSync(b).size)return true;if(f.endsWith('.json')&&readFileSync(a,'utf8')!==readFileSync(b,'utf8'))return true;}return false;}
+function diseaseStale(){return dirStale('disease')||dirStale('intro-video');}
 function ensureV2Data(){const pub=join(root,'prototype/v2/public/archive.json');if(!existsSync(pub)||!existsSync(join(root,'prototype/v2/public/disease/index.json'))||diseaseStale()){say('자료 준비: prototype/v2/public (archive.json · 심질환 파형)');run(process.execPath,[join(root,'scripts/prepare-v2.cjs')]);}}
 function browserPath(){
  // Ask the installed Playwright which browser build it expects (a different build in the cache does not count).
@@ -68,7 +71,7 @@ function doctor(){
 const WAVE_NOTE={prev:'이전 버전 — 실시간·실험실 모두 최적화 전 그리기',all:'최적화를 실험실 탭에도 — 두 탭 모두 링 스트립(기본값, npm run story 와 같음)',live:'실시간 탭에만 최적화 — 실험실은 기존 그리기'};
 // 2026-11-10 사용자 「각 모드로 바로 진입하는 명령어」: 잡음 장면 · 실험실로 바로 연다(주소만 다르다)
 const DIRECT={'story:pli':['/?story=noise&cond=pli','잡음 장면 — 전원선 간섭'],'story:bw':['/?story=noise&cond=bw','잡음 장면 — 기저선 변동'],
- 'story:ma':['/?story=noise&cond=ma','잡음 장면 — 근육 잡음'],'story:noise':['/?story=noise&cond=all','잡음 장면 3개 연속(전원선 → 기저선 → 근육)'],'story:lab':['/?route=lab','실험실']};
+ 'story:ma':['/?story=noise&cond=ma','잡음 장면 — 근육 잡음'],'story:noise':['/?story=noise&cond=all','잡음 장면 3개 연속(전원선 → 기저선 → 근육)'],'story:lab':['/?route=lab','실험실'],'story:live':['/?introlive=1','도입부 실시간 3D(D-195 이전 방식 — 영상 경로와 비교)']};
 function story(wave,direct,perf){ensureV2Data();const v2=join(root,'prototype/v2');ensureDeps(v2);
  const path=perf!==undefined?`/?perf=${perf}`:direct?DIRECT[direct][0]:wave?`/?wave=${wave}`:'/';if(perf!==undefined)say(`\n도입부 성능 시험(D-190): 끈 것 = ${perf||'없음(기준)'} · 왼쪽 아래에 FPS 표시`);if(direct)say(`\n바로 진입: ${DIRECT[direct][1]}`);
  say(`\nR1 Story: http://127.0.0.1:5173${path}  (Lab부터: ?route=lab, 단계 이동: ?step=3, 잡음 장면: ?story=noise&cond=pli|bw|ma)  — 멈추려면 Ctrl+C`);
@@ -169,6 +172,6 @@ function supervise(p,argv,cwd,source={kind:'replay',label:''}){
 
 const table={doctor,'bridge:setup':()=>bridgeSetup(args),'bridge:replay':()=>bridgeReplay(args),story:()=>story(null),'story:wave-prev':()=>story('prev'),'story:wave-all':()=>story('all'),'story:wave-live':()=>story('live'),'story:check':storyCheck,'story:perf':()=>story(null,null,(args.join(',').replace(/[^a-z0-9,]/gi,''))),...Object.fromEntries(Object.keys(DIRECT).map(k=>[k,()=>story(null,k)])),spike:()=>spike(args[0]),py:()=>py(args),'py:setup':pySetup,browsers:()=>run('npx',['playwright','install','chromium'],{cwd:join(root,'prototype/v2')}),'v2:prepare':()=>run(process.execPath,[join(root,'scripts/prepare-v2.cjs'),...args])};
 if(fileURLToPath(import.meta.url)===resolve(process.argv[1]||'')){
- if(!table[cmd]){say('사용법: npm run doctor | story | story:perf -- msaa,pr75 | story:pli | story:bw | story:ma | story:noise | story:lab | story:check | spike -- <이름> | py -- <스크립트> | py:setup | browsers | v2:prepare');process.exit(cmd?1:0);}
+ if(!table[cmd]){say('사용법: npm run doctor | story | story:perf -- msaa,pr75 | story:pli | story:bw | story:ma | story:noise | story:lab | story:live | story:check | spike -- <이름> | py -- <스크립트> | py:setup | browsers | v2:prepare');process.exit(cmd?1:0);}
  table[cmd]();
 }

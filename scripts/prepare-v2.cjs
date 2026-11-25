@@ -17,4 +17,6 @@ for(const name of ['index.html','style.css','app.js','core.js']){let s=fs.readFi
 for(const name of ['bank.js','extension.js'])fs.copyFileSync(path.join(root,'data',name),path.join(dest,'legacy/data',name));
 // D-189 심질환 파형 탭 자료(scripts/disease/build_disease_bank.py → data/disease)
 fs.mkdirSync(path.join(dest,'disease'),{recursive:true});for(const f of fs.readdirSync(path.join(root,'data/disease')))fs.copyFileSync(path.join(root,'data/disease',f),path.join(dest,'disease',f));
+// D-195 도입부 영상 자료(verification/intro-video-20261125/make_assets.py → data/intro-video, 하위 폴더 heart/ 포함)
+if(fs.existsSync(path.join(root,'data/intro-video')))fs.cpSync(path.join(root,'data/intro-video'),path.join(dest,'intro-video'),{recursive:true});
 console.log('Prepared 98 archived scenes, method explanations and preserved legacy workspace.');

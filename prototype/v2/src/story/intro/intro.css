@@ -68,3 +68,6 @@
 .it-click i{width:12px;height:12px;border-radius:50%;background:#ffd9a8;box-shadow:0 0 0 0 rgb(255 217 168 / .6);animation:it-click 1.8s ease-out infinite}
 @keyframes it-click{70%{box-shadow:0 0 0 14px rgb(255 217 168 / 0)}100%{box-shadow:0 0 0 0 rgb(255 217 168 / 0)}}
 .reduced .it-click i{animation:none}
+/* D-195 영상 경로: 3D 장면 대신 미리 렌더한 영상 · 심장 박동 프레임(같은 자리, DOM 글자 · 파형 아래) */
+.it-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;background:#000;transition:opacity .25s linear}
+canvas.it-vid{background:transparent}

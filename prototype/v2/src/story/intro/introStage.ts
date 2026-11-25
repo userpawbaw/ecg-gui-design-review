@@ -21,6 +21,7 @@ import {beatPhase,type Loop} from './beats';
 import {createGrid,createScrollMix,mvPerBoxFor,scrambled} from './waveUi';
 import {createScreenFluid,FLUID_FORCED} from './screenFluid';
 import {createWaveMode} from '../noise/waveMode';
+import {loadIntroVideo} from './introVideo';
 
 export type IntroData={fs:number,loop:Loop,input:Float32Array,output:Float32Array,metrics:{snrIn:number,snrOut:number,cc:number}};
 export type IntroDom={wrapper:HTMLElement,content:HTMLElement,gl:HTMLCanvasElement,sweep:HTMLCanvasElement,
@@ -133,6 +134,9 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  let pRaw=opt.frozenP??0,p=pRaw,spinVel=0,spinExtra=0;
  lenis?.on('scroll',(e:Lenis)=>{pRaw=e.limit>0?e.scroll/e.limit:0;});
  const NEW=!!arch&&!INTRO_GLOBE;
+ // D-195: 새 도입은 기본이 영상 경로(3D는 미리 렌더한 영상, 엔진 계산은 그대로 · GL 그리기만 생략). ?introlive=1 · ?perf=… 이면 실시간 3D. 영상 자료가 없으면 실시간으로.
+ const video=NEW&&!IQ.has('introlive')&&!IQ.has('perf')&&opt.frozenP===null?await loadIntroVideo(dom.gl.parentElement!,opt.reduced):null;
+ if(video)dom.gl.style.visibility='hidden';
  let titleW=-1,titleH=-1;   // D-190 제목 크기(창 바뀔 때만 다시 읽음)
  // D-190 도입 진행: first(스크롤 = 서고 안 짧은 이동) → auto(시간 = 심장까지, 스크롤 잠금) → wave(스크롤 = 파형 단계), 위로 되돌리면 back(짧게 거꾸로)
  let mode:'first'|'auto'|'wave'|'back'='first',modeT0=0,modeP0=PV1;
@@ -143,12 +147,12 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  // 서고 이동 + 심장까지 고정 애니메이션 → 파형은 3잡음 장면과 같은 waveMode(R 피크마다 입력 → 출력 4분의 1씩, 다 차면 휠로 겹침 조절).
  // 새 도입에서는 스크롤(Lenis)을 쓰지 않는다 — 휠은 파형 단계의 겹침에만.
  const wm=createWaveMode();
- const start=()=>{if(NEW&&mode==='first'&&opt.frozenP===null){mode='auto';modeT0=performance.now()/1000;modeP0=p;}};
+ const start=()=>{if(NEW&&mode==='first'&&opt.frozenP===null){mode='auto';modeT0=performance.now()/1000;modeP0=p;video?.start();}};
  const onClick=(e:MouseEvent)=>{if((e.target as HTMLElement).closest('button,a'))return;start();};
  if(NEW){lenis?.stop();dom.content.style.height='100%';dom.wrapper.style.cursor='pointer';(dom.wrapper.parentElement??dom.wrapper).addEventListener('click',onClick);}
  // D-163: 파형 단계 휠 안내 — 마지막 입력(휠 · 키)에서 1.2 s 지나야 나타난다
  // D-164: 제목 유체 왜곡 오버레이(움직임 줄이기 · 터치 · 좁은 화면 · WebGL 실패면 없음 — DOM 글자 그대로)
- const screenFluid=opt.reduced&&!FLUID_FORCED?(console.info('[screenFluid] 꺼짐: 움직임 줄이기(prefers-reduced-motion — Windows 「애니메이션 효과」 끔이면 켜짐) · ?fluid=1 로 강제'),null):createScreenFluid(dom.title.parentElement!);   // D-167: whole intro, top layer
+ const screenFluid=video?null:opt.reduced&&!FLUID_FORCED?(console.info('[screenFluid] 꺼짐: 움직임 줄이기(prefers-reduced-motion — Windows 「애니메이션 효과」 끔이면 켜짐) · ?fluid=1 로 강제'),null):createScreenFluid(dom.title.parentElement!);   // D-167: whole intro, top layer
  const hintEl=dom.wheelHint?.querySelector<HTMLElement>('.it-wheelhint')??null;let lastInput=performance.now(),hintA=0;const introT0=performance.now();let firstA=0;
  const onKey=(e:KeyboardEvent)=>{if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(e.key))lastInput=performance.now();
   if(NEW){if((e.key==='Enter'||e.key===' ')&&mode==='first'&&!(e.target as HTMLElement)?.closest?.('button,a')){e.preventDefault();start();}
@@ -165,7 +169,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  let W=0,H=0;
  const box=()=>({l:.47*W,r:.93*W,t:.34*H,b:.72*H});
  function resize(){
-  titleW=-1;W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio||1,PR_CAP);
+  titleW=-1;W=innerWidth;H=innerHeight;video?.resize();const pr=Math.min(devicePixelRatio||1,PR_CAP);
   renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);fxaa?.setSize(W*pr,H*pr);bloom.resolution.set(W*pr/2,H*pr/2);
   shafts?.setSize(W*pr,H*pr);space?.setPx(H,pr);arch?.setPx(H,pr);grade.uniforms.uAspect.value=W/H;
   camera.aspect=W/H;camera.updateProjectionMatrix();figure.setResolution(W*pr,H*pr);
@@ -178,7 +182,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
 
  // --- clock + W4 state ---
  const t0=performance.now();let frozenT=opt.frozenT;
- const clock=()=>frozenT??(performance.now()-t0)/1000;
+ const clock=()=>frozenT??video?.clock()??(performance.now()-t0)/1000;   // D-195: 영상 재생 중 시계 = 렌더 시계(T0 + 재생 시각)
  type Wave={state:'off'|'flying'|'on',t0:number,t1:number,start:number|null};
  const wave:Wave={state:'off',t0:0,t1:0,start:null};
  const mix=createScrollMix();   // D-055: follows the scroll (2.5 % steps), reversible
@@ -257,13 +261,14 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
 
  const state={get mode(){return mode;},get end(){return NEW?wm.atEnd:p>.95;},p:0,t:0,frame:0,headAbs:0,heart:{V:0,flash:0},wave:wave as Wave,get mix(){return NEW?wm.mix:mix.value;},get label(){return labelState.current;}};
  let raf=0,disposed=false,shaftA=0,archShaft=0,endK=0;
+ let beatOv:{sincePrev:number,untilNext:number}|null=null;   // D-195 영상 렌더: 박동 위상 직접 지정
  function frame(dt:number,draw=true){
   const t=clock();
   if(opt.frozenP!==null)p=opt.frozenP;
   else if(!NEW)p+=(pRaw-p)*damp(dt,.33);
   else{
    const now=performance.now()/1000;
-   if(mode==='auto'){const k=clamp((now-modeT0)/(opt.reduced?2:AUTO_S));p=modeP0+(PVA-modeP0)*(.5-.5*Math.cos(Math.PI*k));if(k>=1)mode='wave';}
+   if(mode==='auto'){const k=video?video.k()??0:clamp((now-modeT0)/(opt.reduced?2:AUTO_S));p=modeP0+(PVA-modeP0)*(.5-.5*Math.cos(Math.PI*k));if(k>=1)mode='wave';}
    else p=mode==='first'?PV0:PVA;
   }
   const firstK=NEW?clamp((p-PV0)/(PV1-PV0)):seg(p,...MAP.title);   // D-190: 제목 · 첫 안내는 첫 구간 진행으로
@@ -317,7 +322,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   shaftA=spaceA*(1-THREE.MathUtils.smoothstep(cam,.15,.6));
   grade.uniforms.uSpace.value=spaceA;grade.uniforms.uTime.value=opt.frozenT!==null?0:(state.frame%97)*.13;
   const heartA=arch?(intro2?seg(p,.56,.62):seg(p,.48,.56)):seg(p,...MAP.heart);figure.heartMat.uniforms.uOpacity.value=heartA*1.6;figure.heartMesh.visible=heartA>.002;
-  figure.beat(ph,heartA>0?1:0);
+  figure.beat(beatOv??ph,heartA>0?1:0);video?.heart(ph);   // D-195 렌더: 박동 프레임은 박동 위상을 직접 지정
   state.heart.V=figure.heartMat.uniforms.uV.value;state.heart.flash=figure.heartMat.uniforms.uFlash.value;
   if(arch){
    const aF=(NEW?DIM+(1-DIM)*seg(p,PV1,.4):seg(p,.25,.31))*(1-.88*seg(p,.64,.73));   // D-190: 첫 화면은 어둡게(?introdim=, 기본 .55), 내려가며 원래 밝기
@@ -338,7 +343,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   if(waveA<=0&&p<GATE_WAVE&&wave.state!=='off'){wave.state='off';wave.start=null;mix.reset();}
   if(wave.state==='flying'&&t>=wave.t1)wave.state='on';
   const headAbs=Math.floor(t*data.fs+1e-6);state.headAbs=headAbs;
-  const hs=toScreen(H3);
+  const hs=video?video.heartScreen():toScreen(H3);
   // D-055: the blend follows the scroll once the trace is running (replaces T2's quarter per R peak)
   if(NEW)wm.update({procOn:wave.state==='on',prevR:ph.prev,t,dt,reduced:opt.reduced});else mix.update(wave.state==='on'?seg(p,...MAP.mix):0,dt,opt.reduced);
   const mixV=NEW?wm.mix:mix.value,flashV=NEW?wm.flash:mix.flash;
@@ -350,7 +355,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
    const trace=mixV<.5?data.input:data.output;
    v.comet={x0:hs.x,y0:hs.y,x1:sweep.slotX(a1),y1:sweep.yOf(valueAtAbs(trace,a1)),k,a:waveA};
   }
-  if(draw)sweep.draw(v);
+  if(draw&&!PERF.has('nosweep'))sweep.draw(v);   // 2026-11-25 측정용: ?perf=nogl(3D 장면 안 그림) · nosweep(파형 안 그림) — 영상 대체 판단
 
   // DOM
   titleAt(firstK);
@@ -388,7 +393,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
   const endA=NEW?(endK+=((wm.atEnd||wm.phase==='overlay'?1:0)-endK)*damp(dt,.3)):seg(p,...MAP.end);dom.end.style.opacity=String(endA);dom.end.style.pointerEvents=endA>.5?'auto':'none';
   if(!opt.reduced)dom.parallax.forEach((el,i)=>{const d=i===0?6:3;el.style.translate=`${(-pointer.sx*d).toFixed(2)}px ${(-pointer.sy*d*.6).toFixed(2)}px`;});
 
-  if(draw){shafts?.render(shaftA);arch?.update(t,state.frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,archShaft);composer.render(dt);screenFluid?.update(dt);}   // occlusion buffer after the camera update; D-167 fluid right after the 3D frame (it re-reads the canvases before they are presented)
+  if(draw&&!PERF.has('nogl')&&!video){shafts?.render(shaftA);arch?.update(t,state.frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,archShaft);composer.render(dt);screenFluid?.update(dt);}   // occlusion buffer after the camera update; D-167 fluid right after the 3D frame (it re-reads the canvases before they are presented)
  }
  let paused=false;
  // D-190 프레임 상한(?ifps=) · 측정(?introprof=1: 프레임별 CPU ms와 gl.finish 대기 ms) · FPS 표시(?fps=1)
@@ -404,12 +409,14 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
 
  return{
   state,lenis,arch,rig,figure,globe,climber,camera,
-  renderOnce(draw=true){frame(1/60,draw);},
+  renderOnce(draw=true,dt=1/60){frame(dt,draw);},   // D-195 영상 렌더: dt = 1/fps(감쇠 값이 영상 시간과 같은 속도로)
   pause(v:boolean){paused=v;},
-  set(o:{p?:number,t?:number|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;},
+  set(o:{p?:number,t?:number|null,beat?:{sincePrev:number,untilNext:number}|null}){if(o.p!==undefined){opt.frozenP=o.p;p=o.p;}if(o.t!==undefined)frozenT=o.t;if(o.beat!==undefined)beatOv=o.beat;},
+  /** D-195 영상 렌더용 상수: 첫 화면 · 파형 단계 진행값, 하강 시간(초) */
+  videoConst:{PV0,PVA,AUTO_S},
   scrollToEnd(){lenis?.scrollTo('bottom');},
-  scrollTop(){lenis?.scrollTo(0,{immediate:true});if(!NEW)lenis?.start();pRaw=0;p=NEW?PV0:0;mode='first';wm.reset();wave.state='off';wave.start=null;mix.reset();},
-  dispose(){disposed=true;gsap.ticker.remove(tick);hud?.remove();cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);(dom.wrapper.parentElement??dom.wrapper).removeEventListener('click',onClick);removeEventListener('keydown',onKey);screenFluid?.dispose();
+  scrollTop(){video?.reset();lenis?.scrollTo(0,{immediate:true});if(!NEW)lenis?.start();pRaw=0;p=NEW?PV0:0;mode='first';wm.reset();wave.state='off';wave.start=null;mix.reset();},
+  dispose(){video?.dispose();disposed=true;gsap.ticker.remove(tick);hud?.remove();cancelAnimationFrame(raf);lenis?.destroy();dom.wrapper.removeEventListener('wheel',onWheel);(dom.wrapper.parentElement??dom.wrapper).removeEventListener('click',onClick);removeEventListener('keydown',onKey);screenFluid?.dispose();
    removeEventListener('pointermove',onMove);document.removeEventListener('pointerleave',onLeave);removeEventListener('resize',resize);
    globe?.dispose();figure.dispose();climber?.dispose();space?.dispose();arch?.dispose();rig?.dispose();shafts?.dispose();reflection?.dispose();floorLm.dispose();[day,night,clouds,height].forEach(x=>x?.dispose());composer.dispose();renderer.dispose();},
  };

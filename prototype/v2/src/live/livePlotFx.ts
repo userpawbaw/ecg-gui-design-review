@@ -8,9 +8,9 @@ import {LABEL, type LiveStream} from './liveStream';
 import {fit, plotRect, drawFrame, shadeBad, cursorLine, type View, type Axis, type Rect} from './livePlot';
 import {paper, BAND_S, GLOW_TAU, ageGradient, createGlow, rgb} from '../labFx';
 import {layersFor, layersOff} from './liveLayers';
-// D-200: 먼 구간은 블록 캔버스(DOM 층, CSS transform)로 — ?livelayers=0 이면 이전(매 프레임 칸 전체 합성)
+// D-200: 먼 구간을 블록 캔버스(DOM 층, CSS transform · 마스크)로 — 사용자 노트북에서 오히려 초당 그림 수가 줄어(층 · 마스크 합성이 병목) 기본은 끔. ?livelayers=1 이면 층 구조(비교용)
 const ABS_DOT = 'position:absolute;left:0;top:0;pointer-events:none;mix-blend-mode:plus-lighter;will-change:transform,opacity;opacity:0';
-const LAYERS = typeof location === 'undefined' || new URLSearchParams(location.search).get('livelayers') !== '0';
+const LAYERS = typeof location !== 'undefined' && new URLSearchParams(location.search).get('livelayers') === '1';
 import {WAVE} from '../waveMode';
 // 측정 전용 기준선(?wave=naive): 같은 효과를 실험실 원래 방식(D-073, 매 프레임 전체 경로 · 64단 그라데이션 · 번짐 3단 재생성)으로.
 const NAIVE = WAVE === 'naive';

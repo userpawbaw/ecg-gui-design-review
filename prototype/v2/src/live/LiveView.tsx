@@ -21,8 +21,8 @@ import methodData from '../methods.json';
 // 2026-11-10 사용자 「실험실 탭과 유사하게 오른쪽에 기법 선택 창 … 최대 3개」: 브리지가 보내는 기법 중 3개까지 그린다(그리기 비용).
 // 브리지가 계산하는 기법은 시작할 때 정해진다(--methods, 원본 저장소). 목록에 있어도 브리지가 보내지 않으면 고를 수 없다.
 const DEFAULT_ORDER = ['M_FE', 'M04', 'M05S', 'M08', 'M06', 'M02', 'M03', 'M05', 'M09', 'M06L6', 'M01'];
-// D-198(A): 가벼운 계산에서 추론 간격을 늘리는 기법(실행 도구 HEAVY와 같은 목록)
-const HEAVY = ['M04', 'M06', 'M06L6', 'M08', 'M09'];
+// D-198(A): 가벼운 계산에서 추론 간격을 늘리는 기법(실행 도구 HEAVY에서 늘 32인 M04를 뺀 목록)
+const HEAVY = ['M06', 'M06L6', 'M08', 'M09'];
 const LIVE_IDS = ['M_FE', 'M01', 'M02', 'M03', 'M04', 'M05S', 'M05', 'M06', 'M06L6', 'M08', 'M09'], MAX_LIVE = 3;
 const shortName = (id: string) => (methodData as Record<string, {name: string}>)[id]?.name ?? LABEL[id] ?? id;
 
@@ -268,7 +268,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
       {burst && <StateChip kind="jitter" tone="warn" label="처리 결과 몰림" note={`화면 ${playLag.toFixed(1)} s 늦춰 끊김 방지`} title={`처리 결과가 최대 ${Math.round(outGap)} ms 간격으로 몰려 도착(브라우저 측정, 최근 2 s) — RTF와 별개. 끊기지 않게 화면을 그만큼 늦춰 그린다`}/>}
       {behind && <StateChip kind="overload" tone="warn" label="브리지 밀림" note={`${(lagMs / 1000).toFixed(1)} s`} title={`입력이 들어온 뒤 처리되기까지 ${(lagMs / 1000).toFixed(1)} s 늦음 — CPU가 모자랍니다(브라우저 · 다른 프로그램이 같은 CPU를 씀). 다른 프로그램을 닫거나 가벼운 기법을 고르세요.${patched ? ' 2 s를 넘으면 브리지가 쌓인 입력을 건너뛰고 지금부터 다시 그립니다.' : ''}`}/>}
       {!behind && jitter && <StateChip kind="jitter" tone="warn" label="수신 간격 불규칙" title="최근 2 s 최대 수신 간격 200 ms 초과"/>}
-      {ctl.light && <span className="live-light"><StateChip kind="overload" tone="idle" label="가벼운 계산" note="추론 간격 2배" title="무거운 기법(M04 · 딥러닝)의 추론 간격 16 → 32 표본: 계산 약 절반, 지연 +64 ms, 참값 오차는 같은 수준(합성 신호 측정, D-198)"/>
+      {ctl.light && <span className="live-light"><StateChip kind="overload" tone="idle" label="가벼운 계산" note="추론 간격 2배" title="딥러닝 기법의 추론 간격 16 → 32 표본(M04는 늘 32): 계산 약 절반, 지연 +64 ms, 참값 오차는 같은 수준(합성 신호 측정, D-198)"/>
         <button type="button" disabled={!!reload} onClick={() => setLight(false)}>원래대로</button></span>}
       {note && <span className="live-note">{note}</span>}
     </div>

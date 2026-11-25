@@ -62,7 +62,7 @@ Story 주소 옵션: `?route=lab`(Lab부터), `?step=3`(단계 바로 가기), `
 
 **이 저장소에서 한 줄로**(2026-11-08): 두 저장소를 같은 폴더에 두고 `npm run bridge:setup`(처음 한 번), 그다음 `npm run bridge:replay`. 원본 저장소는 `claude/pli-harmonic-canceller` 브랜치여야 한다(D-162, 그 전에는 `claude/adoring-cray-nv6pvq`). 발표 캡처 절차 전체는 `docs/DEMO_BRIDGE.md`.
 
-**브리지 밀림 대응**(2026-11-25, D-198): `npm run bridge:replay`는 원본 브리지에 밀림 건너뛰기 · 루프 전체 RTF 패치를 덧댄 사본(`.cache/bridge`)으로 띄운다(원본 폴더는 그대로). 노트북에서 처음부터 가볍게: `npm run bridge:replay -- --light`. 패치 없이 원본 그대로: `npm run bridge:replay -- --no-patch`. 화면은 밀림이 이어지면 한 번 자동으로 가벼운 계산으로 바꾸고, 상태 줄의 「원래대로」로 되돌린다.
+**브리지 밀림 대응**(2026-11-25, D-198): `npm run bridge:replay`는 원본 브리지에 밀림 건너뛰기 · 루프 전체 RTF 패치를 덧댄 사본(`.cache/bridge`)으로 띄운다(원본 폴더는 그대로). M04는 늘 추론 간격 32로 띄운다(브리지 권고, 품질 같음). 노트북에서 딥러닝 기법까지 처음부터 가볍게: `npm run bridge:replay -- --light`. 패치 없이 원본 그대로: `npm run bridge:replay -- --no-patch`. 화면은 밀림이 이어지면 한 번 자동으로 가벼운 계산으로 바꾸고, 상태 줄의 「원래대로」로 되돌린다.
 
 **실시간 탭 기법 바꾸기**(2026-11-10): `npm run bridge:replay`로 띄우면 실시간 측정 탭 오른쪽에서 기법을 고를 때마다 브리지만 다시 뜬다(몇 초). 딥러닝 기법(M06 · M08 · M09)까지 쓰려면 처음 한 번 `npm run bridge:setup -- --dl`. 실보드는 `npm run bridge:replay -- --port COM3`. 재생 기본 신호는 D1 기록 100 + 혼합 잡음 0 dB(D-179), 이전 합성 신호는 `npm run bridge:replay -- --synth`.
 

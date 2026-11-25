@@ -131,14 +131,16 @@ async function sourceStep(){
 const LIVE_ALLOWED=new Set(['M_FE','M01','M02','M03','M04','M05','M05S','M06','M06L6','M08','M09']);
 // D-198(A): 가벼운 계산 — 무거운 기법(M04 · 딥러닝) 추론 간격 16 → 32. 시작 옵션 --light 또는 화면이 밀림을 보면 /restart {light:true}
 const HEAVY=['M04','M06','M06L6','M08','M09'];
-const lightArgs=(methods,on)=>{const h=on?methods.split(',').filter(m=>HEAVY.includes(m)):[];return h.length?['--hop-for',h.map(m=>m+'=32').join(',')]:[];};
+// 2026-11-25 사용자(VS Code에서 브리지가 「--hop-for M04=32」를 권함): M04는 늘 32 — 측정상 참값 RMSE 같음(D-198 hop_compare.txt). 가벼운 계산이면 나머지 무거운 기법도 32
+const ALWAYS32=['M04'];
+const lightArgs=(methods,on)=>{const h=methods.split(',').filter(m=>on?HEAVY.includes(m):ALWAYS32.includes(m));return h.length?['--hop-for',h.map(m=>m+'=32').join(',')]:[];};
 const sup={state:'stopped',methods:'',err:'',child:null,light:has('--light')};
 function bridgeArgs(methods){
  const pass=[],skip=new Set(['--no-browser','--kiosk','--install-torch','--no-torch','--selftest','--selftest-dl','--light']);
  for(let i=0;i<argv.length;i++){const a=argv[i];if(skip.has(a))continue;if(a==='--root'||a==='--methods'){i++;continue;}
   if(SRC_FLAGS.has(a)){if(a==='--replay'&&/^(synth|csv)$/.test(argv[i+1]??''))i++;continue;}pass.push(a);}
  const src=pass.includes('--port')?[]:SOURCE.args;
- return ['scripts/serial_bridge.py',...src,'--serve','--http-port',String(PORT_BR),'--methods',methods,...pass,...lightArgs(methods,sup.light&&!pass.includes('--hop-for'))];}
+ return ['scripts/serial_bridge.py',...src,'--serve','--http-port',String(PORT_BR),'--methods',methods,...pass,...(pass.includes('--hop-for')?[]:lightArgs(methods,sup.light))];}
 function supervise(initial){
  let prev=null,gen=0,tries=0,since=0;sup.methods=initial;
  const start=()=>{const g=++gen;sup.state='starting';sup.err='';since=Date.now();say(`\n브리지 시작: --methods ${sup.methods}`);

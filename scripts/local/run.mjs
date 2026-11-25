@@ -145,7 +145,9 @@ function bridgeReplay(extra){const d=sourceDir(),p=findPython();if(!p){bad('Pyth
 //  GET /status → {state, methods, err}   POST /restart {methods:[…]} → 202
 // 허용 목록 밖 이름은 받지 않는다. 새로 띄운 브리지가 바로 죽으면(포트가 아직 안 풀림 등) 1 s 간격으로 4번 다시, 그래도 안 되면 이전 목록으로.
 const HEAVY=['M04','M06','M06L6','M08','M09'];
-const lightArgs=(methods,on)=>{const h=on?methods.split(',').filter(m=>HEAVY.includes(m)):[];return h.length?['--hop-for',h.map(m=>m+'=32').join(',')]:[];};
+// 2026-11-25 사용자(VS Code에서 브리지가 「--hop-for M04=32」를 권함): M04는 늘 32 — 측정상 참값 RMSE 같음(D-198 hop_compare.txt). 가벼운 계산이면 나머지 무거운 기법도 32
+const ALWAYS32=['M04'];
+const lightArgs=(methods,on)=>{const h=methods.split(',').filter(m=>on?HEAVY.includes(m):ALWAYS32.includes(m));return h.length?['--hop-for',h.map(m=>m+'=32').join(',')]:[];};
 const LIVE_ALLOWED=new Set(['M_FE','M01','M02','M03','M04','M05','M05S','M06','M06L6','M08','M09']);
 function supervise(p,argv,cwd,source={kind:'replay',label:''}){
  const CTL=Number(process.env.ECG_BRIDGE_CTL_PORT||8764),BR=new URL(process.env.ECG_BRIDGE||'http://127.0.0.1:8765');
@@ -153,9 +155,9 @@ function supervise(p,argv,cwd,source={kind:'replay',label:''}){
  // D-198(A): 가벼운 계산 — 무거운 기법(M04 · 딥러닝)의 추론 간격 16 → 32(계산 약 절반, 참값 RMSE 같음, 지연 +64 ms). 시작 옵션 --light 또는 화면이 밀림을 보면 /restart {light:true}
  let light=argv.includes('--light');if(light)argv.splice(argv.indexOf('--light'),1);
  const userHop=argv.includes('--hop-for');
- const args=()=>{const a=[...argv];a[mi+1]=methods;return a.concat(lightArgs(methods,light&&!userHop));};
+ const args=()=>{const a=[...argv];a[mi+1]=methods;return a.concat(userHop?[]:lightArgs(methods,light));};
  const start=()=>{const g=++gen;state='starting';err='';since=Date.now();
-  say(`\n브리지 시작: --methods ${methods}`+(light&&!userHop&&lightArgs(methods,true).length?' · 가벼운 계산(무거운 기법 추론 간격 32)':''));
+  say(`\n브리지 시작: --methods ${methods}`+(userHop?'':lightArgs(methods,light).length?` · ${light?'가벼운 계산 ':''}추론 간격 32: ${lightArgs(methods,light)[1].replace(/=32/g,'')}`:''));
   child=spawn(p.bin,[...p.pre,...args()],{cwd,env,stdio:['ignore','inherit','pipe']});
   child.stderr.on('data',b=>{process.stderr.write(b);err=(err+b).slice(-1500);});
   child.on('exit',code=>{if(g!==gen)return;child=null;if(state==='stopping')return;

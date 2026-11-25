@@ -70,7 +70,8 @@ export class StripRow {
     this.paint(a, wrapT + 1, ca, traces, full);        // 오른쪽 끝을 한 열 넘겨 이음(스크롤 이음매용)
     this.paint(wrapT, b, -1, traces, full);            // 왼쪽은 열 -1에서 시작
   }
-  private paint(a: number, b: number, colA: number, traces: StripTrace[], full: boolean) {
+  /** D-200: 블록 캔버스(liveLayers)도 쓴다 — 열 colA부터 a … b 표본을 긋는다(full = 왼쪽 경계 없이 지움). */
+  paint(a: number, b: number, colA: number, traces: StripTrace[], full: boolean) {
     const G = this.geom, d = G.dpr, x1 = this.rx(colA + (b - a)) + 3;
     // 지울 왼쪽 경계: 처음부터면 전부, 이어 그리기면 이음점(이미 그은 마지막 표본) 오른쪽만, 감긴 둘째 조각은 왼쪽 여백부터
     const clipL = full || colA < 0 ? 0 : this.rx(colA);
@@ -178,20 +179,22 @@ export function composeRow(g: CanvasRenderingContext2D, row: StripRow, ramps: Ag
   sweep: boolean, head: number, headX: number, rightX: number, r: number, white: number, glow: number, level: number, liveK: number, span: number, gapS: number, tailS: number, oldK?: number,
   /** 이 줄 전체의 불투명도 배율(D-184 겹치기 강조 · 흐리기 애니메이션 — 링을 다시 긋지 않고 합성 때만). */ alphaK?: number,
   /** D-199: 번짐만(선 없이) — 축 확대 중 번짐은 늘여 쓰고 선은 따로 긋는다 */ glowOnly?: boolean,
+  /** D-200: 먼 구간(일정 세기)은 그리지 않는다 — 블록 캔버스(DOM 층)가 맡는다. 창(사라짐 · 잔광)과 잔광 창 안의 번짐만. winFade · winHot 으로 창을 정해 줄 수 있다 */ farOff?: boolean, winFade?: [number, number][], winHot?: [number, number][],
 }) {
   const G = row.geom, d = G.dpr, l = G.l, r = o.r, pw = r - l, k = pw / o.span, oldK = o.oldK ?? .72, hotS = Math.min(o.span, 3 * GLOW_TAU);
   const clipTo = (list: [number, number][]) => list.map(([a, b]) => [Math.max(l, a), Math.min(r, b)] as [number, number]).filter(([a, b]) => b > a);
   const wrap = (a: number, b: number) => clipTo([-pw, 0, pw].map(off => [a + off, b + off] as [number, number]));
   // 사라짐 구간(나이 span−tailS … span−gapS)과 흰빛 구간(나이 0 … hotS)의 화면 x
-  const fade = o.sweep ? wrap(o.headX + o.gapS * k - 2, o.headX + o.tailS * k + 2) : clipTo([[o.rightX - (o.span - o.gapS) * k - 2, o.rightX - (o.span - o.tailS) * k + 2]]);
-  const hot = o.sweep ? wrap(o.headX - hotS * k - 2, o.headX + 3) : clipTo([[o.rightX - hotS * k - 2, r]]);
+  const fade = o.winFade ?? (o.sweep ? wrap(o.headX + o.gapS * k - 2, o.headX + o.tailS * k + 2) : clipTo([[o.rightX - (o.span - o.gapS) * k - 2, o.rightX - (o.span - o.tailS) * k + 2]]));
+  const hot = o.winHot ?? (o.sweep ? wrap(o.headX - hotS * k - 2, o.headX + 3) : clipTo([[o.rightX - hotS * k - 2, r]]));
   const lineWins = [...fade, ...hot].sort((a, b) => a[0] - b[0]);
   const glowOn = o.level > 0 && o.glow > .003, aK = Math.max(0, o.alphaK ?? 1);
   if (aK <= .002) return;
   const clipOut = (wins: [number, number][]) => { g.beginPath(); let x = l; for (const [a, b] of wins) { if (a > x) g.rect(x, G.t, a - x, G.h); x = Math.max(x, b); } if (x < r) g.rect(x, G.t, r - x, G.h); g.clip(); };
   // 1) 먼 구간
-  if (glowOn) { g.save(); clipOut(fade); g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, oldK * o.glow * aK); row.blit(g, row.sum.c, 2 * d, o.sweep, o.head, o.rightX); g.restore(); }
-  if (!o.glowOnly) { g.save(); clipOut(lineWins); g.globalAlpha = Math.min(1, oldK * aK);
+  if (glowOn && o.farOff) { g.save(); g.beginPath(); for (const [a, b] of hot) g.rect(a, G.t, b - a, G.h); g.clip(); g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, oldK * o.glow * aK); row.blit(g, row.sum.c, 2 * d, o.sweep, o.head, o.rightX); g.restore(); }
+  if (glowOn && !o.farOff) { g.save(); clipOut(fade); g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, oldK * o.glow * aK); row.blit(g, row.sum.c, 2 * d, o.sweep, o.head, o.rightX); g.restore(); }
+  if (!o.glowOnly && !o.farOff) { g.save(); clipOut(lineWins); g.globalAlpha = Math.min(1, oldK * aK);
   if (row.hasBase) row.blit(g, row.base.c, 1, o.sweep, o.head, o.rightX);
   row.blit(g, row.lit.c, 1, o.sweep, o.head, o.rightX);
   g.restore(); }

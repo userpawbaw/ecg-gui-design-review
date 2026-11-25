@@ -6,7 +6,11 @@
 import * as AX from './liveAxis';
 import {LABEL, type LiveStream} from './liveStream';
 import {fit, plotRect, drawFrame, shadeBad, cursorLine, type View, type Axis, type Rect} from './livePlot';
-import {paper, BAND_S, ageGradient, createGlow, rgb} from '../labFx';
+import {paper, BAND_S, GLOW_TAU, ageGradient, createGlow, rgb} from '../labFx';
+import {layersFor, layersOff} from './liveLayers';
+// D-200: 먼 구간은 블록 캔버스(DOM 층, CSS transform)로 — ?livelayers=0 이면 이전(매 프레임 칸 전체 합성)
+const ABS_DOT = 'position:absolute;left:0;top:0;pointer-events:none;mix-blend-mode:plus-lighter;will-change:transform,opacity;opacity:0';
+const LAYERS = typeof location === 'undefined' || new URLSearchParams(location.search).get('livelayers') !== '0';
 import {WAVE} from '../waveMode';
 // 측정 전용 기준선(?wave=naive): 같은 효과를 실험실 원래 방식(D-073, 매 프레임 전체 경로 · 64단 그라데이션 · 번짐 3단 재생성)으로.
 const NAIVE = WAVE === 'naive';
@@ -55,7 +59,7 @@ function state(c: HTMLCanvasElement): Per {
   return p;
 }
 /** 정적 층: 바탕 · 용지 격자 · 눈금 글자, 그리고 빛기둥용 밝은 용지. 축 · 크기 · 창이 바뀔 때만. */
-function paintStatic(c: HTMLCanvasElement, g: CanvasRenderingContext2D, w: number, h: number, dpr: number, P: Rect, ax: Axis | undefined, winS: number, play: AX.Play) {
+function paintStatic(c: HTMLCanvasElement, g: CanvasRenderingContext2D, w: number, h: number, dpr: number, P: Rect, ax: Axis | undefined, winS: number, play: AX.Play, clear = true) {
   const s = state(c).st, key = [w, h, dpr, play, winS, ax ? ax.m.toFixed(5) + ',' + ax.s : '-'].join('|');
   if (s.key !== key) {
     s.key = key;
@@ -70,18 +74,22 @@ function paintStatic(c: HTMLCanvasElement, g: CanvasRenderingContext2D, w: numbe
   // 정적 층은 캔버스의 CSS 배경으로 한 번만 붙이고, 매 프레임은 지우기만(전체 크기 복사 1회 절약). 기준선(naive)은 실험실처럼 매번 복사.
   if (NAIVE) { g.setTransform(1, 0, 0, 1, 0, 0); g.drawImage(s.bg, 0, 0); g.setTransform(dpr, 0, 0, dpr, 0, 0); return; }
   if (c.dataset.bgKey !== key) { c.dataset.bgKey = key; c.style.background = `url(${s.bg.toDataURL()}) 0 0 / 100% 100% no-repeat`; }
-  g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, c.width, c.height); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  if (clear) { g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, c.width, c.height); g.setTransform(dpr, 0, 0, dpr, 0, 0); }
 }
 
+const mainDirty = new WeakMap<HTMLCanvasElement, boolean>();
+function anyBad(S: LiveStream, v: View) { const ok = S.okBuf; if (!ok || S.head < 0) return false; for (let i = 0; i < S.cap; i++) { const t = AX.absAt(i, S.vh, S.cap, v.play); if (S.seen(t) && ok[t % S.cap] < .5) return true; } return false; }
 type Series = {name: string, color: string, width: number, alpha: number, lit: boolean, glow: boolean, casing?: boolean};
 const CASING = '#0a1a21';   // D-183 테두리: 겹치기 칸 배경색
 function drawPanel(S: LiveStream, v: View, c: HTMLCanvasElement, list: Series[], ax: Map<string, Axis>, frameAx: Axis | undefined, k: {white: number, glow: number, dotR: number, dotA: number}, now: number, groups?: Group[]): PanelGeom | null {
   const {g, w, h, dpr} = fit(c), P = plotRect(w, h);
-  paintStatic(c, g, w, h, dpr, P, frameAx, S.winS, v.play);
-  if (!list.length || S.vh < 0) return null;
-  shadeBad(g, P, S, v);
+  // D-200: 층 구조 스크롤에서는 아래 캔버스에 매 프레임 그릴 것이 없다 — 측정이 아닌 구간(음영)이 있거나 지난 프레임에 그렸을 때만 지우고 그린다
+  const quiet = LAYERS && !NAIVE && v.play === 'scroll' && !!list.length && S.vh >= 0, bad = quiet && anyBad(S, v), mk = mainDirty.get(c) ?? true;
+  paintStatic(c, g, w, h, dpr, P, frameAx, S.winS, v.play, !quiet || bad || mk); mainDirty.set(c, !quiet || bad);
+  if (!list.length || S.vh < 0) { layersOff(c); return null; }
+  if (!quiet || bad) shadeBad(g, P, S, v);
   const cap = S.cap, dx = P.pw / (cap - 1), sweep = v.play === 'sweep', H = S.vh, fs = S.fs;
-  const headX = sweep ? P.l + (H % cap) * dx : P.r - S.vhFrac * dx, liveK = v.glowOn ? AX.glowLive(now - S.lastData) : 0;
+  const headX = sweep ? P.l + (H % cap) * dx : P.r - S.vhFrac * dx, liveK = v.glowOn ? AX.glowLive(now - S.lastMove) : 0;   // D-200: 데이터 도착이 아니라 재생 머리가 멈춘 지 얼마나
   const yOf = (q: Axis, a: Float32Array) => (t: number) => Math.min(P.b + 4, Math.max(P.t - 4, P.t + P.ph / 2 - (a[((t % cap) + cap) % cap] - q.m) / q.s * (P.ph / 2 - 6)));
   const traces: StripTrace[] = [], dots: StripTrace[] = [], ys = new Map<string, (t: number) => number>(), byName = new Map<string, {tr: StripTrace[], dot?: StripTrace}>();
   for (const s of list) { const a = S.bufs.get(s.name), q = ax.get(s.name); if (!a || !q) continue;
@@ -117,8 +125,51 @@ function drawPanel(S: LiveStream, v: View, c: HTMLCanvasElement, list: Series[],
   });
   for (const id of [...p.rows.keys()]) if (!gs.some(x => x.id === id)) p.rows.delete(id);
   const key0 = [w, h, dpr, cap, v.play, ].join('|');
+  const e = AX.eraseSpans(cap, v.eraseFrac), span = (cap - 1) / fs;
+  const gapS = (v.softEdge ? e.gap : e.gap + e.fade) / fs, tailS = (e.gap + e.fade) / fs, fadeS = v.softEdge ? e.fade / fs : 0;
+  const LAY = LAYERS && !NAIVE, SCROLL_L = LAY && !sweep;
+  const kks = new Map<string, string>();
   for (const gr of gs) { const kk = key0 + '|' + gr.series.map(x => x.name + ':' + (ax.get(x.name)?.m.toFixed(5)) + ',' + ax.get(x.name)?.s + ',' + [x.width, x.alpha, x.lit, x.glow, !!x.casing].join(',')).join('|');
-    gr.row.configure(kk, {l: P.l, t: P.t, w: P.pw, h: P.ph, nCols: cap, dx, dpr}, pace.level); gr.row.update(H, Math.max(S.first, H - cap + 1), gr.tr); }
+    kks.set(gr.id, kk); if (!SCROLL_L) { gr.row.configure(kk, {l: P.l, t: P.t, w: P.pw, h: P.ph, nCols: cap, dx, dpr}, pace.level); gr.row.update(H, Math.max(S.first, H - cap + 1), gr.tr); } }
+  if (LAY) {
+    // D-200: 파형은 블록 캔버스 두 장(짝 · 홀)에 새 표본만 긋고 DOM에서 transform으로 옮긴다(다시 칠하지 않음).
+    const L = layersFor(c); L.attach(); L.hide(false);
+    L.layout(w, h, P, [w, h, dpr, cap, v.play, P.l, P.t, P.pw, P.ph, c.offsetLeft, c.offsetTop].join('|'));
+    L.prune(gs.map(x => x.id)); for (const gr of gs) L.group(gr.id); L.order(gs.map(x => x.id)); L.setMode(sweep ? 'sweep' : 'scroll');
+    const kH = Math.floor(H / cap), on = v.glowOn && pace.level > 0, kpx = P.pw / span, hotS = Math.min(span, 3 * GLOW_TAU);
+    if (SCROLL_L) L.masks(span, gapS, fadeS);
+    else { const fade1 = headX + tailS * kpx + 2, hot0 = headX - hotS * kpx - 2; L.setWin(0, Math.max(P.l, fade1 - P.pw), hot0); L.setWin(1, fade1, Math.min(P.r, hot0 + P.pw)); }
+    for (const gr of gs) { const GL = L.group(gr.id);
+      // 세기: 스크롤 = 창 불투명도(마스크가 나이별 세기), 스윕 = 먼 구간 일정 세기를 층 불투명도로(composeRow 와 같은 oldK · 번짐 · 흰빛 배율)
+      const aK = Math.max(0, gr.alphaK), oa = Math.min(1, .72 * aK), og = on ? Math.min(1, .72 * k.glow * gr.glowK * (SCROLL_L ? aK : 1)) : 0;
+      if (SCROLL_L) { const ow = Math.min(1, .75 * k.white * gr.whiteK) * liveK * aK, ok = [aK, og, ow].map(x => x.toFixed(3)).join();
+        if (GL.box.dataset.o !== ok) { GL.box.dataset.o = ok; GL.wl.style.opacity = Math.min(1, aK).toFixed(3); GL.wg.style.opacity = og.toFixed(3); GL.ww.style.opacity = ow.toFixed(3); } }
+      for (const kb of [kH - 1, kH]) { const s = GL.slots[((kb % 2) + 2) % 2], els = [s.gEl, s.lEl, s.wEl];
+        if (kb < 0) { for (const el of els) el.style.display = 'none'; continue; } for (const el of els) if (el.style.display) el.style.display = '';
+        s.blk.configure(kks.get(gr.id) ?? '', cap, dx, P, dpr, pace.level); s.blk.setBase(kb * cap); s.blk.paint(H, S.first, gr.tr, SCROLL_L && v.glowOn); L.sizeSlot(s, dpr);
+        const xOf = sweep ? (t: number) => P.l + (t - kb * cap) * dx : (t: number) => headX - (H - t) * dx, tf = `translate3d(${(s.blk.left(xOf) - P.l).toFixed(2)}px,0,0)`;
+        for (const el of els) if (el.style.transform !== tf) el.style.transform = tf;
+        if (SCROLL_L) { if (s.gEl.parentElement !== GL.wg) GL.wg.appendChild(s.gEl); if (s.lEl.parentElement !== GL.wl) GL.wl.appendChild(s.lEl); if (s.wEl.parentElement !== GL.ww) GL.ww.appendChild(s.wEl); }
+        else { const target = (kb === kH ? L.wins[0] : L.wins[1]).content; if (s.gEl.parentElement !== target || s.lEl.parentElement !== target) target.append(s.gEl, s.lEl); }
+        const ko = SCROLL_L ? '1|1' : oa.toFixed(3) + '|' + og.toFixed(3); if (s.lEl.dataset.o !== ko) { s.lEl.dataset.o = ko; s.lEl.style.opacity = SCROLL_L ? '' : oa.toFixed(3); s.gEl.style.opacity = SCROLL_L ? '' : og.toFixed(3); }
+      }
+      // 선단 빛점(스크롤): 작은 요소의 위치 · 불투명도만
+      if (SCROLL_L) { gr.dots.forEach((tr, i) => { let d = GL.dots[i]; const R = k.dotR, dk = [R, k.dotA, dpr].join();
+          if (!d) { d = GL.dots[i] = document.createElement('canvas'); d.style.cssText = ABS_DOT; L.root.appendChild(d); }
+          if (d.dataset.k !== dk) { d.dataset.k = dk; const sp = headSprite(R, k.dotA, dpr); d.width = sp.width; d.height = sp.height; d.style.width = d.style.height = 2 * R + 'px'; const dg = d.getContext('2d')!; dg.clearRect(0, 0, d.width, d.height); dg.drawImage(sp, 0, 0); }
+          const vis = liveK > 0 && S.seen(H), o = vis ? Math.min(1, liveK * aK * Math.min(1.25, gr.whiteK)) : 0;
+          d.style.opacity = o.toFixed(3); if (vis) d.style.transform = `translate3d(${(headX - R).toFixed(2)}px,${(tr.y(H) - R).toFixed(2)}px,0)`; });
+        for (let i = gr.dots.length; i < GL.dots.length; i++) GL.dots[i].style.opacity = '0'; }
+    }
+    if (SCROLL_L) {
+      // 빛기둥: 선단(오른쪽 끝) 뒤 밝은 격자 띠 — 미리 구운 한 장을 불투명도만
+      const bandPx = P.pw / S.winS * BAND_S; L.bakeBand(p.st.hot, P, bandPx, dpr, p.st.key + '|' + bandPx.toFixed(2));
+      const bo = liveK > 0 ? liveK.toFixed(3) : '0'; if (L.band.style.opacity !== bo) L.band.style.opacity = bo;
+      L.band.style.transform = `translate3d(${(headX - bandPx).toFixed(2)}px,${P.t}px,0)`;
+      fxStats.rebuilds = gs.reduce((a, gr) => a + gr.row.rebuilds, 0);
+      return geom;
+    }
+  }
   // 빛기둥(A): 선단 뒤 BAND_S 동안 밝은 용지 — 세로 스윕 선 대신
   if (liveK > 0) {
     const band = P.pw / S.winS * BAND_S; g.save(); g.globalCompositeOperation = 'lighter';
@@ -127,11 +178,10 @@ function drawPanel(S: LiveStream, v: View, c: HTMLCanvasElement, list: Series[],
     g.restore();
   } else cursorLine(g, P, S, v);
   // 지우기 설정 → 나이 램프(스윕: 선단 앞 빈칸 + 사라짐 / 스크롤: 왼쪽 끝 사라짐)
-  const e = AX.eraseSpans(cap, v.eraseFrac), span = (cap - 1) / fs;
-  ramps.build(span, (v.softEdge ? e.gap : e.gap + e.fade) / fs, v.softEdge ? e.fade / fs : 0);
+  ramps.build(span, gapS, fadeS);
   g.save(); g.beginPath(); g.rect(P.l, P.t, P.pw, P.ph); g.clip();
   for (const gr of gs) { gr.row.clearAhead(H, Math.floor(v.softEdge ? e.gap : e.gap + e.fade) - 1);
-    composeRow(g, gr.row, ramps, layer, {sweep, head: H, headX, rightX: sweep ? P.r : headX, r: P.r, white: k.white * gr.whiteK, glow: k.glow * gr.glowK, level: v.glowOn ? pace.level : 0, liveK, span, gapS: (v.softEdge ? e.gap : e.gap + e.fade) / fs, tailS: (e.gap + e.fade) / fs, alphaK: gr.alphaK}); }
+    composeRow(g, gr.row, ramps, layer, {sweep, head: H, headX, rightX: sweep ? P.r : headX, r: P.r, white: k.white * gr.whiteK, glow: k.glow * gr.glowK, level: v.glowOn ? pace.level : 0, liveK, span, gapS, tailS, alphaK: gr.alphaK, farOff: LAY}); }
   g.restore();
   // 선단 빛점
   if (liveK > 0 && S.seen(H)) for (const gr of gs) for (const tr of gr.dots) {

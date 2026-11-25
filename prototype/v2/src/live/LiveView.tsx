@@ -132,7 +132,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
     const frame = () => {
       raf = requestAnimationFrame(frame);
       const now = performance.now(), at = S.reveal.at(now), vh = Math.floor(at), frac = at < 0 ? 0 : at - vh;
-      if (vh !== S.vh || (frac !== S.vhFrac && viewRef.current.play === 'scroll')) { S.vh = vh; S.vhFrac = frac; dirty.current = true; }
+      if (vh !== S.vh || (frac !== S.vhFrac && viewRef.current.play === 'scroll')) { if (vh !== S.vh) S.lastMove = now; S.vh = vh; S.vhFrac = frac; dirty.current = true; }
       if (S.head >= 0) {
         const names = [...(S.bufs.has('raw') ? ['raw'] : []), ...S.names().filter(n => n !== 'raw' && S.bufs.has(n))], key = names.join() + '@' + S.fs;
         let h = hr.current;
@@ -146,7 +146,7 @@ export function LiveView({base, help}: {base: string, help: React.ReactNode}) {
         }
       }
       if (TRACE) TRACE.push([now, at]);
-      const since = now - S.lastData, v = viewRef.current;
+      const since = now - S.lastMove, v = viewRef.current;   // D-200: 재생 머리 기준
       const fading = (v.play === 'sweep' && v.glowOn && since > 300 && since < 700) || (v.mode === 'overlay' && FX && !!overlay.current && overlayBusy(overlay.current));
       if (!dirty.current && !fading) return;
       dirty.current = false;

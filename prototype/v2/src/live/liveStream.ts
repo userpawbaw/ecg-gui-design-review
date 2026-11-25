@@ -28,6 +28,8 @@ export const SLOTS = ['#67e7c3', '#97c2ff', '#f6d18d', '#d7a6ff'], RAW_COLOR = '
 export class LiveStream {
   winS = 5; fs = 250; cap = 1250;
   head = -1; first = 0; vh = -1; lastData = -1e9;
+  /** D-200: 화면 재생 머리(vh)가 마지막으로 움직인 시각 — 효과(빛기둥 · 잔광 · 빛점) 켜고 끄기 기준. 데이터 도착(lastData)으로 하면 화면 버퍼가 파형을 흘리는 동안에도 효과만 깜빡였다(F-112). */
+  lastMove = -1e9;
   bufs = new Map<string, Float32Array>(); okBuf: Float32Array | null = null;
   colorOf = new Map<string, string>(); hidden = new Set<string>();
   stat: Stat = {}; notes: Note[] = []; feMode: string | null = null;

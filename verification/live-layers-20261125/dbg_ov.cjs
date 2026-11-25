@@ -1,0 +1,5 @@
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1600,height:1000}});
+ await p.goto(process.argv[2]+'/?route=lab',{waitUntil:'load'});await p.waitForTimeout(1500);await p.getByRole('button',{name:/실시간 측정/}).first().click();await p.waitForSelector('.live-status');await p.waitForTimeout(4000);
+ await p.getByRole('button',{name:'중첩'}).click();await p.waitForTimeout(3000);
+ const dump=()=>p.evaluate(()=>{const c=document.querySelector('.live-canvas.tall');const root=c.parentElement.lastElementChild;const clip=root.firstElementChild;return [...clip.children].map(b=>b.style.display+'|'+[...b.children].map(w=>w.style.opacity+'/'+w.childElementCount+'/'+(w.style.maskImage?'m':'-')).join(' ')).join('  ;  ')+' || focus='+c.dataset.focus+' hov='+c.dataset.hov;});
+ console.log('전:',await dump());const box=await p.locator('.live-canvas.tall').boundingBox();await p.mouse.move(box.x+box.width*.5,box.y+box.height*.45);await p.waitForTimeout(1500);console.log('후:',await dump());await b.close();})();

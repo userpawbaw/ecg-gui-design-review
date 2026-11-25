@@ -19,7 +19,7 @@ type Props={data:Loaded;transport:Transport;mode:Mode;span:number;inspect:boolea
  /** D-192 질환 탭: 입력 행 이름 · 정상 기준 행(traces.normal, 입력 바로 아래, Reference 없음) · 그린 기하를 밖으로(설명 덧층이 시각 → 화면 좌표를 계산) */
  inputLabel?:string;normalRow?:{label:string,color:string};geomOut?:{current:PlotGeom|null};
  /** D-194 구간 확대: 있으면 그리기마다 표시 구간 · 오른쪽 끝 시각 · 격자 위상(초)을 이 값으로(매 프레임 값 — React 상태 아님). redrawOut = 같은 프레임에 다시 그리기 */
- viewRef?:{current:{span:number,right:number,phase:number}|null};redrawOut?:{current:(()=>void)|null}};
+ viewRef?:{current:PlotView|null};redrawOut?:{current:(()=>void)|null}};
 export type PlotGeom={w:number,h:number,left:number,right:number,pw:number,t:number,span:number,fs:number,amplitude:number,mode:Mode,inspect:boolean,rows:{id:string,t:number,b:number}[]};
 // D-183 단계 → 기본 배율(겹치기): 깨끗 1 · 중간 .62 · 거침 .4, 번짐 · 흰빛은 깨끗한 것만. 입력은 실시간 입력과 같게 .55 · 번짐 없음
 const TIER_BASE=[{a:1,g:1,w:1},{a:.62,g:0,w:0},{a:.4,g:0,w:0}],IN_BASE={a:.55,g:0,w:0};
@@ -30,6 +30,11 @@ const ZONE_ALL=new URLSearchParams(location.search).get('ovzone')==='all';   // 
 // the glow, so the interval is what shows it — and never back up, so the picture does not pulse between levels.
 // D-177 (user 2026-11-12, several methods looked darker): no automatic step-down by default — level 2 stays; ?labfx=auto restores the step-down.
 const FX_PIN=(()=>{const v=new URLSearchParams(location.search).get('labfx');return v==='auto'?null:v===null?2:Math.max(0,Math.min(2,Number(v)||0));})();
+/** 시간축 보기(D-194). z = 확대 · 축소 중: 처음(a) · 끝(b) 보기와 진행(e, 0 → 1) — 이 동안은 두 장면을 한 번씩만 그려 두고 늘여 섞는다. */
+const mkLayer=()=>{const c=document.createElement('canvas');return {c,g:c.getContext('2d')!};};
+const ZSNAP=new URLSearchParams(location.search).get('zoomsnap')!=='0';   // ?zoomsnap=0 : 확대 중에도 매 프레임 전부 다시 그림(이전 방식, 비교용)
+const fit=(L:{c:HTMLCanvasElement},w:number,h:number)=>{if(L.c.width!==w)L.c.width=w;if(L.c.height!==h)L.c.height=h;};
+export type PlotView={span:number,right:number,phase:number,z?:{a:{span:number,right:number,phase:number},b:{span:number,right:number,phase:number},e:number}};
 export function Plot(p:Props){
  const canvas=useRef<HTMLCanvasElement>(null),latest=useRef(p);latest.current=p;
  const fx=useRef({level:FX_PIN??2,ema:0,frames:0,last:0});
@@ -38,7 +43,28 @@ export function Plot(p:Props){
  useEffect(()=>{const c=canvas.current!;const g=c.getContext('2d');if(!g)return;let raf=0,signature='',bgSig='';
  const bg=document.createElement('canvas'),bgg=bg.getContext('2d')!,hot=document.createElement('canvas'),hg=hot.getContext('2d')!,glow=createGlow();
  const strips:StripRow[]=[],ramps=new AgeRamps(),layer=(()=>{const lc=document.createElement('canvas');return{c:lc,g:lc.getContext('2d')!};})();
- const draw=()=>{const t0=performance.now(),q0=latest.current,vw=q0.viewRef?.current??null,q=vw?{...q0,span:vw.span}:q0,t=vw?vw.right:q0.transport.time;const rect=c.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
+ // 2026-11-25 질환 탭 축 확대가 끊김(사용자 영상: 초당 약 15장): 확대 중에는 구간이 매 프레임 바뀌어 행마다 파형 층(잔광 · 번짐 · 사라짐)을
+ // 처음부터 다시 긋고 합성했다(CPU 4배 감속에서 그리기 47–67 ms, 그중 합성 31–44 ms). 확대는 시간축 가로 배율만 바뀌므로
+ // 확대가 시작될 때 처음 · 끝 장면의 파형만 한 번씩 그려 두고(snap), 그 사이 프레임은 격자 · 눈금만 새로 그린 뒤(bgOnly)
+ // 두 장면을 시간 좌표에 맞춰 늘이고 섞는다. 처음 · 끝 프레임은 이전과 같은 그림이다.
+ const signature0=()=>{const q=latest.current;return [q.amplitude,q.shown.join(','),q.reference,q.method,q.preview,q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,fx.current.level,q.normalRow?.label].join('|');};
+ const zs={key:'',bKey:'',A:mkLayer(),B:mkLayer(),T:mkLayer()};let geo:{left:number,right:number,pw:number,boxes:Box[],dpr:number}|null=null;
+ const zoomFrame=(v:PlotView)=>{const z=v.z!,k=[z.a.span,z.a.right,z.a.phase,z.b.span,z.b.right,z.b.phase].map(x=>x.toFixed(4)).join()+'|'+c.width+'x'+c.height+'|'+signature0();
+  const snap=(vv:PlotView,S:{c:HTMLCanvasElement,g:CanvasRenderingContext2D})=>{drawCore({view:vv,mode:'snap'});fit(S,c.width,c.height);S.g.setTransform(1,0,0,1,0,0);S.g.globalCompositeOperation='copy';S.g.drawImage(c,0,0);S.g.globalCompositeOperation='source-over';};
+  // 두 장면을 한 프레임에 그리면 시작에 한 번 멈칫한다 — 첫 프레임은 처음 장면만(끝 장면 비중 e≈0), 끝 장면은 다음 프레임에
+  let bReady=zs.bKey===k;if(zs.key!==k){snap(z.a,zs.A);zs.key=k;}else if(!bReady){snap(z.b,zs.B);zs.bKey=k;bReady=true;}
+  drawCore({view:v,mode:'bgOnly'});const G=geo;if(!G)return;const d=G.dpr,T=zs.T,e=Math.max(0,Math.min(1,z.e));fit(T,c.width,c.height);
+  T.g.setTransform(1,0,0,1,0,0);T.g.globalCompositeOperation='source-over';T.g.globalAlpha=1;T.g.clearRect(0,0,T.c.width,T.c.height);T.g.globalCompositeOperation='lighter';T.g.imageSmoothingEnabled=true;
+  for(const [S,vv,a] of (bReady?[[zs.A,z.a,1-e],[zs.B,z.b,e]]:[[zs.A,z.a,1]]) as [typeof zs.A,PlotView,number][]){if(a<.002)continue;const sx=vv.span/v.span,X0=G.left+((vv.right-vv.span)-(v.right-v.span))/v.span*G.pw;
+   T.g.globalAlpha=a;T.g.drawImage(S.c,G.left*d,0,G.pw*d,S.c.height,X0*d,0,G.pw*sx*d,S.c.height);}
+  // 끝 장면이 덮지 못하는 가장자리(좁은 구간 밖)는 처음 장면만 있다 — 거기서는 처음 장면을 온전히(섞느라 흐려지지 않게)
+  if(bReady&&e>.002){const xb0=G.left+((z.b.right-z.b.span)-(v.right-v.span))/v.span*G.pw,xb1=xb0+G.pw*z.b.span/v.span,sx=z.a.span/v.span,X0=G.left+((z.a.right-z.a.span)-(v.right-v.span))/v.span*G.pw;
+   T.g.save();T.g.beginPath();if(xb0>G.left)T.g.rect(G.left*d,0,(xb0-G.left)*d,T.c.height);if(xb1<G.right)T.g.rect(xb1*d,0,(G.right-xb1)*d,T.c.height);T.g.clip();
+   T.g.globalAlpha=e;T.g.drawImage(zs.A.c,G.left*d,0,G.pw*d,zs.A.c.height,X0*d,0,G.pw*sx*d,zs.A.c.height);T.g.restore();}
+  T.g.globalAlpha=1;T.g.globalCompositeOperation='source-over';
+  g.save();g.setTransform(1,0,0,1,0,0);g.beginPath();for(const b of G.boxes)g.rect(G.left*d,b.t*d,G.pw*d,(b.b-b.t)*d);g.clip();g.drawImage(T.c,0,0);g.restore();};
+ const draw=()=>{const v=latest.current.viewRef?.current;if(ZSNAP&&v?.z&&!latest.current.overlay)zoomFrame(v);else drawCore();};
+ const drawCore=(o?:{view:PlotView|null,mode:'snap'|'bgOnly'})=>{const t0=performance.now(),q0=latest.current,vw=o?o.view:q0.viewRef?.current??null,q=vw?{...q0,span:vw.span}:q0,t=vw?vw.right:q0.transport.time;const rect=c.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
  // D-185 겹치기 강조: 지난 그림의 기하로 마우스 판정 → 강조 상태 한 걸음(고정 · 범례 단추 포함)
  const OV=!!q.overlay&&!q.residual,F=focus.current,ovNames=['input',...q.shown];let ovMoving=false,curZone:string|null=null;const Z=zoneRef.current;
  if(OV){F.pinned=new Set((q.pins??[]).filter(n=>ovNames.includes(n)));F.chip=q.chip??null;let hit:string|string[]|null=null;const G=geomRef.current;
@@ -59,29 +85,31 @@ export function Plot(p:Props){
   ovMoving=step(F,t0,ovNames,hit);c.style.cursor=F.target&&F.px!==null?'pointer':'';c.dataset.focus=F.target??'';c.dataset.hov=F.hov.join(',');if(OV_DBG)c.dataset.layers=ovNames.map(n=>`${n}:${fr.get(n)}/${tierRef.current.get(n)?.v??0}`).join(' ');}
  const sig=[t,q.mode,q.span,q.inspect,q.amplitude,q.reference,q.method,q.preview,q.shown.join(','),q.data.scene.id,q.data.offset,q.soft,q.residual,q.gain,rect.width,rect.height,dpr,fx.current.level,OV,OV?ovNames.map(n=>(F.e.get(n)??0).toFixed(3)).join(',')+F.f.toFixed(3)+'|'+curZone+(F.px!==null)+Z.hold.sig+Math.round(Z.y):''].join('|');
  // a collapsed canvas (0 × 0 while the layout changes) is skipped: drawImage of a 0-size static layer throws
- if(sig!==signature&&rect.width>=1&&rect.height>=1){signature=sig;const W=Math.round(rect.width*dpr),H=Math.round(rect.height*dpr);if(c.width!==W||c.height!==H){c.width=W;c.height=H;}g.setTransform(dpr,0,0,dpr,0,0);const w=rect.width,h=rect.height;
+ if((o||sig!==signature)&&rect.width>=1&&rect.height>=1){signature=o?'':sig;const W=Math.round(rect.width*dpr),H=Math.round(rect.height*dpr);if(c.width!==W||c.height!==H){c.width=W;c.height=H;}g.setTransform(dpr,0,0,dpr,0,0);const w=rect.width,h=rect.height;
  const rows=[{id:'input',label:q.inputLabel??'입력',color:'#ffbc79'},...(q.normalRow&&q.data.traces.normal?[{id:'normal',...q.normalRow}]:[]),...q.shown.map((id,k)=>({id,label:(NAME[id]??id)+(id===q.method?' · 선택 기법':''),color:SHOWN_COLORS[k%SHOWN_COLORS.length]}))];   // D-165: 표시 목록 순서대로 아래에 쌓인다
  const count=rows.length;const rh=OV?h:(h-(q.residual?144:0))/count;if(q.residual)rows.push({id:q.method,label:`차이 신호(출력 − Reference) · 표시 ×${q.gain||1}`,color:'#c0ced7'});g.font='11px system-ui';const labelWidth=Math.max(...amplitudeTicks(q.amplitude,q.residual?q.gain||1:1).concat(amplitudeTicks(q.amplitude)).map(t=>g.measureText(t.label).width));const left=Math.max(72,labelWidth+26),right=w-18,pw=right-left;
  const boxes:Box[]=rows.map((_,r)=>{const isDiff=q.residual&&r===count,top=OV?36:r*rh+36;return{l:left,r:right,t:top,b:OV?h-30:isDiff?top+72:(r+1)*rh-30};});
  // static layer (background, ECG paper, labels, amplitude ticks) + a brighter paper copy for A — redrawn only when the layout changes
  const clearBg=document.body.classList.contains('lab-dark')&&!c.closest('.large-dialog');   // D-074: the panel shows the archive faintly through
  const bs=[w,h,dpr,q.amplitude,q.span,vw?.phase??0,q.residual,q.gain,q.method,q.shown.join(','),clearBg,OV,q.inputLabel,q.normalRow?.label].join('|');
- if(bs!==bgSig){bgSig=bs;for(const [cv,cg] of [[bg,bgg],[hot,hg]] as const){cv.width=W;cv.height=H;cg.setTransform(dpr,0,0,dpr,0,0);cg.clearRect(0,0,w,h);}
+ if(bs!==bgSig){bgSig=bs;for(const [cv,cg] of [[bg,bgg],[hot,hg]] as const){if(cv.width!==W)cv.width=W;if(cv.height!==H)cv.height=H;cg.setTransform(dpr,0,0,dpr,0,0);cg.clearRect(0,0,w,h);}   // 같은 크기면 버퍼를 다시 잡지 않음(축 확대 중 매 프레임)
   if(!clearBg){bgg.fillStyle=BG;bgg.fillRect(0,0,w,h);}
   rows.forEach((row,r)=>{if(OV&&r>0)return;const isDiff=q.residual&&r===count,b=boxes[r],amp=isDiff?q.amplitude/(q.gain||1):q.amplitude;
    paper(bgg,b,q.span,amp,1,vw?.phase??0,!!vw);paper(hg,b,q.span,amp,4.2,vw?.phase??0,!!vw);
    bgg.textAlign='left';bgg.textBaseline='alphabetic';bgg.font='11px system-ui';bgg.fillStyle='#acc2cd';bgg.fillText('[mV]',10,r*rh+22);bgg.font='600 14px system-ui';bgg.fillStyle=OV?'#d7e4e8':row.color;bgg.fillText(OV?'중첩: 입력 · 표시 기법 · Reference(동일 축 · 동일 진폭)':row.label,left,r*rh+22);
    bgg.font='11px system-ui';bgg.fillStyle='#acc2cd';bgg.textAlign='right';bgg.textBaseline='middle';for(const tick of amplitudeTicks(q.amplitude,isDiff?q.gain||1:1))bgg.fillText(tick.label,left-10,b.t+tick.fraction*(b.b-b.t));});}
- g.clearRect(0,0,w,h);g.drawImage(bg,0,0,w,h);
+ geo={left,right,pw,boxes,dpr};g.clearRect(0,0,w,h);if(o?.mode!=='snap')g.drawImage(bg,0,0,w,h);
  const pts=visiblePoints(t,q.span,q.data.fs,q.data.n,q.mode,q.inspect,q.soft).filter(p=>p.index>=q.data.offset&&p.index<q.data.offset+q.data.traces.input.length);
  // the sweep head and how many seconds behind it a screen x lies (afterglow, leading fade, A, C); none while inspecting
  const live=!q.inspect,count_=Math.round(q.span*q.data.fs),headX=q.mode==='sweep'?left+((Math.floor(t*q.data.fs)%count_)/count_)*pw:right;
  const ageOf=(x:number)=>q.mode==='sweep'?((((headX-x)/pw*q.span)%q.span)+q.span)%q.span:(right-x)/pw*q.span;
  const fxOn=live&&q.soft,level=fx.current.level;
  // A: one light column of brighter ECG paper across every row, just behind the head, cooling over BAND_S (replaces the sweep line)
- if(fxOn){const band=pw/q.span*BAND_S,top=boxes[0].t,bot=boxes[boxes.length-1].b;g.save();g.globalCompositeOperation='lighter';
+ if(fxOn&&o?.mode!=='snap'){const band=pw/q.span*BAND_S,top=boxes[0].t,bot=boxes[boxes.length-1].b;g.save();g.globalCompositeOperation='lighter';
   for(let i=0;i<5;i++){let x0=headX-band*(i+1)/5;const bw=band/5;if(x0+bw<left)x0+=pw;if(x0<left-1)continue;g.globalAlpha=(1-i/5)*.7;g.drawImage(hot,x0*dpr,top*dpr,bw*dpr,(bot-top)*dpr,x0,top,bw,bot-top);}
   g.restore();}
+ zz:{if(o?.mode==='bgOnly'){g.fillStyle='#adc3ce';g.font='12px system-ui';g.textAlign='left';g.textBaseline='alphabetic';
+  boxes.forEach((b,r)=>{if(OV&&r>0)return;for(let k=0;k<=4;k++){const at=q.inspect?Math.max(0,t-q.span)+k*Math.min(t,q.span)/4:t-q.span+k*q.span/4;const label=q.mode==='sweep'&&!q.inspect?(k*q.span/4).toFixed(1)+'s 위치':at<0?'—':at.toFixed(q.span<2.5?2:1)+'s';g.fillText(label,left+k*pw/4-(k===4?55:0),b.b+20);}});break zz;}
  // D-185 겹치기: 거칠기 단계(입력 대비, D-183과 같은 기준 · 1 s 유지) → 그리는 순서(입력 → 거친 것 → 깨끗한 것, 강조가 절반을 넘으면 맨 위)와 기본 배율
  const off0=q.data.offset,lo0=pts.length?Math.max(2,pts[0].index-off0):0,hi0=pts.length?pts[pts.length-1].index-off0:0;
  // D-186: 앞 순서 = 포함 비율 깊이(실시간과 같은 규칙 · 0.25 s마다 · 1 s 유지), 흐림 단계 = 거칠기 단계와 깊이 중 큰 쪽
@@ -142,10 +170,11 @@ export function Plot(p:Props){
  if(q.mode==='sweep'&&live&&!fxOn&&(!OV||firstOv)){g.strokeStyle='#bfd8e0';g.lineWidth=1;g.beginPath();g.moveTo(headX,top);g.lineTo(headX,bottom);g.stroke();}
  });if(q.geomOut)q.geomOut.current={w,h,left,right,pw,t,span:q.span,fs:q.data.fs,amplitude:q.amplitude,mode:q.mode,inspect:q.inspect,rows:rows.map((rw,i)=>({id:rw.id,t:boxes[i].t,b:boxes[i].b}))};if(OV)geomRef.current={left,right,pw,top:boxes[0].t,ph:boxes[0].b-boxes[0].t,pts,ys:ysOv};else geomRef.current=null;
  if(OV&&!HOVER_NEAR&&F.px!==null&&Z.hold.cur&&Number.isFinite(Z.y)){const col=new Map(rows.map(r=>[r.id,r.color]));drawZoneBar(c,{l:left,r:right,t:boxes[0].t,b:boxes[0].b,pw,ph:boxes[0].b-boxes[0].t},Z.hold.cur,Z.y,curZone,n=>col.get(n)??'#ccc');}
+ }
  if(OV_DBG)c.dataset.zones=Z.hold.cur?JSON.stringify({c:Math.round(Z.y),...Z.hold.cur}):'';if(q.transport.playing){labStats.frames++;labStats.ms+=performance.now()-t0;}c.dataset.time=t.toFixed(3);c.dataset.mode=q.inspect?'inspect':q.mode;c.dataset.difference=String(!!q.residual);c.dataset.fx=String(fx.current.level);
  if(q.transport.playing){const f=fx.current,dt=t0-f.last;f.last=t0;if(dt>0&&dt<250){f.ema=f.frames?f.ema*.95+dt*.05:dt;f.frames++;}c.dataset.frameMs=f.ema.toFixed(1);
   if(FX_PIN===null&&f.frames>90&&f.level>0&&f.ema>26){f.level--;f.frames=0;}}
- }if(q.transport.playing||ovMoving||(OV&&F.px!==null&&!!F.target))raf=requestAnimationFrame(draw);};drawRef.current=()=>{cancelAnimationFrame(raf);draw();};if(p.redrawOut)p.redrawOut.current=drawRef.current;draw();const resize=new ResizeObserver(()=>{cancelAnimationFrame(raf);signature='';draw();});resize.observe(c);return()=>{cancelAnimationFrame(raf);resize.disconnect();};
+ }if(o?.mode!=='snap'&&(q.transport.playing||ovMoving||(OV&&F.px!==null&&!!F.target)))raf=requestAnimationFrame(draw);};drawRef.current=()=>{cancelAnimationFrame(raf);draw();};if(p.redrawOut)p.redrawOut.current=drawRef.current;draw();const resize=new ResizeObserver(()=>{cancelAnimationFrame(raf);signature='';draw();});resize.observe(c);return()=>{cancelAnimationFrame(raf);resize.disconnect();};
  },[p.data,p.transport.playing,p.inputLabel,p.normalRow?.label,p.mode,p.span,p.inspect,p.amplitude,p.reference,p.method,p.preview,p.shown.join(','),p.large,p.soft,p.residual,p.gain,p.overlay]);
  useEffect(()=>{drawRef.current();},[p.pins?.join(','),p.chip]);
  const nRows=p.shown.length+(p.normalRow&&p.data.traces.normal?1:0),ov=!!p.overlay&&!p.residual,onMove=(e:React.PointerEvent<HTMLCanvasElement>)=>{if(!ov)return;const r=e.currentTarget.getBoundingClientRect();setPointer(focus.current,e.clientX-r.left,e.clientY-r.top);drawRef.current();},onLeave=()=>{setPointer(focus.current,null,null);drawRef.current();},onClick=(e:React.MouseEvent<HTMLCanvasElement>)=>{if(!ov)return;const r=e.currentTarget.getBoundingClientRect();focus.current.click={x:e.clientX-r.left,y:e.clientY-r.top};drawRef.current();};

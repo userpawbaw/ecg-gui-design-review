@@ -24,11 +24,14 @@ export class StripRow {
     key += '|L' + levels; if (key === this.key) return;
     this.key = key; this.levels = levels; this.geom = geom; this.drawnTo = -1; this.rebuilds++;
     const W = Math.ceil((geom.nCols * geom.dx + 2 * PAD) * geom.dpr), H = Math.ceil(geom.h * geom.dpr);
-    for (const L of [this.base, this.lit]) { L.c.width = W; L.c.height = H; }
+    // 2026-11-25 질환 탭 축 확대(사용자 「15프레임밖에」): 구간이 매 프레임 바뀌어도 링 폭은 화면 폭 그대로 — 같은 크기면 다시 잡지 않는다
+    // (캔버스 크기 대입은 같은 값이어도 버퍼를 새로 만든다. 내용은 update 의 처음부터 그리기가 지운다)
+    const size = (c: HTMLCanvasElement, w: number, h: number) => { if (c.width !== w) c.width = w; if (c.height !== h) c.height = h; };
+    for (const L of [this.base, this.lit]) size(L.c, W, H);
     // 번짐은 흐린 빛이라 화면 밀도(dpr)와 무관하게 CSS 픽셀의 ½ · ¼ · ⅛ 로 계산한다(dpr 2에서 화소 4배 절약)
     const Wc = Math.ceil(geom.nCols * geom.dx + 2 * PAD), Hc = Math.ceil(geom.h);
-    this.gl.forEach((L, i) => { L.c.width = Math.ceil(Wc / 2 ** (i + 1)); L.c.height = Math.ceil(Hc / 2 ** (i + 1)); });
-    this.sum.c.width = this.gl[0].c.width; this.sum.c.height = this.gl[0].c.height;
+    this.gl.forEach((L, i) => size(L.c, Math.ceil(Wc / 2 ** (i + 1)), Math.ceil(Hc / 2 ** (i + 1))));
+    size(this.sum.c, this.gl[0].c.width, this.gl[0].c.height);
   }
   invalidate() { this.drawnTo = -1; }
   /** 선단 앞 n열(빈칸)을 링에서 미리 비운다 — 빈칸은 램프로 지울 필요가 없어진다. 선(+2 px)과 번짐(+6 px)은 선단 바로 뒤를 남긴다. */

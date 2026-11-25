@@ -11,7 +11,7 @@ export type TourOpts = {decel: boolean, dof: boolean, move: boolean, ghost: bool
 export const TOUR_OPT_LABELS: [keyof TourOpts, string, string][] = [
   ['decel', '감속 정지 · 가속 재개', 'A1'], ['dof', '초점 밖 흐림', 'A2'], ['move', '같은 화면 안 초점 이동', 'A3'], ['ghost', '정상 유령 투영', 'A4'],
   ['caliper', '측정선 그리기', 'A5'], ['glass', '유리 카드', 'A6'], ['progress', '왼쪽 제목 진행선', 'A7'], ['recap', '끝 요약 표식', 'A8'], ['zoom', '특징별 구간 확대 · 축소', 'A9'], ['minimap', '확대 중 개관 띠', 'A10']];
-export const TOUR_DEFAULT: TourOpts = {decel: true, dof: true, move: true, ghost: true, caliper: true, glass: true, progress: true, recap: true, zoom: true, minimap: true};
+export const TOUR_DEFAULT: TourOpts = {decel: true, dof: true, move: true, ghost: true, caliper: true, glass: true, progress: true, recap: false, zoom: true, minimap: true};   // 2026-11-25 사용자: 끝 요약 숫자 표식 없앰(옵션 A8로는 남김)
 export type TourApi = {start: (k?: number) => void, stop: () => void, running: () => boolean, done: () => boolean};
 export type TourStatus = {k: number, hold: boolean, holdS: number, seq: number} | null;
 
@@ -20,7 +20,7 @@ const DUR: Record<Phase, number> = {idle: 0, run: 0, decel: .5, in: .6, hold: 4,
 const clamp = (v: number) => Math.max(0, Math.min(1, v)), ease = (u: number) => u * u * (3 - 2 * u);
 const NO_MOVE_GAP = .5;   // 초점 이동을 끄면 같은 화면 특징 사이 재생(초) — 다음 박동이 들어오기 전
 
-type View = {span: number, right: number, phase: number};
+type View = {span: number, right: number, phase: number, z?: {a: {span: number, right: number, phase: number}, b: {span: number, right: number, phase: number}, e: number}};
 const ZOOM_S = .8, GRID_MAJOR = .2;
 
 export function DiseaseTour({tour, normal, transport, geom, viewRef, redraw, opts, reduced, setMode, getMode, setSpan, getSpan, beginPlay, onStatus, apiRef}: {
@@ -44,7 +44,7 @@ export function DiseaseTour({tour, normal, transport, geom, viewRef, redraw, opt
       const right = Math.min(transport.time, z.c + (1 - f) * span), gridT = z.L0 + (z.L1 - z.L0) * e;
       const ph = (((gridT - (right - span)) % GRID_MAJOR) + GRID_MAJOR) % GRID_MAJOR;
       if (u >= 1) { S.zoom = null; const done = Math.abs(z.to.span - base()) < 1e-3 && Math.abs(z.to.right - transport.time) < 1e-3; setView(done ? null : {...z.to, phase: 0}); }
-      else setView({span, right, phase: ph}); };
+      else setView({span, right, phase: ph, z: {a: z.from, b: {...z.to, phase: 0}, e}}); };   // z: 그래프가 처음 · 끝 장면을 한 번씩만 그려 늘여 섞는다(Plot zoomFrame)
     const stepTarget = (k: number): View | null => { if (!live.current.opts.zoom) return null; const v = stepView(steps[k], base()); return Math.abs(v.span - base()) < 1e-3 ? null : {...v, phase: 0}; };
     const beginStepZoom = (k: number) => { const t = stepTarget(k); if (t) zoomTo(t, focusOf(steps[k]).c); else if (S.view) zoomTo({span: base(), right: transport.time, phase: 0}, focusOf(steps[k]).c); else S.zoom = null; };
     const stopOf = (k: number): number => !live.current.opts.move && k > 0 && Math.abs(steps[k].stop - steps[k - 1].stop) < 1e-6 ? stopOf(k - 1) + NO_MOVE_GAP : steps[k].stop;

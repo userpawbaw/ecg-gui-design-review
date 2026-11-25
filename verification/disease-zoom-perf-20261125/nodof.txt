@@ -1,0 +1,23 @@
+[nodof] pvc CPU×4 
+확대 프레임 27개 · 간격 중앙 116.6 ms(≈9 fps) · 최대 633 ms
+전체 rAF 간격 중앙 16.7 ms
+자기 시간 상위:
+37.3% (program) :-1
+33.5% (idle) :-1
+10.6% drawImage :-1
+5.4% ge index-Cs2mxCVy.js:48
+5.3% getBoundingClientRect :-1
+0.9% (anon) :-1
+0.8% Y index-Cs2mxCVy.js:48
+0.8% Ie index-Cs2mxCVy.js:48
+0.6% (garbage collector) :-1
+0.5% (anon) index-Cs2mxCVy.js:48
+0.5% requestAnimationFrame :-1
+0.3% Z index-Cs2mxCVy.js:48
+0.2% setTransform :-1
+0.2% querySelector :-1
+0.1% fillText :-1
+0.1% m index-Cs2mxCVy.js:48
+0.1% y index-Cs2mxCVy.js:48
+0.1% rt index-Cs2mxCVy.js:48
+errors none

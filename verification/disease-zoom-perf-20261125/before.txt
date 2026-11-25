@@ -1,0 +1,23 @@
+[before] pvc CPU×4 
+확대 프레임 27개 · 간격 중앙 116.7 ms(≈9 fps) · 최대 583 ms
+전체 rAF 간격 중앙 16.7 ms
+자기 시간 상위:
+39.9% (program) :-1
+32.4% (idle) :-1
+11.3% drawImage :-1
+4.9% ge index-Cs2mxCVy.js:48
+4.2% getBoundingClientRect :-1
+0.7% Ie index-Cs2mxCVy.js:48
+0.7% (anon) index-Cs2mxCVy.js:48
+0.7% Y index-Cs2mxCVy.js:48
+0.6% (garbage collector) :-1
+0.5% requestAnimationFrame :-1
+0.4% Z index-Cs2mxCVy.js:48
+0.4% (anon) :-1
+0.2% fillText :-1
+0.2% querySelector :-1
+0.2% setTransform :-1
+0.1% f :0
+0.1% (anon) :0
+0.1% G7 index-Cs2mxCVy.js:5751
+errors none

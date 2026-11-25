@@ -1,0 +1,23 @@
+[after1z] pvc CPU×4 
+확대 프레임 19개 · 간격 중앙 100.0 ms(≈10 fps) · 최대 583 ms
+전체 rAF 간격 중앙 16.7 ms
+자기 시간 상위:
+40.2% (program) :-1
+31.1% (idle) :-1
+11.9% drawImage :-1
+5.7% getBoundingClientRect :-1
+5.0% ge index-C-P-F-lB.js:48
+0.7% Y index-C-P-F-lB.js:48
+0.7% (anon) index-C-P-F-lB.js:48
+0.7% Ie index-C-P-F-lB.js:48
+0.5% requestAnimationFrame :-1
+0.4% (garbage collector) :-1
+0.4% Z index-C-P-F-lB.js:48
+0.2% build index-C-P-F-lB.js:48
+0.2% f :0
+0.1% rt index-C-P-F-lB.js:48
+0.1% fillText :-1
+0.1% querySelector :-1
+0.1% stroke :-1
+0.1% paint index-C-P-F-lB.js:48
+errors none

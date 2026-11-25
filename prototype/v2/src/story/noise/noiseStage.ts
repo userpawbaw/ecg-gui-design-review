@@ -23,6 +23,7 @@ import {createWaveMode} from './waveMode';
 import {emissionTimes,shell,tapTime,lastTap} from './fieldPulse';
 import {beatPhase,type Loop} from '../intro/beats';
 import {createChecker} from './storyCheck';
+import {loadNoiseVideo} from './noiseVideo';
 
 export type Cond='pli'|'bw'|'ma';
 export type NoiseData={cond:Cond,fs:number,loop:Loop,input:Float32Array,output:Float32Array,clean:Float32Array};
@@ -155,7 +156,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   const pop=ss(10.7,11.0,t),out=1-ss(12.9,13.3,t),k=pop*out;if(k<=.003)return;
   const a=STRIP_C.clone().add(new THREE.Vector3(.06,.045,0)).project(camera);if(a.z>1)return;   // tail tip on the strip top, between sockets 2 and 3
   // above-right of the strip, but never into the scene title (top 18 %); when that would put it below the anchor, beside it (left)
-  const ax=(a.x*.5+.5)*W,ay=(-a.y*.5+.5)*H,bw=Math.min(300,.2*W),bh=bw*.56,top=.18*H;
+  const {x:ax,y:ay}=ndcPx(a),bw=Math.min(300,.2*W),bh=bw*.56,top=.18*H;
   let bx=ax+.05*W,by=ay-bh-.1*H,side=false;
   if(by<top){by=top;if(by+bh>ay-.03*H){side=true;bx=ax-bw-.06*W;by=clamp(ay-bh*.85,top,H-bh-.12*H);}}
   const over=1+.12*Math.sin(Math.PI*clamp((t-10.7)/.42))*(1-ss(10.95,11.15,t));   // one overshoot (0.3 s pop)
@@ -405,14 +406,15 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  let sweep=mkSweep();const wave=createWaveMode();let lastT=0,ui='';
  const og=dom.overlay.getContext('2d')!;
  let W=0,H=0,panelMid=0;
- const sternumPx=()=>{const p=skin(VID.sternum).project(camera);return{x:(p.x*.5+.5)*W,y:(-p.y*.5+.5)*H};};
+ const ndcPx=(p:THREE.Vector3)=>video?video.toScreen(p.x,p.y):{x:(p.x*.5+.5)*W,y:(-p.y*.5+.5)*H};   // D-196: 영상 경로면 영상 화면 좌표(cover + 흔들림)
+ const sternumPx=()=>ndcPx(skin(VID.sternum).project(camera));
  function resize(){
   W=innerWidth;H=innerHeight;const pr=Math.min(devicePixelRatio||1,1.25);
   renderer.setPixelRatio(pr);renderer.setSize(W,H,false);composer.setPixelRatio(pr);composer.setSize(W,H);bloom.resolution.set(W*pr/2,H*pr/2);
   arch.setPx(H,pr);grade.uniforms.uAspect.value=W/H;
   // panel layout is measured on the settled composition (TP), then the camera goes back where it was (scene hand-over)
   const keep={p:camera.position.clone(),q:camera.quaternion.clone(),fov:camera.fov,near:camera.near,look:cur.look.clone(),h:cur.h};
-  camera.aspect=W/H;camAt(TP);
+  camera.aspect=video?video.aspect:W/H;camAt(TP);   // D-196: 영상과 같은 16:9 카메라로 투영(오버레이 좌표)
   // B-b: the panel's 0 mV sits at the exhaled chest height (layout only); other scenes centre it
   setMorphs(0,0);figure.group.updateMatrixWorld(true);panelMid=data.cond==='bw'?sternumPx().y:.5*H;
   const half=.2*H,b={l:.64*W,r:.97*W,t:panelMid-half,b:panelMid+half},mv=mvPerBoxFor(b,2.5);sweep.resize(b,mv);grid.resize(b,2.5,mv);
@@ -453,13 +455,17 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   keys=keysFor(data.cond);sClock=0;contactT=-1;arrive.length=0;arrived.clear();sAt.clear();
   if(handover)keys[0]={t:0,pos:camera.position.clone(),look:cur.look.clone(),hfov:cur.h};
   bokeh.enabled=data.cond==='ma';shells.forEach(({m})=>{m.visible=false;});
-  sweep=mkSweep();wave.reset();ui='';
+  sweep=mkSweep();wave.reset();ui='';video?.setScene(data.cond);
   // D-173 (user 2026-11-11 「멀티탭 장면부터 시작하게」): the power-line scene starts on the strip (t = 10 s, the old 0–10 s close-up
   // and orbit are skipped); every later beat keeps its scene time. ?plifrom=0 restores the opening.
   const st=data.cond==='pli'&&!handover?PLI_FROM:0;t0=performance.now()-st*1000;if(frozen!==null)frozen=st;sClock=st;lastT=st;resize();
  }
+ // D-196: 기본은 영상 경로(3D 장면 = 미리 렌더한 영상, 엔진 계산 · 파형 · 오버레이는 실시간). ?introlive=1 · ?perf=… · ?t= 이면 실시간 3D. 자료가 없어도 실시간.
+ const video=!qp.has('introlive')&&!qp.has('perf')&&opt.frozenT===null?await loadNoiseVideo(dom.gl.parentElement!,opt.reduced):null;
+ if(video)dom.gl.style.visibility='hidden';
+ let vLast=performance.now();
  setScene(data0,{last:opt.last});addEventListener('resize',resize);
- const clock=()=>frozen??(performance.now()-t0)/1000;
+ const clock=()=>frozen??video?.clock()??(performance.now()-t0)/1000;   // D-196: 영상 재생 시각이 장면 시계
  function update(){
   const t=clock(),tl=((t%T)+T)%T;frame++;
   // motion
@@ -526,6 +532,7 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   og.globalAlpha=1;if(data.cond==='pli')drawBubble(t);
   const out=last&&leaveT>=0?ss(leaveT+OUTLEN-1.2,leaveT+OUTLEN,t):0;if(out>0){og.fillStyle=`rgba(0,0,0,${out})`;og.fillRect(0,0,W,H);}      // only the last scene ends in black (→ Lab)
   if(leaveT>=0&&t>=leaveT+OUTLEN&&!ended){ended=true;opt.onEnd?.();}
+  if(video){const n=performance.now();video.tick(Math.min(.1,(n-vLast)/1000));vLast=n;return;}   // D-196: 3D 그리기 생략
   arch.update(t,QAOFF.has('jitter')?0:frame,camera,(composer.readBuffer as THREE.WebGLRenderTarget).depthTexture,1);   // 2026-11-10 사용자 「3가지 잡음 … 빛 커튼이 잘 보이지 않는」: 0.6 → 1, 도입부(archShaft 1)와 같게
   grade.uniforms.uTime.value=t;composer.render();
  }
@@ -571,13 +578,15 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
  }
  gsap.ticker.add(update);
  return{set:(o:{t?:number|null})=>{if(o.t!==undefined)frozen=o.t;},renderOnce:update,setScene,selfCheck,
+  /** D-196 영상 녹화: 틱 멈춤(renderOnce로만 그림) */
+  pause(v:boolean){if(v)gsap.ticker.remove(update);else gsap.ticker.add(update);},
   /** QA candidates (debug panel): set one and rebuild the camera keys when the composition changes */
   setQa(k:string,v:string){QA[k]=v;if(k==='light')setLights(v);if(k==='set')void useSet(v);if(k==='fist'&&data.cond==='ma')drive=createFistDrive(data.input,data.clean,data.fs,v);if(k==='comp'&&data.cond==='pli'){const t=clock();keys=keysFor('pli');void t;}},get qa(){return {...QA};},
   /** QA (S-10): fix the breath morph (null = data) and show the figure alone on black for a body mask */
   qaPose(o:{breath?:number|null,mask?:boolean}){if(o.breath!==undefined)qaBreath=o.breath;if(o.mask!==undefined){arch.setFade(o.mask?0:1);[chair,strip,workstation,lamp].forEach(x=>x.visible=!o.mask);}},
   /** QA: jump the scene clock (e.g. back to the strip) */
   jump(tt:number){if(frozen!==null)frozen=tt;else t0=performance.now()-tt*1000;lastT=tt;if(tt<12.5){sClock=tt;contactT=-1;arrive.length=0;arrived.clear();sAt.clear();}},
-  scroll:(dy:number)=>wave.scroll(dy),toggleOverlay:()=>wave.toggleOverlay(),leave:()=>{if(leaveT<0)leaveT=clock();},get cond(){return data.cond;},figure,arch,
+  scroll:(dy:number)=>wave.scroll(dy),toggleOverlay:()=>wave.toggleOverlay(),leave:()=>{if(leaveT<0){leaveT=clock();video?.leave(leaveT);}},get cond(){return data.cond;},figure,arch,
   /** QA: the muscle-noise bursts the fist follows (loop seconds) and the stored loop length */
   bursts:()=>({T,bursts:drive?.bursts??[]}),
   /** QA: camera state and what lies under a screen point (NDC), by object and material name */
@@ -587,5 +596,5 @@ export async function createNoiseStage(dom:NoiseDom,data0:NoiseData,opt:NoiseOpt
   probe(nx:number,ny:number){const r=new THREE.Raycaster();r.setFromCamera(new THREE.Vector2(nx,ny),camera);
    const h=r.intersectObjects(scene.children,true).filter(x=>(x.object as THREE.Mesh).isMesh&&x.distance>1e-3).slice(0,4).map(x=>({d:+x.distance.toFixed(3),o:x.object.name,m:((Array.isArray((x.object as THREE.Mesh).material)?((x.object as THREE.Mesh).material as THREE.Material[])[0]:(x.object as THREE.Mesh).material) as THREE.Material)?.name,p:x.point.toArray().map(v=>+v.toFixed(3))}));
    return{near:camera.near,pos:camera.position.toArray().map(v=>+v.toFixed(3)),dir:camera.getWorldDirection(new THREE.Vector3()).toArray().map(v=>+v.toFixed(4)),fov:+camera.fov.toFixed(3),aspect:+camera.aspect.toFixed(4),hits:h};},
-  dispose(){gsap.ticker.remove(update);removeEventListener('resize',resize);renderer.dispose();composer.dispose();arch.dispose();figure.dispose();}};
+  dispose(){video?.dispose();gsap.ticker.remove(update);removeEventListener('resize',resize);renderer.dispose();composer.dispose();arch.dispose();figure.dispose();}};
 }

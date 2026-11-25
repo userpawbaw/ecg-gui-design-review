@@ -31,3 +31,6 @@
 .ns-wheel{position:absolute;left:80.5%;bottom:calc(11% + 96px);transform:translateX(-50%);pointer-events:none;opacity:0;transition:opacity .6s ease}
 .ns-wheel.on{opacity:.85}
 .ns-wheel .it-wheelhint{position:relative;transform:none;opacity:1}
+/* D-196 영상 경로: 3D 장면 대신 미리 렌더한 영상(파형 · 오버레이 아래) */
+.ns-vid-wrap{position:absolute;inset:0;pointer-events:none;will-change:transform;transform-origin:50% 50%}
+.ns-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:transparent}

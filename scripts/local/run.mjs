@@ -38,7 +38,7 @@ function ensureDeps(dir){if(!existsSync(join(dir,'node_modules'))){say(`의존�
 function dirStale(rel){const src=join(root,'data',rel),dst=join(root,'prototype/v2/public',rel);if(!existsSync(src))return false;
  for(const f of readdirSync(src)){const a=join(src,f),b=join(dst,f);if(statSync(a).isDirectory()){if(!existsSync(b)||dirStale(join(rel,f)))return true;continue;}
   if(!existsSync(b)||statSync(a).size!==statSync(b).size)return true;if(f.endsWith('.json')&&readFileSync(a,'utf8')!==readFileSync(b,'utf8'))return true;}return false;}
-function diseaseStale(){return dirStale('disease')||dirStale('intro-video');}
+function diseaseStale(){return dirStale('disease')||dirStale('intro-video')||dirStale('noise-video');}
 function ensureV2Data(){const pub=join(root,'prototype/v2/public/archive.json');if(!existsSync(pub)||!existsSync(join(root,'prototype/v2/public/disease/index.json'))||diseaseStale()){say('자료 준비: prototype/v2/public (archive.json · 심질환 파형)');run(process.execPath,[join(root,'scripts/prepare-v2.cjs')]);}}
 function browserPath(){
  // Ask the installed Playwright which browser build it expects (a different build in the cache does not count).

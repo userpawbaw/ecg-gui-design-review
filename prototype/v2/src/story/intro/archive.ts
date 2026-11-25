@@ -376,13 +376,17 @@ export async function createArchive(variant:ArchiveVariant='base'){
       vec2 o=t-.5-f;float k=exp(-dot(o,o)*.45)*exp(-abs(q.a-dist)/(.04+.06*dist)*3.);s+=q.rgb*k;w+=k;}
      vec3 fogc=w>1e-4?s/w:texture2D(tFog,vUv).rgb;
      gl_FragColor=vec4(mix(col,uHazeCol,hz)+fogc,1.);}`}));
+  let fogDirty=false;
   class FogPass extends Pass{
    constructor(){super();this.needsSwap=true;}
    setSize(w:number,h:number){fogRT.setSize(Math.max(1,Math.ceil(w/2)),Math.max(1,Math.ceil(h/2)));cu.uFogSize.value.set(fogRT.width,fogRT.height);}
    render(r:THREE.WebGLRenderer,write:THREE.WebGLRenderTarget,read:THREE.WebGLRenderTarget){
     cu.tBase.value=read.texture;
-    if(vu.uOn.value<.002&&vu.uCOn.value<.002){r.setRenderTarget(this.renderToScreen?null:write);comp.render(r);return;}   // haze only
-    r.setRenderTarget(fogRT);fogQ.render(r);
+    // 2026-11-25 D-195: 빛기둥이 꺼지면 마지막 안개 그림(fogRT)이 남아 합성에 그대로 더해졌다(합성은 안개를 세기와 무관하게 더함) —
+    // 진행이 급히 바뀌면(영상 녹화 · 되돌아가기) 첫 화면의 빛줄기가 파형 단계에 남음. 꺼지는 순간 한 번 비운다.
+    if(vu.uOn.value<.002&&vu.uCOn.value<.002){if(fogDirty){const cc=r.getClearColor(new THREE.Color()),ca=r.getClearAlpha();r.setRenderTarget(fogRT);r.setClearColor(0x000000,0);r.clear();r.setClearColor(cc,ca);fogDirty=false;}
+     r.setRenderTarget(this.renderToScreen?null:write);comp.render(r);return;}   // haze only
+    r.setRenderTarget(fogRT);fogQ.render(r);fogDirty=true;
     r.setRenderTarget(this.renderToScreen?null:write);comp.render(r);}
    dispose(){fogRT.dispose();fogQ.dispose();comp.dispose();}
   }

@@ -124,6 +124,7 @@ export async function createIntro(dom:IntroDom,data:IntroData,opt:IntroOptions){
  // D-190 ?perf=merge: 출력 변환 + 색보정 한 단계(createFinal) · ?perf=fxaa: MSAA 대신 마지막에 FXAA 한 단계(sRGB 화면에서)
  const MERGE=PERF.has('merge'),FXAA=PERF.has('fxaa');
  const grade=MERGE?createFinal(renderer.toneMappingExposure):createGrade();
+ if(IQ.has('introdbg'))(globalThis as unknown as {__introDbg:unknown}).__introDbg={renderer,composer,bloom,grade,scene};   // 원인 분석용(?introdbg)
  if(MERGE)composer.addPass(grade);else{composer.addPass(new OutputPass());if(!OFF('igrade'))composer.addPass(grade);}
  const fxaa=FXAA?new FXAAPass():null;if(fxaa)composer.addPass(fxaa);
  const grid=createGrid(dom.grid);

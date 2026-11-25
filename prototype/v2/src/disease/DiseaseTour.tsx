@@ -7,6 +7,7 @@ import type {Transport, Mode} from '../engine';
 import type {PlotGeom} from '../Plot';
 import {stepView, focusOf, type NormalRow, type Tour, type Step, type Region, type Caliper} from './tour';
 
+const TDBG = typeof location !== 'undefined' && new URLSearchParams(location.search).has('tourdbg');
 export type TourOpts = {decel: boolean, dof: boolean, move: boolean, ghost: boolean, caliper: boolean, glass: boolean, progress: boolean, recap: boolean, zoom: boolean, minimap: boolean};
 export const TOUR_OPT_LABELS: [keyof TourOpts, string, string][] = [
   ['decel', '감속 정지 · 가속 재개', 'A1'], ['dof', '초점 밖 흐림', 'A2'], ['move', '같은 화면 안 초점 이동', 'A3'], ['ghost', '정상 유령 투영', 'A4'],
@@ -30,7 +31,7 @@ export function DiseaseTour({tour, normal, transport, geom, viewRef, redraw, opt
   const live = useRef({opts, reduced, onStatus});live.current = {opts, reduced, onStatus};
   useEffect(() => {
     const S = {phase: 'idle' as Phase, k: 0, from: -1, ph0: 0, clock: 0, last: 0, lastTime: transport.time, d0: 0, stopAt: 0, prevMode: 'sweep' as Mode, prevSpan: 0, userSpeed: 1, done: false, seen: new Set<number>(), seq: 0,
-      view: null as View | null, zoom: null as null | {from: View, to: View, c: number, t0: number, dur: number, L0: number, L1: number}, pdur: 0};
+      pend: null as null | {mode: Mode, span: number}, view: null as View | null, zoom: null as null | {from: View, to: View, c: number, t0: number, dur: number, L0: number, L1: number}, pdur: 0};
     const steps = tour.steps, base = () => tour.span ?? getSpan();
     // ---- D-194 구간 확대 · 축소: 멈춘 동안만, 특징 중심이 화면에서 곧게 움직이도록(구간은 log 보간), 격자 위상은 시작 · 끝 모두 왼쪽 기준이 되게 반 칸 안에서 보간 ----
     const setView = (v: View | null) => { S.view = v; viewRef.current = v; redraw.current?.(); };
@@ -55,13 +56,19 @@ export function DiseaseTour({tour, normal, transport, geom, viewRef, redraw, opt
       else if (ph === 'move') { beginStepZoom(S.k); S.pdur = S.zoom ? S.zoom.dur + .45 : DUR.move; }
       else if (ph === 'out') { if (S.view) zoomTo({span: base(), right: transport.time, phase: 0}, focusOf(steps[S.k]).c); else S.zoom = null; S.pdur = S.zoom ? Math.max(DUR.out, S.zoom.dur) : DUR.out; }
       else S.pdur = 0; if (ph === 'hold') S.seq++; if (ph === 'hold' || ph === 'in' || ph === 'idle' || ph === 'run') status(); };
-    const finish = (restore: boolean) => { transport.speed = S.userSpeed; S.zoom = null; if (S.view) setView(null); if (restore && S.phase !== 'idle') { setMode(S.prevMode); if (S.prevSpan && S.prevSpan !== getSpan()) setSpan(S.prevSpan); } S.phase = 'idle'; status(); };
+    const restoreNow = (m: Mode, sp: number) => { S.pend = null; if (m !== getMode()) setMode(m); if (sp && sp !== getSpan()) setSpan(sp); };
+    // 2026-11-25 사용자: 마지막 특징 뒤 재생이 멈춘 곳에서 이어지지 않고 한 번 튐 — 끝나자마자 스크롤 → 스윕으로 바꿔 파형 위치가 달라졌다.
+    // 끝까지 본 뒤에는 스윕 커서가 처음으로 돌아가는 순간(시각이 구간의 배수 — 두 방식 화면이 같다)에 원래 방식으로 돌린다. 그 전에 사용자가 방식을 바꾸거나 시각을 옮기면 그 선택을 따르고, 질환을 바꾸면 바로 돌린다.
+    const finish = (restore: boolean, seamless = false) => { transport.speed = S.userSpeed; S.zoom = null; if (S.view) setView(null);
+      if (restore && S.phase !== 'idle') { if (seamless && (S.prevMode !== getMode() || (S.prevSpan && S.prevSpan !== getSpan()))) S.pend = {mode: S.prevMode, span: S.prevSpan}; else restoreNow(S.prevMode, S.prevSpan); }
+      S.phase = 'idle'; status(); };
     apiRef.current = {
-      start: (k = 0) => { if (S.phase === 'idle') { S.prevMode = getMode(); S.prevSpan = getSpan(); S.userSpeed = transport.speed || 1; }
+      start: (k = 0) => { if (S.phase === 'idle') { S.prevMode = S.pend?.mode ?? getMode(); S.prevSpan = S.pend?.span ?? getSpan(); S.pend = null; S.userSpeed = transport.speed || 1; }
         if (tour.span && tour.span !== getSpan()) setSpan(tour.span);   // 긴 휴지처럼 5 s 화면에 안 들어오는 특징
         S.k = k; S.from = -1; S.done = false; if (k === 0) S.seen.clear(); transport.speed = S.userSpeed; setMode('scroll');
         const t0 = k === 0 ? tour.start : Math.max(0, stopOf(k) - 2.2); S.lastTime = t0; beginPlay(t0); go('run'); },
       stop: () => finish(true), running: () => S.phase !== 'idle', done: () => S.done};
+    if (TDBG) (globalThis as unknown as {__tour: unknown}).__tour = {S, transport, getMode, getSpan, setMode};   // ?tourdbg=1: 시험이 투어 상태 · 재생 시각을 읽는다
     let raf = 0;
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
@@ -82,10 +89,13 @@ export function DiseaseTour({tour, normal, transport, geom, viewRef, redraw, opt
           else if (S.phase === 'move' && u >= 1) { S.from = -1; go('hold'); }
           else if (S.phase === 'out' && u >= 1) { S.from = -1; S.zoom = null; if (S.view) setView(null);
             if (S.k + 1 < steps.length) { S.k++; if (o.decel && !red) go('accel'); else { transport.speed = S.userSpeed; go('run'); } }
-            else { S.done = true; finish(true); } }
+            else { S.done = true; finish(true, true); } }
           else if (S.phase === 'accel') { transport.speed = S.userSpeed * clamp(u) ** 2; if (u >= 1) { transport.speed = S.userSpeed; go('run'); } }
         }
       }
+      if (S.pend && S.phase === 'idle') { const sp = getSpan(), P = S.pend;
+        if (getMode() !== 'scroll' || Math.abs(transport.time - S.lastTime) > .35 + dt * 2) S.pend = null;   // 사용자가 방식을 바꾸거나 시각을 옮겼다 — 그 선택을 따른다
+        else if (Math.floor(transport.time / sp) !== Math.floor(S.lastTime / sp) && transport.time > S.lastTime) restoreNow(P.mode, P.span); }
       S.lastTime = transport.time;
       paint(S, o, red);
     };
@@ -182,7 +192,7 @@ export function DiseaseTour({tour, normal, transport, geom, viewRef, redraw, opt
       else ze.style.opacity = '0';
     };
     raf = requestAnimationFrame(frame);
-    return () => { cancelAnimationFrame(raf); if (S.phase !== 'idle') { transport.speed = S.userSpeed; setMode(S.prevMode); if (S.prevSpan) setSpan(S.prevSpan); } apiRef.current = null; live.current.onStatus(null); };
+    return () => { cancelAnimationFrame(raf); if (S.pend) restoreNow(S.pend.mode, S.pend.span); if (S.phase !== 'idle') { transport.speed = S.userSpeed; setMode(S.prevMode); if (S.prevSpan) setSpan(S.prevSpan); } apiRef.current = null; live.current.onStatus(null); };
   }, [tour, normal, transport, geom]);
   return <div ref={root} className="dt-layer" aria-hidden="true">
     <div ref={dof} className="dt-dof"/><div ref={dim} className="dt-dim"/>

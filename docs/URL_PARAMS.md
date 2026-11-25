@@ -85,6 +85,7 @@
 | `heartlive=1` | 심박 배지 3D 심장을 이전처럼 박동마다 WebGL로(기본은 미리 렌더한 프레임) — D-200 비교용 |
 | `zoomfps` | 질환 탭 확대 · 축소가 끝날 때마다 왼쪽 아래에 그 확대의 초당 프레임과 방식 표시(노트북 비교용) |
 | `zoomdbg` | 개발용: `__plotZoom.full/fast/bench` 노출(같은 보기를 방식별로 그려 비교) |
+| `tourdbg` | 개발용(심질환 탭): `__tour`(투어 상태 S · transport · getMode/setMode · getSpan) 노출 — 투어 끝 튐 검증(`verification/disease-tour-end-jump-20261125`) |
 | `rampcache=0` | 개발용: 잔광 램프 캐시 끄기(비교) |
 | `perf=nogl` · `perf=nosweep` | (실시간 3D에서) 3D 장면 · 파형 패널 그리기를 빼고 측정(D-195 판단용) | — |
 | `hrdbg=1` | 실시간 심박 계산을 매 프레임 `window.__hr`에 기록(시험용, D-188) | 끔 |

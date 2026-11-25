@@ -9,7 +9,7 @@ import {Plot,SHOWN_COLORS} from './Plot';
 import {LabHeart} from './heart/LabHeart';
 import {DISEASES,markTimes,spanTimes} from './disease/diseases';
 import {DiseaseTour,TOUR_DEFAULT,TOUR_OPT_LABELS,type TourOpts,type TourApi,type TourStatus} from './disease/DiseaseTour';
-import {buildNormalRow,buildTour,ROW_CFG,needsRef} from './disease/tour';
+import {buildNormalRow,buildTour,ROW_CFG,needsRef,TOUR_SPAN} from './disease/tour';
 import {decode} from './engine';
 import type {PlotGeom} from './Plot';
 import {OverlayChips} from './OverlayChips';
@@ -78,7 +78,7 @@ function App(){
  const [tourOpts,setTourOpts]=useState<TourOpts>(()=>{try{return {...TOUR_DEFAULT,...JSON.parse(localStorage.getItem('diseaseTourOpts')??'{}')};}catch{return TOUR_DEFAULT;}}),[tourStatus,setTourStatus]=useState<TourStatus>(null),[dNoisy,setDNoisy]=useState(false);
  const plotGeom=useRef<PlotGeom|null>(null),tourApi=useRef<TourApi|null>(null),modeRef=useRef<Mode>('sweep');
  useEffect(()=>{try{localStorage.setItem('diseaseTourOpts',JSON.stringify(tourOpts));}catch{}},[tourOpts]);
- const labSnap=useRef<{bank:Bank|null,axis:string,noise:string,snr:number,amplitude:number,shown:string[]}|null>(null),prevRoute=useRef('lab'),routeRef=useRef('lab');   /* 자료 길이를 사용자가 고르면 10분 자동 선택을 하지 않는다 */const requestEpoch=useRef(0);const transport=useRef(new Transport()).current;const [time,setTime]=useState(transport.time),[playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1),[loop,setLoop]=useState(false);
+ const labSnap=useRef<{bank:Bank|null,axis:string,noise:string,snr:number,amplitude:number,shown:string[],span:number}|null>(null),prevRoute=useRef('lab'),routeRef=useRef('lab');   /* 자료 길이를 사용자가 고르면 10분 자동 선택을 하지 않는다 */const requestEpoch=useRef(0);const transport=useRef(new Transport()).current;const [time,setTime]=useState(transport.time),[playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1),[loop,setLoop]=useState(false);
  const hoverTimer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined),events=useRef<Array<{at:string,message:string}>>([]),viewer=useRef<HTMLDivElement>(null);
  const announce=(message:string)=>{setStatus(message);events.current.push({at:new Date().toISOString(),message});if(events.current.length>50)events.current.shift();};
  const pause=()=>{resumeAfterLoad.current=false;transport.pause();setPlaying(false);setTime(transport.time);};
@@ -87,8 +87,8 @@ function App(){
  useEffect(()=>{let active=true;loadArchive().then(b=>{if(active){setArchive(b);setBank(current=>current||(routeRef.current==='disease'?null:b));}}).catch(e=>{if(active){setError(String(e));setLoading(false);}});fetch('./replay/manifest.json').then(r=>r.ok?r.json():null).then(b=>{if(active&&b?.scenes?.length){setLong(b);if(b.scenes.length===98&&!bankChosen.current&&routeRef.current!=='disease')setBank(b);}}).catch(()=>{});return()=>{active=false;};},[retry]);
  routeRef.current=route;
  useEffect(()=>{const prev=prevRoute.current;prevRoute.current=route;
-  if(route==='disease'&&prev!=='disease'){labSnap.current={bank,axis,noise,snr,amplitude,shown};setShown([]);setData(null);setBank(null);setAxis('d1');setNoise('mixed');setSnr(10);}
-  else if(prev==='disease'&&route!=='disease'){const k=labSnap.current;labSnap.current=null;setData(null);setDFile(null);setAxis(k?.axis??'d1');setNoise(k?.noise??'mixed');setSnr(k?.snr??10);setAmplitude(k?.amplitude??2);if(k?.shown)setShown(k.shown);setBank(k?.bank??(long&&long.scenes.length===98&&!bankChosen.current?long:archive));}},[route]);
+  if(route==='disease'&&prev!=='disease'){labSnap.current={bank,axis,noise,snr,amplitude,shown,span};setShown([]);setData(null);setBank(null);setAxis('d1');setNoise('mixed');setSnr(10);}
+  else if(prev==='disease'&&route!=='disease'){const k=labSnap.current;labSnap.current=null;setData(null);setDFile(null);setAxis(k?.axis??'d1');setNoise(k?.noise??'mixed');setSnr(k?.snr??10);setAmplitude(k?.amplitude??2);if(k?.shown)setShown(k.shown);if(k?.span)setSpan(k.span);setBank(k?.bank??(long&&long.scenes.length===98&&!bankChosen.current?long:archive));}},[route]);
  useEffect(()=>{if(route!=='disease')return;let ok=true;setLoading(true);setError('');
   (async()=>{const idx:DIndex=dIndex??await fetch('./disease/index.json').then(r=>{if(!r.ok)throw Error('심질환 파형 목록 열기 실패');return r.json();});if(!ok)return;if(!dIndex)setDIndex(idx);
    const id=idx.diseases.some(d=>d.id===disease)?disease:idx.diseases[0].id;const f:DFile=await fetch(`./disease/${id}.json`).then(r=>{if(!r.ok)throw Error('심질환 파형 파일 열기 실패');return r.json();});if(!ok)return;
@@ -130,15 +130,14 @@ function App(){
  /* D-192 정상 기준 행(N1)과 투어 계획 — 원파형(clean)은 잡음 조건과 무관하게 같다 */
  const dClean=route==='disease'&&dFile&&data&&data.scene.id.startsWith(dFile.disease+'-')?data.traces.clean:null;
  /* D-193: 정상 기록 100 평균 박동이 필요한 질환(심방세동 · 조동 · 각 차단)은 normal.json 원파형을 한 번 읽는다 */
- const [dRef,setDRef]=useState<{x:Float32Array,beats:{i:number,s:string}[]}|null>(null),[planSpan,setPlanSpan]=useState(span),spanRef=useRef(span);spanRef.current=span;
- useEffect(()=>{if(!tourApi.current?.running())setPlanSpan(span);},[span]);   // 투어가 표시 구간을 잠시 바꿔도 계획은 그대로
+ const [dRef,setDRef]=useState<{x:Float32Array,beats:{i:number,s:string}[]}|null>(null),spanRef=useRef(span);spanRef.current=span;
  useEffect(()=>{if(route!=='disease'||!dFile||!needsRef(dFile.disease)||dRef)return;let alive=true;fetch('./disease/normal.json').then(r=>r.json()).then((f:DFile)=>{if(alive)setDRef({x:decode(f.scenes[0].traces.clean,f.scenes[0].scale,f.n),beats:f.beats});}).catch(e=>console.warn('normal ref',e));return()=>{alive=false;};},[route,dFile,dRef]);
  const dNormal=useMemo(()=>dClean&&dFile&&ROW_CFG[dFile.disease]&&(!needsRef(dFile.disease)||dRef)?buildNormalRow(dClean,dFile.beats,dFile.fs,ROW_CFG[dFile.disease],dRef??undefined):null,[dClean&&dFile?dFile.disease:null,!!dClean,dRef]);
- const dTour=useMemo(()=>dClean&&dFile&&dNormal?buildTour(dFile.disease,dClean,dFile.beats,dFile.fs,dNormal,planSpan,dFile.rhythm):null,[dNormal,planSpan]);
+ const dTour=useMemo(()=>dClean&&dFile&&dNormal?buildTour(dFile.disease,dClean,dFile.beats,dFile.fs,dNormal,TOUR_SPAN,dFile.rhythm):null,[dNormal]);   // 계획은 고정 구간(사용자 구간과 무관)
  /* D-189 · D-193 질환 초기 표시 범위: 투어가 있으면 설명이 덧씌워지는 멈춤 화면들(첫 멈춤 화면 왼쪽 끝 ~ 마지막 멈춤)의 질환 · 정상 행 최댓값에 맞춤
   * (사용자 2026-11-24: 심실 조기 수축 1.3 mV · 5 s가 적절, 애니메이션 동안 범위 초과가 없으면 충분). 투어가 없으면 60 s 원파형 최댓값. */
  useEffect(()=>{if(route!=='disease'){fitted.current='';return;}if(!data||!dFile||!data.scene.id.startsWith(dFile.disease+'-'))return;const want=ROW_CFG[dFile.disease]?(dTour?'tour':''):'all';if(!want||fitted.current===dFile.disease)return;fitted.current=dFile.disease;
-  const a=data.traces.clean,fs=data.fs;let max=.2,i0=0,i1=a.length;if(dTour){const sp=dTour.span??planSpan;i0=Math.max(0,Math.floor((dTour.steps[0].stop-sp)*fs));i1=Math.min(a.length,Math.ceil(dTour.steps[dTour.steps.length-1].stop*fs)+1);}
+  const a=data.traces.clean,fs=data.fs;let max=.2,i0=0,i1=a.length;if(dTour){const sp=dTour.span??TOUR_SPAN;setSpan(sp);i0=Math.max(0,Math.floor((dTour.steps[0].stop-sp)*fs));i1=Math.min(a.length,Math.ceil(dTour.steps[dTour.steps.length-1].stop*fs)+1);}
   for(const tr of [a,dTour?dNormal?.trace:undefined])if(tr)for(let i=i0;i<i1;i++)max=Math.max(max,Math.abs(tr[i]));setAmplitude(Math.ceil(max*(dTour?1.3:1.2)*10)/10);},[route,data,dFile,dTour]);   // 1.3: 측정선 · 글자 자리(심실 조기 수축 → 1.3 mV, 사용자 확인값)
  const pData=useMemo(()=>data&&dClean&&dNormal?{...data,traces:{...data.traces,...(dNoisy?{}:{input:data.traces.clean}),normal:dNormal.trace}}:data,[data,dClean,dNormal,dNoisy]);
  const dSel=DISEASES.find(d=>d.id===dFile?.disease)?.name??'';

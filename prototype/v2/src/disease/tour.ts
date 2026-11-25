@@ -94,7 +94,9 @@ function widthStep(c: Ctx, id: string, title: string, g: BeatGeo, stop: number, 
     calipers: [{row: 'input', kind: 'bracket', t0: T(c, g.on), t1: T(c, g.off), label: `${f2(q)} s`, at: 'top'}, {row: 'normal', kind: 'bracket', t0: T(c, n.on), t1: T(c, n.off), label: `${f2(nq)} s`, at: 'top'}],
     mark: {t: (T(c, g.on) + T(c, g.off)) / 2}};
 }
-const finish = (steps: Step[], rr: number, extra: Partial<Tour> = {}): Tour => ({steps, start: Math.max(0, steps[0].stop - 3.5), rr, ...extra});
+/** 투어 계획 기본 표시 구간(초) — 사용자가 고른 구간과 무관하게 이 값으로 세우고, 질환을 고를 때 화면도 이 구간으로 맞춘다(2026-11-25 사용자: 초기 설정이 안 먹음). */
+export const TOUR_SPAN = 5;
+const finish = (steps: Step[], rr: number, extra: Partial<Tour> = {}): Tour => ({steps, start: Math.max(0, steps[0].stop - 3.5), rr, span: TOUR_SPAN, ...extra});
 
 /** 조기 박동(심실 V · 심방 A): N N X N, ③은 보상성(V) · 비보상성(A) 휴지. */
 function earlyTour(c: Ctx, sym: 'V' | 'A'): Tour | null {
